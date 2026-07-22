@@ -103,6 +103,13 @@
   .tl li:last-child{border-bottom:none}
   .tl .t{flex:0 0 46px;font-weight:800;color:var(--accent2);font-variant-numeric:tabular-nums;font-size:12.5px}
   .dnote{margin-top:8px;font-size:12.5px;color:var(--muted);background:var(--chip);border-radius:8px;padding:7px 10px}
+  .pc{margin-top:8px;font-size:12.5px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+  .pc .pch{font-weight:800;color:var(--accent2);margin-bottom:3px}
+  .pc div{margin:3px 0}
+  .pc .opt{font-weight:800}
+  .pc .plus{color:var(--ok);font-weight:700}
+  .pc .minus{color:var(--accent);font-weight:700}
+  .wxwrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow-x:auto}
   nav.qnav{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
   nav.qnav a{font-size:13px;font-weight:700;color:var(--accent2);text-decoration:none;
     background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
@@ -151,6 +158,7 @@
 
   <nav class="qnav">
     <a href="#agenda">📅 Agenda</a>
+    <a href="#pogoda">☀️ Pogoda</a>
     <a href="#strategia">📈 Bilety</a>
     <a href="#koszty">💴 Koszty</a>
     <a href="atrakcje.html">🎟️ Atrakcje</a>
@@ -212,6 +220,11 @@
         <li><span class="t">18:30</span><span>kolacja: kaiten-zushi (taśma) albo yakiniku</span></li>
       </ul>
       <div class="dnote">💡 Ustalcie dzieciom limit na gachapon z góry — inaczej wyjdziecie z Akihabary z walizką kapsułek 😉</div>
+      <div class="pc">
+        <div class="pch">⚖️ teamLab Planets czy Akihabara?</div>
+        <div><span class="opt">teamLab</span> — <span class="plus">za:</span> immersyjne, „wow" dla dzieci; <span class="minus">przeciw:</span> bilet z datą (~+310 zł/4 os.), dojazd na Toyosu.</div>
+        <div><span class="opt">Akihabara</span> — <span class="plus">za:</span> za darmo, na luzie (gachapon, elektronika, anime); <span class="minus">przeciw:</span> „zwykłe miasto" po intensywnym poranku.</div>
+      </div>
     </div></div>
 
     <div class="day"><div class="dnum">4</div><div class="dbody">
@@ -244,6 +257,11 @@
         <li><span class="t">20:00</span><span>wieczorne Gion — szansa minąć maiko w drodze na występ</span></li>
       </ul>
       <div class="dnote">💡 W Kioto noście buty łatwe do zdejmowania — świątynie, tatami i warsztaty tego wymagają.</div>
+      <div class="pc">
+        <div class="pch">⚖️ Nocleg w Kioto: aparthotel czy machiya?</div>
+        <div><span class="opt">Aparthotel (Mimaru)</span> — <span class="plus">za:</span> łóżka, aneks kuchenny, winda, pralnia — bezstresowo z dziećmi (~820 zł/noc); <span class="minus">przeciw:</span> mniej „japońskiego" klimatu.</div>
+        <div><span class="opt">Machiya</span> — <span class="plus">za:</span> futony na tatami w drewnianym domku, dużo klimatu; <span class="minus">przeciw:</span> schody i mniej udogodnień (~890 zł/noc).</div>
+      </div>
     </div></div>
 
     <div class="day"><div class="dnum">6</div><div class="dbody">
@@ -334,7 +352,12 @@
         <li><span class="t">18:15</span><span>kolacja <a class="alink" href="atrakcje.html#chanko">chanko-nabe</a> (kocioł zapaśników) w knajpie byłego sumity</span></li>
         <li><span class="t">20:00</span><span>powrót do hotelu</span></li>
       </ul>
-      <div class="dnote">💡 Bilety: sprzedaż ~początek kwietnia na sumo.or.jp — brać box 4-os. albo miejsca arena B/C, wyprzedają się w godziny. Lornetka się przyda.</div>
+      <div class="dnote">💡 Bilety: sprzedaż ~początek kwietnia na sumo.or.jp — wyprzedają się w godziny. Lornetka się przyda.</div>
+      <div class="pc">
+        <div class="pch">⚖️ Miejsca na sumo: arena B/C czy box przy ringu?</div>
+        <div><span class="opt">Arena B/C (krzesełka)</span> — <span class="plus">za:</span> wygodne, dobry widok z góry, taniej (~620 zł/4 os.), łatwo wyjść z dziećmi; <span class="minus">przeciw:</span> dalej od ringu.</div>
+        <div><span class="opt">Box przy ringu (masu-seki)</span> — <span class="plus">za:</span> 100% klimatu, tuż przy akcji; <span class="minus">przeciw:</span> siedzenie na poduszkach po turecku 3–4 h, drożej (~1 170 zł).</div>
+      </div>
     </div></div>
 
     <div class="day travel"><div class="dnum">12</div><div class="dbody">
@@ -353,6 +376,21 @@
     </div></div>
 
   </div>
+
+  <h2 id="pogoda" style="scroll-margin-top:16px">☀️ Pogoda w maju i pakowanie</h2>
+  <p class="lead">Maj to jeden z najlepszych miesięcy na Japonię: ciepło, słonecznie i sucho — <b>przed sezonem deszczowym</b> (tsuyu na głównej wyspie startuje dopiero w czerwcu). Poniżej typowe średnie; dokładna prognoza na 2027 pojawi się bliżej wyjazdu.</p>
+  <div class="wxwrap">
+    <table>
+      <thead><tr><th>Region</th><th style="text-align:right">Dzień</th><th style="text-align:right">Noc</th><th>Uwaga</th></tr></thead>
+      <tbody>
+        <tr><td class="cat">🏙️ Tokio</td><td class="num">~23°C</td><td class="num">~14°C</td><td>przyjemnie, słonecznie; sporadyczny przelotny deszcz</td></tr>
+        <tr><td class="cat">♨️ Hakone (góry)</td><td class="num">~19°C</td><td class="num">~10°C</td><td>chłodniej i wilgotniej — weź ciepłą warstwę; Fudżi najlepiej widać rano</td></tr>
+        <tr><td class="cat">⛩️ Kioto / Nara</td><td class="num">~25°C</td><td class="num">~14°C</td><td>cieplej niż w Tokio; w kotlinie w słońcu bywa parno</td></tr>
+        <tr><td class="cat">🏯 Osaka</td><td class="num">~25°C</td><td class="num">~15°C</td><td>ciepło, miejsko; wieczory łagodne</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="dnote" style="margin-top:12px">🎒 <b>Co spakować:</b> ubrania na warstwy (rano i wieczorem chłodniej, zwłaszcza w Hakone) · lekka kurtka/wiatrówka · <b>składany parasol</b> (~9 dni z deszczem w miesiącu, zwykle przelotnie) · wygodne buty łatwe do zdejmowania (świątynie, tatami) · krem z filtrem i nakrycia głowy (słońce mocne). Zmierzch ok. 18:30.</div>
 
   <h2 id="strategia" style="scroll-margin-top:16px">📈 Strategia biletowa</h2>
   <p class="lead">Ceny Etihad WAW→Tokio falują o ±30% w skali tygodnia (13 865 → 18 000 → 13 865 zł za 4 os.). W całym oknie ±3 dni najtańsza jest dokładnie nasza kombinacja <b>3→15 maja</b>; wyloty 30.04–2.05 (ogon Golden Week) są o 2,5–5 tys. droższe.</p>
