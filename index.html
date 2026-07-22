@@ -95,6 +95,9 @@
   .day .dhead .place{color:var(--accent);font-weight:800}
   .day .dtext{font-size:14px;color:var(--ink);line-height:1.5}
   .day .dtext b.l{color:var(--accent2)}
+  .alink{color:var(--accent2);font-weight:600;text-decoration:underline dotted;text-underline-offset:2px}
+  .alink:hover{color:var(--accent)}
+  a.chip{text-decoration:none;color:#fff}
   .tl{list-style:none;margin:6px 0 0;padding:0}
   .tl li{display:flex;gap:10px;font-size:13.5px;padding:3px 0;border-bottom:1px dashed var(--line);align-items:baseline}
   .tl li:last-child{border-bottom:none}
@@ -122,11 +125,12 @@
       <span class="chip">🎎 herbata · kaligrafia · ikebana</span>
       <span class="chip">⚡ Pokémony</span>
       <span class="chip">♨️ ryokan z onsenem</span>
+      <a class="chip" href="atrakcje.html">🎟️ atrakcje i bilety →</a>
     </div>
   </header>
 
   <h2>📅 Agenda — dzień po dniu</h2>
-  <p class="lead">12 dni, 11 nocy — Tokio, Hakone, Kioto, Osaka. Golden Week kończy się 5 maja, więc główne przejazdy robimy już po szczycie tłumów. Rozkład ramowy, elastyczny.</p>
+  <p class="lead">12 dni, 11 nocy — Tokio, Hakone, Kioto, Osaka. Golden Week kończy się 5 maja, więc główne przejazdy robimy już po szczycie tłumów. Rozkład ramowy, elastyczny. Każda podkreślona atrakcja prowadzi do karty z <a class="alink" href="atrakcje.html">godzinami, cenami i linkami do rezerwacji</a>.</p>
   <div class="daylist">
 
     <div class="day travel"><div class="dnum">✈</div><div class="dbody">
@@ -144,11 +148,11 @@
     <div class="day"><div class="dnum">1</div><div class="dbody">
       <div class="dhead"><b>wt. 4.05</b> · <span class="place">Tokio — przylot i Asakusa</span></div>
       <ul class="tl">
-        <li><span class="t">12:45</span><span>lądowanie NRT — imigracja z kodem QR Visit Japan Web (wypełnić w samolocie!), odbiór bagaży</span></li>
-        <li><span class="t">14:18</span><span>Narita Express do Tokyo Station (~55 min)</span></li>
+        <li><span class="t">12:45</span><span>lądowanie NRT — imigracja z kodem QR <a class="alink" href="atrakcje.html#vjw">Visit Japan Web</a> (wypełnić w samolocie!), odbiór bagaży</span></li>
+        <li><span class="t">14:18</span><span><a class="alink" href="atrakcje.html#nex">Narita Express</a> do Tokyo Station (~55 min)</span></li>
         <li><span class="t">15:30</span><span>check-in w aparthotelu, chwila oddechu</span></li>
         <li><span class="t">16:30</span><span>metro do Asakusy: brama Kaminarimon, uliczka Nakamise (senbei, pamiątki)</span></li>
-        <li><span class="t">18:00</span><span>Sensō-ji o zmroku — podświetlona pagoda, tłumy już malejące</span></li>
+        <li><span class="t">18:00</span><span><a class="alink" href="atrakcje.html#sensoji">Sensō-ji</a> o zmroku — podświetlona pagoda, tłumy już malejące</span></li>
         <li><span class="t">19:00</span><span>kolacja: ramen albo izakaya przy Hoppy Street</span></li>
         <li><span class="t">20:30</span><span>kombini (7-Eleven/Lawson) po zapasy; doładowanie kart Suica</span></li>
         <li><span class="t">21:30</span><span>sen — najlepsze lekarstwo na jet lag</span></li>
@@ -160,11 +164,11 @@
       <div class="dhead"><b>śr. 5.05</b> · <span class="place">Tokio</span> · Dzień Dziecka</div>
       <ul class="tl">
         <li><span class="t">08:30</span><span>śniadanie (kawiarnia/kombini)</span></li>
-        <li><span class="t">09:15</span><span>Meiji Jingū — spacer przez las, wielkie torii, beczki sake</span></li>
+        <li><span class="t">09:15</span><span><a class="alink" href="atrakcje.html#meiji">Meiji Jingū</a> — spacer przez las, wielkie torii, beczki sake</span></li>
         <li><span class="t">10:45</span><span>Harajuku: Takeshita Street (naleśniki crepe!), elegancka Omotesandō</span></li>
         <li><span class="t">12:30</span><span>lunch w Harajuku</span></li>
         <li><span class="t">14:00</span><span>Shibuya: słynne skrzyżowanie, pomnik Hachikō, Mega Don Quijote</span></li>
-        <li><span class="t">17:45</span><span>Shibuya Sky — slot na zachód słońca (rezerwacja online, sprzedaż rusza 4 tyg. wcześniej)</span></li>
+        <li><span class="t">17:45</span><span><a class="alink" href="atrakcje.html#shibuya-sky">Shibuya Sky</a> — slot na zachód słońca (rezerwacja online, sprzedaż rusza 4 tyg. wcześniej)</span></li>
         <li><span class="t">19:30</span><span>kolacja w izakaya</span></li>
       </ul>
       <div class="dnote">💡 Dziś Kodomo no hi (Dzień Dziecka) — nad miastem powiewają karpie koinobori. Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży.</div>
@@ -173,11 +177,11 @@
     <div class="day"><div class="dnum">3</div><div class="dbody">
       <div class="dhead"><b>czw. 6.05</b> · <span class="place">Tokio — Pokémony i Tsukiji</span></div>
       <ul class="tl">
-        <li><span class="t">07:30</span><span>Tsukiji Outer Market — sushi i tamagoyaki na śniadanie ze straganów</span></li>
+        <li><span class="t">07:30</span><span><a class="alink" href="atrakcje.html#tsukiji">Tsukiji Outer Market</a> — sushi i tamagoyaki na śniadanie ze straganów</span></li>
         <li><span class="t">09:45</span><span>metro do Ikebukuro</span></li>
-        <li><span class="t">10:30</span><span>⚡ Pokémon Center Mega Tokyo (Sunshine City) — największy w Japonii</span></li>
-        <li><span class="t">12:30</span><span>Pokémon Café — zarezerwowany slot (rezerwacje otwierają się 31 dni wcześniej o 18:00 czasu jap.)</span></li>
-        <li><span class="t">14:30</span><span>opcja A: Akihabara (gachapon, retro gry) · opcja B: teamLab Planets (bilet z góry)</span></li>
+        <li><span class="t">10:30</span><span>⚡ <a class="alink" href="atrakcje.html#pokemon">Pokémon Center Mega Tokyo</a> (Sunshine City) — największy w Japonii</span></li>
+        <li><span class="t">12:30</span><span><a class="alink" href="atrakcje.html#pokemon">Pokémon Café</a> — zarezerwowany slot (rezerwacje otwierają się 31 dni wcześniej o 18:00 czasu jap.)</span></li>
+        <li><span class="t">14:30</span><span>opcja A: Akihabara (gachapon, retro gry) · opcja B: <a class="alink" href="atrakcje.html#teamlab">teamLab Planets</a> (bilet z góry)</span></li>
         <li><span class="t">18:30</span><span>kolacja: kaiten-zushi (taśma) albo yakiniku</span></li>
       </ul>
       <div class="dnote">💡 Ustalcie dzieciom limit na gachapon z góry — inaczej wyjdziecie z Akihabary z walizką kapsułek 😉</div>
@@ -186,13 +190,13 @@
     <div class="day"><div class="dnum">4</div><div class="dbody">
       <div class="dhead"><b>pt. 7.05</b> · <span class="place">Tokio → Hakone</span></div>
       <ul class="tl">
-        <li><span class="t">08:00</span><span>nadanie dużych walizek kurierem takkyūbin z recepcji PROSTO do Kioto (dojdą jutro, ~2 500 ¥/szt.)</span></li>
-        <li><span class="t">09:00</span><span>Romancecar Odakyu z Shinjuku (miejsca rezerwowane, ~85 min) + Hakone Free Pass</span></li>
+        <li><span class="t">08:00</span><span>nadanie dużych walizek kurierem <a class="alink" href="atrakcje.html#takkyubin">takkyūbin</a> z recepcji PROSTO do Kioto (dojdą jutro, ~2 500 ¥/szt.)</span></li>
+        <li><span class="t">09:00</span><span><a class="alink" href="atrakcje.html#hakone-pass">Romancecar Odakyu</a> z Shinjuku (miejsca rezerwowane, ~85 min) + <a class="alink" href="atrakcje.html#hakone-pass">Hakone Free Pass</a></span></li>
         <li><span class="t">10:30</span><span>Hakone-Yumoto → zabytkowa kolejka górska do Gōry</span></li>
-        <li><span class="t">11:30</span><span>kolej linowa Sōunzan → Ōwakudani: pola siarkowe i czarne jajka (+7 lat życia od sztuki)</span></li>
+        <li><span class="t">11:30</span><span>kolej linowa Sōunzan → <a class="alink" href="atrakcje.html#owakudani">Ōwakudani</a>: pola siarkowe i czarne jajka (+7 lat życia od sztuki)</span></li>
         <li><span class="t">13:00</span><span>lunch z widokiem</span></li>
-        <li><span class="t">14:30</span><span>ropeway w dół → rejs „piracki" po jeziorze Ashi</span></li>
-        <li><span class="t">15:30</span><span>Moto-Hakone: czerwone torii Hakone-jinja nad wodą</span></li>
+        <li><span class="t">14:30</span><span>ropeway w dół → rejs „piracki" po <a class="alink" href="atrakcje.html#ashi">jeziorze Ashi</a></span></li>
+        <li><span class="t">15:30</span><span>Moto-Hakone: czerwone torii <a class="alink" href="atrakcje.html#ashi">Hakone-jinja</a> nad wodą</span></li>
         <li><span class="t">16:30</span><span>autobus do ryokanu, check-in, yukaty</span></li>
         <li><span class="t">17:30</span><span>onsen (prywatna kąpiel rodzinna kashikiri — zarezerwować przy meldunku)</span></li>
         <li><span class="t">18:30</span><span>kolacja kaiseki podawana do pokoju/sali; wieczorem druga kąpiel dla chętnych</span></li>
@@ -205,8 +209,8 @@
       <ul class="tl">
         <li><span class="t">07:00</span><span>poranny onsen + japońskie śniadanie</span></li>
         <li><span class="t">09:30</span><span>wykwaterowanie, zejście do Odawary (autobus/kolejka)</span></li>
-        <li><span class="t">11:00</span><span>shinkansen Hikari do Kioto (~2 h) — miejsca D/E, okno E od strony Fudżi</span></li>
-        <li><span class="t">13:15</span><span>Kioto: bagaże już czekają (takkyūbin); zostawiamy plecaki</span></li>
+        <li><span class="t">11:00</span><span><a class="alink" href="atrakcje.html#smartex">shinkansen Hikari</a> do Kioto (~2 h) — miejsca D/E, okno E od strony Fudżi</span></li>
+        <li><span class="t">13:15</span><span>Kioto: bagaże już czekają (<a class="alink" href="atrakcje.html#takkyubin">takkyūbin</a>); zostawiamy plecaki</span></li>
         <li><span class="t">15:00</span><span>check-in; spacer po Gion: Hanamikoji, świątynia Yasaka, park Maruyama</span></li>
         <li><span class="t">17:30</span><span>Pontocho — wąska uliczka latarni nad rzeką Kamo</span></li>
         <li><span class="t">18:30</span><span>kolacja: obanzai — domowa kuchnia Kioto</span></li>
@@ -219,12 +223,12 @@
       <div class="dhead"><b>niedz. 9.05</b> · <span class="place">Kioto — wschodnie</span></div>
       <ul class="tl">
         <li><span class="t">06:45</span><span>pociąg JR do Inari (5 min z dworca)</span></li>
-        <li><span class="t">07:15</span><span>Fushimi Inari przed tłumami — tysiące torii, wejście do rozdroża Yotsutsuji (~1,5 h)</span></li>
+        <li><span class="t">07:15</span><span><a class="alink" href="atrakcje.html#fushimi">Fushimi Inari</a> przed tłumami — tysiące torii, wejście do rozdroża Yotsutsuji (~1,5 h)</span></li>
         <li><span class="t">10:00</span><span>przejazd pod Kiyomizu</span></li>
-        <li><span class="t">10:45</span><span>Kiyomizu-dera: taras nad doliną, wodospad Otowa (3 strumienie życzeń)</span></li>
+        <li><span class="t">10:45</span><span><a class="alink" href="atrakcje.html#kiyomizu">Kiyomizu-dera</a>: taras nad doliną, wodospad Otowa (3 strumienie życzeń)</span></li>
         <li><span class="t">12:15</span><span>zejście uliczkami Sannenzaka/Ninenzaka, lunch po drodze</span></li>
         <li><span class="t">14:00</span><span>przerwa na lody matcha; ewentualnie Kōdai-ji</span></li>
-        <li><span class="t">15:30</span><span>Nishiki Market — „spiżarnia Kioto": przekąski, tsukemono, wagashi</span></li>
+        <li><span class="t">15:30</span><span><a class="alink" href="atrakcje.html#nishiki">Nishiki Market</a> — „spiżarnia Kioto": przekąski, tsukemono, wagashi</span></li>
         <li><span class="t">17:00</span><span>odpoczynek w hotelu</span></li>
         <li><span class="t">19:00</span><span>kolacja</span></li>
       </ul>
@@ -234,11 +238,11 @@
     <div class="day"><div class="dnum">7</div><div class="dbody">
       <div class="dhead"><b>pon. 10.05</b> · <span class="place">Kioto — dzień kultury</span> 🎎</div>
       <ul class="tl">
-        <li><span class="t">09:00</span><span>Kinkaku-ji — Złoty Pawilon w porannym świetle</span></li>
+        <li><span class="t">09:00</span><span><a class="alink" href="atrakcje.html#kinkakuji">Kinkaku-ji</a> — Złoty Pawilon w porannym świetle</span></li>
         <li><span class="t">11:00</span><span>powrót do centrum, lekki lunch</span></li>
-        <li><span class="t">13:00</span><span>🍵 ceremonia parzenia herbaty — sesja rodzinna po angielsku (~60 min)</span></li>
-        <li><span class="t">14:30</span><span>✒️ warsztat kaligrafii shodō — każdy pisze swój znak na pamiątkę</span></li>
-        <li><span class="t">16:00</span><span>🌸 ikebana — warsztat układania kwiatów (mama w wypożyczonym kimonie — opcja)</span></li>
+        <li><span class="t">13:00</span><span>🍵 <a class="alink" href="atrakcje.html#culture">ceremonia parzenia herbaty</a> — sesja rodzinna po angielsku (~60 min)</span></li>
+        <li><span class="t">14:30</span><span>✒️ <a class="alink" href="atrakcje.html#culture">warsztat kaligrafii shodō</a> — każdy pisze swój znak na pamiątkę</span></li>
+        <li><span class="t">16:00</span><span>🌸 <a class="alink" href="atrakcje.html#culture">ikebana</a> — warsztat układania kwiatów (mama w wypożyczonym kimonie — opcja)</span></li>
         <li><span class="t">18:00</span><span>spacer w złotej godzinie po Gion — zdjęcia w kimonach</span></li>
         <li><span class="t">19:00</span><span>kolacja: yudōfu (tofu po kiotyjsku) albo lekkie kaiseki</span></li>
       </ul>
@@ -250,10 +254,10 @@
       <ul class="tl">
         <li><span class="t">08:15</span><span>Kintetsu Limited Express z Kioto (35 min, miejsca rezerwowane)</span></li>
         <li><span class="t">09:00</span><span>Nara-kōen: jelenie kłaniają się za krakersy shika-senbei</span></li>
-        <li><span class="t">10:00</span><span>Tōdai-ji — Wielki Budda z brązu (15 m); dzieci przeciskają się przez „nozdrze Buddy" w filarze</span></li>
-        <li><span class="t">11:30</span><span>aleja tysięcy kamiennych lampionów do Kasuga Taisha</span></li>
+        <li><span class="t">10:00</span><span><a class="alink" href="atrakcje.html#todaiji">Tōdai-ji</a> — Wielki Budda z brązu (15 m); dzieci przeciskają się przez „nozdrze Buddy" w filarze</span></li>
+        <li><span class="t">11:30</span><span>aleja tysięcy kamiennych lampionów do <a class="alink" href="atrakcje.html#kasuga">Kasuga Taisha</a></span></li>
         <li><span class="t">13:00</span><span>lunch przy Higashimuki (udon, street food)</span></li>
-        <li><span class="t">14:30</span><span>Nakatanidō — pokaz błyskawicznego ubijania mochi + degustacja na ciepło</span></li>
+        <li><span class="t">14:30</span><span><a class="alink" href="atrakcje.html#mochi">Nakatanidō</a> — pokaz błyskawicznego ubijania mochi + degustacja na ciepło</span></li>
         <li><span class="t">15:30</span><span>powrót do Kioto</span></li>
         <li><span class="t">17:00</span><span>czas wolny: sento (łaźnia miejska) albo odpoczynek</span></li>
         <li><span class="t">19:00</span><span>kolacja</span></li>
@@ -265,9 +269,9 @@
       <div class="dhead"><b>śr. 12.05</b> · <span class="place">Arashiyama → Osaka</span></div>
       <ul class="tl">
         <li><span class="t">07:50</span><span>JR do Saga-Arashiyama (15 min)</span></li>
-        <li><span class="t">08:15</span><span>las bambusowy — szumi i jest pusty tylko o poranku</span></li>
-        <li><span class="t">09:15</span><span>ogrody zen Tenryū-ji (UNESCO)</span></li>
-        <li><span class="t">10:30</span><span>most Togetsukyō → wspinaczka na Iwatayamę do małp (20 min, widok na całe Kioto)</span></li>
+        <li><span class="t">08:15</span><span><a class="alink" href="atrakcje.html#arashiyama">las bambusowy</a> — szumi i jest pusty tylko o poranku</span></li>
+        <li><span class="t">09:15</span><span>ogrody zen <a class="alink" href="atrakcje.html#arashiyama">Tenryū-ji</a> (UNESCO)</span></li>
+        <li><span class="t">10:30</span><span>most Togetsukyō → wspinaczka na <a class="alink" href="atrakcje.html#monkeys">Iwatayamę</a> do małp (20 min, widok na całe Kioto)</span></li>
         <li><span class="t">12:30</span><span>lunch w Arashiyamie</span></li>
         <li><span class="t">14:00</span><span>powrót do hotelu po bagaże</span></li>
         <li><span class="t">15:30</span><span>JR Special Rapid do Osaki (~30 min)</span></li>
@@ -280,12 +284,12 @@
     <div class="day"><div class="dnum">10</div><div class="dbody">
       <div class="dhead"><b>czw. 13.05</b> · <span class="place">Osaka — luz i jedzenie</span></div>
       <ul class="tl">
-        <li><span class="t">09:00</span><span>targ Kuromon Ichiba — śniadanie „po trochu ze wszystkiego": owoce morza, owoce, mochi</span></li>
-        <li><span class="t">11:00</span><span>zamek w Osace (park + muzeum z panoramą) · wariant B: akwarium Kaiyukan z rekinem wielorybim</span></li>
+        <li><span class="t">09:00</span><span>targ <a class="alink" href="atrakcje.html#kuromon">Kuromon Ichiba</a> — śniadanie „po trochu ze wszystkiego": owoce morza, owoce, mochi</span></li>
+        <li><span class="t">11:00</span><span><a class="alink" href="atrakcje.html#osaka-castle">zamek w Osace</a> (park + muzeum z panoramą) · wariant B: <a class="alink" href="atrakcje.html#kaiyukan">akwarium Kaiyukan</a> z rekinem wielorybim</span></li>
         <li><span class="t">13:30</span><span>lunch</span></li>
-        <li><span class="t">15:00</span><span>Shinsekai — retro-Osaka: wieża Tsūtenkaku, kushikatsu (panierowane szaszłyki)</span></li>
+        <li><span class="t">15:00</span><span><a class="alink" href="atrakcje.html#shinsekai">Shinsekai</a> — retro-Osaka: wieża Tsūtenkaku, kushikatsu (panierowane szaszłyki)</span></li>
         <li><span class="t">17:30</span><span>powrót do hotelu, luz</span></li>
-        <li><span class="t">19:00</span><span>Dōtonbori runda 2 albo 20-minutowy rejs po kanale Tombori</span></li>
+        <li><span class="t">19:00</span><span>Dōtonbori runda 2 albo 20-minutowy <a class="alink" href="atrakcje.html#tombori">rejs po kanale Tombori</a></span></li>
       </ul>
       <div class="dnote">💡 Celowo luźny dzień po intensywnym Kioto — przetasujcie punkty wedle nastroju i pogody.</div>
     </div></div>
@@ -294,13 +298,13 @@
       <div class="dhead"><b>pt. 14.05</b> · <span class="place">Osaka → Tokio + SUMO</span> 🥋</div>
       <ul class="tl">
         <li><span class="t">07:45</span><span>wykwaterowanie, metro na Shin-Ōsakę</span></li>
-        <li><span class="t">08:15</span><span>shinkansen Nozomi do Tokio (2 h 25) — miejsca D/E: Fudżi za oknem ~40 min przed Tokio</span></li>
+        <li><span class="t">08:15</span><span><a class="alink" href="atrakcje.html#smartex">shinkansen Nozomi</a> do Tokio (2 h 25) — miejsca D/E: Fudżi za oknem ~40 min przed Tokio</span></li>
         <li><span class="t">10:45</span><span>Tokyo Station → bagaże do hotelu lub schowki na dworcu Ryōgoku</span></li>
         <li><span class="t">11:30</span><span>wczesny lunch w Ryōgoku</span></li>
-        <li><span class="t">12:30</span><span>wejście do hali Ryōgoku Kokugikan — niższe dywizje przy pustej hali (można usiąść bliżej)</span></li>
+        <li><span class="t">12:30</span><span>wejście do hali <a class="alink" href="atrakcje.html#sumo">Ryōgoku Kokugikan</a> — niższe dywizje przy pustej hali (można usiąść bliżej)</span></li>
         <li><span class="t">14:15</span><span>jūryō: rytuały wejścia, sól, tupanie shiko</span></li>
         <li><span class="t">15:45</span><span>makuuchi: ceremonia dohyō-iri, walki mistrzów, na koniec ceremonia łuku</span></li>
-        <li><span class="t">18:15</span><span>kolacja chanko-nabe (kocioł zapaśników) w knajpie byłego sumity</span></li>
+        <li><span class="t">18:15</span><span>kolacja <a class="alink" href="atrakcje.html#chanko">chanko-nabe</a> (kocioł zapaśników) w knajpie byłego sumity</span></li>
         <li><span class="t">20:00</span><span>powrót do hotelu</span></li>
       </ul>
       <div class="dnote">💡 Bilety: sprzedaż ~początek kwietnia na sumo.or.jp — brać box 4-os. albo miejsca arena B/C, wyprzedają się w godziny. Lornetka się przyda.</div>
@@ -313,7 +317,7 @@
         <li><span class="t">10:00</span><span>ostatnie zakupy: Don Quijote / Tokyo Character Street na dworcu</span></li>
         <li><span class="t">12:00</span><span>lekki lunch</span></li>
         <li><span class="t">13:45</span><span>odbiór bagaży z hotelu</span></li>
-        <li><span class="t">14:18</span><span>Narita Express na lotnisko (~55 min) — na NRT 3 h przed wylotem</span></li>
+        <li><span class="t">14:18</span><span><a class="alink" href="atrakcje.html#nex">Narita Express</a> na lotnisko (~55 min) — na NRT 3 h przed wylotem</span></li>
         <li><span class="t">16:00</span><span>odprawa, kontrola, ewentualny zwrot tax-free</span></li>
         <li><span class="t">18:00</span><span>wylot NRT → Abu Zabi (przesiadka 2 h 30)</span></li>
         <li><span class="t">06:50</span><span>lądowanie w Warszawie w niedzielę 16.05 — okaeri! 🎌</span></li>
@@ -376,7 +380,7 @@
           <td class="num sub-amt" id="hotelAmt">—</td>
         </tr>
         <tr>
-          <td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny + metro + Narita Express (4 os.)</span></td>
+          <td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny + metro + <a class="alink" href="atrakcje.html#nex">Narita Express</a> (4 os.)</span></td>
           <td class="num">—</td>
           <td class="num"><input type="number" id="transport" value="4000" min="0" step="100"></td>
         </tr>
@@ -421,6 +425,7 @@
   </div>
 
   <footer>
+    <a href="atrakcje.html" style="color:var(--accent2);font-weight:700">🎟️ Katalog atrakcji: godziny · ceny · rezerwacje →</a><br>
     Plan roboczy · zaktualizowano 22.07.2026 · strona prywatna (noindex)<br>
     Rezerwacje z wyprzedzeniem: sumo (sprzedaż ~kwiecień 2027, wyprzedaje się w godziny) · warsztaty kultury w Kioto (herbata, kaligrafia, ikebana) · Pokémon Café · hotele rodzinne z darmowym anulowaniem.
   </footer>
