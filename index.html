@@ -150,147 +150,13 @@
   </header>
 
   <nav class="qnav">
-    <a href="#decyzje">⚖️ Decyzje</a>
-    <a href="#koszty">💴 Koszty</a>
     <a href="#agenda">📅 Agenda</a>
     <a href="#strategia">📈 Bilety</a>
+    <a href="#koszty">💴 Koszty</a>
     <a href="atrakcje.html">🎟️ Atrakcje</a>
   </nav>
 
-  <h2 id="decyzje" style="scroll-margin-top:16px">⚖️ Decyzje do podjęcia</h2>
-  <p class="lead">Otwarte wybory z agendy. Kliknij opcję — <b>kalkulator niżej przeliczy się natychmiast</b> (kwoty za całą rodzinę, wybory zapisują się w przeglądarce).</p>
-
-  <div class="dec">
-    <div class="dt">1 · Dzień 3, popołudnie w Tokio</div>
-    <div class="dd">Po Pokémon Center: luźne buszowanie czy sztuka cyfrowa?</div>
-    <div class="opts">
-      <label><input type="radio" name="d_pop" value="akiba" data-cost="0" checked> Akihabara — gachapon i elektronika <span class="price">0 zł</span></label>
-      <label><input type="radio" name="d_pop" value="teamlab" data-cost="310"> teamLab Planets (boso po wodzie, immersyjna sztuka) <span class="rec">hit u dzieci</span> <span class="price">+310 zł</span></label>
-    </div>
-  </div>
-
-  <div class="dec">
-    <div class="dt">2 · Dzień 3 — Pokémon Café</div>
-    <div class="dd">Tematyczny lunch z wizytą Pikachu przy stoliku (rezerwacja 31 dni wcześniej).</div>
-    <div class="opts">
-      <label><input type="checkbox" id="d_cafe" data-cost="200" checked> Rezerwujemy Pokémon Café <span class="rec">frajda dzieci</span> <span class="price">+200 zł</span></label>
-    </div>
-  </div>
-
-  <div class="dec">
-    <div class="dt">3 · Dzień 7 — zakres warsztatów kultury w Kioto</div>
-    <div class="dd">Rdzeń dnia dla mamy: sama herbata czy pełny zestaw?</div>
-    <div class="opts">
-      <label><input type="radio" name="d_kult" value="tea" data-cost="420"> Tylko ceremonia herbaty (~60 min) <span class="price">+420 zł</span></label>
-      <label><input type="radio" name="d_kult" value="full" data-cost="1100" checked> Herbata + kaligrafia + ikebana (pełne popołudnie) <span class="rec">pasja mamy</span> <span class="price">+1 100 zł</span></label>
-    </div>
-  </div>
-
-  <div class="dec">
-    <div class="dt">4 · Dzień 10 — główny punkt Osaki</div>
-    <div class="dd">Zamek z panoramą czy rekin wielorybi?</div>
-    <div class="opts">
-      <label><input type="radio" name="d_osk" value="zamek" data-cost="30"> Zamek w Osace (muzeum; dzieci wchodzą za darmo) <span class="price">+30 zł</span></label>
-      <label><input type="radio" name="d_osk" value="kaiyukan" data-cost="215" checked> Akwarium Kaiyukan <span class="rec">dla dzieci</span> <span class="price">+215 zł</span></label>
-      <label><input type="radio" name="d_osk" value="oba" data-cost="245"> Oba (dzień robi się intensywny) <span class="price">+245 zł</span></label>
-    </div>
-  </div>
-
-  <div class="dec">
-    <div class="dt">5 · Dzień 10, wieczór — rejs kanałem Tombori</div>
-    <div class="dd">20 minut między neonami Dōtonbori, z wody.</div>
-    <div class="opts">
-      <label><input type="checkbox" id="d_rejs" data-cost="125"> Płyniemy <span class="price">+125 zł</span></label>
-    </div>
-  </div>
-
-  <div class="dec">
-    <div class="dt">6 · Dzień 11 — bilety na sumo</div>
-    <div class="dd">Kupujemy na początku kwietnia; typ miejsc trzeba wybrać od razu.</div>
-    <div class="opts">
-      <label><input type="radio" name="d_sumo" value="arena" data-cost="620" checked> Krzesełka arena B/C — dobry widok, wygodne <span class="rec">rekomendacja</span> <span class="price">+620 zł</span></label>
-      <label><input type="radio" name="d_sumo" value="box" data-cost="1170"> Box 4-osobowy przy ringu (na poduszkach, klimat 100%) <span class="price">+1 170 zł</span></label>
-    </div>
-  </div>
-
-  <div class="dec">
-    <div class="dt">7 · Kioto — styl noclegu (4 noce)</div>
-    <div class="dd">Zmienia stawkę noclegową w kalkulatorze, nie sumę atrakcji.</div>
-    <div class="opts">
-      <label><input type="radio" name="d_noc" value="apart" data-rate="820" checked> Aparthotel rodzinny (Mimaru itp.) — wygoda, kuchnia <span class="price">820 zł/noc</span></label>
-      <label><input type="radio" name="d_noc" value="machiya" data-rate="890"> Tradycyjna machiya — futony na tatami, klimat <span class="price">~890 zł/noc</span></label>
-    </div>
-  </div>
-
-  <div class="decsum"><span>Atrakcje wg Twoich wyborów (+ stałe ~570 zł: Shibuya Sky, świątynie, drobne bilety):</span><span id="decTotal">—</span></div>
-
-  <h2 id="koszty" style="scroll-margin-top:16px">💴 Kalkulator kosztów</h2>
-  <p class="lead">Szacunek dla <b>4 osób</b> na cały wyjazd. Wszystkie pola możesz edytować — suma liczy się na bieżąco, a zmiany zapisują się w przeglądarce.</p>
-
-  <div class="price-flag">✈️ <span><b>Lot dziś (22.07): 13 865 zł</b> za 4 os. (Etihad) — cena faluje 13,9–18 tys.; progi decyzyjne wyżej ↑</span></div>
-
-  <div class="calc">
-    <table>
-      <thead>
-        <tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="cat">✈️ Loty<span class="hint">Etihad, całość za 4 os. (+ bagaż rejestrowany)</span></td>
-          <td class="num">—</td>
-          <td class="num"><input type="number" id="flights" value="14000" min="0" step="100"></td>
-        </tr>
-        <tr>
-          <td class="cat">🏨 Noclegi<span class="hint">aparthotel rodzinny (lub machiya); 1 noc ryokan (drożej)</span></td>
-          <td class="num"><input type="number" id="nights" class="small" value="11" min="0" step="1"><span class="x">×</span><input type="number" id="nightRate" class="small" value="820" min="0" step="10"></td>
-          <td class="num sub-amt" id="hotelAmt">—</td>
-        </tr>
-        <tr>
-          <td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny + metro + <a class="alink" href="atrakcje.html#nex">Narita Express</a> (4 os.)</span></td>
-          <td class="num">—</td>
-          <td class="num"><input type="number" id="transport" value="4000" min="0" step="100"></td>
-        </tr>
-        <tr>
-          <td class="cat">🍜 Wyżywienie<span class="hint">dni × dzienna stawka na rodzinę (izakaya, targi, ramen, sushi)</span></td>
-          <td class="num"><input type="number" id="days" class="small" value="12" min="0" step="1"><span class="x">×</span><input type="number" id="foodRate" class="small" value="500" min="0" step="10"></td>
-          <td class="num sub-amt" id="foodAmt">—</td>
-        </tr>
-        <tr>
-          <td class="cat">🎟️ Atrakcje, bilety i warsztaty<span class="hint">liczone z sekcji ⚖️ Decyzje (możesz nadpisać ręcznie)</span></td>
-          <td class="num">—</td>
-          <td class="num"><input type="number" id="attractions" value="2600" min="0" step="100"></td>
-        </tr>
-        <tr>
-          <td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor bezpieczeństwa na nieprzewidziane</span></td>
-          <td class="num">—</td>
-          <td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr class="totrow"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr>
-      </tfoot>
-    </table>
-  </div>
-
-  <div class="stats">
-    <div class="stat"><div class="k">Na osobę</div><div class="v" id="perPerson">—</div></div>
-    <div class="stat"><div class="k">Na dzień (4 os.)</div><div class="v" id="perDay">—</div></div>
-    <div class="stat"><div class="k">Nocleg / noc</div><div class="v" id="perNight">—</div></div>
-  </div>
-
-  <div class="budget">
-    <div style="display:flex;justify-content:space-between;align-items:baseline">
-      <strong>Budżet: 40 000 – 60 000 zł</strong>
-      <span id="budgetPct" style="font-weight:800"></span>
-    </div>
-    <div class="bar"><div class="fill" id="barFill"></div></div>
-    <div class="bar-labels"><span>0</span><span>40k</span><span>60k</span><span>70k</span></div>
-    <div class="verdict" id="verdict"></div>
-    <div class="note">Orientacyjne kwoty w PLN. JR Pass zwykle się nie opłaca przy pętli Tokio–Kioto–Osaka (taniej na biletach pojedynczych).</div>
-    <button class="reset" id="resetBtn" type="button">↺ Przywróć wartości domyślne</button>
-  </div>
-
-<h2 id="agenda" style="scroll-margin-top:16px">📅 Agenda — dzień po dniu</h2>
+  <h2 id="agenda" style="scroll-margin-top:16px">📅 Agenda — dzień po dniu</h2>
   <p class="lead">12 dni, 11 nocy — Tokio, Hakone, Kioto, Osaka. Golden Week kończy się 5 maja, więc główne przejazdy robimy już po szczycie tłumów. Rozkład ramowy, elastyczny. Każda podkreślona atrakcja prowadzi do karty z <a class="alink" href="atrakcje.html">godzinami, cenami i linkami do rezerwacji</a>.</p>
   <div class="daylist">
 
@@ -336,7 +202,7 @@
     </div></div>
 
     <div class="day"><div class="dnum">3</div><div class="dbody">
-      <div class="dhead"><b>czw. 6.05</b> · <span class="place">Tokio — Pokémony i Tsukiji</span><a class="decb" href="#decyzje">⚖️ 1·2</a></div>
+      <div class="dhead"><b>czw. 6.05</b> · <span class="place">Tokio — Pokémony i Tsukiji</span></div>
       <ul class="tl">
         <li><span class="t">09:00</span><span><a class="alink" href="atrakcje.html#tsukiji">Tsukiji Outer Market</a> — sushi i tamagoyaki na śniadanie ze straganów</span></li>
         <li><span class="t">10:45</span><span>metro do Ikebukuro</span></li>
@@ -366,7 +232,7 @@
     </div></div>
 
     <div class="day"><div class="dnum">5</div><div class="dbody">
-      <div class="dhead"><b>sob. 8.05</b> · <span class="place">Hakone → Kioto</span><a class="decb" href="#decyzje">⚖️ 7</a></div>
+      <div class="dhead"><b>sob. 8.05</b> · <span class="place">Hakone → Kioto</span></div>
       <ul class="tl">
         <li><span class="t">08:00</span><span>poranny onsen + japońskie śniadanie</span></li>
         <li><span class="t">09:30</span><span>wykwaterowanie, zejście do Odawary (autobus/kolejka)</span></li>
@@ -397,7 +263,7 @@
     </div></div>
 
     <div class="day"><div class="dnum">7</div><div class="dbody">
-      <div class="dhead"><b>pon. 10.05</b> · <span class="place">Kioto — dzień kultury</span> 🎎<a class="decb" href="#decyzje">⚖️ 3</a></div>
+      <div class="dhead"><b>pon. 10.05</b> · <span class="place">Kioto — dzień kultury</span> 🎎</div>
       <ul class="tl">
         <li><span class="t">09:00</span><span><a class="alink" href="atrakcje.html#kinkakuji">Kinkaku-ji</a> — Złoty Pawilon w porannym świetle</span></li>
         <li><span class="t">11:00</span><span>powrót do centrum, lekki lunch</span></li>
@@ -443,7 +309,7 @@
     </div></div>
 
     <div class="day"><div class="dnum">10</div><div class="dbody">
-      <div class="dhead"><b>czw. 13.05</b> · <span class="place">Osaka — luz i jedzenie</span><a class="decb" href="#decyzje">⚖️ 4·5</a></div>
+      <div class="dhead"><b>czw. 13.05</b> · <span class="place">Osaka — luz i jedzenie</span></div>
       <ul class="tl">
         <li><span class="t">09:00</span><span>targ <a class="alink" href="atrakcje.html#kuromon">Kuromon Ichiba</a> — śniadanie „po trochu ze wszystkiego": owoce morza, owoce, mochi</span></li>
         <li><span class="t">11:00</span><span><a class="alink" href="atrakcje.html#osaka-castle">zamek w Osace</a> (park + muzeum z panoramą) · wariant B: <a class="alink" href="atrakcje.html#kaiyukan">akwarium Kaiyukan</a> z rekinem wielorybim</span></li>
@@ -456,7 +322,7 @@
     </div></div>
 
     <div class="day"><div class="dnum">11</div><div class="dbody">
-      <div class="dhead"><b>pt. 14.05</b> · <span class="place">Osaka → Tokio + SUMO</span> 🥋<a class="decb" href="#decyzje">⚖️ 6</a></div>
+      <div class="dhead"><b>pt. 14.05</b> · <span class="place">Osaka → Tokio + SUMO</span> 🥋</div>
       <ul class="tl">
         <li><span class="t">09:00</span><span>wykwaterowanie, metro na Shin-Ōsakę</span></li>
         <li><span class="t">09:33</span><span><a class="alink" href="atrakcje.html#smartex">shinkansen Nozomi</a> do Tokio (2 h 25) — miejsca D/E: Fudżi za oknem ~40 min przed Tokio</span></li>
@@ -519,7 +385,73 @@
     </ul>
   </div>
 
-    <footer>
+  <h2 id="koszty" style="scroll-margin-top:16px">💴 Kalkulator kosztów</h2>
+  <p class="lead">Szacunek dla <b>4 osób</b> na cały wyjazd. Wszystkie pola możesz edytować — suma liczy się na bieżąco, a zmiany zapisują się w przeglądarce.</p>
+
+  <div class="price-flag">✈️ <span><b>Lot dziś (22.07): 13 865 zł</b> za 4 os. (Etihad) — cena faluje 13,9–18 tys.; progi decyzyjne wyżej ↑</span></div>
+
+  <div class="calc">
+    <table>
+      <thead>
+        <tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cat">✈️ Loty<span class="hint">Etihad, całość za 4 os. (+ bagaż rejestrowany)</span></td>
+          <td class="num">—</td>
+          <td class="num"><input type="number" id="flights" value="14000" min="0" step="100"></td>
+        </tr>
+        <tr>
+          <td class="cat">🏨 Noclegi<span class="hint">aparthotel rodzinny (lub machiya); 1 noc ryokan (drożej)</span></td>
+          <td class="num"><input type="number" id="nights" class="small" value="11" min="0" step="1"><span class="x">×</span><input type="number" id="nightRate" class="small" value="820" min="0" step="10"></td>
+          <td class="num sub-amt" id="hotelAmt">—</td>
+        </tr>
+        <tr>
+          <td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny + metro + <a class="alink" href="atrakcje.html#nex">Narita Express</a> (4 os.)</span></td>
+          <td class="num">—</td>
+          <td class="num"><input type="number" id="transport" value="4000" min="0" step="100"></td>
+        </tr>
+        <tr>
+          <td class="cat">🍜 Wyżywienie<span class="hint">dni × dzienna stawka na rodzinę (izakaya, targi, ramen, sushi)</span></td>
+          <td class="num"><input type="number" id="days" class="small" value="12" min="0" step="1"><span class="x">×</span><input type="number" id="foodRate" class="small" value="500" min="0" step="10"></td>
+          <td class="num sub-amt" id="foodAmt">—</td>
+        </tr>
+        <tr>
+          <td class="cat">🎟️ Atrakcje, bilety i warsztaty<span class="hint">sumo, warsztaty kultury (herbata, kaligrafia, ikebana), Pokémon Café, akwarium, Shibuya Sky</span></td>
+          <td class="num">—</td>
+          <td class="num"><input type="number" id="attractions" value="2600" min="0" step="100"></td>
+        </tr>
+        <tr>
+          <td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor bezpieczeństwa na nieprzewidziane</span></td>
+          <td class="num">—</td>
+          <td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="totrow"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">Na osobę</div><div class="v" id="perPerson">—</div></div>
+    <div class="stat"><div class="k">Na dzień (4 os.)</div><div class="v" id="perDay">—</div></div>
+    <div class="stat"><div class="k">Nocleg / noc</div><div class="v" id="perNight">—</div></div>
+  </div>
+
+  <div class="budget">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <strong>Budżet: 40 000 – 60 000 zł</strong>
+      <span id="budgetPct" style="font-weight:800"></span>
+    </div>
+    <div class="bar"><div class="fill" id="barFill"></div></div>
+    <div class="bar-labels"><span>0</span><span>40k</span><span>60k</span><span>70k</span></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="note">Orientacyjne kwoty w PLN. JR Pass zwykle się nie opłaca przy pętli Tokio–Kioto–Osaka (taniej na biletach pojedynczych).</div>
+    <button class="reset" id="resetBtn" type="button">↺ Przywróć wartości domyślne</button>
+  </div>
+
+  <footer>
     <a href="atrakcje.html" style="color:var(--accent2);font-weight:700">🎟️ Katalog atrakcji: godziny · ceny · rezerwacje →</a><br>
     Plan roboczy · zaktualizowano 22.07.2026 · strona prywatna (noindex)<br>
     Rezerwacje z wyprzedzeniem: sumo (sprzedaż ~kwiecień 2027, wyprzedaje się w godziny) · warsztaty kultury w Kioto (herbata, kaligrafia, ikebana) · Pokémon Café · hotele rodzinne z darmowym anulowaniem.
@@ -606,36 +538,6 @@
   });
 
   load();calc();
-})();
-</script>
-<script>
-(function(){
-  var BASE=570, KEY="japonia2027.dec.v1";
-  var q=function(s){return document.querySelectorAll(s);};
-  function inputs(){return [].slice.call(q('.dec input'));}
-  function state(){var o={};inputs().forEach(function(i){o[i.name||i.id]= i.type==='checkbox'? i.checked : (i.checked? i.value: (o[i.name]||null));});return o;}
-  function save(){try{localStorage.setItem(KEY,JSON.stringify(state()));}catch(e){}}
-  function load(){var s={};try{s=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){}
-    inputs().forEach(function(i){
-      if(i.type==='checkbox'&&i.id in s) i.checked=!!s[i.id];
-      if(i.type==='radio'&&s[i.name]) i.checked=(i.value===s[i.name]);
-    });}
-  function fire(el){el.dispatchEvent(new Event('input',{bubbles:true}));}
-  function apply(){
-    var sum=BASE;
-    inputs().forEach(function(i){ if(i.checked&&i.dataset.cost) sum+=parseFloat(i.dataset.cost); });
-    var at=document.getElementById('attractions');
-    if(at){at.value=Math.round(sum);fire(at);}
-    var rate=null;
-    inputs().forEach(function(i){ if(i.checked&&i.dataset.rate) rate=parseFloat(i.dataset.rate); });
-    var nr=document.getElementById('nightRate');
-    if(nr&&rate&&parseFloat(nr.value)!==rate){nr.value=rate;fire(nr);}
-    var dt=document.getElementById('decTotal');
-    if(dt) dt.textContent=Math.round(sum).toLocaleString('pl-PL')+' zł';
-    save();
-  }
-  inputs().forEach(function(i){i.addEventListener('change',apply);});
-  load();apply();
 })();
 </script>
 </body>
