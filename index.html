@@ -191,10 +191,41 @@
 
   </div>
 
+  <h2>📈 Strategia biletowa</h2>
+  <p class="lead">Ceny Etihad WAW→Tokio falują o ±30% w skali tygodnia (13 865 → 18 000 → 13 865 zł za 4 os.). W całym oknie ±3 dni najtańsza jest dokładnie nasza kombinacja <b>3→15 maja</b>; wyloty 30.04–2.05 (ogon Golden Week) są o 2,5–5 tys. droższe.</p>
+
+  <div class="seg" style="border-left-color:var(--accent2)">
+    <div class="top"><span class="city">🎯 Progi decyzyjne (4 os., RT z bagażem)</span></div>
+    <ul>
+      <li><b>≤ 13 000 zł</b> — okazja, <b>kupować natychmiast</b> (historyczne promocje Etihad: 2,7–3,1 tys. zł/os)</li>
+      <li><b>13–15 tys. zł</b> — cena uczciwa; można kupić dla pewności miejsc</li>
+      <li><b>≥ 16 tys. zł</b> — górka, czekać na wyprzedaż</li>
+    </ul>
+  </div>
+
+  <div class="seg" style="border-left-color:var(--accent2)">
+    <div class="top"><span class="city">🗓️ Kalendarz polowania</span></div>
+    <ul>
+      <li><b>~20.11–2.12.2026 — Black Friday Etihad/Qatar</b> (historycznie do −35%, podróże do 30.06)</li>
+      <li><b>22.12.2026–poł. stycznia 2027</b> — Qatar Travel Festival + Etihad January Sale</li>
+      <li><b>Koniec stycznia 2027 — twardy deadline zakupu</b> (4 miejsca w jednej rezerwacji znikają szybko; bliżej terminu ceny rosną)</li>
+      <li>Plan B: Air China z WAW przez Pekin (~3,3–4 tys. zł/os, bagaż w cenie); Qatar bywa tańszy od Etihadu</li>
+    </ul>
+  </div>
+
+  <div class="seg" style="border-left-color:var(--accent2)">
+    <div class="top"><span class="city">🔔 Aktywne alerty</span></div>
+    <ul>
+      <li>✅ <b>Google Flights</b> — monitoring ceny 3→15.05 włączony (mail przy zmianie ceny)</li>
+      <li>✅ <b>Automatyczne kontrole Claude</b>: 1.10, 20.11, 22.12.2026, 12.01 i 25.01.2027 — sprawdzenie ceny i rekomendacja kup/czekaj</li>
+      <li>📝 Do dołożenia ręcznie: alert w <b>Kayak</b> (drugie źródło) + obserwacja <b>fly4free.pl</b> (tag Tokio)</li>
+    </ul>
+  </div>
+
   <h2>💴 Kalkulator kosztów</h2>
   <p class="lead">Szacunek dla <b>4 osób</b> na cały wyjazd. Wszystkie pola możesz edytować — suma liczy się na bieżąco, a zmiany zapisują się w przeglądarce.</p>
 
-  <div class="price-flag">✈️ <span><b>Lot na dziś: 18 000 zł</b> (Etihad, 4 os.) — było 15 036 zł 22.07; monitoring cen włączony.</span></div>
+  <div class="price-flag">✈️ <span><b>Lot dziś (22.07): 13 865 zł</b> za 4 os. (Etihad) — cena faluje 13,9–18 tys.; progi decyzyjne wyżej ↑</span></div>
 
   <div class="calc">
     <table>
@@ -205,7 +236,7 @@
         <tr>
           <td class="cat">✈️ Loty<span class="hint">Etihad, całość za 4 os. (+ bagaż rejestrowany)</span></td>
           <td class="num">—</td>
-          <td class="num"><input type="number" id="flights" value="18000" min="0" step="100"></td>
+          <td class="num"><input type="number" id="flights" value="14000" min="0" step="100"></td>
         </tr>
         <tr>
           <td class="cat">🏨 Noclegi<span class="hint">aparthotel rodzinny (lub machiya); 1 noc ryokan (drożej)</span></td>
@@ -266,7 +297,7 @@
 
 <script>
 (function(){
-  var DEFAULTS={flights:18000,nights:11,nightRate:820,transport:4000,days:12,foodRate:500,attractions:2600,extras:3000};
+  var DEFAULTS={flights:14000,nights:11,nightRate:820,transport:4000,days:12,foodRate:500,attractions:2600,extras:3000};
   var ids=Object.keys(DEFAULTS);
   var KEY="japonia2027.calc.v1";
   var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
