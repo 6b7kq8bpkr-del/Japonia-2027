@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Japonia 2027 — plan i kalkulator kosztów</title>
+<style>
+  :root{
+    --bg:#f6f5f2; --panel:#ffffff; --ink:#1c1b22; --muted:#6b6a75;
+    --line:#e7e5df; --accent:#bc002d; --accent2:#1b3a6b; --ok:#1a7f4b;
+    --warn:#b06a00; --bad:#b0202d; --chip:#f0eee9; --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(20,20,40,.06);
+    --r:14px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --bg:#14141a; --panel:#1d1d26; --ink:#eceaf2; --muted:#a2a0ad;
+      --line:#2c2c38; --accent:#ff5a76; --accent2:#7aa2df; --ok:#57c98a;
+      --warn:#e0a54d; --bad:#ff7a86; --chip:#26262f; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35); }
+  }
+  :root[data-theme="dark"]{ --bg:#14141a; --panel:#1d1d26; --ink:#eceaf2; --muted:#a2a0ad; --line:#2c2c38; --accent:#ff5a76; --accent2:#7aa2df; --ok:#57c98a; --warn:#e0a54d; --bad:#ff7a86; --chip:#26262f; }
+  :root[data-theme="light"]{ --bg:#f6f5f2; --panel:#ffffff; --ink:#1c1b22; --muted:#6b6a75; --line:#e7e5df; --accent:#bc002d; --accent2:#1b3a6b; --ok:#1a7f4b; --warn:#b06a00; --bad:#b0202d; --chip:#f0eee9; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Noto Sans",sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:940px;margin:0 auto;padding:20px 18px 64px}
+  header.hero{position:relative;overflow:hidden;
+    border-radius:20px;padding:34px 26px;color:#fff;box-shadow:var(--shadow);
+    background:linear-gradient(135deg,#16305c,#8f0022)}
+  .sun{position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;
+    background:radial-gradient(circle,#ff2d4f 0%,#ff2d4f 58%,transparent 60%);opacity:.85}
+  header.hero h1{margin:0 0 6px;font-size:clamp(26px,5vw,40px);letter-spacing:-.5px;position:relative}
+  header.hero .sub{margin:0;opacity:.92;font-size:clamp(14px,2.4vw,17px);position:relative}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative}
+  .chip{background:rgba(255,255,255,.16);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.22);
+    padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600}
+  .theme-btn{position:absolute;top:16px;right:16px;z-index:3;background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;padding:6px 12px;cursor:pointer;font-size:13px}
+  h2{font-size:clamp(19px,3.4vw,24px);margin:38px 0 6px;letter-spacing:-.3px}
+  .lead{color:var(--muted);margin:0 0 18px;font-size:15px}
+  /* agenda */
+  .seg{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--accent);
+    border-radius:var(--r);padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow)}
+  .seg .top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;margin-bottom:8px}
+  .seg .city{font-size:18px;font-weight:800}
+  .seg .dates{font-size:13px;font-weight:700;color:#fff;background:var(--accent2);padding:2px 10px;border-radius:999px}
+  .seg .nights{font-size:12.5px;color:var(--muted);font-weight:600}
+  .seg ul{margin:6px 0 0;padding-left:20px}
+  .seg li{margin:3px 0}
+  .seg li b{color:var(--accent)}
+  .tag{display:inline-block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;
+    padding:2px 8px;border-radius:6px;background:var(--chip);color:var(--accent2);margin-left:2px}
+  .tag.new{background:var(--accent);color:#fff}
+  /* calculator */
+  .calc{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:6px 4px 10px;box-shadow:var(--shadow);overflow:hidden}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+  th{font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+  td.cat{font-weight:700}
+  td .hint{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-top:2px}
+  td.num{text-align:right;white-space:nowrap}
+  input[type=number]{width:92px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;
+    background:var(--bg);color:var(--ink);font-size:15px;text-align:right;font-variant-numeric:tabular-nums}
+  input.small{width:64px}
+  input:focus{outline:2px solid var(--accent2);outline-offset:1px}
+  .x{color:var(--muted);padding:0 6px;font-size:14px}
+  .sub-amt{font-weight:700;font-variant-numeric:tabular-nums}
+  tfoot td{border-bottom:none}
+  .totrow td{background:var(--chip);font-size:17px;font-weight:800;border-top:2px solid var(--line)}
+  .totrow .big{font-size:22px;color:var(--accent)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow)}
+  .stat .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;font-weight:700}
+  .stat .v{font-size:24px;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums}
+  .budget{margin-top:16px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+  .bar{height:16px;border-radius:999px;background:var(--chip);position:relative;overflow:hidden;margin:10px 0 6px}
+  .bar .fill{height:100%;border-radius:999px;transition:width .3s ease,background .3s ease}
+  .bar-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+  .verdict{font-weight:700;margin-top:8px}
+  .note{font-size:13px;color:var(--muted);margin-top:10px}
+  .reset{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:9px;
+    padding:8px 14px;cursor:pointer;font-size:13px;margin-top:14px}
+  .reset:hover{color:var(--ink);border-color:var(--muted)}
+  footer{margin-top:40px;color:var(--muted);font-size:13px;text-align:center;line-height:1.7}
+  .price-flag{display:inline-flex;gap:6px;align-items:center;background:var(--chip);border:1px dashed var(--accent);
+    border-radius:10px;padding:8px 12px;font-size:13.5px;margin:2px 0 4px}
+  @media(max-width:560px){
+    .stats{grid-template-columns:1fr}
+    input[type=number]{width:80px} input.small{width:56px}
+    th,td{padding:9px 8px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="sun"></div>
+    <button class="theme-btn" id="themeBtn" type="button">🌗 Motyw</button>
+    <h1>🇯🇵 Japonia 2027 — rodzinny plan</h1>
+    <p class="sub">3–15 maja 2027 · rodzina 2+2 (dzieci 11 i 13 lat) · Tokio – Hakone – Kioto – Osaka</p>
+    <div class="chips">
+      <span class="chip">✈️ Etihad przez Abu Zabi</span>
+      <span class="chip">🏨 11 nocy</span>
+      <span class="chip">🥋 turniej sumo</span>
+      <span class="chip">🎮 Super Nintendo World</span>
+      <span class="chip">♨️ ryokan z onsenem</span>
+    </div>
+  </header>
+
+  <h2>🗓️ Plan podróży</h2>
+  <p class="lead">12 dni, 11 nocy. Golden Week kończy się 5 maja — pierwsze dni spędzamy w Tokio, główne przejazdy już po szczycie tłumów.</p>
+
+  <div class="seg">
+    <div class="top"><span class="city">🏙️ Tokio — część 1</span><span class="dates">4–8 maja</span><span class="nights">4 noce · przylot 4.05, 12:45 (Narita)</span></div>
+    <ul>
+      <li>Dzień 1 na aklimatyzację — Asakusa i świątynia Sensō-ji wieczorem</li>
+      <li>Shibuya + Harajuku + <b>Shibuya Sky</b> (taras widokowy na zachód słońca)</li>
+      <li><b>Akihabara</b> + Pokémon Center — raj dla 11- i 13-latka</li>
+      <li>teamLab Planets, Muzeum Ghibli, ew. Tokyo Skytree</li>
+      <li>5.05 = Dzień Dziecka (koinobori — karpie nad miastem)</li>
+      <li>Plan B na sumo: turystyczny pokaz z byłymi zawodnikami + chanko-nabe <span class="tag">opcja</span></li>
+    </ul>
+  </div>
+
+  <div class="seg">
+    <div class="top"><span class="city">♨️ Hakone</span><span class="dates">8–9 maja</span><span class="nights">1 noc · ryokan</span></div>
+    <ul>
+      <li>Pętla Hakone: kolejka górska, linowa nad polami siarkowymi Ōwakudani, statek po jeziorze Ashi</li>
+      <li>Widoki na <b>górę Fudżi</b></li>
+      <li><b>Nocleg w ryokanie z onsenem</b> — prywatna kąpiel rodzinna (kashikiri) + kolacja kaiseki</li>
+    </ul>
+  </div>
+
+  <div class="seg">
+    <div class="top"><span class="city">⛩️ Kioto</span><span class="dates">9–12 maja</span><span class="nights">3 noce · + Nara</span></div>
+    <ul>
+      <li>Fushimi Inari (tysiące bram torii — najlepiej ok. 7:30 rano)</li>
+      <li>Kiyomizu-dera + uliczki Higashiyama, Arashiyama (las bambusowy + małpy)</li>
+      <li>Kinkaku-ji (Złoty Pawilon), Nintendo Museum w Ujī</li>
+      <li><b>🍵 Ceremonia parzenia herbaty</b> (Maikoya/Camellia — można z kimonem) <span class="tag new">nowe</span></li>
+      <li>Dzień w <b>Narze</b> — jelenie jedzące z ręki + wielki Budda (Tōdai-ji)</li>
+    </ul>
+  </div>
+
+  <div class="seg">
+    <div class="top"><span class="city">🎡 Osaka</span><span class="dates">12–14 maja</span><span class="nights">2 noce</span></div>
+    <ul>
+      <li><b>Universal Studios Japan + Super Nintendo World</b> (cały dzień — 13.05, z Express Pass)</li>
+      <li>Dōtonbori — neony i street food (takoyaki, okonomiyaki)</li>
+      <li>Ew. zamek w Osace lub akwarium Kaiyukan</li>
+    </ul>
+  </div>
+
+  <div class="seg">
+    <div class="top"><span class="city">🥋 Tokio — finał</span><span class="dates">14–15 maja</span><span class="nights">1 noc · wylot 15.05, 18:00</span></div>
+    <ul>
+      <li>14.05 rano: shinkansen z Osaki (widok na Fudżi po prawej), bagaże do hotelu</li>
+      <li><b>🥋 Prawdziwy turniej sumo — Natsu Basho, dzień 6</b> w hali Ryōgoku Kokugikan <span class="tag new">nowe</span></li>
+      <li>Najlepsza część (makuuchi) 15:45–18:00; kolacja <b>chanko-nabe</b> w Ryōgoku</li>
+      <li>15.05: ostatnie zakupy (Don Quijote), ~14:30 wyjazd na Naritę, wylot 18:00</li>
+    </ul>
+  </div>
+
+  <h2>💴 Kalkulator kosztów</h2>
+  <p class="lead">Szacunek dla <b>4 osób</b> na cały wyjazd. Wszystkie pola możesz edytować — suma liczy się na bieżąco, a zmiany zapisują się w przeglądarce.</p>
+
+  <div class="price-flag">✈️ <span><b>Lot na dziś: 18 000 zł</b> (Etihad, 4 os.) — było 15 036 zł 22.07; monitoring cen włączony.</span></div>
+
+  <div class="calc">
+    <table>
+      <thead>
+        <tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cat">✈️ Loty<span class="hint">Etihad, całość za 4 os. (+ bagaż rejestrowany)</span></td>
+          <td class="num">—</td>
+          <td class="num"><input type="number" id="flights" value="18000" min="0" step="100"></td>
+        </tr>
+        <tr>
+          <td class="cat">🏨 Noclegi<span class="hint">aparthotel rodzinny (Mimaru itp.); 1 noc ryokan drożej</span></td>
+          <td class="num"><input type="number" id="nights" class="small" value="11" min="0" step="1"><span class="x">×</span><input type="number" id="nightRate" class="small" value="800" min="0" step="10"></td>
+          <td class="num sub-amt" id="hotelAmt">—</td>
+        </tr>
+        <tr>
+          <td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny + metro + Narita Express (4 os.)</span></td>
+          <td class="num">—</td>
+          <td class="num"><input type="number" id="transport" value="4000" min="0" step="100"></td>
+        </tr>
+        <tr>
+          <td class="cat">🍜 Wyżywienie<span class="hint">dni × dzienna stawka na całą rodzinę</span></td>
+          <td class="num"><input type="number" id="days" class="small" value="12" min="0" step="1"><span class="x">×</span><input type="number" id="foodRate" class="small" value="460" min="0" step="10"></td>
+          <td class="num sub-amt" id="foodAmt">—</td>
+        </tr>
+        <tr>
+          <td class="cat">🎟️ Atrakcje i bilety<span class="hint">USJ, Ghibli, teamLab, sumo, ceremonia herbaty, muzea</span></td>
+          <td class="num">—</td>
+          <td class="num"><input type="number" id="attractions" value="3000" min="0" step="100"></td>
+        </tr>
+        <tr>
+          <td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor bezpieczeństwa na nieprzewidziane</span></td>
+          <td class="num">—</td>
+          <td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="totrow"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="k">Na osobę</div><div class="v" id="perPerson">—</div></div>
+    <div class="stat"><div class="k">Na dzień (4 os.)</div><div class="v" id="perDay">—</div></div>
+    <div class="stat"><div class="k">Nocleg / noc</div><div class="v" id="perNight">—</div></div>
+  </div>
+
+  <div class="budget">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <strong>Budżet: 40 000 – 60 000 zł</strong>
+      <span id="budgetPct" style="font-weight:800"></span>
+    </div>
+    <div class="bar"><div class="fill" id="barFill"></div></div>
+    <div class="bar-labels"><span>0</span><span>40k</span><span>60k</span><span>70k</span></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="note">Orientacyjne kwoty w PLN. JR Pass zwykle się nie opłaca przy pętli Tokio–Kioto–Osaka (taniej na biletach pojedynczych).</div>
+    <button class="reset" id="resetBtn" type="button">↺ Przywróć wartości domyślne</button>
+  </div>
+
+  <footer>
+    Plan roboczy · zaktualizowano 22.07.2026 · strona prywatna (noindex)<br>
+    Rezerwacje z wyprzedzeniem: sumo (sprzedaż ~kwiecień 2027, wyprzedaje się w godziny) · Ghibli (10. dnia poprz. miesiąca) · USJ Express Pass · hotele rodzinne z darmowym anulowaniem.
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var DEFAULTS={flights:18000,nights:11,nightRate:800,transport:4000,days:12,foodRate:460,attractions:3000,extras:3000};
+  var ids=Object.keys(DEFAULTS);
+  var KEY="japonia2027.calc.v1";
+  var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
+
+  function load(){
+    var saved={};
+    try{saved=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){}
+    ids.forEach(function(id){
+      var el=document.getElementById(id);
+      if(saved[id]!=null&&!isNaN(saved[id])) el.value=saved[id];
+    });
+  }
+  function save(){
+    var o={};
+    ids.forEach(function(id){o[id]=num(id);});
+    try{localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}
+  }
+  function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
+
+  function calc(){
+    var flights=num("flights");
+    var hotel=num("nights")*num("nightRate");
+    var transport=num("transport");
+    var food=num("days")*num("foodRate");
+    var attractions=num("attractions");
+    var extras=num("extras");
+
+    document.getElementById("hotelAmt").textContent=fmt(hotel);
+    document.getElementById("foodAmt").textContent=fmt(food);
+
+    var total=flights+hotel+transport+food+attractions+extras;
+    document.getElementById("total").textContent=fmt(total);
+    document.getElementById("perPerson").textContent=fmt(total/4);
+    var d=num("days")||1;
+    document.getElementById("perDay").textContent=fmt(total/d);
+    var nn=num("nights")||1;
+    document.getElementById("perNight").textContent=fmt(hotel/nn);
+
+    // budget gauge, scale 0..70k
+    var pct=Math.max(0,Math.min(100,total/70000*100));
+    var fill=document.getElementById("barFill");
+    fill.style.width=pct+"%";
+    var col, verdict, vcol;
+    if(total<40000){col=getCss("--accent2");verdict="Poniżej widełek — jest zapas na lepsze hotele lub premium economy.";vcol=getCss("--muted");}
+    else if(total<=60000){col=getCss("--ok");verdict="✅ Mieści się w budżecie 40–60 tys. zł.";vcol=getCss("--ok");}
+    else if(total<=68000){col=getCss("--warn");verdict="⚠️ Nieco ponad budżet — przytnij atrakcje albo standard noclegów.";vcol=getCss("--warn");}
+    else{col=getCss("--bad");verdict="⛔ Wyraźnie ponad budżet — wymaga cięć.";vcol=getCss("--bad");}
+    fill.style.background=col;
+    var v=document.getElementById("verdict");v.textContent=verdict;v.style.color=vcol;
+    document.getElementById("budgetPct").textContent=fmt(total);
+    save();
+  }
+  function getCss(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+
+  ids.forEach(function(id){document.getElementById(id).addEventListener("input",calc);});
+
+  document.getElementById("resetBtn").addEventListener("click",function(){
+    ids.forEach(function(id){document.getElementById(id).value=DEFAULTS[id];});
+    calc();
+  });
+
+  // theme toggle
+  var tb=document.getElementById("themeBtn");
+  var TKEY="japonia2027.theme";
+  function applyTheme(t){ if(t) document.documentElement.setAttribute("data-theme",t); }
+  try{applyTheme(localStorage.getItem(TKEY));}catch(e){}
+  tb.addEventListener("click",function(){
+    var cur=document.documentElement.getAttribute("data-theme");
+    var isDark = cur ? cur==="dark" : window.matchMedia("(prefers-color-scheme:dark)").matches;
+    var next=isDark?"light":"dark";
+    applyTheme(next);
+    try{localStorage.setItem(TKEY,next);}catch(e){}
+    calc(); // refresh colors from CSS vars
+  });
+
+  load();calc();
+})();
+</script>
+</body>
+</html>
