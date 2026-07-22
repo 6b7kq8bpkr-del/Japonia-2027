@@ -84,6 +84,17 @@
   footer{margin-top:40px;color:var(--muted);font-size:13px;text-align:center;line-height:1.7}
   .price-flag{display:inline-flex;gap:6px;align-items:center;background:var(--chip);border:1px dashed var(--accent);
     border-radius:10px;padding:8px 12px;font-size:13.5px;margin:2px 0 4px}
+  .daylist{display:flex;flex-direction:column;gap:10px}
+  .day{display:flex;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+    padding:13px 16px;box-shadow:var(--shadow)}
+  .day .dnum{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--accent2);color:#fff;
+    font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .day.travel .dnum{background:var(--accent)}
+  .day .dbody{flex:1;min-width:0}
+  .day .dhead{font-size:15px;margin-bottom:2px}
+  .day .dhead .place{color:var(--accent);font-weight:800}
+  .day .dtext{font-size:14px;color:var(--ink);line-height:1.5}
+  .day .dtext b.l{color:var(--accent2)}
   @media(max-width:560px){
     .stats{grid-template-columns:1fr}
     input[type=number]{width:80px} input.small{width:56px}
@@ -168,6 +179,77 @@
   </div>
 
   <div class="price-flag" style="border-color:var(--accent2);margin-top:8px">🏯 <span><b>Opcja głębszego zanurzenia:</b> zamień 1 noc w Osace na <b>nocleg w klasztorze na górze Kōyasan</b> (shukubō) — wegetariańska kuchnia shōjin, poranny rytuał ognia goma i medytacja z mnichami.</span></div>
+
+  <h2>📅 Plan dzień po dniu</h2>
+  <p class="lead">Ramowy rozkład — elastyczny, ale pokazuje rytm dnia i logistykę przejazdów.</p>
+  <div class="daylist">
+
+    <div class="day travel"><div class="dnum">✈</div><div class="dbody">
+      <div class="dhead"><b>pon. 3.05</b> · <span class="place">Przelot</span></div>
+      <div class="dtext">WAW 11:50 → przez Abu Zabi (przesiadka ~2 h) → nocleg w samolocie.</div>
+    </div></div>
+
+    <div class="day"><div class="dnum">1</div><div class="dbody">
+      <div class="dhead"><b>wt. 4.05</b> · <span class="place">Tokio — przylot</span></div>
+      <div class="dtext"><b class="l">Przylot 12:45</b>, Narita Express do miasta, meldunek. <b class="l">Po południu (lekko, jet lag):</b> Asakusa — Sensō-ji, uliczka Nakamise, spacer w kimonie. <b class="l">Wieczór:</b> ramen / izakaya, wcześnie spać.</div>
+    </div></div>
+
+    <div class="day"><div class="dnum">2</div><div class="dbody">
+      <div class="dhead"><b>śr. 5.05</b> · <span class="place">Tokio</span> · Dzień Dziecka</div>
+      <div class="dtext"><b class="l">Rano:</b> Meiji Jingū + Harajuku. <b class="l">Południe:</b> Shibuya + ⚡ Pokémon Center Shibuya. <b class="l">Późne popołudnie:</b> Shibuya Sky na zachód słońca (rezerwacja). <b class="l">Wieczór:</b> 🎎 Kabuki w Kabukiza (pojedynczy akt).</div>
+    </div></div>
+
+    <div class="day"><div class="dnum">3</div><div class="dbody">
+      <div class="dhead"><b>czw. 6.05</b> · <span class="place">Tokio</span></div>
+      <div class="dtext"><b class="l">Rano:</b> targ Tsukiji — sushi na śniadanie. <b class="l">Południe:</b> ⚡ Pokémon Center Mega Tokyo (Ikebukuro) + Pokémon Café (rezerwacja!). <b class="l">Popołudnie:</b> Akihabara lub teamLab (opcja).</div>
+    </div></div>
+
+    <div class="day"><div class="dnum">4</div><div class="dbody">
+      <div class="dhead"><b>pt. 7.05</b> · <span class="place">Tokio → Hakone</span></div>
+      <div class="dtext"><b class="l">Rano:</b> Romancecar z Shinjuku (~1,5 h). <b class="l">Popołudnie:</b> pętla Hakone — kolej górska i linowa, Ōwakudani, widoki na Fudżi. <b class="l">Wieczór:</b> ♨️ ryokan — onsen, yukata, kolacja kaiseki.</div>
+    </div></div>
+
+    <div class="day"><div class="dnum">5</div><div class="dbody">
+      <div class="dhead"><b>sob. 8.05</b> · <span class="place">Hakone → Kioto</span></div>
+      <div class="dtext"><b class="l">Rano:</b> poranna kąpiel onsen; statek po jeziorze Ashi, torii Hakone-jinja. <b class="l">Południe:</b> Odawara → shinkansen do Kioto (~2 h). <b class="l">Popołudnie:</b> 🏮 meldunek w machiya, Gion o zmroku.</div>
+    </div></div>
+
+    <div class="day"><div class="dnum">6</div><div class="dbody">
+      <div class="dhead"><b>niedz. 9.05</b> · <span class="place">Kioto — wschód</span></div>
+      <div class="dtext"><b class="l">Wcześnie rano:</b> Fushimi Inari (bramy torii ~7:30). <b class="l">Południe:</b> Kiyomizu-dera + Higashiyama — 👘 kimono na cały dzień. <b class="l">Popołudnie:</b> ⚡ Pokémon Center Kyoto. <b class="l">Wieczór:</b> wieczór z maiko w Gion (opcja).</div>
+    </div></div>
+
+    <div class="day"><div class="dnum">7</div><div class="dbody">
+      <div class="dhead"><b>pon. 10.05</b> · <span class="place">Kioto — dzień kultury</span></div>
+      <div class="dtext"><b class="l">Rano:</b> 🧘 zazen (medytacja) + shakyō (przepisywanie sutr) w świątyni. <b class="l">Południe:</b> 🍵 ceremonia herbaty, ✒️ kaligrafia, 🌸 ikebana. <b class="l">Popołudnie:</b> warsztat wagashi + dzielnica Nishijin. <b class="l">Wieczór:</b> degustacja sake w Fushimi (rodzice).</div>
+    </div></div>
+
+    <div class="day"><div class="dnum">8</div><div class="dbody">
+      <div class="dhead"><b>wt. 11.05</b> · <span class="place">Nara (wycieczka)</span></div>
+      <div class="dtext"><b class="l">Cały dzień:</b> Nara (~45 min pociągiem) — jelenie jedzące z ręki, Tōdai-ji (wielki Budda), Kasuga Taisha. <b class="l">Wieczór:</b> powrót do Kioto, odpoczynek w machiya.</div>
+    </div></div>
+
+    <div class="day"><div class="dnum">9</div><div class="dbody">
+      <div class="dhead"><b>śr. 12.05</b> · <span class="place">Kioto → Osaka</span></div>
+      <div class="dtext"><b class="l">Rano:</b> Arashiyama — las bambusowy, Tenryū-ji, małpy Iwatayama. <b class="l">Południe:</b> przejazd do Osaki (~40 min), meldunek. <b class="l">Wieczór:</b> Dōtonbori — neony i street food.</div>
+    </div></div>
+
+    <div class="day"><div class="dnum">10</div><div class="dbody">
+      <div class="dhead"><b>czw. 13.05</b> · <span class="place">Osaka</span></div>
+      <div class="dtext"><b class="l">Rano:</b> targ Kuromon Ichiba. <b class="l">Południe:</b> zamek w Osace lub akwarium Kaiyukan. <b class="l">Popołudnie:</b> ⚡ Pokémon Center Osaka. <b class="l">Wieczór:</b> 🍳 warsztat okonomiyaki (smażycie sami).</div>
+    </div></div>
+
+    <div class="day"><div class="dnum">11</div><div class="dbody">
+      <div class="dhead"><b>pt. 14.05</b> · <span class="place">Osaka → Tokio + 🥋 sumo</span></div>
+      <div class="dtext"><b class="l">Rano:</b> wczesny shinkansen (Fudżi po prawej), bagaże do hotelu. <b class="l">Popołudnie:</b> 🥋 turniej sumo Natsu Basho (dzień 6) w Ryōgoku — makuuchi 15:45–18:00. <b class="l">Wieczór:</b> chanko-nabe w Ryōgoku.</div>
+    </div></div>
+
+    <div class="day travel"><div class="dnum">12</div><div class="dbody">
+      <div class="dhead"><b>sob. 15.05</b> · <span class="place">Tokio → powrót</span></div>
+      <div class="dtext"><b class="l">Rano:</b> ostatnie zakupy (Don Quijote / Nakamise), lekki program blisko hotelu. <b class="l">~14:30:</b> Narita Express na lotnisko. <b class="l">18:00:</b> wylot NRT → przez Abu Zabi → WAW 06:50 (niedz. 16.05).</div>
+    </div></div>
+
+  </div>
 
   <h2>💴 Kalkulator kosztów</h2>
   <p class="lead">Szacunek dla <b>4 osób</b> na cały wyjazd. Wszystkie pola możesz edytować — suma liczy się na bieżąco, a zmiany zapisują się w przeglądarce.</p>
