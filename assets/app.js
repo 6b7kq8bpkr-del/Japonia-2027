@@ -23,6 +23,19 @@ if(pg){var upd=function(){var h=document.documentElement,m=h.scrollHeight-h.clie
 // countdown to departure
 var cd=document.getElementById('cd');
 if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date())/86400000));cd.textContent=days;}
+// home hero: parallax bg + fading scroll cue
+(function(){
+  var hbg=document.querySelector('.hero.home .hbg'), cue=document.querySelector('.scrollcue');
+  if(!hbg&&!cue) return;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, raf=null;
+  function frame(){ var y=scrollY||pageYOffset||0;
+    if(hbg&&!reduce) hbg.style.transform='translate3d(0,'+(y*0.22)+'px,0)';
+    if(cue) cue.style.opacity=Math.max(0,1-y/240);
+    raf=null;
+  }
+  addEventListener('scroll',function(){ if(raf==null) raf=requestAnimationFrame(frame); },{passive:true});
+  frame();
+})();
 (function(){
   var geoEl=document.getElementById('geo'); if(!geoEl) return;
   var btn=document.getElementById('mapActivate'), mapDiv=document.getElementById('map');

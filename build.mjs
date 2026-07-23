@@ -75,6 +75,32 @@ a{color:var(--ai)}
 .chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
   border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:600;backdrop-filter:blur(3px)}
 
+/* ---- home hero (cinematic) ---- */
+.hero.home{min-height:clamp(450px,66vh,620px);display:flex;flex-direction:column;justify-content:center;
+  padding:56px 42px 62px;background:none}
+.hero.home .hbg{position:absolute;top:-15%;left:-5%;width:110%;height:130%;z-index:0;overflow:hidden;will-change:transform}
+.hero.home .hbg-img{position:absolute;inset:0;background-size:cover;background-position:center 42%;
+  animation:kenburns 30s ease-in-out infinite alternate;will-change:transform}
+.hero.home .hgrad{position:absolute;inset:0;z-index:0;
+  background:linear-gradient(118deg,rgba(20,45,88,.52),rgba(138,43,35,.30) 62%),
+             linear-gradient(180deg,rgba(10,18,30,.14) 0%,transparent 30%,transparent 50%,rgba(8,14,26,.62) 100%)}
+.hero.home::after{opacity:.3}
+.hero.home .hero-inner{position:relative;z-index:2}
+.hero.home h1{font-size:clamp(42px,8.6vw,88px)}
+.hero.home .eyebrow{animation:hup .8s .05s both}
+.hero.home h1{animation:hup .9s .16s both}
+.hero.home .lead{animation:hup .9s .3s both}
+.hero.home .chips{animation:hup .9s .42s both}
+.scrollcue{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:2;color:rgba(255,255,255,.92);
+  animation:bob 1.9s ease-in-out infinite;filter:drop-shadow(0 1px 5px rgba(0,0,0,.5));transition:opacity .3s}
+@keyframes kenburns{from{transform:scale(1.05)}to{transform:scale(1.17)}}
+@keyframes hup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+@media(prefers-reduced-motion:reduce){
+  .hero.home .hbg-img,.scrollcue,
+  .hero.home .eyebrow,.hero.home h1,.hero.home .lead,.hero.home .chips{animation:none}
+}
+
 /* sections */
 main{padding-bottom:40px}
 section{margin-top:34px}
@@ -323,6 +349,19 @@ if(pg){var upd=function(){var h=document.documentElement,m=h.scrollHeight-h.clie
 // countdown to departure
 var cd=document.getElementById('cd');
 if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date())/86400000));cd.textContent=days;}
+// home hero: parallax bg + fading scroll cue
+(function(){
+  var hbg=document.querySelector('.hero.home .hbg'), cue=document.querySelector('.scrollcue');
+  if(!hbg&&!cue) return;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, raf=null;
+  function frame(){ var y=scrollY||pageYOffset||0;
+    if(hbg&&!reduce) hbg.style.transform='translate3d(0,'+(y*0.22)+'px,0)';
+    if(cue) cue.style.opacity=Math.max(0,1-y/240);
+    raf=null;
+  }
+  addEventListener('scroll',function(){ if(raf==null) raf=requestAnimationFrame(frame); },{passive:true});
+  frame();
+})();
 (function(){
   var geoEl=document.getElementById('geo'); if(!geoEl) return;
   var btn=document.getElementById('mapActivate'), mapDiv=document.getElementById('map');
@@ -842,11 +881,16 @@ function indexPage(){
     <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Pogoda w maju, informacje praktyczne i co spakować.</div></a>
   </div>`;
   const inner = `
-  <header class="hero" style="background:linear-gradient(120deg,rgba(27,58,107,.56),rgba(138,43,35,.40)),url('${IMG.fuji}') center/cover">
-    <p class="eyebrow">Plan rodzinny · 2+2 · 13 dni</p>
-    <h1>Japonia 2027</h1>
-    <p class="lead">3–15 maja 2027 · Abu Zabi (stopover) – Tokio – Hakone – Kioto – Osaka. Klasyka pierwszego razu z odrobiną tradycyjnej kultury, Pokémonami dla dzieci i turniejem sumo na finał.</p>
-    <div class="chips"><span class="chip">✈️ Etihad</span><span class="chip">🕌 noc w Abu Zabi gratis</span><span class="chip">🏨 11 nocy</span><span class="chip">🥋 turniej sumo</span><span class="chip">♨️ ryokan z onsenem</span></div>
+  <header class="hero home">
+    <div class="hbg"><div class="hbg-img" style="background-image:url('${IMG.fuji}')"></div></div>
+    <div class="hgrad"></div>
+    <div class="hero-inner">
+      <p class="eyebrow">Plan rodzinny · 2+2 · 13 dni</p>
+      <h1>Japonia 2027</h1>
+      <p class="lead">3–15 maja 2027 · Abu Zabi (stopover) – Tokio – Hakone – Kioto – Osaka. Klasyka pierwszego razu z odrobiną tradycyjnej kultury, Pokémonami dla dzieci i turniejem sumo na finał.</p>
+      <div class="chips"><span class="chip">✈️ Etihad</span><span class="chip">🕌 noc w Abu Zabi gratis</span><span class="chip">🏨 11 nocy</span><span class="chip">🥋 turniej sumo</span><span class="chip">♨️ ryokan z onsenem</span></div>
+    </div>
+    <div class="scrollcue" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
   </header>
 
   <section class="statband" aria-label="Podróż w liczbach">
