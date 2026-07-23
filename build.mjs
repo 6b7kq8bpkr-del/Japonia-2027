@@ -201,6 +201,18 @@ section{margin-top:34px}
 footer{margin-top:44px;padding:26px 0;border-top:1px solid var(--line);color:var(--muted);
   font-size:13px;text-align:center;line-height:1.7}
 footer a{font-weight:700;text-decoration:none}
+.maphold{position:relative}
+.mapbtn{width:100%;padding:15px;border:1px dashed var(--line);background:var(--paper);border-radius:16px;
+  font-weight:700;color:var(--ai);cursor:pointer;font-family:var(--sans);font-size:14.5px}
+.mapbtn:hover{border-color:var(--ai)}
+.map{display:none;height:340px;border-radius:16px;overflow:hidden;background:var(--sakura)}
+.leaflet-container{font-family:var(--sans)}
+.mk{background:var(--shu);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;
+  justify-content:center;font-weight:800;font-size:13px;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.35)}
+.maplegend{margin:14px 0 6px;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px;font-size:14px}
+.maplegend li{display:flex;align-items:center;gap:10px}
+.maplegend .mn{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--ai);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
 .totop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;background:var(--ai-dark);
   color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:var(--shadow);opacity:0;pointer-events:none;
   transition:.25s;z-index:60}
@@ -218,16 +230,68 @@ var bt=document.getElementById('totop');
 if(bt){addEventListener('scroll',function(){bt.classList.toggle('show',scrollY>500);});
   bt.addEventListener('click',function(){scrollTo({top:0,behavior:'smooth'});});}
 var on=document.querySelector('.pills a.on'); if(on&&on.scrollIntoView) on.scrollIntoView({inline:'center',block:'nearest'});
+(function(){
+  var geoEl=document.getElementById('geo'); if(!geoEl) return;
+  var btn=document.getElementById('mapActivate'), mapDiv=document.getElementById('map');
+  if(!btn||!mapDiv) return;
+  btn.addEventListener('click',function(){
+    btn.style.display='none'; mapDiv.style.display='block';
+    ensureLeaflet(function(){ render(JSON.parse(geoEl.textContent)); });
+  });
+  function ensureLeaflet(cb){
+    if(window.L) return cb();
+    var c=document.createElement('link'); c.rel='stylesheet';
+    c.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css'; document.head.appendChild(c);
+    var s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+    s.onload=cb; s.onerror=function(){mapDiv.innerHTML='<p style="padding:16px">Nie udało się załadować mapy — użyj linku do Google Maps.</p>';};
+    document.head.appendChild(s);
+  }
+  function render(stops){
+    var map=L.map(mapDiv,{scrollWheelZoom:false});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(map);
+    var pts=[];
+    stops.forEach(function(s,i){ var ll=[s[0],s[1]]; pts.push(ll);
+      L.marker(ll,{icon:L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],html:'<div class="mk">'+(i+1)+'</div>'})})
+        .addTo(map).bindPopup((i+1)+'. '+s[2]);
+    });
+    if(pts.length>1) L.polyline(pts,{color:'#c8402c',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
+    map.fitBounds(pts,{padding:[34,34]});
+    setTimeout(function(){map.invalidateSize();},80);
+  }
+})();
 `;
 fs.writeFileSync(DIR + '/assets/app.js', APP);
 
 /* ============================ DATA ============================ */
+const IMG = {
+  shibuya:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Shibuya_Crossing%2C_Aerial.jpg/1280px-Shibuya_Crossing%2C_Aerial.jpg',
+  fuji:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/View_of_Mount_Fuji_from_%C5%8Cwakudani_20211202.jpg/1280px-View_of_Mount_Fuji_from_%C5%8Cwakudani_20211202.jpg',
+  fushimi:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg/1280px-Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg',
+  todaiji:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/T%C5%8Ddai-ji_Kon-d%C5%8D.jpg/1280px-T%C5%8Ddai-ji_Kon-d%C5%8D.jpg',
+  dotonbori:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Osaka_Dotonbori_Ebisu_Bridge.jpg/1280px-Osaka_Dotonbori_Ebisu_Bridge.jpg',
+  sensoji:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Sensoji_2023.jpg/1280px-Sensoji_2023.jpg',
+};
 const CITY = {
-  tokio:{grad:'linear-gradient(135deg,#1b3a6b,#0e2743)'},
-  hakone:{grad:'linear-gradient(135deg,#1f5e5a,#0f3634)'},
-  kioto:{grad:'linear-gradient(135deg,#8a2b23,#b0652c)'},
-  nara:{grad:'linear-gradient(135deg,#3c5a34,#20361d)'},
-  osaka:{grad:'linear-gradient(135deg,#3a2054,#7c2d55)'},
+  tokio:{ov:'linear-gradient(135deg,rgba(20,32,64,.72),rgba(14,39,67,.86))',photo:IMG.shibuya},
+  hakone:{ov:'linear-gradient(135deg,rgba(20,58,58,.68),rgba(15,54,52,.85))',photo:IMG.fuji},
+  kioto:{ov:'linear-gradient(135deg,rgba(120,40,32,.72),rgba(120,72,30,.82))',photo:IMG.fushimi},
+  nara:{ov:'linear-gradient(135deg,rgba(45,74,42,.72),rgba(32,54,29,.86))',photo:IMG.todaiji},
+  osaka:{ov:'linear-gradient(135deg,rgba(58,32,84,.72),rgba(124,45,85,.82))',photo:IMG.dotonbori},
+};
+const bg = c => `${CITY[c].ov},url('${CITY[c].photo}') center/cover`;
+const GEO = {
+  '2027-05-04':[[35.772,140.393,'Narita (przylot)'],[35.681,139.767,'Tokyo Station'],[35.7148,139.7967,'Asakusa / Sensō-ji']],
+  '2027-05-05':[[35.6764,139.6993,'Meiji Jingū'],[35.6702,139.7027,'Harajuku'],[35.6595,139.7005,'Shibuya']],
+  '2027-05-06':[[35.6654,139.7707,'Targ Tsukiji'],[35.7295,139.7190,'Pokémon Center (Ikebukuro)'],[35.6817,139.7740,'Pokémon Café (Nihombashi)'],[35.6984,139.7731,'Akihabara']],
+  '2027-05-07':[[35.6896,139.7006,'Shinjuku'],[35.2503,139.0503,'Gōra'],[35.2445,139.0197,'Ōwakudani'],[35.2044,139.0247,'Jezioro Ashi / Hakone-jinja']],
+  '2027-05-08':[[35.2564,139.1553,'Odawara'],[34.9858,135.7588,'Kioto'],[35.0037,135.7756,'Gion'],[35.0043,135.7707,'Pontocho']],
+  '2027-05-09':[[34.9671,135.7727,'Fushimi Inari'],[34.9948,135.7850,'Kiyomizu-dera'],[35.0050,135.7649,'Nishiki Market']],
+  '2027-05-10':[[35.0394,135.7292,'Kinkaku-ji'],[35.0037,135.7756,'Warsztaty / Gion']],
+  '2027-05-11':[[34.6851,135.8430,'Park Nara'],[34.6889,135.8398,'Tōdai-ji'],[34.6819,135.8483,'Kasuga Taisha']],
+  '2027-05-12':[[35.0170,135.6716,'Arashiyama (bambus)'],[35.0110,135.6770,'Małpy Iwatayama'],[34.6687,135.5013,'Osaka / Dōtonbori']],
+  '2027-05-13':[[34.6656,135.5062,'Kuromon Ichiba'],[34.6873,135.5259,'Zamek w Osace'],[34.6545,135.4289,'Kaiyukan'],[34.6524,135.5063,'Shinsekai']],
+  '2027-05-14':[[34.7333,135.5000,'Shin-Ōsaka'],[35.6970,139.7933,'Ryōgoku Kokugikan (sumo)']],
+  '2027-05-15':[[35.681,139.767,'Tokio'],[35.772,140.393,'Narita → wylot']],
 };
 const A = (id,label)=>({id,label}); // attraction link helper
 
@@ -495,7 +559,7 @@ ${inner}
 function footer(prefix){
   return `<footer>Plan rodzinny · Japonia 3–15 maja 2027 · strona prywatna (noindex)<br>
   Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br>
-  <a href="${prefix}index.html">Strona główna</a></footer>`;
+  Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="${prefix}index.html">Strona główna</a></footer>`;
 }
 
 function dayPage(d,i){
@@ -510,9 +574,22 @@ function dayPage(d,i){
   const links = d.links.length?`<div class="linklist">${d.links.map(l=>`<a href="${prefix}atrakcje.html#${l.id}">🎟️ ${l.label}</a>`).join('')}</div>`:'';
   const pc = d.pc?`<div class="pc"><div class="pch">⚖️ ${d.pc.q}</div>${d.pc.opts.map(o=>`<div class="row"><span class="opt">${o[0]}</span> — <span class="plus">za:</span> ${o[1]}; <span class="minus">przeciw:</span> ${o[2]}.</div>`).join('')}</div>`:'';
   const more = d.more.length?`<section class="more"><h2 class="stitle">Więcej o tym dniu</h2><div class="card">${d.more.map(m=>`<details><summary>${m[0]}</summary><p>${m[1]}</p></details>`).join('')}</div></section>`:'';
-  const gmap = `<a class="gmap" href="https://www.google.com/maps/search/${encodeURIComponent(d.title+' Japan')}" target="_blank" rel="noopener">📍 Otwórz punkty dnia w Google Maps ↗</a>`;
+  const geo = GEO[d.date]||[];
+  const gdir = geo.length?`https://www.google.com/maps/dir/${geo.map(g=>g[0]+','+g[1]).join('/')}`:'#';
+  const legend = geo.map((g,idx)=>`<li><span class="mn">${idx+1}</span> ${g[2]}</li>`).join('');
+  const mapSec = geo.length?`
+  <section>
+    <h2 class="stitle">Trasa dnia</h2>
+    <div class="card">
+      <div class="maphold"><button class="mapbtn" id="mapActivate">🗺️ Aktywuj mapę</button><div id="map" class="map"></div></div>
+      <ol class="maplegend">${legend}</ol>
+      <a class="gmap" href="${gdir}" target="_blank" rel="noopener">📍 Otwórz trasę w Google Maps ↗</a>
+      <p class="note" style="margin-top:6px">Orientacyjna trasa — linia łączy główne punkty; dokładny przebieg dróg sprawdź w Google Maps.</p>
+      <script type="application/json" id="geo">${JSON.stringify(geo)}</script>
+    </div>
+  </section>`:'';
   const inner = `
-  <header class="hero" style="background:${CITY[d.city].grad}">
+  <header class="hero" style="background:${bg(d.city)}">
     <p class="eyebrow">Dzień ${i+1} z 12 · ${d.dow} · ${d.dd}</p>
     <h1>${d.title}</h1>
     <p class="lead">${d.lead}</p>
@@ -521,7 +598,7 @@ function dayPage(d,i){
 
   <section>
     <h2 class="stitle">Plan dnia</h2>
-    <div class="card"><ul class="tline">${tl}</ul>${gmap}</div>
+    <div class="card"><ul class="tline">${tl}</ul></div>
   </section>
 
   <section>
@@ -529,6 +606,7 @@ function dayPage(d,i){
     <div class="facts">${facts}</div>
     ${pc}
   </section>
+  ${mapSec}
 
   <section>
     <h2 class="stitle">Wskazówki praktyczne</h2>
@@ -548,7 +626,7 @@ function dayPage(d,i){
 
 /* ---- index ---- */
 function indexPage(){
-  const cards = DAYS.map((d,i)=>`<a class="dcard" href="days/${d.date}.html" style="background:${CITY[d.city].grad}">
+  const cards = DAYS.map((d,i)=>`<a class="dcard" href="days/${d.date}.html" style="background:${bg(d.city)}">
     <div class="dn">${i+1}</div>
     <div class="dd">${d.dow} · ${d.dd}</div>
     <div class="dt">${d.title}</div>
@@ -559,7 +637,7 @@ function indexPage(){
     <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Czego się spodziewać w maju i co zabrać.</div></a>
   </div>`;
   const inner = `
-  <header class="hero" style="background:linear-gradient(135deg,#1b3a6b,#8a2b23)">
+  <header class="hero" style="background:linear-gradient(135deg,rgba(27,58,107,.74),rgba(138,43,35,.80)),url('${IMG.fuji}') center/cover">
     <p class="eyebrow">Plan rodzinny · 2+2 · 12 dni</p>
     <h1>Japonia 2027</h1>
     <p class="lead">3–15 maja 2027 · Tokio – Hakone – Kioto – Osaka. Klasyka pierwszego razu z odrobiną tradycyjnej kultury, Pokémonami dla dzieci i prawdziwym turniejem sumo na finał.</p>
@@ -674,7 +752,7 @@ function pogodaPage(){
     ['🏯 Osaka','~25°C','~15°C','ciepło, miejsko; wieczory łagodne'],
   ].map(r=>`<tr><td class="cat">${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td></tr>`).join('');
   const inner=`
-  <header class="hero" style="background:linear-gradient(135deg,#1f5e5a,#b98a34)">
+  <header class="hero" style="background:linear-gradient(135deg,rgba(31,94,90,.72),rgba(185,138,52,.72)),url('${IMG.fuji}') center/cover">
     <p class="eyebrow">Klimat i pakowanie</p>
     <h1>Pogoda w maju</h1>
     <p class="lead">Maj to jeden z najlepszych miesięcy na Japonię: ciepło, słonecznie i sucho — przed sezonem deszczowym, który na głównej wyspie zaczyna się dopiero w czerwcu.</p>
@@ -716,7 +794,7 @@ function atrakcjePage(){
     <a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a><a href="#kioto">⛩️ Kioto</a>
     <a href="#nara">🦌 Nara</a><a href="#osaka">🏯 Osaka</a><a href="#sumo-s">🥋 Sumo</a><a href="#praktyczne">🧳 Praktyczne</a></nav>`;
   const inner=`
-  <header class="hero" style="background:linear-gradient(135deg,#8a2b23,#b98a34)">
+  <header class="hero" style="background:linear-gradient(135deg,rgba(138,43,35,.74),rgba(185,138,52,.74)),url('${IMG.sensoji}') center/cover">
     <p class="eyebrow">Godziny · ceny · rezerwacje</p>
     <h1>Atrakcje</h1>
     <p class="lead">Wszystkie miejsca z planu w jednym katalogu — z godzinami, orientacyjnymi cenami (¥100 ≈ 2,6 zł) i linkami do oficjalnych rezerwacji.</p>
