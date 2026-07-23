@@ -291,10 +291,11 @@ const IMG = {
   fuji:'/assets/img/fuji.jpg', yasaka:'/assets/img/yasaka.jpg', fushimi:'/assets/img/fushimi.jpg',
   kinkakuji:'/assets/img/kinkakuji.jpg', todaiji:'/assets/img/todaiji.jpg', bamboo:'/assets/img/bamboo.jpg',
   dotonbori:'/assets/img/dotonbori.jpg', sumo:'/assets/img/sumo.jpg', tokyostation:'/assets/img/tokyostation.jpg',
+  abudhabi:'/assets/img/abudhabi.jpg', mosque:'/assets/img/mosque.jpg',
 };
 // one distinct photo per day
 const DAYIMG = {
-  '2027-05-04':IMG.sensoji, '2027-05-05':IMG.shibuya, '2027-05-06':IMG.akihabara,
+  '2027-05-03':IMG.abudhabi, '2027-05-04':IMG.mosque, '2027-05-05':IMG.sensoji, '2027-05-06':IMG.shibuya,
   '2027-05-07':IMG.fuji, '2027-05-08':IMG.yasaka, '2027-05-09':IMG.fushimi,
   '2027-05-10':IMG.kinkakuji, '2027-05-11':IMG.todaiji, '2027-05-12':IMG.bamboo,
   '2027-05-13':IMG.dotonbori, '2027-05-14':IMG.sumo, '2027-05-15':IMG.tokyostation,
@@ -305,14 +306,16 @@ const CITY = {
   kioto:{c1:'120,40,32',c2:'120,72,30',photo:IMG.fushimi},
   nara:{c1:'45,74,42',c2:'32,54,29',photo:IMG.todaiji},
   osaka:{c1:'58,32,84',c2:'124,45,85',photo:IMG.dotonbori},
+  abudhabi:{c1:'110,74,20',c2:'40,60,80',photo:IMG.abudhabi},
 };
 // hero: light tint so the PHOTO is the star; card: bottom-weighted for a legible title
 const heroBg = (c,ph) => `linear-gradient(120deg,rgba(${CITY[c].c1},.58),rgba(${CITY[c].c2},.34)),url('${ph}') center/cover`;
 const cardBg = (c,ph) => `linear-gradient(to top,rgba(${CITY[c].c1},.92),rgba(${CITY[c].c1},.10)),url('${ph}') center/cover`;
 const GEO = {
-  '2027-05-04':[[35.772,140.393,'Narita (przylot)'],[35.681,139.767,'Tokyo Station'],[35.7148,139.7967,'Asakusa / Sensō-ji']],
-  '2027-05-05':[[35.6764,139.6993,'Meiji Jingū'],[35.6702,139.7027,'Harajuku'],[35.6595,139.7005,'Shibuya']],
-  '2027-05-06':[[35.6654,139.7707,'Targ Tsukiji'],[35.7295,139.7190,'Pokémon Center (Ikebukuro)'],[35.6817,139.7740,'Pokémon Café (Nihombashi)'],[35.6984,139.7731,'Akihabara']],
+  '2027-05-03':[[52.1657,20.9671,'Lotnisko Chopina (wylot 11:50)'],[24.4330,54.6511,'Lotnisko Abu Zabi (19:35)'],[24.4539,54.3773,'Hotel stopover (centrum)']],
+  '2027-05-04':[[24.4128,54.4750,'Wielki Meczet Szejka Zajida'],[24.5333,54.3981,'Luwr Abu Zabi'],[24.4330,54.6511,'Lotnisko (wylot 21:50)']],
+  '2027-05-05':[[35.772,140.393,'Narita (przylot 12:45)'],[35.681,139.767,'Tokyo Station'],[35.7148,139.7967,'Asakusa / Sensō-ji']],
+  '2027-05-06':[[35.6654,139.7707,'Targ Tsukiji'],[35.7295,139.7190,'Pokémon Center (Ikebukuro)'],[35.6817,139.7740,'Pokémon Café (Nihombashi)'],[35.6595,139.7005,'Shibuya + Shibuya Sky']],
   '2027-05-07':[[35.6896,139.7006,'Shinjuku'],[35.2503,139.0503,'Gōra'],[35.2445,139.0197,'Ōwakudani'],[35.2044,139.0247,'Jezioro Ashi / Hakone-jinja']],
   '2027-05-08':[[35.2564,139.1553,'Odawara'],[34.9858,135.7588,'Kioto'],[35.0037,135.7756,'Gion'],[35.0043,135.7707,'Pontocho']],
   '2027-05-09':[[34.9671,135.7727,'Fushimi Inari'],[34.9948,135.7850,'Kiyomizu-dera'],[35.0050,135.7649,'Nishiki Market']],
@@ -326,59 +329,71 @@ const GEO = {
 const A = (id,label)=>({id,label}); // attraction link helper
 
 const DAYS = [
-{date:'2027-05-04',dow:'wtorek',dd:'4 maja',city:'tokio',title:'Przylot i pierwszy wieczór w Tokio',
- lead:'Lądujemy po nocnym locie, spokojnie wchodzimy w japoński rytm i witamy się z miastem w Asakusie.',
- chips:['Łagodny start','NEX z lotniska','Jet lag'],
+{date:'2027-05-03',dow:'poniedziałek',dd:'3 maja',city:'abudhabi',title:'Wylot i wieczór w Abu Zabi',
+ lead:'Startujemy z Warszawy, a zamiast nocnej przesiadki — hotel 4★ gratis od Etihadu i spokojny sen po pierwszym locie.',
+ chips:['Stopover Etihad','Hotel gratis','Tylko 6 h lotu'],
  tl:[
-  ['w nocy','Przelot Etihad','WAW → Abu Zabi → Narita; nocleg w samolocie, zegarki od razu na czas japoński (+7 h).'],
+  ['08:45','Wyjazd na Lotnisko Chopina',''],
+  ['09:20','Check-in Etihad','Bilet ze stopoverem (multi-city); odprawa online 30 h wcześniej.'],
+  ['11:50','Wylot WAW → Abu Zabi','~6 h lotu.'],
+  ['19:35','Lądowanie w Abu Zabi','Czas lokalny (+2 h vs Polska).'],
+  ['20:30','Transfer do hotelu','Hotel z pakietu stopover — w cenie biletu.'],
+  ['21:30','Sen w prawdziwym łóżku','Zamiast nocy w samolocie — jet lag rozbity na raty.'],
+ ],
+ facts:[['Łagodna','Intensywność'],['Lot 6 h','Przejazdy'],['Minimalne','Chodzenie'],['Łatwy etap','Dla dzieci'],['Abu Zabi (gratis)','Nocleg']],
+ tips:['Pakiet hotelowy stopover rezerwuje się na etihad.com najpóźniej 3 dni przed wylotem — zróbcie to od razu po kupnie biletów.','Do walizki podręcznej: stroje na jeden gorący dzień (35–40°C) — duże bagaże można nadać od razu do Tokio.'],
+ links:[A('stopover','Pakiet stopover Etihad')],
+ more:[['Dlaczego stopover','Postój trwa ~26 h, więc łapie się na darmowy hotel (program Etihadu dla ekonomii i biznesu). Podróż dzieli się na 6 + 10 godzin lotu z pełną nocą snu pośrodku — z dziećmi to zupełnie inna jakość niż 18 godzin ciurkiem.']]},
+
+{date:'2027-05-04',dow:'wtorek',dd:'4 maja',city:'abudhabi',title:'Dzień w Abu Zabi i nocny lot do Tokio',
+ lead:'Poranek w jednym z najpiękniejszych meczetów świata, popołudnie w klimatyzowanym Luwrze — wieczorem lecimy dalej.',
+ chips:['Wielki Meczet','35–40°C!','Wylot 21:50'],
+ tl:[
+  ['08:00','Śniadanie w hotelu','Bez pośpiechu — bagaże zostają w przechowalni.'],
+  ['09:00','Wielki Meczet Szejka Zajida','82 kopuły, największy dywan świata; wstęp darmowy, stroje zakrywające (abaje do wypożyczenia na miejscu).'],
+  ['12:00','Klimatyzowany azyl','Luwr Abu Zabi (kopuła-deszcz światła) albo pałac Qasr Al Watan — w środku dnia na zewnątrz jest 35–40°C.'],
+  ['15:30','Powrót do hotelu','Prysznic, odbiór bagaży, chwila przy basenie.'],
+  ['18:30','Transfer na lotnisko',''],
+  ['21:50','Wylot Abu Zabi → Tokio','~10 h; kolacja na pokładzie i spać — zegarki na czas japoński (+5 h).'],
+ ],
+ facts:[['Łagodna','Intensywność'],['Taxi + lot 10 h','Przejazdy'],['Umiarkowane','Chodzenie'],['Meczet robi „wow"','Dla dzieci'],['Nocny lot','Nocleg']],
+ tips:['Meczet zwiedzajcie RANO — najmniejszy upał i tłum; rezerwacja wejścia online (darmowa) z wyprzedzeniem.','Kobiety i dziewczynki: zakryte ramiona i kolana; abaje wypożyczają bezpłatnie przy wejściu.'],
+ links:[A('mosque','Wielki Meczet'),A('louvread','Luwr Abu Zabi')],
+ more:[['Kontekst','Meczet Szejka Zajida mieści 40 tysięcy wiernych; marmur, złoto i kryształowe żyrandole robią wrażenie niezależnie od wieku. Luwr AD to filia paryskiego Luwru pod słynną kopułą Jeana Nouvela — „deszcz światła" nad galeriami.']]},
+
+{date:'2027-05-05',dow:'środa',dd:'5 maja',city:'tokio',title:'Przylot do Tokio w Dzień Dziecka',
+ lead:'Lądujemy wypoczęci po nocy w łóżku, a Tokio wita nas karpiami koinobori — dziś Kodomo no hi.',
+ chips:['Dzień Dziecka','Łagodny start','NEX z lotniska'],
+ tl:[
   ['12:45','Lądowanie na Narcie','Imigracja z kodem QR Visit Japan Web (wypełnić w samolocie), odbiór bagaży.'],
   ['14:18','Narita Express do miasta','~55 min do centrum, miejsca rezerwowane.'],
   ['15:30','Zameldowanie','Zostawiamy bagaże, chwila oddechu.'],
-  ['16:30','Asakusa','Brama Kaminarimon i deptak Nakamise pełen straganów.'],
+  ['16:30','Asakusa','Brama Kaminarimon i deptak Nakamise; nad rzeką karpie koinobori na Dzień Dziecka.'],
   ['18:00','Sensō-ji o zmroku','Podświetlona pagoda, gdy tłumy już maleją.'],
   ['19:00','Kolacja','Ramen albo izakaya; potem kombini po zapasy i karty Suica.'],
-  ['21:30','Wczesny sen','Najlepsze lekarstwo na jet lag.'],
+  ['21:30','Wczesny sen','Domykamy jet lag.'],
  ],
- facts:[['Łagodna','Intensywność'],['Narita Express','Przejazdy'],['Umiarkowane','Chodzenie'],['Łatwy start','Dla dzieci'],['Tokio (1/3)','Nocleg']],
+ facts:[['Łagodna','Intensywność'],['Narita Express','Przejazdy'],['Umiarkowane','Chodzenie'],['Ich święto!','Dla dzieci'],['Tokio (1/2)','Nocleg']],
  tips:['Visit Japan Web wypełnijcie dla całej czwórki jeszcze w samolocie — na lotnisku pokazujecie kod QR.','Suica w Apple/Google Pay płaci za metro i w sklepach; dzieciom fizyczne karty kodomo (−50%).'],
  links:[A('sensoji','Sensō-ji'),A('nex','Narita Express + Suica'),A('vjw','Visit Japan Web')],
- more:[['Dobrze wiedzieć','Pierwszy dzień celowo jest lekki — po ~15 godzinach podróży liczy się aklimatyzacja, nie liczba punktów. Asakusa wieczorem daje mocne „jesteśmy w Japonii" bez wysiłku.']]},
+ more:[['Dobrze wiedzieć','To ostatni dzień Golden Week — Asakusa będzie odświętna, ale wieczorem tłumy maleją. Od jutra Japonia wraca do normalnego rytmu i mamy ją dla siebie.']]},
 
-{date:'2027-05-05',dow:'środa',dd:'5 maja',city:'tokio',title:'Zielone Tokio, moda i widok z góry',
- lead:'Od chramu w lesie, przez młodzieżowe Harajuku i tętniącą Shibuyę, po zachód słońca nad miastem.',
- chips:['Dzień Dziecka','Dużo chodzenia','Shibuya Sky'],
- tl:[
-  ['08:30','Śniadanie','Kawiarnia lub kombini.'],
-  ['09:15','Meiji Jingū','Chram shintō w 70-hektarowym lesie: wielkie torii i beczki sake.'],
-  ['10:45','Harajuku','Takeshita Street (naleśniki crepe) i elegancka Omotesandō.'],
-  ['12:30','Lunch',''],
-  ['14:00','Shibuya','Słynne skrzyżowanie, pomnik Hachikō, Mega Don Quijote.'],
-  ['17:45','Shibuya Sky','Otwarty taras na zachód słońca — rezerwacja online.'],
-  ['19:30','Kolacja',''],
- ],
- facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Świetnie','Dla dzieci'],['Tokio (2/3)','Nocleg']],
- tips:['Dziś Kodomo no hi (Dzień Dziecka) — nad miastem powiewają karpie koinobori.','Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej).'],
- links:[A('meiji','Meiji Jingū'),A('shibuya-sky','Shibuya Sky')],
- more:[]},
-
-{date:'2027-05-06',dow:'czwartek',dd:'6 maja',city:'tokio',title:'Sushi o poranku i dzień Pokémonów',
- lead:'Śniadanie na targu Tsukiji, a potem to, na co dzieci czekają najbardziej — świat Pokémonów.',
- chips:['Dla dzieci','Pokémon Café','Sushi'],
+{date:'2027-05-06',dow:'czwartek',dd:'6 maja',city:'tokio',title:'Wielki dzień Tokio: sushi, Pokémony i widok z dachu',
+ lead:'Jeden gęsty, najlepszy dzień w stolicy: śniadanie na targu, świat Pokémonów i zachód słońca 229 metrów nad Shibuyą.',
+ chips:['Dla dzieci','Pokémon Café','Shibuya Sky'],
  tl:[
   ['09:00','Targ Tsukiji','Świeże sushi i tamagoyaki na patyku prosto ze straganów.'],
   ['10:45','Metro do Ikebukuro',''],
   ['11:15','Pokémon Center Mega Tokyo','Największy sklep Pokémon w Japonii (Sunshine City).'],
-  ['12:30','Pokémon Café','Tematyczny lunch z wizytą Pikachu — rezerwacja z góry.'],
-  ['14:30','Akihabara lub teamLab','Dzielnica gier i gachaponów albo immersyjne muzeum sztuki cyfrowej.'],
-  ['18:30','Kolacja','Kaiten-zushi (sushi z taśmy) albo yakiniku.'],
+  ['12:30','Pokémon Café','Tematyczny lunch z wizytą Pikachu — rezerwacja z góry (Nihombashi).'],
+  ['15:00','Shibuya','Słynne skrzyżowanie, pomnik Hachikō, Mega Don Quijote.'],
+  ['17:45','Shibuya Sky','Otwarty taras na zachód słońca — rezerwacja online.'],
+  ['19:30','Kolacja','Kaiten-zushi (sushi z taśmy) albo yakiniku w Shibuyi.'],
  ],
- facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Umiarkowane','Chodzenie'],['Ich dzień','Dla dzieci'],['Tokio (3/3)','Nocleg']],
- tips:['Rezerwacja Pokémon Café otwiera się 31 dni wcześniej o 18:00 czasu japońskiego — łapcie slot punktualnie.','Ustalcie dzieciom limit na gachapon z góry, inaczej wyjdziecie z Akihabary z walizką kapsułek.'],
- links:[A('tsukiji','Tsukiji'),A('pokemon','Pokémon Center + Café'),A('teamlab','teamLab Planets')],
- pc:{q:'teamLab Planets czy Akihabara?',opts:[
-   ['teamLab','immersyjne, „wow" dla dzieci','bilet z datą (~+310 zł/4 os.) i dojazd na Toyosu'],
-   ['Akihabara','za darmo, na luzie (gachapon, elektronika)','„zwykłe miasto" po intensywnym poranku']]},
- more:[]},
+ facts:[['Wyższa','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Ich dzień','Dla dzieci'],['Tokio (2/2)','Nocleg']],
+ tips:['Rezerwacja Pokémon Café otwiera się 31 dni wcześniej o 18:00 czasu japońskiego — łapcie slot punktualnie.','Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej); ustalcie limit na gachapon z góry 😉'],
+ links:[A('tsukiji','Tsukiji'),A('pokemon','Pokémon Center + Café'),A('shibuya-sky','Shibuya Sky')],
+ more:[['Co wypadło przez stopover','Ten dzień łączy dawne dwa: odpuściliśmy Meiji Jingū, Harajuku i Akihabarę/teamLab na rzecz nocy w Abu Zabi. Jeśli zostanie energia, krótki skok do Akihabary da się wcisnąć 15.05 przed odbiorem bagaży.']]},
 
 {date:'2027-05-07',dow:'piątek',dd:'7 maja',city:'hakone',title:'W góry Hakone — onsen i Fudżi',
  lead:'Pętla wulkaniczna, jezioro z bramą torii i pierwsza noc po japońsku: yukata, kaiseki i gorące źródła.',
@@ -553,7 +568,11 @@ const DAYS = [
 
 /* ============================ HOTELS ============================ */
 const HOTELS = [
-{id:'tokio1',name:'MIMARU Tokyo Ueno EAST',stay:'Tokio · 3 noce (4–7.05)',
+{id:'auh',name:'Hotel stopover w Abu Zabi',stay:'Abu Zabi · 1 noc (3–4.05) · GRATIS',noqr:true,
+ desc:'Hotel 4★ w cenie biletu Etihad (program stopover, także w ekonomii). Konkretny obiekt wybiera się z listy Etihadu przy rezerwacji pakietu — najpóźniej 3 dni przed wylotem, najlepiej od razu po kupnie biletów.',
+ price:'0 zł (pakiet stopover Etihad)',near:'centrum Abu Zabi; transfer we własnym zakresie (taxi ~60–80 AED)',
+ site:'https://www.etihad.com/en/book/stopover'},
+{id:'tokio1',name:'MIMARU Tokyo Ueno EAST',stay:'Tokio · 2 noce (5–7.05)',
  desc:'Aparthotel projektowany pod rodziny: apartament dla 4 osób z aneksem kuchennym i osobną sypialnią. Spokojna okolica Ueno, ~10 min metrem do Asakusy, wygodny start po przylocie.',
  price:'~750–950 zł/noc (apartament 4-os.)',near:'metro Inarichō / JR Ueno',
  site:'https://mimaruhotels.com/en/hotel/ueno-east/'},
@@ -576,7 +595,7 @@ const HOTELS = [
 ];
 const gmapsQ = name => 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);
 // day date -> hotel id (check-in days)
-const DAYHOTEL = {'2027-05-04':'tokio1','2027-05-07':'hakone','2027-05-08':'kioto','2027-05-12':'osaka','2027-05-14':'tokio2'};
+const DAYHOTEL = {'2027-05-03':'auh','2027-05-05':'tokio1','2027-05-07':'hakone','2027-05-08':'kioto','2027-05-12':'osaka','2027-05-14':'tokio2'};
 
 /* ============================ TEMPLATES ============================ */
 const TABS = [['index.html','Plan'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['koszty.html','Bilety i koszty'],['pogoda.html','Pogoda']];
@@ -700,10 +719,10 @@ function indexPage(){
   </div>`;
   const inner = `
   <header class="hero" style="background:linear-gradient(120deg,rgba(27,58,107,.56),rgba(138,43,35,.40)),url('${IMG.fuji}') center/cover">
-    <p class="eyebrow">Plan rodzinny · 2+2 · 12 dni</p>
+    <p class="eyebrow">Plan rodzinny · 2+2 · 13 dni</p>
     <h1>Japonia 2027</h1>
-    <p class="lead">3–15 maja 2027 · Tokio – Hakone – Kioto – Osaka. Klasyka pierwszego razu z odrobiną tradycyjnej kultury, Pokémonami dla dzieci i prawdziwym turniejem sumo na finał.</p>
-    <div class="chips"><span class="chip">✈️ Etihad przez Abu Zabi</span><span class="chip">🏨 11 nocy</span><span class="chip">🥋 turniej sumo</span><span class="chip">♨️ ryokan z onsenem</span></div>
+    <p class="lead">3–15 maja 2027 · Abu Zabi (stopover) – Tokio – Hakone – Kioto – Osaka. Klasyka pierwszego razu z odrobiną tradycyjnej kultury, Pokémonami dla dzieci i turniejem sumo na finał.</p>
+    <div class="chips"><span class="chip">✈️ Etihad</span><span class="chip">🕌 noc w Abu Zabi gratis</span><span class="chip">🏨 11 nocy</span><span class="chip">🥋 turniej sumo</span><span class="chip">♨️ ryokan z onsenem</span></div>
   </header>
 
   <section>
@@ -734,7 +753,7 @@ function kosztyPage(){
     <h2 class="stitle">Strategia biletowa</h2>
     <div class="pflag">✈️ <span><b>Lot dziś (23.07.2026): ok. 13 900 zł</b> za 4 os. (Etihad) — cena faluje 13,9–18 tys.</span></div>
     ${seg('🎯 Progi decyzyjne (4 os., w obie strony, z bagażem)',['<b>≤ 13 000 zł</b> — okazja, kupować natychmiast','<b>13–15 tys. zł</b> — cena uczciwa, można kupić dla pewności miejsc','<b>≥ 16 tys. zł</b> — górka, czekać na wyprzedaż'])}
-    ${seg('🗓️ Kalendarz polowania',['<b>~20.11–2.12.2026</b> — Black Friday Etihad/Qatar (historycznie do −35%, podróże do 30.06)','<b>22.12.2026 – poł. stycznia 2027</b> — Qatar Travel Festival + Etihad January Sale','<b>Koniec stycznia 2027</b> — twardy deadline zakupu (4 miejsca w jednej rezerwacji znikają szybko)','Plan B: Air China z Warszawy przez Pekin (~3,3–4 tys. zł/os, bagaż w cenie)'])}
+    ${seg('🗓️ Kalendarz polowania',['<b>~20.11–2.12.2026</b> — Black Friday Etihad/Qatar (historycznie do −35%, podróże do 30.06)','<b>22.12.2026 – poł. stycznia 2027</b> — Qatar Travel Festival + Etihad January Sale','<b>Koniec stycznia 2027</b> — twardy deadline zakupu (4 miejsca w jednej rezerwacji znikają szybko)','Plan B: Air China z Warszawy przez Pekin (~3,3–4 tys. zł/os, bagaż w cenie)','Bilet kupujemy jako Etihad ze stopoverem: nocleg 4★ w Abu Zabi gratis (postój >24 h, pakiet na etihad.com ≥3 dni przed; przy zakupie potwierdzić, że promocja obejmuje maj 2027 i że multi-city nie podnosi taryfy)'])}
     ${seg('🔔 Aktywne alerty',['Google Flights — monitoring ceny 3→15.05 (mail przy zmianie)','Automatyczne kontrole Claude: 1.10, 20.11, 22.12.2026 oraz 12.01 i 25.01.2027','Do dołożenia ręcznie: alert w Kayak + obserwacja fly4free.pl (tag Tokio)'])}
   </section>
 
@@ -746,9 +765,9 @@ function kosztyPage(){
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
           <tr><td class="cat">✈️ Loty<span class="hint">Etihad, całość za 4 os. (+ bagaż)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="14000" min="0" step="100"></td></tr>
-          <tr><td class="cat">🏨 Noclegi<span class="hint">aparthotel lub machiya; 1 noc ryokan</span></td><td class="num"><input type="number" id="nights" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="820" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">10 płatnych nocy w Japonii (noc w Abu Zabi gratis od Etihadu)</span></td><td class="num"><input type="number" id="nights" class="sm" value="10" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="820" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny + metro + NEX</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4000" min="0" step="100"></td></tr>
-          <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę</span></td><td class="num"><input type="number" id="days" class="sm" value="12" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
+          <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (w tym dzień w Abu Zabi)</span></td><td class="num"><input type="number" id="days" class="sm" value="13" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">sumo, warsztaty, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2600" min="0" step="100"></td></tr>
           <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td></tr>
         </tbody>
@@ -772,7 +791,7 @@ function kosztyPage(){
   ${footer('')}
   <script>
   (function(){
-    var D={flights:14000,nights:11,nightRate:820,transport:4000,days:12,foodRate:500,attractions:2600,extras:3000};
+    var D={flights:14000,nights:10,nightRate:820,transport:4000,days:13,foodRate:500,attractions:2600,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
@@ -816,23 +835,24 @@ function hotelePage(){
         <div class="meta"><span>💴 <b>${H.price}</b> — orientacyjnie, maj = sprawdzić przy rezerwacji</span><span>📍 ${H.near}</span></div>
         <div class="links"><a href="${gmapsQ(H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a></div>
       </div>
-      <div class="hqr">
+      ${H.noqr?'':`<div class="hqr">
         <img src="assets/qr/${H.id}.svg" alt="Kod QR — ${H.name} w Google Maps" width="132" height="132" loading="lazy">
         <div class="qlab">📱 zeskanuj →<br>Google Maps</div>
-      </div>
+      </div>`}
     </div>`).join('');
   const inner=`
   <header class="hero" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(18,39,64,.40)),url('${IMG.tokyostation}') center/cover">
-    <p class="eyebrow">Noclegi · 11 nocy · pokoje rodzinne 4-os.</p>
+    <p class="eyebrow">Noclegi · 10 nocy w Japonii + gratis Abu Zabi · pokoje rodzinne 4-os.</p>
     <h1>Hotele</h1>
-    <p class="lead">Pięć baz dobranych pod rodzinę 2+2: aparthotele MIMARU (osobna sypialnia + aneks) i jeden klasyczny ryokan z onsenem w Hakone. Każdy kod QR otwiera hotel w Google Maps na telefonie.</p>
+    <p class="lead">Pięć baz w Japonii pod rodzinę 2+2 (aparthotele MIMARU i ryokan z onsenem) plus darmowa noc stopover w Abu Zabi od Etihadu. Kody QR otwierają hotele w Google Maps na telefonie.</p>
   </header>
   <section>
     <div class="hlist">${cards}</div>
     <div class="card" style="margin-top:16px"><ul class="tips">
       <li><b>Rezerwujcie wrzesień–październik 2026</b> z darmowym anulowaniem (Booking/strony hoteli) — pokoje 4-osobowe znikają pierwsze, a początek maja łapie ogon Golden Week.</li>
       <li>Ryokan w Hakone: przy rezerwacji poprosić o kolację kaiseki i zarezerwować prywatną kąpiel kashikiri na ~17:30.</li>
-      <li>Ceny to widełki orientacyjne za pokój/apartament dla 4 osób; suma 11 nocy ≈ 9–11 tys. zł (w kalkulatorze liczymy 11 × 820 zł).</li>
+      <li>Ceny to widełki orientacyjne za pokój/apartament dla 4 osób; suma 10 płatnych nocy ≈ 8–10 tys. zł (w kalkulatorze liczymy 10 × 820 zł; noc w Abu Zabi gratis).</li>
+      <li>Pakiet stopover (hotel w Abu Zabi) rezerwujcie na etihad.com od razu po kupnie biletów — popularne terminy znikają, a promocję trzeba potwierdzić dla maja 2027.</li>
       <li>Adresy dla taksówkarza najlepiej pokazywać z Google Maps po japońsku — QR z tej strony otwiera właściwe miejsce od razu.</li>
     </ul></div>
   </section>
@@ -847,6 +867,7 @@ function pogodaPage(){
     ['♨️ Hakone (góry)','~19°C','~10°C','chłodniej i wilgotniej — weź ciepłą warstwę; Fudżi najlepiej widać rano'],
     ['⛩️ Kioto / Nara','~25°C','~14°C','cieplej niż w Tokio; w kotlinie w słońcu bywa parno'],
     ['🏯 Osaka','~25°C','~15°C','ciepło, miejsko; wieczory łagodne'],
+    ['🕌 Abu Zabi (stopover)','35–40°C','~26°C','upał! zwiedzanie rano, w południe klimatyzacja (Luwr), dużo wody'],
   ].map(r=>`<tr><td class="cat">${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td></tr>`).join('');
   const inner=`
   <header class="hero" style="background:linear-gradient(120deg,rgba(31,94,90,.56),rgba(18,44,42,.42)),url('${IMG.fuji}') center/cover">
@@ -889,7 +910,7 @@ function atrakcjePage(){
   body = body.replace(/<h2 id="([^"]+)">([^<]+)<\/h2>/g,'<h2 id="$1" class="stitle" style="scroll-margin-top:80px">$2</h2>');
   const toc = `<nav class="toc" style="margin-bottom:18px">
     <a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a><a href="#kioto">⛩️ Kioto</a>
-    <a href="#nara">🦌 Nara</a><a href="#osaka">🏯 Osaka</a><a href="#sumo-s">🥋 Sumo</a><a href="#praktyczne">🧳 Praktyczne</a></nav>`;
+    <a href="#nara">🦌 Nara</a><a href="#osaka">🏯 Osaka</a><a href="#abuzabi">🕌 Abu Zabi</a><a href="#sumo-s">🥋 Sumo</a><a href="#praktyczne">🧳 Praktyczne</a></nav>`;
   const inner=`
   <header class="hero" style="background:linear-gradient(120deg,rgba(138,43,35,.56),rgba(70,32,20,.42)),url('${IMG.sensoji}') center/cover">
     <p class="eyebrow">Godziny · ceny · rezerwacje</p>

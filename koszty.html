@@ -23,7 +23,7 @@
     <h2 class="stitle">Strategia biletowa</h2>
     <div class="pflag">✈️ <span><b>Lot dziś (23.07.2026): ok. 13 900 zł</b> za 4 os. (Etihad) — cena faluje 13,9–18 tys.</span></div>
     <div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">🎯 Progi decyzyjne (4 os., w obie strony, z bagażem)</h3><ul class="tips"><li><b>≤ 13 000 zł</b> — okazja, kupować natychmiast</li><li><b>13–15 tys. zł</b> — cena uczciwa, można kupić dla pewności miejsc</li><li><b>≥ 16 tys. zł</b> — górka, czekać na wyprzedaż</li></ul></div>
-    <div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">🗓️ Kalendarz polowania</h3><ul class="tips"><li><b>~20.11–2.12.2026</b> — Black Friday Etihad/Qatar (historycznie do −35%, podróże do 30.06)</li><li><b>22.12.2026 – poł. stycznia 2027</b> — Qatar Travel Festival + Etihad January Sale</li><li><b>Koniec stycznia 2027</b> — twardy deadline zakupu (4 miejsca w jednej rezerwacji znikają szybko)</li><li>Plan B: Air China z Warszawy przez Pekin (~3,3–4 tys. zł/os, bagaż w cenie)</li></ul></div>
+    <div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">🗓️ Kalendarz polowania</h3><ul class="tips"><li><b>~20.11–2.12.2026</b> — Black Friday Etihad/Qatar (historycznie do −35%, podróże do 30.06)</li><li><b>22.12.2026 – poł. stycznia 2027</b> — Qatar Travel Festival + Etihad January Sale</li><li><b>Koniec stycznia 2027</b> — twardy deadline zakupu (4 miejsca w jednej rezerwacji znikają szybko)</li><li>Plan B: Air China z Warszawy przez Pekin (~3,3–4 tys. zł/os, bagaż w cenie)</li><li>Bilet kupujemy jako Etihad ze stopoverem: nocleg 4★ w Abu Zabi gratis (postój >24 h, pakiet na etihad.com ≥3 dni przed; przy zakupie potwierdzić, że promocja obejmuje maj 2027 i że multi-city nie podnosi taryfy)</li></ul></div>
     <div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">🔔 Aktywne alerty</h3><ul class="tips"><li>Google Flights — monitoring ceny 3→15.05 (mail przy zmianie)</li><li>Automatyczne kontrole Claude: 1.10, 20.11, 22.12.2026 oraz 12.01 i 25.01.2027</li><li>Do dołożenia ręcznie: alert w Kayak + obserwacja fly4free.pl (tag Tokio)</li></ul></div>
   </section>
 
@@ -35,9 +35,9 @@
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
           <tr><td class="cat">✈️ Loty<span class="hint">Etihad, całość za 4 os. (+ bagaż)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="14000" min="0" step="100"></td></tr>
-          <tr><td class="cat">🏨 Noclegi<span class="hint">aparthotel lub machiya; 1 noc ryokan</span></td><td class="num"><input type="number" id="nights" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="820" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">10 płatnych nocy w Japonii (noc w Abu Zabi gratis od Etihadu)</span></td><td class="num"><input type="number" id="nights" class="sm" value="10" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="820" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny + metro + NEX</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4000" min="0" step="100"></td></tr>
-          <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę</span></td><td class="num"><input type="number" id="days" class="sm" value="12" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
+          <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (w tym dzień w Abu Zabi)</span></td><td class="num"><input type="number" id="days" class="sm" value="13" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">sumo, warsztaty, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2600" min="0" step="100"></td></tr>
           <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td></tr>
         </tbody>
@@ -63,7 +63,7 @@
   Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="index.html">Strona główna</a></footer>
   <script>
   (function(){
-    var D={flights:14000,nights:11,nightRate:820,transport:4000,days:12,foodRate:500,attractions:2600,extras:3000};
+    var D={flights:14000,nights:10,nightRate:820,transport:4000,days:13,foodRate:500,attractions:2600,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
