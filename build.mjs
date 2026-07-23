@@ -266,12 +266,17 @@ fs.writeFileSync(DIR + '/assets/app.js', APP);
 
 /* ============================ DATA ============================ */
 const IMG = {
-  shibuya:'/assets/img/shibuya.jpg',
-  fuji:'/assets/img/fuji.jpg',
-  fushimi:'/assets/img/fushimi.jpg',
-  todaiji:'/assets/img/todaiji.jpg',
-  dotonbori:'/assets/img/dotonbori.jpg',
-  sensoji:'/assets/img/sensoji.jpg',
+  sensoji:'/assets/img/sensoji.jpg', shibuya:'/assets/img/shibuya.jpg', akihabara:'/assets/img/akihabara.jpg',
+  fuji:'/assets/img/fuji.jpg', yasaka:'/assets/img/yasaka.jpg', fushimi:'/assets/img/fushimi.jpg',
+  kinkakuji:'/assets/img/kinkakuji.jpg', todaiji:'/assets/img/todaiji.jpg', bamboo:'/assets/img/bamboo.jpg',
+  dotonbori:'/assets/img/dotonbori.jpg', sumo:'/assets/img/sumo.jpg', tokyostation:'/assets/img/tokyostation.jpg',
+};
+// one distinct photo per day
+const DAYIMG = {
+  '2027-05-04':IMG.sensoji, '2027-05-05':IMG.shibuya, '2027-05-06':IMG.akihabara,
+  '2027-05-07':IMG.fuji, '2027-05-08':IMG.yasaka, '2027-05-09':IMG.fushimi,
+  '2027-05-10':IMG.kinkakuji, '2027-05-11':IMG.todaiji, '2027-05-12':IMG.bamboo,
+  '2027-05-13':IMG.dotonbori, '2027-05-14':IMG.sumo, '2027-05-15':IMG.tokyostation,
 };
 const CITY = {
   tokio:{c1:'20,32,64',c2:'14,39,67',photo:IMG.shibuya},
@@ -281,8 +286,8 @@ const CITY = {
   osaka:{c1:'58,32,84',c2:'124,45,85',photo:IMG.dotonbori},
 };
 // hero: light tint so the PHOTO is the star; card: bottom-weighted for a legible title
-const heroBg = c => `linear-gradient(120deg,rgba(${CITY[c].c1},.58),rgba(${CITY[c].c2},.34)),url('${CITY[c].photo}') center/cover`;
-const cardBg = c => `linear-gradient(to top,rgba(${CITY[c].c1},.92),rgba(${CITY[c].c1},.10)),url('${CITY[c].photo}') center/cover`;
+const heroBg = (c,ph) => `linear-gradient(120deg,rgba(${CITY[c].c1},.58),rgba(${CITY[c].c2},.34)),url('${ph}') center/cover`;
+const cardBg = (c,ph) => `linear-gradient(to top,rgba(${CITY[c].c1},.92),rgba(${CITY[c].c1},.10)),url('${ph}') center/cover`;
 const GEO = {
   '2027-05-04':[[35.772,140.393,'Narita (przylot)'],[35.681,139.767,'Tokyo Station'],[35.7148,139.7967,'Asakusa / Sensō-ji']],
   '2027-05-05':[[35.6764,139.6993,'Meiji Jingū'],[35.6702,139.7027,'Harajuku'],[35.6595,139.7005,'Shibuya']],
@@ -593,7 +598,7 @@ function dayPage(d,i){
     </div>
   </section>`:'';
   const inner = `
-  <header class="hero" style="background:${heroBg(d.city)}">
+  <header class="hero" style="background:${heroBg(d.city, DAYIMG[d.date])}">
     <p class="eyebrow">Dzień ${i+1} z 12 · ${d.dow} · ${d.dd}</p>
     <h1>${d.title}</h1>
     <p class="lead">${d.lead}</p>
@@ -630,7 +635,7 @@ function dayPage(d,i){
 
 /* ---- index ---- */
 function indexPage(){
-  const cards = DAYS.map((d,i)=>`<a class="dcard" href="days/${d.date}.html" style="background:${cardBg(d.city)}">
+  const cards = DAYS.map((d,i)=>`<a class="dcard" href="days/${d.date}.html" style="background:${cardBg(d.city, DAYIMG[d.date])}">
     <div class="dn">${i+1}</div>
     <div class="dd">${d.dow} · ${d.dd}</div>
     <div class="dt">${d.title}</div>
