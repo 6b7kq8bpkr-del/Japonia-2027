@@ -502,7 +502,10 @@ function dayPage(d,i){
   const prefix='../';
   const prev=DAYS[i-1], next=DAYS[i+1];
   const tl = d.tl.map(x=>`<li><div class="tm">${x[0]}</div><div class="bd"><p class="h">${x[1]}</p>${x[2]?`<p class="d">${x[2]}</p>`:''}</div></li>`).join('');
-  const facts = d.facts.map(f=>`<div><div class="fv">${f[0]}</div><div class="fk">${f[1]}</div></div>`).join('');
+  const facts = d.facts.map((f,idx)=>{
+    const span=(d.facts.length%2===1 && idx===d.facts.length-1)?' style="grid-column:1/-1"':'';
+    return `<div${span}><div class="fv">${f[0]}</div><div class="fk">${f[1]}</div></div>`;
+  }).join('');
   const tips = d.tips.map(t=>`<li>${t}</li>`).join('');
   const links = d.links.length?`<div class="linklist">${d.links.map(l=>`<a href="${prefix}atrakcje.html#${l.id}">🎟️ ${l.label}</a>`).join('')}</div>`:'';
   const pc = d.pc?`<div class="pc"><div class="pch">⚖️ ${d.pc.q}</div>${d.pc.opts.map(o=>`<div class="row"><span class="opt">${o[0]}</span> — <span class="plus">za:</span> ${o[1]}; <span class="minus">przeciw:</span> ${o[2]}.</div>`).join('')}</div>`:'';
