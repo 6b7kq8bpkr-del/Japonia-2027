@@ -255,3 +255,34 @@ footer a{font-weight:700;text-decoration:none}
   color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:var(--shadow);opacity:0;pointer-events:none;
   transition:.25s;z-index:60}
 .totop.show{opacity:1;pointer-events:auto}
+
+/* ---- modern polish ---- */
+.progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;
+  background:linear-gradient(90deg,var(--kin),var(--shu));transition:width .12s linear}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.06) 0%,transparent 34%,transparent 58%,rgba(0,0,0,.34) 100%)}
+.qcard,.dcard,.hcard,.acard,.hotelbox,.stt,.daynav a{
+  transition:transform .32s cubic-bezier(.2,.7,.2,1),box-shadow .32s ease,border-color .15s ease,filter .32s ease}
+.qcard:hover,.hcard:hover,.acard:hover,.stt:hover,.daynav a:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.dcard:hover{transform:translateY(-4px);box-shadow:0 30px 70px rgba(20,30,45,.22);filter:brightness(1.05)}
+.js main>section{opacity:0;transform:translateY(22px);
+  transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.js main>section.in{opacity:1;transform:none}
+/* intensity dot on day cards */
+.dcard .idot{position:absolute;top:17px;right:18px;width:12px;height:12px;border-radius:50%;z-index:1;
+  box-shadow:0 0 0 3px rgba(255,255,255,.4),0 1px 3px rgba(0,0,0,.35)}
+.idot.g{background:var(--success)}.idot.y{background:var(--kin)}.idot.r{background:var(--shu)}
+/* stat band */
+.statband{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:12px;margin-top:22px}
+.stt{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 14px;text-align:center;box-shadow:var(--shadow-sm)}
+.stt b{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(26px,4.4vw,38px);color:var(--ai);line-height:1;letter-spacing:-.01em}
+.stt b small{font-size:.4em;color:var(--muted);font-family:var(--sans);font-weight:700;margin-left:3px}
+.stt span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-top:8px}
+.stt.hl{background:linear-gradient(160deg,var(--ai),var(--ai-dark));border-color:transparent}
+.stt.hl b{color:#fff}.stt.hl b small{color:rgba(255,255,255,.72)}.stt.hl span{color:rgba(255,255,255,.85)}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js main>section{opacity:1;transform:none;transition:none}
+  .qcard,.dcard,.hcard,.acard,.hotelbox,.stt,.daynav a{transition:border-color .15s ease}
+  .qcard:hover,.dcard:hover,.hcard:hover,.acard:hover,.stt:hover,.daynav a:hover{transform:none}
+}

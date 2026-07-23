@@ -7,8 +7,10 @@
 <meta name="description" content="Plan rodzinnego wyjazdu do Japonii 3–15 maja 2027: agenda dzień po dniu, atrakcje, koszty i pogoda.">
 <title>Japonia 2027 — rodzinny plan wyjazdu</title>
 <link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
+<div class="progress" id="progress"></div>
 <div class="topbar"><div class="navrow"><a class="brand" href="index.html">JAPONIA <b>·</b> 2027</a><nav class="tabs"><a href="index.html" class="on">Plan</a><a href="decyzje.html">Dlaczego</a><a href="atrakcje.html">Atrakcje</a><a href="hotele.html">Hotele</a><a href="koszty.html">Koszty</a><a href="pogoda.html">Pogoda</a></nav></div></div>
 
 <main class="wrap">
@@ -19,6 +21,14 @@
     <p class="lead">3–15 maja 2027 · Abu Zabi (stopover) – Tokio – Hakone – Kioto – Osaka. Klasyka pierwszego razu z odrobiną tradycyjnej kultury, Pokémonami dla dzieci i turniejem sumo na finał.</p>
     <div class="chips"><span class="chip">✈️ Etihad</span><span class="chip">🕌 noc w Abu Zabi gratis</span><span class="chip">🏨 11 nocy</span><span class="chip">🥋 turniej sumo</span><span class="chip">♨️ ryokan z onsenem</span></div>
   </header>
+
+  <section class="statband" aria-label="Podróż w liczbach">
+    <div class="stt hl"><b id="cd">—</b><span>dni do wylotu</span></div>
+    <div class="stt"><b>13</b><span>dni podróży</span></div>
+    <div class="stt"><b>5</b><span>baz / miast</span></div>
+    <div class="stt"><b>11</b><span>nocy w Japonii</span></div>
+    <div class="stt"><b>~42<small>tys zł</small></b><span>budżet 2+2</span></div>
+  </section>
 
   <section>
     <h2 class="stitle">Nasza trasa po Japonii</h2>
@@ -37,57 +47,71 @@
     <p class="lead-p">Kliknij dowolny dzień, żeby zobaczyć plan godzinowy, wskazówki i „w skrócie". Golden Week kończy się 5 maja, więc główne przejazdy robimy już po szczycie tłumów.</p>
     <div class="dgrid"><a class="dcard" href="days/2027-05-03.html" style="background:linear-gradient(to top,rgba(110,74,20,.92),rgba(110,74,20,.10)),url('/assets/img/abudhabi.jpg') center/cover">
     <div class="dn">1</div>
+    <span class="idot g" title="Lekki dzień"></span>
     <div class="dd">poniedziałek · 3 maja</div>
     <div class="dt">Wylot i wieczór w Abu Zabi</div>
   </a><a class="dcard" href="days/2027-05-04.html" style="background:linear-gradient(to top,rgba(110,74,20,.92),rgba(110,74,20,.10)),url('/assets/img/mosque.jpg') center/cover">
     <div class="dn">2</div>
+    <span class="idot y" title="Średni dzień"></span>
     <div class="dd">wtorek · 4 maja</div>
     <div class="dt">Dzień w Abu Zabi i nocny lot do Tokio</div>
   </a><a class="dcard" href="days/2027-05-05.html" style="background:linear-gradient(to top,rgba(20,32,64,.92),rgba(20,32,64,.10)),url('/assets/img/sensoji.jpg') center/cover">
     <div class="dn">3</div>
+    <span class="idot g" title="Lekki dzień"></span>
     <div class="dd">środa · 5 maja</div>
     <div class="dt">Przylot do Tokio w Dzień Dziecka</div>
   </a><a class="dcard" href="days/2027-05-06.html" style="background:linear-gradient(to top,rgba(20,32,64,.92),rgba(20,32,64,.10)),url('/assets/img/shibuya.jpg') center/cover">
     <div class="dn">4</div>
+    <span class="idot r" title="Intensywny dzień"></span>
     <div class="dd">czwartek · 6 maja</div>
     <div class="dt">Wielki dzień Tokio: sushi, Pokémony i widok z dachu</div>
   </a><a class="dcard" href="days/2027-05-07.html" style="background:linear-gradient(to top,rgba(20,58,58,.92),rgba(20,58,58,.10)),url('/assets/img/fuji.jpg') center/cover">
     <div class="dn">5</div>
+    <span class="idot y" title="Średni dzień"></span>
     <div class="dd">piątek · 7 maja</div>
     <div class="dt">W góry Hakone — onsen i Fudżi</div>
   </a><a class="dcard" href="days/2027-05-08.html" style="background:linear-gradient(to top,rgba(120,40,32,.92),rgba(120,40,32,.10)),url('/assets/img/yasaka.jpg') center/cover">
     <div class="dn">6</div>
+    <span class="idot g" title="Lekki dzień"></span>
     <div class="dd">sobota · 8 maja</div>
     <div class="dt">Z gór do dawnej stolicy</div>
   </a><a class="dcard" href="days/2027-05-09.html" style="background:linear-gradient(to top,rgba(120,40,32,.92),rgba(120,40,32,.10)),url('/assets/img/fushimi.jpg') center/cover">
     <div class="dn">7</div>
+    <span class="idot r" title="Intensywny dzień"></span>
     <div class="dd">niedziela · 9 maja</div>
     <div class="dt">Kioto wschodnie: torii i tarasy</div>
   </a><a class="dcard" href="days/2027-05-10.html" style="background:linear-gradient(to top,rgba(120,40,32,.92),rgba(120,40,32,.10)),url('/assets/img/kinkakuji.jpg') center/cover">
     <div class="dn">8</div>
+    <span class="idot y" title="Średni dzień"></span>
     <div class="dd">poniedziałek · 10 maja</div>
     <div class="dt">Dzień kultury: herbata, pędzel, kwiaty</div>
   </a><a class="dcard" href="days/2027-05-11.html" style="background:linear-gradient(to top,rgba(45,74,42,.92),rgba(45,74,42,.10)),url('/assets/img/todaiji.jpg') center/cover">
     <div class="dn">9</div>
+    <span class="idot y" title="Średni dzień"></span>
     <div class="dd">wtorek · 11 maja</div>
     <div class="dt">Nara: jelenie i Wielki Budda</div>
   </a><a class="dcard" href="days/2027-05-12.html" style="background:linear-gradient(to top,rgba(58,32,84,.92),rgba(58,32,84,.10)),url('/assets/img/bamboo.jpg') center/cover">
     <div class="dn">10</div>
+    <span class="idot r" title="Intensywny dzień"></span>
     <div class="dd">środa · 12 maja</div>
     <div class="dt">Bambusy Arashiyamy i neony Osaki</div>
   </a><a class="dcard" href="days/2027-05-13.html" style="background:linear-gradient(to top,rgba(58,32,84,.92),rgba(58,32,84,.10)),url('/assets/img/dotonbori.jpg') center/cover">
     <div class="dn">11</div>
+    <span class="idot g" title="Lekki dzień"></span>
     <div class="dd">czwartek · 13 maja</div>
     <div class="dt">Osaka: luz, targ i kuchnia</div>
   </a><a class="dcard" href="days/2027-05-14.html" style="background:linear-gradient(to top,rgba(20,32,64,.92),rgba(20,32,64,.10)),url('/assets/img/sumo.jpg') center/cover">
     <div class="dn">12</div>
+    <span class="idot y" title="Średni dzień"></span>
     <div class="dd">piątek · 14 maja</div>
     <div class="dt">Powrót do Tokio i turniej sumo</div>
   </a><a class="dcard" href="days/2027-05-15.html" style="background:linear-gradient(to top,rgba(20,32,64,.92),rgba(20,32,64,.10)),url('/assets/img/tokyostation.jpg') center/cover">
     <div class="dn">13</div>
+    <span class="idot g" title="Lekki dzień"></span>
     <div class="dd">sobota · 15 maja</div>
     <div class="dt">Ostatnie zakupy i droga do domu</div>
   </a></div>
+    <p class="note" style="margin-top:12px">Kropka na kafelku to obciążenie dnia: <b style="color:var(--success)">●</b> lekki · <b style="color:var(--kin)">●</b> średni · <b style="color:var(--shu)">●</b> intensywny. Więcej w <a href="decyzje.html">Dlaczego tak?</a></p>
   </section>
 
   <section>

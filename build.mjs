@@ -263,6 +263,37 @@ footer a{font-weight:700;text-decoration:none}
   color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:var(--shadow);opacity:0;pointer-events:none;
   transition:.25s;z-index:60}
 .totop.show{opacity:1;pointer-events:auto}
+
+/* ---- modern polish ---- */
+.progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;
+  background:linear-gradient(90deg,var(--kin),var(--shu));transition:width .12s linear}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.06) 0%,transparent 34%,transparent 58%,rgba(0,0,0,.34) 100%)}
+.qcard,.dcard,.hcard,.acard,.hotelbox,.stt,.daynav a{
+  transition:transform .32s cubic-bezier(.2,.7,.2,1),box-shadow .32s ease,border-color .15s ease,filter .32s ease}
+.qcard:hover,.hcard:hover,.acard:hover,.stt:hover,.daynav a:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.dcard:hover{transform:translateY(-4px);box-shadow:0 30px 70px rgba(20,30,45,.22);filter:brightness(1.05)}
+.js main>section{opacity:0;transform:translateY(22px);
+  transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.js main>section.in{opacity:1;transform:none}
+/* intensity dot on day cards */
+.dcard .idot{position:absolute;top:17px;right:18px;width:12px;height:12px;border-radius:50%;z-index:1;
+  box-shadow:0 0 0 3px rgba(255,255,255,.4),0 1px 3px rgba(0,0,0,.35)}
+.idot.g{background:var(--success)}.idot.y{background:var(--kin)}.idot.r{background:var(--shu)}
+/* stat band */
+.statband{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:12px;margin-top:22px}
+.stt{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 14px;text-align:center;box-shadow:var(--shadow-sm)}
+.stt b{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(26px,4.4vw,38px);color:var(--ai);line-height:1;letter-spacing:-.01em}
+.stt b small{font-size:.4em;color:var(--muted);font-family:var(--sans);font-weight:700;margin-left:3px}
+.stt span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-top:8px}
+.stt.hl{background:linear-gradient(160deg,var(--ai),var(--ai-dark));border-color:transparent}
+.stt.hl b{color:#fff}.stt.hl b small{color:rgba(255,255,255,.72)}.stt.hl span{color:rgba(255,255,255,.85)}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js main>section{opacity:1;transform:none;transition:none}
+  .qcard,.dcard,.hcard,.acard,.hotelbox,.stt,.daynav a{transition:border-color .15s ease}
+  .qcard:hover,.dcard:hover,.hcard:hover,.acard:hover,.stt:hover,.daynav a:hover{transform:none}
+}
 `;
 fs.writeFileSync(DIR + '/assets/style.css', CSS);
 
@@ -276,6 +307,22 @@ var bt=document.getElementById('totop');
 if(bt){addEventListener('scroll',function(){bt.classList.toggle('show',scrollY>500);});
   bt.addEventListener('click',function(){scrollTo({top:0,behavior:'smooth'});});}
 var on=document.querySelector('.pills a.on'); if(on&&on.scrollIntoView) on.scrollIntoView({inline:'center',block:'nearest'});
+// scroll reveal (runs early so a later error can't leave sections hidden)
+(function(){
+  var secs=[].slice.call(document.querySelectorAll('main>section'));
+  if(!('IntersectionObserver' in window)){ secs.forEach(function(s){s.classList.add('in');}); return; }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -6% 0px'});
+  secs.forEach(function(s){ if(s.querySelector('#map')){ s.classList.add('in'); return; } io.observe(s); });
+})();
+// reading progress bar
+var pg=document.getElementById('progress');
+if(pg){var upd=function(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;
+  pg.style.width=(m>0?(h.scrollTop/m*100):0)+'%';};addEventListener('scroll',upd,{passive:true});upd();}
+// countdown to departure
+var cd=document.getElementById('cd');
+if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date())/86400000));cd.textContent=days;}
 (function(){
   var geoEl=document.getElementById('geo'); if(!geoEl) return;
   var btn=document.getElementById('mapActivate'), mapDiv=document.getElementById('map');
@@ -689,8 +736,10 @@ function shell({title,desc,prefix,active,inner,pillsIdx}){
 <meta name="description" content="${desc}">
 <title>${title}</title>
 <link rel="stylesheet" href="${prefix}assets/style.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
+<div class="progress" id="progress"></div>
 ${nav(active,prefix)}
 ${pillsIdx!=null?pills(pillsIdx):''}
 <main class="wrap">
@@ -778,11 +827,13 @@ function dayPage(d,i){
 
 /* ---- index ---- */
 function indexPage(){
-  const cards = DAYS.map((d,i)=>`<a class="dcard" href="days/${d.date}.html" style="background:${cardBg(d.city, DAYIMG[d.date])}">
+  const intLbl={g:'Lekki',y:'Średni',r:'Intensywny'};
+  const cards = DAYS.map((d,i)=>{const it=DAYINT[d.date];return `<a class="dcard" href="days/${d.date}.html" style="background:${cardBg(d.city, DAYIMG[d.date])}">
     <div class="dn">${i+1}</div>
+    ${it?`<span class="idot ${it[0]}" title="${intLbl[it[0]]} dzień"></span>`:''}
     <div class="dd">${d.dow} · ${d.dd}</div>
     <div class="dt">${d.title}</div>
-  </a>`).join('');
+  </a>`;}).join('');
   const quick = `<div class="quick">
     <a class="qcard" href="decyzje.html"><div class="qi">🧭</div><div class="qh">Dlaczego tak?</div><div class="qd">Logika planu: rytm, decyzje i jak go modyfikować.</div></a>
     <a class="qcard" href="atrakcje.html"><div class="qi">🎟️</div><div class="qh">Atrakcje</div><div class="qd">Godziny, ceny i linki do rezerwacji — 32 miejsca.</div></a>
@@ -797,6 +848,14 @@ function indexPage(){
     <p class="lead">3–15 maja 2027 · Abu Zabi (stopover) – Tokio – Hakone – Kioto – Osaka. Klasyka pierwszego razu z odrobiną tradycyjnej kultury, Pokémonami dla dzieci i turniejem sumo na finał.</p>
     <div class="chips"><span class="chip">✈️ Etihad</span><span class="chip">🕌 noc w Abu Zabi gratis</span><span class="chip">🏨 11 nocy</span><span class="chip">🥋 turniej sumo</span><span class="chip">♨️ ryokan z onsenem</span></div>
   </header>
+
+  <section class="statband" aria-label="Podróż w liczbach">
+    <div class="stt hl"><b id="cd">—</b><span>dni do wylotu</span></div>
+    <div class="stt"><b>13</b><span>dni podróży</span></div>
+    <div class="stt"><b>5</b><span>baz / miast</span></div>
+    <div class="stt"><b>11</b><span>nocy w Japonii</span></div>
+    <div class="stt"><b>~42<small>tys zł</small></b><span>budżet 2+2</span></div>
+  </section>
 
   <section>
     <h2 class="stitle">Nasza trasa po Japonii</h2>
@@ -814,6 +873,7 @@ function indexPage(){
     <h2 class="stitle">Dzień po dniu</h2>
     <p class="lead-p">Kliknij dowolny dzień, żeby zobaczyć plan godzinowy, wskazówki i „w skrócie". Golden Week kończy się 5 maja, więc główne przejazdy robimy już po szczycie tłumów.</p>
     <div class="dgrid">${cards}</div>
+    <p class="note" style="margin-top:12px">Kropka na kafelku to obciążenie dnia: <b style="color:var(--success)">●</b> lekki · <b style="color:var(--kin)">●</b> średni · <b style="color:var(--shu)">●</b> intensywny. Więcej w <a href="decyzje.html">Dlaczego tak?</a></p>
   </section>
 
   <section>

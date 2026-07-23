@@ -7,6 +7,22 @@ var bt=document.getElementById('totop');
 if(bt){addEventListener('scroll',function(){bt.classList.toggle('show',scrollY>500);});
   bt.addEventListener('click',function(){scrollTo({top:0,behavior:'smooth'});});}
 var on=document.querySelector('.pills a.on'); if(on&&on.scrollIntoView) on.scrollIntoView({inline:'center',block:'nearest'});
+// scroll reveal (runs early so a later error can't leave sections hidden)
+(function(){
+  var secs=[].slice.call(document.querySelectorAll('main>section'));
+  if(!('IntersectionObserver' in window)){ secs.forEach(function(s){s.classList.add('in');}); return; }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -6% 0px'});
+  secs.forEach(function(s){ if(s.querySelector('#map')){ s.classList.add('in'); return; } io.observe(s); });
+})();
+// reading progress bar
+var pg=document.getElementById('progress');
+if(pg){var upd=function(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;
+  pg.style.width=(m>0?(h.scrollTop/m*100):0)+'%';};addEventListener('scroll',upd,{passive:true});upd();}
+// countdown to departure
+var cd=document.getElementById('cd');
+if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date())/86400000));cd.textContent=days;}
 (function(){
   var geoEl=document.getElementById('geo'); if(!geoEl) return;
   var btn=document.getElementById('mapActivate'), mapDiv=document.getElementById('map');
