@@ -245,6 +245,11 @@ footer a{font-weight:700;text-decoration:none}
 .maplegend li{display:flex;align-items:center;gap:10px}
 .maplegend .mn{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--ai);color:#fff;
   display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+.flex{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.flex span{font-size:12.5px;border-radius:10px;padding:8px 11px;border:1px solid var(--line);flex:1 1 240px;line-height:1.4}
+.flex .fxlock{background:var(--panel)}
+.flex .fxcut{background:var(--sakura)}
+.flex b{font-weight:800}
 .rhythm{width:100%;border-collapse:collapse;font-size:14px}
 .rhythm td,.rhythm th{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 .rhythm tr:last-child td{border-bottom:none}
@@ -630,6 +635,21 @@ const DAYINT = {
   '2027-05-14':['y','Shinkansen + turniej sumo'],
   '2027-05-15':['g','Ostatnie zakupy + lot do domu'],
 };
+const DAYFLEX = {
+  '2027-05-03':['lot z Warszawy','dzień tranzytowy — nic do wycięcia'],
+  '2027-05-04':['nocny lot 21:50 do Tokio','Luwr (opcjonalny); meczet zostawić'],
+  '2027-05-05':['przylot + Narita Express','wieczorną Asakusę można skrócić'],
+  '2027-05-06':['Pokémon Café i Shibuya Sky (rezerwacje!)','Tsukiji, gdy rano ciężko'],
+  '2027-05-07':['ryokan + pętla Hakone','Open-Air Museum (opcja)'],
+  '2027-05-08':['shinkansen do Kioto','wieczór w Gion / Pontocho'],
+  '2027-05-09':['Fushimi Inari','Nishiki, ewentualnie Kiyomizu'],
+  '2027-05-10':['warsztaty kultury (rezerwacja)','Kinkaku-ji'],
+  '2027-05-11':['— (cała Nara to opcja, ale hit)','Kasuga Taisha; całość można skrócić'],
+  '2027-05-12':['przejazd Kioto → Osaka','małpy na Iwatayamie'],
+  '2027-05-13':['nic — cały dzień to bufor','wybierzcie zamek LUB akwarium'],
+  '2027-05-14':['SUMO + shinkansen do Tokio','nic — kotwica dnia'],
+  '2027-05-15':['lot 18:00 + Narita Express','zakupy dowolnie'],
+};
 
 /* ============================ TEMPLATES ============================ */
 const TABS = [['index.html','Plan'],['decyzje.html','Dlaczego'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['koszty.html','Koszty'],['pogoda.html','Pogoda']];
@@ -684,6 +704,8 @@ function dayPage(d,i){
   const links = d.links.length?`<div class="linklist">${d.links.map(l=>`<a href="${prefix}atrakcje.html#${l.id}">🎟️ ${l.label}</a>`).join('')}</div>`:'';
   const pc = d.pc?`<div class="pc"><div class="pch">⚖️ ${d.pc.q}</div>${d.pc.opts.map(o=>`<div class="row"><span class="opt">${o[0]}</span> — <span class="plus">za:</span> ${o[1]}; <span class="minus">przeciw:</span> ${o[2]}.</div>`).join('')}</div>`:'';
   const more = d.more.length?`<section class="more"><h2 class="stitle">Więcej o tym dniu</h2><div class="card">${d.more.map(m=>`<details><summary>${m[0]}</summary><p>${m[1]}</p></details>`).join('')}</div></section>`:'';
+  const fx = DAYFLEX[d.date];
+  const flexNote = fx ? `<div class="flex"><span class="fxlock"><b>🔒 Nie ruszać:</b> ${fx[0]}</span><span class="fxcut"><b>✂️ Można odpuścić:</b> ${fx[1]}</span></div>` : '';
   const hid = DAYHOTEL[d.date];
   const hotelBox = hid ? (()=>{const H=HOTELS.find(h=>h.id===hid);
     return `<a class="hotelbox" href="../hotele.html#${H.id}">🏨 <span><b>Nocleg: ${H.name}</b> — szczegóły, cena i kod QR do mapy →</span></a>`;})() : '';
@@ -717,6 +739,7 @@ function dayPage(d,i){
   <section>
     <h2 class="stitle">W skrócie</h2>
     <div class="facts">${facts}</div>
+    ${flexNote}
     ${hotelBox}
     ${pc}
   </section>
@@ -748,7 +771,7 @@ function indexPage(){
   const quick = `<div class="quick">
     <a class="qcard" href="decyzje.html"><div class="qi">🧭</div><div class="qh">Dlaczego tak?</div><div class="qd">Logika planu: rytm, decyzje i jak go modyfikować.</div></a>
     <a class="qcard" href="atrakcje.html"><div class="qi">🎟️</div><div class="qh">Atrakcje</div><div class="qd">Godziny, ceny i linki do rezerwacji — 32 miejsca.</div></a>
-    <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Hotele</div><div class="qd">5 baz na 11 nocy, pokoje rodzinne + QR do map.</div></a>
+    <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Hotele</div><div class="qd">5 baz na 11 nocy, pokoje rodzinne, zdjęcia i linki do map.</div></a>
     <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Bilety i koszty</div><div class="qd">Strategia zakupu lotów, progi cen i kalkulator budżetu.</div></a>
     <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Czego się spodziewać w maju i co zabrać.</div></a>
   </div>`;
@@ -932,6 +955,17 @@ function decyzjePage(){
       <tbody>${rows}</tbody>
     </table></div>
     <div class="dnote" style="margin-top:12px">💡 Dwa punkty nacisku: <b>6.05</b> — najcięższy dzień w drugiej dobie po locie (jeśli rano ciężko, odpuśćcie Tsukiji); <b>12→15.05</b> — trzy zmiany łóżka w cztery doby (cena za sumo, dlatego 13.05 jest pusty z założenia).</div>
+  </section>
+
+  <section>
+    <h2 class="stitle">📅 Kalendarz przygotowań — deadline'y</h2>
+    <p class="lead-p">Do kiedy co załatwić. Trzy alerty (loty, noclegi, pogoda) same przypomną się w aplikacji.</p>
+    <div class="card"><ul class="tips">
+      <li><b>✈️ Loty — twardy deadline: koniec stycznia 2027.</b> Cel: 11–13 tys. zł na Black Friday (20.11–2.12.2026) albo w styczniowej wyprzedaży Etihad/Qatar. Później tylko drożej (4 miejsca + ogon Golden Week). Alerty: 1.10, 20.11, 22.12.2026, 12.01, 25.01.2027. <a href="koszty.html">Progi i strategia →</a></li>
+      <li><b>🏨 Noclegi — rezerwować wrzesień–październik 2026</b> z darmowym anulowaniem. Pokoje 4-osobowe i ryokan z prywatnym rotenburo znikają pierwsze, a początek maja to ogon Golden Week. Pakiet stopover w Abu Zabi: na etihad.com od razu po kupnie biletów (potwierdzić najpóźniej 3 dni przed wylotem). <span class="ipill y">alert: 15.09.2026</span></li>
+      <li><b>🎟️ Rezerwacje czasowe:</b> Nintendo Museum — loteria ~luty 2027 · warsztaty kultury w Kioto — 1–2 miesiące wcześniej · bilety sumo — ~początek kwietnia 2027 (znikają 1. dnia) · Shibuya Sky — 4 tygodnie wcześniej (slot na zachód słońca) · Pokémon Café — 31 dni wcześniej o 18:00 czasu japońskiego.</li>
+      <li><b>☔ Pogoda — dostrajać najpóźniej ~7 dni przed</b> (wcześniej prognoza jest niewiarygodna). Wtedy przełóżcie Shibuya Sky na najpogodniejszy wieczór i rezerwujcie slot tylko przy dobrej prognozie. <b>Rano danego dnia:</b> status kolejki w Hakone (hakonenavi.jp — wiatr/gaz), w razie czego Open-Air Museum; Fudżi to loteria. Dni z buforem (13.05) i plany B pochłaniają deszcz bez przebudowy. <span class="ipill y">alert: 26.04.2027</span></li>
+    </ul></div>
   </section>
 
   <section>
