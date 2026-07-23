@@ -343,6 +343,12 @@ const CITY = {
 // hero: light tint so the PHOTO is the star; card: bottom-weighted for a legible title
 const heroBg = (c,ph) => `linear-gradient(120deg,rgba(${CITY[c].c1},.58),rgba(${CITY[c].c2},.34)),url('${ph}') center/cover`;
 const cardBg = (c,ph) => `linear-gradient(to top,rgba(${CITY[c].c1},.92),rgba(${CITY[c].c1},.10)),url('${ph}') center/cover`;
+const JPSTOPS = [
+  [35.6804,139.7690,'Tokio — start (2 noce) i finał na turnieju sumo'],
+  [35.2323,139.1069,'Hakone — ryokan z prywatnym onsenem (1 noc)'],
+  [34.9853,135.7581,'Kioto — baza na 4 noce (stąd Nara i Arashiyama)'],
+  [34.6937,135.5023,'Osaka — Dōtonbori i kuchnia (2 noce)'],
+];
 const GEO = {
   '2027-05-03':[[52.1657,20.9671,'Lotnisko Chopina (wylot 11:50)'],[24.4330,54.6511,'Lotnisko Abu Zabi (19:35)'],[24.4539,54.3773,'Hotel stopover (centrum)']],
   '2027-05-04':[[24.4128,54.4750,'Wielki Meczet Szejka Zajida'],[24.5333,54.3981,'Luwr Abu Zabi'],[24.4330,54.6511,'Lotnisko (wylot 21:50)']],
@@ -791,6 +797,18 @@ function indexPage(){
     <p class="lead">3–15 maja 2027 · Abu Zabi (stopover) – Tokio – Hakone – Kioto – Osaka. Klasyka pierwszego razu z odrobiną tradycyjnej kultury, Pokémonami dla dzieci i turniejem sumo na finał.</p>
     <div class="chips"><span class="chip">✈️ Etihad</span><span class="chip">🕌 noc w Abu Zabi gratis</span><span class="chip">🏨 11 nocy</span><span class="chip">🥋 turniej sumo</span><span class="chip">♨️ ryokan z onsenem</span></div>
   </header>
+
+  <section>
+    <h2 class="stitle">Nasza trasa po Japonii</h2>
+    <p class="lead-p">Cała podróż na jednej mapie: z Tokio w góry Hakone, dalej do Kioto (baza na Narę i Arashiyamę), potem Osaka — i szybką koleją z powrotem do Tokio na turniej sumo. Wszystkie większe przejazdy shinkansenem, już po szczycie Golden Week.</p>
+    <div class="card">
+      <div class="maphold"><button class="mapbtn" id="mapActivate">🗺️ Aktywuj mapę</button><div id="map" class="map"></div></div>
+      <ol class="maplegend">${JPSTOPS.map(s=>`<li>${s[2]}</li>`).join('')}</ol>
+      <a class="gmap" href="https://www.google.com/maps/dir/Tokyo,+Japan/Hakone/Kyoto/Osaka/Tokyo,+Japan" target="_blank" rel="noopener">📍 Otwórz trasę w Google Maps ↗</a>
+      <p class="note" style="margin-top:6px">Linia pokazuje kierunek podróży (Tokio → Hakone → Kioto → Osaka); powrót do Tokio tą samą trasą koleją. Dzień w Abu Zabi (stopover) jest poza tą mapą.</p>
+      <script type="application/json" id="geo">${JSON.stringify(JPSTOPS)}</script>
+    </div>
+  </section>
 
   <section>
     <h2 class="stitle">Dzień po dniu</h2>
