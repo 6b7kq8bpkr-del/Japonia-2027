@@ -26,9 +26,9 @@ a{color:var(--ai)}
 /* top nav */
 .topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(8px);
   background:linear-gradient(var(--paper),rgba(245,241,232,.86));padding:12px 0}
-.topbar .bar{max-width:880px;margin:0 auto;background:var(--ai-dark);border-radius:999px;
+.topbar .navrow{max-width:880px;margin:0 auto;background:var(--ai-dark);border-radius:999px;
   display:flex;align-items:center;gap:8px;padding:9px 12px 9px 20px;box-shadow:var(--shadow-sm);
-  flex-wrap:wrap}
+  flex-wrap:wrap;min-height:44px}
 .brand{font-family:var(--serif);color:#fff;font-weight:500;font-size:16px;letter-spacing:.06em;
   text-decoration:none;margin-right:auto;white-space:nowrap}
 .brand b{color:var(--kin);font-weight:500}
@@ -37,6 +37,14 @@ a{color:var(--ai)}
   padding:7px 14px;border-radius:999px;white-space:nowrap;transition:.15s}
 .tabs a:hover{background:rgba(255,255,255,.12);color:#fff}
 .tabs a.on{background:var(--paper);color:var(--ai-dark)}
+  @media(max-width:640px){
+    .topbar{padding:10px 0}
+    .topbar .navrow{flex-wrap:nowrap;gap:8px;padding:8px 10px 8px 16px}
+    .brand{font-size:14px;margin-right:8px;flex:0 0 auto}
+    .tabs{flex:1 1 auto;min-width:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    .tabs::-webkit-scrollbar{display:none}
+    .tabs a{padding:7px 12px}
+  }
 
 /* day pills */
 .pills{max-width:880px;margin:14px auto 0;padding:0 20px;display:flex;gap:8px;overflow-x:auto;
@@ -599,10 +607,10 @@ const gmapsQ = name => 'https://www.google.com/maps/search/?api=1&query='+encode
 const DAYHOTEL = {'2027-05-03':'auh','2027-05-05':'tokio1','2027-05-07':'hakone','2027-05-08':'kioto','2027-05-12':'osaka','2027-05-14':'tokio2'};
 
 /* ============================ TEMPLATES ============================ */
-const TABS = [['index.html','Plan'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['koszty.html','Bilety i koszty'],['pogoda.html','Pogoda']];
+const TABS = [['index.html','Plan'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['koszty.html','Koszty'],['pogoda.html','Pogoda']];
 function nav(active,prefix){
   const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on"':'')}>${l}</a>`).join('');
-  return `<div class="topbar"><div class="bar"><a class="brand" href="${prefix}index.html">JAPONIA <b>·</b> 2027</a><nav class="tabs">${t}</nav></div></div>`;
+  return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html">JAPONIA <b>·</b> 2027</a><nav class="tabs">${t}</nav></div></div>`;
 }
 function pills(curIdx){
   const items = DAYS.map((d,i)=>{
@@ -670,7 +678,7 @@ function dayPage(d,i){
   </section>`:'';
   const inner = `
   <header class="hero" style="background:${heroBg(d.city, DAYIMG[d.date])}">
-    <p class="eyebrow">Dzień ${i+1} z 12 · ${d.dow} · ${d.dd}</p>
+    <p class="eyebrow">Dzień ${i+1} z ${DAYS.length} · ${d.dow} · ${d.dd}</p>
     <h1>${d.title}</h1>
     <p class="lead">${d.lead}</p>
     <div class="chips">${d.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
@@ -702,7 +710,7 @@ function dayPage(d,i){
   </nav>
   <p class="kbd">Przełączaj dni strzałkami ← → na klawiaturze albo z paska u góry.</p>
   ${footer(prefix)}`;
-  return shell({title:`Dzień ${i+1}: ${d.title} · Japonia 2027`,desc:d.lead,prefix,active:'',inner,pillsIdx:i});
+  return shell({title:`Dzień ${i+1}: ${d.title} · Japonia 2027`,desc:d.lead,prefix,active:'index.html',inner,pillsIdx:i});
 }
 
 /* ---- index ---- */
