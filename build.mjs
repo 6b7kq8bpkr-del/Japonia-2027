@@ -228,10 +228,11 @@ footer a{font-weight:700;text-decoration:none}
 .hcard .links{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
 .hcard .links a{font-size:12.5px;font-weight:700;text-decoration:none;color:var(--ai);
   border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--paper)}
-.hcard .hqr{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:6px}
-.hcard .hqr img{border:1px solid var(--line);border-radius:14px;background:#fff}
-.hcard .qlab{font-size:11px;color:var(--muted);text-align:center;line-height:1.35}
-@media(max-width:560px){.hcard{flex-direction:column}.hcard .hqr{flex-direction:row;align-items:center}}
+.hcard .hphoto{flex:0 0 auto;width:184px;text-decoration:none;display:flex;flex-direction:column;gap:6px}
+.hcard .hphoto img{width:184px;height:128px;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block}
+.hcard .hphoto:hover img{border-color:var(--ai)}
+.hcard .plab{font-size:12px;font-weight:700;color:var(--ai);text-align:center}
+@media(max-width:560px){.hcard{flex-direction:column}.hcard .hphoto{width:100%}.hcard .hphoto img{width:100%;height:180px}}
 .maphold{position:relative}
 .mapbtn{width:100%;padding:15px;border:1px dashed var(--line);background:var(--paper);border-radius:16px;
   font-weight:700;color:var(--ai);cursor:pointer;font-family:var(--sans);font-size:14.5px}
@@ -844,16 +845,16 @@ function hotelePage(){
         <div class="meta"><span>💴 <b>${H.price}</b> — orientacyjnie, maj = sprawdzić przy rezerwacji</span><span>📍 ${H.near}</span></div>
         <div class="links"><a href="${gmapsQ(H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a></div>
       </div>
-      ${H.noqr?'':`<div class="hqr">
-        <img src="assets/qr/${H.id}.svg" alt="Kod QR — ${H.name} w Google Maps" width="132" height="132" loading="lazy">
-        <div class="qlab">📱 zeskanuj →<br>Google Maps</div>
-      </div>`}
+      <a class="hphoto" href="${H.id==='auh'?H.site:gmapsQ(H.name)}" target="_blank" rel="noopener">
+        <img src="assets/img/hotels/${H.id}.jpg" alt="${H.name}" loading="lazy">
+        <span class="plab">📍 ${H.id==='auh'?'Etihad Stopover →':'Zobacz w Google Maps →'}</span>
+      </a>
     </div>`).join('');
   const inner=`
   <header class="hero" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(18,39,64,.40)),url('${IMG.tokyostation}') center/cover">
     <p class="eyebrow">Noclegi · 10 nocy w Japonii + gratis Abu Zabi · pokoje rodzinne 4-os.</p>
     <h1>Hotele</h1>
-    <p class="lead">Pięć baz w Japonii pod rodzinę 2+2 (aparthotele MIMARU i ryokan z onsenem) plus darmowa noc stopover w Abu Zabi od Etihadu. Kody QR otwierają hotele w Google Maps na telefonie.</p>
+    <p class="lead">Pięć baz w Japonii pod rodzinę 2+2 (aparthotele MIMARU i ryokan z onsenem) plus darmowa noc stopover w Abu Zabi od Etihadu. Kliknij zdjęcie hotelu, aby otworzyć jego lokalizację w Google Maps.</p>
   </header>
   <section>
     <div class="hlist">${cards}</div>
@@ -862,7 +863,7 @@ function hotelePage(){
       <li>Ryokan w Hakone: przy rezerwacji poprosić o kolację kaiseki i zarezerwować prywatną kąpiel kashikiri na ~17:30.</li>
       <li>Ceny to widełki orientacyjne za pokój/apartament dla 4 osób; suma 10 płatnych nocy ≈ 8–10 tys. zł (w kalkulatorze liczymy 10 × 820 zł; noc w Abu Zabi gratis).</li>
       <li>Pakiet stopover (hotel w Abu Zabi) rezerwujcie na etihad.com od razu po kupnie biletów — popularne terminy znikają, a promocję trzeba potwierdzić dla maja 2027.</li>
-      <li>Adresy dla taksówkarza najlepiej pokazywać z Google Maps po japońsku — QR z tej strony otwiera właściwe miejsce od razu.</li>
+      <li>Adresy dla taksówkarza najlepiej pokazywać z Google Maps po japońsku — kliknięcie zdjęcia hotelu otwiera właściwe miejsce od razu.</li>
     </ul></div>
   </section>
   ${footer('')}`;
