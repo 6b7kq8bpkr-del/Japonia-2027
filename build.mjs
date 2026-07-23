@@ -55,10 +55,11 @@ a{color:var(--ai)}
 .hero{position:relative;overflow:hidden;color:#fff;border-radius:var(--radius);
   margin:20px 0 0;padding:44px 34px 38px;box-shadow:var(--shadow)}
 .hero::after{content:"";position:absolute;inset:0;background-image:url("${WAVE}");
-  background-size:56px;opacity:.9;pointer-events:none}
+  background-size:56px;opacity:.5;pointer-events:none}
 .hero>*{position:relative;z-index:1}
+.hero .eyebrow,.hero h1,.hero .lead{text-shadow:0 1px 16px rgba(0,0,0,.5),0 1px 3px rgba(0,0,0,.4)}
 .eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:700;
-  opacity:.92;margin:0 0 12px}
+  opacity:.95;margin:0 0 12px}
 .hero h1{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;line-height:1.02;
   margin:0;font-size:clamp(34px,7vw,72px);text-wrap:balance}
 .hero .lead{margin:16px 0 0;font-size:clamp(15px,2.3vw,18px);max-width:60ch;opacity:.95}
@@ -134,9 +135,10 @@ section{margin-top:34px}
 @media(max-width:620px){.dgrid{grid-template-columns:1fr}}
 .dcard{text-decoration:none;color:#fff;border-radius:var(--radius);padding:20px;position:relative;
   overflow:hidden;box-shadow:var(--shadow);min-height:150px;display:flex;flex-direction:column;justify-content:flex-end}
-.dcard::after{content:"";position:absolute;inset:0;background-image:url("${WAVE}");background-size:52px;opacity:.85}
+.dcard::after{content:"";position:absolute;inset:0;background-image:url("${WAVE}");background-size:52px;opacity:.45}
 .dcard>*{position:relative;z-index:1}
-.dcard .dn{position:absolute;top:16px;left:20px;font-family:var(--serif);font-size:30px;opacity:.85;z-index:1}
+.dcard .dn,.dcard .dd,.dcard .dt{text-shadow:0 1px 12px rgba(0,0,0,.6),0 1px 2px rgba(0,0,0,.45)}
+.dcard .dn{position:absolute;top:16px;left:20px;font-family:var(--serif);font-size:30px;opacity:.92;z-index:1}
 .dcard .dd{font-size:12.5px;opacity:.9;text-transform:uppercase;letter-spacing:.08em}
 .dcard .dt{font-family:var(--serif);font-weight:500;font-size:20px;line-height:1.12;margin-top:3px;text-wrap:balance}
 .quick{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
@@ -272,13 +274,15 @@ const IMG = {
   sensoji:'/assets/img/sensoji.jpg',
 };
 const CITY = {
-  tokio:{ov:'linear-gradient(135deg,rgba(20,32,64,.72),rgba(14,39,67,.86))',photo:IMG.shibuya},
-  hakone:{ov:'linear-gradient(135deg,rgba(20,58,58,.68),rgba(15,54,52,.85))',photo:IMG.fuji},
-  kioto:{ov:'linear-gradient(135deg,rgba(120,40,32,.72),rgba(120,72,30,.82))',photo:IMG.fushimi},
-  nara:{ov:'linear-gradient(135deg,rgba(45,74,42,.72),rgba(32,54,29,.86))',photo:IMG.todaiji},
-  osaka:{ov:'linear-gradient(135deg,rgba(58,32,84,.72),rgba(124,45,85,.82))',photo:IMG.dotonbori},
+  tokio:{c1:'20,32,64',c2:'14,39,67',photo:IMG.shibuya},
+  hakone:{c1:'20,58,58',c2:'15,54,52',photo:IMG.fuji},
+  kioto:{c1:'120,40,32',c2:'120,72,30',photo:IMG.fushimi},
+  nara:{c1:'45,74,42',c2:'32,54,29',photo:IMG.todaiji},
+  osaka:{c1:'58,32,84',c2:'124,45,85',photo:IMG.dotonbori},
 };
-const bg = c => `${CITY[c].ov},url('${CITY[c].photo}') center/cover`;
+// hero: light tint so the PHOTO is the star; card: bottom-weighted for a legible title
+const heroBg = c => `linear-gradient(120deg,rgba(${CITY[c].c1},.58),rgba(${CITY[c].c2},.34)),url('${CITY[c].photo}') center/cover`;
+const cardBg = c => `linear-gradient(to top,rgba(${CITY[c].c1},.92),rgba(${CITY[c].c1},.10)),url('${CITY[c].photo}') center/cover`;
 const GEO = {
   '2027-05-04':[[35.772,140.393,'Narita (przylot)'],[35.681,139.767,'Tokyo Station'],[35.7148,139.7967,'Asakusa / Sensō-ji']],
   '2027-05-05':[[35.6764,139.6993,'Meiji Jingū'],[35.6702,139.7027,'Harajuku'],[35.6595,139.7005,'Shibuya']],
@@ -589,7 +593,7 @@ function dayPage(d,i){
     </div>
   </section>`:'';
   const inner = `
-  <header class="hero" style="background:${bg(d.city)}">
+  <header class="hero" style="background:${heroBg(d.city)}">
     <p class="eyebrow">Dzień ${i+1} z 12 · ${d.dow} · ${d.dd}</p>
     <h1>${d.title}</h1>
     <p class="lead">${d.lead}</p>
@@ -626,7 +630,7 @@ function dayPage(d,i){
 
 /* ---- index ---- */
 function indexPage(){
-  const cards = DAYS.map((d,i)=>`<a class="dcard" href="days/${d.date}.html" style="background:${bg(d.city)}">
+  const cards = DAYS.map((d,i)=>`<a class="dcard" href="days/${d.date}.html" style="background:${cardBg(d.city)}">
     <div class="dn">${i+1}</div>
     <div class="dd">${d.dow} · ${d.dd}</div>
     <div class="dt">${d.title}</div>
@@ -637,7 +641,7 @@ function indexPage(){
     <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Czego się spodziewać w maju i co zabrać.</div></a>
   </div>`;
   const inner = `
-  <header class="hero" style="background:linear-gradient(135deg,rgba(27,58,107,.74),rgba(138,43,35,.80)),url('${IMG.fuji}') center/cover">
+  <header class="hero" style="background:linear-gradient(120deg,rgba(27,58,107,.56),rgba(138,43,35,.40)),url('${IMG.fuji}') center/cover">
     <p class="eyebrow">Plan rodzinny · 2+2 · 12 dni</p>
     <h1>Japonia 2027</h1>
     <p class="lead">3–15 maja 2027 · Tokio – Hakone – Kioto – Osaka. Klasyka pierwszego razu z odrobiną tradycyjnej kultury, Pokémonami dla dzieci i prawdziwym turniejem sumo na finał.</p>
@@ -752,7 +756,7 @@ function pogodaPage(){
     ['🏯 Osaka','~25°C','~15°C','ciepło, miejsko; wieczory łagodne'],
   ].map(r=>`<tr><td class="cat">${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td></tr>`).join('');
   const inner=`
-  <header class="hero" style="background:linear-gradient(135deg,rgba(31,94,90,.72),rgba(185,138,52,.72)),url('${IMG.fuji}') center/cover">
+  <header class="hero" style="background:linear-gradient(120deg,rgba(31,94,90,.56),rgba(18,44,42,.42)),url('${IMG.fuji}') center/cover">
     <p class="eyebrow">Klimat i pakowanie</p>
     <h1>Pogoda w maju</h1>
     <p class="lead">Maj to jeden z najlepszych miesięcy na Japonię: ciepło, słonecznie i sucho — przed sezonem deszczowym, który na głównej wyspie zaczyna się dopiero w czerwcu.</p>
@@ -794,7 +798,7 @@ function atrakcjePage(){
     <a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a><a href="#kioto">⛩️ Kioto</a>
     <a href="#nara">🦌 Nara</a><a href="#osaka">🏯 Osaka</a><a href="#sumo-s">🥋 Sumo</a><a href="#praktyczne">🧳 Praktyczne</a></nav>`;
   const inner=`
-  <header class="hero" style="background:linear-gradient(135deg,rgba(138,43,35,.74),rgba(185,138,52,.74)),url('${IMG.sensoji}') center/cover">
+  <header class="hero" style="background:linear-gradient(120deg,rgba(138,43,35,.56),rgba(70,32,20,.42)),url('${IMG.sensoji}') center/cover">
     <p class="eyebrow">Godziny · ceny · rezerwacje</p>
     <h1>Atrakcje</h1>
     <p class="lead">Wszystkie miejsca z planu w jednym katalogu — z godzinami, orientacyjnymi cenami (¥100 ≈ 2,6 zł) i linkami do oficjalnych rezerwacji.</p>
