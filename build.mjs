@@ -1075,6 +1075,17 @@ function pogodaPage(){
     </ul></div>
   </section>
   <section>
+    <h2 class="stitle">🎒 Bagaż — podręczny + plecak wystarczy</h2>
+    <p class="lead-p">Przy pięciu zmianach bazy i jeździe pociągami lekki bagaż to nie oszczędność, tylko wygoda. Tania taryfa Etihad i tak jest bez bagażu rejestrowanego — z podręcznym nic nie dopłacacie.</p>
+    <div class="card"><ul class="tips">
+      <li><b>Pakujcie na ~5–6 dni, nie na 13.</b> Aparthotele MIMARU (Tokio, Kioto, Osaka) mają pralkę i suszarkę — pranie robicie w Kioto i komplet ubrań wraca do obiegu.</li>
+      <li><b>Waga, nie objętość, jest limitem.</b> W klasie ekonomicznej Etihad to zwykle ~7 kg/os. (podręczny + mała sztuka osobista) — dokładny limit potwierdźcie przy zakupie biletu.</li>
+      <li><b>Zakupy na powrót to jedyne ryzyko.</b> Pokémony, gachapony i Don Quijote potrafią spuchnąć bagaż — dokupcie jedną walizkę rejestrowaną tylko na lot powrotny (dopłata za odcinek) albo tanią składaną walizkę już w Japonii.</li>
+      <li><b>Hakone bez targania:</b> to tylko 1 noc — główne bagaże wyślijcie kurierem <i>takkyubin</i> z hotelu w Tokio prosto do Kioto (~1500–2000 ¥/szt., doba), a w góry jedziecie z samymi plecakami.</li>
+      <li>Kosmetyki zapewnia hotel, a czego zabraknie — dokupicie za grosze (Uniqlo, Don Quijote na każdym rogu). W kabinie pamiętajcie o limicie płynów 100 ml.</li>
+    </ul></div>
+  </section>
+  <section>
     <h2 class="stitle">☔ Plan B na deszcz — miasto po mieście</h2>
     <div class="card"><ul class="tips">
       <li><b>Tokio:</b> Round1 (Ikebukuro), rodzinne karaoke (Big Echo / Karaoke Kan, przed 22:00), Pokémon Center — a Shibuya Sky przekładać: taras odkryty, w chmurach szkoda biletu.</li>
