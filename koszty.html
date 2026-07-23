@@ -35,7 +35,7 @@
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
           <tr><td class="cat">✈️ Loty<span class="hint">Etihad, całość za 4 os. (+ bagaż)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="14000" min="0" step="100"></td></tr>
-          <tr><td class="cat">🏨 Noclegi<span class="hint">10 płatnych nocy w Japonii (noc w Abu Zabi gratis od Etihadu)</span></td><td class="num"><input type="number" id="nights" class="sm" value="10" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="820" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 10 nocy: aparthotele ~820 zł + 1 noc ryokan z prywatnym onsenem ~2 700 zł (Abu Zabi gratis)</span></td><td class="num"><input type="number" id="nights" class="sm" value="10" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1000" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny + metro + NEX</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4000" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (w tym dzień w Abu Zabi)</span></td><td class="num"><input type="number" id="days" class="sm" value="13" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">sumo, warsztaty, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2600" min="0" step="100"></td></tr>
@@ -63,7 +63,7 @@
   Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="index.html">Strona główna</a></footer>
   <script>
   (function(){
-    var D={flights:14000,nights:10,nightRate:820,transport:4000,days:13,foodRate:500,attractions:2600,extras:3000};
+    var D={flights:14000,nights:10,nightRate:1000,transport:4000,days:13,foodRate:500,attractions:2600,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}

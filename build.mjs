@@ -416,7 +416,7 @@ const DAYS = [
   ['14:30','Rejs po jeziorze Ashi','Stylizowany „piracki" galeon; przy dobrej pogodzie Fudżi nad wodą.'],
   ['15:30','Hakone-jinja','Czerwona brama torii stojąca w jeziorze.'],
   ['16:30','Ryokan','Zameldowanie, yukaty.'],
-  ['17:30','Onsen','Prywatna kąpiel rodzinna (kashikiri — zarezerwować przy meldunku).'],
+  ['17:30','Onsen','Prywatny rotenburo (odkryta kąpiel) na tarasie pokoju — do dyspozycji o każdej porze.'],
   ['18:30','Kolacja kaiseki','Wielodaniowa, sezonowa; wieczorem druga kąpiel dla chętnych.'],
  ],
  facts:[['Średnia','Intensywność'],['Romancecar + kolejki','Przejazdy'],['Umiarkowane','Chodzenie'],['Frajda z kolejek','Dla dzieci'],['Ryokan','Nocleg']],
@@ -586,10 +586,10 @@ const HOTELS = [
  desc:'Aparthotel projektowany pod rodziny: apartament dla 4 osób z aneksem kuchennym i osobną sypialnią. Spokojna okolica Ueno, ~10 min metrem do Asakusy, wygodny start po przylocie.',
  price:'~750–950 zł/noc (apartament 4-os.)',near:'metro Inarichō / JR Ueno',
  site:'https://mimaruhotels.com/en/hotel/ueno-east/'},
-{id:'hakone',name:'Yoshiike Ryokan',stay:'Hakone · 1 noc (7–8.05)',
- desc:'Klasyczny ryokan z ogrodem 10 000 m², pokojami rodzinnymi na tatami i kąpielami onsen — w tym prywatną kashikiri do zarezerwowania dla rodziny. Kolacja kaiseki i japońskie śniadanie w cenie.',
- price:'~1 600–2 200 zł/noc z HB dla 4 os.',near:'5 min pieszo od stacji Hakone-Yumoto',
- site:'https://www.yoshiike.org/'},
+{id:'hakone',name:'Hakone Kowakien TEN-YU',stay:'Hakone · 1 noc (7–8.05) · prywatny onsen',
+ desc:'Wyższa półka na jedyną noc, gdy nocleg JEST atrakcją: nowoczesny luksusowy ryokan, w którym pokoje mają PRYWATNĄ odkrytą kąpiel onsen (rotenburo) na tarasie — kąpiel o każdej porze, bez wspólnych łaźni. Wielodaniowe kaiseki, przyjazny rodzinom, na pętli Hakone przy Gōrze. Alternatywa z widokiem na dolinę: Hakone Ginyu. Zdjęcie: przykładowy rotenburo.',
+ price:'~2 400–3 200 zł/noc z HB dla 4 os. (wyższa półka)',near:'rejon Gōra, na pętli Hakone',
+ site:'https://www.hakone-tenyu.com/en/'},
 {id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 4 noce (8–12.05)',
  desc:'Ta sama rodzinna formuła co w Tokio, tuż przy dworcu Kioto — idealna baza wypadowa na Narę (Kintetsu) i Arashiyamę (JR), a walizki z takkyūbin czekają w recepcji.',
  price:'~800–1 000 zł/noc (apartament 4-os.)',near:'3 min pieszo od dworca Kyoto',
@@ -775,7 +775,7 @@ function kosztyPage(){
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
           <tr><td class="cat">✈️ Loty<span class="hint">Etihad, całość za 4 os. (+ bagaż)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="14000" min="0" step="100"></td></tr>
-          <tr><td class="cat">🏨 Noclegi<span class="hint">10 płatnych nocy w Japonii (noc w Abu Zabi gratis od Etihadu)</span></td><td class="num"><input type="number" id="nights" class="sm" value="10" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="820" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 10 nocy: aparthotele ~820 zł + 1 noc ryokan z prywatnym onsenem ~2 700 zł (Abu Zabi gratis)</span></td><td class="num"><input type="number" id="nights" class="sm" value="10" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1000" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny + metro + NEX</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4000" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (w tym dzień w Abu Zabi)</span></td><td class="num"><input type="number" id="days" class="sm" value="13" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">sumo, warsztaty, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2600" min="0" step="100"></td></tr>
@@ -801,7 +801,7 @@ function kosztyPage(){
   ${footer('')}
   <script>
   (function(){
-    var D={flights:14000,nights:10,nightRate:820,transport:4000,days:13,foodRate:500,attractions:2600,extras:3000};
+    var D={flights:14000,nights:10,nightRate:1000,transport:4000,days:13,foodRate:500,attractions:2600,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
@@ -850,6 +850,13 @@ function hotelePage(){
         <span class="plab">📍 ${H.id==='auh'?'Etihad Stopover →':'Zobacz w Google Maps →'}</span>
       </a>
     </div>`).join('');
+  const HOTELGEO=[
+    [35.7108,139.7823,'MIMARU Tokyo Ueno EAST · Tokio (start)'],
+    [35.2470,139.0530,'Hakone Kowakien Ten-yu · Hakone'],
+    [34.9880,135.7590,'MIMARU Kyoto Station · Kioto'],
+    [34.6680,135.5030,'MIMARU Osaka Namba North · Osaka'],
+    [35.6708,139.7726,'MIMARU Tokyo Ginza EAST · Tokio (finał)'],
+  ];
   const inner=`
   <header class="hero" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(18,39,64,.40)),url('${IMG.tokyostation}') center/cover">
     <p class="eyebrow">Noclegi · 10 nocy w Japonii + gratis Abu Zabi · pokoje rodzinne 4-os.</p>
@@ -858,9 +865,20 @@ function hotelePage(){
   </header>
   <section>
     <div class="hlist">${cards}</div>
-    <div class="card" style="margin-top:16px"><ul class="tips">
+  </section>
+  <section>
+    <h2 class="stitle">Mapa baz w Japonii</h2>
+    <div class="card">
+      <div class="maphold"><button class="mapbtn" id="mapActivate">🗺️ Aktywuj mapę</button><div id="map" class="map"></div></div>
+      <ol class="maplegend">${HOTELGEO.map((g,i)=>`<li><span class="mn">${i+1}</span> ${g[2]}</li>`).join('')}</ol>
+      <a class="gmap" href="https://www.google.com/maps/dir/${HOTELGEO.map(g=>g[0]+','+g[1]).join('/')}" target="_blank" rel="noopener">📍 Trasa baz w Google Maps ↗</a>
+      <script type="application/json" id="geo">${JSON.stringify(HOTELGEO)}</script>
+    </div>
+  </section>
+  <section>
+    <div class="card"><ul class="tips">
       <li><b>Rezerwujcie wrzesień–październik 2026</b> z darmowym anulowaniem (Booking/strony hoteli) — pokoje 4-osobowe znikają pierwsze, a początek maja łapie ogon Golden Week.</li>
-      <li>Ryokan w Hakone: przy rezerwacji poprosić o kolację kaiseki i zarezerwować prywatną kąpiel kashikiri na ~17:30.</li>
+      <li>Ryokan w Hakone (wyższa półka): wybierzcie pokój z prywatnym rotenburo i potwierdźcie kaiseki + japońskie śniadanie w cenie.</li>
       <li>Ceny to widełki orientacyjne za pokój/apartament dla 4 osób; suma 10 płatnych nocy ≈ 8–10 tys. zł (w kalkulatorze liczymy 10 × 820 zł; noc w Abu Zabi gratis).</li>
       <li>Pakiet stopover (hotel w Abu Zabi) rezerwujcie na etihad.com od razu po kupnie biletów — popularne terminy znikają, a promocję trzeba potwierdzić dla maja 2027.</li>
       <li>Adresy dla taksówkarza najlepiej pokazywać z Google Maps po japońsku — kliknięcie zdjęcia hotelu otwiera właściwe miejsce od razu.</li>
