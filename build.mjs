@@ -141,7 +141,7 @@ section{margin-top:34px}
 .dcard .dn{position:absolute;top:16px;left:20px;font-family:var(--serif);font-size:30px;opacity:.92;z-index:1}
 .dcard .dd{font-size:12.5px;opacity:.9;text-transform:uppercase;letter-spacing:.08em}
 .dcard .dt{font-family:var(--serif);font-weight:500;font-size:20px;line-height:1.12;margin-top:3px;text-wrap:balance}
-.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.quick{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
 @media(max-width:620px){.quick{grid-template-columns:1fr}}
 .qcard{text-decoration:none;color:var(--ink);background:var(--panel);border:1px solid var(--line);
   border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);transition:.15s}
@@ -203,6 +203,27 @@ section{margin-top:34px}
 footer{margin-top:44px;padding:26px 0;border-top:1px solid var(--line);color:var(--muted);
   font-size:13px;text-align:center;line-height:1.7}
 footer a{font-weight:700;text-decoration:none}
+/* hotels */
+.hotelbox{display:flex;gap:10px;align-items:center;margin-top:14px;text-decoration:none;color:var(--ink);
+  background:var(--panel);border:1px dashed var(--kin);border-radius:16px;padding:13px 16px;
+  font-size:14px;box-shadow:var(--shadow-sm);transition:.15s}
+.hotelbox:hover{border-color:var(--ai)}
+.hlist{display:flex;flex-direction:column;gap:14px}
+.hcard{display:flex;gap:18px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 22px;box-shadow:var(--shadow);scroll-margin-top:80px}
+.hcard .hmain{flex:1;min-width:0}
+.hcard .hstay{font-size:11.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--shu);font-weight:800}
+.hcard h3{font-family:var(--serif);font-weight:500;font-size:21px;margin:4px 0 8px}
+.hcard .desc{font-size:14px;margin:0 0 10px}
+.hcard .meta{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+.hcard .meta b{color:var(--ink)}
+.hcard .links{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
+.hcard .links a{font-size:12.5px;font-weight:700;text-decoration:none;color:var(--ai);
+  border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--paper)}
+.hcard .hqr{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:6px}
+.hcard .hqr img{border:1px solid var(--line);border-radius:14px;background:#fff}
+.hcard .qlab{font-size:11px;color:var(--muted);text-align:center;line-height:1.35}
+@media(max-width:560px){.hcard{flex-direction:column}.hcard .hqr{flex-direction:row;align-items:center}}
 .maphold{position:relative}
 .mapbtn{width:100%;padding:15px;border:1px dashed var(--line);background:var(--paper);border-radius:16px;
   font-weight:700;color:var(--ai);cursor:pointer;font-family:var(--sans);font-size:14.5px}
@@ -530,8 +551,35 @@ const DAYS = [
  more:[]},
 ];
 
+/* ============================ HOTELS ============================ */
+const HOTELS = [
+{id:'tokio1',name:'MIMARU Tokyo Ueno EAST',stay:'Tokio · 3 noce (4–7.05)',
+ desc:'Aparthotel projektowany pod rodziny: apartament dla 4 osób z aneksem kuchennym i osobną sypialnią. Spokojna okolica Ueno, ~10 min metrem do Asakusy, wygodny start po przylocie.',
+ price:'~750–950 zł/noc (apartament 4-os.)',near:'metro Inarichō / JR Ueno',
+ site:'https://mimaruhotels.com/en/hotel/ueno-east/'},
+{id:'hakone',name:'Yoshiike Ryokan',stay:'Hakone · 1 noc (7–8.05)',
+ desc:'Klasyczny ryokan z ogrodem 10 000 m², pokojami rodzinnymi na tatami i kąpielami onsen — w tym prywatną kashikiri do zarezerwowania dla rodziny. Kolacja kaiseki i japońskie śniadanie w cenie.',
+ price:'~1 600–2 200 zł/noc z HB dla 4 os.',near:'5 min pieszo od stacji Hakone-Yumoto',
+ site:'https://www.yoshiike.org/'},
+{id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 4 noce (8–12.05)',
+ desc:'Ta sama rodzinna formuła co w Tokio, tuż przy dworcu Kioto — idealna baza wypadowa na Narę (Kintetsu) i Arashiyamę (JR), a walizki z takkyūbin czekają w recepcji.',
+ price:'~800–1 000 zł/noc (apartament 4-os.)',near:'3 min pieszo od dworca Kyoto',
+ site:'https://mimaruhotels.com/en/hotel/kyoto-station/'},
+{id:'osaka',name:'MIMARU Osaka NAMBA North',stay:'Osaka · 2 noce (12–14.05)',
+ desc:'Apartamenty rodzinne w sercu Namby — ~8 minut spacerem od neonów Dōtonbori i 10 od targu Kuromon. Wieczorne wyjścia na street food bez logistyki.',
+ price:'~750–950 zł/noc (apartament 4-os.)',near:'metro Nippombashi / Namba',
+ site:'https://mimaruhotels.com/en/hotel/namba-north/'},
+{id:'tokio2',name:'MIMARU Tokyo GINZA EAST',stay:'Tokio · 1 noc (14–15.05)',
+ desc:'Nocleg na finał: spokojna wschodnia Ginza, prosto metrem na Ryōgoku (sumo) i rzut kamieniem od Tokyo Station, skąd rano odjeżdża Narita Express. Alternatywa przy samej hali: APA Ryōgoku Eki Tower (ale pokoje 2-os. — trzeba brać dwa).',
+ price:'~850–1 050 zł/noc (apartament 4-os.)',near:'metro Shintomichō / Tokyo Station',
+ site:'https://mimaruhotels.com/en/hotel/ginza-east/'},
+];
+const gmapsQ = name => 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);
+// day date -> hotel id (check-in days)
+const DAYHOTEL = {'2027-05-04':'tokio1','2027-05-07':'hakone','2027-05-08':'kioto','2027-05-12':'osaka','2027-05-14':'tokio2'};
+
 /* ============================ TEMPLATES ============================ */
-const TABS = [['index.html','Plan'],['atrakcje.html','Atrakcje'],['koszty.html','Bilety i koszty'],['pogoda.html','Pogoda']];
+const TABS = [['index.html','Plan'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['koszty.html','Bilety i koszty'],['pogoda.html','Pogoda']];
 function nav(active,prefix){
   const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on"':'')}>${l}</a>`).join('');
   return `<div class="topbar"><div class="bar"><a class="brand" href="${prefix}index.html">JAPONIA <b>·</b> 2027</a><nav class="tabs">${t}</nav></div></div>`;
@@ -583,6 +631,9 @@ function dayPage(d,i){
   const links = d.links.length?`<div class="linklist">${d.links.map(l=>`<a href="${prefix}atrakcje.html#${l.id}">🎟️ ${l.label}</a>`).join('')}</div>`:'';
   const pc = d.pc?`<div class="pc"><div class="pch">⚖️ ${d.pc.q}</div>${d.pc.opts.map(o=>`<div class="row"><span class="opt">${o[0]}</span> — <span class="plus">za:</span> ${o[1]}; <span class="minus">przeciw:</span> ${o[2]}.</div>`).join('')}</div>`:'';
   const more = d.more.length?`<section class="more"><h2 class="stitle">Więcej o tym dniu</h2><div class="card">${d.more.map(m=>`<details><summary>${m[0]}</summary><p>${m[1]}</p></details>`).join('')}</div></section>`:'';
+  const hid = DAYHOTEL[d.date];
+  const hotelBox = hid ? (()=>{const H=HOTELS.find(h=>h.id===hid);
+    return `<a class="hotelbox" href="../hotele.html#${H.id}">🏨 <span><b>Nocleg: ${H.name}</b> — szczegóły, cena i kod QR do mapy →</span></a>`;})() : '';
   const geo = GEO[d.date]||[];
   const gdir = geo.length?`https://www.google.com/maps/dir/${geo.map(g=>g[0]+','+g[1]).join('/')}`:'#';
   const legend = geo.map((g,idx)=>`<li><span class="mn">${idx+1}</span> ${g[2]}</li>`).join('');
@@ -613,6 +664,7 @@ function dayPage(d,i){
   <section>
     <h2 class="stitle">W skrócie</h2>
     <div class="facts">${facts}</div>
+    ${hotelBox}
     ${pc}
   </section>
   ${mapSec}
@@ -642,6 +694,7 @@ function indexPage(){
   </a>`).join('');
   const quick = `<div class="quick">
     <a class="qcard" href="atrakcje.html"><div class="qi">🎟️</div><div class="qh">Atrakcje</div><div class="qd">Godziny, ceny i linki do rezerwacji — 32 miejsca.</div></a>
+    <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Hotele</div><div class="qd">5 baz na 11 nocy, pokoje rodzinne + QR do map.</div></a>
     <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Bilety i koszty</div><div class="qd">Strategia zakupu lotów, progi cen i kalkulator budżetu.</div></a>
     <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Czego się spodziewać w maju i co zabrać.</div></a>
   </div>`;
@@ -752,6 +805,41 @@ function kosztyPage(){
   return shell({title:'Bilety i koszty · Japonia 2027',desc:'Strategia zakupu biletów lotniczych i kalkulator budżetu wyjazdu do Japonii.',prefix:'',active:'koszty.html',inner,pillsIdx:null});
 }
 
+/* ---- hotele ---- */
+function hotelePage(){
+  const cards = HOTELS.map(H=>`
+    <div class="hcard" id="${H.id}">
+      <div class="hmain">
+        <div class="hstay">${H.stay}</div>
+        <h3>${H.name}</h3>
+        <p class="desc">${H.desc}</p>
+        <div class="meta"><span>💴 <b>${H.price}</b> — orientacyjnie, maj = sprawdzić przy rezerwacji</span><span>📍 ${H.near}</span></div>
+        <div class="links"><a href="${gmapsQ(H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a></div>
+      </div>
+      <div class="hqr">
+        <img src="assets/qr/${H.id}.svg" alt="Kod QR — ${H.name} w Google Maps" width="132" height="132" loading="lazy">
+        <div class="qlab">📱 zeskanuj →<br>Google Maps</div>
+      </div>
+    </div>`).join('');
+  const inner=`
+  <header class="hero" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(18,39,64,.40)),url('${IMG.tokyostation}') center/cover">
+    <p class="eyebrow">Noclegi · 11 nocy · pokoje rodzinne 4-os.</p>
+    <h1>Hotele</h1>
+    <p class="lead">Pięć baz dobranych pod rodzinę 2+2: aparthotele MIMARU (osobna sypialnia + aneks) i jeden klasyczny ryokan z onsenem w Hakone. Każdy kod QR otwiera hotel w Google Maps na telefonie.</p>
+  </header>
+  <section>
+    <div class="hlist">${cards}</div>
+    <div class="card" style="margin-top:16px"><ul class="tips">
+      <li><b>Rezerwujcie wrzesień–październik 2026</b> z darmowym anulowaniem (Booking/strony hoteli) — pokoje 4-osobowe znikają pierwsze, a początek maja łapie ogon Golden Week.</li>
+      <li>Ryokan w Hakone: przy rezerwacji poprosić o kolację kaiseki i zarezerwować prywatną kąpiel kashikiri na ~17:30.</li>
+      <li>Ceny to widełki orientacyjne za pokój/apartament dla 4 osób; suma 11 nocy ≈ 9–11 tys. zł (w kalkulatorze liczymy 11 × 820 zł).</li>
+      <li>Adresy dla taksówkarza najlepiej pokazywać z Google Maps po japońsku — QR z tej strony otwiera właściwe miejsce od razu.</li>
+    </ul></div>
+  </section>
+  ${footer('')}`;
+  return shell({title:'Hotele · Japonia 2027',desc:'Noclegi wyjazdu do Japonii: aparthotele rodzinne i ryokan, z kodami QR do Google Maps.',prefix:'',active:'hotele.html',inner,pillsIdx:null});
+}
+
 /* ---- pogoda ---- */
 function pogodaPage(){
   const rows=[
@@ -819,6 +907,7 @@ function atrakcjePage(){
 DAYS.forEach((d,i)=>fs.writeFileSync(`${DIR}/days/${d.date}.html`, dayPage(d,i)));
 const ATR = atrakcjePage(); // read old before overwriting index (index doesn't touch atrakcje)
 fs.writeFileSync(DIR + '/index.html', indexPage());
+fs.writeFileSync(DIR + '/hotele.html', hotelePage());
 fs.writeFileSync(DIR + '/koszty.html', kosztyPage());
 fs.writeFileSync(DIR + '/pogoda.html', pogodaPage());
 fs.writeFileSync(DIR + '/atrakcje.html', ATR);
