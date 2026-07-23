@@ -11,10 +11,19 @@ var on=document.querySelector('.pills a.on'); if(on&&on.scrollIntoView) on.scrol
   var geoEl=document.getElementById('geo'); if(!geoEl) return;
   var btn=document.getElementById('mapActivate'), mapDiv=document.getElementById('map');
   if(!btn||!mapDiv) return;
-  btn.addEventListener('click',function(){
+  var done=false;
+  function activate(){
+    if(done) return; done=true;
     btn.style.display='none'; mapDiv.style.display='block';
     ensureLeaflet(function(){ render(JSON.parse(geoEl.textContent)); });
-  });
+  }
+  btn.addEventListener('click',activate);
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ activate(); io.disconnect(); } });
+    },{rootMargin:'200px 0px'});
+    io.observe(btn.parentNode||mapDiv);
+  } else { activate(); }
   function ensureLeaflet(cb){
     if(window.L) return cb();
     var c=document.createElement('link'); c.rel='stylesheet';
