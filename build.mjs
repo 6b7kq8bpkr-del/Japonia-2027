@@ -245,6 +245,15 @@ footer a{font-weight:700;text-decoration:none}
 .maplegend li{display:flex;align-items:center;gap:10px}
 .maplegend .mn{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--ai);color:#fff;
   display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+.rhythm{width:100%;border-collapse:collapse;font-size:14px}
+.rhythm td,.rhythm th{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.rhythm tr:last-child td{border-bottom:none}
+.rhythm th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.rhythm .dcol{font-weight:800;white-space:nowrap}
+.ipill{display:inline-block;font-size:11.5px;font-weight:800;border-radius:999px;padding:2px 11px;color:#fff;white-space:nowrap}
+.ipill.g{background:var(--success)}.ipill.y{background:var(--kin)}.ipill.r{background:var(--shu)}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:620px){.twocol{grid-template-columns:1fr}}
 .totop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;background:var(--ai-dark);
   color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:var(--shadow);opacity:0;pointer-events:none;
   transition:.25s;z-index:60}
@@ -606,9 +615,24 @@ const HOTELS = [
 const gmapsQ = name => 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);
 // day date -> hotel id (check-in days)
 const DAYHOTEL = {'2027-05-03':'auh','2027-05-05':'tokio1','2027-05-07':'hakone','2027-05-08':'kioto','2027-05-12':'osaka','2027-05-14':'tokio2'};
+const DAYINT = {
+  '2027-05-03':['g','Wylot z Warszawy + hotel w Abu Zabi'],
+  '2027-05-04':['y','Wielki Meczet + Luwr + nocny lot'],
+  '2027-05-05':['g','Przylot do Tokio, wieczór w Asakusie'],
+  '2027-05-06':['r','Tsukiji + Pokémony + Shibuya Sky'],
+  '2027-05-07':['y','Pętla Hakone + ryokan (reset)'],
+  '2027-05-08':['g','Onsen → Kioto, wieczór w Gion'],
+  '2027-05-09':['r','Fushimi + Kiyomizu + Nishiki (dużo pod górę)'],
+  '2027-05-10':['y','Złoty Pawilon + warsztaty kultury'],
+  '2027-05-11':['y','Nara — jelenie i Wielki Budda'],
+  '2027-05-12':['r','Arashiyama + małpy + przejazd do Osaki'],
+  '2027-05-13':['g','Osaka — dzień luzu (bufor)'],
+  '2027-05-14':['y','Shinkansen + turniej sumo'],
+  '2027-05-15':['g','Ostatnie zakupy + lot do domu'],
+};
 
 /* ============================ TEMPLATES ============================ */
-const TABS = [['index.html','Plan'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['koszty.html','Koszty'],['pogoda.html','Pogoda']];
+const TABS = [['index.html','Plan'],['decyzje.html','Dlaczego'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['koszty.html','Koszty'],['pogoda.html','Pogoda']];
 function nav(active,prefix){
   const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on"':'')}>${l}</a>`).join('');
   return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html">JAPONIA <b>·</b> 2027</a><nav class="tabs">${t}</nav></div></div>`;
@@ -722,6 +746,7 @@ function indexPage(){
     <div class="dt">${d.title}</div>
   </a>`).join('');
   const quick = `<div class="quick">
+    <a class="qcard" href="decyzje.html"><div class="qi">🧭</div><div class="qh">Dlaczego tak?</div><div class="qd">Logika planu: rytm, decyzje i jak go modyfikować.</div></a>
     <a class="qcard" href="atrakcje.html"><div class="qi">🎟️</div><div class="qh">Atrakcje</div><div class="qd">Godziny, ceny i linki do rezerwacji — 32 miejsca.</div></a>
     <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Hotele</div><div class="qd">5 baz na 11 nocy, pokoje rodzinne + QR do map.</div></a>
     <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Bilety i koszty</div><div class="qd">Strategia zakupu lotów, progi cen i kalkulator budżetu.</div></a>
@@ -888,6 +913,73 @@ function hotelePage(){
   return shell({title:'Hotele · Japonia 2027',desc:'Noclegi wyjazdu do Japonii: aparthotele rodzinne i ryokan, z kodami QR do Google Maps.',prefix:'',active:'hotele.html',inner,pillsIdx:null});
 }
 
+/* ---- decyzje / dlaczego ---- */
+function decyzjePage(){
+  const pill={g:'Lekki',y:'Średni',r:'Intensywny'};
+  const rows=DAYS.map((d,i)=>{const it=DAYINT[d.date]||['y',''];return `<tr><td class="dcol">${i+1} · ${d.dd}</td><td>${it[1]}</td><td><span class="ipill ${it[0]}">${pill[it[0]]}</span></td></tr>`;}).join('');
+  const inner=`
+  <header class="hero" style="background:linear-gradient(120deg,rgba(27,58,107,.62),rgba(200,64,44,.5)),url('${IMG.fushimi}') center/cover">
+    <p class="eyebrow">Zrozum i zmień plan</p>
+    <h1>Dlaczego tak?</h1>
+    <p class="lead">Cała logika za tym planem w jednym miejscu — co jest stałe, co możesz ruszyć i jak. Żebyście modyfikowali go świadomie, nie na wyczucie.</p>
+  </header>
+
+  <section>
+    <h2 class="stitle">Rytm wyjazdu</h2>
+    <p class="lead-p">Zmęczenie u rodzin przychodzi w 4.–5. dniu — dlatego reset (ryokan + najlżejszy dzień) wypada dokładnie tam, a zielone dni to bufory. Żaden intensywny dzień nie następuje po intensywnym.</p>
+    <div class="card" style="overflow-x:auto"><table class="rhythm">
+      <thead><tr><th>Dzień</th><th>Sedno</th><th style="text-align:right">Obciążenie</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <div class="dnote" style="margin-top:12px">💡 Dwa punkty nacisku: <b>6.05</b> — najcięższy dzień w drugiej dobie po locie (jeśli rano ciężko, odpuśćcie Tsukiji); <b>12→15.05</b> — trzy zmiany łóżka w cztery doby (cena za sumo, dlatego 13.05 jest pusty z założenia).</div>
+  </section>
+
+  <section>
+    <h2 class="stitle">Kluczowe decyzje — i dlaczego</h2>
+    <div class="card more">
+      <details><summary>Daty 3–15 maja</summary><p>Najtańsza kombinacja w całej siatce cen (dziś ~13 900 zł/4 os.) i zarazem najdłuższa sensowna. Wyloty 30.04–2.05 są o 2,5–5 tys. droższe (ogon Golden Week) i wpadają w szczyt tłumów oraz droższych hoteli. Golden Week kończy się 5 maja.</p></details>
+      <details><summary>Długość: 10 nocy w Japonii</summary><p>~59% budżetu to koszty stałe (loty, pętla shinkansenów), niezależne od długości. Skrócenie o 2 dni to ledwie −5% kosztu, ale −17% wyjazdu — i paradoksalnie DROŻSZY bilet (krótsze kombinacje w siatce są droższe). Wydłużenie w tym oknie oznacza wejście w Golden Week.</p></details>
+      <details><summary>Stopover w Abu Zabi</summary><p>Darmowy hotel 4★ od Etihadu (postój &gt;24 h), przelot rozbity na 6 + 10 h z nocą snu — z dziećmi zupełnie inna jakość niż 18 h ciurkiem. Kosztuje 1 dzień w Tokio (start skrócony do 2 nocy). Możliwy wariant z 2 nocami (obie gratis) — patrz „Jak modyfikować".</p></details>
+      <details><summary>Trasa i bazy: Tokio–Hakone–Kioto–Osaka</summary><p>To niemal 1:1 szkielet najlepiej ocenianych (4,9–5,0★) rodzinnych tourów: Kioto 4 noce jako hub z wycieczką do Nary, ryokan wciśnięty w środek jako „reset", 2–4 noce na bazę (każda przeprowadzka to pół dnia logistyki).</p></details>
+      <details><summary>Ryokan w środku trasy — wyższa półka</summary><p>To jedyna noc, gdy nocleg JEST atrakcją (onsen, kaiseki, tatami). Dlatego tu — i tylko tu — warto dopłacić: pokój z prywatnym rotenburo to wspomnienie, nie tylko łóżko. Reszta hoteli (MIMARU) zostaje standardowa, bo pokój dla 4 i lokalizacja liczą się bardziej niż gwiazdki.</p></details>
+      <details><summary>Sumo 14 maja — kotwica nie do ruszenia</summary><p>Traficie na dzień 6 turnieju Natsu Basho. Touroperatorzy oferują tylko pokazy i lekcje; prawdziwy turniej to przewaga, której nie kupicie w pakiecie. Cała końcówka trasy jest ułożona pod tę datę.</p></details>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="stitle">Co jest stałe, a co możesz ruszyć</h2>
+    <div class="twocol">
+      <div class="card"><h3 style="font-family:var(--serif);font-weight:500;font-size:18px;margin:0 0 8px">⚓ Stałe (kotwice)</h3><ul class="tips">
+        <li>Daty i godziny lotów Etihad</li>
+        <li>Turniej sumo — 14.05 (dzień 6)</li>
+        <li>Ryokan-reset w Hakone (środek trasy)</li>
+        <li>Pętla shinkansenów Tokio→Kioto→Osaka→Tokio</li>
+      </ul></div>
+      <div class="card"><h3 style="font-family:var(--serif);font-weight:500;font-size:18px;margin:0 0 8px">🔧 Elastyczne</h3><ul class="tips">
+        <li>Poszczególne atrakcje w każdym dniu</li>
+        <li>Kolejność Nara ↔ Arashiyama</li>
+        <li>Dzień luzu w Osace (13.05) — bufor</li>
+        <li>Zakres warsztatów; opcje ninja / taiko / Round1</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="stitle">Jak modyfikować</h2>
+    <div class="card more">
+      <details><summary>✂️ Chcę krócej / taniej o kilka dni</summary><p>Kolejność cięć bez psucia rytmu: <b>Nishiki (9.05) → Kinkaku-ji (10.05) → rejs Tombori (13.05)</b>. Wyrzucenie całej bazy (Osaka) tylko w ostateczności. Uwaga: każdy skrócony wariant ma WYŻSZY koszt jednostkowy dnia i droższy bilet — oszczędność ~1,4–1,5 tys./dzień, ale ~1,7 tys. traci się na samym bilecie. Progi i liczby: <a href="koszty.html">Bilety i koszty</a>.</p></details>
+      <details><summary>➕ Chcę dłużej</summary><p>W tym oknie (30.04–15.05) dłużej = Golden Week (loty +2,5–5 tys., hotele +30–80%, tłumy). Jedyne sensowne wydłużenie: <b>2 noce w Abu Zabi „tam"</b> (start 2.05) — obie noce gratis z programu Etihad, drugi dzień to Yas Island (parki klimatyzowane, hit dla dzieci w 40°C). Koszt: +1 dzień urlopu. Postój w drodze powrotnej odpada — nie jest darmowy, łamie okno i kasuje sumo.</p></details>
+      <details><summary>🎮 Chcę więcej frajdy dla dzieci</summary><p>W odwodzie (opcje, nie obowiązki): <b>klasa ninja</b> w Kioto (przy Nishiki), <b>warsztat taiko</b>, <b>Round1 + karaoke</b> w Osace, <b>Hakone Open-Air Museum</b> oraz <b>Nintendo Museum</b> w Ujī (loteria biletów ~luty 2027, paszporty). Karty i ceny: <a href="atrakcje.html">Atrakcje</a>.</p></details>
+      <details><summary>😌 Chcę luźniej na miejscu</summary><p>Dni „Intensywne" (6, 9, 12.05) mają zawory bezpieczeństwa: 6.05 odpuśćcie Tsukiji; 9.05 skróćcie do Fushimi + Kiyomizu; 12.05 odpuśćcie małpy Iwatayama. Decyzja przy śniadaniu — nic nie trzeba zmieniać z góry.</p></details>
+      <details><summary>🏨 Chcę wyższy standard hoteli</summary><p>Poza ryokanem — raczej nie warto. W Japonii „gwiazdki" bywają pułapką: droższe hotele często mają mniejsze pokoje mieszczące 3 os. (dwa pokoje = drożej i rozdziela rodzinę) i gorszą lokalizację. MIMARU (apartament dla 4) to wybór ekspercki, nie kompromis. Zapas budżetu lepiej wydać na przeżycia niż na łóżka.</p></details>
+    </div>
+  </section>
+
+  <p class="kbd" style="margin-top:24px"><a href="index.html" style="font-weight:700">← wróć do planu dzień po dniu</a></p>
+  ${footer('')}`;
+  return shell({title:'Dlaczego tak? — decyzje i modyfikacja planu · Japonia 2027',desc:'Logika planu wyjazdu do Japonii: rytm, kluczowe decyzje, co stałe vs elastyczne i jak modyfikować.',prefix:'',active:'decyzje.html',inner,pillsIdx:null});
+}
+
 /* ---- pogoda ---- */
 function pogodaPage(){
   const rows=[
@@ -966,6 +1058,7 @@ DAYS.forEach((d,i)=>fs.writeFileSync(`${DIR}/days/${d.date}.html`, dayPage(d,i))
 const ATR = atrakcjePage(); // read old before overwriting index (index doesn't touch atrakcje)
 fs.writeFileSync(DIR + '/index.html', indexPage());
 fs.writeFileSync(DIR + '/hotele.html', hotelePage());
+fs.writeFileSync(DIR + '/decyzje.html', decyzjePage());
 fs.writeFileSync(DIR + '/koszty.html', kosztyPage());
 fs.writeFileSync(DIR + '/pogoda.html', pogodaPage());
 fs.writeFileSync(DIR + '/atrakcje.html', ATR);
