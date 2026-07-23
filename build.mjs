@@ -264,12 +264,12 @@ fs.writeFileSync(DIR + '/assets/app.js', APP);
 
 /* ============================ DATA ============================ */
 const IMG = {
-  shibuya:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Shibuya_Crossing%2C_Aerial.jpg/1280px-Shibuya_Crossing%2C_Aerial.jpg',
-  fuji:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/View_of_Mount_Fuji_from_%C5%8Cwakudani_20211202.jpg/1280px-View_of_Mount_Fuji_from_%C5%8Cwakudani_20211202.jpg',
-  fushimi:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg/1280px-Torii_path_with_lantern_at_Fushimi_Inari_Taisha_Shrine%2C_Kyoto%2C_Japan.jpg',
-  todaiji:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/T%C5%8Ddai-ji_Kon-d%C5%8D.jpg/1280px-T%C5%8Ddai-ji_Kon-d%C5%8D.jpg',
-  dotonbori:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Osaka_Dotonbori_Ebisu_Bridge.jpg/1280px-Osaka_Dotonbori_Ebisu_Bridge.jpg',
-  sensoji:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Sensoji_2023.jpg/1280px-Sensoji_2023.jpg',
+  shibuya:'/assets/img/shibuya.jpg',
+  fuji:'/assets/img/fuji.jpg',
+  fushimi:'/assets/img/fushimi.jpg',
+  todaiji:'/assets/img/todaiji.jpg',
+  dotonbori:'/assets/img/dotonbori.jpg',
+  sensoji:'/assets/img/sensoji.jpg',
 };
 const CITY = {
   tokio:{ov:'linear-gradient(135deg,rgba(20,32,64,.72),rgba(14,39,67,.86))',photo:IMG.shibuya},
