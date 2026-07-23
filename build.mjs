@@ -710,10 +710,12 @@ const HOTELS = [
  desc:'Aparthotel projektowany pod rodziny: apartament dla 4 osób z aneksem kuchennym i osobną sypialnią. Spokojna okolica Ueno, ~10 min metrem do Asakusy, wygodny start po przylocie.',
  price:'~750–950 zł/noc (apartament 4-os.)',near:'metro Inarichō / JR Ueno',
  site:'https://mimaruhotels.com/en/hotel/ueno-east/'},
-{id:'hakone',name:'Hakone Kowakien TEN-YU',stay:'Hakone · 1 noc (7–8.05) · prywatny onsen',
- desc:'Wyższa półka na jedyną noc, gdy nocleg JEST atrakcją: nowoczesny luksusowy ryokan, w którym pokoje mają PRYWATNĄ odkrytą kąpiel onsen (rotenburo) na tarasie — kąpiel o każdej porze, bez wspólnych łaźni. Wielodaniowe kaiseki, przyjazny rodzinom, na pętli Hakone przy Gōrze. Alternatywa z widokiem na dolinę: Hakone Ginyu. Zdjęcie: przykładowy rotenburo.',
- price:'~2 400–3 200 zł/noc z HB dla 4 os. (wyższa półka)',near:'rejon Gōra, na pętli Hakone',
- site:'https://www.hakone-tenyu.com/en/'},
+{id:'hakone',name:'Hakone Kowakien Ten-yu',stay:'Hakone · 1 noc (7–8.05) · prywatny onsen',
+ desc:'Wyższa półka na jedyną noc, gdy nocleg JEST atrakcją: nowoczesny luksusowy ryokan, w którym KAŻDY pokój ma prywatną odkrytą kąpiel onsen (rotenburo) na tarasie — kąpiel o dowolnej porze, bez wspólnych łaźni. Dla 2+2 bierzcie pokój typu „Maisonette" (do 4 osób). Wielodaniowe kaiseki, przyjazny rodzinom, w rejonie Ninotairy/Gōry. WAŻNE: 7.05 to piątek, a pokoi 4-osobowych jest mało — rezerwujcie od razu, gdy tylko otworzą się terminy (na maj 2027 mogą jeszcze nie być dostępne — patrz „Kalendarz przygotowań"). Alternatywy dla 4 osób z prywatnym rotenburo: Hakone Kowakien Mikawaya (typy willowe) lub Ajisai Onsen Ryokan (pokoje rodzinne, darmowe anulowanie na Booking). Zdjęcie: przykładowy rotenburo.',
+ price:'~2 400–3 200 zł/noc z HB dla 4 os. (wyższa półka)',near:'Ninotaira, rejon Gōra, na pętli Hakone',
+ mapsq:'Hakone Kowakien Ten-yu, Ninotaira, Hakone',
+ book:'https://www.booking.com/hotel/jp/hakone-kowakien-tenyu.html',
+ site:'https://www.ten-yu.com/en/'},
 {id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 4 noce (8–12.05)',
  desc:'Ta sama rodzinna formuła co w Tokio, tuż przy dworcu Kioto — idealna baza wypadowa na Narę (Kintetsu) i Arashiyamę (JR), a walizki z takkyūbin czekają w recepcji.',
  price:'~800–1 000 zł/noc (apartament 4-os.)',near:'3 min pieszo od dworca Kyoto',
@@ -820,7 +822,7 @@ function dayPage(d,i){
   const flexNote = fx ? `<div class="flex"><span class="fxlock"><b>🔒 Nie ruszać:</b> ${fx[0]}</span><span class="fxcut"><b>✂️ Można odpuścić:</b> ${fx[1]}</span></div>` : '';
   const hid = DAYHOTEL[d.date];
   const hotelBox = hid ? (()=>{const H=HOTELS.find(h=>h.id===hid);
-    return `<a class="hotelbox" href="../hotele.html#${H.id}">🏨 <span><b>Nocleg: ${H.name}</b> — szczegóły, cena i kod QR do mapy →</span></a>`;})() : '';
+    return `<a class="hotelbox" href="../hotele.html#${H.id}">🏨 <span><b>Nocleg: ${H.name}</b> — szczegóły, cena i link do mapy →</span></a>`;})() : '';
   const geo = GEO[d.date]||[];
   const gdir = geo.length?`https://www.google.com/maps/dir/${geo.map(g=>g[0]+','+g[1]).join('/')}`:'#';
   const legend = geo.map((g,idx)=>`<li><span class="mn">${idx+1}</span> ${g[2]}</li>`).join('');
@@ -1037,9 +1039,9 @@ function hotelePage(){
         <h3>${H.name}</h3>
         <p class="desc">${H.desc}</p>
         <div class="meta"><span>💴 <b>${H.price}</b> — orientacyjnie, maj = sprawdzić przy rezerwacji</span><span>📍 ${H.near}</span></div>
-        <div class="links"><a href="${gmapsQ(H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a></div>
+        <div class="links"><a href="${gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a>${H.book?`<a href="${H.book}" target="_blank" rel="noopener">Sprawdź dostępność →</a>`:''}</div>
       </div>
-      <a class="hphoto" href="${H.id==='auh'?H.site:gmapsQ(H.name)}" target="_blank" rel="noopener">
+      <a class="hphoto" href="${H.id==='auh'?H.site:gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">
         <img src="assets/img/hotels/${H.id}.jpg" alt="${H.name}" loading="lazy">
         <span class="plab">📍 ${H.id==='auh'?'Etihad Stopover →':'Zobacz w Google Maps →'}</span>
       </a>
