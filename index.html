@@ -4,579 +4,89 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Japonia 2027 — plan i kalkulator kosztów</title>
-<style>
-  :root{
-    --bg:#f6f5f2; --panel:#ffffff; --ink:#1c1b22; --muted:#6b6a75;
-    --line:#e7e5df; --accent:#bc002d; --accent2:#1b3a6b; --ok:#1a7f4b;
-    --warn:#b06a00; --bad:#b0202d; --chip:#f0eee9; --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(20,20,40,.06);
-    --r:14px;
-  }
-  @media (prefers-color-scheme:dark){
-    :root{ --bg:#14141a; --panel:#1d1d26; --ink:#eceaf2; --muted:#a2a0ad;
-      --line:#2c2c38; --accent:#ff5a76; --accent2:#7aa2df; --ok:#57c98a;
-      --warn:#e0a54d; --bad:#ff7a86; --chip:#26262f; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35); }
-  }
-  :root[data-theme="dark"]{ --bg:#14141a; --panel:#1d1d26; --ink:#eceaf2; --muted:#a2a0ad; --line:#2c2c38; --accent:#ff5a76; --accent2:#7aa2df; --ok:#57c98a; --warn:#e0a54d; --bad:#ff7a86; --chip:#26262f; }
-  :root[data-theme="light"]{ --bg:#f6f5f2; --panel:#ffffff; --ink:#1c1b22; --muted:#6b6a75; --line:#e7e5df; --accent:#bc002d; --accent2:#1b3a6b; --ok:#1a7f4b; --warn:#b06a00; --bad:#b0202d; --chip:#f0eee9; }
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Noto Sans",sans-serif;
-    line-height:1.55;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:940px;margin:0 auto;padding:20px 18px 64px}
-  header.hero{position:relative;overflow:hidden;
-    border-radius:20px;padding:34px 26px;color:#fff;box-shadow:var(--shadow);
-    background:linear-gradient(135deg,#16305c,#8f0022)}
-  .sun{position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;
-    background:radial-gradient(circle,#ff2d4f 0%,#ff2d4f 58%,transparent 60%);opacity:.85}
-  header.hero h1{margin:0 0 6px;font-size:clamp(26px,5vw,40px);letter-spacing:-.5px;position:relative}
-  header.hero .sub{margin:0;opacity:.92;font-size:clamp(14px,2.4vw,17px);position:relative}
-  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative}
-  .chip{background:rgba(255,255,255,.16);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.22);
-    padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600}
-  .theme-btn{position:absolute;top:16px;right:16px;z-index:3;background:rgba(255,255,255,.18);
-    border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:999px;padding:6px 12px;cursor:pointer;font-size:13px}
-  h2{font-size:clamp(19px,3.4vw,24px);margin:38px 0 6px;letter-spacing:-.3px}
-  .lead{color:var(--muted);margin:0 0 18px;font-size:15px}
-  /* agenda */
-  .seg{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--accent);
-    border-radius:var(--r);padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow)}
-  .seg .top{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;margin-bottom:8px}
-  .seg .city{font-size:18px;font-weight:800}
-  .seg .dates{font-size:13px;font-weight:700;color:#fff;background:var(--accent2);padding:2px 10px;border-radius:999px}
-  .seg .nights{font-size:12.5px;color:var(--muted);font-weight:600}
-  .seg ul{margin:6px 0 0;padding-left:20px}
-  .seg li{margin:3px 0}
-  .seg li b{color:var(--accent)}
-  .tag{display:inline-block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;
-    padding:2px 8px;border-radius:6px;background:var(--chip);color:var(--accent2);margin-left:2px}
-  .tag.new{background:var(--accent);color:#fff}
-  /* calculator */
-  .calc{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:6px 4px 10px;box-shadow:var(--shadow);overflow:hidden}
-  table{width:100%;border-collapse:collapse}
-  th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
-  th{font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
-  td.cat{font-weight:700}
-  td .hint{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-top:2px}
-  td.num{text-align:right;white-space:nowrap}
-  input[type=number]{width:92px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;
-    background:var(--bg);color:var(--ink);font-size:15px;text-align:right;font-variant-numeric:tabular-nums}
-  input.small{width:64px}
-  input:focus{outline:2px solid var(--accent2);outline-offset:1px}
-  .x{color:var(--muted);padding:0 6px;font-size:14px}
-  .sub-amt{font-weight:700;font-variant-numeric:tabular-nums}
-  tfoot td{border-bottom:none}
-  .totrow td{background:var(--chip);font-size:17px;font-weight:800;border-top:2px solid var(--line)}
-  .totrow .big{font-size:22px;color:var(--accent)}
-  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
-  .stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow)}
-  .stat .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;font-weight:700}
-  .stat .v{font-size:24px;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums}
-  .budget{margin-top:16px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
-  .bar{height:16px;border-radius:999px;background:var(--chip);position:relative;overflow:hidden;margin:10px 0 6px}
-  .bar .fill{height:100%;border-radius:999px;transition:width .3s ease,background .3s ease}
-  .bar-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
-  .verdict{font-weight:700;margin-top:8px}
-  .note{font-size:13px;color:var(--muted);margin-top:10px}
-  .reset{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:9px;
-    padding:8px 14px;cursor:pointer;font-size:13px;margin-top:14px}
-  .reset:hover{color:var(--ink);border-color:var(--muted)}
-  footer{margin-top:40px;color:var(--muted);font-size:13px;text-align:center;line-height:1.7}
-  .price-flag{display:inline-flex;gap:6px;align-items:center;background:var(--chip);border:1px dashed var(--accent);
-    border-radius:10px;padding:8px 12px;font-size:13.5px;margin:2px 0 4px}
-  .daylist{display:flex;flex-direction:column;gap:10px}
-  .day{display:flex;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
-    padding:13px 16px;box-shadow:var(--shadow)}
-  .day .dnum{flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:var(--accent2);color:#fff;
-    font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px}
-  .day.travel .dnum{background:var(--accent)}
-  .day .dbody{flex:1;min-width:0}
-  .day .dhead{font-size:15px;margin-bottom:2px}
-  .day .dhead .place{color:var(--accent);font-weight:800}
-  .day .dtext{font-size:14px;color:var(--ink);line-height:1.5}
-  .day .dtext b.l{color:var(--accent2)}
-  .alink{color:var(--accent2);font-weight:600;text-decoration:underline dotted;text-underline-offset:2px}
-  .alink:hover{color:var(--accent)}
-  a.chip{text-decoration:none;color:#fff}
-  .tl{list-style:none;margin:6px 0 0;padding:0}
-  .tl li{display:flex;gap:10px;font-size:13.5px;padding:3px 0;border-bottom:1px dashed var(--line);align-items:baseline}
-  .tl li:last-child{border-bottom:none}
-  .tl .t{flex:0 0 46px;font-weight:800;color:var(--accent2);font-variant-numeric:tabular-nums;font-size:12.5px}
-  .dnote{margin-top:8px;font-size:12.5px;color:var(--muted);background:var(--chip);border-radius:8px;padding:7px 10px}
-  .pc{margin-top:8px;font-size:12.5px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
-  .pc .pch{font-weight:800;color:var(--accent2);margin-bottom:3px}
-  .pc div{margin:3px 0}
-  .pc .opt{font-weight:800}
-  .pc .plus{color:var(--ok);font-weight:700}
-  .pc .minus{color:var(--accent);font-weight:700}
-  .wxwrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow-x:auto}
-  nav.qnav{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
-  nav.qnav a{font-size:13px;font-weight:700;color:var(--accent2);text-decoration:none;
-    background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 14px;box-shadow:var(--shadow)}
-  nav.qnav a:hover{border-color:var(--accent2)}
-  .dec{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--warn);
-    border-radius:var(--r);padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
-  .dec .dt{font-weight:800;font-size:15.5px;margin-bottom:2px}
-  .dec .dd{font-size:13px;color:var(--muted);margin-bottom:8px}
-  .dec .opts{display:flex;flex-direction:column;gap:6px}
-  .dec .opts label{display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;
-    border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--bg)}
-  .dec .opts label:has(input:checked){border-color:var(--accent2);outline:1.5px solid var(--accent2)}
-  .dec .opts input{accent-color:var(--accent2)}
-  .dec .price{margin-left:auto;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
-  .dec .rec{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;
-    background:var(--ok);color:#fff;border-radius:5px;padding:1px 6px}
-  .decsum{background:var(--chip);border:1px dashed var(--accent2);border-radius:var(--r);
-    padding:12px 16px;font-size:15px;font-weight:700;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
-  .decb{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;color:#fff;
-    background:var(--warn);border-radius:6px;padding:2px 8px;text-decoration:none;margin-left:6px}
-  @media(max-width:560px){
-    .stats{grid-template-columns:1fr}
-    input[type=number]{width:80px} input.small{width:56px}
-    th,td{padding:9px 8px}
-  }
-</style>
+<meta name="description" content="Plan rodzinnego wyjazdu do Japonii 3–15 maja 2027: agenda dzień po dniu, atrakcje, koszty i pogoda.">
+<title>Japonia 2027 — rodzinny plan wyjazdu</title>
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<div class="wrap">
+<div class="topbar"><div class="bar"><a class="brand" href="index.html">JAPONIA <b>·</b> 2027</a><nav class="tabs"><a href="index.html" class="on">Plan</a><a href="atrakcje.html">Atrakcje</a><a href="koszty.html">Bilety i koszty</a><a href="pogoda.html">Pogoda</a></nav></div></div>
 
-  <header class="hero">
-    <div class="sun"></div>
-    <button class="theme-btn" id="themeBtn" type="button">🌗 Motyw</button>
-    <h1>🇯🇵 Japonia 2027 — rodzinny plan</h1>
-    <p class="sub">3–15 maja 2027 · rodzina 2+2 (dzieci 11 i 13 lat) · Tokio – Hakone – Kioto – Osaka</p>
-    <div class="chips">
-      <span class="chip">✈️ Etihad przez Abu Zabi</span>
-      <span class="chip">🏨 11 nocy</span>
-      <span class="chip">🥋 turniej sumo</span>
-      <span class="chip">🎎 herbata · kaligrafia · ikebana</span>
-      <span class="chip">⚡ Pokémony</span>
-      <span class="chip">♨️ ryokan z onsenem</span>
-      <a class="chip" href="atrakcje.html">🎟️ atrakcje i bilety →</a>
-    </div>
+<main class="wrap">
+
+  <header class="hero" style="background:linear-gradient(135deg,#1b3a6b,#8a2b23)">
+    <p class="eyebrow">Plan rodzinny · 2+2 · 12 dni</p>
+    <h1>Japonia 2027</h1>
+    <p class="lead">3–15 maja 2027 · Tokio – Hakone – Kioto – Osaka. Klasyka pierwszego razu z odrobiną tradycyjnej kultury, Pokémonami dla dzieci i prawdziwym turniejem sumo na finał.</p>
+    <div class="chips"><span class="chip">✈️ Etihad przez Abu Zabi</span><span class="chip">🏨 11 nocy</span><span class="chip">🥋 turniej sumo</span><span class="chip">♨️ ryokan z onsenem</span></div>
   </header>
 
-  <nav class="qnav">
-    <a href="#agenda">📅 Agenda</a>
-    <a href="#pogoda">☀️ Pogoda</a>
-    <a href="#strategia">📈 Bilety</a>
-    <a href="#koszty">💴 Koszty</a>
-    <a href="atrakcje.html">🎟️ Atrakcje</a>
-  </nav>
+  <section>
+    <h2 class="stitle">Dzień po dniu</h2>
+    <p class="lead-p">Kliknij dowolny dzień, żeby zobaczyć plan godzinowy, wskazówki i „w skrócie". Golden Week kończy się 5 maja, więc główne przejazdy robimy już po szczycie tłumów.</p>
+    <div class="dgrid"><a class="dcard" href="days/2027-05-04.html" style="background:linear-gradient(135deg,#1b3a6b,#0e2743)">
+    <div class="dn">1</div>
+    <div class="dd">wtorek · 4 maja</div>
+    <div class="dt">Przylot i pierwszy wieczór w Tokio</div>
+  </a><a class="dcard" href="days/2027-05-05.html" style="background:linear-gradient(135deg,#1b3a6b,#0e2743)">
+    <div class="dn">2</div>
+    <div class="dd">środa · 5 maja</div>
+    <div class="dt">Zielone Tokio, moda i widok z góry</div>
+  </a><a class="dcard" href="days/2027-05-06.html" style="background:linear-gradient(135deg,#1b3a6b,#0e2743)">
+    <div class="dn">3</div>
+    <div class="dd">czwartek · 6 maja</div>
+    <div class="dt">Sushi o poranku i dzień Pokémonów</div>
+  </a><a class="dcard" href="days/2027-05-07.html" style="background:linear-gradient(135deg,#1f5e5a,#0f3634)">
+    <div class="dn">4</div>
+    <div class="dd">piątek · 7 maja</div>
+    <div class="dt">W góry Hakone — onsen i Fudżi</div>
+  </a><a class="dcard" href="days/2027-05-08.html" style="background:linear-gradient(135deg,#8a2b23,#b0652c)">
+    <div class="dn">5</div>
+    <div class="dd">sobota · 8 maja</div>
+    <div class="dt">Z gór do dawnej stolicy</div>
+  </a><a class="dcard" href="days/2027-05-09.html" style="background:linear-gradient(135deg,#8a2b23,#b0652c)">
+    <div class="dn">6</div>
+    <div class="dd">niedziela · 9 maja</div>
+    <div class="dt">Kioto wschodnie: torii i tarasy</div>
+  </a><a class="dcard" href="days/2027-05-10.html" style="background:linear-gradient(135deg,#8a2b23,#b0652c)">
+    <div class="dn">7</div>
+    <div class="dd">poniedziałek · 10 maja</div>
+    <div class="dt">Dzień kultury: herbata, pędzel, kwiaty</div>
+  </a><a class="dcard" href="days/2027-05-11.html" style="background:linear-gradient(135deg,#3c5a34,#20361d)">
+    <div class="dn">8</div>
+    <div class="dd">wtorek · 11 maja</div>
+    <div class="dt">Nara: jelenie i Wielki Budda</div>
+  </a><a class="dcard" href="days/2027-05-12.html" style="background:linear-gradient(135deg,#3a2054,#7c2d55)">
+    <div class="dn">9</div>
+    <div class="dd">środa · 12 maja</div>
+    <div class="dt">Bambusy Arashiyamy i neony Osaki</div>
+  </a><a class="dcard" href="days/2027-05-13.html" style="background:linear-gradient(135deg,#3a2054,#7c2d55)">
+    <div class="dn">10</div>
+    <div class="dd">czwartek · 13 maja</div>
+    <div class="dt">Osaka: luz, targ i kuchnia</div>
+  </a><a class="dcard" href="days/2027-05-14.html" style="background:linear-gradient(135deg,#1b3a6b,#0e2743)">
+    <div class="dn">11</div>
+    <div class="dd">piątek · 14 maja</div>
+    <div class="dt">Powrót do Tokio i turniej sumo</div>
+  </a><a class="dcard" href="days/2027-05-15.html" style="background:linear-gradient(135deg,#1b3a6b,#0e2743)">
+    <div class="dn">12</div>
+    <div class="dd">sobota · 15 maja</div>
+    <div class="dt">Ostatnie zakupy i droga do domu</div>
+  </a></div>
+  </section>
 
-  <h2 id="agenda" style="scroll-margin-top:16px">📅 Agenda — dzień po dniu</h2>
-  <p class="lead">12 dni, 11 nocy — Tokio, Hakone, Kioto, Osaka. Golden Week kończy się 5 maja, więc główne przejazdy robimy już po szczycie tłumów. Rozkład ramowy, elastyczny. Każda podkreślona atrakcja prowadzi do karty z <a class="alink" href="atrakcje.html">godzinami, cenami i linkami do rezerwacji</a>.</p>
-  <div class="daylist">
-
-    <div class="day travel"><div class="dnum">✈</div><div class="dbody">
-      <div class="dhead"><b>pon. 3.05</b> · <span class="place">Przelot WAW → Tokio</span></div>
-      <ul class="tl">
-        <li><span class="t">08:45</span><span>zbiórka w domu, wyjazd na Lotnisko Chopina</span></li>
-        <li><span class="t">09:20</span><span>check-in Etihad + nadanie bagaży (odprawa online otwiera się 30 h przed lotem)</span></li>
-        <li><span class="t">11:50</span><span>wylot WAW → Abu Zabi (~6 h)</span></li>
-        <li><span class="t">19:35</span><span>lądowanie w Abu Zabi (czas lokalny), przejście do gate</span></li>
-        <li><span class="t">21:50</span><span>wylot AUH → Tokio Narita (~9,5 h) — nocleg w samolocie</span></li>
-      </ul>
-      <div class="dnote">💡 Zegarki od razu na czas japoński (+7 h). Dzieci: tablety z filmami; dorośli: zatyczki i maska na oczy.</div>
-    </div></div>
-
-    <div class="day"><div class="dnum">1</div><div class="dbody">
-      <div class="dhead"><b>wt. 4.05</b> · <span class="place">Tokio — przylot i Asakusa</span></div>
-      <ul class="tl">
-        <li><span class="t">12:45</span><span>lądowanie NRT — imigracja z kodem QR <a class="alink" href="atrakcje.html#vjw">Visit Japan Web</a> (wypełnić w samolocie!), odbiór bagaży</span></li>
-        <li><span class="t">14:18</span><span><a class="alink" href="atrakcje.html#nex">Narita Express</a> do Tokyo Station (~55 min)</span></li>
-        <li><span class="t">15:30</span><span>check-in w aparthotelu, chwila oddechu</span></li>
-        <li><span class="t">16:30</span><span>metro do Asakusy: brama Kaminarimon, uliczka Nakamise (senbei, pamiątki)</span></li>
-        <li><span class="t">18:00</span><span><a class="alink" href="atrakcje.html#sensoji">Sensō-ji</a> o zmroku — podświetlona pagoda, tłumy już malejące</span></li>
-        <li><span class="t">19:00</span><span>kolacja: ramen albo izakaya przy Hoppy Street</span></li>
-        <li><span class="t">20:30</span><span>kombini (7-Eleven/Lawson) po zapasy; doładowanie kart Suica</span></li>
-        <li><span class="t">21:30</span><span>sen — najlepsze lekarstwo na jet lag</span></li>
-      </ul>
-      <div class="dnote">💡 Suica w Apple/Google Pay płaci za metro i w sklepach; dzieciom można kupić fizyczne karty kodomo (−50% na przejazdy).</div>
-    </div></div>
-
-    <div class="day"><div class="dnum">2</div><div class="dbody">
-      <div class="dhead"><b>śr. 5.05</b> · <span class="place">Tokio</span> · Dzień Dziecka</div>
-      <ul class="tl">
-        <li><span class="t">08:30</span><span>śniadanie (kawiarnia/kombini)</span></li>
-        <li><span class="t">09:15</span><span><a class="alink" href="atrakcje.html#meiji">Meiji Jingū</a> — spacer przez las, wielkie torii, beczki sake</span></li>
-        <li><span class="t">10:45</span><span>Harajuku: Takeshita Street (naleśniki crepe!), elegancka Omotesandō</span></li>
-        <li><span class="t">12:30</span><span>lunch w Harajuku</span></li>
-        <li><span class="t">14:00</span><span>Shibuya: słynne skrzyżowanie, pomnik Hachikō, Mega Don Quijote</span></li>
-        <li><span class="t">17:45</span><span><a class="alink" href="atrakcje.html#shibuya-sky">Shibuya Sky</a> — slot na zachód słońca (rezerwacja online, sprzedaż rusza 4 tyg. wcześniej)</span></li>
-        <li><span class="t">19:30</span><span>kolacja w izakaya</span></li>
-      </ul>
-      <div class="dnote">💡 Dziś Kodomo no hi (Dzień Dziecka) — nad miastem powiewają karpie koinobori. Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży.</div>
-    </div></div>
-
-    <div class="day"><div class="dnum">3</div><div class="dbody">
-      <div class="dhead"><b>czw. 6.05</b> · <span class="place">Tokio — Pokémony i Tsukiji</span></div>
-      <ul class="tl">
-        <li><span class="t">09:00</span><span><a class="alink" href="atrakcje.html#tsukiji">Tsukiji Outer Market</a> — sushi i tamagoyaki na śniadanie ze straganów</span></li>
-        <li><span class="t">10:45</span><span>metro do Ikebukuro</span></li>
-        <li><span class="t">11:15</span><span>⚡ <a class="alink" href="atrakcje.html#pokemon">Pokémon Center Mega Tokyo</a> (Sunshine City) — największy w Japonii</span></li>
-        <li><span class="t">12:30</span><span><a class="alink" href="atrakcje.html#pokemon">Pokémon Café</a> — zarezerwowany slot (rezerwacje otwierają się 31 dni wcześniej o 18:00 czasu jap.)</span></li>
-        <li><span class="t">14:30</span><span>opcja A: Akihabara (gachapon) · opcja B: <a class="alink" href="atrakcje.html#teamlab">teamLab Planets</a> (bilet z góry)</span></li>
-        <li><span class="t">18:30</span><span>kolacja: kaiten-zushi (taśma) albo yakiniku</span></li>
-      </ul>
-      <div class="dnote">💡 Ustalcie dzieciom limit na gachapon z góry — inaczej wyjdziecie z Akihabary z walizką kapsułek 😉</div>
-      <div class="pc">
-        <div class="pch">⚖️ teamLab Planets czy Akihabara?</div>
-        <div><span class="opt">teamLab</span> — <span class="plus">za:</span> immersyjne, „wow" dla dzieci; <span class="minus">przeciw:</span> bilet z datą (~+310 zł/4 os.), dojazd na Toyosu.</div>
-        <div><span class="opt">Akihabara</span> — <span class="plus">za:</span> za darmo, na luzie (gachapon, elektronika, anime); <span class="minus">przeciw:</span> „zwykłe miasto" po intensywnym poranku.</div>
-      </div>
-    </div></div>
-
-    <div class="day"><div class="dnum">4</div><div class="dbody">
-      <div class="dhead"><b>pt. 7.05</b> · <span class="place">Tokio → Hakone</span></div>
-      <ul class="tl">
-        <li><span class="t">08:00</span><span>nadanie dużych walizek kurierem <a class="alink" href="atrakcje.html#takkyubin">takkyūbin</a> z recepcji PROSTO do Kioto (dojdą jutro, ~2 500 ¥/szt.)</span></li>
-        <li><span class="t">09:00</span><span><a class="alink" href="atrakcje.html#hakone-pass">Romancecar Odakyu</a> z Shinjuku (miejsca rezerwowane, ~85 min) + <a class="alink" href="atrakcje.html#hakone-pass">Hakone Free Pass</a></span></li>
-        <li><span class="t">10:30</span><span>Hakone-Yumoto → zabytkowa kolejka górska do Gōry</span></li>
-        <li><span class="t">11:30</span><span>kolej linowa Sōunzan → <a class="alink" href="atrakcje.html#owakudani">Ōwakudani</a>: pola siarkowe i czarne jajka (+7 lat życia od sztuki)</span></li>
-        <li><span class="t">13:00</span><span>lunch z widokiem</span></li>
-        <li><span class="t">14:30</span><span>ropeway w dół → rejs „piracki" po <a class="alink" href="atrakcje.html#ashi">jeziorze Ashi</a></span></li>
-        <li><span class="t">15:30</span><span>Moto-Hakone: czerwone torii <a class="alink" href="atrakcje.html#ashi">Hakone-jinja</a> nad wodą</span></li>
-        <li><span class="t">16:30</span><span>autobus do ryokanu, check-in, yukaty</span></li>
-        <li><span class="t">17:30</span><span>onsen (prywatna kąpiel rodzinna kashikiri — zarezerwować przy meldunku)</span></li>
-        <li><span class="t">18:30</span><span>kolacja kaiseki podawana do pokoju/sali; wieczorem druga kąpiel dla chętnych</span></li>
-      </ul>
-      <div class="dnote">💡 Przy dobrej pogodzie Fudżi widać z kolejki linowej i znad jeziora — najczęściej rano. Do Hakone jedziecie tylko z plecakami na 1 noc.</div>
-    </div></div>
-
-    <div class="day"><div class="dnum">5</div><div class="dbody">
-      <div class="dhead"><b>sob. 8.05</b> · <span class="place">Hakone → Kioto</span></div>
-      <ul class="tl">
-        <li><span class="t">08:00</span><span>poranny onsen + japońskie śniadanie</span></li>
-        <li><span class="t">09:30</span><span>wykwaterowanie, zejście do Odawary (autobus/kolejka)</span></li>
-        <li><span class="t">11:00</span><span><a class="alink" href="atrakcje.html#smartex">shinkansen Hikari</a> do Kioto (~2 h) — miejsca D/E, okno E od strony Fudżi</span></li>
-        <li><span class="t">13:15</span><span>Kioto: bagaże już czekają (<a class="alink" href="atrakcje.html#takkyubin">takkyūbin</a>); zostawiamy plecaki</span></li>
-        <li><span class="t">15:00</span><span>check-in; spacer po Gion: Hanamikoji, świątynia Yasaka, park Maruyama</span></li>
-        <li><span class="t">17:30</span><span>Pontocho — wąska uliczka latarni nad rzeką Kamo</span></li>
-        <li><span class="t">18:30</span><span>kolacja: obanzai — domowa kuchnia Kioto</span></li>
-        <li><span class="t">20:00</span><span>wieczorne Gion — szansa minąć maiko w drodze na występ</span></li>
-      </ul>
-      <div class="dnote">💡 W Kioto noście buty łatwe do zdejmowania — świątynie, tatami i warsztaty tego wymagają.</div>
-      <div class="pc">
-        <div class="pch">⚖️ Nocleg w Kioto: aparthotel czy machiya?</div>
-        <div><span class="opt">Aparthotel (Mimaru)</span> — <span class="plus">za:</span> łóżka, aneks kuchenny, winda, pralnia — bezstresowo z dziećmi (~820 zł/noc); <span class="minus">przeciw:</span> mniej „japońskiego" klimatu.</div>
-        <div><span class="opt">Machiya</span> — <span class="plus">za:</span> futony na tatami w drewnianym domku, dużo klimatu; <span class="minus">przeciw:</span> schody i mniej udogodnień (~890 zł/noc).</div>
-      </div>
-    </div></div>
-
-    <div class="day"><div class="dnum">6</div><div class="dbody">
-      <div class="dhead"><b>niedz. 9.05</b> · <span class="place">Kioto — wschodnie</span></div>
-      <ul class="tl">
-        <li><span class="t">08:30</span><span>pociąg JR do Inari (5 min z dworca)</span></li>
-        <li><span class="t">09:00</span><span><a class="alink" href="atrakcje.html#fushimi">Fushimi Inari</a> — tysiące torii; im wyżej (do rozdroża Yotsutsuji, ~1,5 h), tym luźniej</span></li>
-        <li><span class="t">11:15</span><span>przejazd pod Kiyomizu</span></li>
-        <li><span class="t">11:45</span><span><a class="alink" href="atrakcje.html#kiyomizu">Kiyomizu-dera</a>: taras nad doliną, wodospad Otowa (3 strumienie życzeń)</span></li>
-        <li><span class="t">13:15</span><span>zejście uliczkami Sannenzaka/Ninenzaka, lunch po drodze</span></li>
-        <li><span class="t">15:00</span><span>przerwa na lody matcha; ewentualnie Kōdai-ji</span></li>
-        <li><span class="t">16:00</span><span><a class="alink" href="atrakcje.html#nishiki">Nishiki Market</a> — „spiżarnia Kioto": przekąski, tsukemono, wagashi</span></li>
-        <li><span class="t">17:30</span><span>odpoczynek w hotelu</span></li>
-        <li><span class="t">19:00</span><span>kolacja</span></li>
-      </ul>
-      <div class="dnote">💡 O 9:00 w bramach jest już tłoczniej niż o świcie — ale spokojny start wygrywa; im wyżej podejdziecie (do Yotsutsuji), tym luźniej.</div>
-    </div></div>
-
-    <div class="day"><div class="dnum">7</div><div class="dbody">
-      <div class="dhead"><b>pon. 10.05</b> · <span class="place">Kioto — dzień kultury</span> 🎎</div>
-      <ul class="tl">
-        <li><span class="t">09:00</span><span><a class="alink" href="atrakcje.html#kinkakuji">Kinkaku-ji</a> — Złoty Pawilon w porannym świetle</span></li>
-        <li><span class="t">11:00</span><span>powrót do centrum, lekki lunch</span></li>
-        <li><span class="t">13:00</span><span>🍵 <a class="alink" href="atrakcje.html#culture">ceremonia parzenia herbaty</a> — sesja rodzinna po angielsku (~60 min)</span></li>
-        <li><span class="t">14:30</span><span>✒️ <a class="alink" href="atrakcje.html#culture">warsztat kaligrafii shodō</a> — każdy pisze swój znak na pamiątkę</span></li>
-        <li><span class="t">16:00</span><span>🌸 <a class="alink" href="atrakcje.html#culture">ikebana</a> — warsztat układania kwiatów</span></li>
-        <li><span class="t">18:00</span><span>spacer w złotej godzinie po Gion</span></li>
-        <li><span class="t">19:00</span><span>kolacja: yudōfu (tofu po kiotyjsku) albo lekkie kaiseki</span></li>
-      </ul>
-      <div class="dnote">💡 Warsztaty (Maikoya/Camellia/studia w Gion) rezerwować 1–2 miesiące wcześniej — sloty rodzinne schodzą pierwsze. Dzieci najbardziej wciąga kaligrafia.</div>
-    </div></div>
-
-    <div class="day"><div class="dnum">8</div><div class="dbody">
-      <div class="dhead"><b>wt. 11.05</b> · <span class="place">Nara — wycieczka</span></div>
-      <ul class="tl">
-        <li><span class="t">09:15</span><span>Kintetsu Limited Express z Kioto (35 min, miejsca rezerwowane)</span></li>
-        <li><span class="t">10:00</span><span>Nara-kōen: jelenie kłaniają się za krakersy shika-senbei</span></li>
-        <li><span class="t">10:45</span><span><a class="alink" href="atrakcje.html#todaiji">Tōdai-ji</a> — Wielki Budda z brązu (15 m); dzieci przeciskają się przez „nozdrze Buddy" w filarze</span></li>
-        <li><span class="t">12:00</span><span>aleja tysięcy kamiennych lampionów do <a class="alink" href="atrakcje.html#kasuga">Kasuga Taisha</a></span></li>
-        <li><span class="t">13:00</span><span>lunch przy Higashimuki (udon, street food)</span></li>
-        <li><span class="t">14:30</span><span><a class="alink" href="atrakcje.html#mochi">Nakatanidō</a> — pokaz błyskawicznego ubijania mochi + degustacja na ciepło</span></li>
-        <li><span class="t">15:30</span><span>powrót do Kioto</span></li>
-        <li><span class="t">17:00</span><span>czas wolny: sento (łaźnia miejska) albo odpoczynek</span></li>
-        <li><span class="t">19:00</span><span>kolacja</span></li>
-      </ul>
-      <div class="dnote">💡 Jelenie bywają nachalne: senbei trzymać wysoko, karmić po jednym — a ukłon przed jeleniem naprawdę działa.</div>
-    </div></div>
-
-    <div class="day"><div class="dnum">9</div><div class="dbody">
-      <div class="dhead"><b>śr. 12.05</b> · <span class="place">Arashiyama → Osaka</span></div>
-      <ul class="tl">
-        <li><span class="t">08:45</span><span>JR do Saga-Arashiyama (15 min)</span></li>
-        <li><span class="t">09:15</span><span><a class="alink" href="atrakcje.html#arashiyama">las bambusowy</a> — szumi i jest pusty tylko o poranku</span></li>
-        <li><span class="t">10:00</span><span>ogrody zen <a class="alink" href="atrakcje.html#arashiyama">Tenryū-ji</a> (UNESCO)</span></li>
-        <li><span class="t">11:15</span><span>most Togetsukyō → wspinaczka na <a class="alink" href="atrakcje.html#monkeys">Iwatayamę</a> do małp (20 min, widok na całe Kioto)</span></li>
-        <li><span class="t">12:30</span><span>lunch w Arashiyamie</span></li>
-        <li><span class="t">14:00</span><span>powrót do hotelu po bagaże</span></li>
-        <li><span class="t">15:30</span><span>JR Special Rapid do Osaki (~30 min)</span></li>
-        <li><span class="t">16:30</span><span>check-in w dzielnicy Namba</span></li>
-        <li><span class="t">18:00</span><span>Dōtonbori: neon Glico (obowiązkowe foto), takoyaki z ulicy, kolacja okonomiyaki</span></li>
-      </ul>
-      <div class="dnote">💡 Las bambusowy o 9:15 nie jest już pusty jak o świcie, ale wciąż robi wrażenie. Przy małpach nie noś jedzenia w widocznych torbach; woda jest na górze.</div>
-    </div></div>
-
-    <div class="day"><div class="dnum">10</div><div class="dbody">
-      <div class="dhead"><b>czw. 13.05</b> · <span class="place">Osaka — luz i jedzenie</span></div>
-      <ul class="tl">
-        <li><span class="t">09:00</span><span>targ <a class="alink" href="atrakcje.html#kuromon">Kuromon Ichiba</a> — śniadanie „po trochu ze wszystkiego": owoce morza, owoce, mochi</span></li>
-        <li><span class="t">11:00</span><span><a class="alink" href="atrakcje.html#osaka-castle">zamek w Osace</a> (park + muzeum z panoramą) · wariant B: <a class="alink" href="atrakcje.html#kaiyukan">akwarium Kaiyukan</a> z rekinem wielorybim</span></li>
-        <li><span class="t">13:30</span><span>lunch</span></li>
-        <li><span class="t">15:00</span><span><a class="alink" href="atrakcje.html#shinsekai">Shinsekai</a> — retro-Osaka: wieża Tsūtenkaku, kushikatsu (panierowane szaszłyki)</span></li>
-        <li><span class="t">17:30</span><span>powrót do hotelu, luz</span></li>
-        <li><span class="t">19:00</span><span>Dōtonbori runda 2 albo 20-minutowy <a class="alink" href="atrakcje.html#tombori">rejs po kanale Tombori</a></span></li>
-      </ul>
-      <div class="dnote">💡 Celowo luźny dzień po intensywnym Kioto — przetasujcie punkty wedle nastroju i pogody.</div>
-    </div></div>
-
-    <div class="day"><div class="dnum">11</div><div class="dbody">
-      <div class="dhead"><b>pt. 14.05</b> · <span class="place">Osaka → Tokio + SUMO</span> 🥋</div>
-      <ul class="tl">
-        <li><span class="t">09:00</span><span>wykwaterowanie, metro na Shin-Ōsakę</span></li>
-        <li><span class="t">09:33</span><span><a class="alink" href="atrakcje.html#smartex">shinkansen Nozomi</a> do Tokio (2 h 25) — miejsca D/E: Fudżi za oknem ~40 min przed Tokio</span></li>
-        <li><span class="t">12:00</span><span>Tokyo Station → bagaże do hotelu lub schowki na dworcu Ryōgoku</span></li>
-        <li><span class="t">12:45</span><span>lunch w Ryōgoku</span></li>
-        <li><span class="t">13:30</span><span>wejście do hali <a class="alink" href="atrakcje.html#sumo">Ryōgoku Kokugikan</a> — niższe dywizje przy pustej hali (można usiąść bliżej)</span></li>
-        <li><span class="t">14:15</span><span>jūryō: rytuały wejścia, sól, tupanie shiko</span></li>
-        <li><span class="t">15:45</span><span>makuuchi: ceremonia dohyō-iri, walki mistrzów, na koniec ceremonia łuku</span></li>
-        <li><span class="t">18:15</span><span>kolacja <a class="alink" href="atrakcje.html#chanko">chanko-nabe</a> (kocioł zapaśników) w knajpie byłego sumity</span></li>
-        <li><span class="t">20:00</span><span>powrót do hotelu</span></li>
-      </ul>
-      <div class="dnote">💡 Bilety: sprzedaż ~początek kwietnia na sumo.or.jp — wyprzedają się w godziny. Lornetka się przyda.</div>
-      <div class="pc">
-        <div class="pch">⚖️ Miejsca na sumo: arena B/C czy box przy ringu?</div>
-        <div><span class="opt">Arena B/C (krzesełka)</span> — <span class="plus">za:</span> wygodne, dobry widok z góry, taniej (~620 zł/4 os.), łatwo wyjść z dziećmi; <span class="minus">przeciw:</span> dalej od ringu.</div>
-        <div><span class="opt">Box przy ringu (masu-seki)</span> — <span class="plus">za:</span> 100% klimatu, tuż przy akcji; <span class="minus">przeciw:</span> siedzenie na poduszkach po turecku 3–4 h, drożej (~1 170 zł).</div>
-      </div>
-    </div></div>
-
-    <div class="day travel"><div class="dnum">12</div><div class="dbody">
-      <div class="dhead"><b>sob. 15.05</b> · <span class="place">Tokio → powrót</span></div>
-      <ul class="tl">
-        <li><span class="t">08:30</span><span>śniadanie, pakowanie, kontrola wagi walizek</span></li>
-        <li><span class="t">10:00</span><span>ostatnie zakupy: Don Quijote / Tokyo Character Street na dworcu</span></li>
-        <li><span class="t">12:00</span><span>lekki lunch</span></li>
-        <li><span class="t">13:45</span><span>odbiór bagaży z hotelu</span></li>
-        <li><span class="t">14:18</span><span><a class="alink" href="atrakcje.html#nex">Narita Express</a> na lotnisko (~55 min) — na NRT 3 h przed wylotem</span></li>
-        <li><span class="t">16:00</span><span>odprawa, kontrola, ewentualny zwrot tax-free</span></li>
-        <li><span class="t">18:00</span><span>wylot NRT → Abu Zabi (przesiadka 2 h 30)</span></li>
-        <li><span class="t">06:50</span><span>lądowanie w Warszawie w niedzielę 16.05 — okaeri! 🎌</span></li>
-      </ul>
-      <div class="dnote">💡 Zostawcie ~5 kg zapasu w walizkach na pamiątki; paragony tax-free trzymajcie przy paszportach.</div>
-    </div></div>
-
+  <section>
+    <h2 class="stitle">Do zaplanowania</h2>
+    <div class="quick">
+    <a class="qcard" href="atrakcje.html"><div class="qi">🎟️</div><div class="qh">Atrakcje</div><div class="qd">Godziny, ceny i linki do rezerwacji — 32 miejsca.</div></a>
+    <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Bilety i koszty</div><div class="qd">Strategia zakupu lotów, progi cen i kalkulator budżetu.</div></a>
+    <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Czego się spodziewać w maju i co zabrać.</div></a>
   </div>
-
-  <h2 id="pogoda" style="scroll-margin-top:16px">☀️ Pogoda w maju i pakowanie</h2>
-  <p class="lead">Maj to jeden z najlepszych miesięcy na Japonię: ciepło, słonecznie i sucho — <b>przed sezonem deszczowym</b> (tsuyu na głównej wyspie startuje dopiero w czerwcu). Poniżej typowe średnie; dokładna prognoza na 2027 pojawi się bliżej wyjazdu.</p>
-  <div class="wxwrap">
-    <table>
-      <thead><tr><th>Region</th><th style="text-align:right">Dzień</th><th style="text-align:right">Noc</th><th>Uwaga</th></tr></thead>
-      <tbody>
-        <tr><td class="cat">🏙️ Tokio</td><td class="num">~23°C</td><td class="num">~14°C</td><td>przyjemnie, słonecznie; sporadyczny przelotny deszcz</td></tr>
-        <tr><td class="cat">♨️ Hakone (góry)</td><td class="num">~19°C</td><td class="num">~10°C</td><td>chłodniej i wilgotniej — weź ciepłą warstwę; Fudżi najlepiej widać rano</td></tr>
-        <tr><td class="cat">⛩️ Kioto / Nara</td><td class="num">~25°C</td><td class="num">~14°C</td><td>cieplej niż w Tokio; w kotlinie w słońcu bywa parno</td></tr>
-        <tr><td class="cat">🏯 Osaka</td><td class="num">~25°C</td><td class="num">~15°C</td><td>ciepło, miejsko; wieczory łagodne</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="dnote" style="margin-top:12px">🎒 <b>Co spakować:</b> ubrania na warstwy (rano i wieczorem chłodniej, zwłaszcza w Hakone) · lekka kurtka/wiatrówka · <b>składany parasol</b> (~9 dni z deszczem w miesiącu, zwykle przelotnie) · wygodne buty łatwe do zdejmowania (świątynie, tatami) · krem z filtrem i nakrycia głowy (słońce mocne). Zmierzch ok. 18:30.</div>
-
-  <h2 id="strategia" style="scroll-margin-top:16px">📈 Strategia biletowa</h2>
-  <p class="lead">Ceny Etihad WAW→Tokio falują o ±30% w skali tygodnia (13 865 → 18 000 → 13 865 zł za 4 os.). W całym oknie ±3 dni najtańsza jest dokładnie nasza kombinacja <b>3→15 maja</b>; wyloty 30.04–2.05 (ogon Golden Week) są o 2,5–5 tys. droższe.</p>
-
-  <div class="seg" style="border-left-color:var(--accent2)">
-    <div class="top"><span class="city">🎯 Progi decyzyjne (4 os., RT z bagażem)</span></div>
-    <ul>
-      <li><b>≤ 13 000 zł</b> — okazja, <b>kupować natychmiast</b> (historyczne promocje Etihad: 2,7–3,1 tys. zł/os)</li>
-      <li><b>13–15 tys. zł</b> — cena uczciwa; można kupić dla pewności miejsc</li>
-      <li><b>≥ 16 tys. zł</b> — górka, czekać na wyprzedaż</li>
-    </ul>
-  </div>
-
-  <div class="seg" style="border-left-color:var(--accent2)">
-    <div class="top"><span class="city">🗓️ Kalendarz polowania</span></div>
-    <ul>
-      <li><b>~20.11–2.12.2026 — Black Friday Etihad/Qatar</b> (historycznie do −35%, podróże do 30.06)</li>
-      <li><b>22.12.2026–poł. stycznia 2027</b> — Qatar Travel Festival + Etihad January Sale</li>
-      <li><b>Koniec stycznia 2027 — twardy deadline zakupu</b> (4 miejsca w jednej rezerwacji znikają szybko; bliżej terminu ceny rosną)</li>
-      <li>Plan B: Air China z WAW przez Pekin (~3,3–4 tys. zł/os, bagaż w cenie); Qatar bywa tańszy od Etihadu</li>
-    </ul>
-  </div>
-
-  <div class="seg" style="border-left-color:var(--accent2)">
-    <div class="top"><span class="city">🔔 Aktywne alerty</span></div>
-    <ul>
-      <li>✅ <b>Google Flights</b> — monitoring ceny 3→15.05 włączony (mail przy zmianie ceny)</li>
-      <li>✅ <b>Automatyczne kontrole Claude</b>: 1.10, 20.11, 22.12.2026, 12.01 i 25.01.2027 — sprawdzenie ceny i rekomendacja kup/czekaj</li>
-      <li>📝 Do dołożenia ręcznie: alert w <b>Kayak</b> (drugie źródło) + obserwacja <b>fly4free.pl</b> (tag Tokio)</li>
-    </ul>
-  </div>
-
-  <h2 id="koszty" style="scroll-margin-top:16px">💴 Kalkulator kosztów</h2>
-  <p class="lead">Szacunek dla <b>4 osób</b> na cały wyjazd. Wszystkie pola możesz edytować — suma liczy się na bieżąco, a zmiany zapisują się w przeglądarce.</p>
-
-  <div class="price-flag">✈️ <span><b>Lot dziś (22.07): 13 865 zł</b> za 4 os. (Etihad) — cena faluje 13,9–18 tys.; progi decyzyjne wyżej ↑</span></div>
-
-  <div class="calc">
-    <table>
-      <thead>
-        <tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="cat">✈️ Loty<span class="hint">Etihad, całość za 4 os. (+ bagaż rejestrowany)</span></td>
-          <td class="num">—</td>
-          <td class="num"><input type="number" id="flights" value="14000" min="0" step="100"></td>
-        </tr>
-        <tr>
-          <td class="cat">🏨 Noclegi<span class="hint">aparthotel rodzinny (lub machiya); 1 noc ryokan (drożej)</span></td>
-          <td class="num"><input type="number" id="nights" class="small" value="11" min="0" step="1"><span class="x">×</span><input type="number" id="nightRate" class="small" value="820" min="0" step="10"></td>
-          <td class="num sub-amt" id="hotelAmt">—</td>
-        </tr>
-        <tr>
-          <td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny + metro + <a class="alink" href="atrakcje.html#nex">Narita Express</a> (4 os.)</span></td>
-          <td class="num">—</td>
-          <td class="num"><input type="number" id="transport" value="4000" min="0" step="100"></td>
-        </tr>
-        <tr>
-          <td class="cat">🍜 Wyżywienie<span class="hint">dni × dzienna stawka na rodzinę (izakaya, targi, ramen, sushi)</span></td>
-          <td class="num"><input type="number" id="days" class="small" value="12" min="0" step="1"><span class="x">×</span><input type="number" id="foodRate" class="small" value="500" min="0" step="10"></td>
-          <td class="num sub-amt" id="foodAmt">—</td>
-        </tr>
-        <tr>
-          <td class="cat">🎟️ Atrakcje, bilety i warsztaty<span class="hint">sumo, warsztaty kultury (herbata, kaligrafia, ikebana), Pokémon Café, akwarium, Shibuya Sky</span></td>
-          <td class="num">—</td>
-          <td class="num"><input type="number" id="attractions" value="2600" min="0" step="100"></td>
-        </tr>
-        <tr>
-          <td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor bezpieczeństwa na nieprzewidziane</span></td>
-          <td class="num">—</td>
-          <td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr class="totrow"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr>
-      </tfoot>
-    </table>
-  </div>
-
-  <div class="stats">
-    <div class="stat"><div class="k">Na osobę</div><div class="v" id="perPerson">—</div></div>
-    <div class="stat"><div class="k">Na dzień (4 os.)</div><div class="v" id="perDay">—</div></div>
-    <div class="stat"><div class="k">Nocleg / noc</div><div class="v" id="perNight">—</div></div>
-  </div>
-
-  <div class="budget">
-    <div style="display:flex;justify-content:space-between;align-items:baseline">
-      <strong>Budżet: 40 000 – 60 000 zł</strong>
-      <span id="budgetPct" style="font-weight:800"></span>
-    </div>
-    <div class="bar"><div class="fill" id="barFill"></div></div>
-    <div class="bar-labels"><span>0</span><span>40k</span><span>60k</span><span>70k</span></div>
-    <div class="verdict" id="verdict"></div>
-    <div class="note">Orientacyjne kwoty w PLN. JR Pass zwykle się nie opłaca przy pętli Tokio–Kioto–Osaka (taniej na biletach pojedynczych).</div>
-    <button class="reset" id="resetBtn" type="button">↺ Przywróć wartości domyślne</button>
-  </div>
-
-  <footer>
-    <a href="atrakcje.html" style="color:var(--accent2);font-weight:700">🎟️ Katalog atrakcji: godziny · ceny · rezerwacje →</a><br>
-    Plan roboczy · zaktualizowano 22.07.2026 · strona prywatna (noindex)<br>
-    Rezerwacje z wyprzedzeniem: sumo (sprzedaż ~kwiecień 2027, wyprzedaje się w godziny) · warsztaty kultury w Kioto (herbata, kaligrafia, ikebana) · Pokémon Café · hotele rodzinne z darmowym anulowaniem.
-  </footer>
-
-</div>
-
-<script>
-(function(){
-  var DEFAULTS={flights:14000,nights:11,nightRate:820,transport:4000,days:12,foodRate:500,attractions:2600,extras:3000};
-  var ids=Object.keys(DEFAULTS);
-  var KEY="japonia2027.calc.v1";
-  var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
-
-  function load(){
-    var saved={};
-    try{saved=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){}
-    ids.forEach(function(id){
-      var el=document.getElementById(id);
-      if(saved[id]!=null&&!isNaN(saved[id])) el.value=saved[id];
-    });
-  }
-  function save(){
-    var o={};
-    ids.forEach(function(id){o[id]=num(id);});
-    try{localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}
-  }
-  function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
-
-  function calc(){
-    var flights=num("flights");
-    var hotel=num("nights")*num("nightRate");
-    var transport=num("transport");
-    var food=num("days")*num("foodRate");
-    var attractions=num("attractions");
-    var extras=num("extras");
-
-    document.getElementById("hotelAmt").textContent=fmt(hotel);
-    document.getElementById("foodAmt").textContent=fmt(food);
-
-    var total=flights+hotel+transport+food+attractions+extras;
-    document.getElementById("total").textContent=fmt(total);
-    document.getElementById("perPerson").textContent=fmt(total/4);
-    var d=num("days")||1;
-    document.getElementById("perDay").textContent=fmt(total/d);
-    var nn=num("nights")||1;
-    document.getElementById("perNight").textContent=fmt(hotel/nn);
-
-    // budget gauge, scale 0..70k
-    var pct=Math.max(0,Math.min(100,total/70000*100));
-    var fill=document.getElementById("barFill");
-    fill.style.width=pct+"%";
-    var col, verdict, vcol;
-    if(total<40000){col=getCss("--accent2");verdict="Poniżej widełek — jest zapas na lepsze hotele lub premium economy.";vcol=getCss("--muted");}
-    else if(total<=60000){col=getCss("--ok");verdict="✅ Mieści się w budżecie 40–60 tys. zł.";vcol=getCss("--ok");}
-    else if(total<=68000){col=getCss("--warn");verdict="⚠️ Nieco ponad budżet — przytnij atrakcje albo standard noclegów.";vcol=getCss("--warn");}
-    else{col=getCss("--bad");verdict="⛔ Wyraźnie ponad budżet — wymaga cięć.";vcol=getCss("--bad");}
-    fill.style.background=col;
-    var v=document.getElementById("verdict");v.textContent=verdict;v.style.color=vcol;
-    document.getElementById("budgetPct").textContent=fmt(total);
-    save();
-  }
-  function getCss(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
-
-  ids.forEach(function(id){document.getElementById(id).addEventListener("input",calc);});
-
-  document.getElementById("resetBtn").addEventListener("click",function(){
-    ids.forEach(function(id){document.getElementById(id).value=DEFAULTS[id];});
-    calc();
-  });
-
-  // theme toggle
-  var tb=document.getElementById("themeBtn");
-  var TKEY="japonia2027.theme";
-  function applyTheme(t){ if(t) document.documentElement.setAttribute("data-theme",t); }
-  try{applyTheme(localStorage.getItem(TKEY));}catch(e){}
-  tb.addEventListener("click",function(){
-    var cur=document.documentElement.getAttribute("data-theme");
-    var isDark = cur ? cur==="dark" : window.matchMedia("(prefers-color-scheme:dark)").matches;
-    var next=isDark?"light":"dark";
-    applyTheme(next);
-    try{localStorage.setItem(TKEY,next);}catch(e){}
-    calc(); // refresh colors from CSS vars
-  });
-
-  load();calc();
-})();
-</script>
+  </section>
+  <footer>Plan rodzinny · Japonia 3–15 maja 2027 · strona prywatna (noindex)<br>
+  Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br>
+  <a href="index.html">Strona główna</a></footer>
+</main>
+<button class="totop" id="totop" aria-label="Do góry">↑</button>
+<script src="assets/app.js"></script>
 </body>
 </html>

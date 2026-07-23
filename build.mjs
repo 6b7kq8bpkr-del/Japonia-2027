@@ -1,0 +1,737 @@
+import fs from 'node:fs';
+const DIR = '/Users/urban/Desktop/Piaskownica/japonia-2027';
+fs.mkdirSync(DIR + '/days', { recursive: true });
+fs.mkdirSync(DIR + '/assets', { recursive: true });
+
+/* ============================ SHARED CSS ============================ */
+const WAVE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M0 24a24 24 0 0148 0'/%3E%3Cpath d='M0 24a17 17 0 0148 0'/%3E%3Cpath d='M0 24a10 10 0 0148 0'/%3E%3C/g%3E%3C/svg%3E";
+
+const CSS = `:root{
+  --paper:#f5f1e8; --panel:#fffdf8; --ink:#1c2530; --muted:#6a7078;
+  --line:rgba(28,37,48,.13); --ai:#1b3a6b; --ai-dark:#122740; --shu:#c8402c;
+  --sakura:#f0e6df; --kin:#b98a34; --success:#2f6d4f;
+  --shadow:0 22px 60px rgba(20,30,45,.12); --shadow-sm:0 2px 10px rgba(20,30,45,.07);
+  --radius:22px; --serif:Georgia,"Times New Roman",serif;
+  --sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{max-width:100%}
+a{color:var(--ai)}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+/* top nav */
+.topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(8px);
+  background:linear-gradient(var(--paper),rgba(245,241,232,.86));padding:12px 0}
+.topbar .bar{max-width:880px;margin:0 auto;background:var(--ai-dark);border-radius:999px;
+  display:flex;align-items:center;gap:8px;padding:9px 12px 9px 20px;box-shadow:var(--shadow-sm);
+  flex-wrap:wrap}
+.brand{font-family:var(--serif);color:#fff;font-weight:500;font-size:16px;letter-spacing:.06em;
+  text-decoration:none;margin-right:auto;white-space:nowrap}
+.brand b{color:var(--kin);font-weight:500}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs a{color:rgba(255,255,255,.82);text-decoration:none;font-size:13.5px;font-weight:600;
+  padding:7px 14px;border-radius:999px;white-space:nowrap;transition:.15s}
+.tabs a:hover{background:rgba(255,255,255,.12);color:#fff}
+.tabs a.on{background:var(--paper);color:var(--ai-dark)}
+
+/* day pills */
+.pills{max-width:880px;margin:14px auto 0;padding:0 20px;display:flex;gap:8px;overflow-x:auto;
+  scrollbar-width:none;padding-bottom:4px}
+.pills::-webkit-scrollbar{display:none}
+.pills a{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:52px;height:52px;border-radius:15px;background:var(--panel);border:1px solid var(--line);
+  text-decoration:none;color:var(--muted);box-shadow:var(--shadow-sm);transition:.15s}
+.pills a:hover{border-color:var(--ai);color:var(--ink)}
+.pills a b{font-size:16px;font-weight:800;color:var(--ink);line-height:1}
+.pills a span{font-size:10px;margin-top:2px}
+.pills a.on{background:var(--ai);border-color:var(--ai)}
+.pills a.on b,.pills a.on span{color:#fff}
+
+/* hero */
+.hero{position:relative;overflow:hidden;color:#fff;border-radius:var(--radius);
+  margin:20px 0 0;padding:44px 34px 38px;box-shadow:var(--shadow)}
+.hero::after{content:"";position:absolute;inset:0;background-image:url("${WAVE}");
+  background-size:56px;opacity:.9;pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:700;
+  opacity:.92;margin:0 0 12px}
+.hero h1{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;line-height:1.02;
+  margin:0;font-size:clamp(34px,7vw,72px);text-wrap:balance}
+.hero .lead{margin:16px 0 0;font-size:clamp(15px,2.3vw,18px);max-width:60ch;opacity:.95}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
+  border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:600;backdrop-filter:blur(3px)}
+
+/* sections */
+main{padding-bottom:40px}
+section{margin-top:34px}
+.stitle{font-family:var(--serif);font-weight:500;font-size:clamp(21px,3.6vw,27px);
+  margin:0 0 16px;letter-spacing:-.01em}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:22px 24px}
+.lead-p{color:var(--muted);font-size:15.5px;margin:0 0 18px;max-width:66ch}
+
+/* timeline */
+.tline{list-style:none;margin:0;padding:0}
+.tline li{display:grid;grid-template-columns:64px 1fr;gap:14px;position:relative}
+.tline .tm{font-weight:800;font-size:13px;color:var(--ai);text-align:right;padding-top:3px;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.tline .bd{border-left:2px solid var(--line);padding:0 0 24px 22px;position:relative}
+.tline li:last-child .bd{border-color:transparent}
+.tline .bd::before{content:"";position:absolute;left:-8px;top:5px;width:13px;height:13px;
+  border-radius:50%;background:var(--shu);border:3px solid var(--panel);box-shadow:0 0 0 1px var(--line)}
+.tline .h{font-weight:700;font-size:16px;margin:0}
+.tline .d{color:var(--muted);font-size:14px;margin:3px 0 0}
+
+/* facts */
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);
+  border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.facts div{background:var(--panel);padding:13px 16px}
+.facts .fv{font-weight:800;font-size:15.5px}
+.facts .fk{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:1px}
+
+/* tips + pros-cons + more */
+.tips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.tips li{display:flex;gap:10px;font-size:14.5px}
+.tips li::before{content:"›";color:var(--shu);font-weight:800}
+.pc{border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:var(--sakura)}
+.pc .pch{font-family:var(--serif);font-weight:500;font-size:17px;margin-bottom:8px}
+.pc .row{font-size:14px;margin:5px 0}
+.pc .opt{font-weight:800}
+.pc .plus{color:var(--success);font-weight:700}
+.pc .minus{color:var(--shu);font-weight:700}
+.more details{border-top:1px solid var(--line);padding:14px 0}
+.more details:first-of-type{border-top:none}
+.more summary{font-family:var(--serif);font-size:17px;cursor:pointer;list-style:none;font-weight:500}
+.more summary::-webkit-details-marker{display:none}
+.more summary::before{content:"＋";color:var(--shu);margin-right:10px;font-weight:700}
+.more details[open] summary::before{content:"−"}
+.more p{color:var(--muted);font-size:14.5px;margin:10px 0 0}
+.linklist{display:flex;flex-wrap:wrap;gap:8px}
+.linklist a{font-size:13px;font-weight:700;text-decoration:none;color:var(--ai);
+  background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 13px}
+.linklist a:hover{border-color:var(--ai)}
+.gmap{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:14px;font-weight:700;
+  color:var(--ai);text-decoration:none}
+
+/* day nav */
+.daynav{display:flex;justify-content:space-between;align-items:stretch;gap:12px;margin-top:36px}
+.daynav a{flex:1;text-decoration:none;color:var(--ink);background:var(--panel);border:1px solid var(--line);
+  border-radius:16px;padding:14px 18px;box-shadow:var(--shadow-sm);transition:.15s}
+.daynav a:hover{border-color:var(--ai)}
+.daynav .dir{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.daynav .ttl{font-weight:700;margin-top:3px}
+.daynav .home{flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:22px}
+.daynav .nx{text-align:right}
+.kbd{color:var(--muted);font-size:12.5px;text-align:center;margin-top:14px}
+
+/* index day grid */
+.dgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:620px){.dgrid{grid-template-columns:1fr}}
+.dcard{text-decoration:none;color:#fff;border-radius:var(--radius);padding:20px;position:relative;
+  overflow:hidden;box-shadow:var(--shadow);min-height:150px;display:flex;flex-direction:column;justify-content:flex-end}
+.dcard::after{content:"";position:absolute;inset:0;background-image:url("${WAVE}");background-size:52px;opacity:.85}
+.dcard>*{position:relative;z-index:1}
+.dcard .dn{position:absolute;top:16px;left:20px;font-family:var(--serif);font-size:30px;opacity:.85;z-index:1}
+.dcard .dd{font-size:12.5px;opacity:.9;text-transform:uppercase;letter-spacing:.08em}
+.dcard .dt{font-family:var(--serif);font-weight:500;font-size:20px;line-height:1.12;margin-top:3px;text-wrap:balance}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+@media(max-width:620px){.quick{grid-template-columns:1fr}}
+.qcard{text-decoration:none;color:var(--ink);background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);transition:.15s}
+.qcard:hover{border-color:var(--ai)}
+.qcard .qi{font-size:26px}
+.qcard .qh{font-family:var(--serif);font-size:19px;margin-top:6px}
+.qcard .qd{color:var(--muted);font-size:13.5px;margin-top:2px}
+
+/* calculator (koszty) */
+.calc table{width:100%;border-collapse:collapse}
+.calc th,.calc td{padding:11px 6px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+.calc th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.calc td.cat{font-weight:700}.calc td.cat .hint{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.calc td.num{text-align:right;white-space:nowrap}
+.calc input{width:96px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--paper);
+  color:var(--ink);font-size:15px;text-align:right;font-variant-numeric:tabular-nums;font-family:var(--sans)}
+.calc input.sm{width:60px}.calc .x{color:var(--muted);padding:0 5px}
+.calc .tot td{border-bottom:none;border-top:2px solid var(--line);font-size:17px;font-weight:800;padding-top:14px}
+.calc .tot .big{color:var(--shu);font-size:23px;text-align:right}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+@media(max-width:620px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow-sm)}
+.stat .k{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.stat .v{font-size:23px;font-weight:800;margin-top:3px}
+.bar{height:15px;border-radius:999px;background:var(--sakura);overflow:hidden;margin:12px 0 6px}
+.bar .fill{height:100%;border-radius:999px;transition:width .3s}
+.barlab{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.reset{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:10px;
+  padding:8px 14px;cursor:pointer;font-size:13px;margin-top:14px;font-family:var(--sans)}
+.pflag{display:inline-flex;gap:6px;background:var(--sakura);border:1px dashed var(--shu);border-radius:12px;
+  padding:9px 13px;font-size:13.5px;margin-bottom:14px}
+
+/* attractions */
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.toc a{font-size:13px;font-weight:700;color:var(--ai);text-decoration:none;background:var(--panel);
+  border:1px solid var(--line);border-radius:999px;padding:6px 13px}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+@media(max-width:680px){.agrid{grid-template-columns:1fr}}
+.acard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 17px;
+  box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:6px;scroll-margin-top:80px}
+.acard h3{margin:0;font-family:var(--serif);font-weight:500;font-size:18px}
+.acard .desc{font-size:13.5px}
+.acard .meta{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+.acard .meta b{color:var(--ink);font-weight:600}
+.acard .links{margin-top:auto;padding-top:6px;display:flex;flex-wrap:wrap;gap:8px}
+.acard .links a{font-size:12.5px;font-weight:700;text-decoration:none;color:var(--ai);
+  border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--paper)}
+.rezerwuj{display:inline-block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
+  background:var(--shu);color:#fff;border-radius:6px;padding:2px 8px;width:fit-content}
+
+/* misc */
+.wxwrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px}
+.wxwrap table{width:100%;border-collapse:collapse}
+.wxwrap th,.wxwrap td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);font-size:14px}
+.wxwrap th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.wxwrap tr:last-child td{border-bottom:none}
+.wxwrap td.cat{font-weight:700}.wxwrap td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.note{color:var(--muted);font-size:13px}
+footer{margin-top:44px;padding:26px 0;border-top:1px solid var(--line);color:var(--muted);
+  font-size:13px;text-align:center;line-height:1.7}
+footer a{font-weight:700;text-decoration:none}
+.totop{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;background:var(--ai-dark);
+  color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:var(--shadow);opacity:0;pointer-events:none;
+  transition:.25s;z-index:60}
+.totop.show{opacity:1;pointer-events:auto}
+`;
+fs.writeFileSync(DIR + '/assets/style.css', CSS);
+
+/* ============================ APP JS ============================ */
+const APP = `document.addEventListener('keydown',function(e){
+  if(e.target.matches('input,textarea')) return;
+  if(e.key==='ArrowRight'){var n=document.getElementById('navNext'); if(n&&n.href) location.href=n.href;}
+  if(e.key==='ArrowLeft'){var p=document.getElementById('navPrev'); if(p&&p.href) location.href=p.href;}
+});
+var bt=document.getElementById('totop');
+if(bt){addEventListener('scroll',function(){bt.classList.toggle('show',scrollY>500);});
+  bt.addEventListener('click',function(){scrollTo({top:0,behavior:'smooth'});});}
+var on=document.querySelector('.pills a.on'); if(on&&on.scrollIntoView) on.scrollIntoView({inline:'center',block:'nearest'});
+`;
+fs.writeFileSync(DIR + '/assets/app.js', APP);
+
+/* ============================ DATA ============================ */
+const CITY = {
+  tokio:{grad:'linear-gradient(135deg,#1b3a6b,#0e2743)'},
+  hakone:{grad:'linear-gradient(135deg,#1f5e5a,#0f3634)'},
+  kioto:{grad:'linear-gradient(135deg,#8a2b23,#b0652c)'},
+  nara:{grad:'linear-gradient(135deg,#3c5a34,#20361d)'},
+  osaka:{grad:'linear-gradient(135deg,#3a2054,#7c2d55)'},
+};
+const A = (id,label)=>({id,label}); // attraction link helper
+
+const DAYS = [
+{date:'2027-05-04',dow:'wtorek',dd:'4 maja',city:'tokio',title:'Przylot i pierwszy wieczór w Tokio',
+ lead:'Lądujemy po nocnym locie, spokojnie wchodzimy w japoński rytm i witamy się z miastem w Asakusie.',
+ chips:['Łagodny start','NEX z lotniska','Jet lag'],
+ tl:[
+  ['w nocy','Przelot Etihad','WAW → Abu Zabi → Narita; nocleg w samolocie, zegarki od razu na czas japoński (+7 h).'],
+  ['12:45','Lądowanie na Narcie','Imigracja z kodem QR Visit Japan Web (wypełnić w samolocie), odbiór bagaży.'],
+  ['14:18','Narita Express do miasta','~55 min do centrum, miejsca rezerwowane.'],
+  ['15:30','Zameldowanie','Zostawiamy bagaże, chwila oddechu.'],
+  ['16:30','Asakusa','Brama Kaminarimon i deptak Nakamise pełen straganów.'],
+  ['18:00','Sensō-ji o zmroku','Podświetlona pagoda, gdy tłumy już maleją.'],
+  ['19:00','Kolacja','Ramen albo izakaya; potem kombini po zapasy i karty Suica.'],
+  ['21:30','Wczesny sen','Najlepsze lekarstwo na jet lag.'],
+ ],
+ facts:[['Łagodna','Intensywność'],['Narita Express','Przejazdy'],['Umiarkowane','Chodzenie'],['Łatwy start','Dla dzieci'],['Tokio (1/3)','Nocleg']],
+ tips:['Visit Japan Web wypełnijcie dla całej czwórki jeszcze w samolocie — na lotnisku pokazujecie kod QR.','Suica w Apple/Google Pay płaci za metro i w sklepach; dzieciom fizyczne karty kodomo (−50%).'],
+ links:[A('sensoji','Sensō-ji'),A('nex','Narita Express + Suica'),A('vjw','Visit Japan Web')],
+ more:[['Dobrze wiedzieć','Pierwszy dzień celowo jest lekki — po ~15 godzinach podróży liczy się aklimatyzacja, nie liczba punktów. Asakusa wieczorem daje mocne „jesteśmy w Japonii" bez wysiłku.']]},
+
+{date:'2027-05-05',dow:'środa',dd:'5 maja',city:'tokio',title:'Zielone Tokio, moda i widok z góry',
+ lead:'Od chramu w lesie, przez młodzieżowe Harajuku i tętniącą Shibuyę, po zachód słońca nad miastem.',
+ chips:['Dzień Dziecka','Dużo chodzenia','Shibuya Sky'],
+ tl:[
+  ['08:30','Śniadanie','Kawiarnia lub kombini.'],
+  ['09:15','Meiji Jingū','Chram shintō w 70-hektarowym lesie: wielkie torii i beczki sake.'],
+  ['10:45','Harajuku','Takeshita Street (naleśniki crepe) i elegancka Omotesandō.'],
+  ['12:30','Lunch',''],
+  ['14:00','Shibuya','Słynne skrzyżowanie, pomnik Hachikō, Mega Don Quijote.'],
+  ['17:45','Shibuya Sky','Otwarty taras na zachód słońca — rezerwacja online.'],
+  ['19:30','Kolacja',''],
+ ],
+ facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Świetnie','Dla dzieci'],['Tokio (2/3)','Nocleg']],
+ tips:['Dziś Kodomo no hi (Dzień Dziecka) — nad miastem powiewają karpie koinobori.','Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej).'],
+ links:[A('meiji','Meiji Jingū'),A('shibuya-sky','Shibuya Sky')],
+ more:[]},
+
+{date:'2027-05-06',dow:'czwartek',dd:'6 maja',city:'tokio',title:'Sushi o poranku i dzień Pokémonów',
+ lead:'Śniadanie na targu Tsukiji, a potem to, na co dzieci czekają najbardziej — świat Pokémonów.',
+ chips:['Dla dzieci','Pokémon Café','Sushi'],
+ tl:[
+  ['09:00','Targ Tsukiji','Świeże sushi i tamagoyaki na patyku prosto ze straganów.'],
+  ['10:45','Metro do Ikebukuro',''],
+  ['11:15','Pokémon Center Mega Tokyo','Największy sklep Pokémon w Japonii (Sunshine City).'],
+  ['12:30','Pokémon Café','Tematyczny lunch z wizytą Pikachu — rezerwacja z góry.'],
+  ['14:30','Akihabara lub teamLab','Dzielnica gier i gachaponów albo immersyjne muzeum sztuki cyfrowej.'],
+  ['18:30','Kolacja','Kaiten-zushi (sushi z taśmy) albo yakiniku.'],
+ ],
+ facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Umiarkowane','Chodzenie'],['Ich dzień','Dla dzieci'],['Tokio (3/3)','Nocleg']],
+ tips:['Rezerwacja Pokémon Café otwiera się 31 dni wcześniej o 18:00 czasu japońskiego — łapcie slot punktualnie.','Ustalcie dzieciom limit na gachapon z góry, inaczej wyjdziecie z Akihabary z walizką kapsułek.'],
+ links:[A('tsukiji','Tsukiji'),A('pokemon','Pokémon Center + Café'),A('teamlab','teamLab Planets')],
+ pc:{q:'teamLab Planets czy Akihabara?',opts:[
+   ['teamLab','immersyjne, „wow" dla dzieci','bilet z datą (~+310 zł/4 os.) i dojazd na Toyosu'],
+   ['Akihabara','za darmo, na luzie (gachapon, elektronika)','„zwykłe miasto" po intensywnym poranku']]},
+ more:[]},
+
+{date:'2027-05-07',dow:'piątek',dd:'7 maja',city:'hakone',title:'W góry Hakone — onsen i Fudżi',
+ lead:'Pętla wulkaniczna, jezioro z bramą torii i pierwsza noc po japońsku: yukata, kaiseki i gorące źródła.',
+ chips:['Ryokan + onsen','Widok na Fudżi','Kolejki i statek'],
+ tl:[
+  ['08:00','Walizki kurierem','Takkyūbin z recepcji prosto do Kioto (dojdą jutro) — do Hakone jedziemy z plecakami.'],
+  ['09:00','Romancecar z Shinjuku','Wygodny ekspres z rezerwowanymi miejscami (~1,5 h).'],
+  ['10:30','Kolejka górska do Gōry',''],
+  ['11:30','Kolej linowa nad Ōwakudani','Pola siarkowe i czarne jajka kuro-tamago (+7 lat życia od sztuki).'],
+  ['13:00','Lunch z widokiem',''],
+  ['14:30','Rejs po jeziorze Ashi','Stylizowany „piracki" galeon; przy dobrej pogodzie Fudżi nad wodą.'],
+  ['15:30','Hakone-jinja','Czerwona brama torii stojąca w jeziorze.'],
+  ['16:30','Ryokan','Zameldowanie, yukaty.'],
+  ['17:30','Onsen','Prywatna kąpiel rodzinna (kashikiri — zarezerwować przy meldunku).'],
+  ['18:30','Kolacja kaiseki','Wielodaniowa, sezonowa; wieczorem druga kąpiel dla chętnych.'],
+ ],
+ facts:[['Średnia','Intensywność'],['Romancecar + kolejki','Przejazdy'],['Umiarkowane','Chodzenie'],['Frajda z kolejek','Dla dzieci'],['Ryokan','Nocleg']],
+ tips:['Fudżi najczęściej widać rano — trzymajcie kciuki przy porannej kolejce linowej i na jeziorze.','Nadanie dużych walizek kurierem (~2 500 ¥/szt.) oszczędza taszczenia po górach i przesiadkach.'],
+ links:[A('hakone-pass','Hakone Free Pass + Romancecar'),A('owakudani','Ōwakudani'),A('ashi','Jezioro Ashi'),A('takkyubin','Takkyūbin')],
+ more:[['Kontekst','Ryokan to nie tylko nocleg, ale całe doświadczenie: śpi się na futonach na tatami, chodzi w yukacie, a kolacja kaiseki i onsen są częścią wieczoru. To najspokojniejszy punkt całego wyjazdu.']]},
+
+{date:'2027-05-08',dow:'sobota',dd:'8 maja',city:'kioto',title:'Z gór do dawnej stolicy',
+ lead:'Poranny onsen, shinkansen do Kioto i pierwszy wieczór w dzielnicy gejsz.',
+ chips:['Shinkansen','Gion o zmroku','Machiya lub aparthotel'],
+ tl:[
+  ['08:00','Poranny onsen + śniadanie',''],
+  ['09:30','Zejście do Odawary',''],
+  ['11:00','Shinkansen do Kioto','~2 h; miejsca D/E — okno E od strony Fudżi.'],
+  ['13:15','Kioto','Bagaże z Tokio już czekają (takkyūbin).'],
+  ['15:00','Spacer po Gion','Hanamikoji, świątynia Yasaka, park Maruyama.'],
+  ['17:30','Pontocho','Wąska uliczka latarni nad rzeką Kamo.'],
+  ['18:30','Kolacja obanzai','Domowa kuchnia Kioto.'],
+  ['20:00','Wieczorne Gion','Szansa minąć maiko w drodze na występ.'],
+ ],
+ facts:[['Łagodna','Intensywność'],['Shinkansen','Przejazdy'],['Umiarkowane','Chodzenie'],['Spokojny wieczór','Dla dzieci'],['Kioto (1/4)','Nocleg']],
+ tips:['W Kioto noście buty łatwe do zdejmowania — świątynie, tatami i warsztaty tego wymagają.','Na uliczkach Gion obowiązuje zakaz fotografowania na prywatnych zaułkach (są kary) — róbcie zdjęcia na głównych deptakach.'],
+ links:[A('gion','Gion i Pontocho'),A('smartex','Rezerwacja shinkansenów')],
+ pc:{q:'Nocleg w Kioto: aparthotel czy machiya?',opts:[
+   ['Aparthotel (Mimaru)','łóżka, kuchnia, winda, pralnia — bezstresowo z dziećmi (~820 zł/noc)','mniej „japońskiego" klimatu'],
+   ['Machiya','futony na tatami w drewnianym domku, dużo klimatu','schody i mniej udogodnień (~890 zł/noc)']]},
+ more:[]},
+
+{date:'2027-05-09',dow:'niedziela',dd:'9 maja',city:'kioto',title:'Kioto wschodnie: torii i tarasy',
+ lead:'Tysiące bram Fushimi Inari, taras Kiyomizu-dera i uliczki, które wyglądają jak sprzed wieków.',
+ chips:['Świątynie','Trochę pod górę','Nishiki Market'],
+ tl:[
+  ['08:30','Pociąg do Inari',''],
+  ['09:00','Fushimi Inari','Tysiące cynobrowych bram torii; im wyżej (do rozdroża Yotsutsuji), tym luźniej.'],
+  ['11:15','Przejazd pod Kiyomizu',''],
+  ['11:45','Kiyomizu-dera','Drewniany taras nad doliną i wodospad Otowa — trzy strumienie życzeń.'],
+  ['13:15','Sannenzaka i Ninenzaka','Zabytkowe uliczki, lunch po drodze.'],
+  ['15:00','Lody matcha','Ewentualnie świątynia Kōdai-ji.'],
+  ['16:00','Nishiki Market','„Spiżarnia Kioto" — przekąski, tsukemono, wagashi.'],
+  ['17:30','Odpoczynek',''],
+  ['19:00','Kolacja',''],
+ ],
+ facts:[['Wyższa','Intensywność'],['Pociąg + pieszo','Przejazdy'],['Sporo, pod górę','Chodzenie'],['Lisy i tarasy','Dla dzieci'],['Kioto (2/4)','Nocleg']],
+ tips:['O 9:00 w bramach jest już tłoczniej niż o świcie — ale spokojny start wygrywa; im wyżej podejdziecie, tym mniej ludzi.','Na Kiyomizu z wodospadu Otowa pije się tylko z jednego strumienia — wybór trzech naraz uchodzi za zachłanność.'],
+ links:[A('fushimi','Fushimi Inari'),A('kiyomizu','Kiyomizu-dera'),A('nishiki','Nishiki Market')],
+ more:[]},
+
+{date:'2027-05-10',dow:'poniedziałek',dd:'10 maja',city:'kioto',title:'Dzień kultury: herbata, pędzel, kwiaty',
+ lead:'Złoty Pawilon o poranku, a po południu rzemiosło Kioto w rękach — ceremonia herbaty, kaligrafia i ikebana.',
+ chips:['Warsztaty','Spokojne tempo','Dla mamy'],
+ tl:[
+  ['09:00','Kinkaku-ji','Złoty Pawilon w porannym świetle, odbity w stawie.'],
+  ['13:00','Ceremonia herbaty','Sesja rodzinna z objaśnieniem po angielsku (~60 min).'],
+  ['14:30','Kaligrafia shodō','Każdy pisze swój znak pędzlem na pamiątkę.'],
+  ['16:00','Ikebana','Warsztat układania kwiatów.'],
+  ['18:00','Spacer po Gion','W złotej godzinie.'],
+  ['19:00','Kolacja','Yudōfu — tofu po kiotyjsku, albo lekkie kaiseki.'],
+ ],
+ facts:[['Łagodna','Intensywność'],['Pieszo + autobus','Przejazdy'],['Niewiele','Chodzenie'],['Kaligrafia wciąga','Dla dzieci'],['Kioto (3/4)','Nocleg']],
+ tips:['Warsztaty (Maikoya, Camellia, studia w Gion) rezerwować 1–2 miesiące wcześniej — sloty rodzinne schodzą pierwsze.','Z całego zestawu dzieci najbardziej wciąga kaligrafia — mokry pędzel i własny znak to świetna pamiątka.'],
+ links:[A('kinkakuji','Kinkaku-ji'),A('culture','Warsztaty kultury')],
+ more:[['Kontekst','Kioto przez tysiąc lat było stolicą cesarską i to tutaj wykuwały się sztuki, które dziś kojarzymy z Japonią: droga herbaty (chadō), kaligrafia (shodō) i ikebana. Dzień jest pomyślany tak, by nie tylko je zobaczyć, ale spróbować własnymi rękami.']]},
+
+{date:'2027-05-11',dow:'wtorek',dd:'11 maja',city:'nara',title:'Nara: jelenie i Wielki Budda',
+ lead:'Wycieczka do pierwszej stolicy Japonii — kłaniające się jelenie i 15-metrowy Budda z brązu.',
+ chips:['Wycieczka','Dla dzieci','Pieszo po parku'],
+ tl:[
+  ['09:15','Kintetsu Express do Nary','~35 min z Kioto, miejsca rezerwowane.'],
+  ['10:00','Jelenie w parku','~1200 oswojonych jeleni sika kłania się za krakersy shika-senbei.'],
+  ['10:45','Tōdai-ji','Wielki Budda z brązu; dzieci przeciskają się przez „nozdrze Buddy" w filarze.'],
+  ['12:00','Kasuga Taisha','Aleja tysięcy kamiennych lampionów.'],
+  ['13:00','Lunch','Higashimuki — udon i street food.'],
+  ['14:30','Pokaz ubijania mochi','Nakatanidō — dwóch mistrzów wali młotami w rytmie; degustacja na ciepło.'],
+  ['15:30','Powrót do Kioto',''],
+  ['17:00','Czas wolny',''],
+  ['19:00','Kolacja',''],
+ ],
+ facts:[['Średnia','Intensywność'],['Pociąg + pieszo','Przejazdy'],['Sporo','Chodzenie'],['Jelenie = hit','Dla dzieci'],['Kioto (4/4)','Nocleg']],
+ tips:['Jelenie bywają nachalne: krakersy trzymajcie wysoko, karmcie po jednym — a ukłon przed jeleniem naprawdę działa.','Pokaz mochi w Nakatanidō bywa nieregularny (mniej więcej co 30 min) — warto zapytać obsługę o najbliższy.'],
+ links:[A('nara-park','Park Nara'),A('todaiji','Tōdai-ji'),A('kasuga','Kasuga Taisha'),A('mochi','Nakatanidō')],
+ more:[]},
+
+{date:'2027-05-12',dow:'środa',dd:'12 maja',city:'osaka',title:'Bambusy Arashiyamy i neony Osaki',
+ lead:'Poranny spacer wśród bambusów i między małpami, a wieczorem zderzenie z kuchnią i neonami Osaki.',
+ chips:['Las bambusowy','Przeprowadzka','Dōtonbori'],
+ tl:[
+  ['08:45','Pociąg do Saga-Arashiyama','~15 min z Kioto.'],
+  ['09:15','Las bambusowy','Szumi i jest najspokojniejszy o poranku.'],
+  ['10:00','Tenryū-ji','Ogrody zen wpisane na listę UNESCO.'],
+  ['11:15','Małpy na Iwatayamie','20 min wspinaczki, panorama Kioto i makaki przy siatce.'],
+  ['12:30','Lunch w Arashiyamie',''],
+  ['14:00','Po bagaże',''],
+  ['15:30','Przejazd do Osaki','~40 min pociągiem.'],
+  ['16:30','Namba','Zameldowanie.'],
+  ['18:00','Dōtonbori','Neon Glico, takoyaki i okonomiyaki z ulicy.'],
+ ],
+ facts:[['Średnia','Intensywność'],['Pociągi','Przejazdy'],['Sporo, pod górę','Chodzenie'],['Małpy i neony','Dla dzieci'],['Osaka (1/2)','Nocleg']],
+ tips:['Przy małpach na Iwatayamie nie noście jedzenia w widocznych torbach; automat z wodą jest na szczycie.','Las bambusowy o 9:15 nie jest już pusty jak o świcie, ale wciąż robi wrażenie — idźcie w głąb, dalej od wejścia.'],
+ links:[A('arashiyama','Arashiyama'),A('monkeys','Monkey Park Iwatayama')],
+ more:[]},
+
+{date:'2027-05-13',dow:'czwartek',dd:'13 maja',city:'osaka',title:'Osaka: luz, targ i kuchnia',
+ lead:'Najspokojniejszy dzień — targ owoców morza, zamek albo akwarium i wieczór w retro-dzielnicy.',
+ chips:['Luźne tempo','Jedzenie','Elastyczny plan'],
+ tl:[
+  ['09:00','Targ Kuromon Ichiba','„Kuchnia Osaki" — owoce morza, sushi, truskawki mochi.'],
+  ['11:00','Zamek w Osace lub Kaiyukan','Panorama z zamku albo rekin wielorybi w jednym z największych akwariów świata.'],
+  ['13:30','Lunch',''],
+  ['15:00','Shinsekai','Retro-Osaka: wieża Tsūtenkaku i kushikatsu (nie maczać dwa razy!).'],
+  ['17:30','Odpoczynek',''],
+  ['19:00','Dōtonbori runda 2','Albo 20-minutowy rejs po kanale Tombori między neonami.'],
+ ],
+ facts:[['Łagodna','Intensywność'],['Metro','Przejazdy'],['Umiarkowane','Chodzenie'],['Akwarium = hit','Dla dzieci'],['Osaka (2/2)','Nocleg']],
+ tips:['To celowo luźny dzień po intensywnym Kioto — przetasujcie punkty wedle nastroju i pogody.','W kushikatsu obowiązuje jedna zasada: wspólnego sosu nie maczamy dwa razy tym samym szaszłykiem.'],
+ links:[A('kuromon','Kuromon Ichiba'),A('osaka-castle','Zamek w Osace'),A('kaiyukan','Akwarium Kaiyukan'),A('shinsekai','Shinsekai'),A('tombori','Rejs Tombori')],
+ more:[]},
+
+{date:'2027-05-14',dow:'piątek',dd:'14 maja',city:'tokio',title:'Powrót do Tokio i turniej sumo',
+ lead:'Shinkansen z widokiem na Fudżi, a po południu prawdziwy turniej sumo w hali Ryōgoku.',
+ chips:['Sumo — dzień 6','Shinkansen','Chanko-nabe'],
+ tl:[
+  ['09:00','Wykwaterowanie','Metro na Shin-Ōsakę.'],
+  ['09:33','Shinkansen Nozomi do Tokio','2 h 25; Fudżi za oknem (miejsca D/E) ~40 min przed metą.'],
+  ['12:00','Bagaże','Do hotelu albo do schowków na dworcu Ryōgoku.'],
+  ['12:45','Lunch w Ryōgoku',''],
+  ['13:30','Wejście na halę','Ryōgoku Kokugikan — niższe dywizje przy jeszcze pustej hali, można usiąść bliżej.'],
+  ['14:15','Jūryō','Rytuały wejścia, sól, tupanie shiko.'],
+  ['15:45','Makuuchi','Najwyższa liga, ceremonia dohyō-iri i finałowa ceremonia łuku.'],
+  ['18:15','Chanko-nabe','Kocioł zapaśników w knajpie prowadzonej przez byłego sumitę.'],
+  ['20:00','Powrót do hotelu',''],
+ ],
+ facts:[['Średnia','Intensywność'],['Shinkansen','Przejazdy'],['Umiarkowane','Chodzenie'],['Sumo robi wrażenie','Dla dzieci'],['Tokio (finał)','Nocleg']],
+ tips:['Bilety na sumo ruszają ~początek kwietnia na sumo.or.jp i wyprzedają się w godziny — kupujcie w dniu startu.','Lornetka bardzo się przyda; walki najwyższej ligi to ostatnie ~2 godziny turnieju.'],
+ links:[A('sumo','Turniej sumo'),A('chanko','Chanko-nabe')],
+ pc:{q:'Miejsca na sumo: arena B/C czy box przy ringu?',opts:[
+   ['Arena B/C (krzesełka)','wygodne, dobry widok z góry, taniej (~620 zł/4 os.), łatwo wyjść z dziećmi','dalej od ringu'],
+   ['Box przy ringu (masu-seki)','100% klimatu, tuż przy akcji','siedzenie na poduszkach po turecku 3–4 h, drożej (~1 170 zł)']]},
+ more:[['Kontekst','Majowy turniej Natsu Basho trwa 15 dni (9–23 maja 2027). Traficie na dzień 6 — środek turnieju, gdy walki mają już stawkę, a hala żyje. To sport z 1500-letnią historią i pełną oprawą rytuału.']]},
+
+{date:'2027-05-15',dow:'sobota',dd:'15 maja',city:'tokio',title:'Ostatnie zakupy i droga do domu',
+ lead:'Spokojny poranek na pamiątki i wieczorny lot do Warszawy.',
+ chips:['Zakupy','Tax-free','Wylot 18:00'],
+ tl:[
+  ['08:30','Śniadanie i pakowanie','Kontrola wagi walizek.'],
+  ['10:00','Ostatnie zakupy','Don Quijote i Tokyo Character Street na dworcu.'],
+  ['12:00','Lekki lunch',''],
+  ['13:45','Odbiór bagaży z hotelu',''],
+  ['14:18','Narita Express na lotnisko','~55 min; na Narcie 3 h przed wylotem.'],
+  ['16:00','Odprawa i kontrola','Ewentualny zwrot tax-free.'],
+  ['18:00','Wylot','NRT → Abu Zabi (przesiadka 2 h 30).'],
+  ['06:50','Warszawa','Lądowanie w niedzielę 16.05 — okaeri!'],
+ ],
+ facts:[['Łagodna','Intensywność'],['NEX na lotnisko','Przejazdy'],['Niewiele','Chodzenie'],['Spokojny dzień','Dla dzieci'],['Lot nocny','Nocleg']],
+ tips:['Zostawcie ~5 kg zapasu w walizkach na pamiątki; paragony tax-free trzymajcie razem z paszportami.','Na Character Street (Tokyo Station) są sklepy Pokémon, Ghibli i Hello Kitty — dobre miejsce na ostatnie prezenty.'],
+ links:[A('nex','Narita Express')],
+ more:[]},
+];
+
+/* ============================ TEMPLATES ============================ */
+const TABS = [['index.html','Plan'],['atrakcje.html','Atrakcje'],['koszty.html','Bilety i koszty'],['pogoda.html','Pogoda']];
+function nav(active,prefix){
+  const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on"':'')}>${l}</a>`).join('');
+  return `<div class="topbar"><div class="bar"><a class="brand" href="${prefix}index.html">JAPONIA <b>·</b> 2027</a><nav class="tabs">${t}</nav></div></div>`;
+}
+function pills(curIdx){
+  const items = DAYS.map((d,i)=>{
+    const [dd] = d.dd.split(' ');
+    return `<a href="${d.date}.html"${(i===curIdx?' class="on"':'')}><b>${i+1}</b><span>${dd}.05</span></a>`;
+  }).join('');
+  return `<div class="pills">${items}</div>`;
+}
+function shell({title,desc,prefix,active,inner,pillsIdx}){
+  return `<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="${desc}">
+<title>${title}</title>
+<link rel="stylesheet" href="${prefix}assets/style.css">
+</head>
+<body>
+${nav(active,prefix)}
+${pillsIdx!=null?pills(pillsIdx):''}
+<main class="wrap">
+${inner}
+</main>
+<button class="totop" id="totop" aria-label="Do góry">↑</button>
+<script src="${prefix}assets/app.js"></script>
+</body>
+</html>`;
+}
+function footer(prefix){
+  return `<footer>Plan rodzinny · Japonia 3–15 maja 2027 · strona prywatna (noindex)<br>
+  Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br>
+  <a href="${prefix}index.html">Strona główna</a></footer>`;
+}
+
+function dayPage(d,i){
+  const prefix='../';
+  const prev=DAYS[i-1], next=DAYS[i+1];
+  const tl = d.tl.map(x=>`<li><div class="tm">${x[0]}</div><div class="bd"><p class="h">${x[1]}</p>${x[2]?`<p class="d">${x[2]}</p>`:''}</div></li>`).join('');
+  const facts = d.facts.map(f=>`<div><div class="fv">${f[0]}</div><div class="fk">${f[1]}</div></div>`).join('');
+  const tips = d.tips.map(t=>`<li>${t}</li>`).join('');
+  const links = d.links.length?`<div class="linklist">${d.links.map(l=>`<a href="${prefix}atrakcje.html#${l.id}">🎟️ ${l.label}</a>`).join('')}</div>`:'';
+  const pc = d.pc?`<div class="pc"><div class="pch">⚖️ ${d.pc.q}</div>${d.pc.opts.map(o=>`<div class="row"><span class="opt">${o[0]}</span> — <span class="plus">za:</span> ${o[1]}; <span class="minus">przeciw:</span> ${o[2]}.</div>`).join('')}</div>`:'';
+  const more = d.more.length?`<section class="more"><h2 class="stitle">Więcej o tym dniu</h2><div class="card">${d.more.map(m=>`<details><summary>${m[0]}</summary><p>${m[1]}</p></details>`).join('')}</div></section>`:'';
+  const gmap = `<a class="gmap" href="https://www.google.com/maps/search/${encodeURIComponent(d.title+' Japan')}" target="_blank" rel="noopener">📍 Otwórz punkty dnia w Google Maps ↗</a>`;
+  const inner = `
+  <header class="hero" style="background:${CITY[d.city].grad}">
+    <p class="eyebrow">Dzień ${i+1} z 12 · ${d.dow} · ${d.dd}</p>
+    <h1>${d.title}</h1>
+    <p class="lead">${d.lead}</p>
+    <div class="chips">${d.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+  </header>
+
+  <section>
+    <h2 class="stitle">Plan dnia</h2>
+    <div class="card"><ul class="tline">${tl}</ul>${gmap}</div>
+  </section>
+
+  <section>
+    <h2 class="stitle">W skrócie</h2>
+    <div class="facts">${facts}</div>
+    ${pc}
+  </section>
+
+  <section>
+    <h2 class="stitle">Wskazówki praktyczne</h2>
+    <div class="card"><ul class="tips">${tips}</ul>${links?'<div style="margin-top:14px">'+links+'</div>':''}</div>
+  </section>
+  ${more}
+
+  <nav class="daynav">
+    ${prev?`<a id="navPrev" href="${prev.date}.html"><div class="dir">← Poprzedni</div><div class="ttl">${prev.dd}</div></a>`:`<a id="navPrev" href="${prefix}index.html"><div class="dir">←</div><div class="ttl">Start</div></a>`}
+    <a class="home" href="${prefix}index.html" title="Strona główna">⌂</a>
+    ${next?`<a class="nx" id="navNext" href="${next.date}.html"><div class="dir">Następny →</div><div class="ttl">${next.dd}</div></a>`:`<a class="nx" id="navNext" href="${prefix}index.html"><div class="dir">→</div><div class="ttl">Koniec</div></a>`}
+  </nav>
+  <p class="kbd">Przełączaj dni strzałkami ← → na klawiaturze albo z paska u góry.</p>
+  ${footer(prefix)}`;
+  return shell({title:`Dzień ${i+1}: ${d.title} · Japonia 2027`,desc:d.lead,prefix,active:'',inner,pillsIdx:i});
+}
+
+/* ---- index ---- */
+function indexPage(){
+  const cards = DAYS.map((d,i)=>`<a class="dcard" href="days/${d.date}.html" style="background:${CITY[d.city].grad}">
+    <div class="dn">${i+1}</div>
+    <div class="dd">${d.dow} · ${d.dd}</div>
+    <div class="dt">${d.title}</div>
+  </a>`).join('');
+  const quick = `<div class="quick">
+    <a class="qcard" href="atrakcje.html"><div class="qi">🎟️</div><div class="qh">Atrakcje</div><div class="qd">Godziny, ceny i linki do rezerwacji — 32 miejsca.</div></a>
+    <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Bilety i koszty</div><div class="qd">Strategia zakupu lotów, progi cen i kalkulator budżetu.</div></a>
+    <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Czego się spodziewać w maju i co zabrać.</div></a>
+  </div>`;
+  const inner = `
+  <header class="hero" style="background:linear-gradient(135deg,#1b3a6b,#8a2b23)">
+    <p class="eyebrow">Plan rodzinny · 2+2 · 12 dni</p>
+    <h1>Japonia 2027</h1>
+    <p class="lead">3–15 maja 2027 · Tokio – Hakone – Kioto – Osaka. Klasyka pierwszego razu z odrobiną tradycyjnej kultury, Pokémonami dla dzieci i prawdziwym turniejem sumo na finał.</p>
+    <div class="chips"><span class="chip">✈️ Etihad przez Abu Zabi</span><span class="chip">🏨 11 nocy</span><span class="chip">🥋 turniej sumo</span><span class="chip">♨️ ryokan z onsenem</span></div>
+  </header>
+
+  <section>
+    <h2 class="stitle">Dzień po dniu</h2>
+    <p class="lead-p">Kliknij dowolny dzień, żeby zobaczyć plan godzinowy, wskazówki i „w skrócie". Golden Week kończy się 5 maja, więc główne przejazdy robimy już po szczycie tłumów.</p>
+    <div class="dgrid">${cards}</div>
+  </section>
+
+  <section>
+    <h2 class="stitle">Do zaplanowania</h2>
+    ${quick}
+  </section>
+  ${footer('')}`;
+  return shell({title:'Japonia 2027 — rodzinny plan wyjazdu',desc:'Plan rodzinnego wyjazdu do Japonii 3–15 maja 2027: agenda dzień po dniu, atrakcje, koszty i pogoda.',prefix:'',active:'index.html',inner,pillsIdx:null});
+}
+
+/* ---- koszty (strategy + calculator) ---- */
+function kosztyPage(){
+  const seg = (t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const inner = `
+  <header class="hero" style="background:linear-gradient(135deg,#122740,#2f6d4f)">
+    <p class="eyebrow">Bilety lotnicze i budżet</p>
+    <h1>Bilety i koszty</h1>
+    <p class="lead">Ceny Etihad WAW→Tokio falują o ±30% w skali tygodnia. Poniżej progi „kup / czekaj", kalendarz wyprzedaży i kalkulator budżetu dla całej rodziny.</p>
+  </header>
+
+  <section>
+    <h2 class="stitle">Strategia biletowa</h2>
+    <div class="pflag">✈️ <span><b>Lot dziś (23.07.2026): ok. 13 900 zł</b> za 4 os. (Etihad) — cena faluje 13,9–18 tys.</span></div>
+    ${seg('🎯 Progi decyzyjne (4 os., w obie strony, z bagażem)',['<b>≤ 13 000 zł</b> — okazja, kupować natychmiast','<b>13–15 tys. zł</b> — cena uczciwa, można kupić dla pewności miejsc','<b>≥ 16 tys. zł</b> — górka, czekać na wyprzedaż'])}
+    ${seg('🗓️ Kalendarz polowania',['<b>~20.11–2.12.2026</b> — Black Friday Etihad/Qatar (historycznie do −35%, podróże do 30.06)','<b>22.12.2026 – poł. stycznia 2027</b> — Qatar Travel Festival + Etihad January Sale','<b>Koniec stycznia 2027</b> — twardy deadline zakupu (4 miejsca w jednej rezerwacji znikają szybko)','Plan B: Air China z Warszawy przez Pekin (~3,3–4 tys. zł/os, bagaż w cenie)'])}
+    ${seg('🔔 Aktywne alerty',['Google Flights — monitoring ceny 3→15.05 (mail przy zmianie)','Automatyczne kontrole Claude: 1.10, 20.11, 22.12.2026 oraz 12.01 i 25.01.2027','Do dołożenia ręcznie: alert w Kayak + obserwacja fly4free.pl (tag Tokio)'])}
+  </section>
+
+  <section>
+    <h2 class="stitle">Kalkulator kosztów</h2>
+    <p class="lead-p">Szacunek dla <b>4 osób</b> na cały wyjazd. Wszystkie pola możesz edytować — suma liczy się na bieżąco, a zmiany zapisują się w przeglądarce.</p>
+    <div class="card calc">
+      <table>
+        <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
+        <tbody>
+          <tr><td class="cat">✈️ Loty<span class="hint">Etihad, całość za 4 os. (+ bagaż)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="14000" min="0" step="100"></td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">aparthotel lub machiya; 1 noc ryokan</span></td><td class="num"><input type="number" id="nights" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="820" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny + metro + NEX</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4000" min="0" step="100"></td></tr>
+          <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę</span></td><td class="num"><input type="number" id="days" class="sm" value="12" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
+          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">sumo, warsztaty, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2600" min="0" step="100"></td></tr>
+          <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td></tr>
+        </tbody>
+        <tfoot><tr class="tot"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="k">Na osobę</div><div class="v" id="perPerson">—</div></div>
+      <div class="stat"><div class="k">Na dzień (4 os.)</div><div class="v" id="perDay">—</div></div>
+      <div class="stat"><div class="k">Nocleg / noc</div><div class="v" id="perNight">—</div></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div style="display:flex;justify-content:space-between"><strong>Budżet: 40 000 – 60 000 zł</strong><span id="budgetPct" style="font-weight:800"></span></div>
+      <div class="bar"><div class="fill" id="barFill"></div></div>
+      <div class="barlab"><span>0</span><span>40k</span><span>60k</span><span>70k</span></div>
+      <div id="verdict" style="font-weight:700;margin-top:8px"></div>
+      <div class="note" style="margin-top:10px">Orientacyjne kwoty w PLN. JR Pass zwykle się nie opłaca przy pętli Tokio–Kioto–Osaka.</div>
+      <button class="reset" id="resetBtn" type="button">↺ Przywróć wartości domyślne</button>
+    </div>
+  </section>
+  ${footer('')}
+  <script>
+  (function(){
+    var D={flights:14000,nights:11,nightRate:820,transport:4000,days:12,foodRate:500,attractions:2600,extras:3000};
+    var ids=Object.keys(D),KEY="jp2027.calc";
+    var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
+    function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
+    function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+    try{var s=JSON.parse(localStorage.getItem(KEY))||{};ids.forEach(function(id){if(s[id]!=null)document.getElementById(id).value=s[id];});}catch(e){}
+    function calc(){
+      var hotel=num("nights")*num("nightRate"),food=num("days")*num("foodRate");
+      document.getElementById("hotelAmt").textContent=fmt(hotel);
+      document.getElementById("foodAmt").textContent=fmt(food);
+      var total=num("flights")+hotel+num("transport")+food+num("attractions")+num("extras");
+      document.getElementById("total").textContent=fmt(total);
+      document.getElementById("perPerson").textContent=fmt(total/4);
+      document.getElementById("perDay").textContent=fmt(total/(num("days")||1));
+      document.getElementById("perNight").textContent=fmt(hotel/(num("nights")||1));
+      var pct=Math.max(0,Math.min(100,total/70000*100)),f=document.getElementById("barFill");f.style.width=pct+"%";
+      var col,v,vc;
+      if(total<40000){col=css("--ai");v="Poniżej widełek — jest zapas na lepsze hotele.";vc=css("--muted");}
+      else if(total<=60000){col=css("--success");v="✅ Mieści się w budżecie 40–60 tys. zł.";vc=css("--success");}
+      else if(total<=68000){col=css("--kin");v="⚠️ Nieco ponad budżet — przytnij atrakcje lub standard noclegów.";vc=css("--kin");}
+      else{col=css("--shu");v="⛔ Wyraźnie ponad budżet.";vc=css("--shu");}
+      f.style.background=col;var vd=document.getElementById("verdict");vd.textContent=v;vd.style.color=vc;
+      document.getElementById("budgetPct").textContent=fmt(total);
+      var o={};ids.forEach(function(id){o[id]=num(id);});try{localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}
+    }
+    ids.forEach(function(id){document.getElementById(id).addEventListener("input",calc);});
+    document.getElementById("resetBtn").addEventListener("click",function(){ids.forEach(function(id){document.getElementById(id).value=D[id];});calc();});
+    calc();
+  })();
+  </script>`;
+  return shell({title:'Bilety i koszty · Japonia 2027',desc:'Strategia zakupu biletów lotniczych i kalkulator budżetu wyjazdu do Japonii.',prefix:'',active:'koszty.html',inner,pillsIdx:null});
+}
+
+/* ---- pogoda ---- */
+function pogodaPage(){
+  const rows=[
+    ['🏙️ Tokio','~23°C','~14°C','przyjemnie, słonecznie; sporadyczny przelotny deszcz'],
+    ['♨️ Hakone (góry)','~19°C','~10°C','chłodniej i wilgotniej — weź ciepłą warstwę; Fudżi najlepiej widać rano'],
+    ['⛩️ Kioto / Nara','~25°C','~14°C','cieplej niż w Tokio; w kotlinie w słońcu bywa parno'],
+    ['🏯 Osaka','~25°C','~15°C','ciepło, miejsko; wieczory łagodne'],
+  ].map(r=>`<tr><td class="cat">${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td></tr>`).join('');
+  const inner=`
+  <header class="hero" style="background:linear-gradient(135deg,#1f5e5a,#b98a34)">
+    <p class="eyebrow">Klimat i pakowanie</p>
+    <h1>Pogoda w maju</h1>
+    <p class="lead">Maj to jeden z najlepszych miesięcy na Japonię: ciepło, słonecznie i sucho — przed sezonem deszczowym, który na głównej wyspie zaczyna się dopiero w czerwcu.</p>
+  </header>
+  <section>
+    <h2 class="stitle">Typowe temperatury</h2>
+    <div class="wxwrap"><table>
+      <thead><tr><th>Region</th><th style="text-align:right">Dzień</th><th style="text-align:right">Noc</th><th>Uwaga</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <p class="note" style="margin-top:10px">Wartości to średnie klimatyczne — dokładna prognoza na 2027 pojawi się bliżej wyjazdu.</p>
+  </section>
+  <section>
+    <h2 class="stitle">Co spakować</h2>
+    <div class="card"><ul class="tips">
+      <li>Ubrania na warstwy — rano i wieczorem chłodniej, zwłaszcza w Hakone.</li>
+      <li>Lekka kurtka lub wiatrówka i składany parasol (~9 dni z deszczem w miesiącu, zwykle przelotnie).</li>
+      <li>Wygodne buty łatwe do zdejmowania — świątynie, tatami i warsztaty tego wymagają.</li>
+      <li>Krem z filtrem i nakrycia głowy — słońce w maju potrafi mocno operować.</li>
+      <li>Coś cieplejszego na wieczór w ryokanie w Hakone; zmierzch ok. 18:30.</li>
+    </ul></div>
+  </section>
+  ${footer('')}`;
+  return shell({title:'Pogoda i pakowanie · Japonia 2027',desc:'Pogoda w maju w Japonii i lista rzeczy do spakowania.',prefix:'',active:'pogoda.html',inner,pillsIdx:null});
+}
+
+/* ---- atrakcje (reuse existing card content under new shell) ---- */
+function atrakcjePage(){
+  const old = fs.readFileSync(DIR + '/atrakcje.html','utf8');
+  const s = old.indexOf('<h2 id="tokio"');
+  const e = old.indexOf('<p class="note"');
+  let body = old.slice(s, e);
+  // map old classes to new ones
+  body = body.split('class="grid"').join('class="agrid"');
+  body = body.split('class="acard"').join('class="acard"'); // same
+  // section headings -> stitle
+  body = body.replace(/<h2 id="([^"]+)">([^<]+)<\/h2>/g,'<h2 id="$1" class="stitle" style="scroll-margin-top:80px">$2</h2>');
+  const toc = `<nav class="toc" style="margin-bottom:18px">
+    <a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a><a href="#kioto">⛩️ Kioto</a>
+    <a href="#nara">🦌 Nara</a><a href="#osaka">🏯 Osaka</a><a href="#sumo-s">🥋 Sumo</a><a href="#praktyczne">🧳 Praktyczne</a></nav>`;
+  const inner=`
+  <header class="hero" style="background:linear-gradient(135deg,#8a2b23,#b98a34)">
+    <p class="eyebrow">Godziny · ceny · rezerwacje</p>
+    <h1>Atrakcje</h1>
+    <p class="lead">Wszystkie miejsca z planu w jednym katalogu — z godzinami, orientacyjnymi cenami (¥100 ≈ 2,6 zł) i linkami do oficjalnych rezerwacji.</p>
+  </header>
+  ${toc}
+  ${body}
+  <p class="note" style="margin-top:16px">Ceny i godziny — stan na lipiec 2026, orientacyjne; przed rezerwacją sprawdźcie na stronach oficjalnych.</p>
+  ${footer('')}`;
+  return shell({title:'Atrakcje: godziny, ceny, rezerwacje · Japonia 2027',desc:'Katalog atrakcji wyjazdu do Japonii z godzinami, cenami i linkami do rezerwacji.',prefix:'',active:'atrakcje.html',inner,pillsIdx:null});
+}
+
+/* ============================ WRITE ============================ */
+DAYS.forEach((d,i)=>fs.writeFileSync(`${DIR}/days/${d.date}.html`, dayPage(d,i)));
+const ATR = atrakcjePage(); // read old before overwriting index (index doesn't touch atrakcje)
+fs.writeFileSync(DIR + '/index.html', indexPage());
+fs.writeFileSync(DIR + '/koszty.html', kosztyPage());
+fs.writeFileSync(DIR + '/pogoda.html', pogodaPage());
+fs.writeFileSync(DIR + '/atrakcje.html', ATR);
+
+console.log('OK · day pages:', DAYS.length, '· timeline items:', DAYS.reduce((a,d)=>a+d.tl.length,0),
+  '· pc:', DAYS.filter(d=>d.pc).length);

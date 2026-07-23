@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Strategia zakupu biletów lotniczych i kalkulator budżetu wyjazdu do Japonii.">
+<title>Bilety i koszty · Japonia 2027</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="topbar"><div class="bar"><a class="brand" href="index.html">JAPONIA <b>·</b> 2027</a><nav class="tabs"><a href="index.html">Plan</a><a href="atrakcje.html">Atrakcje</a><a href="koszty.html" class="on">Bilety i koszty</a><a href="pogoda.html">Pogoda</a></nav></div></div>
+
+<main class="wrap">
+
+  <header class="hero" style="background:linear-gradient(135deg,#122740,#2f6d4f)">
+    <p class="eyebrow">Bilety lotnicze i budżet</p>
+    <h1>Bilety i koszty</h1>
+    <p class="lead">Ceny Etihad WAW→Tokio falują o ±30% w skali tygodnia. Poniżej progi „kup / czekaj", kalendarz wyprzedaży i kalkulator budżetu dla całej rodziny.</p>
+  </header>
+
+  <section>
+    <h2 class="stitle">Strategia biletowa</h2>
+    <div class="pflag">✈️ <span><b>Lot dziś (23.07.2026): ok. 13 900 zł</b> za 4 os. (Etihad) — cena faluje 13,9–18 tys.</span></div>
+    <div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">🎯 Progi decyzyjne (4 os., w obie strony, z bagażem)</h3><ul class="tips"><li><b>≤ 13 000 zł</b> — okazja, kupować natychmiast</li><li><b>13–15 tys. zł</b> — cena uczciwa, można kupić dla pewności miejsc</li><li><b>≥ 16 tys. zł</b> — górka, czekać na wyprzedaż</li></ul></div>
+    <div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">🗓️ Kalendarz polowania</h3><ul class="tips"><li><b>~20.11–2.12.2026</b> — Black Friday Etihad/Qatar (historycznie do −35%, podróże do 30.06)</li><li><b>22.12.2026 – poł. stycznia 2027</b> — Qatar Travel Festival + Etihad January Sale</li><li><b>Koniec stycznia 2027</b> — twardy deadline zakupu (4 miejsca w jednej rezerwacji znikają szybko)</li><li>Plan B: Air China z Warszawy przez Pekin (~3,3–4 tys. zł/os, bagaż w cenie)</li></ul></div>
+    <div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">🔔 Aktywne alerty</h3><ul class="tips"><li>Google Flights — monitoring ceny 3→15.05 (mail przy zmianie)</li><li>Automatyczne kontrole Claude: 1.10, 20.11, 22.12.2026 oraz 12.01 i 25.01.2027</li><li>Do dołożenia ręcznie: alert w Kayak + obserwacja fly4free.pl (tag Tokio)</li></ul></div>
+  </section>
+
+  <section>
+    <h2 class="stitle">Kalkulator kosztów</h2>
+    <p class="lead-p">Szacunek dla <b>4 osób</b> na cały wyjazd. Wszystkie pola możesz edytować — suma liczy się na bieżąco, a zmiany zapisują się w przeglądarce.</p>
+    <div class="card calc">
+      <table>
+        <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
+        <tbody>
+          <tr><td class="cat">✈️ Loty<span class="hint">Etihad, całość za 4 os. (+ bagaż)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="14000" min="0" step="100"></td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">aparthotel lub machiya; 1 noc ryokan</span></td><td class="num"><input type="number" id="nights" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="820" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny + metro + NEX</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4000" min="0" step="100"></td></tr>
+          <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę</span></td><td class="num"><input type="number" id="days" class="sm" value="12" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
+          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">sumo, warsztaty, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2600" min="0" step="100"></td></tr>
+          <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td></tr>
+        </tbody>
+        <tfoot><tr class="tot"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="k">Na osobę</div><div class="v" id="perPerson">—</div></div>
+      <div class="stat"><div class="k">Na dzień (4 os.)</div><div class="v" id="perDay">—</div></div>
+      <div class="stat"><div class="k">Nocleg / noc</div><div class="v" id="perNight">—</div></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div style="display:flex;justify-content:space-between"><strong>Budżet: 40 000 – 60 000 zł</strong><span id="budgetPct" style="font-weight:800"></span></div>
+      <div class="bar"><div class="fill" id="barFill"></div></div>
+      <div class="barlab"><span>0</span><span>40k</span><span>60k</span><span>70k</span></div>
+      <div id="verdict" style="font-weight:700;margin-top:8px"></div>
+      <div class="note" style="margin-top:10px">Orientacyjne kwoty w PLN. JR Pass zwykle się nie opłaca przy pętli Tokio–Kioto–Osaka.</div>
+      <button class="reset" id="resetBtn" type="button">↺ Przywróć wartości domyślne</button>
+    </div>
+  </section>
+  <footer>Plan rodzinny · Japonia 3–15 maja 2027 · strona prywatna (noindex)<br>
+  Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br>
+  <a href="index.html">Strona główna</a></footer>
+  <script>
+  (function(){
+    var D={flights:14000,nights:11,nightRate:820,transport:4000,days:12,foodRate:500,attractions:2600,extras:3000};
+    var ids=Object.keys(D),KEY="jp2027.calc";
+    var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
+    function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
+    function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+    try{var s=JSON.parse(localStorage.getItem(KEY))||{};ids.forEach(function(id){if(s[id]!=null)document.getElementById(id).value=s[id];});}catch(e){}
+    function calc(){
+      var hotel=num("nights")*num("nightRate"),food=num("days")*num("foodRate");
+      document.getElementById("hotelAmt").textContent=fmt(hotel);
+      document.getElementById("foodAmt").textContent=fmt(food);
+      var total=num("flights")+hotel+num("transport")+food+num("attractions")+num("extras");
+      document.getElementById("total").textContent=fmt(total);
+      document.getElementById("perPerson").textContent=fmt(total/4);
+      document.getElementById("perDay").textContent=fmt(total/(num("days")||1));
+      document.getElementById("perNight").textContent=fmt(hotel/(num("nights")||1));
+      var pct=Math.max(0,Math.min(100,total/70000*100)),f=document.getElementById("barFill");f.style.width=pct+"%";
+      var col,v,vc;
+      if(total<40000){col=css("--ai");v="Poniżej widełek — jest zapas na lepsze hotele.";vc=css("--muted");}
+      else if(total<=60000){col=css("--success");v="✅ Mieści się w budżecie 40–60 tys. zł.";vc=css("--success");}
+      else if(total<=68000){col=css("--kin");v="⚠️ Nieco ponad budżet — przytnij atrakcje lub standard noclegów.";vc=css("--kin");}
+      else{col=css("--shu");v="⛔ Wyraźnie ponad budżet.";vc=css("--shu");}
+      f.style.background=col;var vd=document.getElementById("verdict");vd.textContent=v;vd.style.color=vc;
+      document.getElementById("budgetPct").textContent=fmt(total);
+      var o={};ids.forEach(function(id){o[id]=num(id);});try{localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}
+    }
+    ids.forEach(function(id){document.getElementById(id).addEventListener("input",calc);});
+    document.getElementById("resetBtn").addEventListener("click",function(){ids.forEach(function(id){document.getElementById(id).value=D[id];});calc();});
+    calc();
+  })();
+  </script>
+</main>
+<button class="totop" id="totop" aria-label="Do góry">↑</button>
+<script src="assets/app.js"></script>
+</body>
+</html>
