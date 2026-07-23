@@ -788,7 +788,7 @@ function indexPage(){
     <a class="qcard" href="atrakcje.html"><div class="qi">🎟️</div><div class="qh">Atrakcje</div><div class="qd">Godziny, ceny i linki do rezerwacji — 32 miejsca.</div></a>
     <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Hotele</div><div class="qd">5 baz na 11 nocy, pokoje rodzinne, zdjęcia i linki do map.</div></a>
     <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Bilety i koszty</div><div class="qd">Strategia zakupu lotów, progi cen i kalkulator budżetu.</div></a>
-    <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Czego się spodziewać w maju i co zabrać.</div></a>
+    <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Pogoda w maju, informacje praktyczne i co spakować.</div></a>
   </div>`;
   const inner = `
   <header class="hero" style="background:linear-gradient(120deg,rgba(27,58,107,.56),rgba(138,43,35,.40)),url('${IMG.fuji}') center/cover">
@@ -1052,7 +1052,7 @@ function pogodaPage(){
   ].map(r=>`<tr><td class="cat">${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td></tr>`).join('');
   const inner=`
   <header class="hero" style="background:linear-gradient(120deg,rgba(31,94,90,.56),rgba(18,44,42,.42)),url('${IMG.fuji}') center/cover">
-    <p class="eyebrow">Klimat i pakowanie</p>
+    <p class="eyebrow">Klimat · praktyka · pakowanie</p>
     <h1>Pogoda w maju</h1>
     <p class="lead">Maj to jeden z najlepszych miesięcy na Japonię: ciepło, słonecznie i sucho — przed sezonem deszczowym, który na głównej wyspie zaczyna się dopiero w czerwcu.</p>
   </header>
@@ -1063,6 +1063,20 @@ function pogodaPage(){
       <tbody>${rows}</tbody>
     </table></div>
     <p class="note" style="margin-top:10px">Wartości to średnie klimatyczne — dokładna prognoza na 2027 pojawi się bliżej wyjazdu.</p>
+  </section>
+  <section>
+    <h2 class="stitle">🧭 Informacje praktyczne</h2>
+    <p class="lead-p">Rzeczy, które warto ogarnąć jeszcze przed wylotem albo pierwszego dnia na lotnisku.</p>
+    <div class="card"><ul class="tips">
+      <li><b>💴 Pieniądze:</b> Japonia wciąż lubi gotówkę (małe knajpki, świątynie, targi). Wypłacajcie z bankomatów 7-Eleven i poczty (Japan Post) — przyjmują zagraniczne karty. Karta zbliżeniowa działa w sieciówkach i większych sklepach. Napiwków się nie daje.</li>
+      <li><b>🚃 Transport lokalny — karty IC:</b> Suica/PASMO (Tokio) lub ICOCA (Kansai) działają w całym kraju — jeden dotyk w metrze, autobusach i sklepach. Dzieci mają wersje dziecięce (taniej, trzeba raz pokazać wiek na stacji). Na iPhonie: Suica w Apple Wallet, doładowanie kartą.</li>
+      <li><b>🚄 Shinkansen i Hakone:</b> JR Pass przy tej trasie się <b>nie opłaca</b> (po podwyżce ~50 000 ¥/os.) — bierzcie bilety punktowe (Tokio↔Kioto, Osaka→Tokio) na miejscu lub w aplikacji. Do Hakone weźcie <b>Hakone Free Pass</b> (Odakyu) — obejmuje kolejkę linową, statek po jeziorze, autobusy i pociąg górski.</li>
+      <li><b>📶 Internet:</b> Dla czterech osób najprościej jeden router <b>pocket WiFi</b> (odbiór na lotnisku lub kurierem do hotelu) — łączy wszystkie urządzenia. Alternatywa: eSIM (Airalo/Ubigi) wgrany na każdy telefon przed wylotem.</li>
+      <li><b>🔌 Prąd:</b> 100 V, gniazdka typu A (dwa płaskie bolce) — polskie wtyczki nie pasują, weźcie adapter(y) typu A. Ładowarki 100–240 V działają bez przetwornicy.</li>
+      <li><b>🩹 Zdrowie i bezpieczeństwo:</b> Woda z kranu jest zdatna do picia. Numery alarmowe: <b>110</b> policja, <b>119</b> pogotowie/straż. Weźcie własne leki (podstawy kupicie w drogeriach). Ubezpieczenie turystyczne z leczeniem i NNW — warto.</li>
+      <li><b>🙇 Zwyczaje:</b> Buty zdejmujemy w ryokanie, świątyniach i części restauracji. W pociągach cisza, telefon na milczek. Koszy na śmieci prawie nie ma — noście torebkę na odpadki. Tatuaże bywają problemem w publicznych onsenach — prywatne rotenburo w ryokanie w Hakone to rozwiązuje.</li>
+      <li><b>🛍️ Tax-free i apki:</b> W sklepach z oznaczeniem „Tax-Free" (od ~5000 ¥) zwrot podatku po okazaniu paszportu. Przydatne apki: Google Maps, Google Translate (tłumaczenie menu aparatem), Navitime / Japan Travel do połączeń kolejowych.</li>
+    </ul></div>
   </section>
   <section>
     <h2 class="stitle">Co spakować</h2>
