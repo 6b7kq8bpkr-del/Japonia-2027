@@ -393,7 +393,7 @@ const DAYS = [
  facts:[['Wyższa','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Ich dzień','Dla dzieci'],['Tokio (2/2)','Nocleg']],
  tips:['Rezerwacja Pokémon Café otwiera się 31 dni wcześniej o 18:00 czasu japońskiego — łapcie slot punktualnie.','Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej); ustalcie limit na gachapon z góry 😉'],
  links:[A('tsukiji','Tsukiji'),A('pokemon','Pokémon Center + Café'),A('shibuya-sky','Shibuya Sky')],
- more:[['Co wypadło przez stopover','Ten dzień łączy dawne dwa: odpuściliśmy Meiji Jingū, Harajuku i Akihabarę/teamLab na rzecz nocy w Abu Zabi. Jeśli zostanie energia, krótki skok do Akihabary da się wcisnąć 15.05 przed odbiorem bagaży.']]},
+ more:[['Co wypadło przez stopover','Ten dzień łączy dawne dwa: odpuściliśmy Meiji Jingū, Harajuku i Akihabarę/teamLab na rzecz nocy w Abu Zabi. Jeśli zostanie energia, krótki skok do Akihabary da się wcisnąć 15.05 przed odbiorem bagaży.'],['Plan B na deszcz','Shibuya Sky rezerwujcie tylko przy dobrej prognozie — taras jest odkryty, a w deszczu recenzenci zgodnie uznają go za stratę pieniędzy. Awaryjnie: Round1 w Ikebukuro (gry, bowling) albo godzina rodzinnego karaoke (Big Echo / Karaoke Kan — przed 22:00 z nieletnimi).']]},
 
 {date:'2027-05-07',dow:'piątek',dd:'7 maja',city:'hakone',title:'W góry Hakone — onsen i Fudżi',
  lead:'Pętla wulkaniczna, jezioro z bramą torii i pierwsza noc po japońsku: yukata, kaiseki i gorące źródła.',
@@ -413,7 +413,7 @@ const DAYS = [
  facts:[['Średnia','Intensywność'],['Romancecar + kolejki','Przejazdy'],['Umiarkowane','Chodzenie'],['Frajda z kolejek','Dla dzieci'],['Ryokan','Nocleg']],
  tips:['Fudżi najczęściej widać rano — trzymajcie kciuki przy porannej kolejce linowej i na jeziorze.','Nadanie dużych walizek kurierem (~2 500 ¥/szt.) oszczędza taszczenia po górach i przesiadkach.'],
  links:[A('hakone-pass','Hakone Free Pass + Romancecar'),A('owakudani','Ōwakudani'),A('ashi','Jezioro Ashi'),A('takkyubin','Takkyūbin')],
- more:[['Kontekst','Ryokan to nie tylko nocleg, ale całe doświadczenie: śpi się na futonach na tatami, chodzi w yukacie, a kolacja kaiseki i onsen są częścią wieczoru. To najspokojniejszy punkt całego wyjazdu.']]},
+ more:[['Kontekst','Ryokan to nie tylko nocleg, ale całe doświadczenie: śpi się na futonach na tatami, chodzi w yukacie, a kolacja kaiseki i onsen są częścią wieczoru. To najspokojniejszy punkt całego wyjazdu.'],['Plan B na wiatr i chmury','Kolejka linowa nad Ōwakudani bywa zawieszana przy silnym wietrze lub alertach wulkanicznych — rano sprawdźcie status na hakonenavi.jp. Awaryjnie: Hakone Open-Air Museum (rzeźby do wspinania, pawilon Picassa, kąpiel stóp) plus rejs po Ashi, który pływa niemal zawsze.']]},
 
 {date:'2027-05-08',dow:'sobota',dd:'8 maja',city:'kioto',title:'Z gór do dawnej stolicy',
  lead:'Poranny onsen, shinkansen do Kioto i pierwszy wieczór w dzielnicy gejsz.',
@@ -429,7 +429,7 @@ const DAYS = [
   ['20:00','Wieczorne Gion','Szansa minąć maiko w drodze na występ.'],
  ],
  facts:[['Łagodna','Intensywność'],['Shinkansen','Przejazdy'],['Umiarkowane','Chodzenie'],['Spokojny wieczór','Dla dzieci'],['Kioto (1/4)','Nocleg']],
- tips:['W Kioto noście buty łatwe do zdejmowania — świątynie, tatami i warsztaty tego wymagają.','Na uliczkach Gion obowiązuje zakaz fotografowania na prywatnych zaułkach (są kary) — róbcie zdjęcia na głównych deptakach.'],
+ tips:['W Kioto noście buty łatwe do zdejmowania — świątynie, tatami i warsztaty tego wymagają.','Na uliczkach Gion obowiązuje zakaz fotografowania na prywatnych zaułkach (są kary) — róbcie zdjęcia na głównych deptakach.','Opcja przed odjazdem: Hakone Open-Air Museum (otwarte od 9:00, 5 min kolejką od Gōry) — godzina wśród rzeźb do wspinania i shinkansen o ~12:00 zamiast 11:00.'],
  links:[A('gion','Gion i Pontocho'),A('smartex','Rezerwacja shinkansenów')],
  pc:{q:'Nocleg w Kioto: aparthotel czy machiya?',opts:[
    ['Aparthotel (Mimaru)','łóżka, kuchnia, winda, pralnia — bezstresowo z dziećmi (~820 zł/noc)','mniej „japońskiego" klimatu'],
@@ -451,7 +451,7 @@ const DAYS = [
   ['19:00','Kolacja',''],
  ],
  facts:[['Wyższa','Intensywność'],['Pociąg + pieszo','Przejazdy'],['Sporo, pod górę','Chodzenie'],['Lisy i tarasy','Dla dzieci'],['Kioto (2/4)','Nocleg']],
- tips:['O 9:00 w bramach jest już tłoczniej niż o świcie — ale spokojny start wygrywa; im wyżej podejdziecie, tym mniej ludzi.','Na Kiyomizu z wodospadu Otowa pije się tylko z jednego strumienia — wybór trzech naraz uchodzi za zachłanność.'],
+ tips:['O 9:00 w bramach jest już tłoczniej niż o świcie — ale spokojny start wygrywa; im wyżej podejdziecie, tym mniej ludzi.','Na Kiyomizu z wodospadu Otowa pije się tylko z jednego strumienia — wybór trzech naraz uchodzi za zachłanność.','Plan B na deszcz w Kioto: Kyoto Railway Museum (symulator shinkansena!) albo teamLab Biovortex przy dworcu — oba kryte i uwielbiane przez dzieci.'],
  links:[A('fushimi','Fushimi Inari'),A('kiyomizu','Kiyomizu-dera'),A('nishiki','Nishiki Market')],
  more:[]},
 
@@ -462,13 +462,13 @@ const DAYS = [
   ['09:00','Kinkaku-ji','Złoty Pawilon w porannym świetle, odbity w stawie.'],
   ['13:00','Ceremonia herbaty','Sesja rodzinna z objaśnieniem po angielsku (~60 min).'],
   ['14:30','Kaligrafia shodō','Każdy pisze swój znak pędzlem na pamiątkę.'],
-  ['16:00','Ikebana','Warsztat układania kwiatów.'],
+  ['16:00','Ikebana','Warsztat układania kwiatów. Opcja równoległa: tata z dziećmi na 75-min klasie ninja (Samurai Ninja Museum) — shurikeny, dmuchawka, kostiumy.'],
   ['18:00','Spacer po Gion','W złotej godzinie.'],
   ['19:00','Kolacja','Yudōfu — tofu po kiotyjsku, albo lekkie kaiseki.'],
  ],
  facts:[['Łagodna','Intensywność'],['Pieszo + autobus','Przejazdy'],['Niewiele','Chodzenie'],['Kaligrafia wciąga','Dla dzieci'],['Kioto (3/4)','Nocleg']],
  tips:['Warsztaty (Maikoya, Camellia, studia w Gion) rezerwować 1–2 miesiące wcześniej — sloty rodzinne schodzą pierwsze.','Z całego zestawu dzieci najbardziej wciąga kaligrafia — mokry pędzel i własny znak to świetna pamiątka.'],
- links:[A('kinkakuji','Kinkaku-ji'),A('culture','Warsztaty kultury')],
+ links:[A('kinkakuji','Kinkaku-ji'),A('culture','Warsztaty kultury'),A('ninja','Klasa ninja (opcja)')],
  more:[['Kontekst','Kioto przez tysiąc lat było stolicą cesarską i to tutaj wykuwały się sztuki, które dziś kojarzymy z Japonią: droga herbaty (chadō), kaligrafia (shodō) i ikebana. Dzień jest pomyślany tak, by nie tylko je zobaczyć, ale spróbować własnymi rękami.']]},
 
 {date:'2027-05-11',dow:'wtorek',dd:'11 maja',city:'nara',title:'Nara: jelenie i Wielki Budda',
@@ -486,8 +486,8 @@ const DAYS = [
   ['19:00','Kolacja',''],
  ],
  facts:[['Średnia','Intensywność'],['Pociąg + pieszo','Przejazdy'],['Sporo','Chodzenie'],['Jelenie = hit','Dla dzieci'],['Kioto (4/4)','Nocleg']],
- tips:['Jelenie bywają nachalne: krakersy trzymajcie wysoko, karmcie po jednym — a ukłon przed jeleniem naprawdę działa.','Pokaz mochi w Nakatanidō bywa nieregularny (mniej więcej co 30 min) — warto zapytać obsługę o najbliższy.'],
- links:[A('nara-park','Park Nara'),A('todaiji','Tōdai-ji'),A('kasuga','Kasuga Taisha'),A('mochi','Nakatanidō')],
+ tips:['Jelenie bywają nachalne: krakersy trzymajcie wysoko, karmcie po jednym — a ukłon przed jeleniem naprawdę działa.','Pokaz mochi w Nakatanidō bywa nieregularny (mniej więcej co 30 min) — warto zapytać obsługę o najbliższy.','Dla graczy (opcja): wracając, można wysiąść w Ujī — Nintendo Museum (bilety w loterii ~3 miesiące wcześniej, paszporty całej czwórki). Odpuściliśmy je wcześniej świadomie, ale topowe biura stawiają je najwyżej dla dzieci w tym wieku — decyzja Wasza.'],
+ links:[A('nara-park','Park Nara'),A('todaiji','Tōdai-ji'),A('kasuga','Kasuga Taisha'),A('mochi','Nakatanidō'),A('nintendomuseum','Nintendo Museum (opcja)')],
  more:[]},
 
 {date:'2027-05-12',dow:'środa',dd:'12 maja',city:'osaka',title:'Bambusy Arashiyamy i neony Osaki',
@@ -517,12 +517,13 @@ const DAYS = [
   ['11:00','Zamek w Osace lub Kaiyukan','Panorama z zamku albo rekin wielorybi w jednym z największych akwariów świata.'],
   ['13:30','Lunch',''],
   ['15:00','Shinsekai','Retro-Osaka: wieża Tsūtenkaku i kushikatsu (nie maczać dwa razy!).'],
+  ['16:30','Opcja: Round1 Sennichimae','7 pięter gier: purikura, bowling, rytmiczne automaty — ulubieniec nastolatków w recenzjach.'],
   ['17:30','Odpoczynek',''],
   ['19:00','Dōtonbori runda 2','Albo 20-minutowy rejs po kanale Tombori między neonami.'],
  ],
  facts:[['Łagodna','Intensywność'],['Metro','Przejazdy'],['Umiarkowane','Chodzenie'],['Akwarium = hit','Dla dzieci'],['Osaka (2/2)','Nocleg']],
- tips:['To celowo luźny dzień po intensywnym Kioto — przetasujcie punkty wedle nastroju i pogody.','W kushikatsu obowiązuje jedna zasada: wspólnego sosu nie maczamy dwa razy tym samym szaszłykiem.'],
- links:[A('kuromon','Kuromon Ichiba'),A('osaka-castle','Zamek w Osace'),A('kaiyukan','Akwarium Kaiyukan'),A('shinsekai','Shinsekai'),A('tombori','Rejs Tombori')],
+ tips:['To celowo luźny dzień po intensywnym Kioto — przetasujcie punkty wedle nastroju i pogody.','W kushikatsu obowiązuje jedna zasada: wspólnego sosu nie maczamy dwa razy tym samym szaszłykiem.','Wieczorne hity z tourów rodzinnych do wyboru: godzina karaoke boxu (~2 000 ¥/pokój) albo warsztat taiko — bębny japońskie, zero bariery językowej.','Kaiyukan w deszczu pęka w szwach — kupcie e-bilet z godziną i celujcie w późne popołudnie.'],
+ links:[A('kuromon','Kuromon Ichiba'),A('osaka-castle','Zamek w Osace'),A('kaiyukan','Akwarium Kaiyukan'),A('shinsekai','Shinsekai'),A('tombori','Rejs Tombori'),A('round1','Round1 i karaoke'),A('taiko','Warsztat taiko')],
  more:[]},
 
 {date:'2027-05-14',dow:'piątek',dd:'14 maja',city:'tokio',title:'Powrót do Tokio i turniej sumo',
@@ -891,6 +892,15 @@ function pogodaPage(){
       <li>Wygodne buty łatwe do zdejmowania — świątynie, tatami i warsztaty tego wymagają.</li>
       <li>Krem z filtrem i nakrycia głowy — słońce w maju potrafi mocno operować.</li>
       <li>Coś cieplejszego na wieczór w ryokanie w Hakone; zmierzch ok. 18:30.</li>
+    </ul></div>
+  </section>
+  <section>
+    <h2 class="stitle">☔ Plan B na deszcz — miasto po mieście</h2>
+    <div class="card"><ul class="tips">
+      <li><b>Tokio:</b> Round1 (Ikebukuro), rodzinne karaoke (Big Echo / Karaoke Kan, przed 22:00), Pokémon Center — a Shibuya Sky przekładać: taras odkryty, w chmurach szkoda biletu.</li>
+      <li><b>Hakone:</b> kolejka linowa staje przy wietrze (status: hakonenavi.jp) → Hakone Open-Air Museum (pawilon Picassa, rzeźby do wspinania) + rejs po Ashi, który pływa prawie zawsze.</li>
+      <li><b>Kioto:</b> Kyoto Railway Museum (symulator shinkansena), teamLab Biovortex przy dworcu, kryte pasaże Nishiki/Teramachi, klasa ninja w muzeum.</li>
+      <li><b>Osaka:</b> Kaiyukan (e-bilet z godziną, późne popołudnie), Round1 Sennichimae, kryty pasaż Shinsaibashi-suji, Dōtonbori pod markizami.</li>
     </ul></div>
   </section>
   ${footer('')}`;
