@@ -96,9 +96,18 @@ a{color:var(--ai)}
 @keyframes kenburns{from{transform:scale(1.05)}to{transform:scale(1.17)}}
 @keyframes hup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+/* ---- secondary heroes: ken-burns + entrance (no parallax) ---- */
+.hero.kb .hbg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero.kb .hbg-img{position:absolute;inset:0;animation:kenburns 34s ease-in-out infinite alternate;will-change:transform}
+.hero.kb .hero-inner{position:relative;z-index:2}
+.hero.kb .eyebrow{animation:hup .7s .05s both}
+.hero.kb h1{animation:hup .8s .14s both}
+.hero.kb .lead{animation:hup .8s .26s both}
+.hero.kb .chips{animation:hup .8s .36s both}
 @media(prefers-reduced-motion:reduce){
   .hero.home .hbg-img,.scrollcue,
-  .hero.home .eyebrow,.hero.home h1,.hero.home .lead,.hero.home .chips{animation:none}
+  .hero.home .eyebrow,.hero.home h1,.hero.home .lead,.hero.home .chips,
+  .hero.kb .hbg-img,.hero.kb .eyebrow,.hero.kb h1,.hero.kb .lead,.hero.kb .chips{animation:none}
 }
 
 /* sections */
@@ -827,11 +836,14 @@ function dayPage(d,i){
     </div>
   </section>`:'';
   const inner = `
-  <header class="hero" style="background:${heroBg(d.city, DAYIMG[d.date])}">
+  <header class="hero kb">
+    <div class="hbg"><div class="hbg-img" style="background:${heroBg(d.city, DAYIMG[d.date])}"></div></div>
+    <div class="hero-inner">
     <p class="eyebrow">Dzień ${i+1} z ${DAYS.length} · ${d.dow} · ${d.dd}</p>
     <h1>${d.title}</h1>
     <p class="lead">${d.lead}</p>
     <div class="chips">${d.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+  </div>
   </header>
 
   <section>
@@ -932,10 +944,13 @@ function indexPage(){
 function kosztyPage(){
   const seg = (t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
   const inner = `
-  <header class="hero" style="background:linear-gradient(135deg,#122740,#2f6d4f)">
+  <header class="hero kb">
+    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(135deg,#122740,#2f6d4f)"></div></div>
+    <div class="hero-inner">
     <p class="eyebrow">Bilety lotnicze i budżet</p>
     <h1>Bilety i koszty</h1>
     <p class="lead">Ceny Etihad WAW→Tokio falują o ±30% w skali tygodnia. Poniżej progi „kup / czekaj", kalendarz wyprzedaży i kalkulator budżetu dla całej rodziny.</p>
+  </div>
   </header>
 
   <section>
@@ -1037,10 +1052,13 @@ function hotelePage(){
     [35.6708,139.7726,'MIMARU Tokyo Ginza EAST · Tokio (finał)'],
   ];
   const inner=`
-  <header class="hero" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(18,39,64,.40)),url('${IMG.tokyostation}') center/cover">
+  <header class="hero kb">
+    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(18,39,64,.40)),url('${IMG.tokyostation}') center/cover"></div></div>
+    <div class="hero-inner">
     <p class="eyebrow">Noclegi · 10 nocy w Japonii + gratis Abu Zabi · pokoje rodzinne 4-os.</p>
     <h1>Hotele</h1>
     <p class="lead">Pięć baz w Japonii pod rodzinę 2+2 (aparthotele MIMARU i ryokan z onsenem) plus darmowa noc stopover w Abu Zabi od Etihadu. Kliknij zdjęcie hotelu, aby otworzyć jego lokalizację w Google Maps.</p>
+  </div>
   </header>
   <section>
     <div class="hlist">${cards}</div>
@@ -1072,10 +1090,13 @@ function decyzjePage(){
   const pill={g:'Lekki',y:'Średni',r:'Intensywny'};
   const rows=DAYS.map((d,i)=>{const it=DAYINT[d.date]||['y',''];return `<tr><td class="dcol">${i+1} · ${d.dd}</td><td>${it[1]}</td><td><span class="ipill ${it[0]}">${pill[it[0]]}</span></td></tr>`;}).join('');
   const inner=`
-  <header class="hero" style="background:linear-gradient(120deg,rgba(27,58,107,.62),rgba(200,64,44,.5)),url('${IMG.fushimi}') center/cover">
+  <header class="hero kb">
+    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.62),rgba(200,64,44,.5)),url('${IMG.fushimi}') center/cover"></div></div>
+    <div class="hero-inner">
     <p class="eyebrow">Zrozum i zmień plan</p>
     <h1>Dlaczego tak?</h1>
     <p class="lead">Cała logika za tym planem w jednym miejscu — co jest stałe, co możesz ruszyć i jak. Żebyście modyfikowali go świadomie, nie na wyczucie.</p>
+  </div>
   </header>
 
   <section>
@@ -1155,10 +1176,13 @@ function pogodaPage(){
     ['🕌 Abu Zabi (stopover)','35–40°C','~26°C','upał! zwiedzanie rano, w południe klimatyzacja (Luwr), dużo wody'],
   ].map(r=>`<tr><td class="cat">${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td></tr>`).join('');
   const inner=`
-  <header class="hero" style="background:linear-gradient(120deg,rgba(31,94,90,.56),rgba(18,44,42,.42)),url('${IMG.fuji}') center/cover">
+  <header class="hero kb">
+    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(31,94,90,.56),rgba(18,44,42,.42)),url('${IMG.fuji}') center/cover"></div></div>
+    <div class="hero-inner">
     <p class="eyebrow">Klimat · praktyka · pakowanie</p>
     <h1>Pogoda w maju</h1>
     <p class="lead">Maj to jeden z najlepszych miesięcy na Japonię: ciepło, słonecznie i sucho — przed sezonem deszczowym, który na głównej wyspie zaczyna się dopiero w czerwcu.</p>
+  </div>
   </header>
   <section>
     <h2 class="stitle">Typowe temperatury</h2>
@@ -1231,10 +1255,13 @@ function atrakcjePage(){
     <a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a><a href="#kioto">⛩️ Kioto</a>
     <a href="#nara">🦌 Nara</a><a href="#osaka">🏯 Osaka</a><a href="#abuzabi">🕌 Abu Zabi</a><a href="#sumo-s">🥋 Sumo</a><a href="#praktyczne">🧳 Praktyczne</a></nav>`;
   const inner=`
-  <header class="hero" style="background:linear-gradient(120deg,rgba(138,43,35,.56),rgba(70,32,20,.42)),url('${IMG.sensoji}') center/cover">
+  <header class="hero kb">
+    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(138,43,35,.56),rgba(70,32,20,.42)),url('${IMG.sensoji}') center/cover"></div></div>
+    <div class="hero-inner">
     <p class="eyebrow">Godziny · ceny · rezerwacje</p>
     <h1>Atrakcje</h1>
     <p class="lead">Wszystkie miejsca z planu w jednym katalogu — z godzinami, orientacyjnymi cenami (¥100 ≈ 2,6 zł) i linkami do oficjalnych rezerwacji.</p>
+  </div>
   </header>
   ${toc}
   ${body}

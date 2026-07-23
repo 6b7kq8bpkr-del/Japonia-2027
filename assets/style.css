@@ -88,9 +88,18 @@ a{color:var(--ai)}
 @keyframes kenburns{from{transform:scale(1.05)}to{transform:scale(1.17)}}
 @keyframes hup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+/* ---- secondary heroes: ken-burns + entrance (no parallax) ---- */
+.hero.kb .hbg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.hero.kb .hbg-img{position:absolute;inset:0;animation:kenburns 34s ease-in-out infinite alternate;will-change:transform}
+.hero.kb .hero-inner{position:relative;z-index:2}
+.hero.kb .eyebrow{animation:hup .7s .05s both}
+.hero.kb h1{animation:hup .8s .14s both}
+.hero.kb .lead{animation:hup .8s .26s both}
+.hero.kb .chips{animation:hup .8s .36s both}
 @media(prefers-reduced-motion:reduce){
   .hero.home .hbg-img,.scrollcue,
-  .hero.home .eyebrow,.hero.home h1,.hero.home .lead,.hero.home .chips{animation:none}
+  .hero.home .eyebrow,.hero.home h1,.hero.home .lead,.hero.home .chips,
+  .hero.kb .hbg-img,.hero.kb .eyebrow,.hero.kb h1,.hero.kb .lead,.hero.kb .chips{animation:none}
 }
 
 /* sections */
