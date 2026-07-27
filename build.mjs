@@ -1327,7 +1327,7 @@ function lotyPage(){
       return `<div class="arow${i===0?' top':''}">
         <div class="an"><i style="background:${r.A.col}"></i>${r.A.name}${r.A.star?' ★':''}${i===0?' <span class="rezerwuj">najtaniej</span>':''}</div>
         <div class="ap">${plz(r.L.v)}</div>
-        <div class="am">przez ${r.A.via} · ${r.A.dur} · ${r.A.note}${stale}</div>
+        <div class="am">${r.A.via==='bezpośredni'?'lot bezpośredni':'przez '+r.A.via} · ${r.A.dur} · ${r.A.note}${stale}</div>
         <div class="ad">${chg}</div>
       </div>`;}).join('');
 
