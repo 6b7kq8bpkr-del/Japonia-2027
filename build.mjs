@@ -11,6 +11,7 @@ const FLIGHT = {
   airline: 'Etihad',
   history: [
     ['2026-07-26', 3910],
+    ['2026-07-27', 4228],
   ],
 };
 FLIGHT.adult   = FLIGHT.history[FLIGHT.history.length-1][1];
