@@ -3,17 +3,45 @@ const DIR = '/Users/urban/Desktop/Piaskownica/japonia-2027';
 fs.mkdirSync(DIR + '/days', { recursive: true });
 fs.mkdirSync(DIR + '/assets', { recursive: true });
 
-/* ===================== CENA LOTU — JEDYNE ŹRÓDŁO PRAWDY =====================
+/* ===================== CENY LOTÓW — JEDYNE ŹRÓDŁO PRAWDY =====================
    Aktualizowane automatycznie przez zadanie `japonia-cena-lotu` (co tydzień).
-   Ręcznie: zmień tylko `history` (dopisz nowy wpis NA KOŃCU) i uruchom `node build.mjs`.
-   Wpis: [data ISO, cena w zł za 1 dorosłego, w obie strony, Etihad WAW→NRT 3–15.05.2027] */
-const FLIGHT = {
-  airline: 'Etihad',
-  history: [
-    ['2026-07-26', 3910],
-    ['2026-07-27', 4228],
-  ],
+   Ręcznie: dopisz nowy obiekt NA KOŃCU tablicy CHECKS i uruchom `node build.mjs`.
+   Ceny: zł za 1 DOROSŁEGO, w obie strony, WAW→Tokio, wylot 3.05 / powrót 15.05.2027. */
+const AIRLINES = {
+  etihad:   {name:'Etihad',        via:'Abu Zabi', dur:'17 h 55 min', col:'#c8402c', star:true,
+             note:'Trasa z planu — w cenie darmowy nocleg 4★ w Abu Zabi (stopover)'},
+  emirates: {name:'Emirates',      via:'Dubaj',    dur:'19 h 25 min', col:'#1b3a6b',
+             note:'Solidna alternatywa, ale bez darmowego stopoveru'},
+  finnair:  {name:'Finnair / JAL', via:'Helsinki', dur:'17 h 5 min',  col:'#2f6d4f',
+             note:'Najkrótsza przesiadka i najniższa emisja wśród przesiadkowych'},
+  lot:      {name:'LOT',           via:'bezpośredni', dur:'12 h 40 min', col:'#b98a34',
+             note:'Najszybszy, bez przesiadki — dopłata za wygodę ok. 1 000 zł/os.'},
+  qatar:    {name:'Qatar Airways', via:'Doha',     dur:'20 h',        col:'#6b4b8a',
+             note:'Bywa mocno przeceniany w Travel Festival (grudzień)'},
+  turkish:  {name:'Turkish',       via:'Stambuł',  dur:'15 h 50 min', col:'#7a8087',
+             note:'Rzadko konkurencyjny cenowo na tej trasie'},
 };
+const CHECKS = [
+  {date:'2026-07-26', p:{etihad:3910, emirates:4262, finnair:4928, lot:5288, qatar:5465, turkish:6423}},
+  {date:'2026-07-27', p:{etihad:4228, emirates:4262, finnair:4727, lot:5248}},
+];
+/* Siatka dat z Google Flights — cena 12-dniowej podróży wg DNIA WYLOTU (1 dorosły) */
+const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5,4150],[6,4150],[7,4260],
+  [8,4260],[9,4150],[10,4260],[11,4050],[12,3940],[13,4150],[14,4260],[15,4260],[16,4150]]};
+/* Porównanie realnych wariantów terminu (ceny Etihad, sprawdzone na żywo) */
+const PERIODS = [
+  {label:'3–15 maja', sub:'obecny plan', price:3910, best:true,
+   pros:['Najniższy punkt w całej siatce dat','Powrót w SOBOTĘ — niedziela na reset przed szkołą','Start w majówkę (1–3.05) oszczędza dni urlopu','Przylot 5.05 — Golden Week właśnie się kończy'],
+   cons:['Pierwsze 2 dni w Tokio jeszcze w ogonie Golden Week']},
+  {label:'2–15 maja', sub:'dzień wcześniej', price:4520,
+   pros:['Druga noc w Abu Zabi gratis (pakiet stopover)','Łagodniejszy reset przed lotem do Tokio'],
+   cons:['+610 zł/os. (~2 400 zł rodzina) — ogon Golden Week','Dodatkowa doba ląduje w Abu Zabi, nie w Japonii','Druga pełna doba w 35–40°C z dziećmi']},
+  {label:'7–19 maja', sub:'cały po Golden Week', price:4657,
+   pros:['Zero Golden Week','Więcej dni turnieju sumo do wyboru (9–23.05)'],
+   cons:['+747 zł/os. (~2 800 zł rodzina)','Powrót w ŚRODĘ — jet lag prosto w szkołę i pracę','Traci majówkę = więcej dni urlopu']},
+];
+const FLIGHT = {airline:'Etihad'};
+FLIGHT.history = CHECKS.filter(c=>c.p.etihad!=null).map(c=>[c.date, c.p.etihad]);
 FLIGHT.adult   = FLIGHT.history[FLIGHT.history.length-1][1];
 FLIGHT.checked = FLIGHT.history[FLIGHT.history.length-1][0];
 FLIGHT.prev    = FLIGHT.history.length > 1 ? FLIGHT.history[FLIGHT.history.length-2][1] : null;
@@ -23,6 +51,32 @@ FLIGHT.band    = FLIGHT.adult <= 3500 ? 'okazja' : (FLIGHT.adult < 4600 ? 'typow
 // własny formatter — Node w tym środowisku ma okrojone ICU i ignoruje locale pl-PL
 const plz  = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';
 const dpl  = iso => {const [y,m,d]=iso.split('-');return `${+d}.${m}.${y}`;};
+/* wykres trendu — rysuje się sam z tablicy CHECKS, rośnie z każdym odczytem */
+const priceChart = () => {
+  const keys = Object.keys(AIRLINES).filter(k => CHECKS.some(c => c.p[k] != null));
+  const all  = CHECKS.flatMap(c => Object.values(c.p));
+  const lo = Math.floor((Math.min(...all) - 250)/500)*500;
+  const hi = Math.ceil ((Math.max(...all) + 250)/500)*500;
+  const W=760,H=300,L=62,R=16,T=14,B=50, single = CHECKS.length===1;
+  const x = i => single ? (L+(W-L-R)/2) : L + i*(W-L-R)/(CHECKS.length-1);
+  const y = v => T + (hi-v)*(H-T-B)/(hi-lo);
+  const ticks = [0,1,2,3,4].map(i => lo + i*(hi-lo)/4);
+  const grid = ticks.map(v=>`<line x1="${L}" y1="${y(v).toFixed(1)}" x2="${W-R}" y2="${y(v).toFixed(1)}" stroke="rgba(28,37,48,.10)" stroke-width="1"/>`+
+    `<text x="${L-10}" y="${(y(v)+4).toFixed(1)}" text-anchor="end" font-size="11" fill="#6a7078">${plz(v).replace(' zł','')}</text>`).join('');
+  const xlab = CHECKS.map((c,i)=>`<text x="${x(i).toFixed(1)}" y="${H-B+22}" text-anchor="middle" font-size="11" fill="#6a7078">${dpl(c.date).slice(0,5)}</text>`).join('');
+  const lines = keys.map(k=>{
+    const pts = CHECKS.map((c,i)=> c.p[k]!=null ? [x(i), y(c.p[k])] : null).filter(Boolean);
+    if(!pts.length) return '';
+    const path = pts.map(p=>`${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
+    const dots = pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4.5" fill="#fffdf8" stroke="${AIRLINES[k].col}" stroke-width="2.5"/>`).join('');
+    return (pts.length>1?`<polyline points="${path}" fill="none" stroke="${AIRLINES[k].col}" stroke-width="${AIRLINES[k].star?3.2:2}" stroke-linejoin="round" stroke-linecap="round"${AIRLINES[k].star?'':' stroke-dasharray="5 4" opacity=".8"'}/>`:'')+dots;
+  }).join('');
+  const legend = keys.map(k=>`<span class="lgd"><i style="background:${AIRLINES[k].col}"></i>${AIRLINES[k].name}${AIRLINES[k].star?' ★':''}</span>`).join('');
+  return `<div class="chartwrap"><svg viewBox="0 0 ${W} ${H}" width="100%" height="auto" role="img" aria-label="Wykres cen lotów w czasie">
+    ${grid}${xlab}${lines}
+  </svg></div><div class="lgds">${legend}</div>
+  <p class="note" style="margin-top:8px">Ceny za 1 dorosłego, w obie strony, WAW→Tokio (3–15.05.2027). Linia ciągła = Etihad (trasa z planu). Wykres rozbudowuje się przy każdym cotygodniowym sprawdzeniu.</p>`;
+};
 const trend = () => {
   if(FLIGHT.prev==null) return '';
   const d = FLIGHT.adult - FLIGHT.prev;
@@ -327,6 +381,40 @@ footer a{font-weight:700;text-decoration:none}
   transition:.25s;z-index:60}
 .totop.show{opacity:1;pointer-events:auto}
 
+/* ---- loty: wykres, tabela linii, warianty terminu ---- */
+.chartwrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 10px}
+.chartwrap svg{min-width:520px;display:block}
+.lgds{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+.lgd{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.lgd i{width:14px;height:4px;border-radius:2px;display:inline-block}
+.alist{display:flex;flex-direction:column;gap:10px}
+.arow{display:grid;grid-template-columns:1fr auto;gap:6px 14px;align-items:center;background:var(--panel);
+  border:1px solid var(--line);border-radius:14px;padding:13px 16px}
+.arow.top{border-color:var(--shu);box-shadow:var(--shadow-sm)}
+.arow .an{font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px}
+.arow .an i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+.arow .am{font-size:12.5px;color:var(--muted);grid-column:1}
+.arow .ap{font-weight:800;font-size:17px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.arow .ad{font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
+.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.pcard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 18px 16px;position:relative}
+.pcard.win{border-color:var(--success);box-shadow:var(--shadow-sm)}
+.pcard .ph{font-family:var(--serif);font-size:20px;font-weight:500}
+.pcard .psub{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:2px}
+.pcard .pp{font-size:24px;font-weight:800;margin:10px 0 2px;font-variant-numeric:tabular-nums}
+.pcard .pdiff{font-size:12.5px;font-weight:700;margin-bottom:10px}
+.pcard ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;font-size:13px}
+.pcard li{display:flex;gap:7px;line-height:1.35}
+.pcard .yes::before{content:"✓";color:var(--success);font-weight:800;flex:0 0 auto}
+.pcard .no::before{content:"✗";color:var(--shu);font-weight:800;flex:0 0 auto}
+.pcard .badge{position:absolute;top:-10px;right:14px;background:var(--success);color:#fff;font-size:10.5px;
+  font-weight:800;text-transform:uppercase;letter-spacing:.07em;border-radius:999px;padding:4px 11px}
+.gridbars{display:flex;align-items:flex-end;gap:3px;height:120px;margin-top:6px}
+.gridbars div{flex:1;border-radius:4px 4px 0 0;background:var(--ai);opacity:.55;position:relative;min-width:0}
+.gridbars div.lowest{background:var(--success);opacity:1}
+.gridbars div.plan{background:var(--shu);opacity:1}
+.gridlabs{display:flex;gap:3px;margin-top:5px}
+.gridlabs span{flex:1;text-align:center;font-size:10px;color:var(--muted);min-width:0}
 /* ---- modern polish ---- */
 .progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;
   background:linear-gradient(90deg,var(--kin),var(--shu));transition:width .12s linear}
@@ -792,7 +880,7 @@ const DAYFLEX = {
 };
 
 /* ============================ TEMPLATES ============================ */
-const TABS = [['index.html','Plan'],['decyzje.html','Dlaczego'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['koszty.html','Koszty'],['pogoda.html','Pogoda']];
+const TABS = [['index.html','Plan'],['decyzje.html','Dlaczego'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['loty.html','Loty'],['koszty.html','Koszty'],['pogoda.html','Pogoda']];
 function nav(active,prefix){
   const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on"':'')}>${l}</a>`).join('');
   return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html">JAPONIA <b>·</b> 2027</a><nav class="tabs">${t}</nav></div></div>`;
@@ -919,7 +1007,8 @@ function indexPage(){
     <a class="qcard" href="decyzje.html"><div class="qi">🧭</div><div class="qh">Dlaczego tak?</div><div class="qd">Logika planu: rytm, decyzje i jak go modyfikować.</div></a>
     <a class="qcard" href="atrakcje.html"><div class="qi">🎟️</div><div class="qh">Atrakcje</div><div class="qd">Godziny, ceny i linki do rezerwacji — 32 miejsca.</div></a>
     <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Hotele</div><div class="qd">5 baz na 11 nocy, pokoje rodzinne, zdjęcia i linki do map.</div></a>
-    <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Bilety i koszty</div><div class="qd">Strategia zakupu lotów, progi cen i kalkulator budżetu.</div></a>
+    <a class="qcard" href="loty.html"><div class="qi">✈️</div><div class="qh">Loty</div><div class="qd">Ceny linii, trendy i kiedy nacisnąć „kup".</div></a>
+    <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet</div><div class="qd">Kalkulator kosztów, transport i widełki 40–60 tys.</div></a>
     <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Pogoda w maju, informacje praktyczne i co spakować.</div></a>
   </div>`;
   const inner = `
@@ -984,12 +1073,13 @@ function kosztyPage(){
   </header>
 
   <section>
-    <h2 class="stitle">Strategia biletowa</h2>
-    <div class="pflag">✈️ <span><b>Ostatnie sprawdzenie ${dpl(FLIGHT.checked)}: ${plz(FLIGHT.adult)}/dorosły</b>${trend()} w obie strony (${FLIGHT.airline}, WAW→Narita, 3–15.05.2027) — dla 2+2 (3 dorosłych + 1 dziecko do 11 lat) ≈ <b>~${plz(FLIGHT.family)}</b>. Cena <b>${FLIGHT.band}</b>. <span class="note">Aktualizowane automatycznie co tydzień.</span></span></div>
-    ${seg('🎯 Progi decyzyjne (Etihad, w obie strony, za 1 dorosłego)',['<b>≤ 3 500 zł/os.</b> (~13 200 zł rodzina 3+1) — okazja, kupować natychmiast','<b>3 500–4 600 zł/os.</b> (~14 000–16 400 rodzina) — cena typowa, można kupić dla pewności miejsc','<b>≥ 4 600 zł/os.</b> — górka, czekać na wyprzedaż',`Ostatni odczyt (${dpl(FLIGHT.checked)}): <b>${plz(FLIGHT.adult)}/os.</b> — próg <b>${FLIGHT.band}</b>`])}
-    ${FLIGHT.history.length>1?`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">📉 Historia sprawdzeń (za 1 dorosłego)</h3><div class="wxwrap"><table><thead><tr><th>Data</th><th style="text-align:right">Cena</th><th style="text-align:right">Zmiana</th></tr></thead><tbody>${FLIGHT.history.slice().reverse().map((h,i,arr)=>{const p=arr[i+1];const d=p?h[1]-p[1]:null;const c=d==null?'—':(d===0?'→ 0':(d<0?`▼ ${plz(Math.abs(d))}`:`▲ ${plz(d)}`));const col=d==null||d===0?'var(--muted)':(d<0?'var(--success)':'var(--shu)');return `<tr><td>${dpl(h[0])}</td><td class="num">${plz(h[1])}</td><td class="num" style="color:${col};font-weight:700">${c}</td></tr>`;}).join('')}</tbody></table></div></div>`:''}
-    ${seg('🗓️ Kalendarz polowania',['<b>~20.11–2.12.2026</b> — Black Friday Etihad/Qatar (historycznie do −35%, podróże do 30.06)','<b>22.12.2026 – poł. stycznia 2027</b> — Qatar Travel Festival + Etihad January Sale','<b>Koniec stycznia 2027</b> — twardy deadline zakupu (4 miejsca w jednej rezerwacji znikają szybko)','Plan B: Air China z Warszawy przez Pekin (~3,3–4 tys. zł/os, bagaż w cenie)','Bilet kupujemy jako Etihad ze stopoverem: nocleg 4★ w Abu Zabi gratis (postój >24 h, pakiet na etihad.com ≥3 dni przed; przy zakupie potwierdzić, że promocja obejmuje maj 2027 i że multi-city nie podnosi taryfy)'])}
-    ${seg('🔔 Aktywne alerty',['Google Flights — monitoring ceny 3→15.05 (mail przy zmianie)','Automatyczne kontrole Claude: 1.10, 20.11, 22.12.2026 oraz 12.01 i 25.01.2027','Do dołożenia ręcznie: alert w Kayak + obserwacja fly4free.pl (tag Tokio)'])}
+    <h2 class="stitle">Bilety lotnicze</h2>
+    <div class="pflag">✈️ <span><b>Ostatnie sprawdzenie ${dpl(FLIGHT.checked)}: ${plz(FLIGHT.adult)}/dorosły</b>${trend()} (${FLIGHT.airline}, WAW→Narita, 3–15.05.2027) — dla 2+2 ≈ <b>~${plz(FLIGHT.family)}</b>. Cena <b>${FLIGHT.band}</b>.</span></div>
+    <div class="card"><ul class="tips">
+      <li>Ta kwota zasila pole „Loty" w kalkulatorze poniżej i odświeża się automatycznie co tydzień.</li>
+      <li>Porównanie linii, wykres trendu, progi „kup / czekaj", kalendarz wyprzedaży i wybór terminu — wszystko na osobnej zakładce.</li>
+    </ul>
+    <a class="gmap" href="loty.html">✈️ Zobacz ceny, trendy i strategię zakupu → </a></div>
   </section>
 
   <section>
@@ -1221,6 +1311,96 @@ function decyzjePage(){
 }
 
 /* ---- pogoda ---- */
+function lotyPage(){
+  const seg = (t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const last = k => {for(let i=CHECKS.length-1;i>=0;i--) if(CHECKS[i].p[k]!=null) return {v:CHECKS[i].p[k],d:CHECKS[i].date,i};return null;};
+  const before = (k,idx) => {for(let i=idx-1;i>=0;i--) if(CHECKS[i].p[k]!=null) return CHECKS[i].p[k];return null;};
+
+  const rows = Object.keys(AIRLINES).map(k=>({k,A:AIRLINES[k],L:last(k)})).filter(r=>r.L)
+    .sort((a,b)=>a.L.v-b.L.v).map((r,i)=>{
+      const pv = before(r.k, r.L.i), d = pv==null?null:r.L.v-pv;
+      const chg = d==null ? '<span style="color:var(--muted)">—</span>'
+        : d===0 ? '<span style="color:var(--muted)">bez zmian</span>'
+        : d<0 ? `<span style="color:var(--success)">▼ ${plz(Math.abs(d))}</span>`
+              : `<span style="color:var(--shu)">▲ ${plz(d)}</span>`;
+      const stale = r.L.d!==CHECKS[CHECKS.length-1].date ? ` <span class="note">(odczyt ${dpl(r.L.d).slice(0,5)})</span>` : '';
+      return `<div class="arow${i===0?' top':''}">
+        <div class="an"><i style="background:${r.A.col}"></i>${r.A.name}${r.A.star?' ★':''}${i===0?' <span class="rezerwuj">najtaniej</span>':''}</div>
+        <div class="ap">${plz(r.L.v)}</div>
+        <div class="am">przez ${r.A.via} · ${r.A.dur} · ${r.A.note}${stale}</div>
+        <div class="ad">${chg}</div>
+      </div>`;}).join('');
+
+  const gmin = Math.min(...DATEGRID.days.map(d=>d[1])), gmax = Math.max(...DATEGRID.days.map(d=>d[1])), base = gmin-300;
+  const bars = DATEGRID.days.map(([d,v])=>`<div class="${v===gmin?'lowest':(d===3?'plan':'')}" style="height:${Math.round((v-base)/(gmax-base)*100)}%" title="${d}.05 — ${plz(v)}"></div>`).join('');
+  const labs = DATEGRID.days.map(([d])=>`<span>${d%2===1?d:''}</span>`).join('');
+
+  const cards = PERIODS.map(P=>{
+    const diff = P.price - PERIODS[0].price;
+    return `<div class="pcard${P.best?' win':''}">${P.best?'<span class="badge">rekomendacja</span>':''}
+      <div class="ph">${P.label}</div><div class="psub">${P.sub}</div>
+      <div class="pp">${plz(P.price)}<span style="font-size:13px;font-weight:600;color:var(--muted)">/os.</span></div>
+      <div class="pdiff" style="color:${diff===0?'var(--success)':'var(--shu)'}">${diff===0?'punkt odniesienia':'+ '+plz(diff)+'/os. (~'+plz(diff*3.8)+' rodzina)'}</div>
+      <ul>${P.pros.map(t=>`<li class="yes">${t}</li>`).join('')}${P.cons.map(t=>`<li class="no">${t}</li>`).join('')}</ul>
+    </div>`;}).join('');
+
+  const inner = `
+  <header class="hero kb">
+    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(200,64,44,.42)),url('${IMG.tokyostation}') center/cover"></div></div>
+    <div class="hero-inner">
+    <p class="eyebrow">Ceny · trendy · rekomendacje</p>
+    <h1>Loty</h1>
+    <p class="lead">Kluczowe linie na trasie WAW→Tokio, jak zmieniają się ich ceny i kiedy nacisnąć „kup". Dane sprawdzane automatycznie co tydzień.</p>
+    </div>
+  </header>
+
+  <section>
+    <h2 class="stitle">Ceny dziś — kluczowe linie</h2>
+    <p class="lead-p">Za 1 dorosłego, w obie strony, wylot 3.05 / powrót 15.05.2027. Ostatnie sprawdzenie: <b>${dpl(FLIGHT.checked)}</b>. Zmiana liczona względem poprzedniego odczytu.</p>
+    <div class="alist">${rows}</div>
+    <div class="dnote" style="margin-top:14px">★ Etihad to trasa z planu — jako jedyna daje <b>darmowy nocleg 4★ w Abu Zabi</b> (program stopover), co realnie warte jest ~600–900 zł. Przy porównywaniu cen doliczcie to na jego korzyść.</div>
+  </section>
+
+  <section>
+    <h2 class="stitle">📈 Trend cen</h2>
+    ${priceChart()}
+    ${FLIGHT.history.length>1?`<div class="card" style="margin-top:16px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">Historia odczytów — Etihad (trasa z planu)</h3><div class="wxwrap"><table><thead><tr><th>Data</th><th style="text-align:right">Cena / dorosły</th><th style="text-align:right">Zmiana</th><th style="text-align:right">Rodzina 2+2</th></tr></thead><tbody>${FLIGHT.history.slice().reverse().map((h,i,arr)=>{const p=arr[i+1];const d=p?h[1]-p[1]:null;const c=d==null?'—':(d===0?'→ 0':(d<0?`▼ ${plz(Math.abs(d))}`:`▲ ${plz(d)}`));const col=d==null||d===0?'var(--muted)':(d<0?'var(--success)':'var(--shu)');return `<tr><td>${dpl(h[0])}</td><td class="num">${plz(h[1])}</td><td class="num" style="color:${col};font-weight:700">${c}</td><td class="num" style="color:var(--muted)">${plz(Math.round(h[1]*3.8/100)*100)}</td></tr>`;}).join('')}</tbody></table></div></div>`:''}
+  </section>
+
+  <section>
+    <h2 class="stitle">🎯 Kiedy kupić</h2>
+    <p class="lead-p">Ceny na tej trasie falują o ±30% w skali tygodnia, więc moment zakupu jest wart więcej niż wybór linii. Oto plan.</p>
+    ${seg('Progi decyzyjne (za 1 dorosłego)',['<b>≤ 3 500 zł/os.</b> (~13 300 zł rodzina) — OKAZJA, kupować natychmiast, nie czekać na „jeszcze lepszą"','<b>3 500–4 600 zł/os.</b> — cena typowa; można kupić dla pewności miejsc, ale bez presji',`<b>≥ 4 600 zł/os.</b> — górka, czekać na wyprzedaż`,`Teraz (${dpl(FLIGHT.checked)}): <b>${plz(FLIGHT.adult)}/os.</b> — próg <b>${FLIGHT.band}</b>`])}
+    ${seg('Kalendarz — kiedy realnie polować',['<b>Lipiec–wrzesień 2026 (teraz):</b> nie kupować. Brak wyprzedaży, ceny typowe — tylko obserwować.','<b>Wrzesień–październik 2026:</b> czas na <a href="hotele.html">noclegi</a> (darmowe anulowanie), loty nadal obserwujemy.','<b>~20.11–2.12.2026 — Black Friday Etihad/Qatar:</b> pierwsze prawdziwe okno, historycznie do −35%. Tu celujemy w próg ≤3 500 zł/os.','<b>22.12.2026 – poł. stycznia 2027:</b> Qatar Travel Festival + Etihad January Sale — drugie okno.','<b>Koniec stycznia 2027 — TWARDY DEADLINE:</b> kupić nawet bez promocji. Cztery miejsca w jednej rezerwacji znikają szybko, a od lutego ceny rosną w stronę Golden Week.'])}
+    ${seg('Zasady, które oszczędzają nerwy',['Kupujemy jako <b>Etihad ze stopoverem</b> — pakiet noclegowy rezerwuje się osobno na etihad.com zaraz po zakupie biletów (≥3 dni przed wylotem).','Przy zakupie potwierdzić, że promocja stopover obejmuje maj 2027 i że multi-city nie podnosi taryfy.','Cena na Google to taryfa bez bagażu rejestrowanego — doliczcie bagaż przy finalnym porównaniu.','Młodsze dziecko (&lt;11 lat) ma taryfę dziecięcą — rodzina to ok. <b>3,8 taryfy</b>, nie 4.','Nie polujcie na dołek w nieskończoność: różnica 200 zł/os. nie jest warta ryzyka braku 4 miejsc obok siebie.'])}
+    ${seg('🔔 Co monitoruje się samo',['<b>Cotygodniowa kontrola cen</b> (poniedziałki) — aktualizuje tę stronę i wykres powyżej','Alerty w kluczowych momentach: 1.10, 20.11, 22.12.2026 oraz 12.01 i 25.01.2027','Google Flights — monitoring trasy 3→15.05 z powiadomieniem mailowym'])}
+  </section>
+
+  <section>
+    <h2 class="stitle">🗓️ Który termin pobytu</h2>
+    <p class="lead-p">Trzy warianty sprawdzone na żywo w Google Flights. Ceny za dorosłego; „rodzina" liczona jako 3,8 taryfy (3 dorosłych + dziecko).</p>
+    <div class="pcards">${cards}</div>
+    <div class="card" style="margin-top:16px">
+      <h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 4px">Cena wg dnia wylotu</h3>
+      <p class="note" style="margin:0 0 10px">12-dniowa podróż, za 1 dorosłego (odczyt ${dpl(DATEGRID.src)}). <span style="color:var(--success);font-weight:700">■</span> najtańszy dzień w całym oknie — i to właśnie 3 maja.</p>
+      <div class="gridbars">${bars}</div>
+      <div class="gridlabs">${labs}</div>
+      <p class="note" style="margin-top:8px">Maj 2027 · najtaniej <b>${plz(gmin)}</b> (3.05), najdrożej <b>${plz(gmax)}</b> (2.05). Wyloty 1–2 maja są droższe przez ogon Golden Week.</p>
+    </div>
+    <div class="dnote" style="margin-top:14px">🏁 <b>Werdykt: zostajemy przy 3–15 maja.</b> To jednocześnie najniższy punkt cenowy w całym oknie, sobotni powrót (niedziela na reset przed szkołą) i start w majówkę, która oszczędza dni urlopu. Alternatywy kosztują 2 400–2 800 zł więcej i pogarszają dzień powrotu.</div>
+  </section>
+
+  <section>
+    <h2 class="stitle">Dalej</h2>
+    <div class="quick">
+      <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet całości</div><div class="qd">Kalkulator kosztów, transport w Japonii i widełki 40–60 tys.</div></a>
+      <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Noclegi</div><div class="qd">5 baz, w tym hotel stopover w Abu Zabi z pakietu Etihad.</div></a>
+    </div>
+  </section>
+  ${footer('')}`;
+  return shell({title:'Loty — ceny, trendy i kiedy kupić · Japonia 2027',desc:'Ceny lotów WAW→Tokio na maj 2027: porównanie linii, trendy cen i rekomendacja terminu zakupu.',prefix:'',active:'loty.html',inner,pillsIdx:null});
+}
+
 function pogodaPage(){
   const rows=[
     ['🏙️ Tokio','~23°C','~14°C','przyjemnie, słonecznie; sporadyczny przelotny deszcz'],
@@ -1330,6 +1510,7 @@ const ATR = atrakcjePage(); // read old before overwriting index (index doesn't 
 fs.writeFileSync(DIR + '/index.html', indexPage());
 fs.writeFileSync(DIR + '/hotele.html', hotelePage());
 fs.writeFileSync(DIR + '/decyzje.html', decyzjePage());
+fs.writeFileSync(DIR + '/loty.html', lotyPage());
 fs.writeFileSync(DIR + '/koszty.html', kosztyPage());
 fs.writeFileSync(DIR + '/pogoda.html', pogodaPage());
 fs.writeFileSync(DIR + '/atrakcje.html', ATR);

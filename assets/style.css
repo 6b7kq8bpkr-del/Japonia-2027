@@ -291,6 +291,40 @@ footer a{font-weight:700;text-decoration:none}
   transition:.25s;z-index:60}
 .totop.show{opacity:1;pointer-events:auto}
 
+/* ---- loty: wykres, tabela linii, warianty terminu ---- */
+.chartwrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 10px}
+.chartwrap svg{min-width:520px;display:block}
+.lgds{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+.lgd{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.lgd i{width:14px;height:4px;border-radius:2px;display:inline-block}
+.alist{display:flex;flex-direction:column;gap:10px}
+.arow{display:grid;grid-template-columns:1fr auto;gap:6px 14px;align-items:center;background:var(--panel);
+  border:1px solid var(--line);border-radius:14px;padding:13px 16px}
+.arow.top{border-color:var(--shu);box-shadow:var(--shadow-sm)}
+.arow .an{font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px}
+.arow .an i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+.arow .am{font-size:12.5px;color:var(--muted);grid-column:1}
+.arow .ap{font-weight:800;font-size:17px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.arow .ad{font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
+.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.pcard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 18px 16px;position:relative}
+.pcard.win{border-color:var(--success);box-shadow:var(--shadow-sm)}
+.pcard .ph{font-family:var(--serif);font-size:20px;font-weight:500}
+.pcard .psub{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:2px}
+.pcard .pp{font-size:24px;font-weight:800;margin:10px 0 2px;font-variant-numeric:tabular-nums}
+.pcard .pdiff{font-size:12.5px;font-weight:700;margin-bottom:10px}
+.pcard ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;font-size:13px}
+.pcard li{display:flex;gap:7px;line-height:1.35}
+.pcard .yes::before{content:"✓";color:var(--success);font-weight:800;flex:0 0 auto}
+.pcard .no::before{content:"✗";color:var(--shu);font-weight:800;flex:0 0 auto}
+.pcard .badge{position:absolute;top:-10px;right:14px;background:var(--success);color:#fff;font-size:10.5px;
+  font-weight:800;text-transform:uppercase;letter-spacing:.07em;border-radius:999px;padding:4px 11px}
+.gridbars{display:flex;align-items:flex-end;gap:3px;height:120px;margin-top:6px}
+.gridbars div{flex:1;border-radius:4px 4px 0 0;background:var(--ai);opacity:.55;position:relative;min-width:0}
+.gridbars div.lowest{background:var(--success);opacity:1}
+.gridbars div.plan{background:var(--shu);opacity:1}
+.gridlabs{display:flex;gap:3px;margin-top:5px}
+.gridlabs span{flex:1;text-align:center;font-size:10px;color:var(--muted);min-width:0}
 /* ---- modern polish ---- */
 .progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;
   background:linear-gradient(90deg,var(--kin),var(--shu));transition:width .12s linear}
