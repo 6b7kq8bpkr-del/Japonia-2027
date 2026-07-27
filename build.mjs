@@ -1036,7 +1036,23 @@ function kosztyPage(){
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
     function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
-    try{var s=JSON.parse(localStorage.getItem(KEY))||{};ids.forEach(function(id){if(s[id]!=null)document.getElementById(id).value=s[id];});}catch(e){}
+    // Przywróć zapisane wartości, ALE nowa cena lotu ma pierwszeństwo:
+    // jeśli użytkownik nie zmieniał pola "loty" ręcznie, wskocz na świeży kurs.
+    var priceRefreshed=false;
+    try{
+      var s=JSON.parse(localStorage.getItem(KEY))||{};
+      var untouched = s._fd!=null && Number(s.flights)===Number(s._fd);
+      ids.forEach(function(id){
+        if(id==="flights" && (untouched || s.flights==null)) return; // zostaw nowy domyślny
+        if(s[id]!=null) document.getElementById(id).value=s[id];
+      });
+      if(untouched && Number(s._fd)!==D.flights) priceRefreshed=true;
+    }catch(e){}
+    if(priceRefreshed){
+      var fl=document.getElementById("flights");
+      fl.style.transition="background .6s"; fl.style.background="var(--sakura)";
+      setTimeout(function(){fl.style.background="";},2400);
+    }
     function calc(){
       var hotel=num("nights")*num("nightRate"),food=num("days")*num("foodRate");
       document.getElementById("hotelAmt").textContent=fmt(hotel);
@@ -1054,7 +1070,7 @@ function kosztyPage(){
       else{col=css("--shu");v="⛔ Wyraźnie ponad budżet.";vc=css("--shu");}
       f.style.background=col;var vd=document.getElementById("verdict");vd.textContent=v;vd.style.color=vc;
       document.getElementById("budgetPct").textContent=fmt(total);
-      var o={};ids.forEach(function(id){o[id]=num(id);});try{localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}
+      var o={};ids.forEach(function(id){o[id]=num(id);});o._fd=D.flights;try{localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}
     }
     ids.forEach(function(id){document.getElementById(id).addEventListener("input",calc);});
     document.getElementById("resetBtn").addEventListener("click",function(){ids.forEach(function(id){document.getElementById(id).value=D[id];});calc();});
