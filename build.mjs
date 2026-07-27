@@ -35,10 +35,10 @@ const PERIODS = [
    cons:['Pierwsze 2 dni w Tokio jeszcze w ogonie Golden Week']},
   {label:'2–15 maja', sub:'dzień wcześniej', price:4520,
    pros:['Druga noc w Abu Zabi gratis (pakiet stopover)','Łagodniejszy reset przed lotem do Tokio'],
-   cons:['+610 zł/os. (~2 400 zł rodzina) — ogon Golden Week','Dodatkowa doba ląduje w Abu Zabi, nie w Japonii','Druga pełna doba w 35–40°C z dziećmi']},
+   cons:['Wyższa taryfa — wylot wpada w ogon Golden Week','Dodatkowa doba ląduje w Abu Zabi, nie w Japonii','Druga pełna doba w 35–40°C z dziećmi']},
   {label:'7–19 maja', sub:'cały po Golden Week', price:4657,
    pros:['Zero Golden Week','Więcej dni turnieju sumo do wyboru (9–23.05)'],
-   cons:['+747 zł/os. (~2 800 zł rodzina)','Powrót w ŚRODĘ — jet lag prosto w szkołę i pracę','Traci majówkę = więcej dni urlopu']},
+   cons:['Najdroższy z trzech wariantów','Powrót w ŚRODĘ — jet lag prosto w szkołę i pracę','Traci majówkę = więcej dni urlopu']},
 ];
 const FLIGHT = {airline:'Etihad'};
 FLIGHT.history = CHECKS.filter(c=>c.p.etihad!=null).map(c=>[c.date, c.p.etihad]);
