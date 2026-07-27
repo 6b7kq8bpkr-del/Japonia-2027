@@ -3,6 +3,33 @@ const DIR = '/Users/urban/Desktop/Piaskownica/japonia-2027';
 fs.mkdirSync(DIR + '/days', { recursive: true });
 fs.mkdirSync(DIR + '/assets', { recursive: true });
 
+/* ===================== CENA LOTU — JEDYNE ŹRÓDŁO PRAWDY =====================
+   Aktualizowane automatycznie przez zadanie `japonia-cena-lotu` (co tydzień).
+   Ręcznie: zmień tylko `history` (dopisz nowy wpis NA KOŃCU) i uruchom `node build.mjs`.
+   Wpis: [data ISO, cena w zł za 1 dorosłego, w obie strony, Etihad WAW→NRT 3–15.05.2027] */
+const FLIGHT = {
+  airline: 'Etihad',
+  history: [
+    ['2026-07-26', 3910],
+  ],
+};
+FLIGHT.adult   = FLIGHT.history[FLIGHT.history.length-1][1];
+FLIGHT.checked = FLIGHT.history[FLIGHT.history.length-1][0];
+FLIGHT.prev    = FLIGHT.history.length > 1 ? FLIGHT.history[FLIGHT.history.length-2][1] : null;
+// rodzina 2+2 = 3 taryfy dorosłe + 1 dziecięca (młodsze <11 lat, ~20% taniej)
+FLIGHT.family  = Math.round((FLIGHT.adult*3 + FLIGHT.adult*0.8)/100)*100;
+FLIGHT.band    = FLIGHT.adult <= 3500 ? 'okazja' : (FLIGHT.adult < 4600 ? 'typowa' : 'górka');
+// własny formatter — Node w tym środowisku ma okrojone ICU i ignoruje locale pl-PL
+const plz  = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';
+const dpl  = iso => {const [y,m,d]=iso.split('-');return `${+d}.${m}.${y}`;};
+const trend = () => {
+  if(FLIGHT.prev==null) return '';
+  const d = FLIGHT.adult - FLIGHT.prev;
+  if(d===0) return ' <b style="color:var(--muted)">→ bez zmian</b>';
+  return d<0 ? ` <b style="color:var(--success)">▼ ${plz(Math.abs(d))} taniej</b>`
+             : ` <b style="color:var(--shu)">▲ ${plz(d)} drożej</b>`;
+};
+
 /* ============================ SHARED CSS ============================ */
 const WAVE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M0 24a24 24 0 0148 0'/%3E%3Cpath d='M0 24a17 17 0 0148 0'/%3E%3Cpath d='M0 24a10 10 0 0148 0'/%3E%3C/g%3E%3C/svg%3E";
 
@@ -957,8 +984,9 @@ function kosztyPage(){
 
   <section>
     <h2 class="stitle">Strategia biletowa</h2>
-    <div class="pflag">✈️ <span><b>Lot dziś (26.07.2026): 3 910 zł/dorosły</b> w obie strony (Etihad, WAW→Narita — potwierdzone na Google Flights) — dla 2+2 (3 dorosłych + 1 dziecko do 11 lat) ≈ <b>~14 700 zł</b>. Ceny „typowe", nie okazyjne.</span></div>
-    ${seg('🎯 Progi decyzyjne (Etihad, w obie strony, za 1 dorosłego)',['<b>≤ 3 500 zł/os.</b> (~13 200 zł rodzina 3+1) — okazja, kupować natychmiast','<b>3 900–4 300 zł/os.</b> (~14 700–16 000 rodzina) — cena typowa, można kupić dla pewności miejsc','<b>≥ 4 600 zł/os.</b> — górka, czekać na wyprzedaż','Dziś (26.07) jest 3 910 zł/os. — czyli próg „typowy"'])}
+    <div class="pflag">✈️ <span><b>Ostatnie sprawdzenie ${dpl(FLIGHT.checked)}: ${plz(FLIGHT.adult)}/dorosły</b>${trend()} w obie strony (${FLIGHT.airline}, WAW→Narita, 3–15.05.2027) — dla 2+2 (3 dorosłych + 1 dziecko do 11 lat) ≈ <b>~${plz(FLIGHT.family)}</b>. Cena <b>${FLIGHT.band}</b>. <span class="note">Aktualizowane automatycznie co tydzień.</span></span></div>
+    ${seg('🎯 Progi decyzyjne (Etihad, w obie strony, za 1 dorosłego)',['<b>≤ 3 500 zł/os.</b> (~13 200 zł rodzina 3+1) — okazja, kupować natychmiast','<b>3 500–4 600 zł/os.</b> (~14 000–16 400 rodzina) — cena typowa, można kupić dla pewności miejsc','<b>≥ 4 600 zł/os.</b> — górka, czekać na wyprzedaż',`Ostatni odczyt (${dpl(FLIGHT.checked)}): <b>${plz(FLIGHT.adult)}/os.</b> — próg <b>${FLIGHT.band}</b>`])}
+    ${FLIGHT.history.length>1?`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">📉 Historia sprawdzeń (za 1 dorosłego)</h3><div class="wxwrap"><table><thead><tr><th>Data</th><th style="text-align:right">Cena</th><th style="text-align:right">Zmiana</th></tr></thead><tbody>${FLIGHT.history.slice().reverse().map((h,i,arr)=>{const p=arr[i+1];const d=p?h[1]-p[1]:null;const c=d==null?'—':(d===0?'→ 0':(d<0?`▼ ${plz(Math.abs(d))}`:`▲ ${plz(d)}`));const col=d==null||d===0?'var(--muted)':(d<0?'var(--success)':'var(--shu)');return `<tr><td>${dpl(h[0])}</td><td class="num">${plz(h[1])}</td><td class="num" style="color:${col};font-weight:700">${c}</td></tr>`;}).join('')}</tbody></table></div></div>`:''}
     ${seg('🗓️ Kalendarz polowania',['<b>~20.11–2.12.2026</b> — Black Friday Etihad/Qatar (historycznie do −35%, podróże do 30.06)','<b>22.12.2026 – poł. stycznia 2027</b> — Qatar Travel Festival + Etihad January Sale','<b>Koniec stycznia 2027</b> — twardy deadline zakupu (4 miejsca w jednej rezerwacji znikają szybko)','Plan B: Air China z Warszawy przez Pekin (~3,3–4 tys. zł/os, bagaż w cenie)','Bilet kupujemy jako Etihad ze stopoverem: nocleg 4★ w Abu Zabi gratis (postój >24 h, pakiet na etihad.com ≥3 dni przed; przy zakupie potwierdzić, że promocja obejmuje maj 2027 i że multi-city nie podnosi taryfy)'])}
     ${seg('🔔 Aktywne alerty',['Google Flights — monitoring ceny 3→15.05 (mail przy zmianie)','Automatyczne kontrole Claude: 1.10, 20.11, 22.12.2026 oraz 12.01 i 25.01.2027','Do dołożenia ręcznie: alert w Kayak + obserwacja fly4free.pl (tag Tokio)'])}
   </section>
@@ -976,7 +1004,7 @@ function kosztyPage(){
       <table>
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
-          <tr><td class="cat">✈️ Loty<span class="hint">Etihad, 3 dorosłych + 1 dziecko do 11 lat (+ bagaż)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="14700" min="0" step="100"></td></tr>
+          <tr><td class="cat">✈️ Loty<span class="hint">Etihad, 3 dorosłych + 1 dziecko do 11 lat (+ bagaż)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="${FLIGHT.family}" min="0" step="100"></td></tr>
           <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 10 nocy: aparthotele ~820 zł + 1 noc ryokan z prywatnym onsenem ~2 700 zł (Abu Zabi gratis)</span></td><td class="num"><input type="number" id="nights" class="sm" value="10" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1000" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">shinkanseny ~2 250 zł + NEX + metro + Hakone</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4000" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (w tym dzień w Abu Zabi)</span></td><td class="num"><input type="number" id="days" class="sm" value="13" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
@@ -1003,7 +1031,7 @@ function kosztyPage(){
   ${footer('')}
   <script>
   (function(){
-    var D={flights:14700,nights:10,nightRate:1000,transport:4000,days:13,foodRate:500,attractions:2600,extras:3000};
+    var D={flights:${FLIGHT.family},nights:10,nightRate:1000,transport:4000,days:13,foodRate:500,attractions:2600,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
