@@ -355,3 +355,17 @@ footer a{font-weight:700;text-decoration:none}
   .qcard,.dcard,.hcard,.acard,.hotelbox,.stt,.daynav a{transition:border-color .15s ease}
   .qcard:hover,.dcard:hover,.hcard:hover,.acard:hover,.stt:hover,.daynav a:hover{transform:none}
 }
+
+/* ---- pogoda na żywo (wzorzec z planu Madery) ---- */
+.wxwrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.wxcard{min-width:0;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);box-shadow:var(--shadow-sm)}
+.wxcard h3{margin:0 0 6px;font-size:15px;color:var(--ai)}
+.wxnow{margin:0;font-size:23px;font-weight:800;line-height:1.15}
+.wxnow span{display:block;margin-top:2px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.wxdays{display:flex;gap:7px;margin-top:13px;overflow-x:auto;padding-bottom:3px;min-width:0}
+.wxd{flex:0 0 auto;min-width:56px;display:grid;gap:3px;padding:9px 6px;border-radius:11px;background:var(--sakura);text-align:center}
+.wxd span{font-size:11.5px;font-weight:800;color:var(--ai);text-transform:capitalize}
+.wxd em{font-size:18px;font-style:normal;line-height:1}
+.wxd b{font-size:12.5px}
+.wxd i{font-style:normal;font-weight:500;color:var(--muted)}
+.wxerr{margin:0;padding:16px;color:var(--muted);line-height:1.6}

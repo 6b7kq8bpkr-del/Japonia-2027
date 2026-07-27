@@ -74,3 +74,35 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
     setTimeout(function(){map.invalidateSize();},80);
   }
 })();
+
+/* ---- pogoda na żywo (Open-Meteo) — wzorzec z planu Madery ---- */
+(function(){
+  var host=document.getElementById('livewx');
+  if(!host) return;
+  var LOC=[
+    {n:'🏙️ Tokio',la:35.6762,lo:139.6503,tz:'Asia/Tokyo'},
+    {n:'♨️ Hakone',la:35.2324,lo:139.1069,tz:'Asia/Tokyo'},
+    {n:'⛩️ Kioto',la:35.0116,lo:135.7681,tz:'Asia/Tokyo'},
+    {n:'🏯 Osaka',la:34.6937,lo:135.5023,tz:'Asia/Tokyo'},
+    {n:'🕌 Abu Zabi',la:24.4539,lo:54.3773,tz:'Asia/Dubai'}
+  ];
+  function ico(c){return c===0?'☀️':c<=3?'⛅':(c===45||c===48)?'🌫️':(c>=51&&c<=57)?'🌦️':(c>=61&&c<=67)?'🌧️':(c>=71&&c<=77)?'🌨️':(c>=80&&c<=82)?'🌦️':(c>=85&&c<=86)?'🌨️':c>=95?'⛈️':'☁️';}
+  function lbl(c){return c===0?'Bezchmurnie':c<=3?'Częściowe zachmurzenie':(c===45||c===48)?'Mgła':(c>=51&&c<=57)?'Mżawka':(c>=61&&c<=67)?'Deszcz':(c>=71&&c<=77)?'Śnieg':(c>=80&&c<=82)?'Przelotny deszcz':(c>=85&&c<=86)?'Przelotny śnieg':c>=95?'Burza':'Zachmurzenie';}
+  Promise.all(LOC.map(function(l){
+    var u='https://api.open-meteo.com/v1/forecast?latitude='+l.la+'&longitude='+l.lo+
+      '&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone='+encodeURIComponent(l.tz)+'&forecast_days=4';
+    return fetch(u).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){return {l:l,d:d};});
+  })).then(function(res){
+    host.innerHTML=res.map(function(x){
+      var c=x.d.current,dd=x.d.daily;
+      var days=dd.time.map(function(t,i){
+        return '<div class="wxd"><span>'+(i===0?'dziś':new Date(t+'T12:00:00').toLocaleDateString('pl',{weekday:'short'}))+'</span>'+
+          '<em title="'+lbl(dd.weather_code[i])+'">'+ico(dd.weather_code[i])+'</em>'+
+          '<b>'+Math.round(dd.temperature_2m_max[i])+'° <i>'+Math.round(dd.temperature_2m_min[i])+'°</i></b></div>';
+      }).join('');
+      return '<article class="wxcard"><h3>'+x.l.n+'</h3><p class="wxnow">'+ico(c.weather_code)+' '+Math.round(c.temperature_2m)+'°C <span>'+lbl(c.weather_code)+'</span></p><div class="wxdays">'+days+'</div></article>';
+    }).join('');
+  }).catch(function(){
+    host.innerHTML='<p class="wxerr">Nie udało się pobrać pogody na żywo. Aktualne prognozy: <a href="https://www.jma.go.jp/bosai/forecast/" target="_blank" rel="noopener">JMA</a> (Japonia).</p>';
+  });
+})();
