@@ -24,6 +24,7 @@ const AIRLINES = {
 const CHECKS = [
   {date:'2026-07-26', p:{etihad:3910, emirates:4262, finnair:4928, lot:5288, qatar:5465, turkish:6423}},
   {date:'2026-07-27', p:{etihad:4228, emirates:4262, finnair:4727, lot:5248}},
+  {date:'2026-07-29', p:{etihad:4225, emirates:4257, finnair:4723, lot:5249, qatar:5219, turkish:6938}},
 ];
 /* Siatka dat z Google Flights — cena 12-dniowej podróży wg DNIA WYLOTU (1 dorosły) */
 const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5,4150],[6,4150],[7,4260],
@@ -1357,6 +1358,212 @@ function decyzjePage(){
 }
 
 /* ---- pogoda ---- */
+/* ============ PLAN DO DRUKU / PDF (wzorzec: PDF-y islandzkie) ============ */
+function drukPage(){
+  const IL = {g:'Lekki', y:'Średni', r:'Intensywny'};
+  const toc = DAYS.map((d,i)=>{
+    const it = DAYINT[d.date];
+    return `<li><span class="tn">${i+1}</span><span class="td">${d.dd}</span><span class="tt">${d.title}</span><span class="ti ti-${it?it[0]:'g'}">${it?IL[it[0]]:''}</span></li>`;
+  }).join('');
+
+  const days = DAYS.map((d,i)=>{
+    const it = DAYINT[d.date], fx = DAYFLEX[d.date], hid = DAYHOTEL[d.date];
+    const H = hid ? HOTELS.find(h=>h.id===hid) : null;
+    const rows = d.tl.map(([t,h,desc])=>`<tr><td class="t">${t}</td><td><b>${h}</b>${desc?`<span class="dsc">${desc}</span>`:''}</td></tr>`).join('');
+    const facts = d.facts.map(([v,k])=>`<span><b>${v}</b>${k}</span>`).join('');
+    return `<section class="pg day">
+      <div class="dhead">
+        <div class="dnum">Dzień ${i+1} <span>z ${DAYS.length}</span></div>
+        <div class="dwhen">${d.dow} · ${d.dd} 2027${it?` · <b class="ti-${it[0]}">${IL[it[0]]}</b>`:''}</div>
+      </div>
+      <h2>${d.title}</h2>
+      <p class="lead">${d.lead}</p>
+      <table class="agenda">${rows}</table>
+      <div class="facts">${facts}</div>
+      ${fx?`<div class="flex"><p><b>🔒 Nie ruszać:</b> ${fx[0]}</p><p><b>✂️ Można odpuścić:</b> ${fx[1]}</p></div>`:''}
+      ${H?`<p class="blk"><b>🏨 Nocleg:</b> ${H.name} — ${H.near}</p>`:''}
+      ${d.tips&&d.tips.length?`<div class="blk"><b>Wskazówki</b><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`:''}
+      <div class="pfoot">Japonia 3–15 maja 2027 · Dzień ${i+1} — ${d.dd}</div>
+    </section>`;
+  }).join('');
+
+  const hotels = HOTELS.map(H=>`<tr><td><b>${H.name}</b><span class="dsc">${H.stay}</span></td><td class="r">${H.price}</td></tr>`).join('');
+
+  const inner = `<div class="sheet">
+
+  <section class="pg cover">
+    <div class="band"></div>
+    <div class="ctitle">
+      <p class="keyb">Plan podróży</p>
+      <h1>Japonia 2027</h1>
+      <p class="csub">3–15 maja 2027 · rodzina 2+2 (dzieci 11 i 13 lat)</p>
+      <p class="csub2">Abu Zabi · Tokio · Hakone · Kioto · Nara · Osaka</p>
+      <div class="rule"></div>
+    </div>
+    <div class="cfacts">
+      <div><b>13</b>dni podróży</div><div><b>11</b>nocy w Japonii</div>
+      <div><b>5</b>baz noclegowych</div><div><b>~42<i>tys. zł</i></b>budżet 2+2</div>
+    </div>
+    <h3 class="toch">Spis treści</h3>
+    <ol class="toc">${toc}</ol>
+    <p class="cnote">Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.
+    Wersja online zawiera mapy tras, zdjęcia i kalkulator kosztów: <b>japonia-2027.vercel.app</b></p>
+    <div class="pfoot">Japonia 3–15 maja 2027 · Plan podróży</div>
+  </section>
+
+  ${days}
+
+  <section class="pg">
+    <div class="dhead"><div class="dnum">Aneks</div><div class="dwhen">Noclegi, terminy i praktyka</div></div>
+    <h2>Informacje praktyczne</h2>
+
+    <h3>Noclegi</h3>
+    <table class="agenda">${hotels}</table>
+    <p class="note">Nocleg w Abu Zabi jest bezpłatny w ramach pakietu Etihad Stopover — rezerwuje się go osobno na etihad.com, najpóźniej 3 dni przed wylotem.</p>
+
+    <h3>Terminy, których nie można przegapić</h3>
+    <table class="agenda">
+      <tr><td class="t">do I 2027</td><td><b>Bilety lotnicze</b><span class="dsc">Twardy deadline: koniec stycznia 2027. Najlepsze okna: Black Friday (20.11–2.12.2026) i styczniowa wyprzedaż Etihad.</span></td></tr>
+      <tr><td class="t">IX–X 2026</td><td><b>Noclegi</b><span class="dsc">Rezerwować z darmowym anulowaniem — pokoje 4-osobowe i ryokan z prywatnym onsenem znikają pierwsze.</span></td></tr>
+      <tr><td class="t">~II 2027</td><td><b>Nintendo Museum</b><span class="dsc">Loteria biletowa (opcja na dzień w Narze).</span></td></tr>
+      <tr><td class="t">~IV 2027</td><td><b>Bilety na sumo</b><span class="dsc">Sprzedaż ~początek kwietnia na sumo.or.jp — wyprzedają się w godziny. Turniej: 9–23.05.2027.</span></td></tr>
+      <tr><td class="t">4 tyg.</td><td><b>Shibuya Sky</b><span class="dsc">Slot na zachód słońca; rezerwować tylko przy dobrej prognozie.</span></td></tr>
+      <tr><td class="t">31 dni</td><td><b>Pokémon Café</b><span class="dsc">Rezerwacja otwiera się 31 dni wcześniej o 18:00 czasu japońskiego.</span></td></tr>
+      <tr><td class="t">~7 dni</td><td><b>Dostrojenie do pogody</b><span class="dsc">Wcześniej prognoza jest niewiarygodna. Rano danego dnia: status kolejki w Hakone (hakonenavi.jp).</span></td></tr>
+    </table>
+
+    <h3>Transport w Japonii</h3>
+    <table class="agenda">
+      <tr><td class="t">8.05</td><td><b>Odawara → Kioto</b><span class="dsc">Shinkansen Hikari · ¥12 300 dorosły / ¥6 140 dziecko</span></td></tr>
+      <tr><td class="t">12.05</td><td><b>Kioto → Osaka</b><span class="dsc">Lokalny JR · ~¥580</span></td></tr>
+      <tr><td class="t">14.05</td><td><b>Shin-Osaka → Tokio</b><span class="dsc">Shinkansen Nozomi · ¥14 720 dorosły / ¥7 360 dziecko</span></td></tr>
+    </table>
+    <p class="note"><b>JR Pass się nie opłaca</b> (~¥50 000/os.) — bilety punktowe są ok. 2× tańsze. Do Hakone: Hakone Free Pass (Odakyu). W miastach: karty IC Suica/PASMO/ICOCA. Bagaże między bazami: kurier takkyūbin (~¥2 000/szt.).</p>
+
+    <h3>Praktyka</h3>
+    <ul class="plist">
+      <li><b>Gotówka:</b> bankomaty 7-Eleven i Japan Post przyjmują karty zagraniczne. Napiwków się nie daje.</li>
+      <li><b>Internet:</b> jeden router pocket WiFi na 4 osoby albo eSIM wgrany przed wylotem.</li>
+      <li><b>Prąd:</b> 100 V, gniazdka typu A (dwa płaskie bolce) — potrzebny adapter.</li>
+      <li><b>Alarmowe:</b> 110 policja · 119 pogotowie i straż. Woda z kranu jest zdatna do picia.</li>
+      <li><b>Zwyczaje:</b> buty zdejmujemy w ryokanie i świątyniach; w pociągach cisza; koszy na śmieci prawie nie ma.</li>
+      <li><b>Bagaż:</b> podręczny + plecak wystarczą — pranie w aparthotelach MIMARU (Kioto). Limit ~7 kg/os. w kabinie.</li>
+      <li><b>Tax-free</b> od ~5 000 ¥ za okazaniem paszportu.</li>
+    </ul>
+    <div class="pfoot">Japonia 3–15 maja 2027 · Aneks praktyczny</div>
+  </section>
+</div>`;
+
+  return `<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Plan podróży do Japonii 3–15 maja 2027 w wersji do druku i zapisu jako PDF.">
+<title>Plan do druku (PDF) · Japonia 2027</title>
+<style>
+:root{--ink:#1c2530;--muted:#5f666e;--line:#d9d3c6;--ai:#1b3a6b;--dark:#0f1c2e;--shu:#c8402c;
+  --kin:#b98a34;--ok:#2f6d4f;--paper:#f5f1e8;--serif:Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.5;font-size:14px}
+.topbar{position:sticky;top:0;z-index:9;background:var(--dark);color:#fff;padding:11px 18px;
+  display:flex;gap:14px;align-items:center;flex-wrap:wrap;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.topbar b{font-family:var(--serif);font-weight:500;letter-spacing:.05em;margin-right:auto}
+.topbar a{color:rgba(255,255,255,.85);text-decoration:none;font-size:13px}
+.btn{background:var(--shu);color:#fff;border:none;border-radius:999px;padding:9px 20px;font-weight:700;
+  font-size:14px;cursor:pointer;font-family:var(--sans)}
+.btn:hover{filter:brightness(1.08)}
+.hint{max-width:820px;margin:18px auto 0;padding:12px 18px;background:#fffdf8;border:1px dashed var(--kin);
+  border-radius:12px;font-size:13px;color:var(--muted)}
+.sheet{max-width:820px;margin:18px auto 60px;padding:0 16px}
+.pg{background:#fff;border:1px solid var(--line);border-radius:6px;padding:34px 40px 30px;margin-bottom:22px;position:relative}
+h1{font-family:var(--serif);font-weight:500;font-size:44px;line-height:1.05;margin:0;letter-spacing:-.01em}
+h2{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.15;margin:2px 0 6px;letter-spacing:-.01em}
+h3{font-family:var(--serif);font-weight:500;font-size:19px;margin:22px 0 8px}
+/* okładka */
+.cover{padding-top:0;overflow:hidden}
+.band{background:var(--dark);height:64px;margin:0 -40px 30px}
+.ctitle{text-align:center}
+.keyb{text-transform:uppercase;letter-spacing:.22em;font-size:11px;font-weight:700;color:var(--kin);margin:0 0 8px}
+.csub{color:var(--ai);font-size:15px;margin:12px 0 2px;font-weight:600}
+.csub2{color:var(--muted);font-size:14px;margin:0}
+.rule{height:2px;background:var(--shu);width:180px;margin:20px auto 0}
+.cfacts{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin:24px 0 6px;text-align:center}
+.cfacts div{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.cfacts b{display:block;font-family:var(--serif);font-weight:500;font-size:27px;color:var(--ai);letter-spacing:-.01em}
+.cfacts i{font-size:12px;font-style:normal;color:var(--muted)}
+.toch{text-align:center;margin-top:26px}
+.toc{list-style:none;margin:0;padding:0;font-size:13.5px}
+.toc li{display:flex;align-items:baseline;gap:10px;padding:6px 2px;border-bottom:1px dotted var(--line)}
+.toc .tn{flex:0 0 22px;font-weight:800;color:var(--shu);font-size:12px}
+.toc .td{flex:0 0 74px;color:var(--muted)}
+.toc .tt{flex:1}
+.toc .ti{flex:0 0 auto;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.ti-g{color:var(--ok)}.ti-y{color:var(--kin)}.ti-r{color:var(--shu)}
+.cnote{margin-top:22px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6}
+/* dzień */
+.dhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  border-bottom:2px solid var(--dark);padding-bottom:7px;margin-bottom:14px;flex-wrap:wrap}
+.dnum{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:var(--shu)}
+.dnum span{color:var(--muted);font-weight:600}
+.dwhen{font-size:12px;color:var(--muted)}
+.lead{color:var(--muted);font-size:14px;margin:0 0 16px;max-width:62ch}
+.agenda{width:100%;border-collapse:collapse;font-size:13px}
+.agenda td{padding:7px 0;border-bottom:1px solid #ececec;vertical-align:top}
+.agenda td.t{width:62px;font-weight:800;color:var(--ai);white-space:nowrap;font-variant-numeric:tabular-nums}
+.agenda td.r{text-align:right;white-space:nowrap;color:var(--muted)}
+.agenda tr:last-child td{border-bottom:none}
+.dsc{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.facts{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}
+.facts span{flex:1 1 118px;border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:10.5px;
+  text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.facts b{display:block;font-size:13px;text-transform:none;letter-spacing:0;color:var(--ink);margin-bottom:1px}
+.flex{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.flex p{flex:1 1 240px;margin:0;font-size:12.5px;border:1px solid var(--line);border-radius:8px;padding:8px 11px;background:#fbf9f4}
+.blk{margin-top:14px;font-size:13px}
+.blk ul{margin:6px 0 0;padding-left:18px}
+.blk li{margin:4px 0}
+.plist{margin:8px 0 0;padding-left:18px;font-size:13px}
+.plist li{margin:6px 0}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+.pfoot{margin-top:22px;padding-top:8px;border-top:1px solid var(--line);font-size:10.5px;color:var(--muted);text-align:center}
+
+@media print{
+  @page{size:A4;margin:15mm 14mm}
+  html,body{background:#fff}
+  body{font-size:10.5pt;line-height:1.42}
+  .topbar,.hint{display:none !important}
+  .sheet{max-width:none;margin:0;padding:0}
+  .pg{border:none;border-radius:0;padding:0;margin:0;page-break-after:always;break-after:page}
+  .pg:last-child{page-break-after:auto;break-after:auto}
+  .band{margin:0 0 22px;height:46px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .cover{padding-top:0}
+  h1{font-size:34pt}h2{font-size:18pt}h3{font-size:13pt;margin:16px 0 6px}
+  .cfacts b{font-size:19pt}
+  .agenda{font-size:9.5pt}
+  .agenda tr,.toc li,.facts span,.flex p{page-break-inside:avoid;break-inside:avoid}
+  .day h2,.dhead{page-break-after:avoid;break-after:avoid}
+  .pfoot{position:absolute;bottom:0;left:0;right:0}
+  .pg{padding-bottom:14mm}
+  a{color:inherit;text-decoration:none}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="topbar no-print">
+  <b>JAPONIA · 2027 — plan do druku</b>
+  <a href="index.html">← wróć do strony</a>
+  <button class="btn" type="button" onclick="window.print()">🖨️ Drukuj / zapisz jako PDF</button>
+</div>
+<p class="hint">Kliknij <b>„Drukuj / zapisz jako PDF"</b>, a w oknie drukowania wybierz miejsce docelowe <b>„Zapisz jako PDF"</b>. Ustaw format <b>A4</b> i włącz <b>grafikę tła</b>, żeby zachować kolory okładki. Każdy dzień drukuje się na osobnej stronie — całość ma ${DAYS.length + 2} strony.</p>
+${inner}
+</body>
+</html>`;
+}
+
 function lotyPage(){
   const seg = (t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
   const last = k => {for(let i=CHECKS.length-1;i>=0;i--) if(CHECKS[i].p[k]!=null) return {v:CHECKS[i].p[k],d:CHECKS[i].date,i};return null;};
