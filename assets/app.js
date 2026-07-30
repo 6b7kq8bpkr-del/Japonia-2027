@@ -75,6 +75,36 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
   }
 })();
 
+/* ---- ranking wg wag: cena vs jakość ---- */
+(function(){
+  var host=document.getElementById('scorelist'), src=document.getElementById('scoredata'), sl=document.getElementById('wprice');
+  if(!host||!src||!sl) return;
+  var D=JSON.parse(src.textContent||'[]'); if(!D.length) return;
+  var min=Math.min.apply(null,D.map(function(a){return a.price;})), max=Math.max.apply(null,D.map(function(a){return a.price;}));
+  function plz(n){return String(Math.round(n)).replace(/B(?=(d{3})+(?!d))/g,' ')+' zł';}
+  function draw(){
+    var w=+sl.value/100;
+    document.getElementById('wlab').textContent=Math.round(w*100)+'%';
+    document.getElementById('wlab2').textContent=Math.round((1-w)*100)+'%';
+    var rows=D.map(function(a){
+      var pp=max===min?100:(max-a.price)/(max-min)*100;
+      return {a:a, pp:pp, sc:w*pp+(1-w)*a.q};
+    }).sort(function(x,y){return y.sc-x.sc;});
+    var best=rows[0].sc;
+    host.innerHTML=rows.map(function(r,i){
+      var a=r.a, fam=Math.round((a.price*3+a.price*0.8)/100)*100;
+      return '<div class="scrow'+(i===0?' win':'')+'">'+
+        '<div class="scpos">'+(i+1)+'</div>'+
+        '<div class="scmain"><div class="scname"><i style="background:'+a.col+'"></i>'+a.name+(a.star?' ★':'')+(i===0?' <span class="rezerwuj">wygrywa</span>':'')+'</div>'+
+        '<div class="scmeta">'+(a.via==='bezpośredni'?'lot bezpośredni':'przez '+a.via)+' · '+a.dur+' · jakość '+a.qpos+'</div></div>'+
+        '<div class="scprice">'+plz(a.price)+'<span>rodzina ~'+plz(fam)+'</span></div>'+
+        '<div class="scbarwrap"><div class="scbar" style="width:'+(best>0?(r.sc/best*100):0).toFixed(1)+'%;background:'+a.col+'"></div><b>'+r.sc.toFixed(1)+'</b></div>'+
+      '</div>';
+    }).join('');
+  }
+  sl.addEventListener('input',draw); draw();
+})();
+
 /* ---- pogoda na żywo (Open-Meteo) — wzorzec z planu Madery ---- */
 (function(){
   var host=document.getElementById('livewx');

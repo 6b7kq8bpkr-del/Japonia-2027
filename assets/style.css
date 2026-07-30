@@ -305,6 +305,20 @@ footer a{font-weight:700;text-decoration:none}
 .arow .an i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
 .arow .am{font-size:12.5px;color:var(--muted);grid-column:1}
 .arow .ap{font-weight:800;font-size:17px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.arow .anums{display:flex;gap:18px;align-items:baseline;justify-content:flex-end;flex-wrap:wrap}
+.arow .anums span{text-align:right;white-space:nowrap}
+.arow .anums b{display:block;font-weight:800;font-size:14.5px;font-variant-numeric:tabular-nums;color:var(--muted)}
+.arow .anums i{display:block;font-style:normal;font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--muted);margin-top:2px}
+.arow .anums .plus b{color:var(--kin)}
+.arow .anums .eff b{font-size:20px;color:var(--ink)}
+.arow.top .anums .eff b{color:var(--shu)}
+.rezerwuj.alt{background:var(--ai)}
+@media(max-width:620px){
+  .arow{grid-template-columns:1fr}
+  .arow .anums{justify-content:flex-start;gap:14px}
+  .arow .ad{text-align:left}
+}
 .arow .ad{font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
 .pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
 .pcard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 18px 16px;position:relative}
@@ -355,6 +369,25 @@ footer a{font-weight:700;text-decoration:none}
   .qcard,.dcard,.hcard,.acard,.hotelbox,.stt,.daynav a{transition:border-color .15s ease}
   .qcard:hover,.dcard:hover,.hcard:hover,.acard:hover,.stt:hover,.daynav a:hover{transform:none}
 }
+
+/* ---- ranking wg wag ---- */
+.wgrow{margin-bottom:16px}
+.wgrow label{display:block;margin-bottom:8px;font-weight:700;color:var(--ai)}
+.wgrow input[type=range]{width:100%;accent-color:var(--shu)}
+.wghint{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px}
+.scorelist{display:grid;gap:8px}
+.scrow{display:grid;grid-template-columns:30px minmax(0,1.5fr) minmax(0,1fr) minmax(0,1.2fr);gap:12px;align-items:center;padding:11px 13px;border-radius:14px;background:var(--sakura)}
+.scrow.win{background:#e8f0e9;box-shadow:inset 0 0 0 2px var(--success)}
+.scpos{font-family:var(--serif);font-size:20px;color:var(--muted);text-align:center}
+.scname{font-weight:800;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.scname i{width:11px;height:11px;border-radius:50%;flex:0 0 auto}
+.scmeta{margin-top:2px;font-size:12px;color:var(--muted);line-height:1.4}
+.scprice{font-weight:800;text-align:right}
+.scprice span{display:block;font-size:11.5px;font-weight:500;color:var(--muted)}
+.scbarwrap{display:flex;align-items:center;gap:8px}
+.scbar{height:9px;border-radius:99px;min-width:3px}
+.scbarwrap b{font-size:12.5px;color:var(--muted);white-space:nowrap}
+@media(max-width:640px){.scrow{grid-template-columns:26px 1fr auto;row-gap:6px}.scbarwrap{grid-column:2/-1}}
 
 /* ---- pogoda na żywo (wzorzec z planu Madery) ---- */
 .wxwrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
