@@ -15,6 +15,8 @@ var on=document.querySelector('.pills a.on'); if(on&&on.scrollIntoView) on.scrol
     es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   },{rootMargin:'0px 0px -6% 0px'});
   secs.forEach(function(s){ if(s.querySelector('#map')){ s.classList.add('in'); return; } io.observe(s); });
+  // bezpiecznik: przy skoku scrolla (kotwica, przywrócona pozycja) obserwator potrafi nie zdążyć
+  setTimeout(function(){ secs.forEach(function(s){ s.classList.add('in'); }); }, 2500);
 })();
 // reading progress bar
 var pg=document.getElementById('progress');

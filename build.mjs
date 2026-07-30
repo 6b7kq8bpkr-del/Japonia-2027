@@ -8,22 +8,27 @@ fs.mkdirSync(DIR + '/assets', { recursive: true });
    Ręcznie: dopisz nowy obiekt NA KOŃCU tablicy CHECKS i uruchom `node build.mjs`.
    Ceny: zł za 1 DOROSŁEGO, w obie strony, WAW→Tokio, wylot 3.05 / powrót 15.05.2027. */
 const AIRLINES = {
-  etihad:   {name:'Etihad',        via:'Abu Zabi', dur:'17 h 55 min', col:'#c8402c', star:true, q:40, qpos:'#10 na świecie',
+  etihad:   {name:'Etihad',        via:'Abu Zabi', dur:'17 h 55 min', stops:1, hotel:true, col:'#c8402c', star:true, q:40, qpos:'#10 na świecie',
              note:'Trasa z planu — w cenie darmowy nocleg 4★ w Abu Zabi (stopover)'},
-  emirates: {name:'Emirates',      via:'Dubaj',    dur:'19 h 25 min', col:'#1b3a6b', q:60, qpos:'#8 na świecie',
+  emirates: {name:'Emirates',      via:'Dubaj',    dur:'19 h 25 min', stops:1, col:'#1b3a6b', q:60, qpos:'#8 na świecie',
              note:'Solidna alternatywa, ale bez darmowego stopoveru'},
-  finnair:  {name:'Finnair / JAL', via:'Helsinki', dur:'17 h 5 min',  col:'#2f6d4f', q:20, qpos:'#7 wśród hybrydowych',
+  finnair:  {name:'Finnair / JAL', via:'Helsinki', dur:'17 h 5 min',  stops:1, col:'#2f6d4f', q:20, qpos:'#7 wśród hybrydowych',
              note:'Najkrótsza przesiadka i najniższa emisja wśród przesiadkowych'},
-  lot:      {name:'LOT',           via:'bezpośredni', dur:'12 h 40 min', col:'#b98a34', q:0, qpos:'#25 na świecie',
+  lot:      {name:'LOT',           via:'bezpośredni', dur:'12 h 40 min', stops:0, col:'#b98a34', q:0, qpos:'#25 na świecie',
              note:'Najszybszy, bez przesiadki — dopłata za wygodę ok. 1 000 zł/os.'},
-  qatar:    {name:'Qatar Airways', via:'Doha',     dur:'20 h',        col:'#6b4b8a', q:100, qpos:'#1 na świecie',
+  qatar:    {name:'Qatar Airways', via:'Doha',     dur:'20 h',        stops:1, col:'#6b4b8a', q:100, qpos:'#1 na świecie',
              note:'Bywa mocno przeceniany w Travel Festival (grudzień)'},
-  turkish:  {name:'Turkish',       via:'Stambuł',  dur:'15 h 50 min', col:'#7a8087', q:80, qpos:'#7 na świecie',
+  turkish:  {name:'Turkish',       via:'Stambuł',  dur:'15 h 50 min', stops:1, col:'#7a8087', q:80, qpos:'#7 na świecie',
              note:'Rzadko konkurencyjny cenowo na tej trasie'},
 };
-/* Wycena czasu w podróży (reguła użytkownika): 8 h lotu ≡ 800 zł na bilecie → 100 zł za godzinę.
-   Koszt efektywny = cena biletu + (czas w drodze × TIMEVAL). */
-const TIMEVAL = 100;
+/* SYSTEM SCORINGOWY — trzy kryteria, każde punktowane 0–100, wynik = średnia ważona.
+   Kwoty służą WYŁĄCZNIE do wyliczenia WAG (nie doliczamy złotówek do ceny biletu):
+   • reguła użytkownika: 8 h w drodze ≡ 800 zł na bilecie  → 100 zł za godzinę,
+   • wygoda: brak przesiadki + darmowy nocleg stopover ≈ 750 zł ekwiwalentu.
+   Wagi wynikają z rozpiętości każdego kryterium w danym zestawieniu przeliczonej na złotówki. */
+const SCORE = {plnPerHour:100, comfortPln:750};
+/* wygoda liczona obiektywnie: 100 pkt bazowo, −30 za przesiadkę, +20 za darmowy nocleg w pakiecie */
+const comfortOf = A => 100 - (A.stops||0)*30 + (A.hotel?20:0);
 const hrsOf = s => {const m=String(s).match(/(\d+)\s*h(?:\s*(\d+))?/); return m ? (+m[1] + (+(m[2]||0))/60) : 0;};
 const hm = h => `${Math.floor(h)} h ${String(Math.round((h%1)*60)).padStart(2,'0')}`;
 const CHECKS = [
@@ -401,14 +406,24 @@ footer a{font-weight:700;text-decoration:none}
 .arow .an i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
 .arow .am{font-size:12.5px;color:var(--muted);grid-column:1}
 .arow .ap{font-weight:800;font-size:17px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.arow .anums{display:flex;gap:18px;align-items:baseline;justify-content:flex-end;flex-wrap:wrap}
-.arow .anums span{text-align:right;white-space:nowrap}
-.arow .anums b{display:block;font-weight:800;font-size:14.5px;font-variant-numeric:tabular-nums;color:var(--muted)}
-.arow .anums i{display:block;font-style:normal;font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;
-  color:var(--muted);margin-top:2px}
-.arow .anums .plus b{color:var(--kin)}
-.arow .anums .eff b{font-size:20px;color:var(--ink)}
-.arow.top .anums .eff b{color:var(--shu)}
+.arow .asc{text-align:right;white-space:nowrap}
+.arow .asc b{display:block;font-family:var(--serif);font-weight:500;font-size:30px;line-height:1;color:var(--ai);
+  font-variant-numeric:tabular-nums}
+.arow.top .asc b{color:var(--shu)}
+.arow .asc i{display:block;font-style:normal;font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--muted);margin-top:3px}
+.arow .crit{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px 18px;margin-top:4px}
+.cr{min-width:0}
+.cr i{display:block;font-style:normal;font-size:9.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+.cr .crb{display:block;height:5px;border-radius:999px;background:var(--sakura);margin:4px 0 3px;overflow:hidden}
+.cr .crb b{display:block;height:100%;border-radius:999px}
+.cr u{text-decoration:none;font-size:11px;color:var(--ink);font-weight:600}
+.wtab{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.wtab span{flex:1 1 150px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--panel);
+  font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.wtab b{display:block;font-family:var(--serif);font-weight:500;font-size:21px;color:var(--ink);
+  text-transform:none;letter-spacing:0;margin-bottom:1px}
+@media(max-width:620px){.arow .crit{grid-template-columns:1fr}}
 .rezerwuj.alt{background:var(--ai)}
 @media(max-width:620px){
   .arow{grid-template-columns:1fr}
@@ -519,6 +534,8 @@ var on=document.querySelector('.pills a.on'); if(on&&on.scrollIntoView) on.scrol
     es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   },{rootMargin:'0px 0px -6% 0px'});
   secs.forEach(function(s){ if(s.querySelector('#map')){ s.classList.add('in'); return; } io.observe(s); });
+  // bezpiecznik: przy skoku scrolla (kotwica, przywrócona pozycja) obserwator potrafi nie zdążyć
+  setTimeout(function(){ secs.forEach(function(s){ s.classList.add('in'); }); }, 2500);
 })();
 // reading progress bar
 var pg=document.getElementById('progress');
@@ -1637,24 +1654,42 @@ function lotyPage(){
   const last = k => {for(let i=CHECKS.length-1;i>=0;i--) if(CHECKS[i].p[k]!=null) return {v:CHECKS[i].p[k],d:CHECKS[i].date,i};return null;};
   const before = (k,idx) => {for(let i=idx-1;i>=0;i--) if(CHECKS[i].p[k]!=null) return CHECKS[i].p[k];return null;};
 
-  const scored = Object.keys(AIRLINES).map(k=>({k,A:AIRLINES[k],L:last(k)})).filter(r=>r.L)
-    .map(r=>{const h=hrsOf(r.A.dur); return {...r, h, tc:Math.round(h*TIMEVAL), eff:Math.round(r.L.v + h*TIMEVAL)};});
+  let scored = Object.keys(AIRLINES).map(k=>({k,A:AIRLINES[k],L:last(k)})).filter(r=>r.L)
+    .map(r=>({...r, h:hrsOf(r.A.dur), c:comfortOf(r.A)}));
+  const rng = f => {const v=scored.map(f); return {min:Math.min(...v), max:Math.max(...v)};};
+  const P=rng(r=>r.L.v), T=rng(r=>r.h), C=rng(r=>r.c);
+  // wagi: rozpiętość każdego kryterium przeliczona na złotówki (kwoty tylko po to)
+  const eqP = P.max-P.min, eqT = (T.max-T.min)*SCORE.plnPerHour,
+        eqC = C.max===C.min ? 0 : (C.max-C.min)/100*SCORE.comfortPln;
+  const eqS = eqP+eqT+eqC || 1;
+  const W = {p:eqP/eqS, t:eqT/eqS, c:eqC/eqS};
+  const pts = (v,r,inv) => r.max===r.min ? 100 : Math.round((inv ? (r.max-v)/(r.max-r.min) : (v-r.min)/(r.max-r.min))*100);
+  scored = scored.map(r=>{
+    const pp=pts(r.L.v,P,true), tp=pts(r.h,T,true), cp=pts(r.c,C,false);
+    return {...r, pp, tp, cp, score:Math.round(W.p*pp + W.t*tp + W.c*cp)};
+  });
   const cheapest = scored.slice().sort((a,b)=>a.L.v-b.L.v)[0];
-  const rows = scored.sort((a,b)=>a.eff-b.eff).map((r,i)=>{
+  const fastest  = scored.slice().sort((a,b)=>a.h-b.h)[0];
+  const rows = scored.sort((a,b)=>b.score-a.score).map((r,i)=>{
       const pv = before(r.k, r.L.i), d = pv==null?null:r.L.v-pv;
       const chg = d==null ? '<span style="color:var(--muted)">—</span>'
         : d===0 ? '<span style="color:var(--muted)">bez zmian</span>'
         : d<0 ? `<span style="color:var(--success)">▼ ${plz(Math.abs(d))}</span>`
               : `<span style="color:var(--shu)">▲ ${plz(d)}</span>`;
       const stale = r.L.d!==CHECKS[CHECKS.length-1].date ? ` <span class="note">(odczyt ${dpl(r.L.d).slice(0,5)})</span>` : '';
-      const tags = (i===0?' <span class="rezerwuj">najlepszy wynik</span>':'')
-        + (r.k===cheapest.k && i!==0 ? ' <span class="rezerwuj alt">najtańszy bilet</span>' : '');
+      const tags = (i===0?' <span class="rezerwuj">1. miejsce</span>':'')
+        + (r.k===cheapest.k && i!==0 ? ' <span class="rezerwuj alt">najtańszy bilet</span>' : '')
+        + (r.k===fastest.k && i!==0 ? ' <span class="rezerwuj alt">najkrótszy lot</span>' : '');
+      const bar = (lab,val,v,col)=>`<div class="cr"><i>${lab}</i>
+        <span class="crb"><b style="width:${val}%;background:${col}"></b></span>
+        <u>${v}</u></div>`;
       return `<div class="arow${i===0?' top':''}">
         <div class="an"><i style="background:${r.A.col}"></i>${r.A.name}${r.A.star?' ★':''}${tags}</div>
-        <div class="anums">
-          <span><b>${plz(r.L.v)}</b><i>bilet</i></span>
-          <span class="plus"><b>+ ${plz(r.tc)}</b><i>czas · ${r.A.dur}</i></span>
-          <span class="eff"><b>${plz(r.eff)}</b><i>efektywnie</i></span>
+        <div class="asc"><b>${r.score}</b><i>pkt / 100</i></div>
+        <div class="crit">
+          ${bar('Cena', r.pp, plz(r.L.v), 'var(--ai)')}
+          ${bar('Czas', r.tp, r.A.dur, 'var(--kin)')}
+          ${bar('Wygoda', r.cp, (r.A.stops? r.A.stops+' przesiadka':'bez przesiadek')+(r.A.hotel?' + nocleg gratis':''), 'var(--success)')}
         </div>
         <div class="am">${r.A.via==='bezpośredni'?'lot bezpośredni':'przez '+r.A.via} · ${r.A.note}${stale}</div>
         <div class="ad">${chg}</div>
@@ -1692,7 +1727,22 @@ function lotyPage(){
     <p class="lead-p">Za 1 dorosłego, w obie strony, wylot 3.05 / powrót 15.05.2027. Ostatnie sprawdzenie: <b>${dpl(FLIGHT.checked)}</b>.
     Ranking według <b>kosztu efektywnego</b> — czyli ceny biletu powiększonej o wartość czasu spędzonego w drodze.</p>
     <div class="alist">${rows}</div>
-    <div class="dnote" style="margin-top:14px">⏱️ <b>Jak liczymy koszt efektywny:</b> do ceny biletu dodajemy <b>${plz(TIMEVAL)} za każdą godzinę w drodze</b> — zgodnie z zasadą, że 8 godzin lotu jest warte mniej więcej ${plz(8*TIMEVAL)} na bilecie. Czas liczony od wylotu do lądowania, razem z przesiadką. Dzięki temu widać, ile realnie kosztuje tania, ale męcząca trasa.</div>
+    <div class="card" style="margin-top:16px">
+      <h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 8px">Jak liczymy wynik</h3>
+      <p style="margin:0 0 4px;font-size:14px">Każda linia dostaje <b>0–100 punktów w trzech kryteriach</b> (najlepsza w zestawieniu = 100, najsłabsza = 0), a wynik końcowy to ich <b>średnia ważona</b>. Do ceny biletu <b>nie doliczamy złotówek</b> — kwoty służą tylko do ustalenia, ile które kryterium waży:</p>
+      <ul class="tips" style="margin-top:10px">
+        <li><b>Cena</b> — cena biletu za dorosłego, w obie strony.</li>
+        <li><b>Czas</b> — od wylotu do lądowania, razem z przesiadką. Waga z Twojej reguły: <b>8 h w drodze ≡ ${plz(8*SCORE.plnPerHour)} na bilecie</b>, czyli ${plz(SCORE.plnPerHour)} za godzinę.</li>
+        <li><b>Wygoda</b> — liczona obiektywnie: 100 pkt bazowo, −30 za przesiadkę, +20 za darmowy nocleg w pakiecie. Pełna rozpiętość tego kryterium warta jest ${plz(SCORE.comfortPln)}.</li>
+      </ul>
+      <p style="margin:12px 0 0;font-size:14px">Wagi nie są ustawiane z ręki — wynikają z tego, jak <b>szeroko rozstrzelone</b> jest każde kryterium w dzisiejszym zestawieniu (rozpiętość przeliczona na złotówki). Dziś wychodzi:</p>
+      <div class="wtab">
+        <span><b>${Math.round(W.p*100)}%</b>Cena · rozpiętość ${plz(eqP)}</span>
+        <span><b>${Math.round(W.t*100)}%</b>Czas · rozpiętość ${hm(T.max-T.min)} ≡ ${plz(eqT)}</span>
+        <span><b>${Math.round(W.c*100)}%</b>Wygoda · rozpiętość ≡ ${plz(Math.round(eqC))}</span>
+      </div>
+      <p class="note" style="margin-top:10px">Gdy ceny się zbliżą do siebie, cena automatycznie straci na wadze, a czas i wygoda zyskają — i odwrotnie.</p>
+    </div>
     <div class="dnote" style="margin-top:10px">★ Etihad to trasa z planu — jako jedyna daje <b>darmowy nocleg 4★ w Abu Zabi</b> (program stopover), co realnie warte jest ~600–900 zł. Przy porównywaniu cen doliczcie to na jego korzyść.</div>
   </section>
 
