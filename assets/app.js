@@ -77,20 +77,24 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
   }
 })();
 
-/* ---- ranking wg wag: cena vs jakość ---- */
+/* ---- ranking wg wag: cena / czas / jakość (3 kryteria, suwaki normalizowane do 100%) ---- */
 (function(){
-  var host=document.getElementById('scorelist'), src=document.getElementById('scoredata'), sl=document.getElementById('wprice');
-  if(!host||!src||!sl) return;
+  var host=document.getElementById('scorelist'), src=document.getElementById('scoredata');
+  var slP=document.getElementById('wprice'), slT=document.getElementById('wtime'), slQ=document.getElementById('wqual');
+  if(!host||!src||!slP||!slT||!slQ) return;
   var D=JSON.parse(src.textContent||'[]'); if(!D.length) return;
-  var min=Math.min.apply(null,D.map(function(a){return a.price;})), max=Math.max.apply(null,D.map(function(a){return a.price;}));
+  function rng(f){var v=D.map(f); return {min:Math.min.apply(null,v), max:Math.max.apply(null,v)};}
+  var P=rng(function(a){return a.price;}), T=rng(function(a){return a.h;}), Q=rng(function(a){return a.q;});
   function plz(n){return String(Math.round(n)).replace(/B(?=(d{3})+(?!d))/g,' ')+' zł';}
+  function pts(v,r,inv){return r.max===r.min?100:((inv?(r.max-v):(v-r.min))/(r.max-r.min)*100);}
   function draw(){
-    var w=+sl.value/100;
-    document.getElementById('wlab').textContent=Math.round(w*100)+'%';
-    document.getElementById('wlab2').textContent=Math.round((1-w)*100)+'%';
+    var wp=+slP.value, wt=+slT.value, wq=+slQ.value, sum=(wp+wt+wq)||1;
+    document.getElementById('wlab_p').textContent=Math.round(wp/sum*100)+'%';
+    document.getElementById('wlab_t').textContent=Math.round(wt/sum*100)+'%';
+    document.getElementById('wlab_q').textContent=Math.round(wq/sum*100)+'%';
     var rows=D.map(function(a){
-      var pp=max===min?100:(max-a.price)/(max-min)*100;
-      return {a:a, pp:pp, sc:w*pp+(1-w)*a.q};
+      var pp=pts(a.price,P,true), tp=pts(a.h,T,true), qp=pts(a.q,Q,false);
+      return {a:a, pp:pp, tp:tp, qp:qp, sc:(wp*pp+wt*tp+wq*qp)/sum};
     }).sort(function(x,y){return y.sc-x.sc;});
     var best=rows[0].sc;
     host.innerHTML=rows.map(function(r,i){
@@ -100,11 +104,12 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
         '<div class="scmain"><div class="scname"><i style="background:'+a.col+'"></i>'+a.name+(a.star?' ★':'')+(i===0?' <span class="rezerwuj">wygrywa</span>':'')+'</div>'+
         '<div class="scmeta">'+(a.via==='bezpośredni'?'lot bezpośredni':'przez '+a.via)+' · '+a.dur+' · jakość '+a.qpos+'</div></div>'+
         '<div class="scprice">'+plz(a.price)+'<span>rodzina ~'+plz(fam)+'</span></div>'+
-        '<div class="scbarwrap"><div class="scbar" style="width:'+(best>0?(r.sc/best*100):0).toFixed(1)+'%;background:'+a.col+'"></div><b>'+r.sc.toFixed(1)+'</b></div>'+
+        '<div class="scbarwrap"><div class="scbar" style="width:'+(best>0?(r.sc/best*100):0).toFixed(1)+'%;background:'+a.col+'"></div><b>'+r.sc.toFixed(0)+'</b></div>'+
       '</div>';
     }).join('');
   }
-  sl.addEventListener('input',draw); draw();
+  [slP,slT,slQ].forEach(function(s){s.addEventListener('input',draw);});
+  draw();
 })();
 
 /* ---- pogoda na żywo (Open-Meteo) — wzorzec z planu Madery ---- */

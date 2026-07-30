@@ -4,7 +4,7 @@ fs.mkdirSync(DIR + '/days', { recursive: true });
 fs.mkdirSync(DIR + '/assets', { recursive: true });
 
 /* ===================== CENY LOTÓW — JEDYNE ŹRÓDŁO PRAWDY =====================
-   Aktualizowane automatycznie przez zadanie `japonia-cena-lotu` (co tydzień).
+   Aktualizowane automatycznie przez zadanie `japonia-cena-lotu` (co dwa dni).
    Ręcznie: dopisz nowy obiekt NA KOŃCU tablicy CHECKS i uruchom `node build.mjs`.
    Ceny: zł za 1 DOROSŁEGO, w obie strony, WAW→Tokio, wylot 3.05 / powrót 15.05.2027. */
 const AIRLINES = {
@@ -21,16 +21,15 @@ const AIRLINES = {
   turkish:  {name:'Turkish',       via:'Stambuł',  dur:'15 h 50 min', stops:1, col:'#7a8087', q:80, qpos:'#7 na świecie',
              note:'Rzadko konkurencyjny cenowo na tej trasie'},
 };
-/* SYSTEM SCORINGOWY — trzy kryteria, każde punktowane 0–100, wynik = średnia ważona.
-   Kwoty służą WYŁĄCZNIE do wyliczenia WAG (nie doliczamy złotówek do ceny biletu):
-   • reguła użytkownika: 8 h w drodze ≡ 800 zł na bilecie  → 100 zł za godzinę,
-   • wygoda: brak przesiadki + darmowy nocleg stopover ≈ 750 zł ekwiwalentu.
-   Wagi wynikają z rozpiętości każdego kryterium w danym zestawieniu przeliczonej na złotówki. */
-const SCORE = {plnPerHour:100, comfortPln:750};
-/* wygoda liczona obiektywnie: 100 pkt bazowo, −30 za przesiadkę, +20 za darmowy nocleg w pakiecie */
-const comfortOf = A => 100 - (A.stops||0)*30 + (A.hotel?20:0);
+/* SYSTEM SCORINGOWY (ranking wg wag, na loty.html) — trzy kryteria: cena / czas / jakość,
+   każde 0–100 pkt, wynik = średnia ważona. Kwoty służą WYŁĄCZNIE do ustalenia DOMYŚLNYCH WAG
+   (nie doliczamy złotówek do ceny biletu!) — reguła użytkownika: 8 h w drodze ≡ 800 zł na
+   bilecie, czyli 100 zł za godzinę. Ten sam pomysł stosujemy do jakości: pełna rozpiętość
+   rankingu jakości (0–100 pkt) traktujemy jako wartą 750 zł. Wagi wychodzą z tego,
+   jak szeroko rozstrzelone jest każde kryterium w danym zestawieniu (rozpiętość razy stawka),
+   a użytkownik może je i tak przesunąć suwakami na stronie. */
+const PLN_PER_HOUR = 100, QUALITY_PLN = 750;
 const hrsOf = s => {const m=String(s).match(/(\d+)\s*h(?:\s*(\d+))?/); return m ? (+m[1] + (+(m[2]||0))/60) : 0;};
-const hm = h => `${Math.floor(h)} h ${String(Math.round((h%1)*60)).padStart(2,'0')}`;
 const CHECKS = [
   {date:'2026-07-26', p:{etihad:3910, emirates:4262, finnair:4928, lot:5288, qatar:5465, turkish:6423}},
   {date:'2026-07-27', p:{etihad:4228, emirates:4262, finnair:4727, lot:5248}},
@@ -86,7 +85,7 @@ const priceChart = () => {
   return `<div class="chartwrap"><svg viewBox="0 0 ${W} ${H}" width="100%" height="auto" role="img" aria-label="Wykres cen lotów w czasie">
     ${grid}${xlab}${lines}
   </svg></div><div class="lgds">${legend}</div>
-  <p class="note" style="margin-top:8px">Ceny za 1 dorosłego, w obie strony, WAW→Tokio (3–15.05.2027). Linia ciągła = Etihad (trasa z planu). Wykres rozbudowuje się przy każdym cotygodniowym sprawdzeniu.</p>`;
+  <p class="note" style="margin-top:8px">Ceny za 1 dorosłego, w obie strony, WAW→Tokio (3–15.05.2027). Linia ciągła = Etihad (trasa z planu). Wykres rozbudowuje się przy każdym sprawdzeniu — co dwa dni.</p>`;
 };
 const trend = () => {
   if(FLIGHT.prev==null) return '';
@@ -406,30 +405,12 @@ footer a{font-weight:700;text-decoration:none}
 .arow .an i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
 .arow .am{font-size:12.5px;color:var(--muted);grid-column:1}
 .arow .ap{font-weight:800;font-size:17px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.arow .asc{text-align:right;white-space:nowrap}
-.arow .asc b{display:block;font-family:var(--serif);font-weight:500;font-size:30px;line-height:1;color:var(--ai);
-  font-variant-numeric:tabular-nums}
-.arow.top .asc b{color:var(--shu)}
-.arow .asc i{display:block;font-style:normal;font-size:9.5px;text-transform:uppercase;letter-spacing:.07em;
-  color:var(--muted);margin-top:3px}
-.arow .crit{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px 18px;margin-top:4px}
-.cr{min-width:0}
-.cr i{display:block;font-style:normal;font-size:9.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
-.cr .crb{display:block;height:5px;border-radius:999px;background:var(--sakura);margin:4px 0 3px;overflow:hidden}
-.cr .crb b{display:block;height:100%;border-radius:999px}
-.cr u{text-decoration:none;font-size:11px;color:var(--ink);font-weight:600}
 .wtab{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .wtab span{flex:1 1 150px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--panel);
   font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
 .wtab b{display:block;font-family:var(--serif);font-weight:500;font-size:21px;color:var(--ink);
   text-transform:none;letter-spacing:0;margin-bottom:1px}
-@media(max-width:620px){.arow .crit{grid-template-columns:1fr}}
-.rezerwuj.alt{background:var(--ai)}
-@media(max-width:620px){
-  .arow{grid-template-columns:1fr}
-  .arow .anums{justify-content:flex-start;gap:14px}
-  .arow .ad{text-align:left}
-}
+@media(max-width:620px){.arow{grid-template-columns:1fr}.arow .ad{text-align:left}}
 .arow .ad{font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
 .pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
 .pcard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 18px 16px;position:relative}
@@ -596,20 +577,24 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
   }
 })();
 
-/* ---- ranking wg wag: cena vs jakość ---- */
+/* ---- ranking wg wag: cena / czas / jakość (3 kryteria, suwaki normalizowane do 100%) ---- */
 (function(){
-  var host=document.getElementById('scorelist'), src=document.getElementById('scoredata'), sl=document.getElementById('wprice');
-  if(!host||!src||!sl) return;
+  var host=document.getElementById('scorelist'), src=document.getElementById('scoredata');
+  var slP=document.getElementById('wprice'), slT=document.getElementById('wtime'), slQ=document.getElementById('wqual');
+  if(!host||!src||!slP||!slT||!slQ) return;
   var D=JSON.parse(src.textContent||'[]'); if(!D.length) return;
-  var min=Math.min.apply(null,D.map(function(a){return a.price;})), max=Math.max.apply(null,D.map(function(a){return a.price;}));
+  function rng(f){var v=D.map(f); return {min:Math.min.apply(null,v), max:Math.max.apply(null,v)};}
+  var P=rng(function(a){return a.price;}), T=rng(function(a){return a.h;}), Q=rng(function(a){return a.q;});
   function plz(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';}
+  function pts(v,r,inv){return r.max===r.min?100:((inv?(r.max-v):(v-r.min))/(r.max-r.min)*100);}
   function draw(){
-    var w=+sl.value/100;
-    document.getElementById('wlab').textContent=Math.round(w*100)+'%';
-    document.getElementById('wlab2').textContent=Math.round((1-w)*100)+'%';
+    var wp=+slP.value, wt=+slT.value, wq=+slQ.value, sum=(wp+wt+wq)||1;
+    document.getElementById('wlab_p').textContent=Math.round(wp/sum*100)+'%';
+    document.getElementById('wlab_t').textContent=Math.round(wt/sum*100)+'%';
+    document.getElementById('wlab_q').textContent=Math.round(wq/sum*100)+'%';
     var rows=D.map(function(a){
-      var pp=max===min?100:(max-a.price)/(max-min)*100;
-      return {a:a, pp:pp, sc:w*pp+(1-w)*a.q};
+      var pp=pts(a.price,P,true), tp=pts(a.h,T,true), qp=pts(a.q,Q,false);
+      return {a:a, pp:pp, tp:tp, qp:qp, sc:(wp*pp+wt*tp+wq*qp)/sum};
     }).sort(function(x,y){return y.sc-x.sc;});
     var best=rows[0].sc;
     host.innerHTML=rows.map(function(r,i){
@@ -619,11 +604,12 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
         '<div class="scmain"><div class="scname"><i style="background:'+a.col+'"></i>'+a.name+(a.star?' ★':'')+(i===0?' <span class="rezerwuj">wygrywa</span>':'')+'</div>'+
         '<div class="scmeta">'+(a.via==='bezpośredni'?'lot bezpośredni':'przez '+a.via)+' · '+a.dur+' · jakość '+a.qpos+'</div></div>'+
         '<div class="scprice">'+plz(a.price)+'<span>rodzina ~'+plz(fam)+'</span></div>'+
-        '<div class="scbarwrap"><div class="scbar" style="width:'+(best>0?(r.sc/best*100):0).toFixed(1)+'%;background:'+a.col+'"></div><b>'+r.sc.toFixed(1)+'</b></div>'+
+        '<div class="scbarwrap"><div class="scbar" style="width:'+(best>0?(r.sc/best*100):0).toFixed(1)+'%;background:'+a.col+'"></div><b>'+r.sc.toFixed(0)+'</b></div>'+
       '</div>';
     }).join('');
   }
-  sl.addEventListener('input',draw); draw();
+  [slP,slT,slQ].forEach(function(s){s.addEventListener('input',draw);});
+  draw();
 })();
 
 /* ---- pogoda na żywo (Open-Meteo) — wzorzec z planu Madery ---- */
@@ -1208,7 +1194,7 @@ function kosztyPage(){
     <h2 class="stitle">Bilety lotnicze</h2>
     <div class="pflag">✈️ <span><b>Ostatnie sprawdzenie ${dpl(FLIGHT.checked)}: ${plz(FLIGHT.adult)}/dorosły</b>${trend()} (${FLIGHT.airline}, WAW→Narita, 3–15.05.2027) — dla 2+2 ≈ <b>~${plz(FLIGHT.family)}</b>. Cena <b>${FLIGHT.band}</b>.</span></div>
     <div class="card"><ul class="tips">
-      <li>Ta kwota zasila pole „Loty" w kalkulatorze poniżej i odświeża się automatycznie co tydzień.</li>
+      <li>Ta kwota zasila pole „Loty" w kalkulatorze poniżej i odświeża się automatycznie co dwa dni.</li>
       <li>Porównanie linii, wykres trendu, progi „kup / czekaj", kalendarz wyprzedaży i wybór terminu — wszystko na osobnej zakładce.</li>
     </ul>
     <a class="gmap" href="loty.html">✈️ Zobacz ceny, trendy i strategię zakupu → </a></div>
@@ -1654,50 +1640,35 @@ function lotyPage(){
   const last = k => {for(let i=CHECKS.length-1;i>=0;i--) if(CHECKS[i].p[k]!=null) return {v:CHECKS[i].p[k],d:CHECKS[i].date,i};return null;};
   const before = (k,idx) => {for(let i=idx-1;i>=0;i--) if(CHECKS[i].p[k]!=null) return CHECKS[i].p[k];return null;};
 
-  let scored = Object.keys(AIRLINES).map(k=>({k,A:AIRLINES[k],L:last(k)})).filter(r=>r.L)
-    .map(r=>({...r, h:hrsOf(r.A.dur), c:comfortOf(r.A)}));
-  const rng = f => {const v=scored.map(f); return {min:Math.min(...v), max:Math.max(...v)};};
-  const P=rng(r=>r.L.v), T=rng(r=>r.h), C=rng(r=>r.c);
-  // wagi: rozpiętość każdego kryterium przeliczona na złotówki (kwoty tylko po to)
-  const eqP = P.max-P.min, eqT = (T.max-T.min)*SCORE.plnPerHour,
-        eqC = C.max===C.min ? 0 : (C.max-C.min)/100*SCORE.comfortPln;
-  const eqS = eqP+eqT+eqC || 1;
-  const W = {p:eqP/eqS, t:eqT/eqS, c:eqC/eqS};
-  const pts = (v,r,inv) => r.max===r.min ? 100 : Math.round((inv ? (r.max-v)/(r.max-r.min) : (v-r.min)/(r.max-r.min))*100);
-  scored = scored.map(r=>{
-    const pp=pts(r.L.v,P,true), tp=pts(r.h,T,true), cp=pts(r.c,C,false);
-    return {...r, pp, tp, cp, score:Math.round(W.p*pp + W.t*tp + W.c*cp)};
-  });
-  const cheapest = scored.slice().sort((a,b)=>a.L.v-b.L.v)[0];
-  const fastest  = scored.slice().sort((a,b)=>a.h-b.h)[0];
-  const rows = scored.sort((a,b)=>b.score-a.score).map((r,i)=>{
+  const rows = Object.keys(AIRLINES).map(k=>({k,A:AIRLINES[k],L:last(k)})).filter(r=>r.L)
+    .sort((a,b)=>a.L.v-b.L.v).map((r,i)=>{
       const pv = before(r.k, r.L.i), d = pv==null?null:r.L.v-pv;
       const chg = d==null ? '<span style="color:var(--muted)">—</span>'
         : d===0 ? '<span style="color:var(--muted)">bez zmian</span>'
         : d<0 ? `<span style="color:var(--success)">▼ ${plz(Math.abs(d))}</span>`
               : `<span style="color:var(--shu)">▲ ${plz(d)}</span>`;
       const stale = r.L.d!==CHECKS[CHECKS.length-1].date ? ` <span class="note">(odczyt ${dpl(r.L.d).slice(0,5)})</span>` : '';
-      const tags = (i===0?' <span class="rezerwuj">1. miejsce</span>':'')
-        + (r.k===cheapest.k && i!==0 ? ' <span class="rezerwuj alt">najtańszy bilet</span>' : '')
-        + (r.k===fastest.k && i!==0 ? ' <span class="rezerwuj alt">najkrótszy lot</span>' : '');
-      const bar = (lab,val,v,col)=>`<div class="cr"><i>${lab}</i>
-        <span class="crb"><b style="width:${val}%;background:${col}"></b></span>
-        <u>${v}</u></div>`;
       return `<div class="arow${i===0?' top':''}">
-        <div class="an"><i style="background:${r.A.col}"></i>${r.A.name}${r.A.star?' ★':''}${tags}</div>
-        <div class="asc"><b>${r.score}</b><i>pkt / 100</i></div>
-        <div class="crit">
-          ${bar('Cena', r.pp, plz(r.L.v), 'var(--ai)')}
-          ${bar('Czas', r.tp, r.A.dur, 'var(--kin)')}
-          ${bar('Wygoda', r.cp, (r.A.stops? r.A.stops+' przesiadka':'bez przesiadek')+(r.A.hotel?' + nocleg gratis':''), 'var(--success)')}
-        </div>
-        <div class="am">${r.A.via==='bezpośredni'?'lot bezpośredni':'przez '+r.A.via} · ${r.A.note}${stale}</div>
+        <div class="an"><i style="background:${r.A.col}"></i>${r.A.name}${r.A.star?' ★':''}${i===0?' <span class="rezerwuj">najtaniej</span>':''}</div>
+        <div class="ap">${plz(r.L.v)}</div>
+        <div class="am">${r.A.via==='bezpośredni'?'lot bezpośredni':'przez '+r.A.via} · ${r.A.dur} · ${r.A.note}${stale}</div>
         <div class="ad">${chg}</div>
       </div>`;}).join('');
 
-  // dane dla kalkulatora wag (cena vs jakość) — czytane przez app.js
+  // dane dla kalkulatora wag (cena / czas / jakość) — czytane przez app.js
   const scoreData = Object.keys(AIRLINES).map(k=>{const L=last(k); return L?{k,name:AIRLINES[k].name,col:AIRLINES[k].col,
-    star:!!AIRLINES[k].star,q:AIRLINES[k].q,qpos:AIRLINES[k].qpos,price:L.v,via:AIRLINES[k].via,dur:AIRLINES[k].dur}:null;}).filter(Boolean);
+    star:!!AIRLINES[k].star,q:AIRLINES[k].q,qpos:AIRLINES[k].qpos,price:L.v,via:AIRLINES[k].via,dur:AIRLINES[k].dur,
+    h:hrsOf(AIRLINES[k].dur)}:null;}).filter(Boolean);
+
+  // domyślne wagi: rozpiętość każdego kryterium w dzisiejszym zestawieniu, przeliczona na złotówki
+  // (kwoty tylko po to, żeby porównać jabłka z jabłkami — nic nie dolicza się do ceny biletu)
+  const scPrices = scoreData.map(a=>a.price), scHours = scoreData.map(a=>a.h), scQual = scoreData.map(a=>a.q);
+  const eqPrice = Math.max(...scPrices) - Math.min(...scPrices);
+  const eqTime  = (Math.max(...scHours) - Math.min(...scHours)) * PLN_PER_HOUR;
+  const eqQual  = (Math.max(...scQual) - Math.min(...scQual)) / 100 * QUALITY_PLN;
+  const eqSum   = (eqPrice + eqTime + eqQual) || 1;
+  const wPrice0 = Math.round(eqPrice/eqSum*100), wTime0 = Math.round(eqTime/eqSum*100);
+  const wQual0  = 100 - wPrice0 - wTime0;
 
   const gmin = Math.min(...DATEGRID.days.map(d=>d[1])), gmax = Math.max(...DATEGRID.days.map(d=>d[1])), base = gmin-300;
   const bars = DATEGRID.days.map(([d,v])=>`<div class="${v===gmin?'lowest':(d===3?'plan':'')}" style="height:${Math.round((v-base)/(gmax-base)*100)}%" title="${d}.05 — ${plz(v)}"></div>`).join('');
@@ -1718,32 +1689,15 @@ function lotyPage(){
     <div class="hero-inner">
     <p class="eyebrow">Ceny · trendy · rekomendacje</p>
     <h1>Loty</h1>
-    <p class="lead">Kluczowe linie na trasie WAW→Tokio, jak zmieniają się ich ceny i kiedy nacisnąć „kup". Dane sprawdzane automatycznie co tydzień.</p>
+    <p class="lead">Kluczowe linie na trasie WAW→Tokio, jak zmieniają się ich ceny i kiedy nacisnąć „kup". Dane sprawdzane automatycznie co dwa dni.</p>
     </div>
   </header>
 
   <section>
     <h2 class="stitle">Ceny dziś — kluczowe linie</h2>
-    <p class="lead-p">Za 1 dorosłego, w obie strony, wylot 3.05 / powrót 15.05.2027. Ostatnie sprawdzenie: <b>${dpl(FLIGHT.checked)}</b>.
-    Ranking według <b>kosztu efektywnego</b> — czyli ceny biletu powiększonej o wartość czasu spędzonego w drodze.</p>
+    <p class="lead-p">Za 1 dorosłego, w obie strony, wylot 3.05 / powrót 15.05.2027. Ostatnie sprawdzenie: <b>${dpl(FLIGHT.checked)}</b>. Posortowane od najtańszej — pełny ranking uwzględniający też czas w drodze i jakość linii jest niżej, w sekcji „Ranking wg Twoich wag".</p>
     <div class="alist">${rows}</div>
-    <div class="card" style="margin-top:16px">
-      <h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 8px">Jak liczymy wynik</h3>
-      <p style="margin:0 0 4px;font-size:14px">Każda linia dostaje <b>0–100 punktów w trzech kryteriach</b> (najlepsza w zestawieniu = 100, najsłabsza = 0), a wynik końcowy to ich <b>średnia ważona</b>. Do ceny biletu <b>nie doliczamy złotówek</b> — kwoty służą tylko do ustalenia, ile które kryterium waży:</p>
-      <ul class="tips" style="margin-top:10px">
-        <li><b>Cena</b> — cena biletu za dorosłego, w obie strony.</li>
-        <li><b>Czas</b> — od wylotu do lądowania, razem z przesiadką. Waga z Twojej reguły: <b>8 h w drodze ≡ ${plz(8*SCORE.plnPerHour)} na bilecie</b>, czyli ${plz(SCORE.plnPerHour)} za godzinę.</li>
-        <li><b>Wygoda</b> — liczona obiektywnie: 100 pkt bazowo, −30 za przesiadkę, +20 za darmowy nocleg w pakiecie. Pełna rozpiętość tego kryterium warta jest ${plz(SCORE.comfortPln)}.</li>
-      </ul>
-      <p style="margin:12px 0 0;font-size:14px">Wagi nie są ustawiane z ręki — wynikają z tego, jak <b>szeroko rozstrzelone</b> jest każde kryterium w dzisiejszym zestawieniu (rozpiętość przeliczona na złotówki). Dziś wychodzi:</p>
-      <div class="wtab">
-        <span><b>${Math.round(W.p*100)}%</b>Cena · rozpiętość ${plz(eqP)}</span>
-        <span><b>${Math.round(W.t*100)}%</b>Czas · rozpiętość ${hm(T.max-T.min)} ≡ ${plz(eqT)}</span>
-        <span><b>${Math.round(W.c*100)}%</b>Wygoda · rozpiętość ≡ ${plz(Math.round(eqC))}</span>
-      </div>
-      <p class="note" style="margin-top:10px">Gdy ceny się zbliżą do siebie, cena automatycznie straci na wadze, a czas i wygoda zyskają — i odwrotnie.</p>
-    </div>
-    <div class="dnote" style="margin-top:10px">★ Etihad to trasa z planu — jako jedyna daje <b>darmowy nocleg 4★ w Abu Zabi</b> (program stopover), co realnie warte jest ~600–900 zł. Przy porównywaniu cen doliczcie to na jego korzyść.</div>
+    <div class="dnote" style="margin-top:14px">★ Etihad to trasa z planu — jako jedyna daje <b>darmowy nocleg 4★ w Abu Zabi</b> (program stopover), co realnie warte jest ~600–900 zł. Przy porównywaniu cen doliczcie to na jego korzyść.</div>
   </section>
 
   <section>
@@ -1758,20 +1712,28 @@ function lotyPage(){
     ${seg('Progi decyzyjne (za 1 dorosłego)',['<b>≤ 3 500 zł/os.</b> (~13 300 zł rodzina) — OKAZJA, kupować natychmiast, nie czekać na „jeszcze lepszą"','<b>3 500–4 600 zł/os.</b> — cena typowa; można kupić dla pewności miejsc, ale bez presji',`<b>≥ 4 600 zł/os.</b> — górka, czekać na wyprzedaż`,`Teraz (${dpl(FLIGHT.checked)}): <b>${plz(FLIGHT.adult)}/os.</b> — próg <b>${FLIGHT.band}</b>`])}
     ${seg('Kalendarz — kiedy realnie polować',['<b>Lipiec–wrzesień 2026 (teraz):</b> nie kupować. Brak wyprzedaży, ceny typowe — tylko obserwować.','<b>Wrzesień–październik 2026:</b> czas na <a href="hotele.html">noclegi</a> (darmowe anulowanie), loty nadal obserwujemy.','<b>~20.11–2.12.2026 — Black Friday Etihad/Qatar:</b> pierwsze prawdziwe okno, historycznie do −35%. Tu celujemy w próg ≤3 500 zł/os.','<b>22.12.2026 – poł. stycznia 2027:</b> Qatar Travel Festival + Etihad January Sale — drugie okno.','<b>Koniec stycznia 2027 — TWARDY DEADLINE:</b> kupić nawet bez promocji. Cztery miejsca w jednej rezerwacji znikają szybko, a od lutego ceny rosną w stronę Golden Week.'])}
     ${seg('Zasady, które oszczędzają nerwy',['Kupujemy jako <b>Etihad ze stopoverem</b> — pakiet noclegowy rezerwuje się osobno na etihad.com zaraz po zakupie biletów (≥3 dni przed wylotem).','Przy zakupie potwierdzić, że promocja stopover obejmuje maj 2027 i że multi-city nie podnosi taryfy.','Cena na Google to taryfa bez bagażu rejestrowanego — doliczcie bagaż przy finalnym porównaniu.','Młodsze dziecko (&lt;11 lat) ma taryfę dziecięcą — rodzina to ok. <b>3,8 taryfy</b>, nie 4.','Nie polujcie na dołek w nieskończoność: różnica 200 zł/os. nie jest warta ryzyka braku 4 miejsc obok siebie.'])}
-    ${seg('🔔 Co monitoruje się samo',['<b>Cotygodniowa kontrola cen</b> (poniedziałki) — aktualizuje tę stronę i wykres powyżej','Alerty w kluczowych momentach: 1.10, 20.11, 22.12.2026 oraz 12.01 i 25.01.2027','Google Flights — monitoring trasy 3→15.05 z powiadomieniem mailowym'])}
+    ${seg('🔔 Co monitoruje się samo',['<b>Kontrola cen co dwa dni</b> — aktualizuje tę stronę i wykres powyżej','Alerty w kluczowych momentach: 1.10, 20.11, 22.12.2026 oraz 12.01 i 25.01.2027','Google Flights — monitoring trasy 3→15.05 z powiadomieniem mailowym'])}
   </section>
 
   <section>
     <h2 class="stitle">⚖️ Ranking wg Twoich wag</h2>
-    <p class="lead-p">Cena czy jakość? Przesuń suwak i zobacz, która linia wygrywa przy Twoich priorytetach. Ceny to ostatnie odczyty, jakość — pozycja w rankingu <i>AirlineRatings „World's Best Airlines 2026"</i>. Ranking przelicza się sam po każdym cotygodniowym sprawdzeniu cen.</p>
+    <p class="lead-p">Trzy kryteria — cena, czas w drodze i jakość linii — każde punktowane 0–100, wynik to ich średnia ważona. Przesuń suwaki i zobacz, która linia wygrywa przy Twoich priorytetach. Ranking przelicza się sam po każdym sprawdzeniu cen (co dwa dni).</p>
     <div class="card" style="margin-bottom:20px">
+      <p style="margin:0 0 14px;font-size:14px">Domyślne wagi <b>nie są ustawione z ręki</b> — wynikają z tego, jak szeroko rozstrzelone jest dziś każde kryterium, przeliczonego na złotówki: cena wprost, czas wg Twojej reguły <b>8 h w drodze ≡ ${plz(8*PLN_PER_HOUR)} na bilecie</b> (czyli ${plz(PLN_PER_HOUR)}/h), jakość tak, że jej pełna rozpiętość (0–100 pkt w rankingu AirlineRatings) warta jest ${plz(QUALITY_PLN)}. Możesz je dowolnie przesunąć.</p>
       <div class="wgrow">
-        <label for="wprice">Waga ceny: <b id="wlab">90%</b> &nbsp;·&nbsp; jakość: <b id="wlab2">10%</b></label>
-        <input type="range" id="wprice" min="0" max="100" step="5" value="90">
-        <div class="wghint"><span>tylko jakość</span><span>tylko cena</span></div>
+        <label for="wprice">💰 Cena <b id="wlab_p">${wPrice0}%</b></label>
+        <input type="range" id="wprice" min="0" max="100" step="5" value="${wPrice0}">
       </div>
-      <div id="scorelist" class="scorelist"></div>
-      <p class="note" style="margin-top:12px">Punkty ceny: najtańsza linia = 100, najdroższa = 0. Punkty jakości: pozycja w rankingu 2026. Kalkulacja nie obejmuje darmowego noclegu z pakietu stopover Etihad (wart ~600–900 zł) — przy zbliżonych wynikach to on przeważa szalę.</p>
+      <div class="wgrow">
+        <label for="wtime">⏱️ Czas w drodze <b id="wlab_t">${wTime0}%</b></label>
+        <input type="range" id="wtime" min="0" max="100" step="5" value="${wTime0}">
+      </div>
+      <div class="wgrow">
+        <label for="wqual">⭐ Jakość linii <b id="wlab_q">${wQual0}%</b></label>
+        <input type="range" id="wqual" min="0" max="100" step="5" value="${wQual0}">
+      </div>
+      <div id="scorelist" class="scorelist" style="margin-top:6px"></div>
+      <p class="note" style="margin-top:12px">Punkty ceny: najtańsza linia = 100, najdroższa = 0. Punkty czasu: najkrótszy lot = 100, najdłuższy = 0 (liczony od wylotu do lądowania, razem z przesiadką). Punkty jakości: pozycja w rankingu <i>AirlineRatings „World's Best Airlines 2026"</i>. Kalkulacja nie obejmuje darmowego noclegu z pakietu stopover Etihad (wart ~600–900 zł) — przy zbliżonych wynikach to on przeważa szalę.</p>
     </div>
     <script id="scoredata" type="application/json">${JSON.stringify(scoreData)}</script>
   </section>
