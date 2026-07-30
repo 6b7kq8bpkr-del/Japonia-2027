@@ -83,14 +83,18 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
   var slP=document.getElementById('wprice'), slT=document.getElementById('wtime'), slQ=document.getElementById('wqual');
   if(!host||!src||!slP||!slT||!slQ) return;
   var D=JSON.parse(src.textContent||'[]'); if(!D.length) return;
+  var chk=document.getElementById('wstopover');
   function rng(f){var v=D.map(f); return {min:Math.min.apply(null,v), max:Math.max.apply(null,v)};}
-  var P=rng(function(a){return a.price;}), C=rng(function(a){return a.cf;}), Q=rng(function(a){return a.q;});
+  var P=rng(function(a){return a.price;}), Q=rng(function(a){return a.q;});
   function plz(n){return String(Math.round(n)).replace(/B(?=(d{3})+(?!d))/g,' ')+' zł';}
   function pts(v,r,inv){return r.max===r.min?100:((inv?(r.max-v):(v-r.min))/(r.max-r.min)*100);}
+  // premia za stopover liczy się tylko, gdy nocleg faktycznie jest bezpłatny
+  function bonusOn(){return !chk || chk.checked;}
+  function cfOf(a){return a.cfBase + (bonusOn()?a.bonus:0);}
   function comfortLabel(a){
     var t=[a.dur];
     t.push(a.stops?(a.stops===1?'1 przesiadka':a.stops+' przesiadki'):'bez przesiadek');
-    if(a.hotel) t.push('nocleg gratis');
+    if(a.bonus>0) t.push(bonusOn()?'nocleg gratis':'nocleg płatny');
     return t.join(' · ');
   }
   function draw(){
@@ -98,8 +102,9 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
     document.getElementById('wlab_p').textContent=Math.round(wp/sum*100)+'%';
     document.getElementById('wlab_t').textContent=Math.round(wt/sum*100)+'%';
     document.getElementById('wlab_q').textContent=Math.round(wq/sum*100)+'%';
+    var C=rng(cfOf);
     var rows=D.map(function(a){
-      var pp=pts(a.price,P,true), cp=pts(a.cf,C,false), qp=pts(a.q,Q,false);
+      var pp=pts(a.price,P,true), cp=pts(cfOf(a),C,false), qp=pts(a.q,Q,false);
       return {a:a, pp:pp, cp:cp, qp:qp, sc:(wp*pp+wt*cp+wq*qp)/sum};
     }).sort(function(x,y){return y.sc-x.sc;});
     var best=rows[0].sc;
@@ -115,6 +120,7 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
     }).join('');
   }
   [slP,slT,slQ].forEach(function(s){s.addEventListener('input',draw);});
+  if(chk) chk.addEventListener('change',draw);
   draw();
 })();
 

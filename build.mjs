@@ -9,7 +9,7 @@ fs.mkdirSync(DIR + '/assets', { recursive: true });
    Ceny: zł za 1 DOROSŁEGO, w obie strony, WAW→Tokio, wylot 3.05 / powrót 15.05.2027. */
 const AIRLINES = {
   etihad:   {name:'Etihad',        via:'Abu Zabi', dur:'17 h 55 min', stops:1, hotel:true, col:'#c8402c', star:true, q:40, qpos:'#10 na świecie',
-             note:'Trasa z planu — w cenie darmowy nocleg 4★ w Abu Zabi (stopover)'},
+             note:'Trasa z planu — możliwy darmowy nocleg 4★ w Abu Zabi (stopover, do potwierdzenia na maj 2027)'},
   emirates: {name:'Emirates',      via:'Dubaj',    dur:'19 h 25 min', stops:1, col:'#1b3a6b', q:60, qpos:'#8 na świecie',
              note:'Solidna alternatywa, ale bez darmowego stopoveru'},
   finnair:  {name:'Finnair / JAL', via:'Helsinki', dur:'17 h 5 min',  stops:1, col:'#2f6d4f', q:20, qpos:'#7 wśród hybrydowych',
@@ -32,9 +32,14 @@ const PLN_PER_HOUR = 100, QUALITY_PLN = 750;
 const hrsOf = s => {const m=String(s).match(/(\d+)\s*h(?:\s*(\d+))?/); return m ? (+m[1] + (+(m[2]||0))/60) : 0;};
 /* Wygoda = czas w drodze, ale doceniamy brak przesiadek i osobno — mocniej — darmowy nocleg
    w ramach stopoveru Etihad (na stronie wyceniany gdzie indziej na ~600–900 zł, tu środek 750 zł).
-   Jednostka to "godziny w drodze", żeby całość dało się przeliczyć na wagę tą samą stawką co czas. */
+   Jednostka to "godziny w drodze", żeby całość dało się przeliczyć na wagę tą samą stawką co czas.
+   UWAGA: premia za stopover jest WARUNKOWA — liczy się tylko wtedy, gdy nocleg faktycznie jest
+   bezpłatny (program Etihad jest formalnie potwierdzony do stycznia 2027, na maj 2027 trzeba go
+   potwierdzić przy zakupie). Dlatego rozbijamy wygodę na `cfBase` + `bonus`, a przełącznik na
+   stronie decyduje, czy bonus wchodzi do rankingu. */
 const STOP_PENALTY_H = 1.5, STOPOVER_BONUS_H = 750/PLN_PER_HOUR;
-const comfortRaw = A => -hrsOf(A.dur) - (A.stops||0)*STOP_PENALTY_H + (A.hotel?STOPOVER_BONUS_H:0);
+const comfortBase  = A => -hrsOf(A.dur) - (A.stops||0)*STOP_PENALTY_H;
+const comfortBonus = A => A.hotel ? STOPOVER_BONUS_H : 0;
 const CHECKS = [
   {date:'2026-07-26', p:{etihad:3910, emirates:4262, finnair:4928, lot:5288, qatar:5465, turkish:6423}},
   {date:'2026-07-27', p:{etihad:4228, emirates:4262, finnair:4727, lot:5248}},
@@ -472,6 +477,11 @@ footer a{font-weight:700;text-decoration:none}
 .wgrow label{display:block;margin-bottom:8px;font-weight:700;color:var(--ai)}
 .wgrow input[type=range]{width:100%;accent-color:var(--shu)}
 .wghint{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px}
+.wchk{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px;padding:11px 13px;border-radius:12px;
+  background:var(--sakura);border:1px solid var(--line);font-size:12.5px;line-height:1.5;cursor:pointer}
+.wchk input{margin-top:2px;flex:0 0 auto;accent-color:var(--shu);width:16px;height:16px;cursor:pointer}
+.wchk b{color:var(--ink)}
+.wchk i{display:block;margin-top:3px;color:var(--muted)}
 .scorelist{display:grid;gap:8px}
 .scrow{display:grid;grid-template-columns:30px minmax(0,1.5fr) minmax(0,1fr) minmax(0,1.2fr);gap:12px;align-items:center;padding:11px 13px;border-radius:14px;background:var(--sakura)}
 .scrow.win{background:#e8f0e9;box-shadow:inset 0 0 0 2px var(--success)}
@@ -588,14 +598,18 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
   var slP=document.getElementById('wprice'), slT=document.getElementById('wtime'), slQ=document.getElementById('wqual');
   if(!host||!src||!slP||!slT||!slQ) return;
   var D=JSON.parse(src.textContent||'[]'); if(!D.length) return;
+  var chk=document.getElementById('wstopover');
   function rng(f){var v=D.map(f); return {min:Math.min.apply(null,v), max:Math.max.apply(null,v)};}
-  var P=rng(function(a){return a.price;}), C=rng(function(a){return a.cf;}), Q=rng(function(a){return a.q;});
+  var P=rng(function(a){return a.price;}), Q=rng(function(a){return a.q;});
   function plz(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';}
   function pts(v,r,inv){return r.max===r.min?100:((inv?(r.max-v):(v-r.min))/(r.max-r.min)*100);}
+  // premia za stopover liczy się tylko, gdy nocleg faktycznie jest bezpłatny
+  function bonusOn(){return !chk || chk.checked;}
+  function cfOf(a){return a.cfBase + (bonusOn()?a.bonus:0);}
   function comfortLabel(a){
     var t=[a.dur];
     t.push(a.stops?(a.stops===1?'1 przesiadka':a.stops+' przesiadki'):'bez przesiadek');
-    if(a.hotel) t.push('nocleg gratis');
+    if(a.bonus>0) t.push(bonusOn()?'nocleg gratis':'nocleg płatny');
     return t.join(' · ');
   }
   function draw(){
@@ -603,8 +617,9 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
     document.getElementById('wlab_p').textContent=Math.round(wp/sum*100)+'%';
     document.getElementById('wlab_t').textContent=Math.round(wt/sum*100)+'%';
     document.getElementById('wlab_q').textContent=Math.round(wq/sum*100)+'%';
+    var C=rng(cfOf);
     var rows=D.map(function(a){
-      var pp=pts(a.price,P,true), cp=pts(a.cf,C,false), qp=pts(a.q,Q,false);
+      var pp=pts(a.price,P,true), cp=pts(cfOf(a),C,false), qp=pts(a.q,Q,false);
       return {a:a, pp:pp, cp:cp, qp:qp, sc:(wp*pp+wt*cp+wq*qp)/sum};
     }).sort(function(x,y){return y.sc-x.sc;});
     var best=rows[0].sc;
@@ -620,6 +635,7 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
     }).join('');
   }
   [slP,slT,slQ].forEach(function(s){s.addEventListener('input',draw);});
+  if(chk) chk.addEventListener('change',draw);
   draw();
 })();
 
@@ -1669,11 +1685,12 @@ function lotyPage(){
   // dane dla kalkulatora wag (cena / wygoda / jakość) — czytane przez app.js
   const scoreData = Object.keys(AIRLINES).map(k=>{const L=last(k); return L?{k,name:AIRLINES[k].name,col:AIRLINES[k].col,
     star:!!AIRLINES[k].star,q:AIRLINES[k].q,qpos:AIRLINES[k].qpos,price:L.v,via:AIRLINES[k].via,dur:AIRLINES[k].dur,
-    stops:AIRLINES[k].stops||0,hotel:!!AIRLINES[k].hotel,cf:comfortRaw(AIRLINES[k])}:null;}).filter(Boolean);
+    stops:AIRLINES[k].stops||0,hotel:!!AIRLINES[k].hotel,
+    cfBase:comfortBase(AIRLINES[k]),bonus:comfortBonus(AIRLINES[k])}:null;}).filter(Boolean);
 
   // domyślne wagi: rozpiętość każdego kryterium w dzisiejszym zestawieniu, przeliczona na złotówki
   // (kwoty tylko po to, żeby porównać jabłka z jabłkami — nic nie dolicza się do ceny biletu)
-  const scPrices = scoreData.map(a=>a.price), scComfort = scoreData.map(a=>a.cf), scQual = scoreData.map(a=>a.q);
+  const scPrices = scoreData.map(a=>a.price), scComfort = scoreData.map(a=>a.cfBase+a.bonus), scQual = scoreData.map(a=>a.q);
   const eqPrice   = Math.max(...scPrices) - Math.min(...scPrices);
   const eqComfort = (Math.max(...scComfort) - Math.min(...scComfort)) * PLN_PER_HOUR;
   const eqQual    = (Math.max(...scQual) - Math.min(...scQual)) / 100 * QUALITY_PLN;
@@ -1708,7 +1725,7 @@ function lotyPage(){
     <h2 class="stitle">Ceny dziś — kluczowe linie</h2>
     <p class="lead-p">Za 1 dorosłego, w obie strony, wylot 3.05 / powrót 15.05.2027. Ostatnie sprawdzenie: <b>${dpl(FLIGHT.checked)}</b>. Posortowane od najtańszej — pełny ranking uwzględniający też czas w drodze i jakość linii jest niżej, w sekcji „Ranking wg Twoich wag".</p>
     <div class="alist">${rows}</div>
-    <div class="dnote" style="margin-top:14px">★ Etihad to trasa z planu — jako jedyna daje <b>darmowy nocleg 4★ w Abu Zabi</b> (program stopover), co realnie warte jest ~600–900 zł. Ta lista pokazuje same ceny, więc tego nie widać — ale <a href="#">ranking wg wag</a> niżej ma to już wliczone w kryterium „wygoda".</div>
+    <div class="dnote" style="margin-top:14px">★ Etihad to trasa z planu — jako jedyna <b>może dać darmowy nocleg 4★ w Abu Zabi</b> (program stopover), wart ~600–900 zł. To jednak <b>opcja warunkowa</b>: program jest formalnie potwierdzony do stycznia 2027, więc na maj 2027 trzeba go potwierdzić przy zakupie. W rankingu niżej można tę premię włączyć i wyłączyć jednym kliknięciem.</div>
   </section>
 
   <section>
@@ -1731,6 +1748,10 @@ function lotyPage(){
     <p class="lead-p">Trzy kryteria — cena, wygoda podróży i jakość linii — każde punktowane 0–100, wynik to ich średnia ważona. Przesuń suwaki i zobacz, która linia wygrywa przy Twoich priorytetach. Ranking przelicza się sam po każdym sprawdzeniu cen (co dwa dni).</p>
     <div class="card" style="margin-bottom:20px">
       <p style="margin:0 0 10px;font-size:14px"><b>Wygoda</b> to nie tylko czas w drodze — dokładamy do niej dwie rzeczy, które realnie robią różnicę z dziećmi: <b>brak przesiadki</b> (premia równa ${STOP_PENALTY_H} h oszczędzonego czasu) oraz <b>darmowy nocleg w ramach stopoveru</b> (premia warta ${plz(750)}, bo to nie strata czasu, a dodatkowy dzień wyjazdu).</p>
+      <label class="wchk"><input type="checkbox" id="wstopover" checked>
+        <span>🕌 <b>Nocleg w Abu Zabi jest bezpłatny</b> — premia za stopover liczy się tylko wtedy.
+        Program Etihad jest formalnie potwierdzony do stycznia 2027; na maj 2027 trzeba go potwierdzić przy zakupie biletu.
+        <i>Odznacz, żeby zobaczyć ranking bez tego założenia.</i></span></label>
       <p style="margin:0 0 14px;font-size:14px">Domyślne wagi <b>nie są ustawione z ręki</b> — wynikają z tego, jak szeroko rozstrzelone jest dziś każde kryterium, przeliczone na złotówki: cena wprost, wygoda wg Twojej reguły <b>8 h w drodze ≡ ${plz(8*PLN_PER_HOUR)} na bilecie</b> (czyli ${plz(PLN_PER_HOUR)}/h), jakość tak, że jej pełna rozpiętość (0–100 pkt w rankingu AirlineRatings) warta jest ${plz(QUALITY_PLN)}. Możesz je dowolnie przesunąć.</p>
       <div class="wgrow">
         <label for="wprice">💰 Cena <b id="wlab_p">${wPrice0}%</b></label>
@@ -1745,7 +1766,7 @@ function lotyPage(){
         <input type="range" id="wqual" min="0" max="100" step="5" value="${wQual0}">
       </div>
       <div id="scorelist" class="scorelist" style="margin-top:6px"></div>
-      <p class="note" style="margin-top:12px">Punkty ceny: najtańsza linia = 100, najdroższa = 0. Punkty wygody: najlepsza kombinacja czasu, przesiadek i stopoveru = 100, najsłabsza = 0 (czas liczony od wylotu do lądowania). Punkty jakości: pozycja w rankingu <i>AirlineRatings „World's Best Airlines 2026"</i>. Darmowy nocleg z pakietu stopover Etihad jest już wliczony w wygodę — nie trzeba go doliczać osobno.</p>
+      <p class="note" style="margin-top:12px">Punkty ceny: najtańsza linia = 100, najdroższa = 0. Punkty wygody: najlepsza kombinacja czasu, przesiadek i stopoveru = 100, najsłabsza = 0 (czas liczony od wylotu do lądowania). Punkty jakości: pozycja w rankingu <i>AirlineRatings „World's Best Airlines 2026"</i>. Premia za darmowy nocleg wchodzi do wygody tylko przy zaznaczonym przełączniku powyżej — bez niej Etihad i Emirates idą praktycznie łeb w łeb.</p>
     </div>
     <script id="scoredata" type="application/json">${JSON.stringify(scoreData)}</script>
   </section>

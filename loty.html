@@ -30,7 +30,7 @@
     <div class="alist"><div class="arow top">
         <div class="an"><i style="background:#c8402c"></i>Etihad ★ <span class="rezerwuj">najtaniej</span></div>
         <div class="ap">4 225 zł</div>
-        <div class="am">przez Abu Zabi · 17 h 55 min · Trasa z planu — w cenie darmowy nocleg 4★ w Abu Zabi (stopover)</div>
+        <div class="am">przez Abu Zabi · 17 h 55 min · Trasa z planu — możliwy darmowy nocleg 4★ w Abu Zabi (stopover, do potwierdzenia na maj 2027)</div>
         <div class="ad"><span style="color:var(--success)">▼ 3 zł</span></div>
       </div><div class="arow">
         <div class="an"><i style="background:#1b3a6b"></i>Emirates</div>
@@ -58,7 +58,7 @@
         <div class="am">przez Stambuł · 15 h 50 min · Rzadko konkurencyjny cenowo na tej trasie</div>
         <div class="ad"><span style="color:var(--shu)">▲ 515 zł</span></div>
       </div></div>
-    <div class="dnote" style="margin-top:14px">★ Etihad to trasa z planu — jako jedyna daje <b>darmowy nocleg 4★ w Abu Zabi</b> (program stopover), co realnie warte jest ~600–900 zł. Ta lista pokazuje same ceny, więc tego nie widać — ale <a href="#">ranking wg wag</a> niżej ma to już wliczone w kryterium „wygoda".</div>
+    <div class="dnote" style="margin-top:14px">★ Etihad to trasa z planu — jako jedyna <b>może dać darmowy nocleg 4★ w Abu Zabi</b> (program stopover), wart ~600–900 zł. To jednak <b>opcja warunkowa</b>: program jest formalnie potwierdzony do stycznia 2027, więc na maj 2027 trzeba go potwierdzić przy zakupie. W rankingu niżej można tę premię włączyć i wyłączyć jednym kliknięciem.</div>
   </section>
 
   <section>
@@ -84,6 +84,10 @@
     <p class="lead-p">Trzy kryteria — cena, wygoda podróży i jakość linii — każde punktowane 0–100, wynik to ich średnia ważona. Przesuń suwaki i zobacz, która linia wygrywa przy Twoich priorytetach. Ranking przelicza się sam po każdym sprawdzeniu cen (co dwa dni).</p>
     <div class="card" style="margin-bottom:20px">
       <p style="margin:0 0 10px;font-size:14px"><b>Wygoda</b> to nie tylko czas w drodze — dokładamy do niej dwie rzeczy, które realnie robią różnicę z dziećmi: <b>brak przesiadki</b> (premia równa 1.5 h oszczędzonego czasu) oraz <b>darmowy nocleg w ramach stopoveru</b> (premia warta 750 zł, bo to nie strata czasu, a dodatkowy dzień wyjazdu).</p>
+      <label class="wchk"><input type="checkbox" id="wstopover" checked>
+        <span>🕌 <b>Nocleg w Abu Zabi jest bezpłatny</b> — premia za stopover liczy się tylko wtedy.
+        Program Etihad jest formalnie potwierdzony do stycznia 2027; na maj 2027 trzeba go potwierdzić przy zakupie biletu.
+        <i>Odznacz, żeby zobaczyć ranking bez tego założenia.</i></span></label>
       <p style="margin:0 0 14px;font-size:14px">Domyślne wagi <b>nie są ustawione z ręki</b> — wynikają z tego, jak szeroko rozstrzelone jest dziś każde kryterium, przeliczone na złotówki: cena wprost, wygoda wg Twojej reguły <b>8 h w drodze ≡ 800 zł na bilecie</b> (czyli 100 zł/h), jakość tak, że jej pełna rozpiętość (0–100 pkt w rankingu AirlineRatings) warta jest 750 zł. Możesz je dowolnie przesunąć.</p>
       <div class="wgrow">
         <label for="wprice">💰 Cena <b id="wlab_p">61%</b></label>
@@ -98,9 +102,9 @@
         <input type="range" id="wqual" min="0" max="100" step="5" value="17">
       </div>
       <div id="scorelist" class="scorelist" style="margin-top:6px"></div>
-      <p class="note" style="margin-top:12px">Punkty ceny: najtańsza linia = 100, najdroższa = 0. Punkty wygody: najlepsza kombinacja czasu, przesiadek i stopoveru = 100, najsłabsza = 0 (czas liczony od wylotu do lądowania). Punkty jakości: pozycja w rankingu <i>AirlineRatings „World's Best Airlines 2026"</i>. Darmowy nocleg z pakietu stopover Etihad jest już wliczony w wygodę — nie trzeba go doliczać osobno.</p>
+      <p class="note" style="margin-top:12px">Punkty ceny: najtańsza linia = 100, najdroższa = 0. Punkty wygody: najlepsza kombinacja czasu, przesiadek i stopoveru = 100, najsłabsza = 0 (czas liczony od wylotu do lądowania). Punkty jakości: pozycja w rankingu <i>AirlineRatings „World's Best Airlines 2026"</i>. Premia za darmowy nocleg wchodzi do wygody tylko przy zaznaczonym przełączniku powyżej — bez niej Etihad i Emirates idą praktycznie łeb w łeb.</p>
     </div>
-    <script id="scoredata" type="application/json">[{"k":"etihad","name":"Etihad","col":"#c8402c","star":true,"q":40,"qpos":"#10 na świecie","price":4225,"via":"Abu Zabi","dur":"17 h 55 min","stops":1,"hotel":true,"cf":-11.916666666666668},{"k":"emirates","name":"Emirates","col":"#1b3a6b","star":false,"q":60,"qpos":"#8 na świecie","price":4257,"via":"Dubaj","dur":"19 h 25 min","stops":1,"hotel":false,"cf":-20.916666666666668},{"k":"finnair","name":"Finnair / JAL","col":"#2f6d4f","star":false,"q":20,"qpos":"#7 wśród hybrydowych","price":4723,"via":"Helsinki","dur":"17 h 5 min","stops":1,"hotel":false,"cf":-18.583333333333332},{"k":"lot","name":"LOT","col":"#b98a34","star":false,"q":0,"qpos":"#25 na świecie","price":5249,"via":"bezpośredni","dur":"12 h 40 min","stops":0,"hotel":false,"cf":-12.666666666666666},{"k":"qatar","name":"Qatar Airways","col":"#6b4b8a","star":false,"q":100,"qpos":"#1 na świecie","price":5219,"via":"Doha","dur":"20 h","stops":1,"hotel":false,"cf":-21.5},{"k":"turkish","name":"Turkish","col":"#7a8087","star":false,"q":80,"qpos":"#7 na świecie","price":6938,"via":"Stambuł","dur":"15 h 50 min","stops":1,"hotel":false,"cf":-17.333333333333336}]</script>
+    <script id="scoredata" type="application/json">[{"k":"etihad","name":"Etihad","col":"#c8402c","star":true,"q":40,"qpos":"#10 na świecie","price":4225,"via":"Abu Zabi","dur":"17 h 55 min","stops":1,"hotel":true,"cfBase":-19.416666666666668,"bonus":7.5},{"k":"emirates","name":"Emirates","col":"#1b3a6b","star":false,"q":60,"qpos":"#8 na świecie","price":4257,"via":"Dubaj","dur":"19 h 25 min","stops":1,"hotel":false,"cfBase":-20.916666666666668,"bonus":0},{"k":"finnair","name":"Finnair / JAL","col":"#2f6d4f","star":false,"q":20,"qpos":"#7 wśród hybrydowych","price":4723,"via":"Helsinki","dur":"17 h 5 min","stops":1,"hotel":false,"cfBase":-18.583333333333332,"bonus":0},{"k":"lot","name":"LOT","col":"#b98a34","star":false,"q":0,"qpos":"#25 na świecie","price":5249,"via":"bezpośredni","dur":"12 h 40 min","stops":0,"hotel":false,"cfBase":-12.666666666666666,"bonus":0},{"k":"qatar","name":"Qatar Airways","col":"#6b4b8a","star":false,"q":100,"qpos":"#1 na świecie","price":5219,"via":"Doha","dur":"20 h","stops":1,"hotel":false,"cfBase":-21.5,"bonus":0},{"k":"turkish","name":"Turkish","col":"#7a8087","star":false,"q":80,"qpos":"#7 na świecie","price":6938,"via":"Stambuł","dur":"15 h 50 min","stops":1,"hotel":false,"cfBase":-17.333333333333336,"bonus":0}]</script>
   </section>
 
   <section>
