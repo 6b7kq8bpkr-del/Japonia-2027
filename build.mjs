@@ -415,11 +415,6 @@ footer a{font-weight:700;text-decoration:none}
 .arow .an i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
 .arow .am{font-size:12.5px;color:var(--muted);grid-column:1}
 .arow .ap{font-weight:800;font-size:17px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.wtab{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.wtab span{flex:1 1 150px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--panel);
-  font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
-.wtab b{display:block;font-family:var(--serif);font-weight:500;font-size:21px;color:var(--ink);
-  text-transform:none;letter-spacing:0;margin-bottom:1px}
 @media(max-width:620px){.arow{grid-template-columns:1fr}.arow .ad{text-align:left}}
 .arow .ad{font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
 .pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
@@ -438,7 +433,6 @@ footer a{font-weight:700;text-decoration:none}
 .gridbars{display:flex;align-items:flex-end;gap:3px;height:120px;margin-top:6px}
 .gridbars div{flex:1;border-radius:4px 4px 0 0;background:var(--ai);opacity:.55;position:relative;min-width:0}
 .gridbars div.lowest{background:var(--success);opacity:1}
-.gridbars div.plan{background:var(--shu);opacity:1}
 .gridlabs{display:flex;gap:3px;margin-top:5px}
 .gridlabs span{flex:1;text-align:center;font-size:10px;color:var(--muted);min-width:0}
 /* ---- modern polish ---- */
@@ -476,7 +470,6 @@ footer a{font-weight:700;text-decoration:none}
 .wgrow{margin-bottom:16px}
 .wgrow label{display:block;margin-bottom:8px;font-weight:700;color:var(--ai)}
 .wgrow input[type=range]{width:100%;accent-color:var(--shu)}
-.wghint{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px}
 .wchk{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px;padding:11px 13px;border-radius:12px;
   background:var(--sakura);border:1px solid var(--line);font-size:12.5px;line-height:1.5;cursor:pointer}
 .wchk input{margin-top:2px;flex:0 0 auto;accent-color:var(--shu);width:16px;height:16px;cursor:pointer}
@@ -1151,7 +1144,7 @@ function indexPage(){
   const quick = `<div class="quick">
     <a class="qcard" href="decyzje.html"><div class="qi">🧭</div><div class="qh">Dlaczego tak?</div><div class="qd">Logika planu: rytm, decyzje i jak go modyfikować.</div></a>
     <a class="qcard" href="atrakcje.html"><div class="qi">🎟️</div><div class="qh">Atrakcje</div><div class="qd">Godziny, ceny i linki do rezerwacji — 32 miejsca.</div></a>
-    <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Hotele</div><div class="qd">5 baz na 11 nocy, pokoje rodzinne, zdjęcia i linki do map.</div></a>
+    <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Hotele</div><div class="qd">6 obiektów na 11 nocy (Abu Zabi gratis), pokoje rodzinne i linki do map.</div></a>
     <a class="qcard" href="loty.html"><div class="qi">✈️</div><div class="qh">Loty</div><div class="qd">Ceny linii, trendy i kiedy nacisnąć „kup".</div></a>
     <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet</div><div class="qd">Kalkulator kosztów, transport i widełki 40–60 tys.</div></a>
     <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Pogoda w maju, informacje praktyczne i co spakować.</div></a>
@@ -1172,8 +1165,8 @@ function indexPage(){
   <section class="statband" aria-label="Podróż w liczbach">
     <div class="stt hl"><b id="cd">—</b><span>dni do wylotu</span></div>
     <div class="stt"><b>13</b><span>dni podróży</span></div>
-    <div class="stt"><b>5</b><span>baz / miast</span></div>
-    <div class="stt"><b>11</b><span>nocy w Japonii</span></div>
+    <div class="stt"><b>5</b><span>baz w Japonii</span></div>
+    <div class="stt"><b>10</b><span>nocy w Japonii</span></div>
     <div class="stt"><b>~42<small>tys zł</small></b><span>budżet 2+2</span></div>
   </section>
 
@@ -1499,8 +1492,8 @@ function drukPage(){
       <div class="rule"></div>
     </div>
     <div class="cfacts">
-      <div><b>13</b>dni podróży</div><div><b>11</b>nocy w Japonii</div>
-      <div><b>5</b>baz noclegowych</div><div><b>~42<i>tys. zł</i></b>budżet 2+2</div>
+      <div><b>13</b>dni podróży</div><div><b>10</b>nocy w Japonii</div>
+      <div><b>5</b>baz w Japonii</div><div><b>~42<i>tys. zł</i></b>budżet 2+2</div>
     </div>
     <h3 class="toch">Spis treści</h3>
     <ol class="toc">${toc}</ol>
@@ -1789,7 +1782,7 @@ function lotyPage(){
     <h2 class="stitle">Dalej</h2>
     <div class="quick">
       <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet całości</div><div class="qd">Kalkulator kosztów, transport w Japonii i widełki 40–60 tys.</div></a>
-      <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Noclegi</div><div class="qd">5 baz, w tym hotel stopover w Abu Zabi z pakietu Etihad.</div></a>
+      <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Noclegi</div><div class="qd">5 baz w Japonii plus hotel stopover w Abu Zabi z pakietu Etihad.</div></a>
     </div>
   </section>
   ${footer('')}`;

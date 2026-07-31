@@ -305,11 +305,6 @@ footer a{font-weight:700;text-decoration:none}
 .arow .an i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
 .arow .am{font-size:12.5px;color:var(--muted);grid-column:1}
 .arow .ap{font-weight:800;font-size:17px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-.wtab{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.wtab span{flex:1 1 150px;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--panel);
-  font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
-.wtab b{display:block;font-family:var(--serif);font-weight:500;font-size:21px;color:var(--ink);
-  text-transform:none;letter-spacing:0;margin-bottom:1px}
 @media(max-width:620px){.arow{grid-template-columns:1fr}.arow .ad{text-align:left}}
 .arow .ad{font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
 .pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
@@ -328,7 +323,6 @@ footer a{font-weight:700;text-decoration:none}
 .gridbars{display:flex;align-items:flex-end;gap:3px;height:120px;margin-top:6px}
 .gridbars div{flex:1;border-radius:4px 4px 0 0;background:var(--ai);opacity:.55;position:relative;min-width:0}
 .gridbars div.lowest{background:var(--success);opacity:1}
-.gridbars div.plan{background:var(--shu);opacity:1}
 .gridlabs{display:flex;gap:3px;margin-top:5px}
 .gridlabs span{flex:1;text-align:center;font-size:10px;color:var(--muted);min-width:0}
 /* ---- modern polish ---- */
@@ -366,7 +360,6 @@ footer a{font-weight:700;text-decoration:none}
 .wgrow{margin-bottom:16px}
 .wgrow label{display:block;margin-bottom:8px;font-weight:700;color:var(--ai)}
 .wgrow input[type=range]{width:100%;accent-color:var(--shu)}
-.wghint{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:2px}
 .wchk{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px;padding:11px 13px;border-radius:12px;
   background:var(--sakura);border:1px solid var(--line);font-size:12.5px;line-height:1.5;cursor:pointer}
 .wchk input{margin-top:2px;flex:0 0 auto;accent-color:var(--shu);width:16px;height:16px;cursor:pointer}

@@ -1,0 +1,9 @@
+# Generator strony — nie publikować (zawiera lokalne ścieżki i wszystkie dane wejściowe)
+build.mjs
+
+# Źródło artefaktu claude.ai (~1,9 MB, zdjęcia jako data-URI) — nie jest częścią serwisu
+japonia-artifact.html
+
+# Robocze
+*.log
+.DS_Store
