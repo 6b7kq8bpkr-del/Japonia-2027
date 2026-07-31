@@ -40,10 +40,15 @@ const hrsOf = s => {const m=String(s).match(/(\d+)\s*h(?:\s*(\d+))?/); return m 
 const STOP_PENALTY_H = 1.5, STOPOVER_BONUS_H = 750/PLN_PER_HOUR;
 const comfortBase  = A => -hrsOf(A.dur) - (A.stops||0)*STOP_PENALTY_H;
 const comfortBonus = A => A.hotel ? STOPOVER_BONUS_H : 0;
+/* Data ostatniej KONTROLI cen — zadanie aktualizuje ją przy każdym uruchomieniu, także wtedy,
+   gdy ceny się nie zmieniły i nie dopisujemy nic do CHECKS. Dzięki temu widać różnicę między
+   „sprawdzone, bez zmian" a „dawno nie sprawdzane". */
+const LAST_CHECKED = '2026-07-31';
 const CHECKS = [
   {date:'2026-07-26', p:{etihad:3910, emirates:4262, finnair:4928, lot:5288, qatar:5465, turkish:6423}},
   {date:'2026-07-27', p:{etihad:4228, emirates:4262, finnair:4727, lot:5248}},
   {date:'2026-07-29', p:{etihad:4225, emirates:4257, finnair:4723, lot:5249, qatar:5219, turkish:6938}},
+  {date:'2026-07-31', p:{etihad:4255, emirates:4261, finnair:4726, lot:5227, qatar:5219, turkish:6945}},
 ];
 /* Siatka dat z Google Flights — cena 12-dniowej podróży wg DNIA WYLOTU (1 dorosły) */
 const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5,4150],[6,4150],[7,4260],
@@ -1213,7 +1218,7 @@ function kosztyPage(){
 
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
-    <div class="pflag">✈️ <span><b>Ostatnie sprawdzenie ${dpl(FLIGHT.checked)}: ${plz(FLIGHT.adult)}/dorosły</b>${trend()} (${FLIGHT.airline}, WAW→Narita, 3–15.05.2027) — dla 2+2 ≈ <b>~${plz(FLIGHT.family)}</b>. Cena <b>${FLIGHT.band}</b>.</span></div>
+    <div class="pflag">✈️ <span><b>Kontrola ${dpl(LAST_CHECKED)}: ${plz(FLIGHT.adult)}/dorosły</b>${trend()} (${FLIGHT.airline}, WAW→Narita, 3–15.05.2027) — dla 2+2 ≈ <b>~${plz(FLIGHT.family)}</b>. Cena <b>${FLIGHT.band}</b>.</span></div>
     <div class="card"><ul class="tips">
       <li>Ta kwota zasila pole „Loty" w kalkulatorze poniżej i odświeża się automatycznie co dwa dni.</li>
       <li>Porównanie linii, wykres trendu, progi „kup / czekaj", kalendarz wyprzedaży i wybór terminu — wszystko na osobnej zakładce.</li>
@@ -1717,7 +1722,7 @@ function lotyPage(){
 
   <section>
     <h2 class="stitle">Ceny dziś — kluczowe linie</h2>
-    <p class="lead-p">Za 1 dorosłego, w obie strony, wylot 3.05 / powrót 15.05.2027. Ostatnie sprawdzenie: <b>${dpl(FLIGHT.checked)}</b>. Posortowane od najtańszej — pełny ranking uwzględniający też czas w drodze i jakość linii jest niżej, w sekcji „Ranking wg Twoich wag".</p>
+    <p class="lead-p">Za 1 dorosłego, w obie strony, wylot 3.05 / powrót 15.05.2027. Ostatnia kontrola cen: <b>${dpl(LAST_CHECKED)}</b>${LAST_CHECKED!==FLIGHT.checked?` · ostatnia zmiana: ${dpl(FLIGHT.checked)}`:''}. Posortowane od najtańszej — pełny ranking uwzględniający też czas w drodze i jakość linii jest niżej, w sekcji „Ranking wg Twoich wag".</p>
     <div class="alist">${rows}</div>
     <div class="dnote" style="margin-top:14px">★ Etihad to trasa z planu — jako jedyna <b>może dać darmowy nocleg 4★ w Abu Zabi</b> (program stopover), wart ~600–900 zł. To jednak <b>opcja warunkowa</b>: program jest formalnie potwierdzony do stycznia 2027, więc na maj 2027 trzeba go potwierdzić przy zakupie. W rankingu niżej można tę premię włączyć i wyłączyć jednym kliknięciem.</div>
   </section>
