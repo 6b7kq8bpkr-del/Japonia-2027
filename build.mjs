@@ -1057,7 +1057,7 @@ ${inner}
 function footer(prefix){
   return `<footer>Plan rodzinny · Japonia 3–15 maja 2027 · strona prywatna (noindex)<br>
   Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br>
-  Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="${prefix}index.html">Strona główna</a></footer>`;
+  Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="${prefix}index.html">Strona główna</a> · <a href="${prefix}druk.html">Plan do druku (PDF)</a></footer>`;
 }
 
 function dayPage(d,i){
@@ -1148,6 +1148,7 @@ function indexPage(){
     <a class="qcard" href="loty.html"><div class="qi">✈️</div><div class="qh">Loty</div><div class="qd">Ceny linii, trendy i kiedy nacisnąć „kup".</div></a>
     <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet</div><div class="qd">Kalkulator kosztów, transport i widełki 40–60 tys.</div></a>
     <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Pogoda w maju, informacje praktyczne i co spakować.</div></a>
+    <a class="qcard" href="druk.html"><div class="qi">🖨️</div><div class="qh">Plan do druku (PDF)</div><div class="qd">Cały plan na kartkach — do wydruku albo offline na telefon.</div></a>
   </div>`;
   const inner = `
   <header class="hero home">
