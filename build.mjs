@@ -43,12 +43,13 @@ const comfortBonus = A => A.hotel ? STOPOVER_BONUS_H : 0;
 /* Data ostatniej KONTROLI cen — zadanie aktualizuje ją przy każdym uruchomieniu, także wtedy,
    gdy ceny się nie zmieniły i nie dopisujemy nic do CHECKS. Dzięki temu widać różnicę między
    „sprawdzone, bez zmian" a „dawno nie sprawdzane". */
-const LAST_CHECKED = '2026-07-31';
+const LAST_CHECKED = '2026-08-04';
 const CHECKS = [
   {date:'2026-07-26', p:{etihad:3910, emirates:4262, finnair:4928, lot:5288, qatar:5465, turkish:6423}},
   {date:'2026-07-27', p:{etihad:4228, emirates:4262, finnair:4727, lot:5248}},
   {date:'2026-07-29', p:{etihad:4225, emirates:4257, finnair:4723, lot:5249, qatar:5219, turkish:6938}},
   {date:'2026-07-31', p:{etihad:4255, emirates:4261, finnair:4726, lot:5227, qatar:5219, turkish:6945}},
+  {date:'2026-08-04', p:{etihad:3961, emirates:5024, finnair:4721, lot:4872, turkish:8152}},
 ];
 /* Siatka dat z Google Flights — cena 12-dniowej podróży wg DNIA WYLOTU (1 dorosły) */
 const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5,4150],[6,4150],[7,4260],
