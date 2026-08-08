@@ -43,7 +43,7 @@ const comfortBonus = A => A.hotel ? STOPOVER_BONUS_H : 0;
 /* Data ostatniej KONTROLI cen — zadanie aktualizuje ją przy każdym uruchomieniu, także wtedy,
    gdy ceny się nie zmieniły i nie dopisujemy nic do CHECKS. Dzięki temu widać różnicę między
    „sprawdzone, bez zmian" a „dawno nie sprawdzane". */
-const LAST_CHECKED = '2026-08-06';
+const LAST_CHECKED = '2026-08-08';
 const CHECKS = [
   {date:'2026-07-26', p:{etihad:3910, emirates:4262, finnair:4928, lot:5288, qatar:5465, turkish:6423}},
   {date:'2026-07-27', p:{etihad:4228, emirates:4262, finnair:4727, lot:5248}},
