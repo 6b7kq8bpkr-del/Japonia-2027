@@ -967,12 +967,13 @@ const DAYS = [
 /* ============================ HOTELS ============================ */
 const HOTELS = [
 {id:'auh',name:'Hotel stopover w Abu Zabi',stay:'Abu Zabi · 1 noc (3–4.05) · GRATIS',noqr:true,
- desc:'Hotel 4★ w cenie biletu Etihad (program stopover, także w ekonomii). Konkretny obiekt wybiera się z listy Etihadu przy rezerwacji pakietu — najpóźniej 3 dni przed wylotem, najlepiej od razu po kupnie biletów.',
+ desc:'Hotel 4★ w cenie biletu Etihad (program stopover, także w ekonomii). Konkretny obiekt wybiera się z listy Etihadu przy rezerwacji pakietu — najpóźniej 3 dni przed wylotem, najlepiej od razu po kupnie biletów. <b>Tego jednego noclegu NIE rezerwujcie przez Booking</b> — poza pakietem Etihad trzeba by za niego zapłacić. Uwaga: bezpłatność programu jest potwierdzona formalnie do stycznia 2027, więc na maj 2027 potwierdźcie ją przy zakupie biletu.',
  price:'0 zł (pakiet stopover Etihad)',near:'centrum Abu Zabi; transfer we własnym zakresie (taxi ~60–80 AED)',
  site:'https://www.etihad.com/en/book/stopover'},
 {id:'tokio1',name:'MIMARU Tokyo Ueno EAST',stay:'Tokio · 2 noce (5–7.05)',
  desc:'Aparthotel projektowany pod rodziny: apartament dla 4 osób z aneksem kuchennym i osobną sypialnią. Spokojna okolica Ueno, ~10 min metrem do Asakusy, wygodny start po przylocie.',
  price:'~750–950 zł/noc (apartament 4-os.)',near:'metro Inarichō / JR Ueno',
+ book:'https://www.booking.com/hotel/jp/mimaru-tokyo-ueno-east.html',
  site:'https://mimaruhotels.com/en/hotel/ueno-east/'},
 {id:'hakone',name:'Hakone Kowakien Ten-yu',stay:'Hakone · 1 noc (7–8.05) · prywatny onsen',
  desc:'Wyższa półka na jedyną noc, gdy nocleg JEST atrakcją: nowoczesny luksusowy ryokan, w którym KAŻDY pokój ma prywatną odkrytą kąpiel onsen (rotenburo) na tarasie — kąpiel o dowolnej porze, bez wspólnych łaźni. Dla 2+2 bierzcie pokój typu „Maisonette" (do 4 osób). Wielodaniowe kaiseki, przyjazny rodzinom, w rejonie Ninotairy/Gōry. WAŻNE: 7.05 to piątek, a pokoi 4-osobowych jest mało — rezerwujcie od razu, gdy tylko otworzą się terminy (na maj 2027 mogą jeszcze nie być dostępne — patrz „Kalendarz przygotowań"). Alternatywy dla 4 osób z prywatnym rotenburo: Hakone Kowakien Mikawaya (typy willowe) lub Ajisai Onsen Ryokan (pokoje rodzinne, darmowe anulowanie na Booking). Zdjęcie: przykładowy rotenburo.',
@@ -983,14 +984,17 @@ const HOTELS = [
 {id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 4 noce (8–12.05)',
  desc:'Ta sama rodzinna formuła co w Tokio, tuż przy dworcu Kioto — idealna baza wypadowa na Narę (Kintetsu) i Arashiyamę (JR), a walizki z takkyūbin czekają w recepcji.',
  price:'~800–1 000 zł/noc (apartament 4-os.)',near:'3 min pieszo od dworca Kyoto',
+ book:'https://www.booking.com/hotel/jp/mimaru-jing-du-station.html',
  site:'https://mimaruhotels.com/en/hotel/kyoto-station/'},
 {id:'osaka',name:'MIMARU Osaka NAMBA North',stay:'Osaka · 2 noce (12–14.05)',
  desc:'Apartamenty rodzinne w sercu Namby — ~8 minut spacerem od neonów Dōtonbori i 10 od targu Kuromon. Wieczorne wyjścia na street food bez logistyki.',
  price:'~750–950 zł/noc (apartament 4-os.)',near:'metro Nippombashi / Namba',
+ book:'https://www.booking.com/hotel/jp/mimaru-osaka-namba-north.html',
  site:'https://mimaruhotels.com/en/hotel/namba-north/'},
 {id:'tokio2',name:'MIMARU Tokyo GINZA EAST',stay:'Tokio · 1 noc (14–15.05)',
  desc:'Nocleg na finał: spokojna wschodnia Ginza, prosto metrem na Ryōgoku (sumo) i rzut kamieniem od Tokyo Station, skąd rano odjeżdża Narita Express. Alternatywa przy samej hali: APA Ryōgoku Eki Tower (ale pokoje 2-os. — trzeba brać dwa).',
  price:'~850–1 050 zł/noc (apartament 4-os.)',near:'metro Shintomichō / Tokyo Station',
+ book:'https://www.booking.com/hotel/jp/mimaru-tokyo-ginza-east.html',
  site:'https://mimaruhotels.com/en/hotel/ginza-east/'},
 ];
 const gmapsQ = name => 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);
