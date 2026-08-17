@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import crypto from 'node:crypto';
 const DIR = '/Users/urban/Desktop/Piaskownica/japonia-2027';
 fs.mkdirSync(DIR + '/days', { recursive: true });
 fs.mkdirSync(DIR + '/assets', { recursive: true });
@@ -2009,11 +2010,355 @@ function pogodaPage(){
 }
 
 /* ---- atrakcje (reuse existing card content under new shell) ---- */
+/* Katalog atrakcji — TREŚĆ ŹRÓDŁOWA.
+   Wcześniej `atrakcjePage()` czytała własny poprzedni wynik z `atrakcje.html`, przez co:
+   (a) build nie był deterministyczny (plik puchł o pustą linię przy każdym uruchomieniu),
+   (b) treść istniała wyłącznie w wygenerowanym HTML — skasowanie pliku wywracało build
+       i bezpowrotnie gubiło 41 kart. Teraz źródłem jest ta stała. */
+const ATR_BODY = String.raw`<h2 id="tokio" class="stitle" style="scroll-margin-top:80px">🏙️ Tokio</h2>
+  <div class="agrid">
+
+    <div class="acard" id="sensoji">
+      <h3>⛩️ Sensō-ji (Asakusa)</h3>
+      <div class="desc">Najstarsza świątynia Tokio (645 r.) — brama Kaminarimon z wielkim lampionem i deptak Nakamise pełen straganów. Wieczorem podświetlona i pusta.</div>
+      <div class="meta"><span>🕒 <b>teren 24 h</b>, pawilon główny 6:00–17:00</span><span>💴 wstęp darmowy</span><span>📍 metro Asakusa (Ginza/Asakusa Line)</span></div>
+      <div class="links"><a href="https://www.senso-ji.jp/" target="_blank" rel="noopener">strona oficjalna →</a></div>
+    </div>
+
+    <div class="acard" id="meiji">
+      <h3>🌳 Meiji Jingū</h3>
+      <div class="desc">Chram shintō ukryty w 70-hektarowym lesie w środku miasta. Wielkie torii, beczki sake, ślubne procesje w weekendy.</div>
+      <div class="meta"><span>🕒 od świtu do zmierzchu (maj ~5:00–18:20)</span><span>💴 darmowy (ogród wewnętrzny 500 ¥)</span><span>📍 JR Harajuku</span></div>
+      <div class="links"><a href="https://www.meijijingu.or.jp/en/" target="_blank" rel="noopener">strona oficjalna →</a></div>
+    </div>
+
+    <div class="acard" id="shibuya-sky">
+      <h3>🌆 Shibuya Sky</h3>
+      <div class="desc">Otwarty taras na dachu 229-metrowego wieżowca — widok na słynne skrzyżowanie, a przy dobrej pogodzie na Fudżi. Najlepszy slot: zachód słońca.</div>
+      <div class="meta"><span>🕒 10:00–22:30 (sloty co 20 min)</span><span>💴 online: dorosły ~2 600 ¥, 12–17 lat ~2 000 ¥, 6–11 lat ~1 200 ¥ → 4 os. ≈ 8 400 ¥ (~220 zł)</span><span>📍 Shibuya Scramble Square, 14 p. wejście</span></div>
+      <span class="rezerwuj">rezerwuj — sprzedaż 4 tyg. wcześniej</span>
+      <div class="links"><a href="https://www.shibuya-scramble-square.com/sky/" target="_blank" rel="noopener">bilety online →</a></div>
+    </div>
+
+    <div class="acard" id="pokemon">
+      <h3>⚡ Pokémon Center Mega Tokyo + Pokémon Café</h3>
+      <div class="desc">Największy sklep Pokémon w Japonii (Sunshine City, Ikebukuro) — ekskluzywne pluszaki i karty. Pokémon Café: tematyczne dania i wizyta Pikachu przy stoliku (uwaga: Café jest w Nihombashi, ~25 min metrem od Ikebukuro).</div>
+      <div class="meta"><span>🕒 sklep 10:00–20:00; Café sloty 10:30–21:00</span><span>💴 sklep — wstęp darmowy; Café ~1 500–2 200 ¥/os za danie</span><span>📍 Sunshine City (sklep) / Nihombashi Takashimaya E (Café)</span></div>
+      <span class="rezerwuj">Café: rezerwacja 31 dni wcześniej, 18:00 czasu jap.</span>
+      <div class="links"><a href="https://www.pokemon.co.jp/shop/en/pokecen/megatokyo/" target="_blank" rel="noopener">Pokémon Center →</a><a href="https://reserve.pokemon-cafe.jp/" target="_blank" rel="noopener">rezerwacja Café →</a></div>
+    </div>
+
+    <div class="acard" id="tsukiji">
+      <h3>🍣 Tsukiji Outer Market</h3>
+      <div class="desc">Targ zewnętrzny dawnej giełdy rybnej: sushi na śniadanie, słodki omlet tamagoyaki na patyku, noże kuchenne. Rodzinna klasyka — jeść po trochu na wielu straganach.</div>
+      <div class="meta"><span>🕒 ~5:00–14:00 (najlepiej przyjść do 10:00)</span><span>💴 śniadanie 1 000–3 000 ¥/os</span><span>📍 metro Tsukiji / Tsukijishijō</span></div>
+      <div class="links"><a href="https://www.tsukiji.or.jp/english/" target="_blank" rel="noopener">strona targu →</a></div>
+    </div>
+
+    <div class="acard" id="teamlab">
+      <h3>💧 teamLab Planets (opcja)</h3>
+      <div class="desc">Immersyjne muzeum sztuki cyfrowej — chodzi się boso, m.in. po wodzie po kolana, wśród luster i kwiatów. Dzieciaki wychodzą zachwycone.</div>
+      <div class="meta"><span>🕒 9:00–22:00 (sloty godzinowe)</span><span>💴 dorosły ~3 800 ¥, 13–17 lat ~2 800 ¥, 4–12 lat ~1 500 ¥</span><span>📍 Toyosu (Yurikamome: Shin-Toyosu)</span></div>
+      <span class="rezerwuj">bilety tylko online, z datą i godziną</span>
+      <div class="links"><a href="https://www.teamlab.art/e/planets/" target="_blank" rel="noopener">bilety →</a></div>
+    </div>
+
+  </div>
+
+  <h2 id="hakone" class="stitle" style="scroll-margin-top:80px">♨️ Hakone</h2>
+  <div class="agrid">
+
+    <div class="acard" id="hakone-pass">
+      <h3>🎫 Hakone Free Pass + Romancecar</h3>
+      <div class="desc">Jeden bilet na całą pętlę: kolejka górska, kolej linowa, „piracki" statek i autobusy. Romancecar = wygodny ekspres z Shinjuku z rezerwowanymi miejscami.</div>
+      <div class="meta"><span>🕒 pass 2-dniowy</span><span>💴 z Shinjuku: dorosły ~6 100 ¥, dziecko ~1 100 ¥; dopłata Romancecar ~1 200 ¥/os</span><span>📍 start: dworzec Odakyu Shinjuku</span></div>
+      <div class="links"><a href="https://www.odakyu.jp/english/passes/hakone/" target="_blank" rel="noopener">Hakone Free Pass →</a><a href="https://www.web-odakyu.com/wsr/" target="_blank" rel="noopener">rezerwacja Romancecar →</a></div>
+    </div>
+
+    <div class="acard" id="owakudani">
+      <h3>🌋 Ōwakudani</h3>
+      <div class="desc">Dymiąca dolina wulkaniczna, do której wjeżdża się kolejką linową. Kultowe czarne jajka kuro-tamago gotowane w siarkowych źródłach — podobno każde dodaje 7 lat życia.</div>
+      <div class="meta"><span>🕒 kolej linowa 9:00–17:00</span><span>💴 przejazd w cenie Free Pass; jajka ~500 ¥/4 szt.</span><span>📍 stacja Ōwakudani (ropeway z Sōunzan)</span></div>
+      <div class="links"><a href="https://www.hakoneropeway.co.jp/foreign/en/" target="_blank" rel="noopener">Hakone Ropeway →</a></div>
+    </div>
+
+    <div class="acard" id="ashi">
+      <h3>⛵ Jezioro Ashi + Hakone-jinja</h3>
+      <div class="desc">Rejs stylizowanym „pirackim" galeonem przez kalderę; przy dobrej pogodzie Fudżi nad taflą. W Moto-Hakone czerwona brama torii stojąca w wodzie — jedno z najsłynniejszych ujęć Japonii.</div>
+      <div class="meta"><span>🕒 rejsy ~9:30–17:00 co 30–40 min</span><span>💴 rejs w cenie Free Pass; świątynia darmowa (24 h)</span><span>📍 Tōgendai → Moto-Hakone</span></div>
+      <div class="links"><a href="https://www.hakonenavi.jp/international/en/" target="_blank" rel="noopener">Hakone Navi →</a></div>
+    </div>
+
+  </div>
+
+  <div class="agrid" style="margin-top:13px">
+    <div class="acard" id="openair">
+      <h3>🎨 Hakone Open-Air Museum</h3>
+      <div class="desc">Park rzeźby, po którym dzieci mogą się wspinać: sieciowa pajęczyna Woods of Net, wieża z witraży, pawilon Picassa i kąpiel stóp w onsenowej wodzie. Ulubiony punkt rodzinnych tourów — i najlepszy plan B, gdy wiatr zatrzyma kolejkę linową.</div>
+      <div class="meta"><span>🕒 9:00–17:00</span><span>💴 2 000 ¥ dorosły / 800 ¥ dzieci szkolne → 4 os. ≈ 5 600 ¥ (~145 zł)</span><span>📍 stacja Chōkoku-no-Mori, 5 min kolejką od Gōry</span></div>
+      <div class="links"><a href="https://www.hakone-oam.or.jp/en/" target="_blank" rel="noopener">strona muzeum →</a></div>
+    </div>
+  </div>
+
+  <h2 id="kioto" class="stitle" style="scroll-margin-top:80px">⛩️ Kioto</h2>
+  <div class="agrid">
+
+    <div class="acard" id="fushimi">
+      <h3>⛩️ Fushimi Inari Taisha</h3>
+      <div class="desc">Tysiące cynobrowych bram torii wijących się po zboczu góry Inari. Do rozdroża Yotsutsuji (~45 min pod górę) — widok na całe Kioto. Lisy-strażnicy na każdym kroku.</div>
+      <div class="meta"><span>🕒 24 h — być przed 7:30!</span><span>💴 darmowe</span><span>📍 JR Inari (2 przystanki z dworca Kioto)</span></div>
+      <div class="links"><a href="https://inari.jp/en/" target="_blank" rel="noopener">strona oficjalna →</a></div>
+    </div>
+
+    <div class="acard" id="kiyomizu">
+      <h3>🏔️ Kiyomizu-dera</h3>
+      <div class="desc">UNESCO — wielki drewniany taras wsparty na 13-metrowych filarach, bez ani jednego gwoździa. Pod spodem wodospad Otowa: trzy strumienie życzeń (zdrowie, nauka, miłość — pije się tylko z jednego!).</div>
+      <div class="meta"><span>🕒 6:00–18:00</span><span>💴 500 ¥ / dzieci 200 ¥</span><span>📍 zejście uliczkami Sannenzaka/Ninenzaka</span></div>
+      <div class="links"><a href="https://www.kiyomizudera.or.jp/en/" target="_blank" rel="noopener">strona oficjalna →</a></div>
+    </div>
+
+    <div class="acard" id="kinkakuji">
+      <h3>✨ Kinkaku-ji (Złoty Pawilon)</h3>
+      <div class="desc">Pawilon pokryty płatkami złota odbijający się w stawie — najsłynniejsza pocztówka Kioto. Najładniej w porannym słońcu, zwiedzanie ~45 min.</div>
+      <div class="meta"><span>🕒 9:00–17:00</span><span>💴 500 ¥ / dzieci 300 ¥</span><span>📍 autobus 101/205 z dworca (~40 min)</span></div>
+      <div class="links"><a href="https://www.shokoku-ji.jp/en/kinkakuji/" target="_blank" rel="noopener">strona oficjalna →</a></div>
+    </div>
+
+    <div class="acard" id="arashiyama">
+      <h3>🎋 Arashiyama: las bambusowy + Tenryū-ji</h3>
+      <div class="desc">Aleja wśród 20-metrowych bambusów (pusta tylko wcześnie rano) i przylegające ogrody zen świątyni Tenryū-ji (UNESCO) z widokiem na góry.</div>
+      <div class="meta"><span>🕒 las 24 h; Tenryū-ji 8:30–17:00</span><span>💴 las darmowy; Tenryū-ji ogrody 500 ¥ / dzieci 300 ¥</span><span>📍 JR Saga-Arashiyama (15 min z Kioto)</span></div>
+      <div class="links"><a href="https://www.tenryuji.com/en/" target="_blank" rel="noopener">Tenryū-ji →</a></div>
+    </div>
+
+    <div class="acard" id="monkeys">
+      <h3>🐒 Monkey Park Iwatayama</h3>
+      <div class="desc">~120 makaków japońskich na szczycie góry nad Arashiyamą. 20 minut wspinaczki, na górze karmienie przez siatkę i panorama Kioto. Hit u dzieci.</div>
+      <div class="meta"><span>🕒 9:00–16:30</span><span>💴 800 ¥ / dzieci 400 ¥</span><span>📍 wejście przy moście Togetsukyō</span></div>
+      <div class="links"><a href="https://monkeypark.jp/" target="_blank" rel="noopener">strona parku →</a></div>
+    </div>
+
+    <div class="acard" id="culture">
+      <h3>🎎 Warsztaty: herbata · kaligrafia · ikebana</h3>
+      <div class="desc">Dzień kultury dla mamy (i całej rodziny): ceremonia herbaty z wyjaśnieniem po angielsku, pisanie znaków shodō pędzlem, układanie kwiatów ikebana.</div>
+      <div class="meta"><span>🕒 sesje 45–90 min, sloty rodzinne rano i po południu</span><span>💴 herbata ~3 000–6 000 ¥/os; pakiety łączone (herbata + kaligrafia) 5 000–8 000 ¥/os</span><span>📍 Gion / okolice Kiyomizu</span></div>
+      <span class="rezerwuj">rezerwuj 1–2 miesiące wcześniej</span>
+      <div class="links"><a href="https://www.tea-kyoto.com/" target="_blank" rel="noopener">Camellia (herbata) →</a><a href="https://mai-ko.com/" target="_blank" rel="noopener">Maikoya (pakiety) →</a></div>
+    </div>
+
+    <div class="acard" id="nishiki">
+      <h3>🍡 Nishiki Market</h3>
+      <div class="desc">„Spiżarnia Kioto" — 400-letnia kryta uliczka ze 130 straganami: tsukemono, wagashi, matcha, krewetki na patyku. Idealne na przekąskowy spacer.</div>
+      <div class="meta"><span>🕒 ~10:00–17:00 (część stoisk zamknięta w środy)</span><span>💴 przekąski 200–800 ¥</span><span>📍 centrum, przecznica od Shijō-dōri</span></div>
+      <div class="links"><a href="https://www.kyoto-nishiki.or.jp/" target="_blank" rel="noopener">strona targu →</a></div>
+    </div>
+
+    <div class="acard" id="gion">
+      <h3>🏮 Gion & Pontocho</h3>
+      <div class="desc">Dzielnice gejsz: drewniane herbaciarnie przy Hanamikoji, latarnie nad rzeką Kamo na Pontocho. Wieczorem szansa minąć maiko śpieszącą na występ.</div>
+      <div class="meta"><span>🕒 najładniej o zmierzchu</span><span>💴 spacer darmowy</span><span>📍 ⚠️ zakaz fotografowania na prywatnych uliczkach Gion (kary!)</span></div>
+      <div class="links"><a href="https://kyoto.travel/en/see-and-do/districts/gion/" target="_blank" rel="noopener">Kyoto Travel Guide →</a></div>
+    </div>
+
+  </div>
+
+  <div class="agrid" style="margin-top:13px">
+    <div class="acard" id="ninja">
+      <h3>🥷 Klasa ninja — Samurai Ninja Museum</h3>
+      <div class="desc">75 minut w kostiumach: rzutki shuriken, dmuchawka, skradanie i historia ninja. W recenzjach rodzin z dziećmi 10–13 regularnie „ulubiona rzecz w Kioto". Świetna opcja dla taty z dziećmi, gdy mama układa ikebanę — muzeum stoi tuż przy targu Nishiki.</div>
+      <div class="meta"><span>🕒 sesje w ciągu dnia, ~75–120 min</span><span>💴 ~8 000–10 000 ¥/os (rodzinne pakiety)</span><span>📍 przy Nishiki Market</span></div>
+      <span class="rezerwuj">rezerwuj online ~2–4 tyg. wcześniej</span>
+      <div class="links"><a href="https://mai-ko.com/samurai/" target="_blank" rel="noopener">rezerwacja →</a></div>
+    </div>
+    <div class="acard" id="railway">
+      <h3>🚄 Kyoto Railway Museum (plan B)</h3>
+      <div class="desc">53 prawdziwe pociągi — od parowozów po shinkansen, do którego się wchodzi; symulator maszynisty losowany za 100 ¥. Najlepszy kryty zapasowy plan na deszczowy dzień w Kioto.</div>
+      <div class="meta"><span>🕒 10:00–17:00 (śr. zamknięte)</span><span>💴 1 500 ¥ dorosły / 500 ¥ dzieci → 4 os. ≈ 4 000 ¥ (~105 zł)</span><span>📍 20 min pieszo od dworca Kioto (Umekōji)</span></div>
+      <div class="links"><a href="https://www.kyotorailwaymuseum.jp/en/" target="_blank" rel="noopener">strona muzeum →</a></div>
+    </div>
+    <div class="acard" id="nintendomuseum">
+      <h3>🎮 Nintendo Museum, Ujī (opcja)</h3>
+      <div class="desc">Muzeum historii Nintendo z interaktywnymi wystawami i gigantycznymi padami — pielgrzymka dla graczy. Leży na linii Kioto–Nara, więc da się dokleić do dnia w Narze. Świadomie je wcześniej odpuściliśmy — karta zostaje na wypadek zmiany zdania.</div>
+      <div class="meta"><span>🕒 wstępy o pełnych godzinach, ~3 h</span><span>💴 3 300 ¥ dorosły / taniej dzieci; <b>bilety WYŁĄCZNIE w loterii ~3 mies. wcześniej</b></span><span>📍 Ujī, stacja Ogura (Kintetsu/JR z Kioto)</span></div>
+      <span class="rezerwuj">loteria ~luty 2027 · paszporty całej 4 przy wejściu</span>
+      <div class="links"><a href="https://museum.nintendo.com/" target="_blank" rel="noopener">loteria biletów →</a></div>
+    </div>
+  </div>
+
+  <h2 id="nara" class="stitle" style="scroll-margin-top:80px">🦌 Nara</h2>
+  <div class="agrid">
+
+    <div class="acard" id="nara-park">
+      <h3>🦌 Park Nara i jelenie</h3>
+      <div class="desc">~1 200 oswojonych jeleni sika swobodnie chodzących po parku. Kłaniają się za krakersy shika-senbei. Karmić po jednym, trzymać zapas wysoko!</div>
+      <div class="meta"><span>🕒 24 h</span><span>💴 park darmowy; senbei ~200 ¥/paczka</span><span>📍 10 min pieszo ze stacji Kintetsu-Nara</span></div>
+      <div class="links"><a href="https://www.visitnara.jp/" target="_blank" rel="noopener">Visit Nara →</a></div>
+    </div>
+
+    <div class="acard" id="todaiji">
+      <h3>🧘 Tōdai-ji</h3>
+      <div class="desc">Jeden z największych drewnianych budynków świata, a w nim 15-metrowy Wielki Budda z brązu. W filarze otwór wielkości „nozdrza Buddy" — kto się przeciśnie, temu szczęście sprzyja (dzieci przechodzą bez problemu).</div>
+      <div class="meta"><span>🕒 7:30–17:30</span><span>💴 800 ¥ / dzieci 400 ¥</span><span>📍 park Nara</span></div>
+      <div class="links"><a href="https://www.todaiji.or.jp/en/" target="_blank" rel="noopener">strona oficjalna →</a></div>
+    </div>
+
+    <div class="acard" id="kasuga">
+      <h3>🏮 Kasuga Taisha</h3>
+      <div class="desc">Chram wśród lasu, do którego prowadzi aleja ~2 000 kamiennych lampionów porośniętych mchem. Klimat jak z Mononoke.</div>
+      <div class="meta"><span>🕒 6:30–17:30</span><span>💴 teren darmowy; sala wewnętrzna 700 ¥</span><span>📍 wschodni skraj parku Nara</span></div>
+      <div class="links"><a href="https://www.kasugataisha.or.jp/en/" target="_blank" rel="noopener">strona oficjalna →</a></div>
+    </div>
+
+    <div class="acard" id="mochi">
+      <h3>🍡 Nakatanidō — mochi</h3>
+      <div class="desc">Najszybsze ubijanie mochi w Japonii — pokaz co ~30 min przy sklepie: dwóch mistrzów wali drewnianymi młotami w rytmie karabinu. Świeże yomogi-mochi jeszcze ciepłe.</div>
+      <div class="meta"><span>🕒 10:00–19:00 (pokazy nieregularnie, zwykle co 30 min)</span><span>💴 mochi ~200 ¥/szt.</span><span>📍 przy Higashimuki, 3 min od Kintetsu-Nara</span></div>
+      <div class="links"><a href="https://www.nakatanidou.jp/" target="_blank" rel="noopener">strona sklepu →</a></div>
+    </div>
+
+  </div>
+
+  <h2 id="osaka" class="stitle" style="scroll-margin-top:80px">🏯 Osaka</h2>
+  <div class="agrid">
+
+    <div class="acard" id="kuromon">
+      <h3>🦐 Kuromon Ichiba</h3>
+      <div class="desc">„Kuchnia Osaki" — 580 m krytego targu: przegrzebki z grilla, tuńczyk, truskawki mochi, sok z melona. Śniadanie w stylu „po trochu ze wszystkiego".</div>
+      <div class="meta"><span>🕒 ~9:00–18:00 (rano najświeższe)</span><span>💴 przekąski 300–1 500 ¥</span><span>📍 metro Nippombashi, 5 min od Namby</span></div>
+      <div class="links"><a href="https://kuromon.com/en/" target="_blank" rel="noopener">strona targu →</a></div>
+    </div>
+
+    <div class="acard" id="osaka-castle">
+      <h3>🏯 Zamek w Osace</h3>
+      <div class="desc">Ikona miasta w parku pełnym fos i murów z gigantycznych głazów. W środku muzeum Toyotomiego Hideyoshiego i taras widokowy na 8. piętrze.</div>
+      <div class="meta"><span>🕒 9:00–17:00</span><span>💴 muzeum 600 ¥, dzieci do lat 15 darmowo; park darmowy</span><span>📍 metro Tanimachi 4-chōme</span></div>
+      <div class="links"><a href="https://www.osakacastle.net/english/" target="_blank" rel="noopener">strona zamku →</a></div>
+    </div>
+
+    <div class="acard" id="kaiyukan">
+      <h3>🦈 Akwarium Kaiyukan</h3>
+      <div class="desc">Jedno z największych akwariów świata — zbiornik centralny na 5 400 ton z rekinem wielorybim; zwiedzanie spiralą w dół przez 8 pięter Pacyfiku.</div>
+      <div class="meta"><span>🕒 10:00–20:00</span><span>💴 dorosły ~2 700 ¥, 7–15 lat ~1 400 ¥ → 4 os. ≈ 8 200 ¥</span><span>📍 Osakako (Chūō Line), Tempozan</span></div>
+      <span class="rezerwuj">bilet z datą online = bez kolejki</span>
+      <div class="links"><a href="https://www.kaiyukan.com/language/eng/" target="_blank" rel="noopener">bilety →</a></div>
+    </div>
+
+    <div class="acard" id="shinsekai">
+      <h3>🗼 Shinsekai & Tsūtenkaku</h3>
+      <div class="desc">Retro-Osaka z lat 50.: neony, automaty, kushikatsu (panierowane szaszłyki — nie maczać dwa razy!). Wieża Tsūtenkaku z pomnikiem Billikena — pogłaskanie stóp daje szczęście.</div>
+      <div class="meta"><span>🕒 wieża 10:00–20:00</span><span>💴 wieża ~1 000 ¥ / dzieci 500 ¥</span><span>📍 metro Ebisuchō / Dōbutsuen-mae</span></div>
+      <div class="links"><a href="https://www.tsutenkaku.co.jp/" target="_blank" rel="noopener">Tsūtenkaku →</a></div>
+    </div>
+
+    <div class="acard" id="tombori">
+      <h3>🚤 Rejs kanałem Tombori</h3>
+      <div class="desc">20-minutowy rejs kanałem Dōtonbori między neonami — miasto z żabiej perspektywy, wieczorem najładniej. Start przy moście obok neonu Glico.</div>
+      <div class="meta"><span>🕒 ~11:00–21:00 co 30 min</span><span>💴 ~1 500 ¥ / dzieci ~900 ¥</span><span>📍 przystań Tazaemon-bashi</span></div>
+      <div class="links"><a href="https://www.ipponmatsu.co.jp/cruise/tombori.html" target="_blank" rel="noopener">Tombori River Cruise →</a></div>
+    </div>
+
+  </div>
+
+  <h2 id="sumo-s" class="stitle" style="scroll-margin-top:80px">🥋 Sumo — Natsu Basho 2027</h2>
+  <div class="agrid">
+
+    <div class="acard" id="sumo">
+      <h3>🥋 Turniej sumo, dzień 6 (pt 14.05)</h3>
+      <div class="desc">Majowy wielki turniej (9–23.05.2027) w hali Ryōgoku Kokugikan. Plan: wejście ~12:30 na niższe dywizje, jūryō od ~14:15, najlepsza liga makuuchi 15:45–18:00 z ceremonią dohyō-iri i finałową ceremonią łuku.</div>
+      <div class="meta"><span>🕒 hala otwarta od ~8:00, kulminacja 15:45–18:00</span><span>💴 box 4-os. ~40 000–52 000 ¥; krzesełka arena B/C ~4 000–9 000 ¥/os</span><span>📍 JR Ryōgoku, 1 min od dworca</span></div>
+      <span class="rezerwuj">sprzedaż ~początek kwietnia 2027 — wyprzedaje się 1. dnia!</span>
+      <div class="links"><a href="https://sumo.pia.jp/en/" target="_blank" rel="noopener">oficjalne bilety →</a><a href="https://www.sumo.or.jp/En/" target="_blank" rel="noopener">Japan Sumo Association →</a></div>
+    </div>
+
+    <div class="acard" id="chanko">
+      <h3>🍲 Chanko-nabe w Ryōgoku</h3>
+      <div class="desc">Gulasz, na którym rosną zapaśnicy — kocioł bulionu z kurczakiem, rybą, tofu i warzywami, do dzielenia na całą rodzinę. W Ryōgoku kilkanaście knajp prowadzonych przez byłych sumitów.</div>
+      <div class="meta"><span>🕒 kolacja po turnieju ~18:15 (zarezerwować stolik!)</span><span>💴 ~3 000–4 500 ¥/os</span><span>📍 polecane: Chanko Tomoegata, Chanko Kirishima</span></div>
+      <div class="links"><a href="https://tomoegata.com/" target="_blank" rel="noopener">Tomoegata →</a></div>
+    </div>
+
+  </div>
+
+  <div class="agrid" style="margin-top:13px">
+    <div class="acard" id="round1">
+      <h3>🕹️ Round1 Sennichimae + karaoke</h3>
+      <div class="desc">7 pięter rozrywki przy Dōtonbori: automaty rytmiczne, purikura (japońskie fotobudki), bowling, darty. W recenzjach „przypadkiem spędziliśmy tu 6 godzin". Obok — karaoke boxy (Big Echo/Jankara): godzina rodzinnego wycia do mikrofonu ~2 000 ¥ za pokój.</div>
+      <div class="meta"><span>🕒 do późna; z rodzicami dzieci mogą wieczorem</span><span>💴 gry 100–500 ¥/szt., purikura ~500 ¥, karaoke ~2 000 ¥/h/pokój</span><span>📍 Sennichimae, 3 min od Dōtonbori</span></div>
+      <div class="links"><a href="https://www.round1.co.jp/" target="_blank" rel="noopener">Round1 →</a></div>
+    </div>
+    <div class="acard" id="taiko">
+      <h3>🥁 Warsztat taiko (bębny japońskie)</h3>
+      <div class="desc">Godzina walenia w wielkie bębny pod okiem instruktora — głośno, fizycznie, zero bariery językowej. Obecny w programach Audley, G Adventures i Intrepid; rodziny wymieniają go jednym tchem z sumo. Sesje też w Kioto (Gion), gdyby pasowało wcześniej.</div>
+      <div class="meta"><span>🕒 sesje ~60 min w ciągu dnia</span><span>💴 ~6 000 ¥/os → 4 os. ≈ 24 000 ¥ (~620 zł)</span><span>📍 Taiko-Lab / Taiko Center — Osaka lub Kioto-Gion</span></div>
+      <span class="rezerwuj">rezerwuj online ~2–4 tyg. wcześniej</span>
+      <div class="links"><a href="https://www.taiko-center.co.jp/school/en/" target="_blank" rel="noopener">Taiko Center →</a></div>
+    </div>
+  </div>
+
+  <h2 id="abuzabi" class="stitle" style="scroll-margin-top:80px">🕌 Abu Zabi (stopover)</h2>
+  <div class="agrid">
+
+    <div class="acard" id="mosque">
+      <h3>🕌 Wielki Meczet Szejka Zajida</h3>
+      <div class="desc">82 białe kopuły, największy ręcznie tkany dywan świata i kryształowe żyrandole — jedno z najbardziej imponujących wnętrz, jakie zobaczycie gdziekolwiek. Robi „wow" niezależnie od wieku.</div>
+      <div class="meta"><span>🕒 sob–czw 9:00–22:00, pt od 9:00 (przerwy na modlitwy)</span><span>💴 wstęp darmowy (darmowa rezerwacja online)</span><span>📍 ~20 min taxi z centrum; zwiedzać RANO — chłodniej i pusto</span></div>
+      <span class="rezerwuj">dress code: zakryte ramiona i kolana; abaje gratis na miejscu</span>
+      <div class="links"><a href="https://www.szgmc.gov.ae/en" target="_blank" rel="noopener">rezerwacja wejścia →</a></div>
+    </div>
+
+    <div class="acard" id="louvread">
+      <h3>🎨 Luwr Abu Zabi</h3>
+      <div class="desc">Filia paryskiego Luwru pod słynną kopułą Jeana Nouvela — „deszcz światła" nad galeriami. Idealny klimatyzowany azyl na środek dnia, gdy na zewnątrz 35–40°C.</div>
+      <div class="meta"><span>🕒 wt–niedz 10:00–18:30 (pon. zamknięte — 4.05.2027 to wtorek ✓)</span><span>💴 ~65 AED dorosły, do 18 lat darmowo → rodzina ~130 AED (~140 zł)</span><span>📍 wyspa Saadiyat, ~15 min taxi z centrum</span></div>
+      <div class="links"><a href="https://www.louvreabudhabi.ae/" target="_blank" rel="noopener">bilety →</a></div>
+    </div>
+
+    <div class="acard" id="stopover">
+      <h3>🏨 Pakiet stopover Etihad</h3>
+      <div class="desc">Darmowy hotel 4★ (do 2 nocy) przy przesiadce >24 h w Abu Zabi — dostępny także dla ekonomii. Bilet kupuje się jako multi-city ze stopoverem, a hotel dobiera z listy Etihadu.</div>
+      <div class="meta"><span>🕒 pakiet rezerwować najpóźniej 3 dni przed wylotem — najlepiej od razu po kupnie biletów</span><span>💴 hotel 0 zł; transfer lotnisko–hotel we własnym zakresie (taxi ~60–80 AED)</span><span>📍 warunek: przy zakupie potwierdzić, że promocja obejmuje maj 2027</span></div>
+      <span class="rezerwuj">rezerwuj razem z biletami</span>
+      <div class="links"><a href="https://www.etihad.com/en/book/stopover" target="_blank" rel="noopener">Etihad Stopover →</a></div>
+    </div>
+
+  </div>
+
+  <h2 id="praktyczne" class="stitle" style="scroll-margin-top:80px">🧳 Praktyczne — transport i formalności</h2>
+  <div class="agrid">
+
+    <div class="acard" id="vjw">
+      <h3>🛂 Visit Japan Web</h3>
+      <div class="desc">Obowiązkowa odprawa imigracyjno-celna online — wypełnijcie dla całej czwórki przed wylotem (albo w samolocie), na lotnisku pokazuje się kod QR zamiast papierków.</div>
+      <div class="meta"><span>🕒 wypełnić do 6 h przed lądowaniem</span><span>💴 darmowe</span></div>
+      <div class="links"><a href="https://www.vjw.digital.go.jp/" target="_blank" rel="noopener">vjw.digital.go.jp →</a></div>
+    </div>
+
+    <div class="acard" id="nex">
+      <h3>🚄 Narita Express + Suica</h3>
+      <div class="desc">NEX: lotnisko ↔ Tokyo Station w ~55 min, miejsca rezerwowane. Suica: karta/apka do metra, autobusów i sklepów — ładujecie i „pikacie".</div>
+      <div class="meta"><span>💴 NEX ~3 070 ¥/os (dzieci 50%); Suica od ręki w Apple Pay/Google Pay</span></div>
+      <div class="links"><a href="https://www.jreast.co.jp/multi/en/nex/" target="_blank" rel="noopener">Narita Express →</a><a href="https://www.jreast.co.jp/multi/en/welcomesuica/" target="_blank" rel="noopener">Welcome Suica →</a></div>
+    </div>
+
+    <div class="acard" id="smartex">
+      <h3>🚅 SmartEX — shinkanseny</h3>
+      <div class="desc">Oficjalna apka/serwis do rezerwacji shinkansenów Tōkaidō (Odawara→Kioto, Kioto→Osaka, Osaka→Tokio). Miejsca da się wybrać na mapce — bierzcie D/E (okno E = strona Fudżi).</div>
+      <div class="meta"><span>🕒 rezerwacje od 1 miesiąca przed przejazdem</span><span>💴 np. Osaka→Tokio ~14 500 ¥/os (dzieci 50%)</span></div>
+      <div class="links"><a href="https://smart-ex.jp/en/" target="_blank" rel="noopener">SmartEX →</a></div>
+    </div>
+
+    <div class="acard" id="takkyubin">
+      <h3>📦 Takkyūbin (Yamato)</h3>
+      <div class="desc">Kurierska wysyłka walizek hotel → hotel (z pominięciem Hakone — tam jedziecie z plecakami). Nadanie w recepcji rano, odbiór następnego dnia. Standard w Japonii, działa jak szwajcarski zegarek.</div>
+      <div class="meta"><span>🕒 zwykle doręczenie następnego dnia</span><span>💴 ~2 000–2 800 ¥/walizka</span></div>
+      <div class="links"><a href="https://www.global-yamato.com/en/hands-free-travel/" target="_blank" rel="noopener">Yamato Transport →</a></div>
+    </div>
+
+  </div>
+`;
+
 function atrakcjePage(){
-  const old = fs.readFileSync(DIR + '/atrakcje.html','utf8');
-  const s = old.indexOf('<h2 id="tokio"');
-  const e = old.indexOf('<p class="note"');
-  let body = old.slice(s, e);
+  let body = ATR_BODY;
   // map old classes to new ones
   body = body.split('class="grid"').join('class="agrid"');
   body = body.split('class="acard"').join('class="acard"'); // same
@@ -2062,8 +2407,14 @@ const PRECACHE = [
   ...[...new Set(Object.values(DAYIMG))].map(p=>p.replace(/^\//,'')),
   ...HOTELS.map(h=>`assets/img/hotels/${h.id}.webp`),
 ];
-const SW = `/* Service worker planu Japonia 2027 — wersja ${LAST_CHECKED} */
-const CACHE = 'jp2027-${LAST_CHECKED}';
+/* Wersja cache = skrót TREŚCI wszystkich generowanych plików. Dzięki temu każda zmiana
+   na stronie unieważnia cache, a brak zmian daje identyczny build (determinizm zachowany).
+   Wersja oparta na dacie NIE działa — zmiany treści bez zmiany daty zostawiały starą stronę. */
+const contentHash = crypto.createHash('sha1');
+PRECACHE.filter(u=>u!=='./').forEach(u=>{ try{ contentHash.update(fs.readFileSync(DIR+'/'+u)); }catch(e){} });
+const SWVER = contentHash.digest('hex').slice(0,10);
+const SW = `/* Service worker planu Japonia 2027 — wersja ${SWVER} */
+const CACHE = 'jp2027-${SWVER}';
 const PRECACHE = ${JSON.stringify(PRECACHE)};
 self.addEventListener('install', function(e){
   self.skipWaiting();
