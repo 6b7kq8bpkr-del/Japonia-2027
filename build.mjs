@@ -1137,7 +1137,7 @@ const DAYFLEX = {
 };
 
 /* ============================ TEMPLATES ============================ */
-const TABS = [['index.html','Plan'],['decyzje.html','Dlaczego'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['loty.html','Loty'],['koszty.html','Koszty'],['pogoda.html','Pogoda']];
+const TABS = [['index.html','Plan'],['decyzje.html','Dlaczego'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['loty.html','Loty'],['koszty.html','Koszty'],['pogoda.html','Pogoda'],['niezbednik.html','Niezbędnik']];
 function nav(active,prefix){
   const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on"':'')}>${l}</a>`).join('');
   return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html">JAPONIA <b>·</b> 2027</a><nav class="tabs">${t}</nav></div></div>`;
@@ -1943,7 +1943,7 @@ function pogodaPage(){
   <header class="hero kb">
     <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(31,94,90,.56),rgba(18,44,42,.42)),url('${IMG.fuji}') center/cover"></div></div>
     <div class="hero-inner">
-    <p class="eyebrow">Klimat · praktyka · pakowanie</p>
+    <p class="eyebrow">Klimat i pakowanie</p>
     <h1>Pogoda w maju</h1>
     <p class="lead">Maj to jeden z najlepszych miesięcy na Japonię: ciepło, słonecznie i sucho — przed sezonem deszczowym, który na głównej wyspie zaczyna się dopiero w czerwcu.</p>
   </div>
@@ -1960,20 +1960,6 @@ function pogodaPage(){
       <tbody>${rows}</tbody>
     </table></div>
     <p class="note" style="margin-top:10px">Wartości to średnie klimatyczne — dokładna prognoza na 2027 pojawi się bliżej wyjazdu.</p>
-  </section>
-  <section>
-    <h2 class="stitle">🧭 Informacje praktyczne</h2>
-    <p class="lead-p">Rzeczy, które warto ogarnąć jeszcze przed wylotem albo pierwszego dnia na lotnisku.</p>
-    <div class="card"><ul class="tips">
-      <li><b>💴 Pieniądze:</b> Japonia wciąż lubi gotówkę (małe knajpki, świątynie, targi). Wypłacajcie z bankomatów 7-Eleven i poczty (Japan Post) — przyjmują zagraniczne karty. Karta zbliżeniowa działa w sieciówkach i większych sklepach. Napiwków się nie daje.</li>
-      <li><b>🚃 Transport lokalny — karty IC:</b> Suica/PASMO (Tokio) lub ICOCA (Kansai) działają w całym kraju — jeden dotyk w metrze, autobusach i sklepach. Dzieci mają wersje dziecięce (taniej, trzeba raz pokazać wiek na stacji). Na iPhonie: Suica w Apple Wallet, doładowanie kartą.</li>
-      <li><b>🚄 Shinkansen i Hakone:</b> JR Pass przy tej trasie się <b>nie opłaca</b> (po podwyżce ~50 000 ¥/os.) — bierzcie bilety punktowe (Tokio↔Kioto, Osaka→Tokio) na miejscu lub w aplikacji. Do Hakone weźcie <b>Hakone Free Pass</b> (Odakyu) — obejmuje kolejkę linową, statek po jeziorze, autobusy i pociąg górski.</li>
-      <li><b>📶 Internet:</b> Dla czterech osób najprościej jeden router <b>pocket WiFi</b> (odbiór na lotnisku lub kurierem do hotelu) — łączy wszystkie urządzenia. Alternatywa: eSIM (Airalo/Ubigi) wgrany na każdy telefon przed wylotem.</li>
-      <li><b>🔌 Prąd:</b> 100 V, gniazdka typu A (dwa płaskie bolce) — polskie wtyczki nie pasują, weźcie adapter(y) typu A. Ładowarki 100–240 V działają bez przetwornicy.</li>
-      <li><b>🩹 Zdrowie i bezpieczeństwo:</b> Woda z kranu jest zdatna do picia. Numery alarmowe: <b>110</b> policja, <b>119</b> pogotowie/straż. Weźcie własne leki (podstawy kupicie w drogeriach). Ubezpieczenie turystyczne z leczeniem i NNW — warto.</li>
-      <li><b>🙇 Zwyczaje:</b> Buty zdejmujemy w ryokanie, świątyniach i części restauracji. W pociągach cisza, telefon na milczek. Koszy na śmieci prawie nie ma — noście torebkę na odpadki. Tatuaże bywają problemem w publicznych onsenach — prywatne rotenburo w ryokanie w Hakone to rozwiązuje.</li>
-      <li><b>🛍️ Tax-free i apki:</b> W sklepach z oznaczeniem „Tax-Free" (od ~5000 ¥) zwrot podatku po okazaniu paszportu. Przydatne apki: Google Maps, Google Translate (tłumaczenie menu aparatem), Navitime / Japan Travel do połączeń kolejowych.</li>
-    </ul></div>
   </section>
   <section>
     <h2 class="stitle">Co spakować</h2>
@@ -2015,6 +2001,82 @@ function pogodaPage(){
    (a) build nie był deterministyczny (plik puchł o pustą linię przy każdym uruchomieniu),
    (b) treść istniała wyłącznie w wygenerowanym HTML — skasowanie pliku wywracało build
        i bezpowrotnie gubiło 41 kart. Teraz źródłem jest ta stała. */
+function niezbednikPage(){
+  const seg=(t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const inner=`
+  <header class="hero kb">
+    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.60),rgba(18,39,64,.44)),url('${IMG.tokyostation}') center/cover"></div></div>
+    <div class="hero-inner">
+    <p class="eyebrow">Wszystko, czego szukasz w biegu</p>
+    <h1>Niezbędnik</h1>
+    <p class="lead">Numery alarmowe, pieniądze, bilety, internet, gniazdka i zwyczaje — w jednym miejscu, żeby nie szukać po całym serwisie. Ta strona działa też offline.</p>
+    </div>
+  </header>
+
+  <section>
+    <h2 class="stitle">🆘 Gdyby coś poszło nie tak</h2>
+    <p class="lead-p">Najpilniejsze rzeczy na górze — żeby nie trzeba było przewijać, gdy się spieszysz.</p>
+    <div class="card"><ul class="tips">
+      <li><b>Numery alarmowe:</b> <b style="font-size:17px">110</b> policja · <b style="font-size:17px">119</b> pogotowie i straż pożarna. Działają z każdego telefonu, także bez karty SIM.</li>
+      <li><b>Ambasada RP w Tokio:</b> 2-13-5 Mita, Meguro-ku, 153-0062 Tokio · tel. <b>+81 3 5794 7020</b>.<br>
+        <b>Telefon dyżurny (całodobowy, tylko sytuacje nagłe):</b> <b>+81 80 4610 7020</b> — wypadek, zatrzymanie, zgon, klęska żywiołowa. Nie jest to infolinia.<br>
+        Sprawy paszportowe: wt.–czw. 9:30–12:00, po umówieniu przez e-Konsulat.</li>
+      <li><b>Zgubiony paszport:</b> zgłoście na policji (dostaniecie zaświadczenie), potem kontakt z ambasadą po paszport tymczasowy. Miejcie <b>zdjęcia lub skany paszportów w telefonie</b> — bardzo przyspiesza sprawę.</li>
+      <li><b>Zgubiona rzecz:</b> w Japonii niemal wszystko wraca. Pytajcie w najbliższej budce policyjnej <i lang="ja">kōban</i> (交番) albo w biurze rzeczy znalezionych na stacji.</li>
+      <li><b>Ubezpieczenie:</b> miejcie numer polisy i telefon assistance zapisany offline — w razie wizyty u lekarza szpital zapyta o niego od razu.</li>
+    </ul></div>
+  </section>
+
+  <section>
+    <h2 class="stitle">Na co dzień</h2>
+    ${seg('💴 Pieniądze i płatności',[
+      'Japonia wciąż lubi <b>gotówkę</b> — małe knajpki, świątynie, targi i automaty często nie przyjmą karty.',
+      'Bankomaty przyjmujące karty zagraniczne: <b>7-Eleven</b> i poczta (<b>Japan Post</b>) — są dosłownie wszędzie i działają całą dobę.',
+      'Karta zbliżeniowa działa w sieciówkach, dużych sklepach i na dworcach.',
+      '<b>Napiwków się nie daje</b> — próba zostawienia reszty bywa odbierana jako niezręczność.'])}
+    ${seg('🚃 Poruszanie się po miastach',[
+      'Karty <b>IC</b> — Suica/PASMO (Tokio) albo ICOCA (Kansai) — działają w całym kraju: metro, autobusy, a nawet sklepy. Jeden dotyk, bez kupowania biletów.',
+      'Dzieci mają <b>wersje dziecięce</b> (taniej) — trzeba raz okazać wiek na stacji.',
+      'Na iPhonie: <b>Suica w Apple Wallet</b>, doładowanie kartą — można założyć jeszcze przed wyjazdem.'])}
+    ${seg('🚄 Przejazdy między miastami',[
+      '<b>JR Pass się przy naszej trasie nie opłaca</b> (~50 000 ¥/os.) — bilety punktowe wychodzą około dwa razy taniej.',
+      'Do Hakone: <b>Hakone Free Pass</b> (Odakyu) — obejmuje kolejkę linową, statek po jeziorze, autobusy i pociąg górski.',
+      'Bagaże między bazami: kurier <b>takkyūbin</b> (~2 000 ¥/szt., doba) — zamiast targać walizki po schodach.',
+      'Szczegółowe ceny naszych odcinków są w <a href="koszty.html">Kosztach</a>.'])}
+    ${seg('📶 Internet i prąd',[
+      'Dla czterech osób najprościej <b>jeden router pocket WiFi</b> (odbiór na lotnisku albo kurierem do hotelu) — łączy wszystkie urządzenia.',
+      'Alternatywa: <b>eSIM</b> (Airalo, Ubigi) wgrany na każdy telefon jeszcze przed wylotem.',
+      '<b>Prąd: 100 V, gniazdka typu A</b> (dwa płaskie bolce) — polskie wtyczki nie pasują, potrzebny adapter. Ładowarki 100–240 V działają bez przetwornicy.'])}
+    ${seg('🙇 Zwyczaje, które warto znać',[
+      '<b>Buty zdejmujemy</b> w ryokanie, świątyniach i części restauracji — stąd buty łatwe do zdejmowania.',
+      'W pociągach obowiązuje <b>cisza</b>, telefon na milczek, rozmowy szeptem.',
+      '<b>Koszy na śmieci prawie nie ma</b> — noście małą torebkę na odpadki i wyrzucajcie w hotelu albo w konbini.',
+      'Nie je się i nie pije w ruchu — zwykle staje się obok automatu albo sklepu.',
+      '<b>Tatuaże</b> bywają problemem w publicznych onsenach; prywatne rotenburo w naszym ryokanie w Hakone to rozwiązuje.'])}
+    ${seg('🛍️ Tax-free i aplikacje',[
+      'W sklepach z oznaczeniem <b>„Tax-Free"</b> zwrot podatku od zakupów powyżej ok. 5 000 ¥ — <b>przy kasie, za okazaniem paszportu</b> (nie na lotnisku).',
+      'Towary „konsumpcyjne" (kosmetyki, słodycze) pakują zaklejone — formalnie nie należy ich otwierać przed wyjazdem z Japonii.',
+      'Warto mieć: <b>Google Maps</b>, <b>Google Translate</b> (tłumaczy menu aparatem — bardzo się przydaje), <b>Navitime</b> lub Japan Travel do połączeń kolejowych.'])}
+    ${seg('🗣️ Pięć zwrotów, które załatwiają 90% sytuacji',[
+      '<i lang="ja">Sumimasen</i> (すみません) — „przepraszam / przepraszam, czy mogę…" — uniwersalne zagajenie.',
+      '<i lang="ja">Arigatō gozaimasu</i> (ありがとうございます) — „dziękuję" w formie grzecznej.',
+      '<i lang="ja">Onegaishimasu</i> (お願いします) — „poproszę".',
+      '<i lang="ja">Eigo de ii desu ka?</i> (英語でいいですか) — „czy może być po angielsku?"',
+      '<i lang="ja">Kore o kudasai</i> (これをください) — „poproszę to" (wskazując palcem — działa zawsze).'])}
+  </section>
+
+  <section>
+    <h2 class="stitle">Dalej</h2>
+    <div class="quick">
+      <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Czego się spodziewać w maju, co spakować i plany B na deszcz.</div></a>
+      <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Noclegi</div><div class="qd">Adresy po japońsku do pokazania taksówkarzowi.</div></a>
+      <a class="qcard" href="druk.html"><div class="qi">📄</div><div class="qh">Plan do druku</div><div class="qd">Całość na kartkach — na wypadek rozładowanego telefonu.</div></a>
+    </div>
+  </section>
+  ${footer('')}`;
+  return shell({title:'Niezbędnik — numery, pieniądze, transport · Japonia 2027',desc:'Numery alarmowe, ambasada, pieniądze, karty IC, internet, gniazdka i zwyczaje — praktyczny niezbędnik na wyjazd do Japonii.',prefix:'',active:'niezbednik.html',inner,pillsIdx:null});
+}
+
 const ATR_BODY = String.raw`<h2 id="tokio" class="stitle" style="scroll-margin-top:80px">🏙️ Tokio</h2>
   <div class="agrid">
 
@@ -2393,6 +2455,7 @@ fs.writeFileSync(DIR + '/druk.html', drukPage());
 fs.writeFileSync(DIR + '/loty.html', lotyPage());
 fs.writeFileSync(DIR + '/koszty.html', kosztyPage());
 fs.writeFileSync(DIR + '/pogoda.html', pogodaPage());
+fs.writeFileSync(DIR + '/niezbednik.html', niezbednikPage());
 fs.writeFileSync(DIR + '/atrakcje.html', ATR);
 
 /* ---- OFFLINE: service worker + manifest + ikona ----
@@ -2401,7 +2464,7 @@ fs.writeFileSync(DIR + '/atrakcje.html', ATR);
    potem serwujemy z cache i w tle odświeżamy (stale-while-revalidate).
    Mapy (Leaflet/OSM) i pogoda wymagają sieci — bez niej po prostu się nie pokażą. */
 const PRECACHE = [
-  './','index.html','decyzje.html','atrakcje.html','hotele.html','loty.html','koszty.html','pogoda.html','druk.html',
+  './','index.html','decyzje.html','atrakcje.html','hotele.html','loty.html','koszty.html','pogoda.html','niezbednik.html','druk.html',
   'assets/style.css','assets/app.js','assets/icon.svg',
   ...DAYS.map(d=>`days/${d.date}.html`),
   ...[...new Set(Object.values(DAYIMG))].map(p=>p.replace(/^\//,'')),
