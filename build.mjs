@@ -271,7 +271,7 @@ section{margin-top:34px}
 
 /* tips + pros-cons + more */
 .tips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-/* UWAGA: wcześniej `display:flex` — przez to KAŻDY element inline (<b>, <i>, <a>) w treści
+/* UWAGA: wcześniej display:flex — przez to KAŻDY element inline (b, i, a) w treści
    punktu stawał się osobną kolumną flexa i punkty z pogrubieniem w środku zdania rozjeżdżały się.
    Teraz strzałka wisi w marginesie, a treść płynie normalnym tekstem. */
 .tips li{position:relative;padding-left:17px;font-size:14.5px;line-height:1.55}
