@@ -271,8 +271,11 @@ section{margin-top:34px}
 
 /* tips + pros-cons + more */
 .tips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.tips li{display:flex;gap:10px;font-size:14.5px}
-.tips li::before{content:"›";color:var(--shu);font-weight:800}
+/* UWAGA: wcześniej `display:flex` — przez to KAŻDY element inline (<b>, <i>, <a>) w treści
+   punktu stawał się osobną kolumną flexa i punkty z pogrubieniem w środku zdania rozjeżdżały się.
+   Teraz strzałka wisi w marginesie, a treść płynie normalnym tekstem. */
+.tips li{position:relative;padding-left:17px;font-size:14.5px;line-height:1.55}
+.tips li::before{content:"›";position:absolute;left:0;top:0;color:var(--shu);font-weight:800}
 .pc{border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:var(--sakura)}
 .pc .pch{font-family:var(--serif);font-weight:500;font-size:17px;margin-bottom:8px}
 .pc .row{font-size:14px;margin:5px 0}
@@ -501,6 +504,18 @@ footer a{font-weight:700;text-decoration:none}
 .wgrow{margin-bottom:16px}
 .wgrow label{display:block;margin-bottom:8px;font-weight:700;color:var(--ai)}
 .wgrow input[type=range]{width:100%;accent-color:var(--shu)}
+.sos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sos a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  padding:16px 10px;border-radius:14px;background:var(--shu);color:#fff;text-decoration:none;
+  box-shadow:var(--shadow-sm);transition:filter .15s}
+.sos a:hover{filter:brightness(1.07)}
+.sos b{font-family:var(--serif);font-weight:500;font-size:38px;line-height:1}
+.sos span{font-size:11.5px;text-transform:uppercase;letter-spacing:.09em;opacity:.92}
+.sosblock{margin-top:16px;padding:14px 16px;border-radius:12px;background:var(--paper);border:1px solid var(--line)}
+.sosblock h4{font-family:var(--serif);font-weight:500;font-size:17px;margin:0 0 6px}
+.sosblock p{margin:6px 0;font-size:13.5px;line-height:1.55}
+.sosblock a{font-weight:700;white-space:nowrap}
+@media(max-width:420px){.sos{grid-template-columns:1fr}}
 .jpaddr{display:flex;align-items:center;gap:10px;margin-top:10px;padding:9px 12px;border-radius:10px;
   background:var(--paper);border:1px solid var(--line);flex-wrap:wrap}
 .jpaddr span{font-size:15px;font-weight:600;letter-spacing:.02em}
@@ -2016,15 +2031,27 @@ function niezbednikPage(){
   <section>
     <h2 class="stitle">🆘 Gdyby coś poszło nie tak</h2>
     <p class="lead-p">Najpilniejsze rzeczy na górze — żeby nie trzeba było przewijać, gdy się spieszysz.</p>
-    <div class="card"><ul class="tips">
-      <li><b>Numery alarmowe:</b> <b style="font-size:17px">110</b> policja · <b style="font-size:17px">119</b> pogotowie i straż pożarna. Działają z każdego telefonu, także bez karty SIM.</li>
-      <li><b>Ambasada RP w Tokio:</b> 2-13-5 Mita, Meguro-ku, 153-0062 Tokio · tel. <b>+81 3 5794 7020</b>.<br>
-        <b>Telefon dyżurny (całodobowy, tylko sytuacje nagłe):</b> <b>+81 80 4610 7020</b> — wypadek, zatrzymanie, zgon, klęska żywiołowa. Nie jest to infolinia.<br>
-        Sprawy paszportowe: wt.–czw. 9:30–12:00, po umówieniu przez e-Konsulat.</li>
-      <li><b>Zgubiony paszport:</b> zgłoście na policji (dostaniecie zaświadczenie), potem kontakt z ambasadą po paszport tymczasowy. Miejcie <b>zdjęcia lub skany paszportów w telefonie</b> — bardzo przyspiesza sprawę.</li>
-      <li><b>Zgubiona rzecz:</b> w Japonii niemal wszystko wraca. Pytajcie w najbliższej budce policyjnej <i lang="ja">kōban</i> (交番) albo w biurze rzeczy znalezionych na stacji.</li>
-      <li><b>Ubezpieczenie:</b> miejcie numer polisy i telefon assistance zapisany offline — w razie wizyty u lekarza szpital zapyta o niego od razu.</li>
-    </ul></div>
+    <div class="card">
+      <div class="sos">
+        <a href="tel:110"><b>110</b><span>policja</span></a>
+        <a href="tel:119"><b>119</b><span>pogotowie · straż</span></a>
+      </div>
+      <p class="note" style="margin:10px 0 0">Oba numery działają z każdego telefonu, także bez karty SIM i bez zasięgu sieci własnego operatora.</p>
+
+      <div class="sosblock">
+        <h4>Ambasada RP w Tokio</h4>
+        <p>2-13-5 Mita, Meguro-ku, 153-0062 Tokio · centrala <a href="tel:+81357947020">+81 3 5794 7020</a></p>
+        <p><b>Telefon dyżurny, całodobowy — tylko sytuacje nagłe:</b> <a href="tel:+818046107020">+81 80 4610 7020</a><br>
+        Wypadek, zatrzymanie, zgon, klęska żywiołowa. To nie jest infolinia ani zapisy na wizyty.</p>
+        <p>Sprawy paszportowe: wtorek–czwartek 9:30–12:00, po umówieniu przez e-Konsulat.</p>
+      </div>
+
+      <ul class="tips" style="margin-top:16px">
+        <li><b>Zgubiony paszport:</b> najpierw zgłoszenie na policji (dostaniecie zaświadczenie), potem ambasada wydaje paszport tymczasowy. Miejcie <b>zdjęcia paszportów w telefonie</b> — bardzo przyspiesza sprawę.</li>
+        <li><b>Zgubiona rzecz:</b> w Japonii niemal wszystko wraca. Pytajcie w budce policyjnej <i lang="ja">kōban</i> (交番) albo w biurze rzeczy znalezionych na stacji.</li>
+        <li><b>Ubezpieczenie:</b> numer polisy i telefon assistance zapiszcie offline — szpital zapyta o nie od razu.</li>
+      </ul>
+    </div>
   </section>
 
   <section>

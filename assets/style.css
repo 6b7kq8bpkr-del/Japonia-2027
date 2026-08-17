@@ -362,6 +362,18 @@ footer a{font-weight:700;text-decoration:none}
 .wgrow{margin-bottom:16px}
 .wgrow label{display:block;margin-bottom:8px;font-weight:700;color:var(--ai)}
 .wgrow input[type=range]{width:100%;accent-color:var(--shu)}
+.sos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sos a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  padding:16px 10px;border-radius:14px;background:var(--shu);color:#fff;text-decoration:none;
+  box-shadow:var(--shadow-sm);transition:filter .15s}
+.sos a:hover{filter:brightness(1.07)}
+.sos b{font-family:var(--serif);font-weight:500;font-size:38px;line-height:1}
+.sos span{font-size:11.5px;text-transform:uppercase;letter-spacing:.09em;opacity:.92}
+.sosblock{margin-top:16px;padding:14px 16px;border-radius:12px;background:var(--paper);border:1px solid var(--line)}
+.sosblock h4{font-family:var(--serif);font-weight:500;font-size:17px;margin:0 0 6px}
+.sosblock p{margin:6px 0;font-size:13.5px;line-height:1.55}
+.sosblock a{font-weight:700;white-space:nowrap}
+@media(max-width:420px){.sos{grid-template-columns:1fr}}
 .jpaddr{display:flex;align-items:center;gap:10px;margin-top:10px;padding:9px 12px;border-radius:10px;
   background:var(--paper);border:1px solid var(--line);flex-wrap:wrap}
 .jpaddr span{font-size:15px;font-weight:600;letter-spacing:.02em}
