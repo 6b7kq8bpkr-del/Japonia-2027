@@ -77,6 +77,56 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
   }
 })();
 
+/* ---- kopiowanie japońskiego adresu (do pokazania taksówkarzowi) ---- */
+(function(){
+  document.querySelectorAll('.jpcopy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.getAttribute('data-addr'), old=b.textContent;
+      function done(){b.textContent='Skopiowano';b.classList.add('ok');
+        setTimeout(function(){b.textContent=old;b.classList.remove('ok');},1600);}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){});}
+      else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();
+           try{document.execCommand('copy');done();}catch(e){} a.remove();}
+    });
+  });
+})();
+
+/* ---- checklista rezerwacji (stan w localStorage) ---- */
+(function(){
+  var list=document.querySelector('.cklist'); if(!list) return;
+  var KEY='jp2027.checklist', boxes=[].slice.call(list.querySelectorAll('input[data-ck]'));
+  var saved={}; try{saved=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){}
+  function draw(){
+    var done=0;
+    boxes.forEach(function(b){
+      var li=b.closest('li');
+      if(b.checked){done++; li.classList.add('done');} else li.classList.remove('done');
+    });
+    var pct=boxes.length?Math.round(done/boxes.length*100):0;
+    document.getElementById('ckcount').textContent=done+' / '+boxes.length;
+    document.getElementById('ckfill').style.width=pct+'%';
+    var next=boxes.filter(function(b){return !b.checked;})[0];
+    document.getElementById('cknext').textContent = next
+      ? 'następne: '+next.closest('li').querySelector('.ckwhat b').textContent
+      : 'wszystko zarezerwowane 🎉';
+  }
+  boxes.forEach(function(b,i){
+    b.checked=!!saved[i];
+    b.addEventListener('change',function(){
+      saved[i]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
+      draw();
+    });
+  });
+  var rb=document.getElementById('ckreset');
+  if(rb) rb.addEventListener('click',function(){
+    boxes.forEach(function(b,i){b.checked=false; saved[i]=false;});
+    try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
+    draw();
+  });
+  draw();
+})();
+
 /* ---- ranking wg wag: cena / wygoda / jakość (3 kryteria, suwaki normalizowane do 100%) ---- */
 (function(){
   var host=document.getElementById('scorelist'), src=document.getElementById('scoredata');

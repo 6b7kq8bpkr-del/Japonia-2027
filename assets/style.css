@@ -362,6 +362,30 @@ footer a{font-weight:700;text-decoration:none}
 .wgrow{margin-bottom:16px}
 .wgrow label{display:block;margin-bottom:8px;font-weight:700;color:var(--ai)}
 .wgrow input[type=range]{width:100%;accent-color:var(--shu)}
+.jpaddr{display:flex;align-items:center;gap:10px;margin-top:10px;padding:9px 12px;border-radius:10px;
+  background:var(--paper);border:1px solid var(--line);flex-wrap:wrap}
+.jpaddr span{font-size:15px;font-weight:600;letter-spacing:.02em}
+.jpcopy{margin-left:auto;background:transparent;border:1px solid var(--line);border-radius:8px;
+  padding:5px 12px;font-size:12px;font-weight:700;color:var(--ai);cursor:pointer;font-family:var(--sans)}
+.jpcopy:hover{border-color:var(--ai)}
+.jpcopy.ok{color:var(--success);border-color:var(--success)}
+.ckhead{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+.ckhead b{font-family:var(--serif);font-weight:500;font-size:26px;color:var(--ai)}
+.ckhead span{font-size:12.5px;color:var(--muted)}
+.ckbar{height:6px;border-radius:999px;background:var(--sakura);overflow:hidden;margin-bottom:16px}
+.ckbar div{height:100%;width:0;border-radius:999px;background:var(--success);transition:width .3s}
+.cklist{list-style:none;margin:0;padding:0}
+.cklist li{border-top:1px solid var(--line)}
+.cklist li:first-child{border-top:none}
+.cklist label{display:grid;grid-template-columns:20px 108px 1fr;gap:10px;align-items:baseline;
+  padding:11px 2px;cursor:pointer}
+.cklist input{width:17px;height:17px;accent-color:var(--success);cursor:pointer;justify-self:start}
+.ckwhen{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--kin);font-weight:700}
+.ckwhat b{font-weight:700;font-size:14.5px}
+.ckwhat i{display:block;font-style:normal;font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.45}
+.cklist li.done .ckwhat b{text-decoration:line-through;color:var(--muted);font-weight:600}
+.cklist li.done .ckwhen{color:var(--muted)}
+@media(max-width:560px){.cklist label{grid-template-columns:20px 1fr}.ckwhen{grid-column:2}}
 .wchk{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px;padding:11px 13px;border-radius:12px;
   background:var(--sakura);border:1px solid var(--line);font-size:12.5px;line-height:1.5;cursor:pointer}
 .wchk input{margin-top:2px;flex:0 0 auto;accent-color:var(--shu);width:16px;height:16px;cursor:pointer}

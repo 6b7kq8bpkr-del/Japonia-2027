@@ -59,6 +59,24 @@ const CHECKS = [
 const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5,4150],[6,4150],[7,4260],
   [8,4260],[9,4150],[10,4260],[11,4050],[12,3940],[13,4150],[14,4260],[15,4260],[16,4150]]};
 /* Porównanie realnych wariantów terminu (ceny Etihad, sprawdzone na żywo) */
+/* Lista rzeczy do zarezerwowania, w kolejności terminów. Renderowana jako checklista
+   na decyzje.html; stan trzymany w localStorage (klucz jp2027.checklist). */
+const BOOKINGS = [
+  {when:'IX–X 2026', what:'Noclegi w Japonii (5 baz)', note:'Z darmowym anulowaniem — pokoje 4-osobowe znikają pierwsze. Linki „Sprawdź dostępność" na stronie Hotele.'},
+  {when:'IX–X 2026', what:'Ryokan w Hakone', note:'Pokój typu Maisonette z prywatnym rotenburo; 7.05 to piątek, terminów mało.'},
+  {when:'do I 2027', what:'Bilety lotnicze', note:'Twardy deadline: koniec stycznia. Najlepsze okna: Black Friday i styczniowa wyprzedaż.'},
+  {when:'po zakupie lotów', what:'Pakiet stopover w Abu Zabi', note:'Osobno na etihad.com, najpóźniej 3 dni przed wylotem. Potwierdzić, że nocleg jest bezpłatny dla maja 2027.'},
+  {when:'~II 2027', what:'Nintendo Museum — loteria', note:'Opcja na dzień w Narze; wymaga paszportów uczestników.'},
+  {when:'II–III 2027', what:'Warsztaty kultury w Kioto', note:'Rezerwacja 1–2 miesiące wcześniej.'},
+  {when:'~IV 2027', what:'Bilety na sumo', note:'Sprzedaż ~początek kwietnia na sumo.or.jp — wyprzedają się w godziny. Turniej 9–23.05.'},
+  {when:'~1.04.2027', what:'Ubezpieczenie turystyczne', note:'Leczenie + NNW dla czterech osób.'},
+  {when:'4 tyg. przed', what:'Shibuya Sky', note:'Slot na zachód słońca — rezerwować dopiero przy dobrej prognozie.'},
+  {when:'31 dni przed', what:'Pokémon Café', note:'Rezerwacja otwiera się o 18:00 czasu japońskiego, dokładnie 31 dni wcześniej.'},
+  {when:'~2 tyg. przed', what:'Internet: pocket WiFi albo eSIM', note:'Router odbiera się na lotnisku; eSIM wgrywa się przed wylotem.'},
+  {when:'~1 tydz. przed', what:'Visit Japan Web', note:'Zgłoszenie celne i imigracyjne online — kody QR dla każdej osoby.'},
+  {when:'~7 dni przed', what:'Dostrojenie planu do pogody', note:'Wtedy prognoza staje się wiarygodna.'},
+  {when:'przed wylotem', what:'Karty IC (Suica/ICOCA)', note:'Można dodać Suica do Apple Wallet jeszcze przed wyjazdem.'},
+];
 const PERIODS = [
   {label:'3–15 maja', sub:'obecny plan', price:3910, best:true,
    pros:['Najniższy punkt w całej siatce dat','Powrót w SOBOTĘ — niedziela na reset przed szkołą','Start w majówkę (1–3.05) oszczędza dni urlopu','Przylot 5.05 — Golden Week właśnie się kończy'],
@@ -482,6 +500,30 @@ footer a{font-weight:700;text-decoration:none}
 .wgrow{margin-bottom:16px}
 .wgrow label{display:block;margin-bottom:8px;font-weight:700;color:var(--ai)}
 .wgrow input[type=range]{width:100%;accent-color:var(--shu)}
+.jpaddr{display:flex;align-items:center;gap:10px;margin-top:10px;padding:9px 12px;border-radius:10px;
+  background:var(--paper);border:1px solid var(--line);flex-wrap:wrap}
+.jpaddr span{font-size:15px;font-weight:600;letter-spacing:.02em}
+.jpcopy{margin-left:auto;background:transparent;border:1px solid var(--line);border-radius:8px;
+  padding:5px 12px;font-size:12px;font-weight:700;color:var(--ai);cursor:pointer;font-family:var(--sans)}
+.jpcopy:hover{border-color:var(--ai)}
+.jpcopy.ok{color:var(--success);border-color:var(--success)}
+.ckhead{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+.ckhead b{font-family:var(--serif);font-weight:500;font-size:26px;color:var(--ai)}
+.ckhead span{font-size:12.5px;color:var(--muted)}
+.ckbar{height:6px;border-radius:999px;background:var(--sakura);overflow:hidden;margin-bottom:16px}
+.ckbar div{height:100%;width:0;border-radius:999px;background:var(--success);transition:width .3s}
+.cklist{list-style:none;margin:0;padding:0}
+.cklist li{border-top:1px solid var(--line)}
+.cklist li:first-child{border-top:none}
+.cklist label{display:grid;grid-template-columns:20px 108px 1fr;gap:10px;align-items:baseline;
+  padding:11px 2px;cursor:pointer}
+.cklist input{width:17px;height:17px;accent-color:var(--success);cursor:pointer;justify-self:start}
+.ckwhen{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--kin);font-weight:700}
+.ckwhat b{font-weight:700;font-size:14.5px}
+.ckwhat i{display:block;font-style:normal;font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.45}
+.cklist li.done .ckwhat b{text-decoration:line-through;color:var(--muted);font-weight:600}
+.cklist li.done .ckwhen{color:var(--muted)}
+@media(max-width:560px){.cklist label{grid-template-columns:20px 1fr}.ckwhen{grid-column:2}}
 .wchk{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px;padding:11px 13px;border-radius:12px;
   background:var(--sakura);border:1px solid var(--line);font-size:12.5px;line-height:1.5;cursor:pointer}
 .wchk input{margin-top:2px;flex:0 0 auto;accent-color:var(--shu);width:16px;height:16px;cursor:pointer}
@@ -595,6 +637,56 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
     map.fitBounds(pts,{padding:[34,34]});
     setTimeout(function(){map.invalidateSize();},80);
   }
+})();
+
+/* ---- kopiowanie japońskiego adresu (do pokazania taksówkarzowi) ---- */
+(function(){
+  document.querySelectorAll('.jpcopy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.getAttribute('data-addr'), old=b.textContent;
+      function done(){b.textContent='Skopiowano';b.classList.add('ok');
+        setTimeout(function(){b.textContent=old;b.classList.remove('ok');},1600);}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){});}
+      else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();
+           try{document.execCommand('copy');done();}catch(e){} a.remove();}
+    });
+  });
+})();
+
+/* ---- checklista rezerwacji (stan w localStorage) ---- */
+(function(){
+  var list=document.querySelector('.cklist'); if(!list) return;
+  var KEY='jp2027.checklist', boxes=[].slice.call(list.querySelectorAll('input[data-ck]'));
+  var saved={}; try{saved=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){}
+  function draw(){
+    var done=0;
+    boxes.forEach(function(b){
+      var li=b.closest('li');
+      if(b.checked){done++; li.classList.add('done');} else li.classList.remove('done');
+    });
+    var pct=boxes.length?Math.round(done/boxes.length*100):0;
+    document.getElementById('ckcount').textContent=done+' / '+boxes.length;
+    document.getElementById('ckfill').style.width=pct+'%';
+    var next=boxes.filter(function(b){return !b.checked;})[0];
+    document.getElementById('cknext').textContent = next
+      ? 'następne: '+next.closest('li').querySelector('.ckwhat b').textContent
+      : 'wszystko zarezerwowane 🎉';
+  }
+  boxes.forEach(function(b,i){
+    b.checked=!!saved[i];
+    b.addEventListener('change',function(){
+      saved[i]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
+      draw();
+    });
+  });
+  var rb=document.getElementById('ckreset');
+  if(rb) rb.addEventListener('click',function(){
+    boxes.forEach(function(b,i){b.checked=false; saved[i]=false;});
+    try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
+    draw();
+  });
+  draw();
 })();
 
 /* ---- ranking wg wag: cena / wygoda / jakość (3 kryteria, suwaki normalizowane do 100%) ---- */
@@ -981,27 +1073,32 @@ const HOTELS = [
  desc:'Aparthotel projektowany pod rodziny: apartament dla 4 osób z aneksem kuchennym i osobną sypialnią. Spokojna okolica Ueno, ~10 min metrem do Asakusy, wygodny start po przylocie.',
  price:'~750–950 zł/noc (apartament 4-os.)',near:'metro Inarichō / JR Ueno',
  book:'https://www.booking.com/hotel/jp/mimaru-tokyo-ueno-east.html',
+  jp:'東京都台東区東上野4-26-3',
  site:'https://mimaruhotels.com/en/hotel/ueno-east/'},
 {id:'hakone',name:'Hakone Kowakien Ten-yu',stay:'Hakone · 1 noc (7–8.05) · prywatny onsen',
  desc:'Wyższa półka na jedyną noc, gdy nocleg JEST atrakcją: nowoczesny luksusowy ryokan, w którym KAŻDY pokój ma prywatną odkrytą kąpiel onsen (rotenburo) na tarasie — kąpiel o dowolnej porze, bez wspólnych łaźni. Dla 2+2 bierzcie pokój typu „Maisonette" (do 4 osób). Wielodaniowe kaiseki, przyjazny rodzinom, w rejonie Ninotairy/Gōry. WAŻNE: 7.05 to piątek, a pokoi 4-osobowych jest mało — rezerwujcie od razu, gdy tylko otworzą się terminy (na maj 2027 mogą jeszcze nie być dostępne — patrz „Kalendarz przygotowań"). Alternatywy dla 4 osób z prywatnym rotenburo: Hakone Kowakien Mikawaya (typy willowe) lub Ajisai Onsen Ryokan (pokoje rodzinne, darmowe anulowanie na Booking). Zdjęcie: przykładowy rotenburo.',
  price:'~2 400–3 200 zł/noc z HB dla 4 os. (wyższa półka)',near:'Ninotaira, rejon Gōra, na pętli Hakone',
  mapsq:'Hakone Kowakien Ten-yu, Ninotaira, Hakone',
  book:'https://www.booking.com/hotel/jp/hakone-kowakien-tenyu.html',
+  jp:'神奈川県足柄下郡箱根町二ノ平1297',
  site:'https://www.ten-yu.com/en/'},
 {id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 4 noce (8–12.05)',
  desc:'Ta sama rodzinna formuła co w Tokio, tuż przy dworcu Kioto — idealna baza wypadowa na Narę (Kintetsu) i Arashiyamę (JR), a walizki z takkyūbin czekają w recepcji.',
  price:'~800–1 000 zł/noc (apartament 4-os.)',near:'3 min pieszo od dworca Kyoto',
  book:'https://www.booking.com/hotel/jp/mimaru-jing-du-station.html',
+  jp:'京都市下京区・京都駅八条口すぐ',
  site:'https://mimaruhotels.com/en/hotel/kyoto-station/'},
 {id:'osaka',name:'MIMARU Osaka NAMBA North',stay:'Osaka · 2 noce (12–14.05)',
  desc:'Apartamenty rodzinne w sercu Namby — ~8 minut spacerem od neonów Dōtonbori i 10 od targu Kuromon. Wieczorne wyjścia na street food bez logistyki.',
  price:'~750–950 zł/noc (apartament 4-os.)',near:'metro Nippombashi / Namba',
  book:'https://www.booking.com/hotel/jp/mimaru-osaka-namba-north.html',
+  jp:'大阪府大阪市西区南堀江1-2-10',
  site:'https://mimaruhotels.com/en/hotel/namba-north/'},
 {id:'tokio2',name:'MIMARU Tokyo GINZA EAST',stay:'Tokio · 1 noc (14–15.05)',
  desc:'Nocleg na finał: spokojna wschodnia Ginza, prosto metrem na Ryōgoku (sumo) i rzut kamieniem od Tokyo Station, skąd rano odjeżdża Narita Express. Alternatywa przy samej hali: APA Ryōgoku Eki Tower (ale pokoje 2-os. — trzeba brać dwa).',
  price:'~850–1 050 zł/noc (apartament 4-os.)',near:'metro Shintomichō / Tokyo Station',
  book:'https://www.booking.com/hotel/jp/mimaru-tokyo-ginza-east.html',
+  jp:'東京都中央区新富1-4-4',
  site:'https://mimaruhotels.com/en/hotel/ginza-east/'},
 ];
 const gmapsQ = name => 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);
@@ -1348,6 +1445,7 @@ function hotelePage(){
         <h3>${H.name}</h3>
         <p class="desc">${H.desc}</p>
         <div class="meta"><span>💴 <b>${H.price}</b> — orientacyjnie, maj = sprawdzić przy rezerwacji</span><span>📍 ${H.near}</span></div>
+        ${H.jp?`<div class="jpaddr"><span lang="ja">${H.jp}</span><button type="button" class="jpcopy" data-addr="${H.jp}" title="Skopiuj adres">Kopiuj</button></div>`:''}
         <div class="links"><a href="${gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a>${H.book?`<a href="${H.book}" target="_blank" rel="noopener">Sprawdź dostępność →</a>`:''}</div>
       </div>
       <a class="hphoto" href="${H.id==='auh'?H.site:gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">
@@ -1418,6 +1516,20 @@ function decyzjePage(){
       <tbody>${rows}</tbody>
     </table></div>
     <div class="dnote" style="margin-top:12px">💡 Dwa punkty nacisku: <b>6.05</b> — najcięższy dzień w drugiej dobie po locie (jeśli rano ciężko, odpuśćcie Tsukiji); <b>12→15.05</b> — trzy zmiany łóżka w cztery doby (cena za sumo, dlatego 13.05 jest pusty z założenia).</div>
+  </section>
+
+  <section>
+    <h2 class="stitle">✅ Co już zarezerwowane</h2>
+    <p class="lead-p">Odhaczaj po kolei — stan zapisuje się w tej przeglądarce. Pozycje są ułożone według terminu, w jakim trzeba je załatwić. Licznik u góry pokazuje, ile zostało.</p>
+    <div class="card">
+      <div class="ckhead"><b id="ckcount">—</b><span id="cknext"></span></div>
+      <div class="ckbar"><div id="ckfill"></div></div>
+      <ul class="cklist">${BOOKINGS.map((b,i)=>
+        `<li><label><input type="checkbox" data-ck="${i}">
+          <span class="ckwhen">${b.when}</span>
+          <span class="ckwhat"><b>${b.what}</b>${b.note?`<i>${b.note}</i>`:''}</span></label></li>`).join('')}</ul>
+      <button class="reset" id="ckreset" type="button">↺ Wyczyść zaznaczenia</button>
+    </div>
   </section>
 
   <section>
