@@ -1,5 +1,5 @@
 :root{
-  --paper:#f5f1e8; --panel:#fffdf8; --ink:#1c2530; --muted:#6a7078;
+  --paper:#f5f1e8; --panel:#fffdf8; --ink:#1c2530; --muted:#60666d;
   --line:rgba(28,37,48,.13); --ai:#1b3a6b; --ai-dark:#122740; --shu:#c8402c;
   --sakura:#f0e6df; --kin:#b98a34; --success:#2f6d4f;
   --shadow:0 22px 60px rgba(20,30,45,.12); --shadow-sm:0 2px 10px rgba(20,30,45,.07);
@@ -35,7 +35,7 @@ a{color:var(--ai)}
     .brand{font-size:14px;margin-right:8px;flex:0 0 auto}
     .tabs{flex:1 1 auto;min-width:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
     .tabs::-webkit-scrollbar{display:none}
-    .tabs a{padding:7px 12px}
+    .tabs a{padding:11px 12px}
   }
 
 /* day pills */
@@ -170,8 +170,10 @@ section{margin-top:34px}
 @media(max-width:620px){.dgrid{grid-template-columns:1fr}}
 .dcard{text-decoration:none;color:#fff;border-radius:var(--radius);padding:20px;position:relative;
   overflow:hidden;box-shadow:var(--shadow);min-height:150px;display:flex;flex-direction:column;justify-content:flex-end}
-.dcard::after{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M0 24a24 24 0 0148 0'/%3E%3Cpath d='M0 24a17 17 0 0148 0'/%3E%3Cpath d='M0 24a10 10 0 0148 0'/%3E%3C/g%3E%3C/svg%3E");background-size:52px;opacity:.45}
-.dcard>*{position:relative;z-index:1}
+.dcard::after{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M0 24a24 24 0 0148 0'/%3E%3Cpath d='M0 24a17 17 0 0148 0'/%3E%3Cpath d='M0 24a10 10 0 0148 0'/%3E%3C/g%3E%3C/svg%3E");background-size:52px;opacity:.45;z-index:2}
+.dcard .dcimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block}
+.dcard .dcgrad{position:absolute;inset:0;z-index:1}
+.dcard>.dn,.dcard>.dd,.dcard>.dt{position:relative;z-index:3}
 .dcard .dn,.dcard .dd,.dcard .dt{text-shadow:0 1px 12px rgba(0,0,0,.6),0 1px 2px rgba(0,0,0,.45)}
 .dcard .dn{position:absolute;top:16px;left:20px;font-family:var(--serif);font-size:30px;opacity:.92;z-index:1}
 .dcard .dd{font-size:12.5px;opacity:.9;text-transform:uppercase;letter-spacing:.08em}

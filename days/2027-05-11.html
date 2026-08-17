@@ -7,6 +7,11 @@
 <meta name="description" content="Wycieczka do pierwszej stolicy Japonii — kłaniające się jelenie i 15-metrowy Budda z brązu.">
 <title>Dzień 9: Nara: jelenie i Wielki Budda · Japonia 2027</title>
 <link rel="stylesheet" href="../assets/style.css">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#0f1c2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Japonia 2027">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -16,7 +21,7 @@
 <main class="wrap">
 
   <header class="hero kb">
-    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(45,74,42,.58),rgba(32,54,29,.34)),url('/assets/img/todaiji.jpg') center/cover"></div></div>
+    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(45,74,42,.58),rgba(32,54,29,.34)),url('/assets/img/todaiji') center/cover"></div></div>
     <div class="hero-inner">
     <p class="eyebrow">Dzień 9 z 13 · wtorek · 11 maja</p>
     <h1>Nara: jelenie i Wielki Budda</h1>
@@ -67,5 +72,6 @@
 </main>
 <button class="totop" id="totop" aria-label="Do góry">↑</button>
 <script src="../assets/app.js"></script>
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('../sw.js').catch(function(){});});</script>
 </body>
 </html>

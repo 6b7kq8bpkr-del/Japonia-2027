@@ -7,6 +7,11 @@
 <meta name="description" content="Spokojny poranek na pamiątki i wieczorny lot do Warszawy.">
 <title>Dzień 13: Ostatnie zakupy i droga do domu · Japonia 2027</title>
 <link rel="stylesheet" href="../assets/style.css">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#0f1c2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Japonia 2027">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -16,7 +21,7 @@
 <main class="wrap">
 
   <header class="hero kb">
-    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(20,32,64,.58),rgba(14,39,67,.34)),url('/assets/img/tokyostation.jpg') center/cover"></div></div>
+    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(20,32,64,.58),rgba(14,39,67,.34)),url('/assets/img/tokyostation') center/cover"></div></div>
     <div class="hero-inner">
     <p class="eyebrow">Dzień 13 z 13 · sobota · 15 maja</p>
     <h1>Ostatnie zakupy i droga do domu</h1>
@@ -67,5 +72,6 @@
 </main>
 <button class="totop" id="totop" aria-label="Do góry">↑</button>
 <script src="../assets/app.js"></script>
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('../sw.js').catch(function(){});});</script>
 </body>
 </html>

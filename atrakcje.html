@@ -7,6 +7,11 @@
 <meta name="description" content="Katalog atrakcji wyjazdu do Japonii z godzinami, cenami i linkami do rezerwacji.">
 <title>Atrakcje: godziny, ceny, rezerwacje · Japonia 2027</title>
 <link rel="stylesheet" href="assets/style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f1c2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Japonia 2027">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -16,7 +21,7 @@
 <main class="wrap">
 
   <header class="hero kb">
-    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(138,43,35,.56),rgba(70,32,20,.42)),url('/assets/img/sensoji.jpg') center/cover"></div></div>
+    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(138,43,35,.56),rgba(70,32,20,.42)),url('/assets/img/sensoji') center/cover"></div></div>
     <div class="hero-inner">
     <p class="eyebrow">Godziny · ceny · rezerwacje</p>
     <h1>Atrakcje</h1>
@@ -435,6 +440,9 @@
   
   
   
+  
+  
+  
   <p class="note" style="margin-top:16px">Ceny i godziny — stan na lipiec 2026, orientacyjne; przed rezerwacją sprawdźcie na stronach oficjalnych.</p>
   <footer>Plan rodzinny · Japonia 3–15 maja 2027 · strona prywatna (noindex)<br>
   Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br>
@@ -442,5 +450,6 @@
 </main>
 <button class="totop" id="totop" aria-label="Do góry">↑</button>
 <script src="assets/app.js"></script>
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});</script>
 </body>
 </html>

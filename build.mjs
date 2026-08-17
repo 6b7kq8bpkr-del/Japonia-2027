@@ -119,7 +119,7 @@ const trend = () => {
 const WAVE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M0 24a24 24 0 0148 0'/%3E%3Cpath d='M0 24a17 17 0 0148 0'/%3E%3Cpath d='M0 24a10 10 0 0148 0'/%3E%3C/g%3E%3C/svg%3E";
 
 const CSS = `:root{
-  --paper:#f5f1e8; --panel:#fffdf8; --ink:#1c2530; --muted:#6a7078;
+  --paper:#f5f1e8; --panel:#fffdf8; --ink:#1c2530; --muted:#60666d;
   --line:rgba(28,37,48,.13); --ai:#1b3a6b; --ai-dark:#122740; --shu:#c8402c;
   --sakura:#f0e6df; --kin:#b98a34; --success:#2f6d4f;
   --shadow:0 22px 60px rgba(20,30,45,.12); --shadow-sm:0 2px 10px rgba(20,30,45,.07);
@@ -155,7 +155,7 @@ a{color:var(--ai)}
     .brand{font-size:14px;margin-right:8px;flex:0 0 auto}
     .tabs{flex:1 1 auto;min-width:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
     .tabs::-webkit-scrollbar{display:none}
-    .tabs a{padding:7px 12px}
+    .tabs a{padding:11px 12px}
   }
 
 /* day pills */
@@ -290,8 +290,10 @@ section{margin-top:34px}
 @media(max-width:620px){.dgrid{grid-template-columns:1fr}}
 .dcard{text-decoration:none;color:#fff;border-radius:var(--radius);padding:20px;position:relative;
   overflow:hidden;box-shadow:var(--shadow);min-height:150px;display:flex;flex-direction:column;justify-content:flex-end}
-.dcard::after{content:"";position:absolute;inset:0;background-image:url("${WAVE}");background-size:52px;opacity:.45}
-.dcard>*{position:relative;z-index:1}
+.dcard::after{content:"";position:absolute;inset:0;background-image:url("${WAVE}");background-size:52px;opacity:.45;z-index:2}
+.dcard .dcimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block}
+.dcard .dcgrad{position:absolute;inset:0;z-index:1}
+.dcard>.dn,.dcard>.dd,.dcard>.dt{position:relative;z-index:3}
 .dcard .dn,.dcard .dd,.dcard .dt{text-shadow:0 1px 12px rgba(0,0,0,.6),0 1px 2px rgba(0,0,0,.45)}
 .dcard .dn{position:absolute;top:16px;left:20px;font-family:var(--serif);font-size:30px;opacity:.92;z-index:1}
 .dcard .dd{font-size:12.5px;opacity:.9;text-transform:uppercase;letter-spacing:.08em}
@@ -678,11 +680,11 @@ fs.writeFileSync(DIR + '/assets/app.js', APP);
 
 /* ============================ DATA ============================ */
 const IMG = {
-  sensoji:'/assets/img/sensoji.jpg', shibuya:'/assets/img/shibuya.jpg', akihabara:'/assets/img/akihabara.jpg',
-  fuji:'/assets/img/fuji.jpg', yasaka:'/assets/img/yasaka.jpg', fushimi:'/assets/img/fushimi.jpg',
-  kinkakuji:'/assets/img/kinkakuji.jpg', todaiji:'/assets/img/todaiji.jpg', bamboo:'/assets/img/bamboo.jpg',
-  dotonbori:'/assets/img/dotonbori.jpg', sumo:'/assets/img/sumo.jpg', tokyostation:'/assets/img/tokyostation.jpg',
-  abudhabi:'/assets/img/abudhabi.jpg', mosque:'/assets/img/mosque.jpg',
+  sensoji:'/assets/img/sensoji'.replace('X','X'), shibuya:'/assets/img/shibuya'.replace('X','X'), akihabara:'/assets/img/akihabara'.replace('X','X'),
+  fuji:'/assets/img/fuji'.replace('X','X'), yasaka:'/assets/img/yasaka'.replace('X','X'), fushimi:'/assets/img/fushimi'.replace('X','X'),
+  kinkakuji:'/assets/img/kinkakuji'.replace('X','X'), todaiji:'/assets/img/todaiji'.replace('X','X'), bamboo:'/assets/img/bamboo'.replace('X','X'),
+  dotonbori:'/assets/img/dotonbori'.replace('X','X'), sumo:'/assets/img/sumo'.replace('X','X'), tokyostation:'/assets/img/tokyostation'.replace('X','X'),
+  abudhabi:'/assets/img/abudhabi'.replace('X','X'), mosque:'/assets/img/mosque'.replace('X','X'),
 };
 // one distinct photo per day
 const DAYIMG = {
@@ -702,6 +704,11 @@ const CITY = {
 // hero: light tint so the PHOTO is the star; card: bottom-weighted for a legible title
 const heroBg = (c,ph) => `linear-gradient(120deg,rgba(${CITY[c].c1},.58),rgba(${CITY[c].c2},.34)),url('${ph}') center/cover`;
 const cardBg = (c,ph) => `linear-gradient(to top,rgba(${CITY[c].c1},.92),rgba(${CITY[c].c1},.10)),url('${ph}') center/cover`;
+/* kafelek dnia: zdjęcie jako <img loading="lazy"> pod gradientem — natywne leniwe ładowanie
+   i jawne wymiary (bez przeskoku układu). Gradient zostaje w tle elementu. */
+const cardImg = (c,ph,alt,eager) => `<img class="dcimg" src="${ph}" alt="" width="1000" height="700" `
+  + `loading="${eager?'eager':'lazy'}" decoding="async">`
+  + `<span class="dcgrad" style="background:linear-gradient(to top,rgba(${CITY[c].c1},.92),rgba(${CITY[c].c1},.10))"></span>`;
 const JPSTOPS = [
   [35.6804,139.7690,'Tokio — start (2 noce) i finał na turnieju sumo'],
   [35.2323,139.1069,'Hakone — ryokan z prywatnym onsenem (1 noc)'],
@@ -1054,6 +1061,11 @@ function shell({title,desc,prefix,active,inner,pillsIdx}){
 <meta name="description" content="${desc}">
 <title>${title}</title>
 <link rel="stylesheet" href="${prefix}assets/style.css">
+<link rel="manifest" href="${prefix}manifest.webmanifest">
+<meta name="theme-color" content="#0f1c2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Japonia 2027">
+<link rel="icon" href="${prefix}assets/icon.svg" type="image/svg+xml">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -1065,6 +1077,7 @@ ${inner}
 </main>
 <button class="totop" id="totop" aria-label="Do góry">↑</button>
 <script src="${prefix}assets/app.js"></script>
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('${prefix}sw.js').catch(function(){});});</script>
 </body>
 </html>`;
 }
@@ -1149,7 +1162,8 @@ function dayPage(d,i){
 /* ---- index ---- */
 function indexPage(){
   const intLbl={g:'Lekki',y:'Średni',r:'Intensywny'};
-  const cards = DAYS.map((d,i)=>{const it=DAYINT[d.date];return `<a class="dcard" href="days/${d.date}.html" style="background:${cardBg(d.city, DAYIMG[d.date])}">
+  const cards = DAYS.map((d,i)=>{const it=DAYINT[d.date];return `<a class="dcard" href="days/${d.date}.html" style="background:rgb(${CITY[d.city].c1})">
+    ${cardImg(d.city, DAYIMG[d.date], d.title, i<2)}
     <div class="dn">${i+1}</div>
     ${it?`<span class="idot ${it[0]}" title="${intLbl[it[0]]} dzień"></span>`:''}
     <div class="dd">${d.dow} · ${d.dd}</div>
@@ -1337,7 +1351,7 @@ function hotelePage(){
         <div class="links"><a href="${gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a>${H.book?`<a href="${H.book}" target="_blank" rel="noopener">Sprawdź dostępność →</a>`:''}</div>
       </div>
       <a class="hphoto" href="${H.id==='auh'?H.site:gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">
-        <img src="assets/img/hotels/${H.id}.jpg" alt="${H.name}" loading="lazy">
+        <img src="assets/img/hotels/${H.id}.webp" alt="${H.name}" loading="lazy">
         <span class="plab">📍 ${H.id==='auh'?'Etihad Stopover →':'Zobacz w Google Maps →'}</span>
       </a>
     </div>`).join('');
@@ -1923,6 +1937,63 @@ fs.writeFileSync(DIR + '/loty.html', lotyPage());
 fs.writeFileSync(DIR + '/koszty.html', kosztyPage());
 fs.writeFileSync(DIR + '/pogoda.html', pogodaPage());
 fs.writeFileSync(DIR + '/atrakcje.html', ATR);
+
+/* ---- OFFLINE: service worker + manifest + ikona ----
+   Cel: plan ma działać w Japonii bez zasięgu i bez roamingu.
+   Strategia: przy instalacji cache'ujemy CAŁY serwis (strony + style + zdjęcia),
+   potem serwujemy z cache i w tle odświeżamy (stale-while-revalidate).
+   Mapy (Leaflet/OSM) i pogoda wymagają sieci — bez niej po prostu się nie pokażą. */
+const PRECACHE = [
+  './','index.html','decyzje.html','atrakcje.html','hotele.html','loty.html','koszty.html','pogoda.html','druk.html',
+  'assets/style.css','assets/app.js','assets/icon.svg',
+  ...DAYS.map(d=>`days/${d.date}.html`),
+  ...[...new Set(Object.values(DAYIMG))].map(p=>p.replace(/^\//,'')),
+  ...HOTELS.map(h=>`assets/img/hotels/${h.id}.webp`),
+];
+const SW = `/* Service worker planu Japonia 2027 — wersja ${LAST_CHECKED} */
+const CACHE = 'jp2027-${LAST_CHECKED}';
+const PRECACHE = ${JSON.stringify(PRECACHE)};
+self.addEventListener('install', function(e){
+  self.skipWaiting();
+  e.waitUntil(caches.open(CACHE).then(function(c){
+    // pojedyncze błędy nie mogą wywrócić instalacji
+    return Promise.all(PRECACHE.map(function(u){return c.add(u).catch(function(){});}));
+  }));
+});
+self.addEventListener('activate', function(e){
+  e.waitUntil(caches.keys().then(function(keys){
+    return Promise.all(keys.filter(function(k){return k!==CACHE;}).map(function(k){return caches.delete(k);}));
+  }).then(function(){return self.clients.claim();}));
+});
+self.addEventListener('fetch', function(e){
+  var req = e.request;
+  if(req.method!=='GET') return;
+  var url = new URL(req.url);
+  if(url.origin !== location.origin) return;           // mapy, pogoda, Google — tylko z sieci
+  e.respondWith(
+    caches.match(req).then(function(hit){
+      var net = fetch(req).then(function(res){
+        if(res && res.status===200) caches.open(CACHE).then(function(c){c.put(req,res.clone());});
+        return res;
+      }).catch(function(){ return hit || caches.match('index.html'); });
+      return hit || net;                                 // cache first, odświeżanie w tle
+    })
+  );
+});
+`;
+fs.writeFileSync(DIR + '/sw.js', SW);
+
+fs.writeFileSync(DIR + '/manifest.webmanifest', JSON.stringify({
+  name:'Japonia 2027 — plan podróży', short_name:'Japonia 2027',
+  description:'Plan rodzinnego wyjazdu do Japonii 3–15 maja 2027.',
+  start_url:'./index.html', scope:'./', display:'standalone',
+  background_color:'#f5f1e8', theme_color:'#0f1c2e', lang:'pl',
+  icons:[{src:'assets/icon.svg', sizes:'any', type:'image/svg+xml', purpose:'any maskable'}]
+}, null, 2));
+
+/* ikona: czerwone koło (hinomaru) na granatowym tle — czytelne w małym rozmiarze */
+fs.writeFileSync(DIR + '/assets/icon.svg',
+`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="96" fill="#0f1c2e"/><circle cx="256" cy="238" r="118" fill="#c8402c"/><text x="256" y="446" text-anchor="middle" font-family="Georgia,serif" font-size="86" fill="#b98a34">2027</text></svg>`);
 
 console.log('OK · day pages:', DAYS.length, '· timeline items:', DAYS.reduce((a,d)=>a+d.tl.length,0),
   '· pc:', DAYS.filter(d=>d.pc).length);

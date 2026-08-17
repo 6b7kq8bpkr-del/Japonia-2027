@@ -7,6 +7,11 @@
 <meta name="description" content="Lądujemy wypoczęci po nocy w łóżku, a Tokio wita nas karpiami koinobori — dziś Kodomo no hi.">
 <title>Dzień 3: Przylot do Tokio w Dzień Dziecka · Japonia 2027</title>
 <link rel="stylesheet" href="../assets/style.css">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#0f1c2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Japonia 2027">
+<link rel="icon" href="../assets/icon.svg" type="image/svg+xml">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -16,7 +21,7 @@
 <main class="wrap">
 
   <header class="hero kb">
-    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(20,32,64,.58),rgba(14,39,67,.34)),url('/assets/img/sensoji.jpg') center/cover"></div></div>
+    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(20,32,64,.58),rgba(14,39,67,.34)),url('/assets/img/sensoji') center/cover"></div></div>
     <div class="hero-inner">
     <p class="eyebrow">Dzień 3 z 13 · środa · 5 maja</p>
     <h1>Przylot do Tokio w Dzień Dziecka</h1>
@@ -67,5 +72,6 @@
 </main>
 <button class="totop" id="totop" aria-label="Do góry">↑</button>
 <script src="../assets/app.js"></script>
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('../sw.js').catch(function(){});});</script>
 </body>
 </html>
