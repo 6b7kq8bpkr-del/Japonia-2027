@@ -7,3 +7,6 @@ japonia-artifact.html
 # Robocze
 *.log
 .DS_Store
+
+# Prompt roboczy — nie publikować
+PROMPT-ULEPSZANIE.md
