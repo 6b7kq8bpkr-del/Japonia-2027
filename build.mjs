@@ -680,11 +680,11 @@ fs.writeFileSync(DIR + '/assets/app.js', APP);
 
 /* ============================ DATA ============================ */
 const IMG = {
-  sensoji:'/assets/img/sensoji'.replace('X','X'), shibuya:'/assets/img/shibuya'.replace('X','X'), akihabara:'/assets/img/akihabara'.replace('X','X'),
-  fuji:'/assets/img/fuji'.replace('X','X'), yasaka:'/assets/img/yasaka'.replace('X','X'), fushimi:'/assets/img/fushimi'.replace('X','X'),
-  kinkakuji:'/assets/img/kinkakuji'.replace('X','X'), todaiji:'/assets/img/todaiji'.replace('X','X'), bamboo:'/assets/img/bamboo'.replace('X','X'),
-  dotonbori:'/assets/img/dotonbori'.replace('X','X'), sumo:'/assets/img/sumo'.replace('X','X'), tokyostation:'/assets/img/tokyostation'.replace('X','X'),
-  abudhabi:'/assets/img/abudhabi'.replace('X','X'), mosque:'/assets/img/mosque'.replace('X','X'),
+  sensoji:'/assets/img/sensoji.webp', shibuya:'/assets/img/shibuya.webp', akihabara:'/assets/img/akihabara.webp',
+  fuji:'/assets/img/fuji.webp', yasaka:'/assets/img/yasaka.webp', fushimi:'/assets/img/fushimi.webp',
+  kinkakuji:'/assets/img/kinkakuji.webp', todaiji:'/assets/img/todaiji.webp', bamboo:'/assets/img/bamboo.webp',
+  dotonbori:'/assets/img/dotonbori.webp', sumo:'/assets/img/sumo.webp', tokyostation:'/assets/img/tokyostation.webp',
+  abudhabi:'/assets/img/abudhabi.webp', mosque:'/assets/img/mosque.webp',
 };
 // one distinct photo per day
 const DAYIMG = {
