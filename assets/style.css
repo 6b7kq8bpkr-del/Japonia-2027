@@ -60,7 +60,7 @@ a{color:var(--ai)}
 
 /* hero */
 .hero{position:relative;overflow:hidden;color:#fff;border-radius:var(--radius);
-  margin:20px 0 0;padding:44px 34px 38px;box-shadow:var(--shadow)}
+  margin:var(--s5) 0 0;padding:48px 38px 46px;box-shadow:var(--shadow)}
 .hero::after{content:"";position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M0 24a24 24 0 0148 0'/%3E%3Cpath d='M0 24a17 17 0 0148 0'/%3E%3Cpath d='M0 24a10 10 0 0148 0'/%3E%3C/g%3E%3C/svg%3E");
   background-size:56px;opacity:.5;pointer-events:none}
 .hero>*{position:relative;z-index:1}
@@ -112,8 +112,13 @@ a{color:var(--ai)}
 /* sections */
 main{padding-bottom:40px}
 section{margin-top:var(--s6)}
-.stitle{font-family:var(--serif);font-weight:500;font-size:clamp(21px,3.6vw,27px);
-  margin:0 0 16px;letter-spacing:-.01em}
+/* Kotwica przy nagłówku sekcji: krótka złota kreska nad tytułem. Daje rytm długim stronom
+   i zastępuje emoji, które wcześniej pełniły tę rolę kosztem edytorialnego tonu. */
+.stitle{font-family:var(--serif);font-weight:500;font-size:clamp(21px,3.4vw,27px);
+  margin:0 0 var(--s4);letter-spacing:-.015em;line-height:1.15;
+  position:relative;padding-top:var(--s4)}
+.stitle::before{content:"";position:absolute;top:0;left:0;width:32px;height:2px;
+  background:var(--kin);border-radius:2px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
   box-shadow:var(--shadow);padding:22px 24px}
 .lead-p{color:var(--muted);font-size:15.5px;margin:0 0 18px;max-width:66ch}
@@ -310,13 +315,17 @@ footer a{font-weight:700;text-decoration:none}
 .lgd{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted)}
 .lgd i{width:14px;height:4px;border-radius:4px;display:inline-block}
 .alist{display:flex;flex-direction:column;gap:10px}
-.arow{display:grid;grid-template-columns:1fr auto;gap:6px 14px;align-items:center;background:var(--panel);
-  border:1px solid var(--line);border-radius:14px;padding:13px 16px}
+.arow{display:grid;grid-template-columns:1fr auto;gap:var(--s1) var(--s5);align-items:baseline;
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:var(--s3) var(--s4);
+  transition:border-color .15s ease,box-shadow .2s ease}
+.arow:hover{border-color:var(--ai);box-shadow:var(--shadow-lift)}
 .arow.top{border-color:var(--shu);box-shadow:var(--shadow-sm)}
 .arow .an{font-weight:800;font-size:15.5px;display:flex;align-items:center;gap:8px}
 .arow .an i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
-.arow .am{font-size:12px;color:var(--muted);grid-column:1}
-.arow .ap{font-weight:800;font-size:17px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.arow .am{font-size:12px;color:var(--muted);grid-column:1;line-height:1.5;max-width:62ch}
+.arow .ap{font-family:var(--serif);font-weight:500;font-size:20px;text-align:right;
+  font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:-.01em}
+.arow.top .ap{color:var(--shu)}
 @media(max-width:620px){.arow{grid-template-columns:1fr}.arow .ad{text-align:left}}
 .arow .ad{font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
 .pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
@@ -354,12 +363,18 @@ footer a{font-weight:700;text-decoration:none}
   box-shadow:0 0 0 3px rgba(255,255,255,.4),0 1px 3px rgba(0,0,0,.35)}
 .idot.g{background:var(--success)}.idot.y{background:var(--kin)}.idot.r{background:var(--shu)}
 /* stat band */
-.statband{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:12px;margin-top:22px}
-.stt{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px 14px;text-align:center;box-shadow:var(--shadow-sm)}
-.stt b{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(26px,4.4vw,38px);color:var(--ai);line-height:1;letter-spacing:-.01em}
+/* Odliczanie to informacja wiodąca — dostaje własną, szerszą kolumnę i pełny kolor.
+   Pozostałe cztery są celowo lżejsze: bez cienia, cieńsza ramka, mniejsza liczba. */
+.statband{display:grid;grid-template-columns:1.35fr repeat(4,1fr);gap:var(--s3);margin-top:var(--s5)}
+@media(max-width:900px){.statband{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}}
+.stt{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:var(--s4) var(--s3);text-align:center;display:flex;flex-direction:column;justify-content:center}
+.stt b{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.4vw,32px);color:var(--ink);line-height:1;letter-spacing:-.02em}
 .stt b small{font-size:.4em;color:var(--muted);font-family:var(--sans);font-weight:700;margin-left:3px}
-.stt span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-top:8px}
-.stt.hl{background:linear-gradient(160deg,var(--ai),var(--ai-dark));border-color:transparent}
+.stt span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:var(--s2)}
+.stt.hl{background:linear-gradient(158deg,var(--ai),var(--ai-dark));border-color:transparent;
+  box-shadow:var(--shadow-lift)}
+.stt.hl b{font-size:clamp(34px,4.6vw,46px)}
 .stt.hl b{color:#fff}.stt.hl b small{color:rgba(255,255,255,.72)}.stt.hl span{color:rgba(255,255,255,.85)}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
