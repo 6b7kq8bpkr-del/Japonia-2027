@@ -323,8 +323,10 @@ section{margin-top:var(--s6)}
 /* index day grid */
 .dgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 @media(max-width:620px){.dgrid{grid-template-columns:1fr}}
-.dcard{text-decoration:none;color:#fff;border-radius:var(--radius);padding:20px;position:relative;
-  overflow:hidden;box-shadow:var(--shadow);min-height:150px;display:flex;flex-direction:column;justify-content:flex-end}
+.dcard{text-decoration:none;color:#fff;border-radius:var(--radius);padding:var(--s5) var(--s4) var(--s4);
+  position:relative;overflow:hidden;box-shadow:var(--shadow-sm);min-height:186px;
+  display:flex;flex-direction:column;justify-content:flex-end}
+.dcard:focus-visible{outline:3px solid var(--kin);outline-offset:3px}
 .dcard::after{content:"";position:absolute;inset:0;background-image:url("${WAVE}");background-size:52px;opacity:.45;z-index:2}
 .dcard .dcimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;display:block}
 .dcard .dcgrad{position:absolute;inset:0;z-index:1}
