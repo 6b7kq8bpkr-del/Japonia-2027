@@ -143,8 +143,15 @@ const CSS = `:root{
   --line:rgba(28,37,48,.13); --ai:#1b3a6b; --ai-dark:#122740; --shu:#c8402c;
   --sakura:#f0e6df; --kin:#b98a34; --success:#2f6d4f;
   --shadow:0 22px 60px rgba(20,30,45,.12); --shadow-sm:0 2px 10px rgba(20,30,45,.07);
-  --radius:22px; --serif:Georgia,"Times New Roman",serif;
-  --sans:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --shadow-lift:0 10px 30px rgba(20,30,45,.10);
+  --radius:20px;
+  /* Georgia jako krój tytułowy: ciepły, komplet polskich znaków, dostępny wszędzie — bez
+     pobierania webfontu, co ma znaczenie przy trybie offline. Sans: uczciwy stos systemowy
+     (wcześniej deklarowany był Inter, którego strona NIGDY nie ładowała). */
+  --serif:Georgia,"Times New Roman",serif;
+  --sans:system-ui,-apple-system,"Segoe UI Variable Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  /* skala odstępów — 6 stopni zamiast 31 przypadkowych wartości */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:36px;
   color-scheme:light;
 }
 *{box-sizing:border-box}
@@ -161,11 +168,11 @@ a{color:var(--ai)}
 .topbar .navrow{max-width:880px;margin:0 auto;background:var(--ai-dark);border-radius:999px;
   display:flex;align-items:center;gap:8px;padding:9px 12px 9px 20px;box-shadow:var(--shadow-sm);
   flex-wrap:wrap;min-height:44px}
-.brand{font-family:var(--serif);color:#fff;font-weight:500;font-size:16px;letter-spacing:.06em;
+.brand{font-family:var(--serif);color:#fff;font-weight:500;font-size:17px;letter-spacing:.06em;
   text-decoration:none;margin-right:auto;white-space:nowrap}
 .brand b{color:var(--kin);font-weight:500}
 .tabs{display:flex;gap:6px;flex-wrap:wrap}
-.tabs a{color:rgba(255,255,255,.82);text-decoration:none;font-size:13.5px;font-weight:600;
+.tabs a{color:rgba(255,255,255,.82);text-decoration:none;font-size:13px;font-weight:600;
   padding:7px 14px;border-radius:999px;white-space:nowrap;transition:.15s}
 .tabs a:hover{background:rgba(255,255,255,.12);color:#fff}
 .tabs a.on{background:var(--paper);color:var(--ai-dark)}
@@ -183,11 +190,11 @@ a{color:var(--ai)}
   scrollbar-width:none;padding-bottom:4px}
 .pills::-webkit-scrollbar{display:none}
 .pills a{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  width:52px;height:52px;border-radius:15px;background:var(--panel);border:1px solid var(--line);
+  width:52px;height:52px;border-radius:14px;background:var(--panel);border:1px solid var(--line);
   text-decoration:none;color:var(--muted);box-shadow:var(--shadow-sm);transition:.15s}
 .pills a:hover{border-color:var(--ai);color:var(--ink)}
-.pills a b{font-size:16px;font-weight:800;color:var(--ink);line-height:1}
-.pills a span{font-size:10px;margin-top:2px}
+.pills a b{font-size:17px;font-weight:800;color:var(--ink);line-height:1}
+.pills a span{font-size:11px;margin-top:2px}
 .pills a.on{background:var(--ai);border-color:var(--ai)}
 .pills a.on b,.pills a.on span{color:#fff}
 
@@ -205,7 +212,7 @@ a{color:var(--ai)}
 .hero .lead{margin:16px 0 0;font-size:clamp(15px,2.3vw,18px);max-width:60ch;opacity:.95}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
 .chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);
-  border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:600;backdrop-filter:blur(3px)}
+  border-radius:999px;padding:6px 13px;font-size:12px;font-weight:600;backdrop-filter:blur(3px)}
 
 /* ---- home hero (cinematic) ---- */
 .hero.home{min-height:clamp(450px,66vh,620px);display:flex;flex-direction:column;justify-content:center;
@@ -244,7 +251,7 @@ a{color:var(--ai)}
 
 /* sections */
 main{padding-bottom:40px}
-section{margin-top:34px}
+section{margin-top:var(--s6)}
 .stitle{font-family:var(--serif);font-weight:500;font-size:clamp(21px,3.6vw,27px);
   margin:0 0 16px;letter-spacing:-.01em}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
@@ -260,24 +267,24 @@ section{margin-top:34px}
 .tline li:last-child .bd{border-color:transparent}
 .tline .bd::before{content:"";position:absolute;left:-8px;top:5px;width:13px;height:13px;
   border-radius:50%;background:var(--shu);border:3px solid var(--panel);box-shadow:0 0 0 1px var(--line)}
-.tline .h{font-weight:700;font-size:16px;margin:0}
+.tline .h{font-weight:700;font-size:17px;margin:0}
 .tline .d{color:var(--muted);font-size:14px;margin:3px 0 0}
 
 /* facts */
 .facts{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line);
-  border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+  border-radius:14px;overflow:hidden;border:1px solid var(--line)}
 .facts div{background:var(--panel);padding:13px 16px}
 .facts .fv{font-weight:800;font-size:15.5px}
-.facts .fk{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:1px}
+.facts .fk{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:1px}
 
 /* tips + pros-cons + more */
 .tips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
 /* UWAGA: wcześniej display:flex — przez to KAŻDY element inline (b, i, a) w treści
    punktu stawał się osobną kolumną flexa i punkty z pogrubieniem w środku zdania rozjeżdżały się.
    Teraz strzałka wisi w marginesie, a treść płynie normalnym tekstem. */
-.tips li{position:relative;padding-left:17px;font-size:14.5px;line-height:1.55}
+.tips li{position:relative;padding-left:17px;font-size:14px;line-height:1.55}
 .tips li::before{content:"›";position:absolute;left:0;top:0;color:var(--shu);font-weight:800}
-.pc{border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px;background:var(--sakura)}
+.pc{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:14px;background:var(--sakura)}
 .pc .pch{font-family:var(--serif);font-weight:500;font-size:17px;margin-bottom:8px}
 .pc .row{font-size:14px;margin:5px 0}
 .pc .opt{font-weight:800}
@@ -289,7 +296,7 @@ section{margin-top:34px}
 .more summary::-webkit-details-marker{display:none}
 .more summary::before{content:"＋";color:var(--shu);margin-right:10px;font-weight:700}
 .more details[open] summary::before{content:"−"}
-.more p{color:var(--muted);font-size:14.5px;margin:10px 0 0}
+.more p{color:var(--muted);font-size:14px;margin:10px 0 0}
 .linklist{display:flex;flex-wrap:wrap;gap:8px}
 .linklist a{font-size:13px;font-weight:700;text-decoration:none;color:var(--ai);
   background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 13px}
@@ -300,13 +307,13 @@ section{margin-top:34px}
 /* day nav */
 .daynav{display:flex;justify-content:space-between;align-items:stretch;gap:12px;margin-top:36px}
 .daynav a{flex:1;text-decoration:none;color:var(--ink);background:var(--panel);border:1px solid var(--line);
-  border-radius:16px;padding:14px 18px;box-shadow:var(--shadow-sm);transition:.15s}
+  border-radius:14px;padding:14px 18px;box-shadow:var(--shadow-sm);transition:.15s}
 .daynav a:hover{border-color:var(--ai)}
-.daynav .dir{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.daynav .dir{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
 .daynav .ttl{font-weight:700;margin-top:3px}
 .daynav .home{flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:22px}
 .daynav .nx{text-align:right}
-.kbd{color:var(--muted);font-size:12.5px;text-align:center;margin-top:14px}
+.kbd{color:var(--muted);font-size:12px;text-align:center;margin-top:14px}
 
 /* index day grid */
 .dgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
@@ -319,7 +326,7 @@ section{margin-top:34px}
 .dcard>.dn,.dcard>.dd,.dcard>.dt{position:relative;z-index:3}
 .dcard .dn,.dcard .dd,.dcard .dt{text-shadow:0 1px 12px rgba(0,0,0,.6),0 1px 2px rgba(0,0,0,.45)}
 .dcard .dn{position:absolute;top:16px;left:20px;font-family:var(--serif);font-size:30px;opacity:.92;z-index:1}
-.dcard .dd{font-size:12.5px;opacity:.9;text-transform:uppercase;letter-spacing:.08em}
+.dcard .dd{font-size:12px;opacity:.9;text-transform:uppercase;letter-spacing:.08em}
 .dcard .dt{font-family:var(--serif);font-weight:500;font-size:20px;line-height:1.12;margin-top:3px;text-wrap:balance}
 .quick{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
 @media(max-width:620px){.quick{grid-template-columns:1fr}}
@@ -327,8 +334,8 @@ section{margin-top:34px}
   border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);transition:.15s}
 .qcard:hover{border-color:var(--ai)}
 .qcard .qi{font-size:26px}
-.qcard .qh{font-family:var(--serif);font-size:19px;margin-top:6px}
-.qcard .qd{color:var(--muted);font-size:13.5px;margin-top:2px}
+.qcard .qh{font-family:var(--serif);font-size:20px;margin-top:6px}
+.qcard .qd{color:var(--muted);font-size:13px;margin-top:2px}
 
 /* calculator (koszty) */
 .calc table{width:100%;border-collapse:collapse}
@@ -336,23 +343,23 @@ section{margin-top:34px}
 .calc th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
 .calc td.cat{font-weight:700}.calc td.cat .hint{display:block;font-size:12px;color:var(--muted);font-weight:400}
 .calc td.num{text-align:right;white-space:nowrap}
-.calc input{width:96px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--paper);
-  color:var(--ink);font-size:15px;text-align:right;font-variant-numeric:tabular-nums;font-family:var(--sans)}
+.calc input{width:96px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);
+  color:var(--ink);font-size:15.5px;text-align:right;font-variant-numeric:tabular-nums;font-family:var(--sans)}
 .calc input.sm{width:60px}.calc .x{color:var(--muted);padding:0 5px}
 .calc .tot td{border-bottom:none;border-top:2px solid var(--line);font-size:17px;font-weight:800;padding-top:14px}
-.calc .tot .big{color:var(--shu);font-size:23px;text-align:right}
+.calc .tot .big{color:var(--shu);font-size:26px;text-align:right}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
 @media(max-width:620px){.stats{grid-template-columns:1fr}}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow-sm)}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-sm)}
 .stat .k{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-.stat .v{font-size:23px;font-weight:800;margin-top:3px}
+.stat .v{font-size:26px;font-weight:800;margin-top:3px}
 .bar{height:15px;border-radius:999px;background:var(--sakura);overflow:hidden;margin:12px 0 6px}
 .bar .fill{height:100%;border-radius:999px;transition:width .3s}
 .barlab{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
-.reset{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:10px;
+.reset{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:8px;
   padding:8px 14px;cursor:pointer;font-size:13px;margin-top:14px;font-family:var(--sans)}
-.pflag{display:inline-flex;gap:6px;background:var(--sakura);border:1px dashed var(--shu);border-radius:12px;
-  padding:9px 13px;font-size:13.5px;margin-bottom:14px}
+.pflag{display:inline-flex;gap:6px;background:var(--sakura);border:1px dashed var(--shu);border-radius:14px;
+  padding:9px 13px;font-size:13px;margin-bottom:14px}
 
 /* attractions */
 .toc{display:flex;flex-wrap:wrap;gap:8px}
@@ -362,18 +369,18 @@ section{margin-top:34px}
 @media(max-width:680px){.agrid{grid-template-columns:1fr}}
 .acard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 17px;
   box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:6px;scroll-margin-top:80px}
-.acard h3{margin:0;font-family:var(--serif);font-weight:500;font-size:18px}
-.acard .desc{font-size:13.5px}
+.acard h3{margin:0;font-family:var(--serif);font-weight:500;font-size:20px}
+.acard .desc{font-size:13px}
 .acard .meta{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
 .acard .meta b{color:var(--ink);font-weight:600}
 .acard .links{margin-top:auto;padding-top:6px;display:flex;flex-wrap:wrap;gap:8px}
-.acard .links a{font-size:12.5px;font-weight:700;text-decoration:none;color:var(--ai);
+.acard .links a{font-size:12px;font-weight:700;text-decoration:none;color:var(--ai);
   border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--paper)}
-.rezerwuj{display:inline-block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
-  background:var(--shu);color:#fff;border-radius:6px;padding:2px 8px;width:fit-content}
+.rezerwuj{display:inline-block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
+  background:var(--shu);color:#fff;border-radius:8px;padding:2px 8px;width:fit-content}
 
 /* misc */
-.wxwrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px}
+.wxwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
 .wxwrap table{width:100%;border-collapse:collapse}
 .wxwrap th,.wxwrap td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--line);font-size:14px}
 .wxwrap th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
@@ -385,20 +392,20 @@ footer{margin-top:44px;padding:26px 0;border-top:1px solid var(--line);color:var
 footer a{font-weight:700;text-decoration:none}
 /* hotels */
 .hotelbox{display:flex;gap:10px;align-items:center;margin-top:14px;text-decoration:none;color:var(--ink);
-  background:var(--panel);border:1px dashed var(--kin);border-radius:16px;padding:13px 16px;
+  background:var(--panel);border:1px dashed var(--kin);border-radius:14px;padding:13px 16px;
   font-size:14px;box-shadow:var(--shadow-sm);transition:.15s}
 .hotelbox:hover{border-color:var(--ai)}
 .hlist{display:flex;flex-direction:column;gap:14px}
 .hcard{display:flex;gap:18px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
   padding:20px 22px;box-shadow:var(--shadow);scroll-margin-top:80px}
 .hcard .hmain{flex:1;min-width:0}
-.hcard .hstay{font-size:11.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--shu);font-weight:800}
-.hcard h3{font-family:var(--serif);font-weight:500;font-size:21px;margin:4px 0 8px}
+.hcard .hstay{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--shu);font-weight:800}
+.hcard h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:4px 0 8px}
 .hcard .desc{font-size:14px;margin:0 0 10px}
 .hcard .meta{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:3px}
 .hcard .meta b{color:var(--ink)}
 .hcard .links{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px}
-.hcard .links a{font-size:12.5px;font-weight:700;text-decoration:none;color:var(--ai);
+.hcard .links a{font-size:12px;font-weight:700;text-decoration:none;color:var(--ai);
   border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--paper)}
 .hcard .hphoto{flex:0 0 auto;width:184px;text-decoration:none;display:flex;flex-direction:column;gap:6px}
 .hcard .hphoto img{width:184px;height:128px;object-fit:cover;border-radius:14px;border:1px solid var(--line);display:block}
@@ -406,10 +413,10 @@ footer a{font-weight:700;text-decoration:none}
 .hcard .plab{font-size:12px;font-weight:700;color:var(--ai);text-align:center}
 @media(max-width:560px){.hcard{flex-direction:column}.hcard .hphoto{width:100%}.hcard .hphoto img{width:100%;height:180px}}
 .maphold{position:relative}
-.mapbtn{width:100%;padding:15px;border:1px dashed var(--line);background:var(--paper);border-radius:16px;
-  font-weight:700;color:var(--ai);cursor:pointer;font-family:var(--sans);font-size:14.5px}
+.mapbtn{width:100%;padding:15px;border:1px dashed var(--line);background:var(--paper);border-radius:14px;
+  font-weight:700;color:var(--ai);cursor:pointer;font-family:var(--sans);font-size:14px}
 .mapbtn:hover{border-color:var(--ai)}
-.map{display:none;height:340px;border-radius:16px;overflow:hidden;background:var(--sakura)}
+.map{display:none;height:340px;border-radius:14px;overflow:hidden;background:var(--sakura)}
 .leaflet-container{font-family:var(--sans)}
 .mk{background:var(--shu);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;
   justify-content:center;font-weight:800;font-size:13px;border:2px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.35)}
@@ -418,7 +425,7 @@ footer a{font-weight:700;text-decoration:none}
 .maplegend .mn{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--ai);color:#fff;
   display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
 .flex{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.flex span{font-size:12.5px;border-radius:10px;padding:8px 11px;border:1px solid var(--line);flex:1 1 240px;line-height:1.4}
+.flex span{font-size:12px;border-radius:8px;padding:8px 11px;border:1px solid var(--line);flex:1 1 240px;line-height:1.4}
 .flex .fxlock{background:var(--panel)}
 .flex .fxcut{background:var(--sakura)}
 .flex b{font-weight:800}
@@ -427,7 +434,7 @@ footer a{font-weight:700;text-decoration:none}
 .rhythm tr:last-child td{border-bottom:none}
 .rhythm th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
 .rhythm .dcol{font-weight:800;white-space:nowrap}
-.ipill{display:inline-block;font-size:11.5px;font-weight:800;border-radius:999px;padding:2px 11px;color:#fff;white-space:nowrap}
+.ipill{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:2px 11px;color:#fff;white-space:nowrap}
 .ipill.g{background:var(--success)}.ipill.y{background:var(--kin)}.ipill.r{background:var(--shu)}
 .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:620px){.twocol{grid-template-columns:1fr}}
@@ -437,39 +444,39 @@ footer a{font-weight:700;text-decoration:none}
 .totop.show{opacity:1;pointer-events:auto}
 
 /* ---- loty: wykres, tabela linii, warianty terminu ---- */
-.chartwrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 10px}
+.chartwrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 10px}
 .chartwrap svg{min-width:520px;display:block}
 .lgds{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
-.lgd{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--muted)}
-.lgd i{width:14px;height:4px;border-radius:2px;display:inline-block}
+.lgd{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted)}
+.lgd i{width:14px;height:4px;border-radius:4px;display:inline-block}
 .alist{display:flex;flex-direction:column;gap:10px}
 .arow{display:grid;grid-template-columns:1fr auto;gap:6px 14px;align-items:center;background:var(--panel);
   border:1px solid var(--line);border-radius:14px;padding:13px 16px}
 .arow.top{border-color:var(--shu);box-shadow:var(--shadow-sm)}
-.arow .an{font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px}
+.arow .an{font-weight:800;font-size:15.5px;display:flex;align-items:center;gap:8px}
 .arow .an i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
-.arow .am{font-size:12.5px;color:var(--muted);grid-column:1}
+.arow .am{font-size:12px;color:var(--muted);grid-column:1}
 .arow .ap{font-weight:800;font-size:17px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 @media(max-width:620px){.arow{grid-template-columns:1fr}.arow .ad{text-align:left}}
 .arow .ad{font-size:12px;font-weight:700;text-align:right;white-space:nowrap}
 .pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-.pcard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 18px 16px;position:relative}
+.pcard{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px 18px 16px;position:relative}
 .pcard.win{border-color:var(--success);box-shadow:var(--shadow-sm)}
 .pcard .ph{font-family:var(--serif);font-size:20px;font-weight:500}
-.pcard .psub{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:2px}
+.pcard .psub{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:2px}
 .pcard .pp{font-size:24px;font-weight:800;margin:10px 0 2px;font-variant-numeric:tabular-nums}
-.pcard .pdiff{font-size:12.5px;font-weight:700;margin-bottom:10px}
+.pcard .pdiff{font-size:12px;font-weight:700;margin-bottom:10px}
 .pcard ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;font-size:13px}
 .pcard li{display:flex;gap:7px;line-height:1.35}
 .pcard .yes::before{content:"✓";color:var(--success);font-weight:800;flex:0 0 auto}
 .pcard .no::before{content:"✗";color:var(--shu);font-weight:800;flex:0 0 auto}
-.pcard .badge{position:absolute;top:-10px;right:14px;background:var(--success);color:#fff;font-size:10.5px;
+.pcard .badge{position:absolute;top:-10px;right:14px;background:var(--success);color:#fff;font-size:11px;
   font-weight:800;text-transform:uppercase;letter-spacing:.07em;border-radius:999px;padding:4px 11px}
 .gridbars{display:flex;align-items:flex-end;gap:3px;height:120px;margin-top:6px}
 .gridbars div{flex:1;border-radius:4px 4px 0 0;background:var(--ai);opacity:.55;position:relative;min-width:0}
 .gridbars div.lowest{background:var(--success);opacity:1}
 .gridlabs{display:flex;gap:3px;margin-top:5px}
-.gridlabs span{flex:1;text-align:center;font-size:10px;color:var(--muted);min-width:0}
+.gridlabs span{flex:1;text-align:center;font-size:11px;color:var(--muted);min-width:0}
 /* ---- modern polish ---- */
 .progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;
   background:linear-gradient(90deg,var(--kin),var(--shu));transition:width .12s linear}
@@ -488,7 +495,7 @@ footer a{font-weight:700;text-decoration:none}
 .idot.g{background:var(--success)}.idot.y{background:var(--kin)}.idot.r{background:var(--shu)}
 /* stat band */
 .statband{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:12px;margin-top:22px}
-.stt{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 14px;text-align:center;box-shadow:var(--shadow-sm)}
+.stt{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px 14px;text-align:center;box-shadow:var(--shadow-sm)}
 .stt b{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(26px,4.4vw,38px);color:var(--ai);line-height:1;letter-spacing:-.01em}
 .stt b small{font-size:.4em;color:var(--muted);font-family:var(--sans);font-weight:700;margin-left:3px}
 .stt span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-top:8px}
@@ -511,22 +518,22 @@ footer a{font-weight:700;text-decoration:none}
   box-shadow:var(--shadow-sm);transition:filter .15s}
 .sos a:hover{filter:brightness(1.07)}
 .sos b{font-family:var(--serif);font-weight:500;font-size:38px;line-height:1}
-.sos span{font-size:11.5px;text-transform:uppercase;letter-spacing:.09em;opacity:.92}
-.sosblock{margin-top:16px;padding:14px 16px;border-radius:12px;background:var(--paper);border:1px solid var(--line)}
+.sos span{font-size:11px;text-transform:uppercase;letter-spacing:.09em;opacity:.92}
+.sosblock{margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--paper);border:1px solid var(--line)}
 .sosblock h4{font-family:var(--serif);font-weight:500;font-size:17px;margin:0 0 6px}
-.sosblock p{margin:6px 0;font-size:13.5px;line-height:1.55}
+.sosblock p{margin:6px 0;font-size:13px;line-height:1.55}
 .sosblock a{font-weight:700;white-space:nowrap}
 @media(max-width:420px){.sos{grid-template-columns:1fr}}
-.jpaddr{display:flex;align-items:center;gap:10px;margin-top:10px;padding:9px 12px;border-radius:10px;
+.jpaddr{display:flex;align-items:center;gap:10px;margin-top:10px;padding:9px 12px;border-radius:8px;
   background:var(--paper);border:1px solid var(--line);flex-wrap:wrap}
-.jpaddr span{font-size:15px;font-weight:600;letter-spacing:.02em}
+.jpaddr span{font-size:15.5px;font-weight:600;letter-spacing:.02em}
 .jpcopy{margin-left:auto;background:transparent;border:1px solid var(--line);border-radius:8px;
   padding:5px 12px;font-size:12px;font-weight:700;color:var(--ai);cursor:pointer;font-family:var(--sans)}
 .jpcopy:hover{border-color:var(--ai)}
 .jpcopy.ok{color:var(--success);border-color:var(--success)}
 .ckhead{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
 .ckhead b{font-family:var(--serif);font-weight:500;font-size:26px;color:var(--ai)}
-.ckhead span{font-size:12.5px;color:var(--muted)}
+.ckhead span{font-size:12px;color:var(--muted)}
 .ckbar{height:6px;border-radius:999px;background:var(--sakura);overflow:hidden;margin-bottom:16px}
 .ckbar div{height:100%;width:0;border-radius:999px;background:var(--success);transition:width .3s}
 .cklist{list-style:none;margin:0;padding:0}
@@ -536,13 +543,13 @@ footer a{font-weight:700;text-decoration:none}
   padding:11px 2px;cursor:pointer}
 .cklist input{width:17px;height:17px;accent-color:var(--success);cursor:pointer;justify-self:start}
 .ckwhen{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--kin);font-weight:700}
-.ckwhat b{font-weight:700;font-size:14.5px}
-.ckwhat i{display:block;font-style:normal;font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.45}
+.ckwhat b{font-weight:700;font-size:14px}
+.ckwhat i{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:2px;line-height:1.45}
 .cklist li.done .ckwhat b{text-decoration:line-through;color:var(--muted);font-weight:600}
 .cklist li.done .ckwhen{color:var(--muted)}
 @media(max-width:560px){.cklist label{grid-template-columns:20px 1fr}.ckwhen{grid-column:2}}
-.wchk{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px;padding:11px 13px;border-radius:12px;
-  background:var(--sakura);border:1px solid var(--line);font-size:12.5px;line-height:1.5;cursor:pointer}
+.wchk{display:flex;gap:10px;align-items:flex-start;margin:0 0 16px;padding:11px 13px;border-radius:14px;
+  background:var(--sakura);border:1px solid var(--line);font-size:12px;line-height:1.5;cursor:pointer}
 .wchk input{margin-top:2px;flex:0 0 auto;accent-color:var(--shu);width:16px;height:16px;cursor:pointer}
 .wchk b{color:var(--ink)}
 .wchk i{display:block;margin-top:3px;color:var(--muted)}
@@ -554,23 +561,23 @@ footer a{font-weight:700;text-decoration:none}
 .scname i{width:11px;height:11px;border-radius:50%;flex:0 0 auto}
 .scmeta{margin-top:2px;font-size:12px;color:var(--muted);line-height:1.4}
 .scprice{font-weight:800;text-align:right}
-.scprice span{display:block;font-size:11.5px;font-weight:500;color:var(--muted)}
+.scprice span{display:block;font-size:11px;font-weight:500;color:var(--muted)}
 .scbarwrap{display:flex;align-items:center;gap:8px}
-.scbar{height:9px;border-radius:99px;min-width:3px}
-.scbarwrap b{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.scbar{height:9px;border-radius:999px;min-width:3px}
+.scbarwrap b{font-size:12px;color:var(--muted);white-space:nowrap}
 @media(max-width:640px){.scrow{grid-template-columns:26px 1fr auto;row-gap:6px}.scbarwrap{grid-column:2/-1}}
 
 /* ---- pogoda na żywo (wzorzec z planu Madery) ---- */
 .wxwrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .wxcard{min-width:0;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);box-shadow:var(--shadow-sm)}
-.wxcard h3{margin:0 0 6px;font-size:15px;color:var(--ai)}
-.wxnow{margin:0;font-size:23px;font-weight:800;line-height:1.15}
-.wxnow span{display:block;margin-top:2px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.wxcard h3{margin:0 0 6px;font-size:15.5px;color:var(--ai)}
+.wxnow{margin:0;font-size:26px;font-weight:800;line-height:1.15}
+.wxnow span{display:block;margin-top:2px;font-size:12px;font-weight:600;color:var(--muted)}
 .wxdays{display:flex;gap:7px;margin-top:13px;overflow-x:auto;padding-bottom:3px;min-width:0}
-.wxd{flex:0 0 auto;min-width:56px;display:grid;gap:3px;padding:9px 6px;border-radius:11px;background:var(--sakura);text-align:center}
-.wxd span{font-size:11.5px;font-weight:800;color:var(--ai);text-transform:capitalize}
-.wxd em{font-size:18px;font-style:normal;line-height:1}
-.wxd b{font-size:12.5px}
+.wxd{flex:0 0 auto;min-width:56px;display:grid;gap:3px;padding:9px 6px;border-radius:14px;background:var(--sakura);text-align:center}
+.wxd span{font-size:11px;font-weight:800;color:var(--ai);text-transform:capitalize}
+.wxd em{font-size:20px;font-style:normal;line-height:1}
+.wxd b{font-size:12px}
 .wxd i{font-style:normal;font-weight:500;color:var(--muted)}
 .wxerr{margin:0;padding:16px;color:var(--muted);line-height:1.6}
 `;
@@ -1342,7 +1349,7 @@ function indexPage(){
 
 /* ---- koszty (strategy + calculator) ---- */
 function kosztyPage(){
-  const seg = (t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const seg = (t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
   const inner = `
   <header class="hero kb">
     <div class="hbg"><div class="hbg-img" style="background:linear-gradient(135deg,#122740,#2f6d4f)"></div></div>
@@ -1364,7 +1371,7 @@ function kosztyPage(){
   </section>
 
   <section>
-    <h2 class="stitle">🚄 Transport w Japonii — zweryfikowane taryfy</h2>
+    <h2 class="stitle">Transport w Japonii — zweryfikowane taryfy</h2>
     <p class="lead-p">Sprawdzone w lipcu 2026 (miejscówki; kurs ¥100 ≈ 2,33 zł). Młodsze dziecko (do 11 lat) płaci taryfę dziecięcą — na kolei dokładnie połowę.</p>
     ${seg('Pętla shinkansenów',['<b>Odawara → Kioto</b> (8.05): ¥12 300/dorosły · ¥6 140/dziecko','<b>Shin-Osaka → Tokio</b> (14.05, Nozomi): ¥14 720/dorosły · ¥7 360/dziecko','<b>Kioto → Osaka</b> (12.05): lokalny JR ~¥580 (to nie shinkansen)','<b>Razem dla 2+2 (3 dorosłych + 1 dziecko): ~¥96 600 ≈ 2 250 zł</b>','JR Pass 7-dniowy (~¥50 000/os.) się <b>nie opłaca</b> — bilety punktowe są ~2× tańsze'])}
   </section>
@@ -1536,7 +1543,7 @@ function decyzjePage(){
   </section>
 
   <section>
-    <h2 class="stitle">✅ Co już zarezerwowane</h2>
+    <h2 class="stitle">Co już zarezerwowane</h2>
     <p class="lead-p">Odhaczaj po kolei — stan zapisuje się w tej przeglądarce. Pozycje są ułożone według terminu, w jakim trzeba je załatwić. Licznik u góry pokazuje, ile zostało.</p>
     <div class="card">
       <div class="ckhead"><b id="ckcount">—</b><span id="cknext"></span></div>
@@ -1550,7 +1557,7 @@ function decyzjePage(){
   </section>
 
   <section>
-    <h2 class="stitle">📅 Kalendarz przygotowań — deadline'y</h2>
+    <h2 class="stitle">Kalendarz przygotowań — deadline'y</h2>
     <p class="lead-p">Do kiedy co załatwić. Trzy alerty (loty, noclegi, pogoda) same przypomną się w aplikacji.</p>
     <div class="card"><ul class="tips">
       <li><b>✈️ Loty — twardy deadline: koniec stycznia 2027.</b> Cel: 11–13 tys. zł na Black Friday (20.11–2.12.2026) albo w styczniowej wyprzedaży Etihad/Qatar. Później tylko drożej (4 miejsca + ogon Golden Week). Alerty: 1.10, 20.11, 22.12.2026, 12.01, 25.01.2027. <a href="koszty.html">Progi i strategia →</a></li>
@@ -1575,13 +1582,13 @@ function decyzjePage(){
   <section>
     <h2 class="stitle">Co jest stałe, a co możesz ruszyć</h2>
     <div class="twocol">
-      <div class="card"><h3 style="font-family:var(--serif);font-weight:500;font-size:18px;margin:0 0 8px">⚓ Stałe (kotwice)</h3><ul class="tips">
+      <div class="card"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 8px">Stałe (kotwice)</h3><ul class="tips">
         <li>Daty i godziny lotów Etihad</li>
         <li>Turniej sumo — 14.05 (dzień 6)</li>
         <li>Ryokan-reset w Hakone (środek trasy)</li>
         <li>Pętla shinkansenów Tokio→Kioto→Osaka→Tokio</li>
       </ul></div>
-      <div class="card"><h3 style="font-family:var(--serif);font-weight:500;font-size:18px;margin:0 0 8px">🔧 Elastyczne</h3><ul class="tips">
+      <div class="card"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 8px">Elastyczne</h3><ul class="tips">
         <li>Poszczególne atrakcje w każdym dniu</li>
         <li>Kolejność Nara ↔ Arashiyama</li>
         <li>Dzień luzu w Osace (13.05) — bufor</li>
@@ -1725,18 +1732,18 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);l
   font-size:14px;cursor:pointer;font-family:var(--sans)}
 .btn:hover{filter:brightness(1.08)}
 .hint{max-width:820px;margin:18px auto 0;padding:12px 18px;background:#fffdf8;border:1px dashed var(--kin);
-  border-radius:12px;font-size:13px;color:var(--muted)}
+  border-radius:14px;font-size:13px;color:var(--muted)}
 .sheet{max-width:820px;margin:18px auto 60px;padding:0 16px}
-.pg{background:#fff;border:1px solid var(--line);border-radius:6px;padding:34px 40px 30px;margin-bottom:22px;position:relative}
+.pg{background:#fff;border:1px solid var(--line);border-radius:8px;padding:34px 40px 30px;margin-bottom:22px;position:relative}
 h1{font-family:var(--serif);font-weight:500;font-size:44px;line-height:1.05;margin:0;letter-spacing:-.01em}
 h2{font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.15;margin:2px 0 6px;letter-spacing:-.01em}
-h3{font-family:var(--serif);font-weight:500;font-size:19px;margin:22px 0 8px}
+h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:22px 0 8px}
 /* okładka */
 .cover{padding-top:0;overflow:hidden}
 .band{background:var(--dark);height:64px;margin:0 -40px 30px}
 .ctitle{text-align:center}
 .keyb{text-transform:uppercase;letter-spacing:.22em;font-size:11px;font-weight:700;color:var(--kin);margin:0 0 8px}
-.csub{color:var(--ai);font-size:15px;margin:12px 0 2px;font-weight:600}
+.csub{color:var(--ai);font-size:15.5px;margin:12px 0 2px;font-weight:600}
 .csub2{color:var(--muted);font-size:14px;margin:0}
 .rule{height:2px;background:var(--shu);width:180px;margin:20px auto 0}
 .cfacts{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin:24px 0 6px;text-align:center}
@@ -1744,14 +1751,14 @@ h3{font-family:var(--serif);font-weight:500;font-size:19px;margin:22px 0 8px}
 .cfacts b{display:block;font-family:var(--serif);font-weight:500;font-size:27px;color:var(--ai);letter-spacing:-.01em}
 .cfacts i{font-size:12px;font-style:normal;color:var(--muted)}
 .toch{text-align:center;margin-top:26px}
-.toc{list-style:none;margin:0;padding:0;font-size:13.5px}
+.toc{list-style:none;margin:0;padding:0;font-size:13px}
 .toc li{display:flex;align-items:baseline;gap:10px;padding:6px 2px;border-bottom:1px dotted var(--line)}
 .toc .tn{flex:0 0 22px;font-weight:800;color:var(--shu);font-size:12px}
 .toc .td{flex:0 0 74px;color:var(--muted)}
 .toc .tt{flex:1}
-.toc .ti{flex:0 0 auto;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.toc .ti{flex:0 0 auto;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
 .ti-g{color:var(--ok)}.ti-y{color:var(--kin)}.ti-r{color:var(--shu)}
-.cnote{margin-top:22px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6}
+.cnote{margin-top:22px;font-size:11px;color:var(--muted);text-align:center;line-height:1.6}
 /* dzień */
 .dhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
   border-bottom:2px solid var(--dark);padding-bottom:7px;margin-bottom:14px;flex-wrap:wrap}
@@ -1764,20 +1771,20 @@ h3{font-family:var(--serif);font-weight:500;font-size:19px;margin:22px 0 8px}
 .agenda td.t{width:62px;font-weight:800;color:var(--ai);white-space:nowrap;font-variant-numeric:tabular-nums}
 .agenda td.r{text-align:right;white-space:nowrap;color:var(--muted)}
 .agenda tr:last-child td{border-bottom:none}
-.dsc{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.dsc{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 .facts{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}
-.facts span{flex:1 1 118px;border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:10.5px;
+.facts span{flex:1 1 118px;border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:11px;
   text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .facts b{display:block;font-size:13px;text-transform:none;letter-spacing:0;color:var(--ink);margin-bottom:1px}
 .flex{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
-.flex p{flex:1 1 240px;margin:0;font-size:12.5px;border:1px solid var(--line);border-radius:8px;padding:8px 11px;background:#fbf9f4}
+.flex p{flex:1 1 240px;margin:0;font-size:12px;border:1px solid var(--line);border-radius:8px;padding:8px 11px;background:#fbf9f4}
 .blk{margin-top:14px;font-size:13px}
 .blk ul{margin:6px 0 0;padding-left:18px}
 .blk li{margin:4px 0}
 .plist{margin:8px 0 0;padding-left:18px;font-size:13px}
 .plist li{margin:6px 0}
 .note{font-size:12px;color:var(--muted);margin-top:8px}
-.pfoot{margin-top:22px;padding-top:8px;border-top:1px solid var(--line);font-size:10.5px;color:var(--muted);text-align:center}
+.pfoot{margin-top:22px;padding-top:8px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);text-align:center}
 
 @media print{
   @page{size:A4;margin:15mm 14mm}
@@ -1814,7 +1821,7 @@ ${inner}
 }
 
 function lotyPage(){
-  const seg = (t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const seg = (t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
   const last = k => {for(let i=CHECKS.length-1;i>=0;i--) if(CHECKS[i].p[k]!=null) return {v:CHECKS[i].p[k],d:CHECKS[i].date,i};return null;};
   const before = (k,idx) => {for(let i=idx-1;i>=0;i--) if(CHECKS[i].p[k]!=null) return CHECKS[i].p[k];return null;};
 
@@ -1880,13 +1887,13 @@ function lotyPage(){
   </section>
 
   <section>
-    <h2 class="stitle">📈 Trend cen</h2>
+    <h2 class="stitle">Trend cen</h2>
     ${priceChart()}
-    ${FLIGHT.history.length>1?`<div class="card" style="margin-top:16px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">Historia odczytów — Etihad (trasa z planu)</h3><div class="wxwrap"><table><thead><tr><th>Data</th><th style="text-align:right">Cena / dorosły</th><th style="text-align:right">Zmiana</th><th style="text-align:right">Rodzina 2+2</th></tr></thead><tbody>${FLIGHT.history.slice().reverse().map((h,i,arr)=>{const p=arr[i+1];const d=p?h[1]-p[1]:null;const c=d==null?'—':(d===0?'→ 0':(d<0?`▼ ${plz(Math.abs(d))}`:`▲ ${plz(d)}`));const col=d==null||d===0?'var(--muted)':(d<0?'var(--success)':'var(--shu)');return `<tr><td>${dpl(h[0])}</td><td class="num">${plz(h[1])}</td><td class="num" style="color:${col};font-weight:700">${c}</td><td class="num" style="color:var(--muted)">${plz(Math.round(h[1]*3.8/100)*100)}</td></tr>`;}).join('')}</tbody></table></div></div>`:''}
+    ${FLIGHT.history.length>1?`<div class="card" style="margin-top:16px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">Historia odczytów — Etihad (trasa z planu)</h3><div class="wxwrap"><table><thead><tr><th>Data</th><th style="text-align:right">Cena / dorosły</th><th style="text-align:right">Zmiana</th><th style="text-align:right">Rodzina 2+2</th></tr></thead><tbody>${FLIGHT.history.slice().reverse().map((h,i,arr)=>{const p=arr[i+1];const d=p?h[1]-p[1]:null;const c=d==null?'—':(d===0?'→ 0':(d<0?`▼ ${plz(Math.abs(d))}`:`▲ ${plz(d)}`));const col=d==null||d===0?'var(--muted)':(d<0?'var(--success)':'var(--shu)');return `<tr><td>${dpl(h[0])}</td><td class="num">${plz(h[1])}</td><td class="num" style="color:${col};font-weight:700">${c}</td><td class="num" style="color:var(--muted)">${plz(Math.round(h[1]*3.8/100)*100)}</td></tr>`;}).join('')}</tbody></table></div></div>`:''}
   </section>
 
   <section>
-    <h2 class="stitle">🎯 Kiedy kupić</h2>
+    <h2 class="stitle">Kiedy kupić</h2>
     <p class="lead-p">Ceny na tej trasie falują o ±30% w skali tygodnia, więc moment zakupu jest wart więcej niż wybór linii. Oto plan.</p>
     ${seg('Progi decyzyjne (za 1 dorosłego)',['<b>≤ 3 500 zł/os.</b> (~13 300 zł rodzina) — OKAZJA, kupować natychmiast, nie czekać na „jeszcze lepszą"','<b>3 500–4 600 zł/os.</b> — cena typowa; można kupić dla pewności miejsc, ale bez presji',`<b>≥ 4 600 zł/os.</b> — górka, czekać na wyprzedaż`,`Teraz (${dpl(FLIGHT.checked)}): <b>${plz(FLIGHT.adult)}/os.</b> — próg <b>${FLIGHT.band}</b>`])}
     ${seg('Kalendarz — kiedy realnie polować',['<b>Lipiec–wrzesień 2026 (teraz):</b> nie kupować. Brak wyprzedaży, ceny typowe — tylko obserwować.','<b>Wrzesień–październik 2026:</b> czas na <a href="hotele.html">noclegi</a> (darmowe anulowanie), loty nadal obserwujemy.','<b>~20.11–2.12.2026 — Black Friday Etihad/Qatar:</b> pierwsze prawdziwe okno, historycznie do −35%. Tu celujemy w próg ≤3 500 zł/os.','<b>22.12.2026 – poł. stycznia 2027:</b> Qatar Travel Festival + Etihad January Sale — drugie okno.','<b>Koniec stycznia 2027 — TWARDY DEADLINE:</b> kupić nawet bez promocji. Cztery miejsca w jednej rezerwacji znikają szybko, a od lutego ceny rosną w stronę Golden Week.'])}
@@ -1895,7 +1902,7 @@ function lotyPage(){
   </section>
 
   <section>
-    <h2 class="stitle">⚖️ Ranking wg Twoich wag</h2>
+    <h2 class="stitle">Ranking wg Twoich wag</h2>
     <p class="lead-p">Trzy kryteria — cena, wygoda podróży i jakość linii — każde punktowane 0–100, wynik to ich średnia ważona. Przesuń suwaki i zobacz, która linia wygrywa przy Twoich priorytetach. Ranking przelicza się sam po każdym sprawdzeniu cen (co dwa dni).</p>
     <div class="card" style="margin-bottom:20px">
       <p style="margin:0 0 10px;font-size:14px"><b>Wygoda</b> to nie tylko czas w drodze — dokładamy do niej dwie rzeczy, które realnie robią różnicę z dziećmi: <b>brak przesiadki</b> (premia równa ${STOP_PENALTY_H} h oszczędzonego czasu) oraz <b>darmowy nocleg w ramach stopoveru</b> (premia warta ${plz(750)}, bo to nie strata czasu, a dodatkowy dzień wyjazdu).</p>
@@ -1923,11 +1930,11 @@ function lotyPage(){
   </section>
 
   <section>
-    <h2 class="stitle">🗓️ Który termin pobytu</h2>
+    <h2 class="stitle">Który termin pobytu</h2>
     <p class="lead-p">Trzy warianty sprawdzone na żywo w Google Flights. Ceny za dorosłego; „rodzina" liczona jako 3,8 taryfy (3 dorosłych + dziecko).</p>
     <div class="pcards">${cards}</div>
     <div class="card" style="margin-top:16px">
-      <h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 4px">Cena wg dnia wylotu</h3>
+      <h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 4px">Cena wg dnia wylotu</h3>
       <p class="note" style="margin:0 0 10px">12-dniowa podróż, za 1 dorosłego (odczyt ${dpl(DATEGRID.src)}). <span style="color:var(--success);font-weight:700">■</span> najtańszy dzień w całym oknie — i to właśnie 3 maja.</p>
       <div class="gridbars">${bars}</div>
       <div class="gridlabs">${labs}</div>
@@ -1965,7 +1972,7 @@ function pogodaPage(){
   </div>
   </header>
   <section>
-    <h2 class="stitle">🌡️ Pogoda teraz — na żywo</h2>
+    <h2 class="stitle">Pogoda teraz — na żywo</h2>
     <p class="lead-p">Aktualne warunki i najbliższe dni we wszystkich bazach trasy plus Abu Zabi. Dane odświeżają się przy każdym otwarciu strony. Prognoza sięga ~16 dni, więc na maj 2027 zajrzyj tu bliżej wyjazdu — teraz służy głównie do porównania, jak bardzo góry (Hakone) potrafią być chłodniejsze od miast.</p>
     <div class="wxwrap" id="livewx"><p class="wxerr">Ładowanie pogody na żywo…</p></div>
   </section>
@@ -1988,7 +1995,7 @@ function pogodaPage(){
     </ul></div>
   </section>
   <section>
-    <h2 class="stitle">🎒 Bagaż — podręczny + plecak wystarczy</h2>
+    <h2 class="stitle">Bagaż — podręczny + plecak wystarczy</h2>
     <p class="lead-p">Przy pięciu zmianach bazy i jeździe pociągami lekki bagaż to nie oszczędność, tylko wygoda. Tania taryfa Etihad i tak jest bez bagażu rejestrowanego — z podręcznym nic nie dopłacacie.</p>
     <div class="card"><ul class="tips">
       <li><b>Pakujcie na ~5–6 dni, nie na 13.</b> Aparthotele MIMARU (Tokio, Kioto, Osaka) mają pralkę i suszarkę — pranie robicie w Kioto i komplet ubrań wraca do obiegu.</li>
@@ -1999,7 +2006,7 @@ function pogodaPage(){
     </ul></div>
   </section>
   <section>
-    <h2 class="stitle">☔ Plan B na deszcz — miasto po mieście</h2>
+    <h2 class="stitle">Plan B na deszcz — miasto po mieście</h2>
     <div class="card"><ul class="tips">
       <li><b>Tokio:</b> Round1 (Ikebukuro), rodzinne karaoke (Big Echo / Karaoke Kan, przed 22:00), Pokémon Center — a Shibuya Sky przekładać: taras odkryty, w chmurach szkoda biletu.</li>
       <li><b>Hakone:</b> kolejka linowa staje przy wietrze (status: hakonenavi.jp) → Hakone Open-Air Museum (pawilon Picassa, rzeźby do wspinania) + rejs po Ashi, który pływa prawie zawsze.</li>
@@ -2018,7 +2025,7 @@ function pogodaPage(){
    (b) treść istniała wyłącznie w wygenerowanym HTML — skasowanie pliku wywracało build
        i bezpowrotnie gubiło 41 kart. Teraz źródłem jest ta stała. */
 function niezbednikPage(){
-  const seg=(t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const seg=(t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
   const inner=`
   <header class="hero kb">
     <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.60),rgba(18,39,64,.44)),url('${IMG.tokyostation}') center/cover"></div></div>
@@ -2030,7 +2037,7 @@ function niezbednikPage(){
   </header>
 
   <section>
-    <h2 class="stitle">🆘 Gdyby coś poszło nie tak</h2>
+    <h2 class="stitle">Gdyby coś poszło nie tak</h2>
     <p class="lead-p">Najpilniejsze rzeczy na górze — żeby nie trzeba było przewijać, gdy się spieszysz.</p>
     <div class="card">
       <div class="sos">
