@@ -5,6 +5,12 @@ fs.mkdirSync(DIR + '/days', { recursive: true });
 fs.mkdirSync(DIR + '/assets', { recursive: true });
 
 /* ===================== CENY LOTÓW — JEDYNE ŹRÓDŁO PRAWDY =====================
+   ŚLEDZIMY DWA SCENARIUSZE POWROTU, bo różnią się nie tylko ceną, ale i kształtem wyjazdu:
+     oj = OPEN-JAW (wybrany): WAW→AUH 3.05, doba w Abu Zabi z darmowym hotelem, AUH→Narita 4.05,
+          powrót 14.05 z lotniska Kansai. 12 dni, 4 zameldowania.
+     rt = ROUND-TRIP: zwykłe WAW↔Tokio z krótką przesiadką — BEZ doby w Abu Zabi i bez darmowego
+          hotelu, za to taniej i z dodatkowym dniem w Japonii; powrót wymaga dojazdu do Narity.
+   Wpisy sprzed 2.09.2026 mają tylko `rt` — wtedy śledziliśmy jeszcze jedną trasę.
    Aktualizowane automatycznie przez zadanie `japonia-cena-lotu` (co dwa dni).
    Ręcznie: dopisz nowy obiekt NA KOŃCU tablicy CHECKS i uruchom `node build.mjs`.
    Ceny: zł za 1 DOROSŁEGO. UWAGA — od 2026-09-02 plan używa trasy OPEN-JAW:
@@ -50,19 +56,19 @@ const comfortBonus = A => A.hotel ? STOPOVER_BONUS_H : 0;
    „sprawdzone, bez zmian" a „dawno nie sprawdzane". */
 const LAST_CHECKED = '2026-09-02';
 const CHECKS = [
-  {date:'2026-07-26', p:{etihad:3910, emirates:4262, finnair:4928, lot:5288, qatar:5465, turkish:6423}},
-  {date:'2026-07-27', p:{etihad:4228, emirates:4262, finnair:4727, lot:5248}},
-  {date:'2026-07-29', p:{etihad:4225, emirates:4257, finnair:4723, lot:5249, qatar:5219, turkish:6938}},
-  {date:'2026-07-31', p:{etihad:4255, emirates:4261, finnair:4726, lot:5227, qatar:5219, turkish:6945}},
-  {date:'2026-08-04', p:{etihad:3961, emirates:5024, finnair:4721, lot:4872, turkish:8152}},
-  {date:'2026-08-06', p:{etihad:3959, emirates:5025, finnair:4722, qatar:4718, lot:4872, turkish:8154}},
-  {date:'2026-08-10', p:{etihad:4066, emirates:4252, finnair:4719, qatar:4716, lot:4668, turkish:8154}},
-  {date:'2026-08-14', p:{etihad:3705, emirates:4251, finnair:4719, qatar:4730, lot:4668, turkish:8145}},
-  {date:'2026-08-16', p:{etihad:4021, emirates:4254, finnair:4721, qatar:4731, lot:4669, turkish:8145}},
-  {date:'2026-08-18', p:{etihad:4067, emirates:4254, finnair:4721, qatar:4734, lot:4819, turkish:8150}},
-  {date:'2026-08-31', p:{etihad:4241, emirates:4259, finnair:5122, qatar:4727, lot:4861, turkish:6945}},
-  {date:'2026-09-01', p:{etihad:3914, emirates:4258, finnair:4582, qatar:4727, lot:5061, turkish:8162}},
-  {date:'2026-09-02', p:{etihad:5033}},   // pierwszy odczyt OPEN-JAW (WAW→NRT / KIX→WAW)
+  {date:'2026-07-26', rt:{etihad:3910, emirates:4262, finnair:4928, lot:5288, qatar:5465, turkish:6423}},
+  {date:'2026-07-27', rt:{etihad:4228, emirates:4262, finnair:4727, lot:5248}},
+  {date:'2026-07-29', rt:{etihad:4225, emirates:4257, finnair:4723, lot:5249, qatar:5219, turkish:6938}},
+  {date:'2026-07-31', rt:{etihad:4255, emirates:4261, finnair:4726, lot:5227, qatar:5219, turkish:6945}},
+  {date:'2026-08-04', rt:{etihad:3961, emirates:5024, finnair:4721, lot:4872, turkish:8152}},
+  {date:'2026-08-06', rt:{etihad:3959, emirates:5025, finnair:4722, qatar:4718, lot:4872, turkish:8154}},
+  {date:'2026-08-10', rt:{etihad:4066, emirates:4252, finnair:4719, qatar:4716, lot:4668, turkish:8154}},
+  {date:'2026-08-14', rt:{etihad:3705, emirates:4251, finnair:4719, qatar:4730, lot:4668, turkish:8145}},
+  {date:'2026-08-16', rt:{etihad:4021, emirates:4254, finnair:4721, qatar:4731, lot:4669, turkish:8145}},
+  {date:'2026-08-18', rt:{etihad:4067, emirates:4254, finnair:4721, qatar:4734, lot:4819, turkish:8150}},
+  {date:'2026-08-31', rt:{etihad:4241, emirates:4259, finnair:5122, qatar:4727, lot:4861, turkish:6945}},
+  {date:'2026-09-01', rt:{etihad:3914, emirates:4258, finnair:4582, qatar:4727, lot:5061, turkish:8162}},
+  {date:'2026-09-02', oj:{etihad:5033}, rt:{etihad:3733, emirates:4148, lot:4417, turkish:8584}},
 ];
 /* Siatka dat z Google Flights — cena 12-dniowej podróży wg DNIA WYLOTU (1 dorosły) */
 const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5,4150],[6,4150],[7,4260],
@@ -104,7 +110,23 @@ const PERIODS = [
 ];
 
 const FLIGHT = {airline:'Etihad'};
-FLIGHT.history = CHECKS.filter(c=>c.p.etihad!=null).map(c=>[c.date, c.p.etihad]);
+FLIGHT.history = CHECKS.filter(c=>c.oj&&c.oj.etihad!=null).map(c=>[c.date, c.oj.etihad]);
+/* Porównanie dwóch scenariuszy powrotu — liczone z ostatniego odczytu, który ma oba.
+   Do ceny biletu dokładamy RÓŻNICE NA ZIEMI, bo same bilety są nieporównywalne:
+   open-jaw jedzie z Kioto ekspresem na Kansai, round-trip musi wrócić do Tokio i na Naritę. */
+const SCEN = (() => {
+  const last = [...CHECKS].reverse().find(c => c.oj && c.rt) || {};
+  const oj = last.oj && last.oj.etihad, rt = last.rt && last.rt.etihad;
+  if (!oj || !rt) return null;
+  const fam = v => Math.round(v*3.8/100)*100;
+  return {
+    date: last.date,
+    oj: {adult:oj, family:fam(oj), ground:320,  groundLabel:'ekspres Haruka z Kioto na KIX'},
+    rt: {adult:rt, family:fam(rt), ground:1340, groundLabel:'shinkansen Kioto→Tokio + Narita Express'},
+  };
+})();
+if (SCEN) { SCEN.oj.total = SCEN.oj.family + SCEN.oj.ground; SCEN.rt.total = SCEN.rt.family + SCEN.rt.ground;
+            SCEN.diff = SCEN.oj.total - SCEN.rt.total; }
 FLIGHT.adult   = FLIGHT.history[FLIGHT.history.length-1][1];
 FLIGHT.checked = FLIGHT.history[FLIGHT.history.length-1][0];
 FLIGHT.prev    = FLIGHT.history.length > 1 ? FLIGHT.history[FLIGHT.history.length-2][1] : null;
@@ -116,8 +138,9 @@ const plz  = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')
 const dpl  = iso => {const [y,m,d]=iso.split('-');return `${+d}.${m}.${y}`;};
 /* wykres trendu — rysuje się sam z tablicy CHECKS, rośnie z każdym odczytem */
 const priceChart = () => {
-  const keys = Object.keys(AIRLINES).filter(k => CHECKS.some(c => c.p[k] != null));
-  const all  = CHECKS.flatMap(c => Object.values(c.p));
+  const px = c => c.rt || {};   // wykres pokazuje serię round-trip — jedyną ciągłą w czasie
+  const keys = Object.keys(AIRLINES).filter(k => CHECKS.some(c => px(c)[k] != null));
+  const all  = CHECKS.flatMap(c => Object.values(px(c)));
   const lo = Math.floor((Math.min(...all) - 250)/500)*500;
   const hi = Math.ceil ((Math.max(...all) + 250)/500)*500;
   const W=760,H=300,L=62,R=16,T=14,B=50, single = CHECKS.length===1;
@@ -128,7 +151,7 @@ const priceChart = () => {
     `<text x="${L-10}" y="${(y(v)+4).toFixed(1)}" text-anchor="end" font-size="11" fill="#6a7078">${plz(v).replace(' zł','')}</text>`).join('');
   const xlab = CHECKS.map((c,i)=>`<text x="${x(i).toFixed(1)}" y="${H-B+22}" text-anchor="middle" font-size="11" fill="#6a7078">${dpl(c.date).slice(0,5)}</text>`).join('');
   const lines = keys.map(k=>{
-    const pts = CHECKS.map((c,i)=> c.p[k]!=null ? [x(i), y(c.p[k])] : null).filter(Boolean);
+    const pts = CHECKS.map((c,i)=> px(c)[k]!=null ? [x(i), y(px(c)[k])] : null).filter(Boolean);
     if(!pts.length) return '';
     const path = pts.map(p=>`${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
     const dots = pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4.5" fill="#fffdf8" stroke="${AIRLINES[k].col}" stroke-width="2.5"/>`).join('');
@@ -542,6 +565,24 @@ footer a{font-weight:700;text-decoration:none}
 .wgrow{margin-bottom:16px}
 .wgrow label{display:block;margin-bottom:8px;font-weight:700;color:var(--ai)}
 .wgrow input[type=range]{width:100%;accent-color:var(--shu)}
+.scen{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s4)}
+@media(max-width:680px){.scen{grid-template-columns:1fr}}
+.scenc{border:1px solid var(--line);border-radius:14px;padding:var(--s4);background:var(--panel);position:relative}
+.scenc.win{border-color:var(--success);box-shadow:var(--shadow-sm)}
+.scenc .tag{position:absolute;top:-10px;left:14px;font-size:10px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.08em;padding:3px 10px;border-radius:999px;background:var(--success);color:#fff}
+.scenc h4{font-family:var(--serif);font-weight:500;font-size:20px;margin:var(--s2) 0 2px}
+.scenc .sub{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.scenrow{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}
+.scenrow:last-of-type{border-bottom:none}
+.scenrow b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.scentot{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:var(--s2);
+  padding-top:var(--s2);border-top:2px solid var(--line)}
+.scentot b{font-family:var(--serif);font-weight:500;font-size:22px}
+.scenc ul{list-style:none;margin:var(--s3) 0 0;padding:0;font-size:12.5px;display:flex;flex-direction:column;gap:4px}
+.scenc li{display:flex;gap:7px;line-height:1.4}
+.scenc .y::before{content:"✓";color:var(--success);font-weight:800}
+.scenc .n::before{content:"✗";color:var(--shu);font-weight:800}
 .sos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .sos a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
   padding:16px 10px;border-radius:14px;background:var(--shu);color:#fff;text-decoration:none;
@@ -1815,8 +1856,8 @@ ${inner}
 
 function lotyPage(){
   const seg = (t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
-  const last = k => {for(let i=CHECKS.length-1;i>=0;i--) if(CHECKS[i].p[k]!=null) return {v:CHECKS[i].p[k],d:CHECKS[i].date,i};return null;};
-  const before = (k,idx) => {for(let i=idx-1;i>=0;i--) if(CHECKS[i].p[k]!=null) return CHECKS[i].p[k];return null;};
+  const last = k => {for(let i=CHECKS.length-1;i>=0;i--){const p=CHECKS[i].rt||{}; if(p[k]!=null) return {v:p[k],d:CHECKS[i].date,i};}return null;};
+  const before = (k,idx) => {for(let i=idx-1;i>=0;i--){const p=CHECKS[i].rt||{}; if(p[k]!=null) return p[k];}return null;};
 
   const rows = Object.keys(AIRLINES).map(k=>({k,A:AIRLINES[k],L:last(k)})).filter(r=>r.L)
     .sort((a,b)=>a.L.v-b.L.v).map((r,i)=>{
@@ -1883,6 +1924,40 @@ function lotyPage(){
     <h2 class="stitle">Trend cen</h2>
     ${priceChart()}
     ${FLIGHT.history.length>1?`<div class="card" style="margin-top:16px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">Historia odczytów — Etihad (trasa z planu)</h3><div class="wxwrap"><table><thead><tr><th>Data</th><th style="text-align:right">Cena / dorosły</th><th style="text-align:right">Zmiana</th><th style="text-align:right">Rodzina 2+2</th></tr></thead><tbody>${FLIGHT.history.slice().reverse().map((h,i,arr)=>{const p=arr[i+1];const d=p?h[1]-p[1]:null;const c=d==null?'—':(d===0?'→ 0':(d<0?`▼ ${plz(Math.abs(d))}`:`▲ ${plz(d)}`));const col=d==null||d===0?'var(--muted)':(d<0?'var(--success)':'var(--shu)');return `<tr><td>${dpl(h[0])}</td><td class="num">${plz(h[1])}</td><td class="num" style="color:${col};font-weight:700">${c}</td><td class="num" style="color:var(--muted)">${plz(Math.round(h[1]*3.8/100)*100)}</td></tr>`;}).join('')}</tbody></table></div></div>`:''}
+  </section>
+
+  <section>
+    <h2 class="stitle">Dwa scenariusze powrotu</h2>
+    <p class="lead-p">Śledzimy oba na bieżąco, bo różnią się nie tylko ceną biletu, ale i kształtem wyjazdu. Do biletu doliczamy <b>dojazd na właściwe lotnisko</b> — bez tego porównanie byłoby mylące. Kwoty dla rodziny 2+2 (3,8 taryfy).</p>
+    ${SCEN?`<div class="scen">
+      <div class="scenc win"><span class="tag">wybrany</span>
+        <h4>Abu Zabi + Kansai</h4>
+        <div class="sub">open-jaw · 12 dni · 4 zameldowania</div>
+        <div class="scenrow"><span>Bilet (${plz(SCEN.oj.adult)}/os.)</span><b>${plz(SCEN.oj.family)}</b></div>
+        <div class="scenrow"><span>${SCEN.oj.groundLabel}</span><b>${plz(SCEN.oj.ground)}</b></div>
+        <div class="scentot"><span>Razem</span><b>${plz(SCEN.oj.total)}</b></div>
+        <ul>
+          <li class="y">Doba w Abu Zabi z <b>darmowym hotelem</b> — 2 dni programu</li>
+          <li class="y">Ostatni poranek spokojnie w Kioto</li>
+          <li class="y">Cztery zameldowania, od 8.05 jeden pokój</li>
+          <li class="n">Najdroższy bilet</li>
+        </ul>
+      </div>
+      <div class="scenc">
+        <h4>Prosto do Tokio</h4>
+        <div class="sub">round-trip · krótka przesiadka</div>
+        <div class="scenrow"><span>Bilet (${plz(SCEN.rt.adult)}/os.)</span><b>${plz(SCEN.rt.family)}</b></div>
+        <div class="scenrow"><span>${SCEN.rt.groundLabel}</span><b>${plz(SCEN.rt.ground)}</b></div>
+        <div class="scentot"><span>Razem</span><b>${plz(SCEN.rt.total)}</b></div>
+        <ul>
+          <li class="y">Taniej o <b>${plz(Math.abs(SCEN.diff))}</b> mimo dojazdu na Naritę</li>
+          <li class="y">Jeden dzień w Japonii więcej</li>
+          <li class="n"><b>Bez Abu Zabi</b> i bez darmowego noclegu — znikają 2 dni planu</li>
+          <li class="n">Ostatni dzień przejedzony: Kioto → Tokio → Narita</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dnote" style="margin-top:14px">📌 <b>Stan na ${dpl(SCEN.date)}:</b> wariant z Abu Zabi jest droższy o <b>${plz(Math.abs(SCEN.diff))}</b> — to cena za dobę w Abu Zabi z darmowym hotelem i za spokojny ostatni poranek zamiast dnia w pociągach. Gdyby ta różnica urosła powyżej ~5 000 zł, warto wrócić do rozmowy; gdyby spadła poniżej ~2 000 zł, wybór staje się oczywisty.</div>`:''}
   </section>
 
   <section>
