@@ -31,7 +31,7 @@
 
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
-    <div class="pflag">✈️ <span><b>Kontrola 4.09.2026: 5 459 zł/dorosły</b> <b style="color:var(--shu)">▲ 426 zł drożej</b> (Etihad open-jaw, WAW→Narita / Kansai→WAW, 3–14.05.2027) — dla 2+2 ≈ <b>~20 700 zł</b>. Cena <b>górka</b>.</span></div>
+    <div class="pflag">✈️ <span><b>Kontrola 4.09.2026: 3 453 zł/dorosły</b> <b style="color:var(--success)">▼ 280 zł taniej</b> (Etihad, WAW↔Tokio, 3–14.05.2027) — dla 2+2 ≈ <b>~13 100 zł</b>. Cena <b>okazja</b>.</span></div>
     <div class="card"><ul class="tips">
       <li>Ta kwota zasila pole „Loty" w kalkulatorze poniżej i odświeża się automatycznie co dwa dni.</li>
       <li>Porównanie linii, wykres trendu, progi „kup / czekaj", kalendarz wyprzedaży i wybór terminu — wszystko na osobnej zakładce.</li>
@@ -42,7 +42,7 @@
   <section>
     <h2 class="stitle">Transport w Japonii — zweryfikowane taryfy</h2>
     <p class="lead-p">Sprawdzone w lipcu 2026 (miejscówki; kurs ¥100 ≈ 2,33 zł). Młodsze dziecko (do 11 lat) płaci taryfę dziecięcą — na kolei dokładnie połowę.</p>
-    <div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">Przejazdy między miastami</h3><ul class="tips"><li><b>Narita → Tokio</b> (5.05, Narita Express): ~¥3 070/dorosły · połowa dla dziecka</li><li><b>Odawara → Kioto</b> (8.05, shinkansen Hikari): ¥12 300/dorosły · ¥6 140/dziecko</li><li><b>Kioto ↔ Osaka</b> (13.05, w obie strony): ~¥1 160/dorosły — zwykły pociąg, nie shinkansen</li><li><b>Kioto → lotnisko Kansai</b> (14.05, ekspres Haruka): ~¥3 600/dorosły · połowa dla dziecka</li><li><b>Razem dla 2+2: ~¥70 500 ≈ 1 640 zł</b> — o ~600 zł mniej niż w wersji z powrotem przez Tokio</li><li>JR Pass (~¥50 000/os.) tym bardziej się <b>nie opłaca</b> — zostaje tylko jeden shinkansen</li></ul></div>
+    <div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">Przejazdy między miastami</h3><ul class="tips"><li><b>Narita → Tokio</b> (4.05, Narita Express): ~¥3 070/dorosły · połowa dla dziecka</li><li><b>Odawara → Kioto</b> (8.05, shinkansen Hikari): ¥12 300/dorosły · ¥6 140/dziecko</li><li><b>Kioto ↔ Osaka</b> (13.05, w obie strony): ~¥1 160/dorosły — zwykły pociąg, nie shinkansen</li><li><b>Kioto → Tokio → Narita</b> (14.05): shinkansen ~¥14 170/dorosły + NEX ~¥3 070</li><li><b>Razem dla 2+2: ~¥118 000 ≈ 2 750 zł</b> (kolej międzymiastowa; metro i Hakone osobno)</li><li>JR Pass (~¥50 000/os.) wciąż się <b>nie opłaca</b> — dwa shinkanseny to za mało</li></ul></div>
   </section>
 
   <section>
@@ -52,10 +52,10 @@
       <table>
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
-          <tr><td class="cat">✈️ Loty<span class="hint">Etihad open-jaw (Narita → Kansai), 3 dorosłych + 1 dziecko do 11 lat</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="20700" min="0" step="100"></td></tr>
-          <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 9 nocy: aparthotele ~820 zł + 1 noc ryokan z prywatnym onsenem ~2 700 zł (Abu Zabi gratis)</span></td><td class="num"><input type="number" id="nights" class="sm" value="9" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1000" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
-          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">1 shinkansen + Haruka na KIX + NEX + metro + Hakone</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="3400" min="0" step="100"></td></tr>
-          <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (w tym dzień w Abu Zabi)</span></td><td class="num"><input type="number" id="days" class="sm" value="12" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
+          <tr><td class="cat">✈️ Loty<span class="hint">Etihad WAW↔Tokio, 3 dorosłych + 1 dziecko do 11 lat (+ bagaż)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="13100" min="0" step="100"></td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 10 nocy: aparthotele ~820–850 zł + 1 noc ryokan z prywatnym onsenem ~2 700 zł</span></td><td class="num"><input type="number" id="nights" class="sm" value="10" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1000" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">2 shinkanseny + NEX ×2 + metro + Hakone + Osaka</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4400" min="0" step="100"></td></tr>
+          <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="12" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">warsztaty kultury, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2200" min="0" step="100"></td></tr>
           <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td></tr>
         </tbody>
@@ -81,7 +81,7 @@
   Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="index.html">Strona główna</a> · <a href="druk.html">Plan do druku (PDF)</a></footer>
   <script>
   (function(){
-    var D={flights:20700,nights:9,nightRate:1000,transport:3400,days:12,foodRate:500,attractions:2200,extras:3000};
+    var D={flights:13100,nights:10,nightRate:1000,transport:4400,days:12,foodRate:500,attractions:2200,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
