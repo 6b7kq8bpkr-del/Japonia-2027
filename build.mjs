@@ -80,10 +80,11 @@ const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5
 const BOOKINGS = [
   {when:'IX–X 2026', what:'Noclegi w Japonii (3 bazy)', note:'Z darmowym anulowaniem — pokoje 4-osobowe znikają pierwsze. Linki „Sprawdź dostępność" na stronie Hotele.'},
   {when:'IX–X 2026', what:'Ryokan w Hakone', note:'Pokój typu Maisonette z prywatnym rotenburo; 7.05 to piątek, terminów mało.'},
-  {when:'do I 2027', what:'Bilety lotnicze', note:'Twardy deadline: koniec stycznia. Najlepsze okna: Black Friday i styczniowa wyprzedaż.'},
+  {when:'TERAZ', what:'Bilety lotnicze', note:'Wybrane 4.09: Etihad 3–13 ze stopoverem, 13 884 zł za 4 os. Kupujemy na etihad.com — 4 miejsca w jednej rezerwacji.'},
+  {when:'przy zakupie', what:'Walizka na powrót + miejsca obok siebie', note:'Bagaż rejestrowany tylko na odcinek powrotny (~220 zł); miejsca na nocnych odcinkach — Basic ich nie gwarantuje.'},
   {when:'~II 2027', what:'Nintendo Museum — loteria', note:'Opcja na dzień w Narze; wymaga paszportów uczestników.'},
   {when:'II–III 2027', what:'Warsztaty kultury w Kioto', note:'Rezerwacja 1–2 miesiące wcześniej.'},
-  {when:'~IV 2027', what:'Miejscówki kolejowe', note:'Shinkansen Odawara→Kioto (8.05) oraz Kioto→Tokio + Narita Express (14.05) — piątkowe pociągi bywają pełne.'},
+  {when:'~IV 2027', what:'Miejscówki kolejowe', note:'Shinkansen Odawara→Kioto (8.05) oraz Kioto→Tokio + Narita Express (13.05).'},
   {when:'~1.04.2027', what:'Ubezpieczenie turystyczne', note:'Leczenie + NNW dla czterech osób.'},
   {when:'4 tyg. przed', what:'Shibuya Sky', note:'Slot na zachód słońca — rezerwować dopiero przy dobrej prognozie.'},
   {when:'31 dni przed', what:'Pokémon Café', note:'Rezerwacja otwiera się o 18:00 czasu japońskiego, dokładnie 31 dni wcześniej.'},
@@ -93,19 +94,25 @@ const BOOKINGS = [
   {when:'przed wylotem', what:'Karty IC (Suica/ICOCA)', note:'Można dodać Suica do Apple Wallet jeszcze przed wyjazdem.'},
 ];
 const PERIODS = [
-  {label:'3–14 maja', sub:'wybrany · round-trip do Narity', price:3453, best:true,
-   pros:['Bilet w progu okazji (≤3 500 zł/os.) — pierwszy raz od startu monitoringu',
-         'Przylot już 4.05 — dodatkowy pełny dzień w Tokio rozbroił przeładowany dzień',
-         'Nadal 3 zameldowania i 6 nocy w Kioto; lądowanie w sobotę rano'],
-   cons:['Ostatni dzień częściowo w pociągach (Kioto → Narita ~4 h)','Bez doby w Abu Zabi']},
-  {label:'3–14 maja', sub:'open-jaw z Kansai (odrzucony 4.09)', price:5459,
-   pros:['Doba w Abu Zabi z darmowym hotelem','Spokojny ostatni poranek — Haruka na KIX w 75 min'],
-   cons:['Zdrożał o ~430 zł/os. i różnica do round-tripu urosła do ~6,5 tys. zł na rodzinę','Dzień w Japonii mniej','Bezpłatność hotelu i tak niepotwierdzona na maj 2027']},
-  {label:'3–13 maja', sub:'wariant krótszy o dzień', price:null,
-   pros:['~1,3 tys. zł mniej na ziemi (noc + wyżywienie)','Lądowanie w piątek — trzy dni na jet lag'],
-   cons:['Wypada wypad do Osaki albo dzień buforowy','Rytm końcówki gęstnieje — wraca zmęczenie, które plan celowo rozbraja']},
+  {label:'3–13 maja', sub:'KUPIONY WARIANT · stopover tam', price:13884, fam:true, best:true,
+   pros:['Najtańsza kombinacja w wycenie samego Etihada (Google jej nie liczył)',
+         'Hotel 4★ w Abu Zabi w pakiecie — potwierdzony przy rezerwacji',
+         'Lądowanie w piątek rano — trzy dni na jet lag'],
+   cons:['8 nocy w Japonii zamiast 10','Bez Osaki i bez luźnego dnia w Tokio']},
+  {label:'3–14 maja', sub:'stopover, dzień dłużej', price:16861, fam:true,
+   pros:['Dodatkowy dzień w Japonii','Lądowanie w sobotę — nadal weekend na reset'],
+   cons:['+2 977 zł na samych biletach (wycena etihad.com)','Ten sam kształt planu, tylko drożej']},
+  {label:'3–14 maja', sub:'round-trip bez stopoveru', price:13100, fam:true,
+   pros:['Wg Google najtańszy (3 453 zł/os.)','10 nocy w Japonii'],
+   cons:['Na etihad.com ta wycena nie istniała w tej cenie','Bez doby w Abu Zabi i darmowego hotelu','Per saldo ~1,5–2 tys. drożej od wybranego (2 noce hoteli i wyżywienie więcej)']},
 ];
 
+/* WYBRANY BILET (etihad.com, 4.09.2026): 3–13.05 ze stopoverem tam, Economy Basic.
+   13 659,81 + opłata stopover 224,37 = 13 884 zł za 4 os. (3 dorosłych + dziecko),
+   hotel 4★ w Abu Zabi (Grand Millenium Al Wahda) w pakiecie. Bagaż: kabinowe w cenie,
+   + 1 walizka rejestrowana na powrót ~220 zł. FLIGHT (niżej) zostaje jako odniesienie
+   rynkowe z Google (round-trip) dla wykresu trendu. */
+const TICKET = {family:13884, bag:220, total:14100, label:'3–13.05 ze stopoverem tam'};
 const FLIGHT = {airline:'Etihad'};
 /* Od 4.09.2026 wybrany scenariusz = ROUND-TRIP (open-jaw zdrożał do ~5,5 tys.). */
 FLIGHT.history = CHECKS.filter(c=>(c.rt||{}).etihad!=null).map(c=>[c.date, c.rt.etihad]);
@@ -159,7 +166,7 @@ const priceChart = () => {
   return `<div class="chartwrap"><svg viewBox="0 0 ${W} ${H}" width="100%" height="auto" role="img" aria-label="Wykres cen lotów w czasie">
     ${grid}${xlab}${lines}
   </svg></div><div class="lgds">${legend}</div>
-  <p class="note" style="margin-top:8px">Ceny za 1 dorosłego, w obie strony, WAW→Tokio (3–14.05.2027). Linia ciągła = Etihad (trasa z planu). Wykres rozbudowuje się przy każdym sprawdzeniu — co dwa dni.</p>`;
+  <p class="note" style="margin-top:8px">Archiwum rynku: ceny za 1 dorosłego, zwykły round-trip WAW↔Tokio wg Google (nasz bilet to inna taryfa — stopover, wyceniany tylko u przewoźnika). Linia ciągła = Etihad.</p>`;
 };
 const trend = () => {
   if(FLIGHT.prev==null) return '';
@@ -873,10 +880,10 @@ const IMG = {
 };
 // one distinct photo per day
 const DAYIMG = {
-  '2027-05-03':IMG.abudhabi, '2027-05-04':IMG.sensoji, '2027-05-05':IMG.shibuya, '2027-05-06':IMG.akihabara,
+  '2027-05-03':IMG.abudhabi, '2027-05-04':IMG.mosque, '2027-05-05':IMG.sensoji, '2027-05-06':IMG.shibuya,
   '2027-05-07':IMG.fuji, '2027-05-08':IMG.yasaka, '2027-05-09':IMG.fushimi,
   '2027-05-10':IMG.kinkakuji, '2027-05-11':IMG.todaiji, '2027-05-12':IMG.bamboo,
-  '2027-05-13':IMG.dotonbori, '2027-05-14':IMG.kinkakuji,
+  '2027-05-13':IMG.tokyostation,
 };
 const CITY = {
   tokio:{c1:'20,32,64',c2:'14,39,67',photo:IMG.shibuya},
@@ -895,92 +902,91 @@ const cardImg = (c,ph,alt,eager) => `<img class="dcimg" src="${ph}" alt="" width
   + `loading="${eager?'eager':'lazy'}" decoding="async">`
   + `<span class="dcgrad" style="background:linear-gradient(to top,rgba(${CITY[c].c1},.92),rgba(${CITY[c].c1},.10))"></span>`;
 const JPSTOPS = [
-  [35.6804,139.7690,'Tokio — start podróży (3 noce)'],
+  [35.6804,139.7690,'Tokio — start podróży (2 noce)'],
   [35.2323,139.1069,'Hakone — ryokan z prywatnym onsenem (1 noc)'],
-  [34.9853,135.7581,'Kioto — główna baza, 6 nocy (stąd Nara, Arashiyama i Osaka)'],
-  [34.6937,135.5023,'Osaka — wypad jednodniowy, bez nocowania'],
+  [34.9853,135.7581,'Kioto — główna baza, 5 nocy (stąd Nara i Arashiyama)'],
 ];
 const GEO = {
-  '2027-05-03':[[52.1657,20.9671,'Lotnisko Chopina (wylot 11:50)'],[24.4330,54.6511,'Przesiadka: Abu Zabi (2 h)']],
-  '2027-05-04':[[35.772,140.393,'Narita (przylot 12:45)'],[35.7108,139.7823,'Hotel w Ueno'],[35.7148,139.7967,'Asakusa / Sensō-ji']],
-  '2027-05-05':[[35.6764,139.6993,'Meiji Jingū'],[35.6702,139.7026,'Harajuku / Takeshita-dōri'],[35.6595,139.7005,'Shibuya + Shibuya Sky']],
-  '2027-05-06':[[35.6654,139.7707,'Targ Tsukiji'],[35.7295,139.7190,'Pokémon Center (Ikebukuro)'],[35.6817,139.7740,'Pokémon Café (Nihombashi)'],[35.7022,139.7741,'Akihabara']],
+  '2027-05-03':[[52.1657,20.9671,'Lotnisko Chopina (wylot 11:50)'],[24.4330,54.6511,'Lotnisko Abu Zabi (19:25)'],[24.4539,54.3773,'Grand Millenium Al Wahda']],
+  '2027-05-04':[[24.4128,54.4750,'Wielki Meczet Szejka Zajida'],[24.5333,54.3981,'Luwr Abu Zabi'],[24.4330,54.6511,'Lotnisko (wylot 21:25)']],
+  '2027-05-05':[[35.772,140.393,'Narita (przylot 12:45)'],[35.7108,139.7823,'Hotel w Ueno'],[35.7148,139.7967,'Asakusa / Sensō-ji']],
+  '2027-05-06':[[35.6654,139.7707,'Targ Tsukiji'],[35.7295,139.7190,'Pokémon Center (Ikebukuro)'],[35.6817,139.7740,'Pokémon Café (Nihombashi)'],[35.6595,139.7005,'Shibuya + Shibuya Sky']],
   '2027-05-07':[[35.6896,139.7006,'Shinjuku'],[35.2503,139.0503,'Gōra'],[35.2445,139.0197,'Ōwakudani'],[35.2044,139.0247,'Jezioro Ashi / Hakone-jinja']],
   '2027-05-08':[[35.2564,139.1553,'Odawara'],[34.9858,135.7588,'Kioto'],[35.0037,135.7756,'Gion'],[35.0043,135.7707,'Pontocho']],
   '2027-05-09':[[34.9671,135.7727,'Fushimi Inari'],[34.9948,135.7850,'Kiyomizu-dera'],[35.0050,135.7649,'Nishiki Market']],
   '2027-05-10':[[35.0394,135.7292,'Kinkaku-ji'],[35.0037,135.7756,'Warsztaty / Gion']],
   '2027-05-11':[[34.6851,135.8430,'Park Nara'],[34.6889,135.8398,'Tōdai-ji'],[34.6819,135.8483,'Kasuga Taisha']],
   '2027-05-12':[[35.0170,135.6716,'Arashiyama (bambus)'],[35.0110,135.6770,'Małpy Iwatayama'],[35.0116,135.7681,'Powrót do Kioto']],
-  '2027-05-13':[[35.0116,135.7681,'Wyjazd z Kioto'],[34.6656,135.5062,'Kuromon Ichiba'],[34.6656,135.5023,'Namba'],[34.6687,135.5013,'Dōtonbori']],
-  '2027-05-14':[[35.0116,135.7681,'Kioto — poranek'],[35.681,139.767,'Tokyo Station (przesiadka)'],[35.772,140.393,'Narita → wylot 18:00']],
+  '2027-05-13':[[35.0116,135.7681,'Kioto — poranek'],[35.681,139.767,'Tokyo Station (przesiadka)'],[35.772,140.393,'Narita → wylot 18:00']],
 };
 const A = (id,label)=>({id,label}); // attraction link helper
 
 const DAYS = [
-{date:'2027-05-03',dow:'poniedziałek',dd:'3 maja',city:'abudhabi',title:'Wylot do Japonii',
- lead:'Dzień podróży: dwa loty z krótką przesiadką w Abu Zabi i noc na pokładzie — budzimy się już nad Japonią.',
- chips:['Wylot 11:50','Przesiadka 2 h','Noc w samolocie'],
+{date:'2027-05-03',dow:'poniedziałek',dd:'3 maja',city:'abudhabi',title:'Wylot i wieczór w Abu Zabi',
+ lead:'Startujemy z Warszawy, a zamiast nocnej przesiadki — hotel 4★ gratis od Etihadu i spokojny sen po pierwszym locie.',
+ chips:['Stopover Etihad','Grand Millenium 4★ gratis','Tylko 5,5 h lotu'],
  tl:[
   ['08:45','Wyjazd na Lotnisko Chopina',''],
-  ['09:20','Check-in Etihad','Odprawa online 30 h wcześniej; bagaże do Tokio lecą bez odbierania.'],
-  ['11:50','Wylot WAW → Abu Zabi','~6 h lotu.'],
-  ['19:25','Przesiadka w Abu Zabi','~2 h — zmiana bramki, kolacja przed drugim lotem.'],
-  ['21:25','Wylot Abu Zabi → Tokio','~10 h; po starcie przestawiamy zegarki na czas japoński (+7 h vs Polska) i śpimy.'],
+  ['09:20','Check-in Etihad','Bilet ze stopoverem (multi-city); odprawa online 30 h wcześniej.'],
+  ['11:50','Wylot WAW → Abu Zabi','5 h 35 min lotu.'],
+  ['19:35','Lądowanie w Abu Zabi','Czas lokalny (+2 h vs Polska).'],
+  ['20:30','Transfer do hotelu','Grand Millenium Al Wahda — 4★ z pakietu stopover, wybrany przy rezerwacji.'],
+  ['21:30','Sen w prawdziwym łóżku','Zamiast nocy w samolocie — jet lag rozbity na raty.'],
  ],
- facts:[['Średnia','Intensywność'],['Dwa loty','Przejazdy'],['Minimalne','Chodzenie'],['Filmy i sen','Dla dzieci'],['Nocny lot','Nocleg']],
- tips:['Visit Japan Web (odprawa imigracyjno-celna) wypełnijcie dla całej czwórki jeszcze przed podróżą — kody QR zrzućcie do zdjęć.','W samolocie od razu tryb japoński: kolacja, potem sen — to najlepszy sposób na rozbicie jet lagu.'],
- links:[A('vjw','Visit Japan Web')],
- more:[['Dlaczego bez noclegu w Abu Zabi','Wariant z dobą w Abu Zabi (stopover z darmowym hotelem) zdrożał do ~5 500 zł/os., a zwykłe połączenie staniało do ~3 450 zł — różnica ~6,5 tys. zł na rodzinę okazała się zbyt wysoką ceną za jeden dzień na pustyni. W zamian zyskaliśmy pełny dodatkowy dzień w Tokio.']]},
+ facts:[['Łagodna','Intensywność'],['Lot 5,5 h','Przejazdy'],['Minimalne','Chodzenie'],['Łatwy etap','Dla dzieci'],['Abu Zabi (gratis)','Nocleg']],
+ tips:['Pakiet hotelowy stopover rezerwuje się na etihad.com najpóźniej 3 dni przed wylotem — zróbcie to od razu po kupnie biletów.','Do walizki podręcznej: stroje na jeden gorący dzień (35–40°C) — duże bagaże można nadać od razu do Tokio.'],
+ links:[A('stopover','Pakiet stopover Etihad')],
+ more:[['Dlaczego stopover','Postój trwa ~26 h, więc łapie się na darmowy hotel (program Etihadu dla ekonomii i biznesu). Podróż dzieli się na 6 + 10 godzin lotu z pełną nocą snu pośrodku — z dziećmi to zupełnie inna jakość niż 18 godzin ciurkiem.']]},
 
-{date:'2027-05-04',dow:'wtorek',dd:'4 maja',city:'tokio',title:'Przylot do Tokio i wieczorna Asakusa',
- lead:'Lądujemy w południe, a wieczorem pierwsza japońska uliczka: brama Kaminarimon, zapach kadzideł i ramen na dobry początek.',
- chips:['Łagodny start','NEX z lotniska','Asakusa o zmroku'],
+{date:'2027-05-04',dow:'wtorek',dd:'4 maja',city:'abudhabi',title:'Dzień w Abu Zabi i nocny lot do Tokio',
+ lead:'Poranek w jednym z najpiękniejszych meczetów świata, popołudnie w klimatyzowanym Luwrze — wieczorem lecimy dalej.',
+ chips:['Wielki Meczet','35–40°C!','Wylot 21:25'],
  tl:[
-  ['12:45','Lądowanie na Naricie','Imigracja z kodem QR Visit Japan Web, odbiór bagaży.'],
+  ['08:00','Śniadanie w hotelu','Bez pośpiechu — bagaże zostają w przechowalni.'],
+  ['09:00','Wielki Meczet Szejka Zajida','82 kopuły, największy dywan świata; wstęp darmowy, stroje zakrywające (abaje do wypożyczenia na miejscu).'],
+  ['12:00','Klimatyzowany azyl','Luwr Abu Zabi (kopuła-deszcz światła) albo pałac Qasr Al Watan — w środku dnia na zewnątrz jest 35–40°C.'],
+  ['15:30','Powrót do hotelu','Prysznic, odbiór bagaży, chwila przy basenie.'],
+  ['18:30','Transfer na lotnisko',''],
+  ['21:25','Wylot Abu Zabi → Tokio','10 h 20 min; kolacja na pokładzie i spać — zegarki na czas japoński (+5 h).'],
+ ],
+ facts:[['Łagodna','Intensywność'],['Taxi + lot 10 h','Przejazdy'],['Umiarkowane','Chodzenie'],['Meczet robi „wow"','Dla dzieci'],['Nocny lot','Nocleg']],
+ tips:['Meczet zwiedzajcie RANO — najmniejszy upał i tłum; rezerwacja wejścia online (darmowa) z wyprzedzeniem.','Kobiety i dziewczynki: zakryte ramiona i kolana; abaje wypożyczają bezpłatnie przy wejściu.'],
+ links:[A('mosque','Wielki Meczet'),A('louvread','Luwr Abu Zabi')],
+ more:[['Kontekst','Meczet Szejka Zajida mieści 40 tysięcy wiernych; marmur, złoto i kryształowe żyrandole robią wrażenie niezależnie od wieku. Luwr AD to filia paryskiego Luwru pod słynną kopułą Jeana Nouvela — „deszcz światła" nad galeriami.']]},
+
+{date:'2027-05-05',dow:'środa',dd:'5 maja',city:'tokio',title:'Przylot do Tokio w Dzień Dziecka',
+ lead:'Lądujemy wypoczęci po nocy w łóżku, a Tokio wita nas karpiami koinobori — dziś Kodomo no hi.',
+ chips:['Dzień Dziecka','Łagodny start','NEX z lotniska'],
+ tl:[
+  ['12:45','Lądowanie na Narcie','Imigracja z kodem QR Visit Japan Web (wypełnić w samolocie), odbiór bagaży.'],
   ['14:18','Narita Express do miasta','~55 min do centrum, miejsca rezerwowane.'],
-  ['15:30','Zameldowanie w Ueno','Zostawiamy bagaże, chwila oddechu po podróży.'],
-  ['16:30','Asakusa','Brama Kaminarimon i deptak Nakamise — 10 min metrem od hotelu.'],
-  ['18:00','Sensō-ji o zmroku','Podświetlona pagoda, gdy dzienne tłumy już maleją.'],
+  ['15:30','Zameldowanie','Zostawiamy bagaże, chwila oddechu.'],
+  ['16:30','Asakusa','Brama Kaminarimon i deptak Nakamise; nad rzeką karpie koinobori na Dzień Dziecka.'],
+  ['18:00','Sensō-ji o zmroku','Podświetlona pagoda, gdy tłumy już maleją.'],
   ['19:00','Kolacja','Ramen albo izakaya; potem kombini po zapasy i karty Suica.'],
-  ['21:00','Wczesny sen','Domykamy jet lag — jutro pierwszy pełny dzień.'],
+  ['21:30','Wczesny sen','Domykamy jet lag.'],
  ],
- facts:[['Łagodna','Intensywność'],['Narita Express','Przejazdy'],['Umiarkowane','Chodzenie'],['Pierwsze wrażenia','Dla dzieci'],['Tokio (1/3)','Nocleg']],
- tips:['Suica w Apple/Google Pay płaci za metro i w sklepach; dzieciom fizyczne karty kodomo (−50%) — do wyrobienia na stacji.','To środek Golden Week (4.05 to święto Zieleni) — Asakusa będzie odświętna i pełna, ale wieczorem tłumy maleją.'],
+ facts:[['Łagodna','Intensywność'],['Narita Express','Przejazdy'],['Umiarkowane','Chodzenie'],['Ich święto!','Dla dzieci'],['Tokio (1/2)','Nocleg']],
+ tips:['Visit Japan Web wypełnijcie dla całej czwórki jeszcze w samolocie — na lotnisku pokazujecie kod QR.','Suica w Apple/Google Pay płaci za metro i w sklepach; dzieciom fizyczne karty kodomo (−50%).'],
  links:[A('sensoji','Sensō-ji'),A('nex','Narita Express + Suica'),A('vjw','Visit Japan Web')],
- more:[]},
+ more:[['Dobrze wiedzieć','To ostatni dzień Golden Week — Asakusa będzie odświętna, ale wieczorem tłumy maleją. Od jutra Japonia wraca do normalnego rytmu i mamy ją dla siebie.']]},
 
-{date:'2027-05-05',dow:'środa',dd:'5 maja',city:'tokio',title:'Dzień Dziecka: Meiji, Harajuku i zachód słońca nad Shibuyą',
- lead:'Karpie koinobori na Dzień Dziecka, las wokół chramu Meiji, kolorowe Harajuku — a na finał Tokio z tarasu 229 metrów nad ziemią.',
- chips:['Dzień Dziecka','Harajuku','Shibuya Sky'],
- tl:[
-  ['09:30','Meiji Jingū','Chram w środku lasu w sercu miasta; na Dzień Dziecka odświętnie — bywa, że trafia się na tradycyjny ślub.'],
-  ['11:30','Harajuku i Takeshita-dōri','Uliczka kolorowych sklepów i crepe\'ów — żywioł nastolatków.'],
-  ['13:00','Lunch przy Omotesandō',''],
-  ['14:30','Shibuya','Słynne skrzyżowanie, pomnik Hachikō, Mega Don Quijote na pamiątkowe szaleństwo.'],
-  ['17:45','Shibuya Sky','Otwarty taras na zachód słońca — rezerwacja online, slot łapcie w dniu startu sprzedaży.'],
-  ['19:30','Kolacja w Shibuyi','Kaiten-zushi (sushi z taśmy) albo yakiniku.'],
- ],
- facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Ich święto!','Dla dzieci'],['Tokio (2/3)','Nocleg']],
- tips:['5 maja to Kodomo no hi (Dzień Dziecka) i ostatni dzień Golden Week — nad rzekami wiszą karpie koinobori, ale w popularnych miejscach jest tłoczno. Meiji Jingū ma na szczęście ogromny teren.','Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej) — rezerwujcie dopiero przy dobrej prognozie.'],
- links:[A('meiji','Meiji Jingū'),A('shibuya-sky','Shibuya Sky')],
- more:[['Skąd ten dzień','Rezygnacja z doby w Abu Zabi oddała nam pełny dzień w Tokio — wróciły Meiji Jingū i Harajuku, które wcześniej wypadły z planu, a przeładowany „wielki dzień Tokio" rozłożył się na dwa spokojniejsze.']]},
-
-{date:'2027-05-06',dow:'czwartek',dd:'6 maja',city:'tokio',title:'Tsukiji, Pokémony i neony Akihabary',
- lead:'Dzień dzieci w najlepszym wydaniu: śniadanie na targu, świat Pokémonów, a wieczorem elektryczne miasteczko Akihabara.',
- chips:['Dla dzieci','Pokémon Café','Akihabara'],
+{date:'2027-05-06',dow:'czwartek',dd:'6 maja',city:'tokio',title:'Wielki dzień Tokio: sushi, Pokémony i widok z dachu',
+ lead:'Jeden gęsty, najlepszy dzień w stolicy: śniadanie na targu, świat Pokémonów i zachód słońca 229 metrów nad Shibuyą.',
+ chips:['Dla dzieci','Pokémon Café','Shibuya Sky'],
  tl:[
   ['09:00','Targ Tsukiji','Świeże sushi i tamagoyaki na patyku prosto ze straganów.'],
   ['10:45','Metro do Ikebukuro',''],
   ['11:15','Pokémon Center Mega Tokyo','Największy sklep Pokémon w Japonii (Sunshine City).'],
   ['12:30','Pokémon Café','Tematyczny lunch z wizytą Pikachu — rezerwacja z góry (Nihombashi).'],
-  ['15:00','Odpoczynek w hotelu','Godzina oddechu przed wieczorem — Golden Week już za nami, miasto luźniejsze.'],
-  ['16:30','Akihabara','Elektryczne miasteczko: gachapony, salony gier retro, sklepy z anime i elektroniką.'],
-  ['19:00','Kolacja w Akihabarze','Kaiten-zushi albo curry — proste i szybkie po intensywnym dniu.'],
+  ['15:00','Shibuya','Słynne skrzyżowanie, pomnik Hachikō, Mega Don Quijote.'],
+  ['17:45','Shibuya Sky','Otwarty taras na zachód słońca — rezerwacja online.'],
+  ['19:30','Kolacja','Kaiten-zushi (sushi z taśmy) albo yakiniku w Shibuyi.'],
  ],
- facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Ich dzień','Dla dzieci'],['Tokio (3/3)','Nocleg']],
- tips:['Rezerwacja Pokémon Café otwiera się 31 dni wcześniej o 18:00 czasu japońskiego — łapcie slot punktualnie.','Golden Week skończył się wczoraj — Tsukiji pracuje już normalnym rytmem, a kolejki są krótsze.','Ustalcie dzieciom limit na gachapony z góry — inaczej wyjdziecie z Akihabary z walizką kapsułek 😉'],
- links:[A('tsukiji','Tsukiji'),A('pokemon','Pokémon Center + Café'),A('akihabara','Akihabara')],
- more:[]},
+ facts:[['Wyższa','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Ich dzień','Dla dzieci'],['Tokio (2/2)','Nocleg']],
+ tips:['Rezerwacja Pokémon Café otwiera się 31 dni wcześniej o 18:00 czasu japońskiego — łapcie slot punktualnie.','Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej); ustalcie limit na gachapon z góry 😉'],
+ links:[A('tsukiji','Tsukiji'),A('pokemon','Pokémon Center + Café'),A('shibuya-sky','Shibuya Sky')],
+ more:[['Co wypadło przez stopover','Ten dzień łączy dawne dwa: odpuściliśmy Meiji Jingū, Harajuku i Akihabarę/teamLab na rzecz nocy w Abu Zabi. Jeśli zostanie energia, krótki skok do Akihabary da się wcisnąć 15.05 przed odbiorem bagaży.'],['Plan B na deszcz','Shibuya Sky rezerwujcie tylko przy dobrej prognozie — taras jest odkryty, a w deszczu recenzenci zgodnie uznają go za stratę pieniędzy. Awaryjnie: Round1 w Ikebukuro (gry, bowling) albo godzina rodzinnego karaoke (Big Echo / Karaoke Kan — przed 22:00 z nieletnimi).']]},
 
 {date:'2027-05-07',dow:'piątek',dd:'7 maja',city:'hakone',title:'W góry Hakone — onsen i Fudżi',
  lead:'Pętla wulkaniczna, jezioro z bramą torii i pierwsza noc po japońsku: yukata, kaiseki i gorące źródła.',
@@ -1015,7 +1021,7 @@ const DAYS = [
   ['18:30','Kolacja obanzai','Domowa kuchnia Kioto.'],
   ['20:00','Wieczorne Gion','Szansa minąć maiko w drodze na występ.'],
  ],
- facts:[['Łagodna','Intensywność'],['Shinkansen','Przejazdy'],['Umiarkowane','Chodzenie'],['Spokojny wieczór','Dla dzieci'],['Kioto (1/6)','Nocleg']],
+ facts:[['Łagodna','Intensywność'],['Shinkansen','Przejazdy'],['Umiarkowane','Chodzenie'],['Spokojny wieczór','Dla dzieci'],['Kioto (1/5)','Nocleg']],
  tips:['W Kioto noście buty łatwe do zdejmowania — świątynie, tatami i warsztaty tego wymagają.','Na uliczkach Gion obowiązuje zakaz fotografowania na prywatnych zaułkach (są kary) — róbcie zdjęcia na głównych deptakach.','Opcja przed odjazdem: Hakone Open-Air Museum (otwarte od 9:00, 5 min kolejką od Gōry) — godzina wśród rzeźb do wspinania i shinkansen o ~12:00 zamiast 11:00.'],
  links:[A('gion','Gion i Pontocho'),A('smartex','Rezerwacja shinkansenów')],
  pc:{q:'Nocleg w Kioto: aparthotel czy machiya?',opts:[
@@ -1037,7 +1043,7 @@ const DAYS = [
   ['17:30','Odpoczynek',''],
   ['19:00','Kolacja',''],
  ],
- facts:[['Wyższa','Intensywność'],['Pociąg + pieszo','Przejazdy'],['Sporo, pod górę','Chodzenie'],['Lisy i tarasy','Dla dzieci'],['Kioto (2/6)','Nocleg']],
+ facts:[['Wyższa','Intensywność'],['Pociąg + pieszo','Przejazdy'],['Sporo, pod górę','Chodzenie'],['Lisy i tarasy','Dla dzieci'],['Kioto (2/5)','Nocleg']],
  tips:['O 9:00 w bramach jest już tłoczniej niż o świcie — ale spokojny start wygrywa; im wyżej podejdziecie, tym mniej ludzi.','Na Kiyomizu z wodospadu Otowa pije się tylko z jednego strumienia — wybór trzech naraz uchodzi za zachłanność.','Plan B na deszcz w Kioto: Kyoto Railway Museum (symulator shinkansena!) albo teamLab Biovortex przy dworcu — oba kryte i uwielbiane przez dzieci.'],
  links:[A('fushimi','Fushimi Inari'),A('kiyomizu','Kiyomizu-dera'),A('nishiki','Nishiki Market')],
  more:[]},
@@ -1053,7 +1059,7 @@ const DAYS = [
   ['18:00','Spacer po Gion','W złotej godzinie.'],
   ['19:00','Kolacja','Yudōfu — tofu po kiotyjsku, albo lekkie kaiseki.'],
  ],
- facts:[['Łagodna','Intensywność'],['Pieszo + autobus','Przejazdy'],['Niewiele','Chodzenie'],['Kaligrafia wciąga','Dla dzieci'],['Kioto (3/6)','Nocleg']],
+ facts:[['Łagodna','Intensywność'],['Pieszo + autobus','Przejazdy'],['Niewiele','Chodzenie'],['Kaligrafia wciąga','Dla dzieci'],['Kioto (3/5)','Nocleg']],
  tips:['Warsztaty (Maikoya, Camellia, studia w Gion) rezerwować 1–2 miesiące wcześniej — sloty rodzinne schodzą pierwsze.','Z całego zestawu dzieci najbardziej wciąga kaligrafia — mokry pędzel i własny znak to świetna pamiątka.'],
  links:[A('kinkakuji','Kinkaku-ji'),A('culture','Warsztaty kultury'),A('ninja','Klasa ninja (opcja)')],
  more:[['Kontekst','Kioto przez tysiąc lat było stolicą cesarską i to tutaj wykuwały się sztuki, które dziś kojarzymy z Japonią: droga herbaty (chadō), kaligrafia (shodō) i ikebana. Dzień jest pomyślany tak, by nie tylko je zobaczyć, ale spróbować własnymi rękami.']]},
@@ -1072,7 +1078,7 @@ const DAYS = [
   ['17:00','Czas wolny',''],
   ['19:00','Kolacja',''],
  ],
- facts:[['Średnia','Intensywność'],['Pociąg + pieszo','Przejazdy'],['Sporo','Chodzenie'],['Jelenie = hit','Dla dzieci'],['Kioto (4/6)','Nocleg']],
+ facts:[['Średnia','Intensywność'],['Pociąg + pieszo','Przejazdy'],['Sporo','Chodzenie'],['Jelenie = hit','Dla dzieci'],['Kioto (4/5)','Nocleg']],
  tips:['Jelenie bywają nachalne: krakersy trzymajcie wysoko, karmcie po jednym — a ukłon przed jeleniem naprawdę działa.','Pokaz mochi w Nakatanidō bywa nieregularny (mniej więcej co 30 min) — warto zapytać obsługę o najbliższy.','Dla graczy (opcja): wracając, można wysiąść w Ujī — Nintendo Museum (bilety w loterii ~3 miesiące wcześniej, paszporty całej czwórki). Odpuściliśmy je wcześniej świadomie, ale topowe biura stawiają je najwyżej dla dzieci w tym wieku — decyzja Wasza.'],
  links:[A('nara-park','Park Nara'),A('todaiji','Tōdai-ji'),A('kasuga','Kasuga Taisha'),A('mochi','Nakatanidō'),A('nintendomuseum','Nintendo Museum (opcja)')],
  more:[]},
@@ -1090,30 +1096,12 @@ const DAYS = [
   ['15:00','Popołudnie do wyboru','Ścieżka Filozofów, Nishiki po raz drugi albo po prostu odpoczynek w pokoju.'],
   ['18:30','Kolacja w okolicy','Bez rezerwacji, gdzie akurat pasuje.'],
  ],
- facts:[['Łagodna','Intensywność'],['Pociąg lokalny','Przejazdy'],['Sporo rano','Chodzenie'],['Małpy','Dla dzieci'],['Kioto (5/6)','Nocleg']],
+ facts:[['Łagodna','Intensywność'],['Pociąg lokalny','Przejazdy'],['Sporo rano','Chodzenie'],['Małpy','Dla dzieci'],['Kioto (5/5)','Nocleg']],
  tips:['Przy małpach na Iwatayamie nie noście jedzenia w widocznych torbach; automat z wodą jest na szczycie.','Las bambusowy o 9:15 nie jest już pusty jak o świcie, ale wciąż robi wrażenie — idźcie w głąb, dalej od wejścia.','To dzień buforowy: jeśli któryś wcześniejszy punkt wypadł przez pogodę, tu jest miejsce, żeby go nadrobić.'],
  links:[A('arashiyama','Arashiyama'),A('monkeys','Monkey Park Iwatayama')],
  more:[]},
 
-{date:'2027-05-13',dow:'czwartek',dd:'13 maja',city:'osaka',title:'Osaka na jeden dzień: targ, Namba i neony',
- lead:'Wypad do kuchni Japonii — bez pakowania i bez zmiany hotelu. Rano targ, po południu Namba, wieczorem neony Dōtonbori.',
- chips:['Wypad z Kioto','Street food','Dōtonbori'],
- tl:[
-  ['09:45','Wyjazd z Kioto','Pociąg do Osaki — ~30–45 min, bez bagaży.'],
-  ['10:30','Targ Kuromon Ichiba','„Kuchnia Osaki" — owoce morza z grilla, sushi, truskawki mochi. Tu się je na stojąco.'],
-  ['12:30','Namba i Shinsaibashi','Kryte pasaże handlowe — dobre też przy deszczu.'],
-  ['14:00','Do wyboru: Kaiyukan albo Shinsekai','Akwarium z rekinem wielorybim (e-bilet z godziną) albo retro-Osaka z wieżą Tsūtenkaku i kushikatsu.'],
-  ['16:30','Opcja dla dzieci: Round1 Sennichimae','7 pięter gier: purikura, bowling, automaty rytmiczne.'],
-  ['18:00','Dōtonbori','Neon Glico, takoyaki i okonomiyaki prosto z ulicy.'],
-  ['19:00','Kolacja w Osace','Okonomiyaki albo kushikatsu — to jest powód, dla którego tu przyjechaliśmy.'],
-  ['21:00','Powrót do Kioto','Ostatnie dogodne pociągi jadą do późna.'],
- ],
- facts:[['Średnia','Intensywność'],['Pociąg + metro','Przejazdy'],['Sporo','Chodzenie'],['Akwarium i Round1','Dla dzieci'],['Kioto (6/6)','Nocleg']],
- tips:['Cały dzień bez bagaży — hotel w Kioto zostaje nasz, więc wracamy do znanego pokoju.','W kushikatsu obowiązuje jedna zasada: wspólnego sosu nie maczamy dwa razy tym samym szaszłykiem.','Kaiyukan w deszczu pęka w szwach — kupcie e-bilet z godziną i celujcie w późne popołudnie.','Karta IC (ICOCA) działa i w Kioto, i w Osace — nie trzeba kupować osobnych biletów.'],
- links:[A('kuromon','Kuromon Ichiba'),A('kaiyukan','Akwarium Kaiyukan'),A('shinsekai','Shinsekai'),A('tombori','Rejs Tombori'),A('round1','Round1 i karaoke')],
- more:[['Dlaczego jednodniowo','Osaka leży 30–45 minut od Kioto, a jej największy atut — jedzenie i wieczorne neony — mieści się w jednym dniu. Nocowanie tu oznaczałoby dwie dodatkowe przeprowadzki i shinkansen z powrotem do Tokio. Zostajemy w Kioto i zyskujemy spokojniejszy koniec wyjazdu.']]},
-
-{date:'2027-05-14',dow:'piątek',dd:'14 maja',city:'kioto',title:'Ostatni poranek i shinkansen na lotnisko',
+{date:'2027-05-13',dow:'czwartek',dd:'13 maja',city:'kioto',title:'Ostatni poranek i shinkansen na lotnisko',
  lead:'Spokojne pożegnanie z Kioto, przejazd shinkansenem z widokiem na Fudżi i wieczorny lot do domu z Narity.',
  chips:['Ostatnie zakupy','Fudżi za oknem','Wylot 18:00'],
  tl:[
@@ -1125,17 +1113,22 @@ const DAYS = [
   ['14:18','Narita Express','~55 min na lotnisko.'],
   ['15:20','Odprawa i kontrola','Na Naricie ~2,5 h przed wylotem; zwrot tax-free przy wyjściu.'],
   ['18:00','Wylot','Narita → Abu Zabi (przesiadka ~2,5 h) → Warszawa.'],
-  ['06:50','Warszawa','Lądowanie w sobotę 15.05 — okaeri! Cały weekend na dojście do siebie.'],
+  ['06:50','Warszawa','Lądowanie w piątek 14.05 — okaeri! Przed wami cały weekend na dojście do siebie.'],
  ],
  facts:[['Średnia','Intensywność'],['Shinkansen + NEX','Przejazdy'],['Niewiele','Chodzenie'],['Fudżi na do widzenia','Dla dzieci'],['Lot nocny','Nocleg']],
- tips:['Miejscówki na shinkansen i NEX zarezerwujcie dzień wcześniej na dworcu — piątkowe pociągi bywają pełne.','Zostawcie ~5 kg zapasu w walizkach na pamiątki.'],
+ tips:['Miejscówki na shinkansen i NEX zarezerwujcie dzień wcześniej na dworcu.','Zostawcie ~5 kg zapasu w walizkach na pamiątki.'],
  links:[A('nex','Narita Express')],
- more:[['Dlaczego przez Naritę','Wariant z wylotem z Kansai (open-jaw) zdrożał na tyle, że przestał się bronić — powrót przez Tokio kosztuje ~2 h 15 w shinkansenie, ale oszczędza ~6,5 tys. zł na biletach. Widok na Fudżi w drodze powrotnej to miła premia pocieszenia.']]},
+ more:[['Dlaczego wracamy 13.05','Finalna wycena Etihada rozstrzygnęła spór wariantów: bilet 3–13 ze stopoverem tam (13 884 zł za całą rodzinę, z hotelem 4★ w Abu Zabi gratis) okazał się najtańszy — tańszy o ~3 tys. zł od powrotu 14.05. Lądujemy w piątek rano, więc na aklimatyzację zostaje pełny weekend.']]},
 ];
 
 /* ============================ HOTELS ============================ */
 const HOTELS = [
-{id:'tokio1',name:'MIMARU Tokyo Ueno EAST',stay:'Tokio · 3 noce (4–7.05)',
+{id:'auh',name:'Grand Millenium Al Wahda',stay:'Abu Zabi · 1 noc (3–4.05) · GRATIS z pakietu',
+ desc:'Hotel 4★ z pakietu Etihad Stopover, wybrany przy rezerwacji biletów — najlepszy z listy: duży basen (bezcenny przy 35–40°C), bezpośrednie połączenie z centrum handlowym Al Wahda Mall (klimatyzowany lunch i zakupy przed nocnym lotem) i ~15 min taksówką od Wielkiego Meczetu. Za pokój nie płacicie — w cenie była tylko opłata rezerwacyjna pakietu (~224 zł).',
+ price:'0 zł (pakiet stopover; opłata ~224 zł już w bilecie)',near:'centrum Abu Zabi, przy Al Wahda Mall; taxi z lotniska ~60–80 AED',
+ mapsq:'Grand Millennium Al Wahda, Abu Dhabi',
+ site:'https://www.millenniumhotels.com/en/abu-dhabi/grand-millennium-al-wahda/'},
+{id:'tokio1',name:'MIMARU Tokyo Ueno EAST',stay:'Tokio · 2 noce (5–7.05)',
  desc:'Aparthotel projektowany pod rodziny: apartament dla 4 osób z aneksem kuchennym i osobną sypialnią. Spokojna okolica Ueno, ~10 min metrem do Asakusy, wygodny start po przylocie.',
  price:'~750–950 zł/noc (apartament 4-os.)',near:'metro Inarichō / JR Ueno',
  book:'https://www.booking.com/hotel/jp/mimaru-tokyo-ueno-east.html',
@@ -1148,8 +1141,8 @@ const HOTELS = [
  book:'https://www.booking.com/hotel/jp/hakone-kowakien-tenyu.html',
   jp:'神奈川県足柄下郡箱根町二ノ平1297',
  site:'https://www.ten-yu.com/en/'},
-{id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 6 nocy (8–14.05)',
- desc:'Ta sama rodzinna formuła co w Tokio, tuż przy dworcu Kioto. To nasza główna baza — sześć nocy w jednym pokoju, bez pakowania. Idealny punkt wypadowy na Narę (Kintetsu), Arashiyamę (JR) i jednodniową Osakę, a ostatniego dnia shinkansen do Tokio odjeżdża spod samych drzwi.',
+{id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 5 nocy (8–13.05)',
+ desc:'Ta sama rodzinna formuła co w Tokio, tuż przy dworcu Kioto. To nasza główna baza — pięć nocy w jednym pokoju, bez pakowania. Idealny punkt wypadowy na Narę (Kintetsu) i Arashiyamę (JR), a ostatniego dnia shinkansen do Tokio odjeżdża spod samych drzwi.',
  price:'~800–1 000 zł/noc (apartament 4-os.)',near:'3 min pieszo od dworca Kyoto',
  book:'https://www.booking.com/hotel/jp/mimaru-jing-du-station.html',
   jp:'京都市下京区・京都駅八条口すぐ',
@@ -1157,34 +1150,32 @@ const HOTELS = [
 ];
 const gmapsQ = name => 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);
 // day date -> hotel id (check-in days)
-const DAYHOTEL = {'2027-05-04':'tokio1','2027-05-07':'hakone','2027-05-08':'kioto'};
+const DAYHOTEL = {'2027-05-03':'auh','2027-05-05':'tokio1','2027-05-07':'hakone','2027-05-08':'kioto'};
 const DAYINT = {
-  '2027-05-03':['y','Podróż: dwa loty, noc na pokładzie'],
-  '2027-05-04':['g','Przylot do Tokio, wieczór w Asakusie'],
-  '2027-05-05':['y','Meiji + Harajuku + Shibuya Sky'],
-  '2027-05-06':['y','Tsukiji + Pokémony + Akihabara'],
+  '2027-05-03':['g','Wylot z Warszawy + hotel w Abu Zabi'],
+  '2027-05-04':['y','Wielki Meczet + Luwr + nocny lot'],
+  '2027-05-05':['g','Przylot do Tokio, wieczór w Asakusie'],
+  '2027-05-06':['r','Tsukiji + Pokémony + Shibuya Sky'],
   '2027-05-07':['y','Pętla Hakone + ryokan (reset)'],
   '2027-05-08':['g','Onsen → Kioto, wieczór w Gion'],
   '2027-05-09':['r','Fushimi + Kiyomizu + Nishiki (dużo pod górę)'],
   '2027-05-10':['y','Złoty Pawilon + warsztaty kultury'],
   '2027-05-11':['y','Nara — jelenie i Wielki Budda'],
   '2027-05-12':['g','Arashiyama rano, popołudnie luzem (bufor)'],
-  '2027-05-13':['y','Osaka jednodniowo — targ, Namba, Dōtonbori'],
-  '2027-05-14':['y','Shinkansen do Tokio + wylot z Narity'],
+  '2027-05-13':['y','Shinkansen do Tokio + wylot z Narity'],
 };
 const DAYFLEX = {
-  '2027-05-03':['loty — nic do wycięcia','—'],
-  '2027-05-04':['przylot + Narita Express','wieczorną Asakusę można skrócić'],
-  '2027-05-05':['Shibuya Sky (rezerwacja!)','Harajuku, gdy nogi odmówią'],
-  '2027-05-06':['Pokémon Café (rezerwacja!)','Akihabarę wieczorem'],
+  '2027-05-03':['lot z Warszawy + hotel z pakietu','dzień tranzytowy — nic do wycięcia'],
+  '2027-05-04':['nocny lot 21:25 do Tokio','Luwr opcjonalny; meczet zostawić'],
+  '2027-05-05':['przylot + Narita Express','wieczorną Asakusę można skrócić'],
+  '2027-05-06':['Pokémon Café i Shibuya Sky (rezerwacje!)','Tsukiji, gdy rano ciężko'],
   '2027-05-07':['ryokan + pętla Hakone','Open-Air Museum (opcja)'],
   '2027-05-08':['shinkansen do Kioto','wieczór w Gion / Pontocho'],
   '2027-05-09':['Fushimi Inari','Nishiki, ewentualnie Kiyomizu'],
   '2027-05-10':['warsztaty kultury (rezerwacja)','Kinkaku-ji'],
   '2027-05-11':['— (cała Nara to opcja, ale hit)','Kasuga Taisha; całość można skrócić'],
   '2027-05-12':['nic — to dzień buforowy','całe popołudnie jest opcjonalne'],
-  '2027-05-13':['Kuromon i Dōtonbori','akwarium LUB Shinsekai, nie oba'],
-  '2027-05-14':['shinkansen ~11:30 + lot 18:00','poranne zakupy dowolnie'],
+  '2027-05-13':['shinkansen ~11:30 + lot 18:00','poranne zakupy dowolnie'],
 };
 
 /* ============================ TEMPLATES ============================ */
@@ -1231,7 +1222,7 @@ ${inner}
 </html>`;
 }
 function footer(prefix){
-  return `<footer>Plan rodzinny · Japonia 3–14 maja 2027 · strona prywatna (noindex)<br>
+  return `<footer>Plan rodzinny · Japonia 3–13 maja 2027 · strona prywatna (noindex)<br>
   Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br>
   Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="${prefix}index.html">Strona główna</a> · <a href="${prefix}druk.html">Plan do druku (PDF)</a></footer>`;
 }
@@ -1321,7 +1312,7 @@ function indexPage(){
   const quick = `<div class="quick">
     <a class="qcard" href="decyzje.html"><div class="qi">🧭</div><div class="qh">Dlaczego tak?</div><div class="qd">Logika planu: rytm, decyzje i jak go modyfikować.</div></a>
     <a class="qcard" href="atrakcje.html"><div class="qi">🎟️</div><div class="qh">Atrakcje</div><div class="qd">Godziny, ceny i linki do rezerwacji — 32 miejsca.</div></a>
-    <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Hotele</div><div class="qd">3 bazy na 10 nocy — aparthotele rodzinne i ryokan z onsenem.</div></a>
+    <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Hotele</div><div class="qd">3 bazy na 8 nocy w Japonii + noc w Abu Zabi gratis.</div></a>
     <a class="qcard" href="loty.html"><div class="qi">✈️</div><div class="qh">Loty</div><div class="qd">Ceny linii, trendy i kiedy nacisnąć „kup".</div></a>
     <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet</div><div class="qd">Kalkulator kosztów, transport i widełki 40–60 tys.</div></a>
     <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Pogoda w maju, informacje praktyczne i co spakować.</div></a>
@@ -1332,30 +1323,30 @@ function indexPage(){
     <div class="hbg"><div class="hbg-img" style="background-image:url('${IMG.fuji}')"></div></div>
     <div class="hgrad"></div>
     <div class="hero-inner">
-      <p class="eyebrow">Plan rodzinny · 2+2 · 12 dni</p>
+      <p class="eyebrow">Plan rodzinny · 2+2 · 11 dni</p>
       <h1>Japonia 2027</h1>
-      <p class="lead">3–14 maja 2027 · Tokio – Hakone – Kioto, z wypadami do Nary i Osaki. Klasyka pierwszego razu z odrobiną tradycyjnej kultury i Pokémonami dla dzieci. Trzy bazy, sześć nocy w Kioto, zero gonitwy.</p>
-      <div class="chips"><span class="chip">✈️ Etihad</span><span class="chip">🗼 3 noce w Tokio</span><span class="chip">🏨 10 nocy w Japonii</span><span class="chip">🍜 street food w Osace</span><span class="chip">♨️ ryokan z onsenem</span></div>
+      <p class="lead">3–13 maja 2027 · Abu Zabi (stopover z hotelem gratis) – Tokio – Hakone – Kioto, z wypadem do Nary. Klasyka pierwszego razu z odrobiną tradycyjnej kultury i Pokémonami dla dzieci. Trzy bazy w Japonii, pięć nocy w Kioto.</p>
+      <div class="chips"><span class="chip">✈️ Etihad</span><span class="chip">🕌 noc w Abu Zabi gratis</span><span class="chip">🏨 8 nocy w Japonii</span><span class="chip">🎏 przylot w Dzień Dziecka</span><span class="chip">♨️ ryokan z onsenem</span></div>
     </div>
     <div class="scrollcue" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
   </header>
 
   <section class="statband" aria-label="Podróż w liczbach">
     <div class="stt hl"><b id="cd">—</b><span>dni do wylotu</span></div>
-    <div class="stt"><b>12</b><span>dni podróży</span></div>
+    <div class="stt"><b>11</b><span>dni podróży</span></div>
     <div class="stt"><b>3</b><span>bazy w Japonii</span></div>
-    <div class="stt"><b>10</b><span>nocy w Japonii</span></div>
-    <div class="stt"><b>~39<small>tys zł</small></b><span>budżet 2+2</span></div>
+    <div class="stt"><b>8</b><span>nocy w Japonii</span></div>
+    <div class="stt"><b>~37<small>tys zł</small></b><span>budżet 2+2</span></div>
   </section>
 
   <section>
     <h2 class="stitle">Nasza trasa po Japonii</h2>
-    <p class="lead-p">Cała podróż na jednej mapie: z Tokio w góry Hakone, a stamtąd do Kioto — głównej bazy na sześć nocy, z której wyjeżdżamy na Narę, Arashiyamę i jednodniową Osakę. Wracamy shinkansenem przez Tokio, z Fudżi za oknem na pożegnanie.</p>
+    <p class="lead-p">Cała podróż na jednej mapie: z Tokio w góry Hakone, a stamtąd do Kioto — głównej bazy na pięć nocy, z której wyjeżdżamy na Narę i Arashiyamę. Wracamy shinkansenem przez Tokio, z Fudżi za oknem na pożegnanie. Dzień w Abu Zabi (stopover w drodze tam) jest poza tą mapą.</p>
     <div class="card">
       <div class="maphold"><button class="mapbtn" id="mapActivate">🗺️ Aktywuj mapę</button><div id="map" class="map"></div></div>
       <ol class="maplegend">${JPSTOPS.map(s=>`<li>${s[2]}</li>`).join('')}</ol>
       <a class="gmap" href="https://www.google.com/maps/dir/Tokyo,+Japan/Hakone/Kyoto/Osaka/Tokyo,+Japan" target="_blank" rel="noopener">📍 Otwórz trasę w Google Maps ↗</a>
-      <p class="note" style="margin-top:6px">Linia pokazuje kierunek podróży (Tokio → Hakone → Kioto → Osaka jednodniowo); wracamy shinkansenem do Tokio i z Narity do domu.</p>
+      <p class="note" style="margin-top:6px">Linia pokazuje kierunek podróży (Tokio → Hakone → Kioto); wracamy shinkansenem do Tokio i z Narity do domu.</p>
       <script type="application/json" id="geo">${JSON.stringify(JPSTOPS)}</script>
     </div>
   </section>
@@ -1372,7 +1363,7 @@ function indexPage(){
     ${quick}
   </section>
   ${footer('')}`;
-  return shell({title:'Japonia 2027 — rodzinny plan wyjazdu',desc:'Plan rodzinnego wyjazdu do Japonii 3–14 maja 2027: agenda dzień po dniu, atrakcje, koszty i pogoda.',prefix:'',active:'index.html',inner,pillsIdx:null});
+  return shell({title:'Japonia 2027 — rodzinny plan wyjazdu',desc:'Plan rodzinnego wyjazdu do Japonii 3–13 maja 2027: agenda dzień po dniu, atrakcje, koszty i pogoda.',prefix:'',active:'index.html',inner,pillsIdx:null});
 }
 
 /* ---- koszty (strategy + calculator) ---- */
@@ -1390,7 +1381,7 @@ function kosztyPage(){
 
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
-    <div class="pflag">✈️ <span><b>Kontrola ${dpl(LAST_CHECKED)}: ${plz(FLIGHT.adult)}/dorosły</b>${trend()} (${FLIGHT.airline}, WAW↔Tokio, 3–14.05.2027) — dla 2+2 ≈ <b>~${plz(FLIGHT.family)}</b>. Cena <b>${FLIGHT.band}</b>.</span></div>
+    <div class="pflag">✈️ <span><b>Bilet wybrany: Etihad ${TICKET.label} — ${plz(TICKET.family)} za 4 osoby</b> (z hotelem 4★ w Abu Zabi w pakiecie) + walizka na powrót ~${plz(TICKET.bag)}. Szczegóły i tło rynkowe na zakładce <a href="loty.html">Loty</a>.</span></div>
     <div class="card"><ul class="tips">
       <li>Ta kwota zasila pole „Loty" w kalkulatorze poniżej i odświeża się automatycznie co dwa dni.</li>
       <li>Porównanie linii, wykres trendu, progi „kup / czekaj", kalendarz wyprzedaży i wybór terminu — wszystko na osobnej zakładce.</li>
@@ -1402,11 +1393,10 @@ function kosztyPage(){
     <h2 class="stitle">Transport w Japonii — zweryfikowane taryfy</h2>
     <p class="lead-p">Sprawdzone w lipcu 2026 (miejscówki; kurs ¥100 ≈ 2,33 zł). Młodsze dziecko (do 11 lat) płaci taryfę dziecięcą — na kolei dokładnie połowę.</p>
     ${seg('Przejazdy między miastami',[
-      '<b>Narita → Tokio</b> (4.05, Narita Express): ~¥3 070/dorosły · połowa dla dziecka',
+      '<b>Narita → Tokio</b> (5.05, Narita Express): ~¥3 070/dorosły · połowa dla dziecka',
       '<b>Odawara → Kioto</b> (8.05, shinkansen Hikari): ¥12 300/dorosły · ¥6 140/dziecko',
-      '<b>Kioto ↔ Osaka</b> (13.05, w obie strony): ~¥1 160/dorosły — zwykły pociąg, nie shinkansen',
-      '<b>Kioto → Tokio → Narita</b> (14.05): shinkansen ~¥14 170/dorosły + NEX ~¥3 070',
-      '<b>Razem dla 2+2: ~¥118 000 ≈ 2 750 zł</b> (kolej międzymiastowa; metro i Hakone osobno)',
+      '<b>Kioto → Tokio → Narita</b> (13.05): shinkansen ~¥14 170/dorosły + NEX ~¥3 070',
+      '<b>Razem dla 2+2: ~¥114 000 ≈ 2 650 zł</b> (kolej międzymiastowa; metro i Hakone osobno)',
       'JR Pass (~¥50 000/os.) wciąż się <b>nie opłaca</b> — dwa shinkanseny to za mało'])}
   </section>
 
@@ -1417,10 +1407,10 @@ function kosztyPage(){
       <table>
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
-          <tr><td class="cat">✈️ Loty<span class="hint">Etihad WAW↔Tokio, 3 dorosłych + 1 dziecko do 11 lat (+ bagaż)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="${FLIGHT.family}" min="0" step="100"></td></tr>
-          <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 10 nocy: aparthotele ~820–850 zł + 1 noc ryokan z prywatnym onsenem ~2 700 zł</span></td><td class="num"><input type="number" id="nights" class="sm" value="10" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1000" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
-          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">2 shinkanseny + NEX ×2 + metro + Hakone + Osaka</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4400" min="0" step="100"></td></tr>
-          <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="12" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
+          <tr><td class="cat">✈️ Loty<span class="hint">Etihad ze stopoverem (cena z etihad.com: 13 884 zł) + walizka na powrót</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="${TICKET.total}" min="0" step="100"></td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 8 nocy: aparthotele ~820–850 zł + 1 noc ryokan ~2 700 zł (Abu Zabi gratis)</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1050" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">2 shinkanseny + NEX ×2 + metro + Hakone</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4200" min="0" step="100"></td></tr>
+          <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">warsztaty kultury, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2200" min="0" step="100"></td></tr>
           <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td></tr>
         </tbody>
@@ -1437,14 +1427,14 @@ function kosztyPage(){
       <div class="bar"><div class="fill" id="barFill"></div></div>
       <div class="barlab"><span>0</span><span>40k</span><span>60k</span><span>70k</span></div>
       <div id="verdict" style="font-weight:700;margin-top:8px"></div>
-      <div class="note" style="margin-top:10px">Orientacyjne kwoty w PLN. JR Pass zwykle się nie opłaca przy pętli Tokio–Kioto–Osaka.</div>
+      <div class="note" style="margin-top:10px">Orientacyjne kwoty w PLN. JR Pass zwykle się nie opłaca przy trasie Tokio–Kioto.</div>
       <button class="reset" id="resetBtn" type="button">↺ Przywróć wartości domyślne</button>
     </div>
   </section>
   ${footer('')}
   <script>
   (function(){
-    var D={flights:${FLIGHT.family},nights:10,nightRate:1000,transport:4400,days:12,foodRate:500,attractions:2200,extras:3000};
+    var D={flights:${TICKET.total},nights:8,nightRate:1050,transport:4200,days:11,foodRate:500,attractions:2200,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
@@ -1512,15 +1502,15 @@ function hotelePage(){
       </a>
     </div>`).join('');
   const HOTELGEO=[
-    [35.7108,139.7823,'MIMARU Tokyo Ueno EAST · Tokio (3 noce)'],
+    [35.7108,139.7823,'MIMARU Tokyo Ueno EAST · Tokio (2 noce)'],
     [35.2470,139.0530,'Hakone Kowakien Ten-yu · Hakone (1 noc)'],
-    [34.9880,135.7590,'MIMARU Kyoto Station · Kioto (6 nocy — główna baza)'],
+    [34.9880,135.7590,'MIMARU Kyoto Station · Kioto (5 nocy — główna baza)'],
   ];
   const inner=`
   <header class="hero kb">
     <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(18,39,64,.40)),url('${IMG.tokyostation}') center/cover"></div></div>
     <div class="hero-inner">
-    <p class="eyebrow">Noclegi · 10 nocy · 3 bazy · pokoje rodzinne 4-os.</p>
+    <p class="eyebrow">Noclegi · 9 nocy · 4 obiekty · pokoje rodzinne 4-os.</p>
     <h1>Hotele</h1>
     <p class="lead">Trzy bazy pod rodzinę 2+2: aparthotele MIMARU z aneksami i pralką oraz ryokan z prywatnym onsenem na jedną górską noc. Sześć ostatnich nocy w jednym pokoju w Kioto.</p>
   </div>
@@ -1541,7 +1531,7 @@ function hotelePage(){
     <div class="card"><ul class="tips">
       <li><b>Rezerwujcie wrzesień–październik 2026</b> z darmowym anulowaniem (Booking/strony hoteli) — pokoje 4-osobowe znikają pierwsze, a początek maja łapie ogon Golden Week.</li>
       <li>Ryokan w Hakone (wyższa półka): wybierzcie pokój z prywatnym rotenburo i potwierdźcie kaiseki + japońskie śniadanie w cenie.</li>
-      <li>Ceny to widełki orientacyjne za pokój/apartament dla 4 osób; suma 10 nocy ≈ 9–11 tys. zł (w kalkulatorze liczymy 10 × 1 000 zł — średnia z aparthoteli i droższego ryokanu).</li>
+      <li>Ceny to widełki orientacyjne za pokój/apartament dla 4 osób; suma 8 płatnych nocy ≈ 8–9 tys. zł (w kalkulatorze liczymy 8 × 1 050 zł — średnia z aparthoteli i droższego ryokanu; Abu Zabi gratis).</li>
       
       <li>Adresy dla taksówkarza najlepiej pokazywać z Google Maps po japońsku — kliknięcie zdjęcia hotelu otwiera właściwe miejsce od razu.</li>
     </ul></div>
@@ -1571,7 +1561,7 @@ function decyzjePage(){
       <thead><tr><th>Dzień</th><th>Sedno</th><th style="text-align:right">Obciążenie</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>
-    <div class="dnote" style="margin-top:12px">💡 <b>Jedyny intensywny dzień to 9.05</b> (Fushimi + Kiyomizu — dużo pod górę); stoi między lekkim 8.05 a średnim 10.05, więc rytm się broni. Dawne punkty nacisku zniknęły: przylot dzień wcześniej rozłożył Tokio na trzy spokojniejsze dni, a od 8.05 do wylotu śpicie w jednym pokoju w Kiocie.</div>
+    <div class="dnote" style="margin-top:12px">💡 Dwa intensywne dni — <b>6.05</b> (wielki dzień Tokio; zawór: odpuścić Tsukiji, jeśli rano ciężko po locie) i <b>9.05</b> (Fushimi + Kiyomizu; zawór: bez Nishiki). Żaden nie następuje po drugim intensywnym, a od 8.05 do wylotu śpicie w jednym pokoju w Kiocie.</div>
   </section>
 
   <section>
@@ -1592,9 +1582,9 @@ function decyzjePage(){
     <h2 class="stitle">Kalendarz przygotowań — deadline'y</h2>
     <p class="lead-p">Do kiedy co załatwić. Trzy alerty (loty, noclegi, pogoda) same przypomną się w aplikacji.</p>
     <div class="card"><ul class="tips">
-      <li><b>✈️ Loty — twardy deadline: koniec stycznia 2027.</b> Cel: 11–13 tys. zł na Black Friday (20.11–2.12.2026) albo w styczniowej wyprzedaży Etihad/Qatar. Później tylko drożej (4 miejsca + ogon Golden Week). Alerty: 1.10, 20.11, 22.12.2026, 12.01, 25.01.2027. <a href="koszty.html">Progi i strategia →</a></li>
+      <li><b>✈️ Loty — WYBRANE (4.09.2026):</b> Etihad 3–13 ze stopoverem tam, 13 884 zł za 4 osoby, hotel 4★ w Abu Zabi w pakiecie. Do domknięcia przy zakupie: walizka na powrót i miejsca obok siebie. <a href="loty.html">Szczegóły →</a></li>
       <li><b>🏨 Noclegi — rezerwować wrzesień–październik 2026</b> z darmowym anulowaniem. Pokoje 4-osobowe i ryokan z prywatnym rotenburo znikają pierwsze, a początek maja to ogon Golden Week. Trzy bazy: Tokio (3 noce), Hakone (1), Kioto (6). <span class="ipill y">alert: 15.09.2026</span></li>
-      <li><b>🎟️ Rezerwacje czasowe:</b> Nintendo Museum — loteria ~luty 2027 · warsztaty kultury w Kioto — 1–2 miesiące wcześniej · Shibuya Sky — 4 tygodnie wcześniej (slot na zachód słońca) · Pokémon Café — 31 dni wcześniej o 18:00 czasu japońskiego.</li>
+      <li><b>🎟️ Rezerwacje czasowe:</b> Nintendo Museum — loteria ~luty 2027 · warsztaty kultury w Kioto — 1–2 miesiące wcześniej · Shibuya Sky — sprzedaż od ~8.04.2027 (4 tyg. przed 6.05; slot na zachód słońca) · Pokémon Café — rezerwacja rusza 5.04.2027 o 18:00 czasu japońskiego (31 dni przed 6.05).</li>
       <li><b>☔ Pogoda — dostrajać najpóźniej ~7 dni przed</b> (wcześniej prognoza jest niewiarygodna). Wtedy przełóżcie Shibuya Sky na najpogodniejszy wieczór i rezerwujcie slot tylko przy dobrej prognozie. <b>Rano danego dnia:</b> status kolejki w Hakone (hakonenavi.jp — wiatr/gaz), w razie czego Open-Air Museum; Fudżi to loteria. Dni z buforem (13.05) i plany B pochłaniają deszcz bez przebudowy. <span class="ipill y">alert: 26.04.2027</span></li>
     </ul></div>
   </section>
@@ -1602,12 +1592,12 @@ function decyzjePage(){
   <section>
     <h2 class="stitle">Kluczowe decyzje — i dlaczego</h2>
     <div class="card more">
-      <details><summary>Daty 3–14 maja</summary><p>Najtańsza kombinacja w całej siatce cen (dziś ~13 900 zł/4 os.) i zarazem najdłuższa sensowna. Wyloty 30.04–2.05 są o 2,5–5 tys. droższe (ogon Golden Week) i wpadają w szczyt tłumów oraz droższych hoteli. Golden Week kończy się 5 maja.</p></details>
-      <details><summary>Długość: 10 nocy w Japonii</summary><p>~59% budżetu to koszty stałe (loty, pętla shinkansenów), niezależne od długości. Skrócenie o 2 dni to ledwie −5% kosztu, ale −17% wyjazdu — i paradoksalnie DROŻSZY bilet (krótsze kombinacje w siatce są droższe). Wydłużenie w tym oknie oznacza wejście w Golden Week.</p></details>
-      <details><summary>Stopover w Abu Zabi — mieliśmy go, zrezygnowaliśmy</summary><p>Do września planem był postój &gt;24 h z darmowym hotelem 4★ i przelot rozbity na 6 + 10 h. Zrezygnowaliśmy 4.09, gdy taryfa ze stopoverem zdrożała do ~5 460 zł/os., a zwykły round-trip staniał do ~3 450 zł — różnica ~6,5 tys. zł na rodzinę za jeden dzień na pustyni przestała się bronić. Bonus: odzyskany dzień trafił do Tokio i rozbroił najcięższy dzień planu. Przesiadka w Abu Zabi została, ale krótka (~2 h w tę, ~2,5 h z powrotem).</p></details>
-      <details><summary>Trasa i bazy: Tokio 3 · Hakone 1 · Kioto 6</summary><p>Szkielet zgodny z najlepiej ocenianymi (4,9–5,0★) rodzinnymi tourami: Kioto jako główny hub (u nas aż 6 nocy — z wypadami do Nary, na Arashiyamę i jednodniowo do Osaki), ryokan wciśnięty w środek jako „reset", a na start trzy noce w Tokio. Tylko trzy zameldowania — od 8.05 do wylotu śpicie w jednym pokoju.</p></details>
+      <details><summary>Daty 3–13 maja</summary><p>Najtańsza kombinacja w całej siatce cen (dziś ~13 900 zł/4 os.) i zarazem najdłuższa sensowna. Wyloty 30.04–2.05 są o 2,5–5 tys. droższe (ogon Golden Week) i wpadają w szczyt tłumów oraz droższych hoteli. Golden Week kończy się 5 maja.</p></details>
+      <details><summary>Długość: 8 nocy w Japonii + doba w Abu Zabi</summary><p>Finalny kompromis ceny i rytmu: ~60% budżetu to koszty stałe (loty, dwa shinkanseny), niezależne od długości. Wariant o dzień dłuższy (powrót 14.05) kosztował przy kasie +2 977 zł na samych biletach; dłużej niż to — wjazd w Golden Week od strony startu. Osiem nocy w Japonii z trzema bazami i buforem 12.05 to kształt, który utrzymuje tempo rodziny 2+2 bez zarzynania budżetu.</p></details>
+      <details><summary>Stopover w Abu Zabi — wypadł i wrócił</summary><p>W planie od lipca, wycięty 4.09 rano (open-jaw z Kansai zdrożał do ~5,5 tys./os.), by wrócić tego samego dnia przy kasie: finalna wycena Etihada pokazała, że <b>3–13 ze stopoverem tam to najtańsza kombinacja w ogóle</b> — 13 884 zł za 4 osoby, z hotelem 4★ (Grand Millenium Al Wahda) w pakiecie i zielonym potwierdzeniem „Stopover included" dla maja 2027. Google tej taryfy w ogóle nie umiał policzyć. Przelot rozbity na 5,5 + 10 h z nocą snu pośrodku — z dziećmi dużo lepszy niż 18 h ciurkiem.</p></details>
+      <details><summary>Trasa i bazy: Tokio 2 · Hakone 1 · Kioto 5</summary><p>Szkielet zgodny z najlepiej ocenianymi (4,9–5,0★) rodzinnymi tourami: Kioto jako główny hub (5 nocy, z wypadami do Nary i na Arashiyamę), ryokan w środku jako „reset", na start dwie noce w Tokio, a po drodze doba w Abu Zabi z darmowym hotelem. Trzy zameldowania w Japonii — od 8.05 do wylotu jeden pokój.</p></details>
       <details><summary>Ryokan w środku trasy — wyższa półka</summary><p>To jedyna noc, gdy nocleg JEST atrakcją (onsen, kaiseki, tatami). Dlatego tu — i tylko tu — warto dopłacić: pokój z prywatnym rotenburo to wspomnienie, nie tylko łóżko. Reszta hoteli (MIMARU) zostaje standardowa, bo pokój dla 4 i lokalizacja liczą się bardziej niż gwiazdki.</p></details>
-      <details><summary>Round-trip przez Naritę zamiast open-jaw z Kansai (decyzja 4.09)</summary><p>Do września planem był bilet open-jaw: doba w Abu Zabi z darmowym hotelem po drodze i powrót prosto z lotniska Kansai. 4 września open-jaw kosztował już ~5 460 zł/os., a zwykły round-trip do Tokio staniał do ~3 450 zł — różnica ~6,5 tys. zł na rodzinę przekroczyła nasz próg decyzyjny. Efekt uboczny okazał się prezentem: przylot dzień wcześniej oddał Tokio trzecią noc, wróciły wycięte kiedyś Meiji Jingū i Harajuku, a przeładowany „wielki dzień Tokio" rozpadł się na dwa spokojne. Cena: ostatniego dnia ~4 h w pociągach (Kioto → Narita) i brak przygody z pustynią.</p></details>
+      <details><summary>Jak wybraliśmy bilet (kronika 4.09)</summary><p>Rano: open-jaw z Kansai zdrożał do ~5 460 zł/os., a round-trip do Narity staniał do ~3 450 — przełączyliśmy plan na round-trip 3–14. Wieczorem, przy realnej rezerwacji na etihad.com, okazało się, że google’owa cena round-tripu u przewoźnika nie istnieje, za to <b>3–13 ze stopoverem kosztuje 13 884 zł za całą rodzinę</b> — mniej niż cokolwiek innego. Finał: wróciliśmy do pierwotnego kształtu podróży (Abu Zabi + przylot 5.05), o dzień krótszego i z lądowaniem w piątek. Lekcja: Google dobrze śledzi proste taryfy, ale przy stopoverach ostatnie słowo ma strona przewoźnika.</p></details>
     </div>
   </section>
 
@@ -1616,14 +1606,14 @@ function decyzjePage(){
     <div class="twocol">
       <div class="card"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 8px">Stałe (kotwice)</h3><ul class="tips">
         <li>Daty i godziny lotów Etihad</li>
-        <li>Wylot z Narity — 14.05, 18:00</li>
+        <li>Wylot z Narity — 13.05, 18:00</li>
         <li>Ryokan-reset w Hakone (środek trasy)</li>
-        <li>Dwa shinkanseny: Odawara→Kioto (8.05) i Kioto→Tokio (14.05)</li>
+        <li>Dwa shinkanseny: Odawara→Kioto (8.05) i Kioto→Tokio (13.05)</li>
       </ul></div>
       <div class="card"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 8px">Elastyczne</h3><ul class="tips">
         <li>Poszczególne atrakcje w każdym dniu</li>
         <li>Kolejność Nara ↔ Arashiyama</li>
-        <li>Dzień luzu w Osace (13.05) — bufor</li>
+        <li>Popołudnie 12.05 bez planu — bufor</li>
         <li>Zakres warsztatów; opcje ninja / taiko / Round1</li>
       </ul></div>
     </div>
@@ -1632,10 +1622,10 @@ function decyzjePage(){
   <section>
     <h2 class="stitle">Jak modyfikować</h2>
     <div class="card more">
-      <details><summary>✂️ Chcę krócej / taniej o kilka dni</summary><p>Kolejność cięć bez psucia rytmu: <b>Nishiki (9.05) → Kinkaku-ji (10.05) → rejs Tombori (13.05)</b>. Cały wypad do Osaki (13.05) można wyciąć bez ruszania reszty — to dzień bez noclegowych konsekwencji. Uwaga: każdy skrócony wariant ma WYŻSZY koszt jednostkowy dnia i droższy bilet — oszczędność ~1,4–1,5 tys./dzień, ale ~1,7 tys. traci się na samym bilecie. Progi i liczby: <a href="koszty.html">Bilety i koszty</a>.</p></details>
-      <details><summary>➕ Chcę dłużej</summary><p>W tym oknie (30.04–15.05) dłużej = Golden Week (loty +2,5–5 tys., hotele +30–80%, tłumy) — przesuwanie startu przed 3.05 się nie opłaca. Jedyne sensowne wydłużenie to <b>powrót 15.05 zamiast 14.05</b>: wraca ostatni dzień w Tokio, ale bilet i hotel podrożeją, a lądowanie wypadnie w niedzielę zamiast w sobotę. Sprawdzajcie na zakładce Loty przed zakupem.</p></details>
-      <details><summary>🎮 Chcę więcej frajdy dla dzieci</summary><p>W odwodzie (opcje, nie obowiązki): <b>klasa ninja</b> w Kioto (przy Nishiki), <b>warsztat taiko</b>, <b>Round1 + karaoke</b> w Osace, <b>Hakone Open-Air Museum</b> oraz <b>Nintendo Museum</b> w Ujī (loteria biletów ~luty 2027, paszporty). Karty i ceny: <a href="atrakcje.html">Atrakcje</a>.</p></details>
-      <details><summary>😌 Chcę luźniej na miejscu</summary><p>Jedyny dzień „Intensywny" to 9.05 — w razie czego skróćcie go do Fushimi + Kiyomizu (bez Nishiki). Na dniach średnich zawory to: 5.05 — odpuścić Harajuku, 6.05 — odpuścić Tsukiji, 13.05 — wybrać akwarium LUB Shinsekai. Decyzja przy śniadaniu — nic nie trzeba zmieniać z góry.</p></details>
+      <details><summary>✂️ Chcę krócej / taniej o kilka dni</summary><p>Kolejność cięć bez psucia rytmu: <b>Nishiki (9.05) → Kinkaku-ji (10.05) → małpy Iwatayama (12.05)</b>. Uwaga: bilet jest już kupiony pod 3–13, więc realne „krócej" oznacza tylko luźniejsze dni na miejscu, nie krótszy wyjazd.</p></details>
+      <details><summary>➕ Chcę dłużej</summary><p>Sprawdzone przy kasie: powrót 14.05 zamiast 13.05 kosztował <b>+2 977 zł</b> na samych biletach (16 861 vs 13 884). Do tego doszłaby noc hotelu i dzień wyżywienia — razem ~3,8 tys. za jeden dodatkowy dzień. Odpuściliśmy; gdyby kiedyś zmieniać bilet, to tylko przez „Manage booking" z pełną świadomością różnicy taryf.</p></details>
+      <details><summary>🎮 Chcę więcej frajdy dla dzieci</summary><p>W odwodzie (opcje, nie obowiązki): <b>klasa ninja</b> w Kioto (przy Nishiki), <b>warsztat taiko</b>, <b>Round1 + karaoke</b> (jest i w Kiocie, przy Kawaramachi), <b>Hakone Open-Air Museum</b> oraz <b>Nintendo Museum</b> w Ujī (loteria biletów ~luty 2027, paszporty). Karty i ceny: <a href="atrakcje.html">Atrakcje</a>.</p></details>
+      <details><summary>😌 Chcę luźniej na miejscu</summary><p>Dwa dni „Intensywne" mają zawory bezpieczeństwa: <b>6.05</b> — odpuśćcie poranne Tsukiji (reszta dnia zostaje), <b>9.05</b> — skróćcie do Fushimi + Kiyomizu, bez Nishiki. Bufor to popołudnie 12.05 — celowo puste. Decyzje podejmujcie przy śniadaniu, nie z wyprzedzeniem.</p></details>
       <details><summary>🏨 Chcę wyższy standard hoteli</summary><p>Poza ryokanem — raczej nie warto. W Japonii „gwiazdki" bywają pułapką: droższe hotele często mają mniejsze pokoje mieszczące 3 os. (dwa pokoje = drożej i rozdziela rodzinę) i gorszą lokalizację. MIMARU (apartament dla 4) to wybór ekspercki, nie kompromis. Zapas budżetu lepiej wydać na przeżycia niż na łóżka.</p></details>
     </div>
   </section>
@@ -1671,7 +1661,7 @@ function drukPage(){
       ${fx?`<div class="flex"><p><b>🔒 Nie ruszać:</b> ${fx[0]}</p><p><b>✂️ Można odpuścić:</b> ${fx[1]}</p></div>`:''}
       ${H?`<p class="blk"><b>🏨 Nocleg:</b> ${H.name} — ${H.near}</p>`:''}
       ${d.tips&&d.tips.length?`<div class="blk"><b>Wskazówki</b><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`:''}
-      <div class="pfoot">Japonia 3–14 maja 2027 · Dzień ${i+1} — ${d.dd}</div>
+      <div class="pfoot">Japonia 3–13 maja 2027 · Dzień ${i+1} — ${d.dd}</div>
     </section>`;
   }).join('');
 
@@ -1684,19 +1674,19 @@ function drukPage(){
     <div class="ctitle">
       <p class="keyb">Plan podróży</p>
       <h1>Japonia 2027</h1>
-      <p class="csub">3–14 maja 2027 · rodzina 2+2 (dzieci 11 i 13 lat)</p>
-      <p class="csub2">Tokio · Hakone · Kioto · Nara · Osaka</p>
+      <p class="csub">3–13 maja 2027 · rodzina 2+2 (dzieci 11 i 13 lat)</p>
+      <p class="csub2">Abu Zabi · Tokio · Hakone · Kioto · Nara</p>
       <div class="rule"></div>
     </div>
     <div class="cfacts">
-      <div><b>12</b>dni podróży</div><div><b>10</b>nocy w Japonii</div>
-      <div><b>3</b>bazy w Japonii</div><div><b>~39<i>tys. zł</i></b>budżet 2+2</div>
+      <div><b>11</b>dni podróży</div><div><b>8</b>nocy w Japonii</div>
+      <div><b>3</b>bazy w Japonii</div><div><b>~37<i>tys. zł</i></b>budżet 2+2</div>
     </div>
     <h3 class="toch">Spis treści</h3>
     <ol class="toc">${toc}</ol>
     <p class="cnote">Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.
     Wersja online zawiera mapy tras, zdjęcia i kalkulator kosztów: <b>japonia-2027.vercel.app</b></p>
-    <div class="pfoot">Japonia 3–14 maja 2027 · Plan podróży</div>
+    <div class="pfoot">Japonia 3–13 maja 2027 · Plan podróży</div>
   </section>
 
   ${days}
@@ -1722,10 +1712,9 @@ function drukPage(){
 
     <h3>Transport w Japonii</h3>
     <table class="agenda">
-      <tr><td class="t">4.05</td><td><b>Narita → Tokio</b><span class="dsc">Narita Express · ~¥3 070 dorosły</span></td></tr>
+      <tr><td class="t">5.05</td><td><b>Narita → Tokio</b><span class="dsc">Narita Express · ~¥3 070 dorosły</span></td></tr>
       <tr><td class="t">8.05</td><td><b>Odawara → Kioto</b><span class="dsc">Shinkansen Hikari · ¥12 300 dorosły / ¥6 140 dziecko</span></td></tr>
-      <tr><td class="t">13.05</td><td><b>Kioto ↔ Osaka</b><span class="dsc">Zwykły pociąg, w obie strony · ~¥1 160 dorosły</span></td></tr>
-      <tr><td class="t">14.05</td><td><b>Kioto → Tokio → Narita</b><span class="dsc">Shinkansen ~¥14 170 + Narita Express ~¥3 070 (dorosły)</span></td></tr>
+            <tr><td class="t">13.05</td><td><b>Kioto → Tokio → Narita</b><span class="dsc">Shinkansen ~¥14 170 + Narita Express ~¥3 070 (dorosły)</span></td></tr>
     </table>
     <p class="note"><b>JR Pass się nie opłaca</b> (~¥50 000/os.) — dwa shinkanseny punktowo to wciąż ~2× taniej. Do Hakone: Hakone Free Pass (Odakyu). W miastach: karty IC Suica/PASMO/ICOCA. Bagaże między bazami: kurier takkyūbin (~¥2 000/szt.).</p>
 
@@ -1739,7 +1728,7 @@ function drukPage(){
       <li><b>Bagaż:</b> podręczny + plecak wystarczą — pranie w aparthotelach MIMARU (Kioto). Limit ~7 kg/os. w kabinie.</li>
       <li><b>Tax-free</b> od ~5 000 ¥ za okazaniem paszportu.</li>
     </ul>
-    <div class="pfoot">Japonia 3–14 maja 2027 · Aneks praktyczny</div>
+    <div class="pfoot">Japonia 3–13 maja 2027 · Aneks praktyczny</div>
   </section>
 </div>`;
 
@@ -1749,7 +1738,7 @@ function drukPage(){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Plan podróży do Japonii 3–14 maja 2027 w wersji do druku i zapisu jako PDF.">
+<meta name="description" content="Plan podróży do Japonii 3–13 maja 2027 w wersji do druku i zapisu jako PDF.">
 <title>Plan do druku (PDF) · Japonia 2027</title>
 <style>
 :root{--ink:#1c2530;--muted:#5f666e;--line:#d9d3c6;--ai:#1b3a6b;--dark:#0f1c2e;--shu:#c8402c;
@@ -1897,8 +1886,8 @@ function lotyPage(){
     const diff = P.price - PERIODS[0].price;
     return `<div class="pcard${P.best?' win':''}">${P.best?'<span class="badge">rekomendacja</span>':''}
       <div class="ph">${P.label}</div><div class="psub">${P.sub}</div>
-      <div class="pp">${P.price?plz(P.price)+'<span style="font-size:13px;font-weight:600;color:var(--muted)">/os.</span>':'<span style="font-size:15px;color:var(--muted)">cena zbliżona do wybranego</span>'}</div>
-      <div class="pdiff" style="color:${diff===0?'var(--success)':'var(--shu)'}">${P.price==null?'&nbsp;':(diff===0?'punkt odniesienia':'+ '+plz(diff)+'/os. (~'+plz(diff*3.8)+' rodzina)')}</div>
+      <div class="pp">${P.price?plz(P.price)+'<span style="font-size:13px;font-weight:600;color:var(--muted)">'+(P.fam?' za 4 os.':'/os.')+'</span>':'<span style="font-size:15px;color:var(--muted)">cena zbliżona do wybranego</span>'}</div>
+      <div class="pdiff" style="color:${diff===0?'var(--success)':'var(--shu)'}">${P.price==null?'&nbsp;':(diff===0?'punkt odniesienia':(diff>0?'+ ':'− ')+plz(Math.abs(diff))+(P.fam?'':'/os.'))}</div>
       <ul>${P.pros.map(t=>`<li class="yes">${t}</li>`).join('')}${P.cons.map(t=>`<li class="no">${t}</li>`).join('')}</ul>
     </div>`;}).join('');
 
@@ -1908,13 +1897,13 @@ function lotyPage(){
     <div class="hero-inner">
     <p class="eyebrow">Ceny · trendy · rekomendacje</p>
     <h1>Loty</h1>
-    <p class="lead">Kluczowe linie na trasie WAW→Tokio, jak zmieniają się ich ceny i kiedy nacisnąć „kup". Dane sprawdzane automatycznie co dwa dni.</p>
+    <p class="lead">Bilet wybrany: Etihad ze stopoverem, 13 884 zł za całą rodzinę. Niżej — jak do tego doszło i archiwum cen rynkowych.</p>
     </div>
   </header>
 
   <section>
     <h2 class="stitle">Ceny dziś — kluczowe linie</h2>
-    <p class="lead-p">Za 1 dorosłego, w obie strony, wylot 3.05 / powrót 14.05.2027 (lądowanie w WAW 15.05 rano). Ostatnia kontrola cen: <b>${dpl(LAST_CHECKED)}</b>${LAST_CHECKED!==FLIGHT.checked?` · ostatnia zmiana: ${dpl(FLIGHT.checked)}`:''}. Posortowane od najtańszej — pełny ranking uwzględniający też czas w drodze i jakość linii jest niżej, w sekcji „Ranking wg Twoich wag".</p>
+    <p class="lead-p">Za 1 dorosłego, w obie strony, wylot 3.05 / powrót 14.05.2027 (lądowanie w WAW 15.05 rano). Ostatnia kontrola cen: <b>${dpl(LAST_CHECKED)}</b>${LAST_CHECKED!==FLIGHT.checked?` · ostatnia zmiana: ${dpl(FLIGHT.checked)}`:''}. To tło rynkowe (zwykły round-trip wg Google) — nasz kupiony wariant ze stopoverem jest opisany wyżej. Ranking wg wag niżej zostaje jako ciekawostka porównawcza.</p>
     <div class="alist">${rows}</div>
     <div class="dnote" style="margin-top:14px">★ Etihad to trasa z planu — jako jedyna <b>może dać darmowy nocleg 4★ w Abu Zabi</b> (program stopover), wart ~600–900 zł. To jednak <b>opcja warunkowa</b>: program jest formalnie potwierdzony do stycznia 2027, więc na maj 2027 trzeba go potwierdzić przy zakupie. W rankingu niżej można tę premię włączyć i wyłączyć jednym kliknięciem.</div>
   </section>
@@ -1926,46 +1915,29 @@ function lotyPage(){
   </section>
 
   <section>
-    <h2 class="stitle">Dwa scenariusze powrotu</h2>
-    <p class="lead-p">Śledzimy oba na bieżąco, bo różnią się nie tylko ceną biletu, ale i kształtem wyjazdu. Do biletu doliczamy <b>dojazd na właściwe lotnisko</b> — bez tego porównanie byłoby mylące. Kwoty dla rodziny 2+2 (3,8 taryfy).</p>
-    ${SCEN?`<div class="scen">
-      <div class="scenc"><h4>Abu Zabi + Kansai</h4>
-        <div class="sub">open-jaw · 12 dni · 4 zameldowania</div>
-        <div class="scenrow"><span>Bilet (${plz(SCEN.oj.adult)}/os.)</span><b>${plz(SCEN.oj.family)}</b></div>
-        <div class="scenrow"><span>${SCEN.oj.groundLabel}</span><b>${plz(SCEN.oj.ground)}</b></div>
-        <div class="scentot"><span>Razem</span><b>${plz(SCEN.oj.total)}</b></div>
-        <ul>
-          <li class="y">Doba w Abu Zabi z <b>darmowym hotelem</b> — 2 dni programu</li>
-          <li class="y">Ostatni poranek spokojnie w Kioto</li>
-          <li class="y">Cztery zameldowania, od 8.05 jeden pokój</li>
-          <li class="n">Najdroższy bilet</li>
-        </ul>
-      </div>
-      <div class="scenc win"><span class="tag">wybrany</span>
-        <h4>Prosto do Tokio</h4>
-        <div class="sub">round-trip · krótka przesiadka</div>
-        <div class="scenrow"><span>Bilet (${plz(SCEN.rt.adult)}/os.)</span><b>${plz(SCEN.rt.family)}</b></div>
-        <div class="scenrow"><span>${SCEN.rt.groundLabel}</span><b>${plz(SCEN.rt.ground)}</b></div>
-        <div class="scentot"><span>Razem</span><b>${plz(SCEN.rt.total)}</b></div>
-        <ul>
-          <li class="y">Taniej o <b>${plz(Math.abs(SCEN.diff))}</b> mimo dojazdu na Naritę</li>
-          <li class="y">Dodatkowy pełny dzień w Tokio (przylot 4.05)</li>
-          <li class="y">Jeden dzień w Japonii więcej</li>
-          <li class="n"><b>Bez doby w Abu Zabi</b> — tylko 2 h przesiadki</li>
-          <li class="n">Ostatni dzień przejedzony: Kioto → Tokio → Narita</li>
-        </ul>
-      </div>
+    <h2 class="stitle">Wybrany bilet</h2>
+    <p class="lead-p">Rozstrzygnięcie zapadło na etihad.com — finalna wycena przewoźnika, której Google nie umiał policzyć (kombinacja stopover + powrót z Narity wycenia się tam absurdalnie).</p>
+    <div class="card">
+      <div class="scenrow"><span><b>Etihad, ${TICKET.label}</b> · Economy Basic · 3 dorosłych + 1 dziecko</span><b>${plz(TICKET.family)}</b></div>
+      <div class="scenrow"><span>W pakiecie: nocleg 4★ w Abu Zabi (Grand Millenium Al Wahda) + opłata stopover 224 zł</span><b>0 zł</b></div>
+      <div class="scenrow"><span>Walizka rejestrowana na powrót (kabinowe 7 kg w cenie)</span><b>~${plz(TICKET.bag)}</b></div>
+      <div class="scentot"><span>Razem loty</span><b>~${plz(TICKET.total)}</b></div>
+      <ul class="tips" style="margin-top:14px">
+        <li>WAW 11:50 → AUH 19:25 (3.05) · nocleg · AUH 21:25 → Narita 12:45 (5.05) · powrót Narita 18:00 (13.05) → WAW 6:50 <b>w piątek 14.05</b>.</li>
+        <li>Rezerwacja wszystkich 4 miejsc razem; miejsca obok siebie warto dopłacić na nocnych odcinkach (Basic ich nie gwarantuje).</li>
+        <li>Odrzucone przy kasie: powrót 14.05 (+2 977 zł) oraz wszystkie warianty bez stopoveru — ta kombinacja była po prostu najtańsza.</li>
+      </ul>
     </div>
-    <div class="dnote" style="margin-top:14px">📌 <b>Stan na ${dpl(SCEN.date)}:</b> wariant z Abu Zabi jest droższy o <b>${plz(Math.abs(SCEN.diff))}</b> — dlatego 4.09 przełączyliśmy plan na round-trip (nasza reguła: różnica powyżej ~5 000 zł wymusza decyzję). Śledzimy dalej oba: gdyby open-jaw stanił i różnica spadła poniżej ~2 000 zł, doba w Abu Zabi z darmowym hotelem wróci do rozważenia.</div>`:''}
   </section>
 
   <section>
-    <h2 class="stitle">Kiedy kupić</h2>
-    <p class="lead-p">Ceny na tej trasie falują o ±30% w skali tygodnia, więc moment zakupu jest wart więcej niż wybór linii. Oto plan.</p>
-    ${seg('Progi decyzyjne (za 1 dorosłego)',['<b>≤ 3 500 zł/os.</b> (~13 300 zł rodzina) — OKAZJA, kupować natychmiast, nie czekać na „jeszcze lepszą"','<b>3 500–4 600 zł/os.</b> — cena typowa; można kupić dla pewności miejsc, ale bez presji',`<b>≥ 4 600 zł/os.</b> — górka, czekać na wyprzedaż`,`Teraz (${dpl(FLIGHT.checked)}): <b>${plz(FLIGHT.adult)}/os.</b> — próg <b>${FLIGHT.band}</b>`])}
-    ${seg('Kalendarz — kiedy realnie polować',['<b>4.09.2026: cena weszła w próg okazji (≤3 500 zł/os.)</b> — wg naszej własnej reguły to moment zakupu, bez czekania na Black Friday.','<b>Wrzesień–październik 2026:</b> równolegle rezerwujemy <a href="hotele.html">noclegi</a> z darmowym anulowaniem.','<b>~20.11–2.12.2026 — Black Friday Etihad/Qatar:</b> pierwsze prawdziwe okno, historycznie do −35%. Tu celujemy w próg ≤3 500 zł/os.','<b>22.12.2026 – poł. stycznia 2027:</b> Qatar Travel Festival + Etihad January Sale — drugie okno.','<b>Koniec stycznia 2027 — TWARDY DEADLINE:</b> kupić nawet bez promocji. Cztery miejsca w jednej rezerwacji znikają szybko, a od lutego ceny rosną w stronę Golden Week.'])}
-    ${seg('Zasady, które oszczędzają nerwy',['Kupujemy <b>zwykły round-trip WAW↔Tokio u Etihada</b> (bez pakietu stopover — przesiadka to tylko ~2 h).','Rezerwujcie wszystkie 4 miejsca w JEDNEJ rezerwacji — łatwiej o miejsca obok siebie i wspólną obsługę zmian.','Cena na Google to taryfa bez bagażu rejestrowanego — doliczcie bagaż przy finalnym porównaniu.','Młodsze dziecko (&lt;11 lat) ma taryfę dziecięcą — rodzina to ok. <b>3,8 taryfy</b>, nie 4.','Nie polujcie na dołek w nieskończoność: różnica 200 zł/os. nie jest warta ryzyka braku 4 miejsc obok siebie.'])}
-    ${seg('🔔 Co monitoruje się samo',['<b>Kontrola cen co dwa dni</b> — aktualizuje tę stronę i wykres powyżej','Alerty w kluczowych momentach: 1.10, 20.11, 22.12.2026 oraz 12.01 i 25.01.2027','Google Flights — monitoring trasy open-jaw (Narita / Kansai) z powiadomieniem mailowym'])}
+    <h2 class="stitle">Status zakupu i co dalej</h2>
+    <div class="card"><ul class="tips">
+      <li><b>Decyzja zapadła 4.09.2026</b> — cena weszła w próg okazji (wg naszej reguły ≤3 500 zł/os. ekwiwalentu) i wybraliśmy wariant ze stopoverem prosto u przewoźnika.</li>
+      <li><b>Przy zakupie:</b> wszystkie 4 miejsca w jednej rezerwacji · walizka na powrót przez „Bags" albo później w „Manage booking" · miejsca obok siebie na nocnych odcinkach.</li>
+      <li><b>Po zakupie:</b> odhaczcie „Bilety lotnicze" na <a href="decyzje.html">checkliście</a>; monitoring cen przestaje mieć znaczenie — wykres niżej zostaje jako archiwum rynku.</li>
+      <li><b>Zmiany/anulowanie:</b> Economy Basic ma najniższą elastyczność — daty są jednak przemyślane od lipca, a ubezpieczenie turystyczne (checklista, ~kwiecień) domyka ryzyko.</li>
+    </ul></div>
   </section>
 
   <section>
@@ -2007,7 +1979,7 @@ function lotyPage(){
       <div class="gridlabs">${labs}</div>
       <p class="note" style="margin-top:8px">Maj 2027 · najtaniej <b>${plz(gmin)}</b> (3.05), najdrożej <b>${plz(gmax)}</b> (2.05). Wyloty 1–2 maja są droższe przez ogon Golden Week.</p>
     </div>
-    <div class="dnote" style="margin-top:14px">🏁 <b>Werdykt: 3–14 maja, round-trip do Narity.</b> Bilet w progu okazji (3 453 zł/os., pierwszy raz poniżej 3 500), przylot dzień wcześniej rozbroił najcięższy dzień w Tokio, a lądowanie w sobotę rano zostawia weekend na jet lag. Open-jaw z Kansai śledzimy dalej — wróci do rozważenia, gdyby różnica spadła poniżej ~2 tys. zł.</div>
+    <div class="dnote" style="margin-top:14px">🏁 <b>Finał: 3–13 maja ze stopoverem tam — 13 884 zł za 4 osoby.</b> Etihad wycenił tę kombinację taniej niż jakikolwiek wariant widoczny w Google, z hotelem 4★ w Abu Zabi w pakiecie. Powrót 14.05 kosztowałby +2 977 zł, a „tani" round-trip z Google w kasie przewoźnika nie istniał. Lekcja: przy nietypowych taryfach (stopover) ostatnie słowo ma zawsze strona przewoźnika.</div>
   </section>
 
   <section>
@@ -2026,8 +1998,7 @@ function pogodaPage(){
     ['🏙️ Tokio','~23°C','~14°C','przyjemnie, słonecznie; sporadyczny przelotny deszcz'],
     ['♨️ Hakone (góry)','~19°C','~10°C','chłodniej i wilgotniej — weź ciepłą warstwę; Fudżi najlepiej widać rano'],
     ['⛩️ Kioto / Nara','~25°C','~14°C','cieplej niż w Tokio; w kotlinie w słońcu bywa parno'],
-    ['🏯 Osaka','~25°C','~15°C','ciepło, miejsko; wieczory łagodne'],
-    ['🕌 Abu Zabi (przesiadka)','35–40°C','~26°C','upał! zwiedzanie rano, w południe klimatyzacja (Luwr), dużo wody'],
+        ['🕌 Abu Zabi (stopover)','35–40°C','~26°C','upał! zwiedzanie rano, w południe klimatyzacja (Luwr), dużo wody'],
   ].map(r=>`<tr><td class="cat">${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td></tr>`).join('');
   const inner=`
   <header class="hero kb">
@@ -2065,7 +2036,7 @@ function pogodaPage(){
     <h2 class="stitle">Bagaż — podręczny + plecak wystarczy</h2>
     <p class="lead-p">Przy pięciu zmianach bazy i jeździe pociągami lekki bagaż to nie oszczędność, tylko wygoda. Tania taryfa Etihad i tak jest bez bagażu rejestrowanego — z podręcznym nic nie dopłacacie.</p>
     <div class="card"><ul class="tips">
-      <li><b>Pakujcie na ~5–6 dni, nie na 13.</b> Aparthotele MIMARU (Tokio, Kioto, Osaka) mają pralkę i suszarkę — pranie robicie w Kioto i komplet ubrań wraca do obiegu.</li>
+      <li><b>Pakujcie na ~5–6 dni, nie na 13.</b> Aparthotele MIMARU (Tokio, Kioto) mają pralkę i suszarkę — pranie robicie w Kioto i komplet ubrań wraca do obiegu.</li>
       <li><b>Waga, nie objętość, jest limitem.</b> W klasie ekonomicznej Etihad to zwykle ~7 kg/os. (podręczny + mała sztuka osobista) — dokładny limit potwierdźcie przy zakupie biletu.</li>
       <li><b>Zakupy na powrót to jedyne ryzyko.</b> Pokémony, gachapony i Don Quijote potrafią spuchnąć bagaż — dokupcie jedną walizkę rejestrowaną tylko na lot powrotny (dopłata za odcinek) albo tanią składaną walizkę już w Japonii.</li>
       <li><b>Hakone bez targania:</b> to tylko 1 noc — główne bagaże wyślijcie kurierem <i>takkyubin</i> z hotelu w Tokio prosto do Kioto (~1500–2000 ¥/szt., doba), a w góry jedziecie z samymi plecakami.</li>
@@ -2078,7 +2049,7 @@ function pogodaPage(){
       <li><b>Tokio:</b> Round1 (Ikebukuro), rodzinne karaoke (Big Echo / Karaoke Kan, przed 22:00), Pokémon Center — a Shibuya Sky przekładać: taras odkryty, w chmurach szkoda biletu.</li>
       <li><b>Hakone:</b> kolejka linowa staje przy wietrze (status: hakonenavi.jp) → Hakone Open-Air Museum (pawilon Picassa, rzeźby do wspinania) + rejs po Ashi, który pływa prawie zawsze.</li>
       <li><b>Kioto:</b> Kyoto Railway Museum (symulator shinkansena), teamLab Biovortex przy dworcu, kryte pasaże Nishiki/Teramachi, klasa ninja w muzeum.</li>
-      <li><b>Osaka:</b> Kaiyukan (e-bilet z godziną, późne popołudnie), Round1 Sennichimae, kryty pasaż Shinsaibashi-suji, Dōtonbori pod markizami.</li>
+      
     </ul></div>
   </section>
   ${footer('')}`;
@@ -2179,7 +2150,35 @@ function niezbednikPage(){
   return shell({title:'Niezbędnik — numery, pieniądze, transport · Japonia 2027',desc:'Numery alarmowe, ambasada, pieniądze, karty IC, internet, gniazdka i zwyczaje — praktyczny niezbędnik na wyjazd do Japonii.',prefix:'',active:'niezbednik.html',inner,pillsIdx:null});
 }
 
-const ATR_BODY = String.raw`<h2 id="tokio" class="stitle" style="scroll-margin-top:80px">🏙️ Tokio</h2>
+const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin-top:80px">🕌 Abu Zabi (stopover)</h2>
+  <div class="agrid">
+
+    <div class="acard" id="mosque">
+      <h3>🕌 Wielki Meczet Szejka Zajida</h3>
+      <div class="desc">82 białe kopuły, największy ręcznie tkany dywan świata i kryształowe żyrandole — jedno z najbardziej imponujących wnętrz, jakie zobaczycie gdziekolwiek. Robi „wow" niezależnie od wieku.</div>
+      <div class="meta"><span>🕒 sob–czw 9:00–22:00, pt od 9:00 (przerwy na modlitwy)</span><span>💴 wstęp darmowy (darmowa rezerwacja online)</span><span>📍 ~20 min taxi z centrum; zwiedzać RANO — chłodniej i pusto</span></div>
+      <span class="rezerwuj">dress code: zakryte ramiona i kolana; abaje gratis na miejscu</span>
+      <div class="links"><a href="https://www.szgmc.gov.ae/en" target="_blank" rel="noopener">rezerwacja wejścia →</a></div>
+    </div>
+
+    <div class="acard" id="louvread">
+      <h3>🎨 Luwr Abu Zabi</h3>
+      <div class="desc">Filia paryskiego Luwru pod słynną kopułą Jeana Nouvela — „deszcz światła" nad galeriami. Idealny klimatyzowany azyl na środek dnia, gdy na zewnątrz 35–40°C.</div>
+      <div class="meta"><span>🕒 wt–niedz 10:00–18:30 (pon. zamknięte — 4.05.2027 to wtorek ✓)</span><span>💴 ~65 AED dorosły, do 18 lat darmowo → rodzina ~130 AED (~140 zł)</span><span>📍 wyspa Saadiyat, ~15 min taxi z centrum</span></div>
+      <div class="links"><a href="https://www.louvreabudhabi.ae/" target="_blank" rel="noopener">bilety →</a></div>
+    </div>
+
+    <div class="acard" id="stopover">
+      <h3>🏨 Pakiet stopover Etihad</h3>
+      <div class="desc">Darmowy hotel 4★ (do 2 nocy) przy przesiadce >24 h w Abu Zabi — dostępny także dla ekonomii. Bilet kupuje się jako multi-city ze stopoverem, a hotel dobiera z listy Etihadu.</div>
+      <div class="meta"><span>🕒 pakiet rezerwować najpóźniej 3 dni przed wylotem — najlepiej od razu po kupnie biletów</span><span>💴 hotel 0 zł; transfer lotnisko–hotel we własnym zakresie (taxi ~60–80 AED)</span><span>📍 warunek: przy zakupie potwierdzić, że promocja obejmuje maj 2027</span></div>
+      <span class="rezerwuj">rezerwuj razem z biletami</span>
+      <div class="links"><a href="https://www.etihad.com/en/book/stopover" target="_blank" rel="noopener">Etihad Stopover →</a></div>
+    </div>
+
+  </div>
+
+<h2 id="tokio" class="stitle" style="scroll-margin-top:80px">🏙️ Tokio</h2>
   <div class="agrid">
 
     <div class="acard" id="akihabara">
@@ -2515,7 +2514,7 @@ function atrakcjePage(){
   // section headings -> stitle
   body = body.replace(/<h2 id="([^"]+)">([^<]+)<\/h2>/g,'<h2 id="$1" class="stitle" style="scroll-margin-top:80px">$2</h2>');
   const toc = `<nav class="toc" style="margin-bottom:18px">
-    <a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a><a href="#kioto">⛩️ Kioto</a>
+    <a href="#abuzabi">🕌 Abu Zabi</a><a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a><a href="#kioto">⛩️ Kioto</a>
     <a href="#nara">🦌 Nara</a><a href="#osaka">🏯 Osaka</a><a href="#sumo-s">🥋 Sumo</a><a href="#praktyczne">🧳 Praktyczne</a></nav>`;
   const inner=`
   <header class="hero kb">
@@ -2599,7 +2598,7 @@ fs.writeFileSync(DIR + '/sw.js', SW);
 
 fs.writeFileSync(DIR + '/manifest.webmanifest', JSON.stringify({
   name:'Japonia 2027 — plan podróży', short_name:'Japonia 2027',
-  description:'Plan rodzinnego wyjazdu do Japonii 3–14 maja 2027.',
+  description:'Plan rodzinnego wyjazdu do Japonii 3–13 maja 2027.',
   start_url:'./index.html', scope:'./', display:'standalone',
   background_color:'#f5f1e8', theme_color:'#0f1c2e', lang:'pl',
   icons:[{src:'assets/icon.svg', sizes:'any', type:'image/svg+xml', purpose:'any maskable'}]
