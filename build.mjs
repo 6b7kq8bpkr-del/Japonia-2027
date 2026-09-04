@@ -79,7 +79,7 @@ const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5
    na decyzje.html; stan trzymany w localStorage (klucz jp2027.checklist). */
 const BOOKINGS = [
   {when:'IX–X 2026', what:'Noclegi w Japonii (3 bazy)', note:'Z darmowym anulowaniem. UWAGA: w MIMARU dziecko od 7 lat liczy się jak dorosły — szukajcie pokoju dla 4 DOROSŁYCH, nie 3+1. Linki „Sprawdź dostępność" na stronie Hotele.'},
-  {when:'IX–X 2026', what:'Ryokan w Hakone', note:'Superior Room with Open-air Bath — jedyny na 4 osoby (Maisonette mieści 3!). Rezerwować jako 3 dorosłych + dziecko 10 lat, pakiet z kolacją i śniadaniem.'},
+  {when:'TERAZ', what:'Ryokan w Hakone — zabezpieczyć na Booking', note:'Ten-yu, Superior Room with Open-air Bath (jedyny na 4 os. — Maisonette mieści 3!), 3 dorosłych + dziecko 10 lat, plan z kolacją; sobota 8.05: ~5,5–6 tys. zł, 5 pokoi, darmowe anulowanie do 3.05.2027. Alternatywy (Mikawaya, Ajisai) nie mają jeszcze otwartej sprzedaży — sprawdzić XI–XII.'},
   {when:'TERAZ', what:'Bilety lotnicze', note:'Wybrane 4.09: Etihad 3–13 ze stopoverem, 13 884 zł za 4 os. Kupujemy na etihad.com — 4 miejsca w jednej rezerwacji.'},
   {when:'przy zakupie', what:'Walizka na powrót + miejsca obok siebie', note:'Bagaż rejestrowany tylko na odcinek powrotny (~220 zł); miejsca na nocnych odcinkach — Basic ich nie gwarantuje.'},
   {when:'~II 2027', what:'DECYZJA: Nintendo Museum (Uji) — grać w loterię?', note:'Domyślnie NIE. Jeśli tak i wygracie: 12.05 po południu kosztem Kinkaku-ji i bufora. Szczegóły w „Decyzje otwarte”.'},
@@ -106,10 +106,14 @@ const OPEN_DECISIONS = [
    opts:[['Apartament 4 pojedyncze łóżka (38 m²)','tańszy, każdy ma łóżko, dwa aneksy sypialne','bez „wow” dla dzieci'],
          ['Pokémon Room','dzieci pamiętają to latami; jeden Pokémon Center w planie i tak jest','dopłata + znika szybciej; tematyka „wchodzi” na trzy noce']],
    def:'Zwykły apartament. Pokémon Room tylko przy dopłacie poniżej ~150 zł/noc — Pokémony mają w planie swój dzień.'},
+  {id:'ryokan-which', day:'2027-05-08', q:'Ryokan: Ten-yu za ~5,5–6 tys. czy tańszy, gdy otworzą sprzedaż?', by:'zarezerwować Ten-yu TERAZ (darmowe anulowanie do 3.05.2027); decyzja ostateczna ~XII 2026', impact:'~2–3 tys. zł',
+   opts:[['Ten-yu, Superior z prywatnym rotenburo','jedyny sprawdzony obiekt z otwartą sprzedażą na 8.05.2027 (5 pokoi); prywatna kąpiel bez wspólnej łaźni; anulowanie gratis do 3.05','~2× drożej niż zakładaliśmy (sobota); kolacja w planach Booking to bufet, nie kaiseki'],
+         ['Mikawaya lub Ajisai Onsen Ryokan','wg opinii świetne dla rodzin, zwykle ~3–4 tys. za 4 os. z posiłkami','na 4.09.2026 brak dostępności na maj 2027 — sprzedaż jeszcze nieotwarta; sobota zniknie pierwsza']],
+   def:'Zarezerwować Ten-yu dziś jako zabezpieczenie (bezpłatne anulowanie), a w listopadzie–grudniu sprawdzić alternatywy; jeśli któraś otworzy sobotę 8.05 z prywatnym onsenem ~2 tys. taniej — przebookować.'},
   {id:'ryokan-meals', day:'2027-05-08', q:'Ryokan: z kolacją i śniadaniem czy bez?', by:'przy rezerwacji ryokanu', impact:'~600–900 zł',
-   opts:[['Pakiet kaiseki + śniadanie','to JEST atrakcja dnia; w Hakone wieczorem i tak nie ma dokąd wyjść','dzieci mogą nie zjeść części dań'],
+   opts:[['Pakiet z kolacją i śniadaniem','to JEST atrakcja dnia; w Hakone wieczorem i tak nie ma dokąd wyjść; na Booking kolacja to bufet (dzieciom łatwiej), kaiseki w planach oficjalnych','+~10% ceny; kaiseki może być dla dzieci trudne'],
          ['Tylko nocleg','taniej','kolacja poza ryokanem = logistyka bez samochodu, wieczór stracony']],
-   def:'Z pakietem. Poproście o wersję dziecięcą kaiseki dla młodszego — większość ryokanów ją ma.'},
+   def:'Z pakietem. Bufet z Booking jest bezpieczniejszy dla dzieci; kaiseki wybierajcie tylko, jeśli mama chce pełnego rytuału.'},
   {id:'ota-vs-harajuku', day:'2027-05-07', q:'7.05: Muzeum Ōta (ukiyo-e) czy od razu Harajuku?', by:'na miejscu, po Meiji Jingū', impact:'~1 h',
    opts:[['Oba — podział','mama 45 min w muzeum, tata z dziećmi na Takeshita-dōri; spotkanie na lunchu','wymaga dwóch telefonów i punktu zbiórki'],
          ['Tylko Harajuku razem','prościej, dzieci nie czekają','mama traci jedyne ukiyo-e w planie']],
@@ -1096,8 +1100,8 @@ const DAYS = [
  more:[['Skąd ten dzień','Trzecia noc w Tokio (zamiast piątej w Kiocie) rozładowała dawny „wielki dzień Tokio” na dwa spokojniejsze i oddała planowi rzeczy, które wcześniej wypadły: Meiji Jingū, ukiyo-e i Harajuku. Tokio ma dla dziesięcio- i trzynastolatka więcej niż Kioto — a mama dostaje chram, drzeworyty i targ.']]},
 
 {date:'2027-05-08',dow:'sobota',dd:'8 maja',city:'hakone',title:'W góry Hakone — onsen i Fudżi',
- lead:'Pętla wulkaniczna, jezioro z bramą torii i pierwsza noc po japońsku: yukata, kaiseki i gorące źródła.',
- chips:['Kultura: ryokan, yukata, kaiseki','Dzieci: kolejki, statek, czarne jajka','Prywatny onsen'],
+ lead:'Pętla wulkaniczna, jezioro z bramą torii i pierwsza noc po japońsku: yukata, kolacja w ryokanie i gorące źródła.',
+ chips:['Kultura: ryokan, yukata, onsen','Dzieci: kolejki, statek, czarne jajka','Prywatny rotenburo'],
  tl:[
   ['08:15','Śniadanie i wymeldowanie','Walizki pojechały wczoraj kurierem — dziś tylko plecaki.'],
   ['09:00','Romancecar z Shinjuku','Wygodny ekspres z rezerwowanymi miejscami (~1,5 h). Sobota — miejscówki kupcie dzień wcześniej.'],
@@ -1108,7 +1112,7 @@ const DAYS = [
   ['15:30','Hakone-jinja','Czerwona brama torii stojąca w jeziorze.'],
   ['16:30','Ryokan','Zameldowanie, yukaty.'],
   ['17:30','Onsen','Prywatny rotenburo (odkryta kąpiel) na tarasie pokoju — do dyspozycji o każdej porze.'],
-  ['18:30','Kolacja kaiseki','Wielodaniowa, sezonowa; wieczorem druga kąpiel dla chętnych.'],
+  ['18:30','Kolacja w ryokanie','W planach z Booking: bufet japońsko-zachodni (dzieciom łatwiej); wielodaniowe kaiseki tylko w droższych planach ze strony oficjalnej. Wieczorem druga kąpiel dla chętnych.'],
  ],
  facts:[['Średnia','Intensywność'],['Romancecar + kolejki','Przejazdy'],['Umiarkowane','Chodzenie'],['Frajda z kolejek','Dla dzieci'],['Ryokan','Nocleg']],
  tips:['Fudżi najczęściej widać rano — trzymajcie kciuki przy porannej kolejce linowej i na jeziorze.','Nadanie dużych walizek kurierem (~2 000–2 500 ¥/szt.) oszczędza taszczenia po górach i przesiadkach.'],
@@ -1222,8 +1226,8 @@ const HOTELS = [
   jp:'東京都台東区東上野4-26-3',
  site:'https://mimaruhotels.com/en/hotel/ueno-east/'},
 {id:'hakone',name:'Hakone Kowakien Ten-yu',stay:'Hakone · 1 noc (8–9.05, sobota) · prywatny onsen',
- desc:'Wyższa półka na jedyną noc, gdy nocleg JEST atrakcją: nowoczesny luksusowy ryokan, w którym KAŻDY pokój ma prywatną odkrytą kąpiel onsen (rotenburo) na tarasie — kąpiel o dowolnej porze, bez wspólnych łaźni. Dla 2+2 bierzcie <b>Superior Room with Open-air Bath</b> — jedyny typ mieszczący 4 osoby (2 łóżka + 2 futony/daybeds, 4 doba). <b>NIE Maisonette</b>: mimo atrakcyjnego wyglądu oficjalnie mieści tylko 3 osoby (35 m², 2 łóżka + 1 futon). Wielodaniowe kaiseki, przyjazny rodzinom, w rejonie Ninotairy/Gōry. WAŻNE: 8.05 to SOBOTA — najdroższa i najszybciej znikająca noc tygodnia w ryokanach, a Superior Rooms na 4 osoby jest mało — rezerwujcie od razu, gdy tylko otworzą się terminy (na maj 2027 mogą jeszcze nie być dostępne — patrz „Kalendarz przygotowań"). Alternatywy dla 4 osób z prywatnym rotenburo: Hakone Kowakien Mikawaya (typy willowe) lub Ajisai Onsen Ryokan (pokoje rodzinne, darmowe anulowanie na Booking). Zdjęcie: przykładowy rotenburo.',
- price:'~2 400–3 200 zł/noc z HB dla 4 os. (wyższa półka)',near:'Ninotaira, rejon Gōra, na pętli Hakone',
+ desc:'Wyższa półka na jedyną noc, gdy nocleg JEST atrakcją: nowoczesny luksusowy ryokan, w którym KAŻDY pokój ma prywatną odkrytą kąpiel onsen (rotenburo) na tarasie — kąpiel o dowolnej porze, bez wspólnych łaźni. Dla 2+2 bierzcie <b>Superior Room with Open-air Bath</b> — jedyny typ mieszczący 4 osoby (2 łóżka + 2 futony/daybeds, 4 doba). <b>NIE Maisonette</b>: mimo atrakcyjnego wyglądu oficjalnie mieści tylko 3 osoby (35 m², 2 łóżka + 1 futon). Kolacja w cenie (bufet w planach Booking, kaiseki w planach oficjalnych), przyjazny rodzinom, w rejonie Ninotairy/Gōry. WAŻNE: 8.05 to SOBOTA — najdroższa i najszybciej znikająca noc tygodnia w ryokanach, a Superior Rooms na 4 osoby jest mało — rezerwujcie od razu, gdy tylko otworzą się terminy (na maj 2027 mogą jeszcze nie być dostępne — patrz „Kalendarz przygotowań"). Alternatywy dla 4 osób z prywatnym rotenburo: Hakone Kowakien Mikawaya (typy willowe) lub Ajisai Onsen Ryokan (pokoje rodzinne, darmowe anulowanie na Booking). Zdjęcie: przykładowy rotenburo.',
+ price:'~4 900–5 500 zł/noc ze śniadaniem, z kolacją bufetową ~5 500–6 000 zł (Booking, sobota 8.05.2027, 3 dorosłych + dziecko; darmowe anulowanie do 3.05) — wyższa półka',near:'Ninotaira, rejon Gōra, na pętli Hakone',
  mapsq:'Hakone Kowakien Ten-yu, Ninotaira, Hakone',
  book:'https://www.booking.com/hotel/jp/hakone-kowakien-tenyu.html',
   jp:'神奈川県足柄下郡箱根町二ノ平1297',
@@ -1456,7 +1460,7 @@ function indexPage(){
     <div class="stt"><b>11</b><span>dni podróży</span></div>
     <div class="stt"><b>3</b><span>bazy w Japonii</span></div>
     <div class="stt"><b>8</b><span>nocy w Japonii</span></div>
-    <div class="stt"><b>~37<small>tys zł</small></b><span>budżet 2+2</span></div>
+    <div class="stt"><b>~40<small>tys zł</small></b><span>budżet 2+2</span></div>
   </section>
 
   <section>
@@ -1528,7 +1532,7 @@ function kosztyPage(){
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
           <tr><td class="cat">✈️ Loty<span class="hint">Etihad ze stopoverem (cena z etihad.com: 13 884 zł) + walizka na powrót</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="${TICKET.total}" min="0" step="100"></td></tr>
-          <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 8 nocy: aparthotele ~820–850 zł + 1 noc ryokan ~2 700 zł (Abu Zabi gratis)</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1050" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 8 nocy: aparthotele ~820–850 zł + 1 noc ryokan ~5 700 zł z posiłkami (sobota; Abu Zabi gratis)</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1400" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">2 shinkanseny + NEX ×2 + metro + Hakone</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4200" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">warsztaty kultury, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2200" min="0" step="100"></td></tr>
@@ -1554,7 +1558,7 @@ function kosztyPage(){
   ${footer('')}
   <script>
   (function(){
-    var D={flights:${TICKET.total},nights:8,nightRate:1050,transport:4200,days:11,foodRate:500,attractions:2200,extras:3000};
+    var D={flights:${TICKET.total},nights:8,nightRate:1400,transport:4200,days:11,foodRate:500,attractions:2200,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
@@ -1832,7 +1836,7 @@ function drukPage(){
     </div>
     <div class="cfacts">
       <div><b>11</b>dni podróży</div><div><b>8</b>nocy w Japonii</div>
-      <div><b>3</b>bazy w Japonii</div><div><b>~37<i>tys. zł</i></b>budżet 2+2</div>
+      <div><b>3</b>bazy w Japonii</div><div><b>~40<i>tys. zł</i></b>budżet 2+2</div>
     </div>
     <h3 class="toch">Spis treści</h3>
     <ol class="toc">${toc}</ol>

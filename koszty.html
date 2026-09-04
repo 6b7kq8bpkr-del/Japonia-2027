@@ -53,7 +53,7 @@
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
           <tr><td class="cat">✈️ Loty<span class="hint">Etihad ze stopoverem (cena z etihad.com: 13 884 zł) + walizka na powrót</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="14100" min="0" step="100"></td></tr>
-          <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 8 nocy: aparthotele ~820–850 zł + 1 noc ryokan ~2 700 zł (Abu Zabi gratis)</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1050" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 8 nocy: aparthotele ~820–850 zł + 1 noc ryokan ~5 700 zł z posiłkami (sobota; Abu Zabi gratis)</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1400" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">2 shinkanseny + NEX ×2 + metro + Hakone</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4200" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">warsztaty kultury, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2200" min="0" step="100"></td></tr>
@@ -81,7 +81,7 @@
   Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="index.html">Strona główna</a> · <a href="druk.html">Plan do druku (PDF)</a></footer>
   <script>
   (function(){
-    var D={flights:14100,nights:8,nightRate:1050,transport:4200,days:11,foodRate:500,attractions:2200,extras:3000};
+    var D={flights:14100,nights:8,nightRate:1400,transport:4200,days:11,foodRate:500,attractions:2200,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
