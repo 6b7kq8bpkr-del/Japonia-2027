@@ -94,7 +94,7 @@ const BOOKINGS = [
   {when:'przed wylotem', what:'Karty IC (Suica/ICOCA)', note:'Można dodać Suica do Apple Wallet jeszcze przed wyjazdem.'},
 ];
 const PERIODS = [
-  {label:'3–13 maja', sub:'KUPIONY WARIANT · stopover tam', price:13884, fam:true, best:true,
+  {label:'3–13 maja', sub:'WYBRANY WARIANT (do zakupu) · stopover tam', price:13884, fam:true, best:true,
    pros:['Najtańsza kombinacja w wycenie samego Etihada (Google jej nie liczył)',
          'Hotel 4★ w Abu Zabi w pakiecie — potwierdzony przy rezerwacji',
          'Lądowanie w piątek rano — trzy dni na jet lag'],
@@ -1636,7 +1636,7 @@ function decyzjePage(){
   <section>
     <h2 class="stitle">Jak modyfikować</h2>
     <div class="card more">
-      <details><summary>✂️ Chcę krócej / taniej o kilka dni</summary><p>Kolejność cięć bez psucia rytmu: <b>Nishiki (9.05) → Kinkaku-ji (10.05) → małpy Iwatayama (12.05)</b>. Uwaga: bilet jest już kupiony pod 3–13, więc realne „krócej" oznacza tylko luźniejsze dni na miejscu, nie krótszy wyjazd.</p></details>
+      <details><summary>✂️ Chcę krócej / taniej o kilka dni</summary><p>Kolejność cięć bez psucia rytmu: <b>Nishiki (9.05) → Kinkaku-ji (10.05) → małpy Iwatayama (12.05)</b>. Uwaga: bilet jest wybrany pod 3–13 (do zakupu na etihad.com), więc realne „krócej" oznacza tylko luźniejsze dni na miejscu, nie krótszy wyjazd.</p></details>
       <details><summary>➕ Chcę dłużej</summary><p>Sprawdzone przy kasie: powrót 14.05 zamiast 13.05 kosztował <b>+2 977 zł</b> na samych biletach (16 861 vs 13 884). Do tego doszłaby noc hotelu i dzień wyżywienia — razem ~3,8 tys. za jeden dodatkowy dzień. Odpuściliśmy; gdyby kiedyś zmieniać bilet, to tylko przez „Manage booking" z pełną świadomością różnicy taryf.</p></details>
       <details><summary>🎮 Chcę więcej frajdy dla dzieci</summary><p>W odwodzie (opcje, nie obowiązki): <b>klasa ninja</b> w Kioto (przy Nishiki), <b>warsztat taiko</b>, <b>Round1 + karaoke</b> (jest i w Kiocie, przy Kawaramachi), <b>Hakone Open-Air Museum</b> oraz <b>Nintendo Museum</b> w Ujī (loteria biletów ~luty 2027, paszporty). Karty i ceny: <a href="atrakcje.html">Atrakcje</a>.</p></details>
       <details><summary>😌 Chcę luźniej na miejscu</summary><p>Jedyny dzień „Intensywny” (10.05) ma zawór: skróćcie do Fushimi + Kiyomizu, bez Nishiki. W Tokio zawory to poranne Tsukiji (6.05) i Muzeum Ōta (7.05). Bufor to popołudnie 12.05 — celowo puste. Decyzje podejmujcie przy śniadaniu, nie z wyprzedzeniem.</p></details>
@@ -1917,7 +1917,7 @@ function lotyPage(){
 
   <section>
     <h2 class="stitle">Ceny dziś — kluczowe linie</h2>
-    <p class="lead-p">Za 1 dorosłego, w obie strony, wylot 3.05 / powrót 14.05.2027 (lądowanie w WAW 15.05 rano). Ostatnia kontrola cen: <b>${dpl(LAST_CHECKED)}</b>${LAST_CHECKED!==FLIGHT.checked?` · ostatnia zmiana: ${dpl(FLIGHT.checked)}`:''}. To tło rynkowe (zwykły round-trip wg Google) — nasz kupiony wariant ze stopoverem jest opisany wyżej. Ranking wg wag niżej zostaje jako ciekawostka porównawcza.</p>
+    <p class="lead-p">Za 1 dorosłego, w obie strony, wylot 3.05 / powrót 13.05.2027 (lądowanie w WAW 14.05 rano). Ostatnia kontrola cen: <b>${dpl(LAST_CHECKED)}</b>${LAST_CHECKED!==FLIGHT.checked?` · ostatnia zmiana: ${dpl(FLIGHT.checked)}`:''}. To tło rynkowe (zwykły round-trip wg Google) — nasz kupiony wariant ze stopoverem jest opisany wyżej. Ranking wg wag niżej zostaje jako ciekawostka porównawcza.</p>
     <div class="alist">${rows}</div>
     <div class="dnote" style="margin-top:14px">★ Etihad to trasa z planu — jako jedyna <b>może dać darmowy nocleg 4★ w Abu Zabi</b> (program stopover), wart ~600–900 zł. To jednak <b>opcja warunkowa</b>: program jest formalnie potwierdzony do stycznia 2027, więc na maj 2027 trzeba go potwierdzić przy zakupie. W rankingu niżej można tę premię włączyć i wyłączyć jednym kliknięciem.</div>
   </section>
