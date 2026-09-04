@@ -82,7 +82,9 @@ const BOOKINGS = [
   {when:'IX–X 2026', what:'Ryokan w Hakone', note:'Superior Room with Open-air Bath — jedyny na 4 osoby (Maisonette mieści 3!). Rezerwować jako 3 dorosłych + dziecko 10 lat, pakiet z kolacją i śniadaniem.'},
   {when:'TERAZ', what:'Bilety lotnicze', note:'Wybrane 4.09: Etihad 3–13 ze stopoverem, 13 884 zł za 4 os. Kupujemy na etihad.com — 4 miejsca w jednej rezerwacji.'},
   {when:'przy zakupie', what:'Walizka na powrót + miejsca obok siebie', note:'Bagaż rejestrowany tylko na odcinek powrotny (~220 zł); miejsca na nocnych odcinkach — Basic ich nie gwarantuje.'},
-  {when:'~II 2027', what:'Nintendo Museum — loteria', note:'Opcja na dzień w Narze; wymaga paszportów uczestników.'},
+  {when:'~II 2027', what:'DECYZJA: Nintendo Museum (Uji) — grać w loterię?', note:'Domyślnie NIE. Jeśli tak i wygracie: 12.05 po południu kosztem Kinkaku-ji i bufora. Szczegóły w „Decyzje otwarte”.'},
+  {when:'II–III 2027', what:'DECYZJA: kaligrafia czy klasa ninja (11.05)', note:'Domyślnie podział (mama shodō, tata + dzieci ninja). Rezerwacje obu warsztatów przy Nishiki.'},
+  {when:'IX–X 2026', what:'DECYZJA: Pokémon Room czy zwykły apartament (Ueno)', note:'Domyślnie zwykły 4 łóżka; Pokémon tylko przy dopłacie < ~150 zł/noc.'},
   {when:'II–III 2027', what:'Warsztaty kultury w Kioto', note:'Rezerwacja 1–2 miesiące wcześniej.'},
   {when:'~IV 2027', what:'Miejscówki kolejowe', note:'Shinkansen Odawara→Kioto (9.05) oraz Kioto→Tokio + Narita Express (13.05).'},
   {when:'~1.04.2027', what:'Ubezpieczenie turystyczne', note:'Leczenie + NNW dla czterech osób.'},
@@ -93,6 +95,72 @@ const BOOKINGS = [
   {when:'~7 dni przed', what:'Dostrojenie planu do pogody', note:'Wtedy prognoza staje się wiarygodna.'},
   {when:'przed wylotem', what:'Karty IC (Suica/ICOCA)', note:'Można dodać Suica do Apple Wallet jeszcze przed wyjazdem.'},
 ];
+/* DECYZJE OTWARTE — jedno miejsce na wszystko, co jeszcze NIE jest rozstrzygnięte.
+   Każda: opcje z „za/przeciw”, domyślny wybór, do kiedy i co zmienia w agendzie. */
+const OPEN_DECISIONS = [
+  {id:'auh-rooms', day:'2027-05-03', q:'Abu Zabi: jeden pokój czy dwa?', by:'przy zakupie biletu', impact:'komfort pierwszej nocy',
+   opts:[['Dwa pokoje obok siebie','Etihad liczy 13-latka jako dorosłego — 3+1 rzadko mieści się w jednym pokoju; wszyscy śpią normalnie','drugi pokój może wykraczać poza darmowy pakiet — sprawdzić w potwierdzeniu'],
+         ['Jeden pokój rodzinny','prościej, na pewno w pakiecie','dostawka dla 4 osób w hotelu 4★ bywa iluzoryczna']],
+   def:'Dwa pokoje, jeśli potwierdzenie je obejmuje; inaczej pokój rodzinny z wyraźnym „4 osoby” w rezerwacji.'},
+  {id:'pokemon-room', day:'2027-05-05', q:'MIMARU Ueno: zwykły apartament czy Pokémon Room?', by:'IX–X 2026 (rezerwacja noclegów)', impact:'~150–400 zł/noc',
+   opts:[['Apartament 4 pojedyncze łóżka (38 m²)','tańszy, każdy ma łóżko, dwa aneksy sypialne','bez „wow” dla dzieci'],
+         ['Pokémon Room','dzieci pamiętają to latami; jeden Pokémon Center w planie i tak jest','dopłata + znika szybciej; tematyka „wchodzi” na trzy noce']],
+   def:'Zwykły apartament. Pokémon Room tylko przy dopłacie poniżej ~150 zł/noc — Pokémony mają w planie swój dzień.'},
+  {id:'ryokan-meals', day:'2027-05-08', q:'Ryokan: z kolacją i śniadaniem czy bez?', by:'przy rezerwacji ryokanu', impact:'~600–900 zł',
+   opts:[['Pakiet kaiseki + śniadanie','to JEST atrakcja dnia; w Hakone wieczorem i tak nie ma dokąd wyjść','dzieci mogą nie zjeść części dań'],
+         ['Tylko nocleg','taniej','kolacja poza ryokanem = logistyka bez samochodu, wieczór stracony']],
+   def:'Z pakietem. Poproście o wersję dziecięcą kaiseki dla młodszego — większość ryokanów ją ma.'},
+  {id:'ota-vs-harajuku', day:'2027-05-07', q:'7.05: Muzeum Ōta (ukiyo-e) czy od razu Harajuku?', by:'na miejscu, po Meiji Jingū', impact:'~1 h',
+   opts:[['Oba — podział','mama 45 min w muzeum, tata z dziećmi na Takeshita-dōri; spotkanie na lunchu','wymaga dwóch telefonów i punktu zbiórki'],
+         ['Tylko Harajuku razem','prościej, dzieci nie czekają','mama traci jedyne ukiyo-e w planie']],
+   def:'Podział — Ōta jest 3 minuty od stacji Harajuku, więc rozejście się nic nie kosztuje.'},
+  {id:'openair', day:'2027-05-08', q:'Hakone: Open-Air Museum czy tylko pętla?', by:'rano 8.05 (pogoda, wiatr)', impact:'~1,5 h i ~¥5 000',
+   opts:[['Tylko pętla + ryokan','spokojniej; sobota i tak jest tłoczna; onsen o 16:30 to nagroda','—'],
+         ['Dodać Open-Air Museum','rzeźby, po których dzieci mogą się wspinać; pawilon Picassa; jedyny sensowny plan B przy wietrze','dzień gęstnieje; wejście do ryokanu przesuwa się na 17:30']],
+   def:'Tylko pętla. Open-Air Museum wchodzi automatycznie, gdy kolejka linowa stoi (wiatr) albo pada.'},
+  {id:'ninja-vs-shodo', day:'2027-05-11', q:'11.05 po Narze: kaligrafia czy klasa ninja?', by:'II–III 2027 (rezerwacje warsztatów)', impact:'~¥4 000–7 000/os.',
+   opts:[['Podział: mama kaligrafia, tata + dzieci ninja','każdy dostaje swoje; oba miejsca są przy Nishiki','dwie rezerwacje, dwa terminy do zgrania'],
+         ['Wszyscy razem na kaligrafię','tańsze, wspólne; dzieci mają swój znak na pamiątkę','13-latek może uznać za nudne'],
+         ['Wszyscy na klasę ninja','pewny hit u dzieci','mama traci kaligrafię — jedyny „rękodzielniczy” punkt poza herbatą']],
+   def:'Podział. Ceremonia herbaty (15:30) wspólna, potem rozejście — oba warsztaty kończą się ok. 18:00.'},
+  {id:'kinkaku', day:'2027-05-12', q:'12.05: Kinkaku-ji czy od razu luz?', by:'na miejscu, po lunchu w Arashiyamie', impact:'~1,5 h',
+   opts:[['Kinkaku-ji (45 min + dojazd)','jedyny Złoty Pawilon w planie; w deszczu bywa pusty','autobus ~30 min; ostatni pełny dzień gęstnieje'],
+         ['Luz od 14:00','prawdziwy bufor przed drogą; dzieci po małpach mają dość','mama traci Kinkaku-ji']],
+   def:'Kinkaku-ji, jeśli rano nie było zmęczenia — to 45 minut. Jeśli było, odpuścić bez żalu.'},
+  {id:'nintendo', day:'2027-05-12', q:'Nintendo Museum (Uji): grać w loterię?', by:'loteria ~II 2027', impact:'całe popołudnie 12.05',
+   opts:[['Nie grać','plan zostaje z buforem; Uji to dodatkowa godzina dojazdów w obie strony','dzieci nie zobaczą muzeum, o którym mówią'],
+         ['Zagrać, a w razie wygranej wstawić 12.05 po południu','hit dla dzieci; 20 min pociągiem z Kioto','znika bufor; loteria wymaga paszportów i konkretnej daty z wyprzedzeniem']],
+   def:'Nie grać — chyba że dzieci same o to poproszą. Jeśli tak: 12.05, 14:00–17:00, kosztem Kinkaku-ji i luzu.'},
+];
+/* Dni zamknięcia atrakcji (0=nd … 6=sb). Sprawdzane przy budowie względem dnia tygodnia każdego dnia planu. */
+const CLOSED = {
+  ota:{days:[1],note:'poniedziałki + kilka dni na przełomie miesiąca (zmiana wystawy)'},
+  louvread:{days:[1],note:'poniedziałki'},
+  railway:{days:[3],note:'środy'},
+  tsukiji:{days:[0],note:'niedziele i część śród (wg kalendarza Toyosu)'},
+  nishiki:{days:[],note:'część stoisk zamknięta w środy i niedziele'},
+};
+const DAYRAIN = {
+  '2027-05-05':'Asakusa działa w deszczu (deptak Nakamise jest kryty); Sensō-ji, ramen i spać — jet lag i tak to wymusi.',
+  '2027-05-06':'Pokémon Center i Café są w środku; uliczki Tsukiji mają zadaszenia. Akihabarę zamieńcie na dłuższe Sunshine City (Ikebukuro) — gry, sklepy, akwarium na dachu.',
+  '2027-05-07':'Muzeum Ōta awansuje na główny punkt. Shibuya Sky w chmurach to strata biletu — zmieńcie datę online (jedna zmiana gratis). Wieczór: teamLab Planets (rezerwacja) albo rodzinne karaoke.',
+  '2027-05-08':'Kolejka linowa staje przy wietrze (status: hakonenavi.jp) — wtedy Hakone Open-Air Museum (pawilon Picassa, rzeźby do wspinania) + rejs po Ashi, który pływa prawie zawsze. Onsen i kaiseki to i tak sedno dnia.',
+  '2027-05-09':'Dzień podróży — deszcz nie przeszkadza. Gion z parasolem jest nawet ładniejsze: latarnie w kałużach.',
+  '2027-05-10':'Fushimi pod parasolem działa (bramy osłaniają), ale ślisko — skróćcie do dolnej pętli. Kiyomizu zamieńcie na kryte Nishiki i pasaż Teramachi.',
+  '2027-05-11':'Tōdai-ji jest pod dachem, jelenie chowają się pod drzewami — skróćcie park i wróćcie wcześniej. Herbata i kaligrafia są w środku, więc popołudnie nic nie traci.',
+  '2027-05-12':'Bambus w deszczu jest wyjątkowo filmowy, ale małpy odpuśćcie (śliska ścieżka). Kinkaku-ji w deszczu pusty. Popołudnie: teamLab Biovortex przy dworcu — UWAGA: Kyoto Railway Museum w środy zamknięte.',
+  '2027-05-13':'Zakupy przy dworcu są pod dachem, a shinkansen jedzie niezależnie od pogody. Fudżi za oknem — tylko przy słońcu.',
+};
+const DAYCROWD = {
+  '2027-05-05':'ostatni dzień Golden Week — Asakusa odświętna i pełna; wieczorem tłum maleje',
+  '2027-05-06':'pierwszy dzień po Golden Week — Tsukiji i Pokémon Center wyraźnie luźniejsze niż w święta',
+  '2027-05-07':'piątek — Shibuya wieczorem gęsta; Meiji Jingū rano cicha',
+  '2027-05-08':'SOBOTA w Hakone — kolejki i statek pełne; Romancecar i miejscówki kupcie dzień wcześniej',
+  '2027-05-09':'niedziela w Gion — wieczorne tłumy, ale i największa szansa minąć maiko',
+  '2027-05-10':'poniedziałek na Fushimi — celowo: weekendowe tłumy zeszły, Nishiki otwarte (wiele stoisk zamyka się w środy)',
+  '2027-05-11':'wtorek w Narze — spokojnie; szkolne wycieczki bywają rano przy Tōdai-ji',
+  '2027-05-12':'środa — Kyoto Railway Museum (plan B) zamknięte; bambus o 9:15 jeszcze znośny',
+};
 const PERIODS = [
   {label:'3–13 maja', sub:'WYBRANY WARIANT (do zakupu) · stopover tam', price:13884, fam:true, best:true,
    pros:['Najtańsza kombinacja w wycenie samego Etihada (Google jej nie liczył)',
@@ -588,6 +656,16 @@ footer a{font-weight:700;text-decoration:none}
 .scenc li{display:flex;gap:7px;line-height:1.4}
 .scenc .y::before{content:"✓";color:var(--success);font-weight:800}
 .scenc .n::before{content:"✗";color:var(--shu);font-weight:800}
+.dayflag{margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--sakura);font-size:13.5px;line-height:1.5}
+.dayflag.rain{background:#e6edf6}
+.dayflag.wxday{background:#eef4ea}
+.decgrid{display:grid;gap:var(--s3)}
+.decc{border:1px solid var(--line);border-radius:14px;padding:var(--s4);background:var(--panel)}
+.decc h4{font-family:var(--serif);font-weight:500;font-size:19px;margin:0 0 4px}
+.decmeta{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:8px}
+.decopt{font-size:13px;padding:6px 0;border-top:1px solid var(--line)}
+.decopt b{color:var(--ai)}
+.decdef{margin-top:8px;padding:8px 12px;border-radius:10px;background:var(--sakura);font-size:13px}
 .sos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .sos a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
   padding:16px 10px;border-radius:14px;background:var(--shu);color:#fff;text-decoration:none;
@@ -867,6 +945,18 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date()
     host.innerHTML='<p class="wxerr">Nie udało się pobrać pogody na żywo. Aktualne prognozy: <a href="https://www.jma.go.jp/bosai/forecast/" target="_blank" rel="noopener">JMA</a> (Japonia).</p>';
   });
 })();
+/* prognoza na konkretny dzień planu (Open-Meteo), widoczna ~16 dni przed */
+(function(){var el=document.querySelector('.wxday');if(!el)return;
+  var la=el.getAttribute('data-la'),lo=el.getAttribute('data-lo'),dt=el.getAttribute('data-date');if(!la||!lo||!dt)return;
+  var diff=(new Date(dt+'T12:00:00')-new Date())/864e5;if(diff<-1||diff>15)return;
+  var u='https://api.open-meteo.com/v1/forecast?latitude='+la+'&longitude='+lo+'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&start_date='+dt+'&end_date='+dt;
+  function ico(c){return c===0?'☀️':c<=3?'⛅':(c===45||c===48)?'🌫️':(c>=51&&c<=57)?'🌦️':(c>=61&&c<=67)?'🌧️':(c>=71&&c<=77)?'🌨️':(c>=80&&c<=82)?'🌦️':c>=95?'⛈️':'☁️';}
+  function lbl(c){return c===0?'bezchmurnie':c<=3?'częściowe zachmurzenie':(c===45||c===48)?'mgła':(c>=51&&c<=57)?'mżawka':(c>=61&&c<=67)?'deszcz':(c>=80&&c<=82)?'przelotny deszcz':c>=95?'burza':'zachmurzenie';}
+  fetch(u).then(function(r){return r.json();}).then(function(j){var d=j.daily;if(!d||!d.time||!d.time.length)return;
+    var c=d.weather_code[0],p=d.precipitation_probability_max[0];
+    el.innerHTML='<b>🌤️ Prognoza na '+dt.slice(8)+'.'+dt.slice(5,7)+':</b> '+ico(c)+' '+lbl(c)+' · '+Math.round(d.temperature_2m_min[0])+'–'+Math.round(d.temperature_2m_max[0])+'°C · deszcz '+(p!=null?p+'%':'—')+(p>=50?' — <b>rozważcie plan „Jeśli pada”</b>':'');
+    el.style.display='';}).catch(function(){});
+})();
 `;
 fs.writeFileSync(DIR + '/assets/app.js', APP);
 
@@ -1001,7 +1091,8 @@ const DAYS = [
  ],
  facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Ich święto!','Dla dzieci'],['Tokio (3/3)','Nocleg']],
  tips:['Muzeum Ōta zmienia wystawy co miesiąc i bywa zamknięte na przełomie miesięcy — sprawdźcie kalendarz tydzień wcześniej; wstęp ~¥1 000, dzieci taniej.','Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej) — rezerwujcie dopiero przy dobrej prognozie.'],
- links:[A('meiji','Meiji Jingū'),A('shibuya-sky','Shibuya Sky')],
+ links:[A('meiji','Meiji Jingū'),A('ota','Muzeum Ōta (ukiyo-e)'),A('shibuya-sky','Shibuya Sky')],
+ pc:{q:'Muzeum Ōta (ukiyo-e) czy od razu Harajuku?',opts:[['Podział: mama do muzeum, tata z dziećmi na Takeshita-dōri','45 min, 3 min od stacji, każdy dostaje swoje','punkt zbiórki na lunch'],['Wszyscy razem od razu Harajuku','prościej, bez czekania','mama traci jedyne ukiyo-e w planie']]},
  more:[['Skąd ten dzień','Trzecia noc w Tokio (zamiast piątej w Kiocie) rozładowała dawny „wielki dzień Tokio” na dwa spokojniejsze i oddała planowi rzeczy, które wcześniej wypadły: Meiji Jingū, ukiyo-e i Harajuku. Tokio ma dla dziesięcio- i trzynastolatka więcej niż Kioto — a mama dostaje chram, drzeworyty i targ.']]},
 
 {date:'2027-05-08',dow:'sobota',dd:'8 maja',city:'hakone',title:'W góry Hakone — onsen i Fudżi',
@@ -1022,6 +1113,7 @@ const DAYS = [
  facts:[['Średnia','Intensywność'],['Romancecar + kolejki','Przejazdy'],['Umiarkowane','Chodzenie'],['Frajda z kolejek','Dla dzieci'],['Ryokan','Nocleg']],
  tips:['Fudżi najczęściej widać rano — trzymajcie kciuki przy porannej kolejce linowej i na jeziorze.','Nadanie dużych walizek kurierem (~2 000–2 500 ¥/szt.) oszczędza taszczenia po górach i przesiadkach.'],
  links:[A('hakone-pass','Hakone Free Pass + Romancecar'),A('owakudani','Ōwakudani'),A('ashi','Jezioro Ashi'),A('takkyubin','Takkyūbin')],
+ pc:{q:'Dołożyć Hakone Open-Air Museum?',opts:[['Nie — tylko pętla i ryokan','sobota jest tłoczna; onsen o 16:30 to nagroda','—'],['Tak (1,5 h, ~¥5 000)','rzeźby do wspinania i pawilon Picassa; jedyny plan B przy wietrze','wejście do ryokanu przesuwa się na 17:30']]},
  more:[['Kontekst','Ryokan to nie tylko nocleg, ale całe doświadczenie: śpi się na futonach na tatami, chodzi w yukacie, a kolacja kaiseki i onsen są częścią wieczoru. To najspokojniejszy punkt całego wyjazdu.'],['Plan B na wiatr i chmury','Kolejka linowa nad Ōwakudani bywa zawieszana przy silnym wietrze lub alertach wulkanicznych — rano sprawdźcie status na hakonenavi.jp. Awaryjnie: Hakone Open-Air Museum (rzeźby do wspinania, pawilon Picassa, kąpiel stóp) plus rejs po Ashi, który pływa niemal zawsze.']]},
 {date:'2027-05-09',dow:'niedziela',dd:'9 maja',city:'kioto',title:'Z gór do dawnej stolicy',
  lead:'Poranny onsen, shinkansen do Kioto i pierwszy wieczór w dzielnicy gejsz.',
@@ -1039,9 +1131,6 @@ const DAYS = [
  facts:[['Łagodna','Intensywność'],['Shinkansen','Przejazdy'],['Umiarkowane','Chodzenie'],['Spokojny wieczór','Dla dzieci'],['Kioto (1/4)','Nocleg']],
  tips:['W Kioto noście buty łatwe do zdejmowania — świątynie, tatami i warsztaty tego wymagają.','Na uliczkach Gion obowiązuje zakaz fotografowania na prywatnych zaułkach (są kary) — róbcie zdjęcia na głównych deptakach.','Opcja przed odjazdem: Hakone Open-Air Museum (otwarte od 9:00, 5 min kolejką od Gōry) — godzina wśród rzeźb do wspinania i shinkansen o ~12:00 zamiast 11:00.'],
  links:[A('gion','Gion i Pontocho'),A('smartex','Rezerwacja shinkansenów')],
- pc:{q:'Nocleg w Kioto: aparthotel czy machiya?',opts:[
-   ['Aparthotel (Mimaru)','łóżka, kuchnia, winda, pralnia — bezstresowo z dziećmi (~820 zł/noc)','mniej „japońskiego" klimatu'],
-   ['Machiya','futony na tatami w drewnianym domku, dużo klimatu','schody i mniej udogodnień (~890 zł/noc)']]},
  more:[]},
 {date:'2027-05-10',dow:'poniedziałek',dd:'10 maja',city:'kioto',title:'Kioto wschodnie: torii i tarasy',
  lead:'Tysiące bram Fushimi Inari, taras Kiyomizu-dera i uliczki, które wyglądają jak sprzed wieków.',
@@ -1072,13 +1161,14 @@ const DAYS = [
   ['13:00','Lunch','Higashimuki — udon i street food.'],
   ['13:45','Pokaz ubijania mochi','Nakatanidō — dwóch mistrzów wali młotami w rytmie; degustacja na ciepło (jeśli akurat trwa).'],
   ['14:15','Powrót do Kioto','~35 min Kintetsu.'],
-  ['15:30','Ceremonia herbaty','Sesja rodzinna z objaśnieniem po angielsku (~60 min) — punkt mamy; dzieci zwykle wciąga rytuał ubijania matchy.'],
+  ['15:30','Ceremonia herbaty','Sesja rodzinna po angielsku (~60 min) — punkt mamy; dzieci zwykle wciąga rytuał ubijania matchy. Wybierzcie herbaciarnię ≤15 min od dworca Kioto (Gion/Higashiyama), żeby zdążyć po Narze.'],
   ['16:45','Kaligrafia shodō','Każdy pisze swój znak pędzlem na pamiątkę. Opcja równoległa: tata z dziećmi na 75-min klasie ninja przy Nishiki.'],
   ['18:30','Kolacja','Yudōfu — tofu po kiotyjsku, albo lekkie kaiseki.'],
  ],
  facts:[['Średnia+','Intensywność'],['Pociąg + pieszo','Przejazdy'],['Sporo','Chodzenie'],['Jelenie = hit','Dla dzieci'],['Kioto (3/4)','Nocleg']],
  tips:['Jelenie bywają nachalne: krakersy trzymajcie wysoko, karmcie po jednym — a ukłon przed jeleniem naprawdę działa.','Pokaz mochi w Nakatanidō bywa nieregularny (mniej więcej co 30 min) — warto zapytać obsługę o najbliższy.','Dla graczy (opcja): wracając, można wysiąść w Ujī — Nintendo Museum (bilety w loterii ~3 miesiące wcześniej, paszporty całej czwórki). Odpuściliśmy je wcześniej świadomie, ale topowe biura stawiają je najwyżej dla dzieci w tym wieku — decyzja Wasza.'],
  links:[A('nara-park','Park Nara'),A('todaiji','Tōdai-ji'),A('kasuga','Kasuga Taisha'),A('mochi','Nakatanidō'),A('nintendomuseum','Nintendo Museum (opcja)')],
+ pc:{q:'Po herbacie: kaligrafia czy klasa ninja?',opts:[['Podział — mama kaligrafia, tata + dzieci ninja','oba przy Nishiki, oba kończą się ok. 18:00','dwie rezerwacje do zgrania'],['Wszyscy na kaligrafię','tańsze, wspólne, znak na pamiątkę','13-latek może się nudzić'],['Wszyscy na ninja','pewny hit u dzieci','mama traci rękodzieło']]},
  more:[]},
 {date:'2027-05-12',dow:'środa',dd:'12 maja',city:'kioto',title:'Bambusy, Złoty Pawilon i wolne popołudnie',
  lead:'Poranek wśród bambusów i między małpami, w południe Złoty Pawilon, a potem Kioto bez planu — ostatni pełny dzień ma zostawić oddech, nie zmęczenie.',
@@ -1096,6 +1186,7 @@ const DAYS = [
  facts:[['Łagodna','Intensywność'],['Pociąg lokalny','Przejazdy'],['Sporo rano','Chodzenie'],['Małpy','Dla dzieci'],['Kioto (4/4)','Nocleg']],
  tips:['Przy małpach na Iwatayamie nie noście jedzenia w widocznych torbach; automat z wodą jest na szczycie.','Las bambusowy o 9:15 nie jest już pusty jak o świcie, ale wciąż robi wrażenie — idźcie w głąb, dalej od wejścia.','Popołudnie jest celowo puste: jeśli któryś wcześniejszy punkt wypadł przez pogodę, tu jest miejsce, żeby go nadrobić — albo po prostu odpocząć przed drogą.'],
  links:[A('arashiyama','Arashiyama'),A('monkeys','Monkey Park Iwatayama'),A('kinkakuji','Kinkaku-ji')],
+ pc:{q:'Po Arashiyamie: Kinkaku-ji czy od razu luz?',opts:[['Kinkaku-ji (45 min + autobus ~30 min)','jedyny Złoty Pawilon w planie; w deszczu pusty','ostatni pełny dzień gęstnieje'],['Luz od 14:00','prawdziwy bufor przed drogą','mama traci Kinkaku-ji']]},
  more:[]},
 {date:'2027-05-13',dow:'czwartek',dd:'13 maja',city:'kioto',title:'Ostatni poranek i shinkansen na lotnisko',
  lead:'Spokojne pożegnanie z Kioto, przejazd shinkansenem z widokiem na Fudżi i wieczorny lot do domu z Narity.',
@@ -1223,6 +1314,35 @@ function footer(prefix){
   Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="${prefix}index.html">Strona główna</a> · <a href="${prefix}druk.html">Plan do druku (PDF)</a></footer>`;
 }
 
+/* Wyciąga z karty katalogu godziny/ceny/uwagi — żeby strona dnia miała je NA MIEJSCU. */
+const atrMeta = (() => {
+  const cache = {};
+  return id => {
+    if (cache[id] !== undefined) return cache[id];
+    const m = ATR_BODY.match(new RegExp('<div class="acard" id="'+id+'">([\\s\\S]*?)</div>\\s*</div>'));
+    if (!m) return (cache[id] = null);
+    const spans = [...m[1].matchAll(/<span>([^<]*)<\/span>/g)].map(x=>x[1]);
+    const pick = e => (spans.find(x=>x.startsWith(e))||'').replace(e,'').trim();
+    return (cache[id] = {hours:pick('🕒'), price:pick('💴'), closed:pick('📅'), book:/rezerwac|e-bilet|online/i.test(m[1])});
+  };
+})();
+const DOW = ['nd','pn','wt','śr','czw','pt','sb'];
+function dayMeta(d){
+  const wd = new Date(d.date+'T12:00:00').getDay();
+  const rows = d.links.map(l => {
+    const m = atrMeta(l.id); if (!m) return '';
+    const c = CLOSED[l.id]; const conflict = c && c.days.includes(wd);
+    if (conflict) console.warn('⚠ ZAMKNIĘTE', d.date, l.id, c.note);
+    const closed = conflict ? `<b style="color:var(--shu)">⚠ zamknięte w ${DOW[wd]} — ${c.note}</b>` : (m.closed || (c ? c.note : '')) ;
+    return `<tr><td class="dcol">${l.label}</td><td>${m.hours||'—'}</td><td>${m.price||'—'}</td><td>${m.book?'<b>tak</b>':'nie'}${closed?'<br><small>📅 '+closed+'</small>':''}</td></tr>`;
+  }).join('');
+  return rows ? `
+  <section>
+    <h2 class="stitle">Godziny, ceny, rezerwacje — na dziś</h2>
+    <div class="card" style="padding:0;overflow:hidden"><div style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Miejsce</th><th>Godziny</th><th>Cena</th><th>Rezerwacja</th></tr></thead><tbody>${rows}</tbody></table></div></div>
+    <p class="note" style="margin-top:6px">Dane z katalogu atrakcji (${d.dow}). Przy zmianie kolejności dni sprawdźcie dni zamknięcia — build ostrzega o kolizjach.</p>
+  </section>` : '';
+}
 function dayPage(d,i){
   const prefix='../';
   const prev=DAYS[i-1], next=DAYS[i+1];
@@ -1236,6 +1356,10 @@ function dayPage(d,i){
   const pc = d.pc?`<div class="pc"><div class="pch">⚖️ ${d.pc.q}</div>${d.pc.opts.map(o=>`<div class="row"><span class="opt">${o[0]}</span> — <span class="plus">za:</span> ${o[1]}; <span class="minus">przeciw:</span> ${o[2]}.</div>`).join('')}</div>`:'';
   const more = d.more.length?`<section class="more"><h2 class="stitle">Więcej o tym dniu</h2><div class="card">${d.more.map(m=>`<details><summary>${m[0]}</summary><p>${m[1]}</p></details>`).join('')}</div></section>`:'';
   const fx = DAYFLEX[d.date];
+  const metaSec = dayMeta(d);
+  const rainNote = DAYRAIN[d.date] ? `<div class="dayflag rain"><b>☔ Jeśli pada:</b> ${DAYRAIN[d.date]}</div>` : '';
+  const crowdNote = DAYCROWD[d.date] ? `<div class="dayflag"><b>👥 Tłum i dzień tygodnia:</b> ${DAYCROWD[d.date]}</div>` : '';
+  const wx = (GEO[d.date]&&GEO[d.date][0]) ? `<div class="dayflag wxday" data-date="${d.date}" data-la="${GEO[d.date][0][0]}" data-lo="${GEO[d.date][0][1]}" style="display:none"></div>` : '';
   const flexNote = fx ? `<div class="flex"><span class="fxlock"><b>🔒 Nie ruszać:</b> ${fx[0]}</span><span class="fxcut"><b>✂️ Można odpuścić:</b> ${fx[1]}</span></div>` : '';
   const hid = DAYHOTEL[d.date];
   const hotelBox = hid ? (()=>{const H=HOTELS.find(h=>h.id===hid);
@@ -1273,7 +1397,7 @@ function dayPage(d,i){
   <section>
     <h2 class="stitle">W skrócie</h2>
     <div class="facts">${facts}</div>
-    ${flexNote}
+    ${flexNote}${crowdNote}${rainNote}${wx}
     ${hotelBox}
     ${pc}
   </section>
@@ -1283,7 +1407,7 @@ function dayPage(d,i){
     <h2 class="stitle">Wskazówki praktyczne</h2>
     <div class="card"><ul class="tips">${tips}</ul>${links?'<div style="margin-top:14px">'+links+'</div>':''}</div>
   </section>
-  ${more}
+  ${metaSec}${more}
 
   <nav class="daynav">
     ${prev?`<a id="navPrev" href="${prev.date}.html"><div class="dir">← Poprzedni</div><div class="ttl">${prev.dd}</div></a>`:`<a id="navPrev" href="${prefix}index.html"><div class="dir">←</div><div class="ttl">Start</div></a>`}
@@ -1575,6 +1699,19 @@ function decyzjePage(){
   </section>
 
   <section>
+    <h2 class="stitle">Decyzje otwarte</h2>
+    <p class="lead-p">Wszystko, co jeszcze <b>nie jest</b> rozstrzygnięte — w jednym miejscu, z domyślnym wyborem, żeby brak decyzji nie blokował planu. Te same pytania pojawiają się na stronach odpowiednich dni.</p>
+    <div class="decgrid">
+    ${OPEN_DECISIONS.map(x=>{const D=DAYS.find(d=>d.date===x.day);return `<div class="decc" id="dec-${x.id}">
+      <h4>${x.q}</h4>
+      <div class="decmeta"><span>📅 do: <b>${x.by}</b></span><span>🎯 dotyczy: ${D?`<a href="days/${x.day}.html">${D.dd}</a>`:'—'}</span><span>⚖️ stawka: ${x.impact}</span></div>
+      ${x.opts.map(o=>`<div class="decopt"><b>${o[0]}</b> — za: ${o[1]}${o[2]&&o[2]!=='—'?'; przeciw: '+o[2]:''}</div>`).join('')}
+      <div class="decdef">✅ <b>Domyślnie:</b> ${x.def}</div>
+    </div>`;}).join('')}
+    </div>
+  </section>
+
+  <section>
     <h2 class="stitle">Kalendarz przygotowań — deadline'y</h2>
     <p class="lead-p">Do kiedy co załatwić. Trzy alerty (loty, noclegi, pogoda) same przypomną się w aplikacji.</p>
     <div class="card"><ul class="tips">
@@ -1675,6 +1812,7 @@ function drukPage(){
       ${fx?`<div class="flex"><p><b>🔒 Nie ruszać:</b> ${fx[0]}</p><p><b>✂️ Można odpuścić:</b> ${fx[1]}</p></div>`:''}
       ${H?`<p class="blk"><b>🏨 Nocleg:</b> ${H.name} — ${H.near}</p>`:''}
       ${d.tips&&d.tips.length?`<div class="blk"><b>Wskazówki</b><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`:''}
+      ${DAYRAIN[d.date]?`<div class="blk"><b>☔ Jeśli pada</b><p>${DAYRAIN[d.date]}</p></div>`:''}
       <div class="pfoot">Japonia 3–13 maja 2027 · Dzień ${i+1} — ${d.dd}</div>
     </section>`;
   }).join('');
@@ -2062,7 +2200,7 @@ function pogodaPage(){
     <div class="card"><ul class="tips">
       <li><b>Tokio:</b> Round1 (Ikebukuro), rodzinne karaoke (Big Echo / Karaoke Kan, przed 22:00), Pokémon Center — a Shibuya Sky przekładać: taras odkryty, w chmurach szkoda biletu.</li>
       <li><b>Hakone:</b> kolejka linowa staje przy wietrze (status: hakonenavi.jp) → Hakone Open-Air Museum (pawilon Picassa, rzeźby do wspinania) + rejs po Ashi, który pływa prawie zawsze.</li>
-      <li><b>Kioto:</b> Kyoto Railway Museum (symulator shinkansena), teamLab Biovortex przy dworcu, kryte pasaże Nishiki/Teramachi, klasa ninja w muzeum.</li>
+      <li><b>Kioto:</b> Kyoto Railway Museum (symulator shinkansena; <b>w środy zamknięte — 12.05 odpada</b>), teamLab Biovortex przy dworcu, kryte pasaże Nishiki/Teramachi, klasa ninja w muzeum.</li>
       
     </ul></div>
   </section>
@@ -2209,6 +2347,13 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
       <div class="links"><a href="https://www.asakusa-sumo.com/" target="_blank" rel="noopener">pokaz w Asakusie →</a><a href="https://www.buysumotickets.com/" target="_blank" rel="noopener">poranne treningi →</a></div>
     </div>
 
+    <div class="acard" id="ota">
+      <h3>🖼️ Muzeum Ōta — ukiyo-e w Harajuku</h3>
+      <div class="desc">Kameralne muzeum drzeworytów japońskich (Hokusai, Hiroshige, Utamaro) 3 minuty od stacji Harajuku. Wystawy zmieniają się co miesiąc, zwiedzanie 45–60 min; buty zdejmuje się przy wejściu.</div>
+      <div class="meta"><span>🕒 wt–nd 10:30–17:30 (ostatnie wejście 17:00)</span><span>💴 ~¥1 000 dorosły; uczniowie taniej</span><span>📍 Harajuku (JR) / Meiji-jingūmae (metro), 3 min pieszo</span><span>📅 zamknięte: poniedziałki + kilka dni na przełomie miesiąca — 7.05.2027 to piątek ✓</span></div>
+      <div class="links"><a href="https://www.ukiyoe-ota-muse.jp/eng/" target="_blank" rel="noopener">strona oficjalna →</a></div>
+    </div>
+
     <div class="acard" id="sensoji">
       <h3>⛩️ Sensō-ji (Asakusa)</h3>
       <div class="desc">Najstarsza świątynia Tokio (645 r.) — brama Kaminarimon z wielkim lampionem i deptak Nakamise pełen straganów. Wieczorem podświetlona i pusta.</div>
@@ -2242,7 +2387,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     <div class="acard" id="tsukiji">
       <h3>🍣 Tsukiji Outer Market</h3>
       <div class="desc">Targ zewnętrzny dawnej giełdy rybnej: sushi na śniadanie, słodki omlet tamagoyaki na patyku, noże kuchenne. Rodzinna klasyka — jeść po trochu na wielu straganach.</div>
-      <div class="meta"><span>🕒 ~5:00–14:00 (najlepiej przyjść do 10:00)</span><span>💴 śniadanie 1 000–3 000 ¥/os</span><span>📍 metro Tsukiji / Tsukijishijō</span></div>
+      <div class="meta"><span>🕒 ~5:00–14:00 (najlepiej przyjść do 10:00)</span><span>💴 śniadanie 1 000–3 000 ¥/os</span><span>📍 metro Tsukiji / Tsukijishijō</span><span>📅 zamknięte: niedziele i część śród (kalendarz Toyosu) — 6.05.2027 to czwartek ✓</span></div>
       <div class="links"><a href="https://www.tsukiji.or.jp/english/" target="_blank" rel="noopener">strona targu →</a></div>
     </div>
 
