@@ -1691,8 +1691,8 @@ function drukPage(){
       <div class="rule"></div>
     </div>
     <div class="cfacts">
-      <div><b>13</b>dni podróży</div><div><b>10</b>nocy w Japonii</div>
-      <div><b>5</b>baz w Japonii</div><div><b>~42<i>tys. zł</i></b>budżet 2+2</div>
+      <div><b>12</b>dni podróży</div><div><b>9</b>nocy w Japonii</div>
+      <div><b>3</b>bazy w Japonii</div><div><b>~42<i>tys. zł</i></b>budżet 2+2</div>
     </div>
     <h3 class="toch">Spis treści</h3>
     <ol class="toc">${toc}</ol>
@@ -2183,6 +2183,13 @@ function niezbednikPage(){
 
 const ATR_BODY = String.raw`<h2 id="tokio" class="stitle" style="scroll-margin-top:80px">🏙️ Tokio</h2>
   <div class="agrid">
+
+    <div class="acard" id="sumo-show">
+      <h3>🥋 Pokaz sumo z byłymi zawodnikami</h3>
+      <div class="desc">Zamiast turnieju (zrezygnowaliśmy): godzinny pokaz w Asakusie lub Ryōgoku — walki pokazowe byłych rikishi, objaśnienie rytuałów, możliwość zmierzenia się z zapaśnikiem (dzieci to uwielbiają) i lunch chanko-nabe. Alternatywa dla rannych ptaszków: poranny trening (asageiko) w prawdziwej stajni — ciszej, autentyczniej, ale obowiązuje pełna cisza na widowni.</div>
+      <div class="meta"><span>🕒 pokazy codziennie, ~60–90 min; asageiko wcześnie rano</span><span>💴 pokaz z lunchem ~11 000–13 000 ¥/os., dzieci taniej; asageiko ~4 000–5 000 ¥</span><span>📍 Asakusa lub Ryōgoku · rezerwacja online z wyprzedzeniem</span></div>
+      <div class="links"><a href="https://www.asakusa-sumo.com/" target="_blank" rel="noopener">pokaz w Asakusie →</a><a href="https://www.buysumotickets.com/" target="_blank" rel="noopener">poranne treningi →</a></div>
+    </div>
 
     <div class="acard" id="sensoji">
       <h3>⛩️ Sensō-ji (Asakusa)</h3>
