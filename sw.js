@@ -1,5 +1,5 @@
-/* Service worker planu Japonia 2027 — wersja 60293dac2d */
-const CACHE = 'jp2027-60293dac2d';
+/* Service worker planu Japonia 2027 — wersja 3dccd63a3d */
+const CACHE = 'jp2027-3dccd63a3d';
 const PRECACHE = ["./","index.html","decyzje.html","atrakcje.html","hotele.html","loty.html","koszty.html","pogoda.html","niezbednik.html","druk.html","assets/style.css","assets/app.js","assets/icon.svg","days/2027-05-03.html","days/2027-05-04.html","days/2027-05-05.html","days/2027-05-06.html","days/2027-05-07.html","days/2027-05-08.html","days/2027-05-09.html","days/2027-05-10.html","days/2027-05-11.html","days/2027-05-12.html","days/2027-05-13.html","days/2027-05-14.html","assets/img/abudhabi.webp","assets/img/sensoji.webp","assets/img/shibuya.webp","assets/img/akihabara.webp","assets/img/fuji.webp","assets/img/yasaka.webp","assets/img/fushimi.webp","assets/img/kinkakuji.webp","assets/img/todaiji.webp","assets/img/bamboo.webp","assets/img/dotonbori.webp","assets/img/hotels/tokio1.webp","assets/img/hotels/hakone.webp","assets/img/hotels/kioto.webp"];
 self.addEventListener('install', function(e){
   self.skipWaiting();
