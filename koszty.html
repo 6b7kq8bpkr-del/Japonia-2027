@@ -31,7 +31,7 @@
 
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
-    <div class="pflag">✈️ <span><b>Kontrola 2.09.2026: 5 033 zł/dorosły</b> (Etihad open-jaw, WAW→Narita / Kansai→WAW, 3–14.05.2027) — dla 2+2 ≈ <b>~19 100 zł</b>. Cena <b>górka</b>.</span></div>
+    <div class="pflag">✈️ <span><b>Kontrola 4.09.2026: 5 459 zł/dorosły</b> <b style="color:var(--shu)">▲ 426 zł drożej</b> (Etihad open-jaw, WAW→Narita / Kansai→WAW, 3–14.05.2027) — dla 2+2 ≈ <b>~20 700 zł</b>. Cena <b>górka</b>.</span></div>
     <div class="card"><ul class="tips">
       <li>Ta kwota zasila pole „Loty" w kalkulatorze poniżej i odświeża się automatycznie co dwa dni.</li>
       <li>Porównanie linii, wykres trendu, progi „kup / czekaj", kalendarz wyprzedaży i wybór terminu — wszystko na osobnej zakładce.</li>
@@ -52,7 +52,7 @@
       <table>
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
-          <tr><td class="cat">✈️ Loty<span class="hint">Etihad open-jaw (Narita → Kansai), 3 dorosłych + 1 dziecko do 11 lat</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="19100" min="0" step="100"></td></tr>
+          <tr><td class="cat">✈️ Loty<span class="hint">Etihad open-jaw (Narita → Kansai), 3 dorosłych + 1 dziecko do 11 lat</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="20700" min="0" step="100"></td></tr>
           <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 9 nocy: aparthotele ~820 zł + 1 noc ryokan z prywatnym onsenem ~2 700 zł (Abu Zabi gratis)</span></td><td class="num"><input type="number" id="nights" class="sm" value="9" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1000" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">1 shinkansen + Haruka na KIX + NEX + metro + Hakone</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="3400" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (w tym dzień w Abu Zabi)</span></td><td class="num"><input type="number" id="days" class="sm" value="12" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
@@ -81,7 +81,7 @@
   Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="index.html">Strona główna</a> · <a href="druk.html">Plan do druku (PDF)</a></footer>
   <script>
   (function(){
-    var D={flights:19100,nights:9,nightRate:1000,transport:3400,days:12,foodRate:500,attractions:2200,extras:3000};
+    var D={flights:20700,nights:9,nightRate:1000,transport:3400,days:12,foodRate:500,attractions:2200,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
