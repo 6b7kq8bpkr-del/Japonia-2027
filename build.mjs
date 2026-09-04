@@ -78,8 +78,8 @@ const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5
 /* Lista rzeczy do zarezerwowania, w kolejności terminów. Renderowana jako checklista
    na decyzje.html; stan trzymany w localStorage (klucz jp2027.checklist). */
 const BOOKINGS = [
-  {when:'IX–X 2026', what:'Noclegi w Japonii (3 bazy)', note:'Z darmowym anulowaniem — pokoje 4-osobowe znikają pierwsze. Linki „Sprawdź dostępność" na stronie Hotele.'},
-  {when:'IX–X 2026', what:'Ryokan w Hakone', note:'Pokój typu Maisonette z prywatnym rotenburo; 7.05 to piątek, terminów mało.'},
+  {when:'IX–X 2026', what:'Noclegi w Japonii (3 bazy)', note:'Z darmowym anulowaniem. UWAGA: w MIMARU dziecko od 7 lat liczy się jak dorosły — szukajcie pokoju dla 4 DOROSŁYCH, nie 3+1. Linki „Sprawdź dostępność" na stronie Hotele.'},
+  {when:'IX–X 2026', what:'Ryokan w Hakone', note:'Superior Room with Open-air Bath — jedyny na 4 osoby (Maisonette mieści 3!). Rezerwować jako 3 dorosłych + dziecko 10 lat, pakiet z kolacją i śniadaniem.'},
   {when:'TERAZ', what:'Bilety lotnicze', note:'Wybrane 4.09: Etihad 3–13 ze stopoverem, 13 884 zł za 4 os. Kupujemy na etihad.com — 4 miejsca w jednej rezerwacji.'},
   {when:'przy zakupie', what:'Walizka na powrót + miejsca obok siebie', note:'Bagaż rejestrowany tylko na odcinek powrotny (~220 zł); miejsca na nocnych odcinkach — Basic ich nie gwarantuje.'},
   {when:'~II 2027', what:'Nintendo Museum — loteria', note:'Opcja na dzień w Narze; wymaga paszportów uczestników.'},
@@ -1135,7 +1135,7 @@ const HOTELS = [
   jp:'東京都台東区東上野4-26-3',
  site:'https://mimaruhotels.com/en/hotel/ueno-east/'},
 {id:'hakone',name:'Hakone Kowakien Ten-yu',stay:'Hakone · 1 noc (7–8.05) · prywatny onsen',
- desc:'Wyższa półka na jedyną noc, gdy nocleg JEST atrakcją: nowoczesny luksusowy ryokan, w którym KAŻDY pokój ma prywatną odkrytą kąpiel onsen (rotenburo) na tarasie — kąpiel o dowolnej porze, bez wspólnych łaźni. Dla 2+2 bierzcie pokój typu „Maisonette" (do 4 osób). Wielodaniowe kaiseki, przyjazny rodzinom, w rejonie Ninotairy/Gōry. WAŻNE: 7.05 to piątek, a pokoi 4-osobowych jest mało — rezerwujcie od razu, gdy tylko otworzą się terminy (na maj 2027 mogą jeszcze nie być dostępne — patrz „Kalendarz przygotowań"). Alternatywy dla 4 osób z prywatnym rotenburo: Hakone Kowakien Mikawaya (typy willowe) lub Ajisai Onsen Ryokan (pokoje rodzinne, darmowe anulowanie na Booking). Zdjęcie: przykładowy rotenburo.',
+ desc:'Wyższa półka na jedyną noc, gdy nocleg JEST atrakcją: nowoczesny luksusowy ryokan, w którym KAŻDY pokój ma prywatną odkrytą kąpiel onsen (rotenburo) na tarasie — kąpiel o dowolnej porze, bez wspólnych łaźni. Dla 2+2 bierzcie <b>Superior Room with Open-air Bath</b> — jedyny typ mieszczący 4 osoby (2 łóżka + 2 futony/daybeds, 4 doba). <b>NIE Maisonette</b>: mimo atrakcyjnego wyglądu oficjalnie mieści tylko 3 osoby (35 m², 2 łóżka + 1 futon). Wielodaniowe kaiseki, przyjazny rodzinom, w rejonie Ninotairy/Gōry. WAŻNE: 7.05 to piątek, a Superior Rooms na 4 osoby jest mało — rezerwujcie od razu, gdy tylko otworzą się terminy (na maj 2027 mogą jeszcze nie być dostępne — patrz „Kalendarz przygotowań"). Alternatywy dla 4 osób z prywatnym rotenburo: Hakone Kowakien Mikawaya (typy willowe) lub Ajisai Onsen Ryokan (pokoje rodzinne, darmowe anulowanie na Booking). Zdjęcie: przykładowy rotenburo.',
  price:'~2 400–3 200 zł/noc z HB dla 4 os. (wyższa półka)',near:'Ninotaira, rejon Gōra, na pętli Hakone',
  mapsq:'Hakone Kowakien Ten-yu, Ninotaira, Hakone',
  book:'https://www.booking.com/hotel/jp/hakone-kowakien-tenyu.html',
