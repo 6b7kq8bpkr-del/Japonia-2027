@@ -8,7 +8,7 @@ fs.mkdirSync(DIR + '/assets', { recursive: true });
    ŚLEDZIMY DWA SCENARIUSZE POWROTU:
      rt = ROUND-TRIP (WYBRANY od 4.09.2026): WAW↔Tokio z krótką przesiadką w Abu Zabi;
           przylot 4.05, powrót 14.05 z Narity. 12 dni, 3 zameldowania, 10 nocy w Japonii.
-     oj = OPEN-JAW (odrzucony 4.09 — zdrożał do ~5,5 tys./os.): doba w Abu Zabi z darmowym
+     oj = OPEN-JAW (odrzucony 4.09 — zdrożał do ~5,5 tys./os., 7.09 już ~7,9 tys.): doba w Abu Zabi z darmowym
           hotelem + powrót z lotniska Kansai. Wraca do gry, gdy różnica spadnie <2 tys. zł.
    Wpisy sprzed 2.09.2026 mają tylko `rt`.
    Aktualizowane automatycznie przez zadanie `japonia-cena-lotu` (co dwa dni).
@@ -56,8 +56,6 @@ const comfortBonus = A => A.hotel ? STOPOVER_BONUS_H : 0;
    „sprawdzone, bez zmian" a „dawno nie sprawdzane". */
 const LAST_CHECKED = '2026-09-07';
 const CHECKS = [
-  {date:'2026-07-26', rt:{etihad:3910, emirates:4262, finnair:4928, lot:5288, qatar:5465, turkish:6423}},
-  {date:'2026-07-27', rt:{etihad:4228, emirates:4262, finnair:4727, lot:5248}},
   {date:'2026-07-29', rt:{etihad:4225, emirates:4257, finnair:4723, lot:5249, qatar:5219, turkish:6938}},
   {date:'2026-07-31', rt:{etihad:4255, emirates:4261, finnair:4726, lot:5227, qatar:5219, turkish:6945}},
   {date:'2026-08-04', rt:{etihad:3961, emirates:5024, finnair:4721, lot:4872, turkish:8152}},
@@ -71,7 +69,7 @@ const CHECKS = [
   {date:'2026-09-02', oj:{etihad:5033}, rt:{etihad:3733, emirates:4148, lot:4417, turkish:8584}},
   {date:'2026-09-04', oj:{etihad:5459}, rt:{etihad:3453, emirates:4148, lot:5271, turkish:8588}},
   {date:'2026-09-06', rt:{etihad:4012, emirates:4147, lot:4417, turkish:8543}},
-  {date:'2026-09-07', rt:{etihad:3449, emirates:4147, lot:5468, qatar:4655, turkish:8586}},   // najtańszy wariant dnia: 3–14
+  {date:'2026-09-07', oj:{etihad:7874}, rt:{etihad:3449, emirates:4147, lot:5468, qatar:4655, turkish:8586}},   // najtańszy wariant dnia: 3–14; open-jaw wystrzelił do 7 874
 ];
 /* Siatka dat z Google Flights — cena 12-dniowej podróży wg DNIA WYLOTU (1 dorosły) */
 const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5,4150],[6,4150],[7,4260],
@@ -192,7 +190,7 @@ const PERIODS = [
    rynkowe z Google (round-trip) dla wykresu trendu. */
 const TICKET = {family:13600, bag:220, total:13820, label:'3–14.05 ze stopoverem tam'};
 const FLIGHT = {airline:'Etihad'};
-/* Od 4.09.2026 wybrany scenariusz = ROUND-TRIP (open-jaw zdrożał do ~5,5 tys.). */
+/* Od 4.09.2026 wybrany scenariusz = ROUND-TRIP (open-jaw zdrożał — 7.09.2026 już ~7,9 tys./os.). */
 FLIGHT.history = CHECKS.filter(c=>(c.rt||{}).etihad!=null).map(c=>[c.date, c.rt.etihad]);
 /* Porównanie dwóch scenariuszy powrotu — liczone z ostatniego odczytu, który ma oba.
    Do ceny biletu dokładamy RÓŻNICE NA ZIEMI, bo same bilety są nieporównywalne:
