@@ -24,7 +24,7 @@ if(pg){var upd=function(){var h=document.documentElement,m=h.scrollHeight-h.clie
   pg.style.width=(m>0?(h.scrollTop/m*100):0)+'%';};addEventListener('scroll',upd,{passive:true});upd();}
 // countdown to departure
 var cd=document.getElementById('cd');
-if(cd){var days=Math.max(0,Math.ceil((new Date('2027-05-03T00:00:00')-new Date())/86400000));cd.textContent=days;}
+if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-26T00:00:00')-new Date())/86400000));cd.textContent=days;}
 // home hero: parallax bg + fading scroll cue
 (function(){
   var hbg=document.querySelector('.hero.home .hbg'), cue=document.querySelector('.scrollcue');
