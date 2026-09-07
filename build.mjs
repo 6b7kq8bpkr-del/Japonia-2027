@@ -88,6 +88,7 @@ const BOOKINGS = [
   {when:'II–III 2027', what:'Warsztaty kultury w Kioto', note:'Rezerwacja 1–2 miesiące wcześniej.'},
   {when:'29.03 · 3.04 · 7.04', what:'Miejscówki na shinkansen (SmartEX)', note:'Sprzedaż rusza miesiąc przed przejazdem o 10:00 JST (3:00 w PL): 29.03 → NEX + Tokio→Kioto na 29.04; 3.04 → Kioto→Tokio na 3.05 (święto — punktualnie!); 7.04 → Odawara→Tokio + NEX na 7.05. Romancecar (6.05) na stronie Odakyu miesiąc wcześniej.'},
   {when:'ZARAZ PO BILETACH', what:'Noclegi — darmowe anulowanie', note:'Kolejność: MIMARU Kyoto Station 29.04–3.05 (zostało 1–5 apartamentów w Golden Week!) → MIMARU Ueno 3–6.05 → Shinanoki 6.05. Wszystkie z bezpłatnym anulowaniem, więc rezerwacja dziś nic nie ryzykuje.'},
+  {when:'~III 2027', what:'Kalendarz Muzeum Ōta na maj', note:'Muzeum zamyka się w poniedziałki i w dzień PO poniedziałkowym święcie (3.05 to święto). Jeśli 4.05 zamknięte — Tokyo National Museum w Ueno (ukiyo-e, otwarte w święta, 5 min od hotelu).'},
   {when:'~1.04.2027', what:'Ubezpieczenie turystyczne', note:'Leczenie + NNW dla czterech osób.'},
   {when:'4 tyg. przed', what:'Shibuya Sky', note:'Slot na zachód słońca — rezerwować dopiero przy dobrej prognozie.'},
   {when:'31 dni przed', what:'Pokémon Café', note:'Rezerwacja otwiera się o 18:00 czasu japońskiego, dokładnie 31 dni wcześniej.'},
@@ -1195,7 +1196,7 @@ const DAYS = [
  ],
  facts:[['Średnia','Intensywność'],['Romancecar + kolejki','Przejazdy'],['Umiarkowane','Chodzenie'],['Frajda z kolejek','Dla dzieci'],['Ryokan','Nocleg']],
  tips:['Fudżi najczęściej widać rano — trzymajcie kciuki przy porannej kolejce linowej i na jeziorze.','Nadanie dużych walizek kurierem (~2 000–2 500 ¥/szt.) oszczędza taszczenia po górach i przesiadkach.'],
- links:[A('hakone-pass','Hakone Free Pass + Romancecar'),A('owakudani','Ōwakudani'),A('ashi','Jezioro Ashi'),A('takkyubin','Takkyūbin')],
+ links:[A('tsukiji','Tsukiji'),A('hakone-pass','Hakone Free Pass + Romancecar'),A('owakudani','Ōwakudani'),A('ashi','Jezioro Ashi'),A('takkyubin','Takkyūbin')],
  pc:{q:'Dołożyć Hakone Open-Air Museum?',opts:[['Nie — tylko pętla i ryokan','sobota jest tłoczna; onsen o 16:30 to nagroda','—'],['Tak (1,5 h, ~¥5 000)','rzeźby do wspinania i pawilon Picassa; jedyny plan B przy wietrze','wejście do ryokanu przesuwa się na 17:30']]},
  more:[['Kontekst','Ryokan to nie tylko nocleg, ale całe doświadczenie: śpi się na futonach na tatami, chodzi w yukacie, a kolacja kaiseki i onsen są częścią wieczoru. To najspokojniejszy punkt całego wyjazdu.'],['Plan B na wiatr i chmury','Kolejka linowa nad Ōwakudani bywa zawieszana przy silnym wietrze lub alertach wulkanicznych — rano sprawdźcie status na hakonenavi.jp. Awaryjnie: Hakone Open-Air Museum (rzeźby do wspinania, pawilon Picassa, kąpiel stóp) plus rejs po Ashi, który pływa niemal zawsze.']]},
 
