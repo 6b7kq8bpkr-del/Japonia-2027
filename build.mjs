@@ -79,7 +79,7 @@ const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5
    na decyzje.html; stan trzymany w localStorage (klucz jp2027.checklist). */
 const BOOKINGS = [
   {when:'IX–X 2026', what:'Noclegi w Japonii (3 bazy)', note:'Z darmowym anulowaniem. UWAGA: w MIMARU dziecko od 7 lat liczy się jak dorosły — szukajcie pokoju dla 4 DOROSŁYCH, nie 3+1. Linki „Sprawdź dostępność" na stronie Hotele.'},
-  {when:'TERAZ', what:'Ryokan w Hakone — zabezpieczyć na Booking', note:'Sengokuhara Shinanoki Ichinoyu, pokój „Tatami Area and Open-Air Bath” (maks. 4: 2 łóżka + 2 futony), 3 dorosłych + dziecko 10 lat, kolacja + śniadanie, czwartek 6.05: ~1 675 zł, darmowe anulowanie. Wariant premium Ten-yu (~4 200 zł) też z anulowaniem — patrz Decyzje otwarte.'},
+  {when:'TERAZ', what:'Ryokan w Hakone — zabezpieczyć na Booking', note:'Hakone Ashinoko Hanaori (Tōgendai, nad jeziorem Ashi), pokój Standard 32 m² dla 4 osób, 3 dorosłych + dziecko 10 lat, kolacja + śniadanie, czwartek 6.05: 2 878 zł, zostały 3 pokoje, darmowe anulowanie do 3.05.2027.',
   {when:'TERAZ', what:'Bilety lotnicze', note:'Wybrane 7.09: Etihad 3–14 ze stopoverem, 13 600 zł za 4 os. — taniej niż krótszy wariant 3–13. Kupujemy na etihad.com, 4 miejsca w jednej rezerwacji.'},
   {when:'przy zakupie', what:'Walizka na powrót + miejsca obok siebie', note:'Bagaż rejestrowany tylko na odcinek powrotny (~220 zł); miejsca na nocnych odcinkach — Basic ich nie gwarantuje.'},
   {when:'~II 2027', what:'DECYZJA: Nintendo Museum (Uji) — grać w loterię?', note:'Domyślnie NIE. Jeśli tak i wygracie: 2.05 po południu kosztem Kinkaku-ji i bufora. Szczegóły w „Decyzje otwarte”.'},
@@ -87,7 +87,7 @@ const BOOKINGS = [
   {when:'IX–X 2026', what:'DECYZJA: Pokémon Room czy zwykły apartament (Ueno)', note:'Domyślnie zwykły 4 łóżka; Pokémon tylko przy dopłacie < ~150 zł/noc.'},
   {when:'II–III 2027', what:'Warsztaty kultury w Kioto', note:'Rezerwacja 1–2 miesiące wcześniej.'},
   {when:'29.03 · 3.04 · 7.04', what:'Miejscówki na shinkansen (SmartEX)', note:'Sprzedaż rusza miesiąc przed przejazdem o 10:00 JST (3:00 w PL): 29.03 → NEX + Tokio→Kioto na 29.04; 3.04 → Kioto→Tokio na 3.05 (święto — punktualnie!); 7.04 → Odawara→Tokio + NEX na 7.05. Romancecar (6.05) na stronie Odakyu miesiąc wcześniej.'},
-  {when:'ZARAZ PO BILETACH', what:'Noclegi — darmowe anulowanie', note:'Kolejność: MIMARU Kyoto Station 29.04–3.05 (4 800 zł; zostało 1–5 apartamentów w Golden Week!) → MIMARU Ueno 3–6.05 (3 800 zł) → Shinanoki 6.05 (1 675 zł). Wszystkie z bezpłatnym anulowaniem, więc rezerwacja dziś nic nie ryzykuje.'},
+  {when:'ZARAZ PO BILETACH', what:'Noclegi — darmowe anulowanie', note:'Kolejność: MIMARU Kyoto Station 29.04–3.05 (4 800 zł; zostało 1–5 apartamentów w Golden Week!) → MIMARU Ueno 3–6.05 (3 800 zł) → Hanaori 6.05 (2 878 zł, zostały 3 pokoje). Wszystkie z bezpłatnym anulowaniem, więc rezerwacja dziś nic nie ryzykuje.'},
   {when:'~III 2027', what:'Kalendarz Muzeum Ōta na maj', note:'Muzeum zamyka się w poniedziałki i w dzień PO poniedziałkowym święcie (3.05 to święto). Jeśli 4.05 zamknięte — Tokyo National Museum w Ueno (ukiyo-e, otwarte w święta, 5 min od hotelu).'},
   {when:'~1.04.2027', what:'Ubezpieczenie turystyczne', note:'Leczenie + NNW dla czterech osób.'},
   {when:'4 tyg. przed', what:'Shibuya Sky', note:'Slot na zachód słońca — rezerwować dopiero przy dobrej prognozie.'},
@@ -108,12 +108,12 @@ const OPEN_DECISIONS = [
    opts:[['Apartament 4 pojedyncze łóżka (38 m²)','tańszy, każdy ma łóżko, dwa aneksy sypialne','bez „wow” dla dzieci'],
          ['Pokémon Room','dzieci pamiętają to latami; jeden Pokémon Center w planie i tak jest','dopłata + znika szybciej; tematyka „wchodzi” na trzy noce']],
    def:'Zwykły apartament. Pokémon Room tylko przy dopłacie poniżej ~150 zł/noc — Pokémony mają w planie swój dzień.'},
-  {id:'ryokan-which', day:'2027-05-06', q:'Ryokan w Hakone (6.05): Shinanoki za ~1 675 zł czy Ten-yu?', by:'zarezerwować TERAZ (oba z darmowym anulowaniem do 3.05.2027)', impact:'~1 700 zł',
-   opts:[['Sengokuhara Shinanoki Ichinoyu (2 481 zł, w planie)','ten sam rdzeń: prywatny onsen na tarasie, 2 łóżka + 2 futony, 38 m², kolacja + śniadanie; 8,9 z 1 129 opinii','skromniejszy standard niż Ten-yu; Sengokuhara = ~25 min autobusem znad jeziora, rano ~60 min do Odawary'],
-         ['Hakone Kowakien Ten-yu, Superior (4 201 zł)','9,1; najbardziej dopracowany ryokan w planie; Ninotaira na trasie pętli','+1 700 zł za tę samą funkcję; kolacja w planie Booking to bufet'],
-         ['Hakone Kowakien Hotel (3 166 zł)','Yunessun w cenie bez limitu — park onsenowy ze zjeżdżalniami, hit dla dzieci; 4 łóżka','brak prywatnej kąpieli w pokoju; 8,3'],
-         ['Fukuzumiro (3 233 zł) / Ajisai Onsen Ryokan (3 488 zł)','Fukuzumiro: zabytkowy ryokan, 9,4; Ajisai: 9,0, rodzinny','Fukuzumiro bez prywatnej kąpieli w pokoju; Ajisai 6 futonów, bez łóżek']],
-   def:'Shinanoki — spełnia każdy warunek, który postawiliśmy (prywatny rotenburo, cztery posłania w tym dwa łóżka, dwa posiłki, darmowe anulowanie), za 60% ceny Ten-yu. Zarezerwować dziś; jeśli do wiosny zatęsknicie za wyższą półką, Ten-yu ma anulowanie gratis — można przebookować.'},
+  {id:'ryokan-which', day:'2027-05-06', q:'Ryokan: Hanaori nad jeziorem (2 878 zł) czy prywatna kąpiel w pokoju?', by:'zarezerwować TERAZ — wszystkie z darmowym anulowaniem', impact:'~1 000–2 100 zł i charakter wieczoru',
+   opts:[['Hakone Ashinoko Hanaori — 2 878 zł (W PLANIE)','stoi w Tōgendai, gdzie kończy się kolejka linowa: zero dojazdu, można zostać nad wodą do zmierzchu; 9,1 z 3 217 opinii (największa próbka); 32 m², 2 łóżka + sofa + futon; onsen z widokiem na jezioro','kąpiel jest WSPÓLNA, nie w pokoju; w opiniach: zakaz wstępu z tatuażami'],
+         ['Sengokuhara Shinanoki — 1 859 zł','najtaniej; prywatna kąpiel na tarasie pokoju (38 m²); bez wspólnej łaźni','25 min autobusem znad jeziora; 8,9 z 1 129 opinii'],
+         ['Balinese Airu — 3 982 zł','prywatny rotenburo z widokiem na góry; 150 m od stacji Yumoto (rano 15 min do Odawary)','20 m² na cztery osoby, same futony; najdroższy'],
+         ['Hanaori z prywatną kąpielą — 4 156 zł','wszystko naraz: lokalizacja i kąpiel w pokoju','ponad dwa razy drożej niż Shinanoki']],
+   def:'Hanaori Standard — user wybrał lokalizację i dużą próbkę opinii zamiast prywatnej kąpieli. Uwaga: onsen jest wspólny i rozdzielony płciowo, więc trzynastolatek idzie z tatą.'},
   {id:'ryokan-meals', day:'2027-05-06', q:'Ryokan: z kolacją i śniadaniem czy bez?', by:'przy rezerwacji ryokanu', impact:'~600–900 zł',
    opts:[['Pakiet z kolacją i śniadaniem','to JEST atrakcja dnia; w Hakone wieczorem i tak nie ma dokąd wyjść; na Booking kolacja to bufet (dzieciom łatwiej), kaiseki w planach oficjalnych','+~10% ceny; kaiseki może być dla dzieci trudne'],
          ['Tylko nocleg','taniej','kolacja poza ryokanem = logistyka bez samochodu, wieczór stracony']],
@@ -1000,7 +1000,7 @@ const cardImg = (c,ph,alt,eager) => `<img class="dcimg" src="${ph}" alt="" width
 const JPSTOPS = [
   [34.9853,135.7581,'Kioto — pierwsza baza, 4 noce (stąd Nara i Arashiyama)'],
   [35.6804,139.7690,'Tokio — święta Golden Week (3 noce; atrakcje z rezerwacją na godzinę)'],
-  [35.2323,139.1069,'Hakone — ryokan z prywatnym onsenem (1 noc), stąd na lotnisko'],
+  [35.2337,139.0155,'Hakone — ryokan nad jeziorem Ashi (1 noc), stąd na lotnisko'],
 ];
 const GEO = {
   '2027-04-27':[[52.1657,20.9671,'Lotnisko Chopina (wylot 11:50)'],[24.4330,54.6511,'Lotnisko Abu Zabi (19:25)'],[24.4539,54.3773,'Grand Millenium Al Wahda']],
@@ -1008,12 +1008,12 @@ const GEO = {
   '2027-04-29':[[35.772,140.393,'Narita (przylot 12:45)'],[35.681,139.767,'Tokyo Station (NEX → shinkansen)'],[34.9858,135.7588,'Kioto — zameldowanie']],
   '2027-05-05':[[35.7142,139.7744,'Park Ueno (koinobori)'],[35.7295,139.7190,'Pokémon Center (Ikebukuro)'],[35.6817,139.7740,'Pokémon Café (Nihombashi)'],[35.7022,139.7741,'Akihabara']],
   '2027-05-04':[[35.6764,139.6993,'Meiji Jingū'],[35.6697,139.7050,'Muzeum Ōta (ukiyo-e)'],[35.6702,139.7026,'Harajuku / Takeshita-dōri'],[35.6595,139.7005,'Shibuya + Shibuya Sky']],
-  '2027-05-06':[[35.6654,139.7707,'Targ Tsukiji'],[35.6896,139.7006,'Shinjuku'],[35.2503,139.0503,'Gōra'],[35.2445,139.0197,'Ōwakudani'],[35.2044,139.0247,'Jezioro Ashi'],[35.2712,139.0007,'Ryokan Sengokuhara']],
+  '2027-05-06':[[35.6654,139.7707,'Targ Tsukiji'],[35.6896,139.7006,'Shinjuku'],[35.2503,139.0503,'Gōra'],[35.2445,139.0197,'Ōwakudani'],[35.2337,139.0155,'Tōgendai — ryokan Hanaori'],[35.2044,139.0247,'Moto-Hakone / Hakone-jinja']],
   '2027-05-03':[[34.9858,135.7588,'Kioto'],[35.681,139.767,'Tokyo Station'],[35.7108,139.7823,'Hotel w Ueno'],[35.7148,139.7967,'Asakusa / Sensō-ji']],
   '2027-04-30':[[34.9671,135.7727,'Fushimi Inari'],[34.9948,135.7850,'Kiyomizu-dera'],[35.0050,135.7649,'Nishiki Market']],
   '2027-05-01':[[34.6851,135.8430,'Park Nara'],[34.6889,135.8398,'Tōdai-ji'],[34.6819,135.8483,'Kasuga Taisha'],[35.0037,135.7756,'Warsztaty w Kioto']],
   '2027-05-02':[[35.0170,135.6716,'Arashiyama (bambus)'],[35.0110,135.6770,'Małpy Iwatayama'],[35.0394,135.7292,'Kinkaku-ji'],[35.0116,135.7681,'Powrót do Kioto']],
-  '2027-05-07':[[35.2712,139.0007,'Sengokuhara'],[35.2564,139.1553,'Odawara'],[35.681,139.767,'Tokyo Station'],[35.772,140.393,'Narita → wylot 18:00']],
+  '2027-05-07':[[35.2337,139.0155,'Tōgendai (jezioro Ashi)'],[35.2564,139.1553,'Odawara'],[35.681,139.767,'Tokyo Station'],[35.772,140.393,'Narita → wylot 18:00']],
 };
 const A = (id,label)=>({id,label}); // attraction link helper
 
@@ -1178,21 +1178,22 @@ const DAYS = [
  links:[A('pokemon','Pokémon Center + Café'),A('akihabara','Akihabara'),A('takkyubin','Takkyūbin na lotnisko')],
  more:[]},
 
-{date:'2027-05-06',dow:'czwartek',dd:'6 maja',city:'hakone',title:'Tsukiji o świcie, potem w góry Hakone',
+{date:'2027-05-06',dow:'czwartek',dd:'6 maja',city:'hakone',title:'Tsukiji o świcie, pętla Hakone i noc nad jeziorem',
  lead:'Pętla wulkaniczna, jezioro z bramą torii i pierwsza noc po japońsku: yukata, kolacja w ryokanie i gorące źródła.',
- chips:['Kultura: targ Tsukiji, ryokan, onsen','Dzieci: kolejki, statek, czarne jajka','Prywatny rotenburo'],
+ chips:['Kultura: targ Tsukiji, ryokan, onsen','Dzieci: kolejki, statek, czarne jajka','Nocleg nad jeziorem Ashi'],
  tl:[
   ['07:45','Targ Tsukiji','Pierwszy dzień po świętach — targ pracuje: sushi i tamagoyaki na patyku na śniadanie. Walizki pojechały wczoraj na lotnisko, dziś tylko plecaki.'],
   ['09:30','Metro do Shinjuku',''],
   ['10:00','Romancecar z Shinjuku','Ekspres z rezerwowanymi miejscami, ~85 min do Hakone-Yumoto; dzień po Golden Week jest luźniej.'],
   ['11:25','Hakone-Yumoto → kolejka górska do Gōry','Tōzan z zakosami ~40 min; Hakone Free Pass kupiony w Shinjuku.'],
   ['12:20','Kolejka linowa Sōunzan → Ōwakudani','Pola siarkowe i czarne jajka kuro-tamago (+7 lat życia od sztuki); lunch na górze.'],
-  ['14:15','Kolej linowa do Tōgendai','Przy dobrej pogodzie Fudżi nad jeziorem.'],
-  ['14:40','Rejs po jeziorze Ashi','„Piracki" galeon do Moto-Hakone (30 min) — brama torii Hakone-jinja przy brzegu; wracamy tym samym statkiem (w Free Passie).'],
-  ['16:30','Tōgendai → Sengokuhara','Autobus linii T ~10 min albo taksówka.'],
-  ['17:00','Ryokan','Zameldowanie, yukaty.'],
-  ['17:30','Onsen','Prywatna kąpiel onsen na tarasie pokoju — do dyspozycji o każdej porze; wspólne łaźnie dla chętnych.'],
-  ['18:30','Kolacja w ryokanie','W planach z Booking: bufet japońsko-zachodni (dzieciom łatwiej); wielodaniowe kaiseki tylko w droższych planach ze strony oficjalnej. Wieczorem druga kąpiel dla chętnych.'],
+  ['14:15','Kolej linowa do Tōgendai','Przy dobrej pogodzie Fudżi nad jeziorem. Ryokan stoi przy samej stacji.'],
+  ['14:30','Zameldowanie w Hanaori','Zostawiamy plecaki i idziemy na statek nalegko — hotel jest 2 minuty od przystani.'],
+  ['15:00','Rejs po jeziorze Ashi','„Piracki" galeon do Moto-Hakone (30 min), w Free Passie.'],
+  ['15:40','Hakone-jinja','Czerwona brama torii stojąca w jeziorze — najlepsze światło późnym popołudniem.'],
+  ['16:30','Powrót statkiem do Tōgendai','Ostatnie kursy ~17:00 — sprawdźcie rozkład rano.'],
+  ['17:15','Onsen z widokiem na jezioro','Duże łaźnie (osobno panowie i panie); przy dobrej pogodzie Fudżi nad wodą.'],
+  ['18:30','Kolacja w ryokanie','Kolacja i śniadanie w cenie. Wieczorem druga kąpiel dla chętnych — łaźnie czynne do późna.'],
  ],
  facts:[['Średnia','Intensywność'],['Romancecar + kolejki','Przejazdy'],['Umiarkowane','Chodzenie'],['Frajda z kolejek','Dla dzieci'],['Ryokan','Nocleg']],
  tips:['Fudżi najczęściej widać rano — trzymajcie kciuki przy porannej kolejce linowej i na jeziorze.','Nadanie dużych walizek kurierem (~2 000–2 500 ¥/szt.) oszczędza taszczenia po górach i przesiadkach.'],
@@ -1202,10 +1203,10 @@ const DAYS = [
 
 {date:'2027-05-07',dow:'piątek',dd:'7 maja',city:'hakone',title:'Poranny onsen i z gór prosto na lotnisko',
  lead:'Ostatnia kąpiel na tarasie, śniadanie w ryokanie i droga na Naritę — bez wracania do Tokio na noc.',
- chips:['Kultura: poranny onsen','Dzieci: Fudżi z okna shinkansena','Wylot 18:00'],
+ chips:['Kultura: onsen nad jeziorem','Dzieci: Fudżi z okna shinkansena','Wylot 18:00'],
  tl:[
-  ['07:30','Poranny onsen i śniadanie','Ostatnia kąpiel na tarasie.'],
-  ['09:15','Autobus do Odawary','Linia T z Sengokuhary ~60 min; w razie opóźnienia taksówka do Odawary ~40 min (~¥8 000).'],
+  ['07:30','Poranny onsen i śniadanie','Ostatnia kąpiel z widokiem na jezioro, potem śniadanie.'],
+  ['09:15','Autobus do Odawary','Hakone Tozan z Tōgendai ~65 min (linia przez Sengokuhara–Yumoto). Hotel wozi też gości na dworzec — potwierdźcie godzinę przy zameldowaniu.'],
   ['10:40','Shinkansen Odawara → Tokyo Station','~35 min (Kodama/Hikari); miejscówki kupione wcześniej.'],
   ['11:30','Tokyo Station','Ostatnie zakupy na Character Street — 30 minut.'],
   ['12:18','Narita Express','~55 min na lotnisko.'],
@@ -1238,11 +1239,11 @@ const HOTELS = [
  book:'https://www.booking.com/hotel/jp/mimaru-tokyo-ueno-east.html',
   jp:'東京都台東区東上野4-26-3',
  site:'https://mimaruhotels.com/en/hotel/ueno-east/'},
-{id:'hakone',name:'Sengokuhara Shinanoki Ichinoyu',stay:'Hakone · 1 noc (6–7.05, czwartek) · prywatny rotenburo',
- desc:'Ryokan z grupy Ichinoyu na płaskowyżu Sengokuhara: pokój „Tatami Area and Open-Air Bath” — 38 m², 2 łóżka + 2 futony, prywatna kąpiel onsen na tarasie, kolacja i śniadanie w cenie. Ten sam rdzeń doświadczenia co w Ten-yu (kąpiel o dowolnej porze, bez wspólnej łaźni) za ok. 60% ceny. 8,9 z ponad 1 100 opinii. Do Sengokuhary dojeżdża się autobusem znad jeziora Ashi (~25 min); rano do Odawary ~60 min. Wariant premium: Hakone Kowakien Ten-yu (9,1; Superior z rotenburo, ~4 200 zł) — patrz „Decyzje otwarte”.',
- price:'~1 675 zł/noc z kolacją i śniadaniem (Booking, czwartek 6.05.2027 — dzień po Golden Week; 3 dorosłych + dziecko; bezpłatne anulowanie)',near:'Sengokuhara; autobus z Tōgendai (jezioro Ashi) ~25 min, z Gōry ~20 min',
- mapsq:'Sengokuhara Shinanoki Ichinoyu, Hakone',
- site:'https://www.booking.com/hotel/jp/sengokuhara-shinanoki-ichinoyu.pl.html'}
+{id:'hakone',name:'Hakone Ashinoko Hanaori',stay:'Hakone · 1 noc (6–7.05, czwartek) · nad jeziorem Ashi',
+ desc:'Nowoczesny ryokan <b>w Tōgendai, nad samym jeziorem Ashi</b> — dokładnie tam, gdzie kończy się nasza kolejka linowa z Ōwakudani i skąd odpływa statek. Zero dojazdu do noclegu. Pokój Standard: 32 m², 2 łóżka + rozkładana sofa + futon, balkon, prywatna łazienka; kolacja i śniadanie w cenie. Duże łaźnie onsen z widokiem na jezioro i Fudżi. <b>Ocena 9,1 z ponad 3 200 opinii</b> — największa próbka spośród ryokanów, które sprawdzaliśmy. Hotel wozi gości z dworca Odawara (11:15, 14:15, 16:45).',
+ price:'2 878 zł/noc z kolacją i śniadaniem (Booking, czwartek 6.05.2027, 3 dorosłych + dziecko; zostały 3 pokoje; bezpłatne anulowanie do 3.05.2027, płatność do 1.05)',near:'Motohakone-Tōgendai 160, nad jeziorem Ashi — przystanek kolejki linowej i przystań statków tuż obok',
+ mapsq:'Hakone Ashinoko Hanaori, Togendai',
+ site:'https://www.booking.com/hotel/jp/hakone-ashinoko-hanaori.pl.html'},
 ];
 const gmapsQ = name => 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);
 // day date -> hotel id (check-in days)
@@ -1270,7 +1271,7 @@ const DAYFLEX = {
   '2027-05-03':['shinkansen do Tokio (miejscówki!)','wieczorną Asakusę można skrócić'],
   '2027-05-04':['Shibuya Sky (rezerwacja!)','Muzeum Ōta (jeśli zamknięte po święcie — Tokyo National Museum w Ueno) albo Harajuku, nie oba na siłę'],
   '2027-05-05':['Pokémon Café (rezerwacja!) + kurier walizek na lotnisko','Akihabarę wieczorem'],
-  '2027-05-06':['ryokan + Ōwakudani','rejs po Ashi i torii Hakone-jinja — gdy jesteście spóźnieni, z Tōgendai prosto do ryokanu (zysk ~1,5 h)'],
+  '2027-05-06':['ryokan nad jeziorem + Ōwakudani','rejs i Hakone-jinja — gdy jesteście spóźnieni, meldujecie się i zostajecie nad wodą (ryokan jest przy przystani)'],
   '2027-05-07':['autobus 9:15 + shinkansen + NEX + lot 18:00','zakupy na Tokyo Station dowolnie'],
 };
 
@@ -1443,7 +1444,7 @@ function indexPage(){
     <a class="qcard" href="atrakcje.html"><div class="qi">🎟️</div><div class="qh">Atrakcje</div><div class="qd">Godziny, ceny, dni zamknięcia i linki do rezerwacji — 44 miejsca.</div></a>
     <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Hotele</div><div class="qd">3 bazy na 8 nocy w Japonii + noc w Abu Zabi gratis.</div></a>
     <a class="qcard" href="loty.html"><div class="qi">✈️</div><div class="qh">Loty</div><div class="qd">Wybrany bilet, archiwum cen i dlaczego akurat ten termin.</div></a>
-    <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet</div><div class="qd">Kalkulator kosztów, zweryfikowane taryfy kolejowe, budżet ~39 tys.</div></a>
+    <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet</div><div class="qd">Kalkulator kosztów, zweryfikowane taryfy kolejowe, budżet ~40 tys.</div></a>
     <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Pogoda na przełomie kwietnia i maja, co spakować i plany B na deszcz.</div></a>
     <a class="qcard" href="druk.html"><div class="qi">🖨️</div><div class="qh">Plan do druku (PDF)</div><div class="qd">Cały plan na kartkach — do wydruku albo offline na telefon.</div></a>
   </div>`;
@@ -1455,7 +1456,7 @@ function indexPage(){
       <p class="eyebrow">Plan rodzinny · 2+2 · 11 dni</p>
       <h1>Japonia 2027</h1>
       <p class="lead">27 kwietnia – 7 maja 2027 · Abu Zabi (stopover z hotelem gratis) – Kioto – Tokio – Hakone, z wypadem do Nary. Trasa odwrócona pod Golden Week: Kioto przed szczytem świąt, święta w Tokio (znosi je lepiej niż Kioto), na koniec ryokan i z gór prosto na lotnisko.</p>
-      <div class="chips"><span class="chip">✈️ Etihad</span><span class="chip">🕌 noc w Abu Zabi gratis</span><span class="chip">🏨 8 nocy w Japonii</span><span class="chip">🎏 Dzień Dziecka w Tokio</span><span class="chip">♨️ ryokan z onsenem</span></div>
+      <div class="chips"><span class="chip">✈️ Etihad</span><span class="chip">🕌 noc w Abu Zabi gratis</span><span class="chip">🏨 8 nocy w Japonii</span><span class="chip">🎏 Dzień Dziecka w Tokio</span><span class="chip">♨️ ryokan nad jeziorem</span></div>
     </div>
     <div class="scrollcue" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
   </header>
@@ -1465,7 +1466,7 @@ function indexPage(){
     <div class="stt"><b>11</b><span>dni podróży</span></div>
     <div class="stt"><b>3</b><span>bazy w Japonii</span></div>
     <div class="stt"><b>8</b><span>nocy w Japonii</span></div>
-    <div class="stt"><b>~39<small>tys zł</small></b><span>budżet 2+2</span></div>
+    <div class="stt"><b>~40<small>tys zł</small></b><span>budżet 2+2</span></div>
   </section>
 
   <section>
@@ -1538,7 +1539,7 @@ function kosztyPage(){
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
           <tr><td class="cat">✈️ Loty<span class="hint">Etihad ze stopoverem (cena z etihad.com 7.09: 13 600 zł) + walizka na powrót</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="${TICKET.total}" min="0" step="100"></td></tr>
-          <tr><td class="cat">🏨 Noclegi<span class="hint">Kioto 4 800 (4 noce) + Tokio 3 800 (3 noce) + ryokan 1 675 = 10 275 zł; Abu Zabi gratis</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1285" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">Kioto 4 800 (4 noce) + Tokio 3 800 (3 noce) + Hanaori 2 878 = 11 478 zł; Abu Zabi gratis</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1435" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 shinkanseny + NEX ×2 + metro + Hakone</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4200" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">warsztaty kultury, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2200" min="0" step="100"></td></tr>
@@ -1564,7 +1565,7 @@ function kosztyPage(){
   ${footer('')}
   <script>
   (function(){
-    var D={flights:${TICKET.total},nights:8,nightRate:1285,transport:4200,days:11,foodRate:500,attractions:2200,extras:3000};
+    var D={flights:${TICKET.total},nights:8,nightRate:1435,transport:4200,days:11,foodRate:500,attractions:2200,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
@@ -1634,7 +1635,7 @@ function hotelePage(){
   const HOTELGEO=[
     [34.9880,135.7590,'MIMARU Kyoto Station · Kioto (4 noce — pierwsza baza)'],
     [35.7108,139.7823,'MIMARU Tokyo Ueno EAST · Tokio (3 noce)'],
-    [35.2712,139.0007,'Sengokuhara Shinanoki Ichinoyu · Hakone (1 noc)'],
+    [35.2337,139.0155,'Hakone Ashinoko Hanaori · Tōgendai, jezioro Ashi (1 noc)'],
   ];
   const inner=`
   <header class="hero kb">
@@ -1642,7 +1643,7 @@ function hotelePage(){
     <div class="hero-inner">
     <p class="eyebrow">Noclegi · 9 nocy · 4 obiekty · chronologicznie</p>
     <h1>Hotele</h1>
-    <p class="lead">Trzy bazy pod rodzinę 2+2: aparthotele MIMARU z aneksami i pralką oraz ryokan z prywatnym onsenem na jedną górską noc. Sześć ostatnich nocy w jednym pokoju w Kioto.</p>
+    <p class="lead">Trzy bazy pod rodzinę 2+2: aparthotele MIMARU z aneksami i pralką oraz ryokan nad jeziorem Ashi na jedną górską noc. Sześć ostatnich nocy w jednym pokoju w Kioto.</p>
   </div>
   </header>
   <section>
@@ -1660,8 +1661,8 @@ function hotelePage(){
   <section>
     <div class="card"><ul class="tips">
       <li><b>Rezerwujcie wrzesień–październik 2026</b> z darmowym anulowaniem (Booking/strony hoteli) — pokoje 4-osobowe znikają pierwsze, a początek maja łapie ogon Golden Week.</li>
-      <li>Ryokan w Hakone (wyższa półka): wybierzcie pokój z prywatnym rotenburo i plan z kolacją + śniadaniem w cenie (na Booking kolacja to bufet; kaiseki tylko w planach ze strony oficjalnej).</li>
-      <li>Ceny to widełki orientacyjne za pokój/apartament dla 4 osób; suma 8 płatnych nocy = <b>10 275 zł</b> (Kioto 4 800 + Tokio 3 800 + ryokan 1 675; w kalkulatorze 8 × 1 285 zł jako średnia; Abu Zabi gratis).</li>
+      <li>Ryokan w Hakone: Hanaori nad jeziorem Ashi, pokój Standard dla 4 osób z kolacją i śniadaniem — zostały 3 pokoje, darmowe anulowanie.</li>
+      <li>Ceny to widełki orientacyjne za pokój/apartament dla 4 osób; suma 8 płatnych nocy = <b>11 478 zł</b> (Kioto 4 800 + Tokio 3 800 + ryokan Hanaori 2 878; w kalkulatorze 8 × 1 435 zł jako średnia; Abu Zabi gratis).</li>
       
       <li>Adresy dla taksówkarza najlepiej pokazywać z Google Maps po japońsku — kliknięcie zdjęcia hotelu otwiera właściwe miejsce od razu.</li>
     </ul></div>
@@ -1744,7 +1745,7 @@ function decyzjePage(){
         <tr><td class="dcol">3 maja</td><td>Sensō-ji o zmroku</td><td>Nakamise, pierwsze gachapony</td></tr>
         <tr><td class="dcol">4 maja</td><td>chram Meiji Jingū, ukiyo-e w Muzeum Ōta</td><td>Harajuku, Shibuya Sky o zachodzie</td></tr>
         <tr><td class="dcol">5 maja</td><td>poranek w parku Ueno, Kan’ei-ji</td><td>Dzień Dziecka: Pokémon Center + Café, Akihabara</td></tr>
-        <tr><td class="dcol">6 maja</td><td>targ Tsukiji, ryokan: yukata, kolacja, prywatny onsen</td><td>kolejki, statek „piracki”, czarne jajka</td></tr>
+        <tr><td class="dcol">6 maja</td><td>targ Tsukiji, ryokan nad jeziorem: yukata, kolacja, onsen</td><td>kolejki, statek „piracki”, czarne jajka</td></tr>
       </tbody></table>
     </div>
     <div class="dnote" style="margin-top:12px">📌 Co świadomie odpuściliśmy: ikebanę i osobny dzień warsztatów (zamiast tego herbata + kaligrafia po Narze), turniej sumo — zaczyna się 9.05, dwa dni po naszym powrocie (w katalogu jest pokaz z byłymi zawodnikami, dostępny codziennie) i Osakę. Zasada „bez kimona na całe popołudnie” zostaje — kultura ma być doświadczeniem, nie przebieranką.</div>
@@ -1842,7 +1843,7 @@ function drukPage(){
     </div>
     <div class="cfacts">
       <div><b>11</b>dni podróży</div><div><b>8</b>nocy w Japonii</div>
-      <div><b>3</b>bazy w Japonii</div><div><b>~39<i>tys. zł</i></b>budżet 2+2</div>
+      <div><b>3</b>bazy w Japonii</div><div><b>~40<i>tys. zł</i></b>budżet 2+2</div>
     </div>
     <h3 class="toch">Spis treści</h3>
     <ol class="toc">${toc}</ol>
@@ -1864,7 +1865,7 @@ function drukPage(){
     <h3>Terminy, których nie można przegapić</h3>
     <table class="agenda">
       <tr><td class="t">do I 2027</td><td><b>Bilety lotnicze</b><span class="dsc">Twardy deadline: koniec stycznia 2027. Najlepsze okna: Black Friday (20.11–2.12.2026) i styczniowa wyprzedaż Etihad.</span></td></tr>
-      <tr><td class="t">IX–X 2026</td><td><b>Noclegi</b><span class="dsc">Rezerwować z darmowym anulowaniem — pokoje 4-osobowe i ryokan z prywatnym onsenem znikają pierwsze.</span></td></tr>
+      <tr><td class="t">IX–X 2026</td><td><b>Noclegi</b><span class="dsc">Rezerwować z darmowym anulowaniem — pokoje 4-osobowe i ryokan nad jeziorem Ashi znikają pierwsze.</span></td></tr>
       <tr><td class="t">~II 2027</td><td><b>Nintendo Museum</b><span class="dsc">Loteria biletowa (opcja na dzień w Narze).</span></td></tr>
       <tr><td class="t">~IV 2027</td><td><b>Miejscówki kolejowe</b><span class="dsc">NEX + shinkansen do Kioto (29.04), Kioto→Tokio (3.05, święto!), Odawara→Tokio + NEX (7.05). W Golden Week bez miejscówek nie ma miejsc — kupić w SmartEX.</span></td></tr>
       <tr><td class="t">4 tyg.</td><td><b>Shibuya Sky</b><span class="dsc">Slot na zachód słońca; rezerwować tylko przy dobrej prognozie.</span></td></tr>
@@ -2147,7 +2148,7 @@ function lotyPage(){
   <section>
     <h2 class="stitle">Dalej</h2>
     <div class="quick">
-      <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet całości</div><div class="qd">Kalkulator kosztów, zweryfikowane taryfy kolejowe, budżet ~39 tys.</div></a>
+      <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet całości</div><div class="qd">Kalkulator kosztów, zweryfikowane taryfy kolejowe, budżet ~40 tys.</div></a>
       <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Noclegi</div><div class="qd">3 bazy: cztery noce w Kiocie, trzy w Tokio, ryokan w Hakone.</div></a>
     </div>
   </section>
@@ -2287,7 +2288,7 @@ function niezbednikPage(){
       'W pociągach obowiązuje <b>cisza</b>, telefon na milczek, rozmowy szeptem.',
       '<b>Koszy na śmieci prawie nie ma</b> — noście małą torebkę na odpadki i wyrzucajcie w hotelu albo w konbini.',
       'Nie je się i nie pije w ruchu — zwykle staje się obok automatu albo sklepu.',
-      '<b>Tatuaże</b> bywają problemem w publicznych onsenach; prywatne rotenburo w naszym ryokanie w Hakone to rozwiązuje.'])}
+      '<b>Tatuaże</b>: w publicznych onsenach zwykle obowiązuje zakaz — w opiniach o naszym ryokanie (Hanaori) jest to wprost potwierdzone. Jeśli to problem, wybierzcie pokój z prywatną kąpielą (patrz „Decyzje otwarte”).'])}
     ${seg('🛍️ Tax-free i aplikacje',[
       'W sklepach z oznaczeniem <b>„Tax-Free"</b> zwrot podatku od zakupów powyżej ok. 5 000 ¥ — <b>przy kasie, za okazaniem paszportu</b> (nie na lotnisku).',
       'Towary „konsumpcyjne" (kosmetyki, słodycze) pakują zaklejone — formalnie nie należy ich otwierać przed wyjazdem z Japonii.',
