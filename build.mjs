@@ -1051,7 +1051,7 @@ const DAYS = [
  more:[['Kontekst','Meczet Szejka Zajida mieści 40 tysięcy wiernych; marmur, złoto i kryształowe żyrandole robią wrażenie niezależnie od wieku. Luwr AD to filia paryskiego Luwru pod słynną kopułą Jeana Nouvela — „deszcz światła" nad galeriami.']]},
 
 {date:'2027-04-29',dow:'czwartek',dd:'29 kwietnia',city:'kioto',title:'Przylot do Tokio i shinkansen do Kioto',
- lead:'Lądujemy w południe i od razu jedziemy do dawnej stolicy — żeby Kioto zobaczyć PRZED szczytem Golden Week, a święta spędzić w wyludnionym Tokio.',
+ lead:'Lądujemy w południe i od razu jedziemy do dawnej stolicy — żeby Kioto zobaczyć PRZED szczytem Golden Week, a święta spędzić w Tokio, które znosi je lepiej.',
  chips:['Kultura: pierwszy wieczór w Kiocie','Dzieci: Fudżi z okna shinkansena','NEX + shinkansen'],
  tl:[
   ['12:45','Lądowanie na Naricie','Imigracja z kodem QR Visit Japan Web (wypełnić w samolocie), odbiór bagaży.'],
