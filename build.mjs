@@ -2167,7 +2167,7 @@ function pogodaPage(){
     <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(31,94,90,.56),rgba(18,44,42,.42)),url('${IMG.fuji}') center/cover"></div></div>
     <div class="hero-inner">
     <p class="eyebrow">Klimat i pakowanie</p>
-    <h1>Pogoda w maju</h1>
+    <h1>Pogoda i pakowanie</h1>
     <p class="lead">Przełom kwietnia i maja to jeden z najlepszych momentów na Japonię: ciepło, słonecznie i sucho — przed sezonem deszczowym, który na głównej wyspie zaczyna się dopiero w czerwcu.</p>
   </div>
   </header>
