@@ -2215,7 +2215,7 @@ function pogodaPage(){
     </ul></div>
   </section>
   ${footer('')}`;
-  return shell({title:'Pogoda i pakowanie · Japonia 2027',desc:'Pogoda w maju w Japonii i lista rzeczy do spakowania.',prefix:'',active:'pogoda.html',inner,pillsIdx:null});
+  return shell({title:'Pogoda i pakowanie · Japonia 2027',desc:'Pogoda na przełomie kwietnia i maja w Japonii i lista rzeczy do spakowania.',prefix:'',active:'pogoda.html',inner,pillsIdx:null});
 }
 
 /* ---- atrakcje (reuse existing card content under new shell) ---- */
