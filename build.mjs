@@ -87,7 +87,7 @@ const BOOKINGS = [
   {when:'IX–X 2026', what:'DECYZJA: Pokémon Room czy zwykły apartament (Ueno)', note:'Domyślnie zwykły 4 łóżka; Pokémon tylko przy dopłacie < ~150 zł/noc.'},
   {when:'II–III 2027', what:'Warsztaty kultury w Kioto', note:'Rezerwacja 1–2 miesiące wcześniej.'},
   {when:'29.03 · 3.04 · 7.04', what:'Miejscówki na shinkansen (SmartEX)', note:'Sprzedaż rusza miesiąc przed przejazdem o 10:00 JST (3:00 w PL): 29.03 → NEX + Tokio→Kioto na 29.04; 3.04 → Kioto→Tokio na 3.05 (święto — punktualnie!); 7.04 → Odawara→Tokio + NEX na 7.05. Romancecar (6.05) na stronie Odakyu miesiąc wcześniej.'},
-  {when:'ZARAZ PO BILETACH', what:'Noclegi — darmowe anulowanie', note:'Kolejność: MIMARU Kyoto Station 29.04–3.05 (zostało 1–5 apartamentów w Golden Week!) → MIMARU Ueno 3–6.05 → Shinanoki 6.05. Wszystkie z bezpłatnym anulowaniem, więc rezerwacja dziś nic nie ryzykuje.'},
+  {when:'ZARAZ PO BILETACH', what:'Noclegi — darmowe anulowanie', note:'Kolejność: MIMARU Kyoto Station 29.04–3.05 (4 800 zł; zostało 1–5 apartamentów w Golden Week!) → MIMARU Ueno 3–6.05 (3 800 zł) → Shinanoki 6.05 (1 675 zł). Wszystkie z bezpłatnym anulowaniem, więc rezerwacja dziś nic nie ryzykuje.'},
   {when:'~III 2027', what:'Kalendarz Muzeum Ōta na maj', note:'Muzeum zamyka się w poniedziałki i w dzień PO poniedziałkowym święcie (3.05 to święto). Jeśli 4.05 zamknięte — Tokyo National Museum w Ueno (ukiyo-e, otwarte w święta, 5 min od hotelu).'},
   {when:'~1.04.2027', what:'Ubezpieczenie turystyczne', note:'Leczenie + NNW dla czterech osób.'},
   {when:'4 tyg. przed', what:'Shibuya Sky', note:'Slot na zachód słońca — rezerwować dopiero przy dobrej prognozie.'},
@@ -1228,13 +1228,13 @@ const HOTELS = [
  site:'https://www.millenniumhotels.com/en/abu-dhabi/grand-millennium-al-wahda/'},
 {id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 4 noce (29.04–3.05)',
  desc:'Ta sama rodzinna formuła co w Tokio, tuż przy dworcu Kioto. To nasza główna baza — cztery noce w jednym pokoju, bez pakowania. Idealny punkt wypadowy na Narę (Kintetsu) i Arashiyamę (JR); 3.05 shinkansen do Tokio odjeżdża spod samych drzwi.',
- price:'~800–1 000 zł/noc (apartament 4-os.)',near:'3 min pieszo od dworca Kyoto',
+ price:'4 800 zł za 4 noce (29.04–3.05, Golden Week) — ~1 200 zł/noc, apartament 4-os.',near:'3 min pieszo od dworca Kyoto',
  book:'https://www.booking.com/hotel/jp/mimaru-jing-du-station.html',
   jp:'京都市下京区・京都駅八条口すぐ',
  site:'https://mimaruhotels.com/en/hotel/kyoto-station/'},
 {id:'tokio1',name:'MIMARU Tokyo Ueno EAST',stay:'Tokio · 3 noce (3–6.05)',
  desc:'Aparthotel projektowany pod rodziny: apartament dla 4 osób z aneksem kuchennym i osobną sypialnią. Spokojna okolica Ueno, ~10 min metrem do Asakusy, wygodny start po przylocie.',
- price:'~750–950 zł/noc (apartament 4-os.)',near:'metro Inarichō / JR Ueno',
+ price:'3 800 zł za 3 noce (3–6.05) — ~1 267 zł/noc, apartament 4-os.',near:'metro Inarichō / JR Ueno',
  book:'https://www.booking.com/hotel/jp/mimaru-tokyo-ueno-east.html',
   jp:'東京都台東区東上野4-26-3',
  site:'https://mimaruhotels.com/en/hotel/ueno-east/'},
@@ -1443,7 +1443,7 @@ function indexPage(){
     <a class="qcard" href="atrakcje.html"><div class="qi">🎟️</div><div class="qh">Atrakcje</div><div class="qd">Godziny, ceny, dni zamknięcia i linki do rezerwacji — 44 miejsca.</div></a>
     <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Hotele</div><div class="qd">3 bazy na 8 nocy w Japonii + noc w Abu Zabi gratis.</div></a>
     <a class="qcard" href="loty.html"><div class="qi">✈️</div><div class="qh">Loty</div><div class="qd">Wybrany bilet, archiwum cen i dlaczego akurat ten termin.</div></a>
-    <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet</div><div class="qd">Kalkulator kosztów, zweryfikowane taryfy kolejowe, budżet ~37 tys.</div></a>
+    <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet</div><div class="qd">Kalkulator kosztów, zweryfikowane taryfy kolejowe, budżet ~39 tys.</div></a>
     <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Pogoda na przełomie kwietnia i maja, co spakować i plany B na deszcz.</div></a>
     <a class="qcard" href="druk.html"><div class="qi">🖨️</div><div class="qh">Plan do druku (PDF)</div><div class="qd">Cały plan na kartkach — do wydruku albo offline na telefon.</div></a>
   </div>`;
@@ -1465,7 +1465,7 @@ function indexPage(){
     <div class="stt"><b>11</b><span>dni podróży</span></div>
     <div class="stt"><b>3</b><span>bazy w Japonii</span></div>
     <div class="stt"><b>8</b><span>nocy w Japonii</span></div>
-    <div class="stt"><b>~37<small>tys zł</small></b><span>budżet 2+2</span></div>
+    <div class="stt"><b>~39<small>tys zł</small></b><span>budżet 2+2</span></div>
   </section>
 
   <section>
@@ -1538,7 +1538,7 @@ function kosztyPage(){
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
           <tr><td class="cat">✈️ Loty<span class="hint">Etihad ze stopoverem (cena z etihad.com 7.09: 13 600 zł) + walizka na powrót</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="${TICKET.total}" min="0" step="100"></td></tr>
-          <tr><td class="cat">🏨 Noclegi<span class="hint">średnia z 8 nocy: Kioto w Golden Week ~1 300 zł, Tokio ~1 100 zł, ryokan ~1 675 zł z posiłkami (Abu Zabi gratis)</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1250" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">Kioto 4 800 (4 noce) + Tokio 3 800 (3 noce) + ryokan 1 675 = 10 275 zł; Abu Zabi gratis</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1285" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 shinkanseny + NEX ×2 + metro + Hakone</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4200" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">warsztaty kultury, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2200" min="0" step="100"></td></tr>
@@ -1564,7 +1564,7 @@ function kosztyPage(){
   ${footer('')}
   <script>
   (function(){
-    var D={flights:${TICKET.total},nights:8,nightRate:1250,transport:4200,days:11,foodRate:500,attractions:2200,extras:3000};
+    var D={flights:${TICKET.total},nights:8,nightRate:1285,transport:4200,days:11,foodRate:500,attractions:2200,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
@@ -1661,7 +1661,7 @@ function hotelePage(){
     <div class="card"><ul class="tips">
       <li><b>Rezerwujcie wrzesień–październik 2026</b> z darmowym anulowaniem (Booking/strony hoteli) — pokoje 4-osobowe znikają pierwsze, a początek maja łapie ogon Golden Week.</li>
       <li>Ryokan w Hakone (wyższa półka): wybierzcie pokój z prywatnym rotenburo i plan z kolacją + śniadaniem w cenie (na Booking kolacja to bufet; kaiseki tylko w planach ze strony oficjalnej).</li>
-      <li>Ceny to widełki orientacyjne za pokój/apartament dla 4 osób; suma 8 płatnych nocy ≈ 9–10 tys. zł (w kalkulatorze liczymy 8 × 1 250 zł — średnia z aparthoteli i droższego ryokanu; Abu Zabi gratis).</li>
+      <li>Ceny to widełki orientacyjne za pokój/apartament dla 4 osób; suma 8 płatnych nocy = <b>10 275 zł</b> (Kioto 4 800 + Tokio 3 800 + ryokan 1 675; w kalkulatorze 8 × 1 285 zł jako średnia; Abu Zabi gratis).</li>
       
       <li>Adresy dla taksówkarza najlepiej pokazywać z Google Maps po japońsku — kliknięcie zdjęcia hotelu otwiera właściwe miejsce od razu.</li>
     </ul></div>
@@ -1842,7 +1842,7 @@ function drukPage(){
     </div>
     <div class="cfacts">
       <div><b>11</b>dni podróży</div><div><b>8</b>nocy w Japonii</div>
-      <div><b>3</b>bazy w Japonii</div><div><b>~37<i>tys. zł</i></b>budżet 2+2</div>
+      <div><b>3</b>bazy w Japonii</div><div><b>~39<i>tys. zł</i></b>budżet 2+2</div>
     </div>
     <h3 class="toch">Spis treści</h3>
     <ol class="toc">${toc}</ol>
@@ -2147,7 +2147,7 @@ function lotyPage(){
   <section>
     <h2 class="stitle">Dalej</h2>
     <div class="quick">
-      <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet całości</div><div class="qd">Kalkulator kosztów, zweryfikowane taryfy kolejowe, budżet ~37 tys.</div></a>
+      <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet całości</div><div class="qd">Kalkulator kosztów, zweryfikowane taryfy kolejowe, budżet ~39 tys.</div></a>
       <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Noclegi</div><div class="qd">3 bazy: cztery noce w Kiocie, trzy w Tokio, ryokan w Hakone.</div></a>
     </div>
   </section>
