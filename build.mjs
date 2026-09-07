@@ -1640,7 +1640,7 @@ function hotelePage(){
   <header class="hero kb">
     <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(18,39,64,.40)),url('${IMG.tokyostation}') center/cover"></div></div>
     <div class="hero-inner">
-    <p class="eyebrow">Noclegi · 9 nocy · 4 obiekty · pokoje rodzinne 4-os.</p>
+    <p class="eyebrow">Noclegi · 9 nocy · 4 obiekty · chronologicznie</p>
     <h1>Hotele</h1>
     <p class="lead">Trzy bazy pod rodzinę 2+2: aparthotele MIMARU z aneksami i pralką oraz ryokan z prywatnym onsenem na jedną górską noc. Sześć ostatnich nocy w jednym pokoju w Kioto.</p>
   </div>
@@ -1747,7 +1747,7 @@ function decyzjePage(){
         <tr><td class="dcol">6 maja</td><td>targ Tsukiji, ryokan: yukata, kolacja, prywatny onsen</td><td>kolejki, statek „piracki”, czarne jajka</td></tr>
       </tbody></table>
     </div>
-    <div class="dnote" style="margin-top:12px">📌 Co świadomie odpuściliśmy: ikebanę i osobny dzień warsztatów (zamiast tego herbata + kaligrafia po Narze), turniej sumo (w katalogu jest pokaz z byłymi zawodnikami jako opcja) i Osakę. Zasada „bez kimona na całe popołudnie” zostaje — kultura ma być doświadczeniem, nie przebieranką.</div>
+    <div class="dnote" style="margin-top:12px">📌 Co świadomie odpuściliśmy: ikebanę i osobny dzień warsztatów (zamiast tego herbata + kaligrafia po Narze), turniej sumo — zaczyna się 9.05, dwa dni po naszym powrocie (w katalogu jest pokaz z byłymi zawodnikami, dostępny codziennie) i Osakę. Zasada „bez kimona na całe popołudnie” zostaje — kultura ma być doświadczeniem, nie przebieranką.</div>
   </section>
 
   <section>
@@ -2147,8 +2147,8 @@ function lotyPage(){
   <section>
     <h2 class="stitle">Dalej</h2>
     <div class="quick">
-      <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet całości</div><div class="qd">Kalkulator kosztów, transport w Japonii i widełki 40–60 tys.</div></a>
-      <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Noclegi</div><div class="qd">3 bazy: Tokio, ryokan w Hakone i sześć nocy w Kiocie.</div></a>
+      <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet całości</div><div class="qd">Kalkulator kosztów, zweryfikowane taryfy kolejowe, budżet ~37 tys.</div></a>
+      <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Noclegi</div><div class="qd">3 bazy: cztery noce w Kiocie, trzy w Tokio, ryokan w Hakone.</div></a>
     </div>
   </section>
   ${footer('')}`;
@@ -2168,7 +2168,7 @@ function pogodaPage(){
     <div class="hero-inner">
     <p class="eyebrow">Klimat i pakowanie</p>
     <h1>Pogoda w maju</h1>
-    <p class="lead">Maj to jeden z najlepszych miesięcy na Japonię: ciepło, słonecznie i sucho — przed sezonem deszczowym, który na głównej wyspie zaczyna się dopiero w czerwcu.</p>
+    <p class="lead">Przełom kwietnia i maja to jeden z najlepszych momentów na Japonię: ciepło, słonecznie i sucho — przed sezonem deszczowym, który na głównej wyspie zaczyna się dopiero w czerwcu.</p>
   </div>
   </header>
   <section>
@@ -2190,7 +2190,7 @@ function pogodaPage(){
       <li>Ubrania na warstwy — rano i wieczorem chłodniej, zwłaszcza w Hakone.</li>
       <li>Lekka kurtka lub wiatrówka i składany parasol (~9 dni z deszczem w miesiącu, zwykle przelotnie).</li>
       <li>Wygodne buty łatwe do zdejmowania — świątynie, tatami i warsztaty tego wymagają.</li>
-      <li>Krem z filtrem i nakrycia głowy — słońce w maju potrafi mocno operować.</li>
+      <li>Krem z filtrem i nakrycia głowy — słońce o tej porze potrafi mocno operować.</li>
       <li>Coś cieplejszego na wieczór w ryokanie w Hakone; zmierzch ok. 18:30.</li>
     </ul></div>
   </section>
@@ -2303,7 +2303,7 @@ function niezbednikPage(){
   <section>
     <h2 class="stitle">Dalej</h2>
     <div class="quick">
-      <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Czego się spodziewać w maju, co spakować i plany B na deszcz.</div></a>
+      <a class="qcard" href="pogoda.html"><div class="qi">☀️</div><div class="qh">Pogoda i pakowanie</div><div class="qd">Czego się spodziewać na przełomie kwietnia i maja, co spakować i plany B na deszcz.</div></a>
       <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Noclegi</div><div class="qd">Adresy po japońsku do pokazania taksówkarzowi.</div></a>
       <a class="qcard" href="druk.html"><div class="qi">📄</div><div class="qh">Plan do druku</div><div class="qd">Całość na kartkach — na wypadek rozładowanego telefonu.</div></a>
     </div>
