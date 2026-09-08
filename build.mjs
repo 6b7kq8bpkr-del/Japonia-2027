@@ -1523,7 +1523,7 @@ function kosztyPage(){
 
   <section>
     <h2 class="stitle">Transport w Japonii — zweryfikowane taryfy</h2>
-    <p class="lead-p">Taryfy sprawdzone w lipcu 2026; przeliczenia po kursie NBP z 7.09.2026: ¥100 ≈ 2,4 zł. Młodsze dziecko (do 11 lat) płaci taryfę dziecięcą — na kolei dokładnie połowę.</p>
+    <p class="lead-p">Taryfy sprawdzone w lipcu 2026; przeliczenia po kursie NBP z 7.09.2026: ¥100 ≈ 2,40 zł. Młodsze dziecko (do 11 lat) płaci taryfę dziecięcą — na kolei dokładnie połowę.</p>
     ${seg('Przejazdy między miastami',[
       '<b>Narita → Tokio → Kioto</b> (29.04): NEX ~¥3 070 + shinkansen ~¥14 170/dorosły',
       
@@ -1542,7 +1542,7 @@ function kosztyPage(){
         <tbody>
           <tr><td class="cat">✈️ Loty<span class="hint">Etihad ze stopoverem, kupione 8.09 za 14 400 zł; bez bagażu rejestrowanego (walizka na powrót ~220 zł tylko awaryjnie)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="${TICKET.total}" min="0" step="100"></td></tr>
           <tr><td class="cat">🏨 Noclegi<span class="hint">Kioto 4 800 (4 noce) + Tokio 3 800 (3 noce) + Hanaori 2 878 = 11 478 zł; Abu Zabi gratis</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1435" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
-          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca: Nozomi ×2 ~2 400 zł, Odawara→Tokio ~310, NEX ×2 ~500, Free Pass + Romancecar ~550, Kintetsu Ltd. Exp. ~210, metro/IC ~600, transfery w Abu Zabi ~150</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4800" min="0" step="100"></td></tr>
+          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca, kurs NBP 2,40: Nozomi ×2 ~2 500 zł, Odawara→Tokio ~320, NEX ×2 ~520, Free Pass + Romancecar ~570, Kintetsu Ltd. Exp. ~215, metro/IC ~620, taksówka pod Kiyomizu ~50, transfery w Abu Zabi ~150</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4900" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">podstawa ~1 065 zł: ceremonia herbaty ~430, Pokémon Café ~180, Shibuya Sky ~200, świątynie + małpy + drobiazgi ~255; reszta (~1 135) na opcje: kaligrafia/ninja, Open-Air Museum, Kinkaku-ji, teamLab</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2200" min="0" step="100"></td></tr>
           <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane; streetwear dla dzieci (4.05) liczcie osobno — koszulka ~150–300 zł, bluza ~500–1 000 zł</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td></tr>
@@ -1567,7 +1567,7 @@ function kosztyPage(){
   ${footer('')}
   <script>
   (function(){
-    var D={flights:${TICKET.total},nights:8,nightRate:1435,transport:4800,days:11,foodRate:500,attractions:2200,extras:3000};
+    var D={flights:${TICKET.total},nights:8,nightRate:1435,transport:4900,days:11,foodRate:500,attractions:2200,extras:3000};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
     function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
@@ -2584,7 +2584,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     <div class="acard" id="shibuya-sky">
       <h3>🌆 Shibuya Sky</h3>
       <div class="desc">Otwarty taras na dachu 229-metrowego wieżowca — widok na słynne skrzyżowanie, a przy dobrej pogodzie na Fudżi. Najlepszy slot: zachód słońca.</div>
-      <div class="meta"><span>🕒 10:00–22:30 (sloty co 20 min)</span><span>💴 online: dorosły ~2 600 ¥, 12–17 lat ~2 000 ¥, 6–11 lat ~1 200 ¥ → 4 os. ≈ 8 400 ¥ (~220 zł)</span><span>📍 Shibuya Scramble Square, 14 p. wejście</span></div>
+      <div class="meta"><span>🕒 10:00–22:30 (sloty co 20 min)</span><span>💴 online: dorosły ~2 600 ¥, 12–17 lat ~2 000 ¥, 6–11 lat ~1 200 ¥ → 4 os. ≈ 8 400 ¥ (~200 zł)</span><span>📍 Shibuya Scramble Square, 14 p. wejście</span></div>
       <span class="rezerwuj">rezerwuj — sprzedaż 4 tyg. wcześniej</span>
       <div class="links"><a href="https://www.shibuya-scramble-square.com/sky/" target="_blank" rel="noopener">bilety online →</a></div>
     </div>
