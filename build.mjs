@@ -1692,7 +1692,7 @@ function decyzjePage(){
       <thead><tr><th>Dzień</th><th>Sedno</th><th style="text-align:right">Obciążenie</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>
-    <div class="dnote" style="margin-top:12px">💡 <b>żaden dzień nie jest intensywny: 30.04 to Fushimi rano, sjesta w hotelu i Kiyomizu po południu. Golden Week rozwiązujemy trasą, nie tempem: Kioto przed szczytem, święta w Tokio, ryokan dzień po świętach. Reset w ryokanie wypada na sam koniec — jako nagroda.</div>
+    <div class="dnote" style="margin-top:12px">💡 <b>Żaden dzień nie jest intensywny</b>: 30.04 to Fushimi rano, sjesta w hotelu i Kiyomizu po południu. Golden Week rozwiązujemy trasą, nie tempem: Kioto przed szczytem, święta w Tokio, ryokan dzień po świętach. Reset w ryokanie wypada na sam koniec — jako nagroda.</div>
   </section>
 
   <section>
