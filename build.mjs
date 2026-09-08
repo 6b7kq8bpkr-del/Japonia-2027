@@ -1765,7 +1765,7 @@ Urban Kielichowski</pre></details>
       <details><summary>Stopover w Abu Zabi — wypadł i wrócił</summary><p>W planie od lipca, wycięty 4.09 rano (open-jaw z Kansai zdrożał do ~5,5 tys./os.), by wrócić tego samego dnia przy kasie: finalna wycena Etihada pokazała, że <b>stopover w drodze tam to najtańsza kombinacja w ogóle</b> — 7.09 termin 3–14 wyceniono na 13 600 zł za 4 osoby, z hotelem 4★ (Grand Millenium Al Wahda) w pakiecie i zielonym potwierdzeniem „Stopover included" dla maja 2027. Google tej taryfy w ogóle nie umiał policzyć. Przelot rozbity na 5,5 + 10 h z nocą snu pośrodku — z dziećmi dużo lepszy niż 18 h ciurkiem.</p></details>
       <details><summary>Trasa i bazy: Kioto 4 · Tokio 3 · Hakone 1</summary><p>Szkielet zgodny z najlepiej ocenianymi (4,9–5,0★) rodzinnymi tourami, z jedną świadomą korektą pod nasz skład: <b>trzecia noc w Tokio kosztem piątej w Kiocie</b>. Przy przylocie w południe dwie noce dawały Tokio ledwie półtora dnia i jeden przeładowany „czerwony” dzień; przy trzech Tokio dostaje spokojne dwa dni, a Kioto (4 noce, z wypadami do Nary i na Arashiyamę) nadal mieści wszystko poza osobnym dniem warsztatów — te weszły w popołudnie po Narze. Ryokan w środku jako „reset”, po drodze doba w Abu Zabi z darmowym hotelem.</p></details>
       <details><summary>Ryokan w środku trasy — wyższa półka</summary><p>To jedyna noc, gdy nocleg JEST atrakcją (onsen, kolacja w yukacie, tatami). Dlatego tu — i tylko tu — warto dopłacić: ryokan z kolacją i onsenem nad jeziorem to wspomnienie, nie tylko łóżko. Wybraliśmy Hanaori Standard ze wspólną łaźnią (rozdzieloną płciowo); pokój z prywatną kąpielą to +1 278 zł — opcja w „Decyzjach otwartych”. Reszta hoteli (MIMARU) zostaje standardowa, bo pokój dla 4 i lokalizacja liczą się bardziej niż gwiazdki.</p></details>
-      <details><summary>Zakup biletów (kronika 8.09)</summary><p>Kupione na etihad.com: 27.04–7.05 ze stopoverem w Abu Zabi w drodze tam, <b>3 600 zł/os. — 14 400 zł za czworo</b>, o 800 zł więcej niż wycena z 7.09 (13 600), wciąż w progu okazji. Monitoring cen i alerty zakupowe wyłączone. Tego samego dnia wypadło Muzeum Ōta — 4.05 idzie Meiji → Harajuku → Cat Street (Supreme, BAPE, Stüssy, Palace — życzenie dzieci) → Shibuya PARCO → Shibuya Sky, bez muzeum. Wieczorem plan dostał luz: sjesta 30.04, wolny wieczór 1.05 (warsztaty jako opcja 2.05), pauza w Miyashita 4.05, Tsukiji o świcie wypadło (targ = Nishiki 2.05), shuttle jako opcja 7.05. Po zewnętrznym audycie (ten sam dzień): Nozomi 29.04 na 16:30–17:00, herbata 1.05 o 16:30, Kinkaku-ji opcjonalnie, Pokémon Center DX w Nihombashi zamiast Ikebukuro, Hakone bez rejsu w planie podstawowym (Hanaori melduje od 15:00), 7.05 shuttle 10:00 albo autobus liczony na 75–90 min; koszt kolei przeliczony na 3 taryfy dorosłe + 1 dziecięcą (~4 800 zł), SmartEX zgłoszenia rok przed, mapa bez Osaki. Później tego dnia 7.05 dostał NEX 13:48 zamiast 12:48: 4 h 15 na Naricie zeszło do 3 h 15 (zalecenie Etihada), a zyskana godzina poszła na lunch i Character Street na Tokyo Station. Poranek 4.05 (Dzień Zieleni) przestawiony pod tłum: Meiji przed 9:00, Takeshita 10:15, butiki na otwarcie 11:00. Tego samego dnia baza w Tokio zmieniła się z Ueno EAST na <b>MIMARU Akasaka</b> — decydowały trzy przejazdy bez przesiadki (Harajuku, Shinjuku z walizkami, Nihombashi); poranek 5.05 przeszedł z parku Ueno na <b>Hie-jinja</b> z tunelem 90 torii, pięć minut pieszo od nowego hotelu. Pod nową bazę przepisane też dwa wieczory: 3.05 meldujemy się o 15:00 i jedziemy do Asakusy dopiero na zmierzch (zamiast sześciu godzin w świątecznym tłumie i meldunku o 20:30), a 5.05 kolacja jest w Akasace pod hotelem, nie w Akihabarze. Tego samego dnia <b>wszystkie trzy noclegi zostały zarezerwowane i potwierdzone</b> (Kioto 5 266, Akasaka 3 413, Hanaori 3 354 = 12 033 zł, każdy z bezpłatnym odwołaniem) — budżet całości urósł z ~41 do ~42 tys. zł. Wieczorem doszła jeszcze zmiana w Hakone: rodzina nie chce kąpać się rano, więc <b>cały onsen mieści się w czwartek</b> — prywatna kąpiel o 15:30 i duża łaźnia nad jeziorem o 20:00; piątek zaczyna się samym śniadaniem o 8:00. Tatuaży nie ma, więc duże łaźnie są bez ograniczeń. Na koniec dnia audyt całej strony po tej serii zmian: zniknęły ostatnie ślady Ueno i Ikebukuro (plan na deszcz 5.05, tabele decyzji), tytuł 7.05 przestał obiecywać poranny onsen, Koszty i Loty mówią już o kupionych biletach zamiast o progach „kup / czekaj”, decyzja o Pokémon Room jest zamknięta, a szablon maila do Hanaori wisi pod checklistą.</p></details>
+      <details><summary>Zakup biletów (kronika 8.09)</summary><p>Kupione na etihad.com: 27.04–7.05 ze stopoverem w Abu Zabi w drodze tam, <b>3 600 zł/os. — 14 400 zł za czworo</b>, o 800 zł więcej niż wycena z 7.09 (13 600), wciąż w progu okazji. Monitoring cen i alerty zakupowe wyłączone. Tego samego dnia wypadło Muzeum Ōta — 4.05 idzie Meiji → Harajuku → Cat Street (Supreme, BAPE, Stüssy, Palace — życzenie dzieci) → Shibuya PARCO → Shibuya Sky, bez muzeum. Wieczorem plan dostał luz: sjesta 30.04, wolny wieczór 1.05 (warsztaty jako opcja 2.05), pauza w Miyashita 4.05, Tsukiji o świcie wypadło (targ = Nishiki 2.05), shuttle jako opcja 7.05. Po zewnętrznym audycie (ten sam dzień): Nozomi 29.04 na 16:30–17:00, herbata 1.05 o 16:30, Kinkaku-ji opcjonalnie, Pokémon Center DX w Nihombashi zamiast Ikebukuro, Hakone bez rejsu w planie podstawowym (Hanaori melduje od 15:00), 7.05 shuttle 10:00 albo autobus liczony na 75–90 min; koszt kolei przeliczony na 3 taryfy dorosłe + 1 dziecięcą (~4 800 zł), SmartEX zgłoszenia rok przed, mapa bez Osaki. Później tego dnia 7.05 dostał NEX 13:48 zamiast 12:48: 4 h 15 na Naricie zeszło do 3 h 15 (zalecenie Etihada), a zyskana godzina poszła na lunch i Character Street na Tokyo Station. Poranek 4.05 (Dzień Zieleni) przestawiony pod tłum: Meiji przed 9:00, Takeshita 10:15, butiki na otwarcie 11:00. Tego samego dnia baza w Tokio zmieniła się z Ueno EAST na <b>MIMARU Akasaka</b> — decydowały trzy przejazdy bez przesiadki (Harajuku, Shinjuku z walizkami, Nihombashi); poranek 5.05 przeszedł z parku Ueno na <b>Hie-jinja</b> z tunelem 90 torii, pięć minut pieszo od nowego hotelu. Pod nową bazę przepisane też dwa wieczory: 3.05 meldujemy się o 15:00 i jedziemy do Asakusy dopiero na zmierzch (zamiast sześciu godzin w świątecznym tłumie i meldunku o 20:30), a 5.05 kolacja jest w Akasace pod hotelem, nie w Akihabarze. Tego samego dnia <b>wszystkie trzy noclegi zostały zarezerwowane i potwierdzone</b> (Kioto 5 266, Akasaka 3 413, Hanaori 3 354 = 12 033 zł, każdy z bezpłatnym odwołaniem) — budżet całości urósł z ~41 do ~42 tys. zł. Wieczorem doszła jeszcze zmiana w Hakone: rodzina nie chce kąpać się rano, więc <b>cały onsen mieści się w czwartek</b> — prywatna kąpiel o 15:30 i duża łaźnia nad jeziorem o 20:00; piątek zaczyna się samym śniadaniem o 8:00. Tatuaży nie ma, więc duże łaźnie są bez ograniczeń. Na koniec dnia audyt całej strony po tej serii zmian — z jedną poprawką techniczną: service worker podawał stronę z pamięci podręcznej i dopiero w tle pobierał nową, więc po każdej zmianie pierwsze otwarcie pokazywało poprzednią wersję; od teraz HTML jest pobierany z sieci, a pamięć służy tylko offline. Poza tym: zniknęły ostatnie ślady Ueno i Ikebukuro (plan na deszcz 5.05, tabele decyzji), tytuł 7.05 przestał obiecywać poranny onsen, Koszty i Loty mówią już o kupionych biletach zamiast o progach „kup / czekaj”, decyzja o Pokémon Room jest zamknięta, a szablon maila do Hanaori wisi pod checklistą.</p></details>
       <details><summary>Jak wybraliśmy bilet (kronika 4.09)</summary><p>Rano: open-jaw z Kansai zdrożał do ~5 460 zł/os., a round-trip do Narity staniał do ~3 450 — przełączyliśmy plan na round-trip 3–14. Wieczorem, przy realnej rezerwacji na etihad.com, okazało się, że google’owa cena round-tripu u przewoźnika nie istnieje, za to <b>wariant ze stopoverem kosztuje 13 600 zł za całą rodzinę</b> (3–14, wycena z 7.09) — mniej niż cokolwiek innego. Finał: wróciliśmy do pierwotnego kształtu podróży (Abu Zabi + przylot 5.05), o dzień krótszego i z lądowaniem w piątek. Lekcja: Google dobrze śledzi proste taryfy, ale przy stopoverach ostatnie słowo ma strona przewoźnika.</p></details>
     </div>
   </section>
@@ -2830,7 +2830,7 @@ const PRECACHE = [
 const contentHash = crypto.createHash('sha1');
 PRECACHE.filter(u=>u!=='./').forEach(u=>{ try{ contentHash.update(fs.readFileSync(DIR+'/'+u)); }catch(e){} });
 const SWVER = contentHash.digest('hex').slice(0,10);
-const SW = `/* Service worker planu Japonia 2027 — wersja ${SWVER} */
+const SW = `/* Service worker planu Japonia 2027 — wersja ${SWVER} · HTML/CSS/JS network-first, obrazy cache-first */
 const CACHE = 'jp2027-${SWVER}';
 const PRECACHE = ${JSON.stringify(PRECACHE)};
 self.addEventListener('install', function(e){
@@ -2845,20 +2845,26 @@ self.addEventListener('activate', function(e){
     return Promise.all(keys.filter(function(k){return k!==CACHE;}).map(function(k){return caches.delete(k);}));
   }).then(function(){return self.clients.claim();}));
 });
+function store(req,res){ if(res && res.status===200){ var cp=res.clone(); caches.open(CACHE).then(function(c){c.put(req,cp);}); } return res; }
 self.addEventListener('fetch', function(e){
   var req = e.request;
   if(req.method!=='GET') return;
   var url = new URL(req.url);
   if(url.origin !== location.origin) return;           // mapy, pogoda, Google — tylko z sieci
-  e.respondWith(
-    caches.match(req).then(function(hit){
-      var net = fetch(req).then(function(res){
-        if(res && res.status===200) caches.open(CACHE).then(function(c){c.put(req,res.clone());});
-        return res;
-      }).catch(function(){ return hit || caches.match('index.html'); });
-      return hit || net;                                 // cache first, odświeżanie w tle
-    })
-  );
+  var isDoc  = req.mode==='navigate' || req.destination==='document' || /\.html$|\/$/.test(url.pathname);
+  var isCode = /assets\/(style\.css|app\.js)$/.test(url.pathname);
+  if(isDoc || isCode){
+    // NETWORK FIRST: strona i kod zawsze świeże; cache tylko gdy nie ma sieci
+    e.respondWith(fetch(req).then(function(res){ return store(req,res); }).catch(function(){
+      return caches.match(req).then(function(hit){ return hit || caches.match('index.html'); });
+    }));
+    return;
+  }
+  // obrazy, ikony, manifest: CACHE FIRST z odświeżaniem w tle
+  e.respondWith(caches.match(req).then(function(hit){
+    var net = fetch(req).then(function(res){ return store(req,res); }).catch(function(){ return hit; });
+    return hit || net;
+  }));
 });
 `;
 fs.writeFileSync(DIR + '/sw.js', SW);
