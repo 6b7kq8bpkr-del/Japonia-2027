@@ -1466,7 +1466,7 @@ function indexPage(){
     <div class="stt"><b>11</b><span>dni podróży</span></div>
     <div class="stt"><b>3</b><span>bazy w Japonii</span></div>
     <div class="stt"><b>8</b><span>nocy w Japonii</span></div>
-    <div class="stt"><b>~40<small>tys zł</small></b><span>budżet 2+2</span></div>
+    <div class="stt"><b>~42<small>tys zł</small></b><span>budżet 2+2</span></div>
   </section>
 
   <section>
@@ -1600,7 +1600,7 @@ function kosztyPage(){
       var pct=Math.max(0,Math.min(100,total/70000*100)),f=document.getElementById("barFill");f.style.width=pct+"%";
       var col,v,vc;
       if(total<40000){col=css("--ai");v="Poniżej widełek — jest zapas na lepsze hotele.";vc=css("--muted");}
-      else if(total<=60000){col=css("--success");v="✅ Mieści się w budżecie 40–60 tys. zł.";vc=css("--success");}
+      else if(total<=60000){col=css("--success");v="✅ Mieści się w budżecie 42–60 tys. zł.";vc=css("--success");}
       else if(total<=68000){col=css("--kin");v="⚠️ Nieco ponad budżet — przytnij atrakcje lub standard noclegów.";vc=css("--kin");}
       else{col=css("--shu");v="⛔ Wyraźnie ponad budżet.";vc=css("--shu");}
       f.style.background=col;var vd=document.getElementById("verdict");vd.textContent=v;vd.style.color=vc;
