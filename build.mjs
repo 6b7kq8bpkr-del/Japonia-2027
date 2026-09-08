@@ -172,14 +172,14 @@ const DAYCROWD = {
 };
 const PERIODS = [
   {label:'27.04–7.05', sub:'WYBRANY · 11 dni, powrót przed wycieczką klasową 10.05', price:3449, best:true,
-   pros:['Ta sama cena biletu co 3–14 maja (Etihad 3 449 zł/os., Google 7.09); dzień krócej = ~1 800 zł mniej na ziemi','Kioto PRZED świętami, Tokio W święta — pod prąd tłumów','Ryokan w czwartek po Golden Week: 1 675 zł zamiast 2 481'],
+   pros:['Ta sama cena biletu co 3–14 maja (Etihad 3 449 zł/os., Google 7.09); dzień krócej = ~1 800 zł mniej na ziemi','Kioto PRZED świętami, Tokio W święta — pod prąd tłumów','Ryokan w czwartek tuż po Golden Week — łatwiej o pokój i ciszej niż w święta'],
    cons:['Cały pobyt w Golden Week — miejscówki na shinkansen i rezerwacje obowiązkowe','Przylot 29.04 w Dzień Shōwa','Bez Osaki']},
   {label:'26.04–7.05', sub:'o dzień dłużej', price:3449,
    pros:['Ta sama cena biletu','Wraca wypad do Osaki (2.05)'],
    cons:['+~1 800 zł (noc w Kiocie w Golden Week + wyżywienie)','Dzień urlopu więcej']},
   {label:'3–14 maja', sub:'poprzedni plan', price:3449,
    pros:['Kioto po Golden Week — bez tłumów'],
-   cons:['Powrót 15.05 — kolizja z wycieczką klasową dziecka 10.05']},
+   cons:['Termin obejmuje 10.05 — dzień wycieczki klasowej dziecka']},
 ];
 
 /* WYBRANY BILET (etihad.com, 7.09.2026): 3–14.05 ze stopoverem tam, Economy Basic.
@@ -771,7 +771,7 @@ if(pg){var upd=function(){var h=document.documentElement,m=h.scrollHeight-h.clie
   pg.style.width=(m>0?(h.scrollTop/m*100):0)+'%';};addEventListener('scroll',upd,{passive:true});upd();}
 // countdown to departure
 var cd=document.getElementById('cd');
-if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-26T00:00:00')-new Date())/86400000));cd.textContent=days;}
+if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date())/86400000));cd.textContent=days;}
 // home hero: parallax bg + fading scroll cue
 (function(){
   var hbg=document.querySelector('.hero.home .hbg'), cue=document.querySelector('.scrollcue');
@@ -1006,7 +1006,7 @@ const GEO = {
   '2027-04-27':[[52.1657,20.9671,'Lotnisko Chopina (wylot 11:50)'],[24.4330,54.6511,'Lotnisko Abu Zabi (19:25)'],[24.4539,54.3773,'Grand Millenium Al Wahda']],
   '2027-04-28':[[24.4128,54.4750,'Wielki Meczet Szejka Zajida'],[24.5333,54.3981,'Luwr Abu Zabi'],[24.4330,54.6511,'Lotnisko (wylot 21:25)']],
   '2027-04-29':[[35.772,140.393,'Narita (przylot 12:45)'],[35.681,139.767,'Tokyo Station (NEX → shinkansen)'],[34.9858,135.7588,'Kioto — zameldowanie']],
-  '2027-05-05':[[35.7142,139.7744,'Park Ueno (koinobori)'],[35.7295,139.7190,'Pokémon Center (Ikebukuro)'],[35.6817,139.7740,'Pokémon Café (Nihombashi)'],[35.7022,139.7741,'Akihabara']],
+  '2027-05-05':[[35.7142,139.7744,'Park Ueno (poranek)'],[35.7295,139.7190,'Pokémon Center (Ikebukuro)'],[35.6817,139.7740,'Pokémon Café (Nihombashi)'],[35.7022,139.7741,'Akihabara']],
   '2027-05-04':[[35.6764,139.6993,'Meiji Jingū'],[35.6697,139.7050,'Muzeum Ōta (ukiyo-e)'],[35.6702,139.7026,'Harajuku / Takeshita-dōri'],[35.6595,139.7005,'Shibuya + Shibuya Sky']],
   '2027-05-06':[[35.6654,139.7707,'Targ Tsukiji'],[35.6896,139.7006,'Shinjuku'],[35.2503,139.0503,'Gōra'],[35.2445,139.0197,'Ōwakudani'],[35.2337,139.0155,'Tōgendai — ryokan Hanaori'],[35.2044,139.0247,'Moto-Hakone / Hakone-jinja']],
   '2027-05-03':[[34.9858,135.7588,'Kioto'],[35.681,139.767,'Tokyo Station'],[35.7108,139.7823,'Hotel w Ueno'],[35.7148,139.7967,'Asakusa / Sensō-ji']],
@@ -1164,7 +1164,7 @@ const DAYS = [
  lead:'Kodomo no hi — ich święto w ich mieście: poranek w parku Ueno, świat Pokémonów, a wieczorem neony Akihabary. Tsukiji przenieśliśmy na jutro, bo w święto targ nie pracuje.',
  chips:['Kultura: park Ueno o poranku','Dzieci: Dzień Dziecka z Pokémonami i Akihabarą','Pokémon Café — rezerwacja'],
  tl:[
-  ['09:00','Park Ueno','Pięć minut od hotelu: staw Shinobazu, świątynia Kan’ei-ji, śniadanie w kawiarni w parku. Koinobori — karpie z tkaniny — wiszą w tym tygodniu w całym mieście; największa instalacja (333 karpie) to Tokyo Tower, jeśli będzie po drodze.'],
+  ['09:00','Park Ueno','Pięć minut od hotelu: staw Shinobazu, świątynia Kan’ei-ji, śniadanie w kawiarni w parku. Koinobori — karpie z tkaniny — wiszą w tym tygodniu w całym mieście; największa instalacja to 333 karpie pod Tokyo Tower (co roku od połowy marca do ~6.05) — ~30 min metrem (Hibiya do Kamiyachō), jeśli chcecie je zobaczyć z bliska.'],
   ['10:45','Metro do Ikebukuro',''],
   ['11:15','Pokémon Center Mega Tokyo','Największy sklep Pokémon w Japonii (Sunshine City).'],
   ['12:30','Pokémon Café','Tematyczny lunch z wizytą Pikachu — rezerwacja z góry (Nihombashi).'],
@@ -1202,11 +1202,11 @@ const DAYS = [
  more:[['Kontekst','Ryokan to nie tylko nocleg, ale całe doświadczenie: śpi się na futonach na tatami, chodzi w yukacie, a kolacja kaiseki i onsen są częścią wieczoru. To najspokojniejszy punkt całego wyjazdu.'],['Plan B na wiatr i chmury','Kolejka linowa nad Ōwakudani bywa zawieszana przy silnym wietrze lub alertach wulkanicznych — rano sprawdźcie status na hakonenavi.jp. Awaryjnie: Hakone Open-Air Museum (rzeźby do wspinania, pawilon Picassa, kąpiel stóp) plus rejs po Ashi, który pływa niemal zawsze.']]},
 
 {date:'2027-05-07',dow:'piątek',dd:'7 maja',city:'hakone',title:'Poranny onsen i z gór prosto na lotnisko',
- lead:'Ostatnia kąpiel na tarasie, śniadanie w ryokanie i droga na Naritę — bez wracania do Tokio na noc.',
+ lead:'Ostatnia kąpiel w onsenie z widokiem na jezioro, śniadanie w ryokanie i droga na Naritę — bez wracania do Tokio na noc.',
  chips:['Kultura: onsen nad jeziorem','Dzieci: Fudżi z okna shinkansena','Wylot 18:00'],
  tl:[
   ['07:30','Poranny onsen i śniadanie','Ostatnia kąpiel z widokiem na jezioro, potem śniadanie.'],
-  ['09:15','Autobus do Odawary','Hakone Tozan z Tōgendai ~65 min (linia przez Sengokuhara–Yumoto). Hotel wozi też gości na dworzec — potwierdźcie godzinę przy zameldowaniu.'],
+  ['09:15','Autobus do Odawary','Hakone Tozan Bus z przystanku Tōgendai ~60 min (przez Sengokuharę i Yumoto), w cenie Free Pass. Alternatywa: hotelowy shuttle do Odawary o 11:15 — wtedy shinkansen ~12:30 i Narita ~14:30, wciąż 3,5 h przed wylotem; potwierdźcie przy zameldowaniu.'],
   ['10:40','Shinkansen Odawara → Tokyo Station','~35 min (Kodama/Hikari); miejscówki kupione wcześniej.'],
   ['11:30','Tokyo Station','Ostatnie zakupy na Character Street — 30 minut.'],
   ['12:18','Narita Express','~55 min na lotnisko.'],
@@ -1641,9 +1641,9 @@ function hotelePage(){
   <header class="hero kb">
     <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(18,39,64,.40)),url('${IMG.tokyostation}') center/cover"></div></div>
     <div class="hero-inner">
-    <p class="eyebrow">Noclegi · 9 nocy · 4 obiekty · chronologicznie</p>
+    <p class="eyebrow">Noclegi · 8 nocy w Japonii + noc w Abu Zabi · 4 obiekty · chronologicznie</p>
     <h1>Hotele</h1>
-    <p class="lead">Trzy bazy pod rodzinę 2+2: aparthotele MIMARU z aneksami i pralką oraz ryokan nad jeziorem Ashi na jedną górską noc. Sześć ostatnich nocy w jednym pokoju w Kioto.</p>
+    <p class="lead">Trzy bazy pod rodzinę 2+2: aparthotele MIMARU z aneksami i pralką oraz ryokan nad jeziorem Ashi na jedną górską noc. Cztery pierwsze noce w jednym apartamencie w Kiocie, potem trzy w Tokio.</p>
   </div>
   </header>
   <section>
@@ -1727,9 +1727,9 @@ function decyzjePage(){
     <p class="lead-p">Do kiedy co załatwić. Trzy alerty (loty, noclegi, pogoda) same przypomną się w aplikacji.</p>
     <div class="card"><ul class="tips">
       <li><b>✈️ Loty — WYBRANE (7.09.2026):</b> Etihad 3–14 ze stopoverem tam, 13 600 zł za 4 osoby, hotel 4★ w Abu Zabi w pakiecie. Do domknięcia przy zakupie: walizka na powrót i miejsca obok siebie. <a href="loty.html">Szczegóły →</a></li>
-      <li><b>🏨 Noclegi — rezerwować wrzesień–październik 2026</b> z darmowym anulowaniem. Pokoje 4-osobowe i ryokan z prywatnym rotenburo znikają pierwsze, a początek maja to ogon Golden Week. Trzy bazy: Tokio (3 noce), Hakone (1), Kioto (6). <span class="ipill y">alert: 15.09.2026</span></li>
+      <li><b>🏨 Noclegi — rezerwować wrzesień–październik 2026</b> z darmowym anulowaniem. Pokoje 4-osobowe — zwłaszcza w ryokanach — znikają pierwsze, a początek maja to ogon Golden Week. Trzy bazy: Kioto (4 noce), Tokio (3), Hakone (1). <span class="ipill y">alert: 15.09.2026</span></li>
       <li><b>🎟️ Rezerwacje czasowe:</b> Nintendo Museum — loteria ~luty 2027 · warsztaty kultury w Kioto — 1–2 miesiące wcześniej · Shibuya Sky — sprzedaż od ~6.04.2027 (4 tyg. przed 4.05; slot na zachód słońca) · Pokémon Café — rezerwacja rusza 4.04.2027 o 18:00 czasu japońskiego (31 dni przed 5.05).</li>
-      <li><b>☔ Pogoda — dostrajać najpóźniej ~7 dni przed</b> (wcześniej prognoza jest niewiarygodna). Wtedy przełóżcie Shibuya Sky na najpogodniejszy wieczór i rezerwujcie slot tylko przy dobrej prognozie. <b>Rano danego dnia:</b> status kolejki w Hakone (hakonenavi.jp — wiatr/gaz), w razie czego Open-Air Museum; Fudżi to loteria. Dni z buforem (13.05) i plany B pochłaniają deszcz bez przebudowy. <span class="ipill y">alert: 26.04.2027</span></li>
+      <li><b>☔ Pogoda — dostrajać najpóźniej ~7 dni przed</b> (wcześniej prognoza jest niewiarygodna). Wtedy przełóżcie Shibuya Sky na najpogodniejszy wieczór i rezerwujcie slot tylko przy dobrej prognozie. <b>Rano danego dnia:</b> status kolejki w Hakone (hakonenavi.jp — wiatr/gaz), w razie czego Open-Air Museum; Fudżi to loteria. Bufor (puste popołudnie 2.05) i zawory (Nishiki, Kinkaku-ji, Muzeum Ōta, Akihabara) pochłaniają deszcz bez przebudowy. <span class="ipill y">alert: 20.04.2027</span></li>
     </ul></div>
   </section>
 
@@ -1758,7 +1758,7 @@ function decyzjePage(){
       <details><summary>Długość: 8 nocy w Japonii + doba w Abu Zabi</summary><p>Jedenaście dni (27.04–7.05) to kompromis między twardą datą powrotu (8.05, wycieczka klasowa 10.05) a budżetem: dzień dłużej kosztowałby ~1 800 zł (noc w Kiocie w Golden Week + wyżywienie) i oddałby wypad do Osaki. Cztery noce w Kiocie mieszczą Fushimi, Narę z herbatą i Arashiyamę; trzy w Tokio — Meiji, Pokémony i Dzień Dziecka; na koniec ryokan tuż po świętach.</p></details>
       <details><summary>Stopover w Abu Zabi — wypadł i wrócił</summary><p>W planie od lipca, wycięty 4.09 rano (open-jaw z Kansai zdrożał do ~5,5 tys./os.), by wrócić tego samego dnia przy kasie: finalna wycena Etihada pokazała, że <b>stopover w drodze tam to najtańsza kombinacja w ogóle</b> — 7.09 termin 3–14 wyceniono na 13 600 zł za 4 osoby, z hotelem 4★ (Grand Millenium Al Wahda) w pakiecie i zielonym potwierdzeniem „Stopover included" dla maja 2027. Google tej taryfy w ogóle nie umiał policzyć. Przelot rozbity na 5,5 + 10 h z nocą snu pośrodku — z dziećmi dużo lepszy niż 18 h ciurkiem.</p></details>
       <details><summary>Trasa i bazy: Kioto 4 · Tokio 3 · Hakone 1</summary><p>Szkielet zgodny z najlepiej ocenianymi (4,9–5,0★) rodzinnymi tourami, z jedną świadomą korektą pod nasz skład: <b>trzecia noc w Tokio kosztem piątej w Kiocie</b>. Przy przylocie w południe dwie noce dawały Tokio ledwie półtora dnia i jeden przeładowany „czerwony” dzień; przy trzech Tokio dostaje spokojne dwa dni, a Kioto (4 noce, z wypadami do Nary i na Arashiyamę) nadal mieści wszystko poza osobnym dniem warsztatów — te weszły w popołudnie po Narze. Ryokan w środku jako „reset”, po drodze doba w Abu Zabi z darmowym hotelem.</p></details>
-      <details><summary>Ryokan w środku trasy — wyższa półka</summary><p>To jedyna noc, gdy nocleg JEST atrakcją (onsen, kaiseki, tatami). Dlatego tu — i tylko tu — warto dopłacić: pokój z prywatnym rotenburo to wspomnienie, nie tylko łóżko. Reszta hoteli (MIMARU) zostaje standardowa, bo pokój dla 4 i lokalizacja liczą się bardziej niż gwiazdki.</p></details>
+      <details><summary>Ryokan w środku trasy — wyższa półka</summary><p>To jedyna noc, gdy nocleg JEST atrakcją (onsen, kaiseki, tatami). Dlatego tu — i tylko tu — warto dopłacić: ryokan z kolacją i onsenem nad jeziorem to wspomnienie, nie tylko łóżko. Wybraliśmy Hanaori Standard ze wspólną łaźnią (rozdzieloną płciowo); pokój z prywatną kąpielą to +1 278 zł — opcja w „Decyzjach otwartych”. Reszta hoteli (MIMARU) zostaje standardowa, bo pokój dla 4 i lokalizacja liczą się bardziej niż gwiazdki.</p></details>
       <details><summary>Jak wybraliśmy bilet (kronika 4.09)</summary><p>Rano: open-jaw z Kansai zdrożał do ~5 460 zł/os., a round-trip do Narity staniał do ~3 450 — przełączyliśmy plan na round-trip 3–14. Wieczorem, przy realnej rezerwacji na etihad.com, okazało się, że google’owa cena round-tripu u przewoźnika nie istnieje, za to <b>wariant ze stopoverem kosztuje 13 600 zł za całą rodzinę</b> (3–14, wycena z 7.09) — mniej niż cokolwiek innego. Finał: wróciliśmy do pierwotnego kształtu podróży (Abu Zabi + przylot 5.05), o dzień krótszego i z lądowaniem w piątek. Lekcja: Google dobrze śledzi proste taryfy, ale przy stopoverach ostatnie słowo ma strona przewoźnika.</p></details>
     </div>
   </section>
@@ -1999,7 +1999,7 @@ h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:22px 0 8px}
   <a href="index.html">← wróć do strony</a>
   <button class="btn" type="button" onclick="window.print()">🖨️ Drukuj / zapisz jako PDF</button>
 </div>
-<p class="hint">Kliknij <b>„Drukuj / zapisz jako PDF"</b>, a w oknie drukowania wybierz miejsce docelowe <b>„Zapisz jako PDF"</b>. Ustaw format <b>A4</b> i włącz <b>grafikę tła</b>, żeby zachować kolory okładki. Każdy dzień drukuje się na osobnej stronie — całość ma ${DAYS.length + 2} strony.</p>
+<p class="hint">Kliknij <b>„Drukuj / zapisz jako PDF"</b>, a w oknie drukowania wybierz miejsce docelowe <b>„Zapisz jako PDF"</b>. Ustaw format <b>A4</b> i włącz <b>grafikę tła</b>, żeby zachować kolory okładki. Każdy dzień drukuje się na osobnej stronie — całość ma ${DAYS.length + 2} stron.</p>
 ${inner}
 </body>
 </html>`;
@@ -2211,7 +2211,7 @@ function pogodaPage(){
     <div class="card"><ul class="tips">
       <li><b>Tokio:</b> Round1 (Ikebukuro), rodzinne karaoke (Big Echo / Karaoke Kan, przed 22:00), Pokémon Center — a Shibuya Sky przekładać: taras odkryty, w chmurach szkoda biletu.</li>
       <li><b>Hakone:</b> kolejka linowa staje przy wietrze (status: hakonenavi.jp) → Hakone Open-Air Museum (pawilon Picassa, rzeźby do wspinania) + rejs po Ashi, który pływa prawie zawsze.</li>
-      <li><b>Kioto:</b> Kyoto Railway Museum (symulator shinkansena; <b>w środy zamknięte — 12.05 i tak jesteście w Osace; 13.05 (czwartek) otwarte</b>), teamLab Biovortex przy dworcu, kryte pasaże Nishiki/Teramachi, klasa ninja w muzeum.</li>
+      <li><b>Kioto:</b> Kyoto Railway Museum (symulator shinkansena; <b>w środy zamknięte — w Kiocie jesteśmy czwartek–poniedziałek, więc otwarte</b>), teamLab Biovortex przy dworcu, kryte pasaże Nishiki/Teramachi, klasa ninja w muzeum.</li>
       
     </ul></div>
   </section>
@@ -2637,7 +2637,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     <div class="acard" id="taiko">
       <h3>🥁 Warsztat taiko (bębny japońskie)</h3>
       <div class="desc">Godzina walenia w wielkie bębny pod okiem instruktora — głośno, fizycznie, zero bariery językowej. Obecny w programach Audley, G Adventures i Intrepid; rodziny wymieniają go jednym tchem z sumo. Sesje też w Kioto (Gion), gdyby pasowało wcześniej.</div>
-      <div class="meta"><span>🕒 sesje ~60 min w ciągu dnia</span><span>💴 ~6 000 ¥/os → 4 os. ≈ 24 000 ¥ (~620 zł)</span><span>📍 Taiko-Lab / Taiko Center — Osaka lub Kioto-Gion</span></div>
+      <div class="meta"><span>🕒 sesje ~60 min w ciągu dnia</span><span>💴 ~6 000 ¥/os → 4 os. ≈ 24 000 ¥ (~620 zł)</span><span>📍 Taiko-Lab Kioto / Taiko Center (Gion)</span></div>
       <span class="rezerwuj">rezerwuj online ~2–4 tyg. wcześniej</span>
       <div class="links"><a href="https://www.taiko-center.co.jp/school/en/" target="_blank" rel="noopener">Taiko Center →</a></div>
     </div>
@@ -2662,8 +2662,8 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
 
     <div class="acard" id="smartex">
       <h3>🚅 SmartEX — shinkanseny</h3>
-      <div class="desc">Oficjalna apka/serwis do rezerwacji shinkansenów Tōkaidō (Odawara→Kioto, Kioto→Osaka, Osaka→Tokio). Miejsca da się wybrać na mapce — bierzcie D/E (okno E = strona Fudżi).</div>
-      <div class="meta"><span>🕒 rezerwacje od 1 miesiąca przed przejazdem</span><span>💴 np. Osaka→Tokio ~14 500 ¥/os (dzieci 50%)</span></div>
+      <div class="desc">Oficjalna apka/serwis do rezerwacji shinkansenów Tōkaidō (nasze odcinki: Tokio→Kioto 29.04, Kioto→Tokio 3.05, Odawara→Tokio 7.05). Miejsca da się wybrać na mapce — bierzcie D/E (okno E = strona Fudżi).</div>
+      <div class="meta"><span>🕒 rezerwacje od 1 miesiąca przed przejazdem</span><span>💴 np. Tokio→Kioto ~14 500 ¥/os (dzieci 50%)</span></div>
       <div class="links"><a href="https://smart-ex.jp/en/" target="_blank" rel="noopener">SmartEX →</a></div>
     </div>
 
