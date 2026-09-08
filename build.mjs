@@ -2851,8 +2851,8 @@ self.addEventListener('fetch', function(e){
   if(req.method!=='GET') return;
   var url = new URL(req.url);
   if(url.origin !== location.origin) return;           // mapy, pogoda, Google — tylko z sieci
-  var isDoc  = req.mode==='navigate' || req.destination==='document' || /\.html$|\/$/.test(url.pathname);
-  var isCode = /assets\/(style\.css|app\.js)$/.test(url.pathname);
+  var isDoc  = req.mode==='navigate' || req.destination==='document' || /\\.html$|\\/$/.test(url.pathname);
+  var isCode = /assets\\/(style\\.css|app\\.js)$/.test(url.pathname);
   if(isDoc || isCode){
     // NETWORK FIRST: strona i kod zawsze świeże; cache tylko gdy nie ma sieci
     e.respondWith(fetch(req).then(function(res){ return store(req,res); }).catch(function(){
