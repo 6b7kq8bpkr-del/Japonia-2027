@@ -80,8 +80,9 @@ const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5
 const BOOKINGS = [
   {when:'IX–X 2026', what:'Noclegi w Japonii (3 bazy)', note:'Z darmowym anulowaniem. UWAGA: w MIMARU dziecko od 7 lat liczy się jak dorosły — szukajcie pokoju dla 4 DOROSŁYCH, nie 3+1. Linki „Sprawdź dostępność" na stronie Hotele.'},
   {when:'TERAZ', what:'Ryokan w Hakone — zabezpieczyć na Booking', note:'Hakone Ashinoko Hanaori (Tōgendai, nad jeziorem Ashi), pokój Standard 32 m² dla 4 osób, 3 dorosłych + dziecko 10 lat, kolacja + śniadanie, czwartek 6.05: 2 878 zł, zostały 3 pokoje — stan z 7.09.2026, darmowe anulowanie do 3.05.2027.'},
-  {when:'✅ 8.09.2026', what:'Bilety lotnicze — KUPIONE', note:'Etihad 27.04–7.05 ze stopoverem w Abu Zabi w drodze tam, 3 600 zł/os. (14 400 zł za 4 os.), jedna rezerwacja na etihad.com. Do domknięcia w „Manage booking”: walizka rejestrowana na powrót (~220 zł) i miejsca obok siebie na nocnych odcinkach.'},
-  {when:'przy zakupie', what:'Walizka na powrót + miejsca obok siebie', note:'Lecimy z podręcznymi 7 kg/os. (Economy Basic nie ma bagażu rejestrowanego w cenie). Walizka rejestrowana TYLKO na odcinek powrotny (~220 zł) — na zakupy; samą walizkę można kupić w Japonii. Miejsca na nocnych odcinkach: Basic ich nie gwarantuje.'},
+  {when:'✅ 8.09.2026', what:'Bilety lotnicze — KUPIONE', note:'Etihad 27.04–7.05 ze stopoverem w Abu Zabi w drodze tam, 3 600 zł/os. (14 400 zł za 4 os.), jedna rezerwacja na etihad.com. Do domknięcia w „Manage booking”: walizka rejestrowana na powrót (~220 zł).'},
+  {when:'✅ 8.09.2026', what:'Miejsca obok siebie — zgłoszone (sprawa #9700179)', note:'Etihad dodał do rezerwacji bezpłatną notatkę: rodzina podróżuje razem, 10-latek ma siedzieć bezpośrednio obok rodzica, 13-latek możliwie blisko reszty — dotyczy wszystkich odcinków. Miejsc nie kupiono; konkretne przydział nastąpi przy odprawie, zależnie od dostępności.'},
+  {when:'przy zakupie', what:'Walizka na powrót', note:'Lecimy z podręcznymi 7 kg/os. (Economy Basic nie ma bagażu rejestrowanego w cenie). Walizka rejestrowana TYLKO na odcinek powrotny (~220 zł) — na zakupy; samą walizkę można kupić w Japonii.'},
   {when:'~II 2027', what:'DECYZJA: Nintendo Museum (Uji) — grać w loterię?', note:'Domyślnie NIE. Jeśli tak i wygracie: 2.05 po południu kosztem Kinkaku-ji i bufora. Szczegóły w „Decyzje otwarte”.'},
   {when:'II–III 2027', what:'DECYZJA: kaligrafia czy klasa ninja (2.05, opcja)', note:'Domyślnie NIC — wolne popołudnie zostaje wolne. Jeśli rodzina chce warsztatów: podział (mama shodō, tata + dzieci ninja), oba przy Nishiki.'},
   {when:'IX–X 2026', what:'DECYZJA: Pokémon Room czy zwykły apartament (Ueno)', note:'Domyślnie zwykły 4 łóżka; Pokémon tylko przy dopłacie < ~150 zł/noc.'},
@@ -1726,7 +1727,7 @@ function decyzjePage(){
     <h2 class="stitle">Kalendarz przygotowań — deadline'y</h2>
     <p class="lead-p">Do kiedy co załatwić. Trzy alerty (loty, noclegi, pogoda) same przypomną się w aplikacji.</p>
     <div class="card"><ul class="tips">
-      <li><b>✈️ Loty — WYBRANE (7.09.2026):</b> Etihad 3–14 ze stopoverem tam, 13 600 zł za 4 osoby, hotel 4★ w Abu Zabi w pakiecie. Do domknięcia przy zakupie: walizka na powrót i miejsca obok siebie. <a href="loty.html">Szczegóły →</a></li>
+      <li><b>✈️ Loty — KUPIONE (8.09.2026):</b> Etihad 27.04–7.05 ze stopoverem tam, 14 620 zł za 4 osoby z walizką na powrót, hotel 4★ w Abu Zabi w pakiecie. Miejsca obok siebie zgłoszone bezpłatnie (sprawa #9700179). <a href="loty.html">Szczegóły →</a></li>
       <li><b>🏨 Noclegi — rezerwować wrzesień–październik 2026</b> z darmowym anulowaniem. Pokoje 4-osobowe — zwłaszcza w ryokanach — znikają pierwsze, a początek maja to ogon Golden Week. Trzy bazy: Kioto (4 noce), Tokio (3), Hakone (1). <span class="ipill y">alert: 15.09.2026</span></li>
       <li><b>🎟️ Rezerwacje czasowe:</b> Nintendo Museum — loteria ~luty 2027 · warsztaty kultury w Kioto — 1–2 miesiące wcześniej · Shibuya Sky — sprzedaż od ~6.04.2027 (4 tyg. przed 4.05; slot na zachód słońca) · Pokémon Café — rezerwacja rusza 4.04.2027 o 18:00 czasu japońskiego (31 dni przed 5.05).</li>
       <li><b>☔ Pogoda — dostrajać najpóźniej ~7 dni przed</b> (wcześniej prognoza jest niewiarygodna). Bilet na Shibuya Sky jest kupiony wcześniej (sloty znikają w dniu startu sprzedaży) — przy złej prognozie spróbujcie zmiany daty w systemie biletowym. <b>Rano danego dnia:</b> status kolejki w Hakone (hakonenavi.jp — wiatr/gaz), w razie czego Open-Air Museum; Fudżi to loteria. Bufor (puste popołudnie 2.05) i zawory (Nishiki, Kinkaku-ji, Nintendo TOKYO, Akihabara) pochłaniają deszcz bez przebudowy. <span class="ipill y">alert: 20.04.2027</span></li>
@@ -2089,7 +2090,7 @@ function lotyPage(){
       <div class="scentot"><span>Razem loty</span><b>~${plz(TICKET.total)}</b></div>
       <ul class="tips" style="margin-top:14px">
         <li>WAW 11:50 → AUH 19:25 (27.04) · nocleg · AUH 21:25 → Narita 12:45 (29.04) · powrót Narita 18:00 (7.05) → WAW 6:50 <b>w sobotę 8.05</b>.</li>
-        <li>Rezerwacja wszystkich 4 miejsc razem; miejsca obok siebie warto dopłacić na nocnych odcinkach (Basic ich nie gwarantuje).</li>
+        <li>Miejsca obok siebie: 8.09 Etihad dodał bezpłatną notatkę do rezerwacji (rodzina razem, 10-latek przy rodzicu, 13-latek blisko reszty, wszystkie odcinki) — sprawa #9700179. Płatnych miejsc nie kupiono; konkretny przydział przy odprawie, zależnie od dostępności.</li>
         <li>Termin przesunięty 7.09 z 3–14 maja na 27.04–7.05 (wycieczka klasowa dziecka 10.05); w Google ta sama cena biletu, kwota ze stopoverem do potwierdzenia w kasie.</li>
       </ul>
     </div>
@@ -2099,7 +2100,7 @@ function lotyPage(){
     <h2 class="stitle">Kupione — co jeszcze domknąć</h2>
     <div class="card"><ul class="tips">
       <li><b>Kupione 8.09.2026</b> — Etihad 27.04–7.05 ze stopoverem tam, 3 600 zł/os. (14 400 zł za 4 osoby). Decyzja zapadła 4.09, gdy cena weszła w próg okazji (≤3 500 zł/os. ekwiwalentu w Google); w kasie wyszło o ~150 zł/os. więcej.</li>
-      <li><b>Do domknięcia w „Manage booking”:</b> walizka rejestrowana na powrót (~220 zł) · miejsca obok siebie na nocnych odcinkach · dane paszportowe całej czwórki.</li>
+      <li><b>Do domknięcia w „Manage booking”:</b> dane paszportowe całej czwórki. Walizka rejestrowana na powrót już w cenie biletu; miejsca obok siebie zgłoszone bezpłatnie 8.09 (sprawa #9700179).</li>
       <li><b>Monitoring cen wyłączony 8.09</b> — wykres niżej zostaje jako archiwum rynku; „Bilety lotnicze” są odhaczone na <a href="decyzje.html">checkliście</a>.</li>
       <li><b>Zmiany/anulowanie:</b> Economy Basic ma najniższą elastyczność — daty są jednak przemyślane od lipca, a ubezpieczenie turystyczne (checklista, ~kwiecień) domyka ryzyko.</li>
     </ul></div>
