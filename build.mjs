@@ -80,9 +80,9 @@ const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5
 const BOOKINGS = [
   {when:'IX–X 2026', what:'Noclegi w Japonii (3 bazy)', note:'Z darmowym anulowaniem. UWAGA: w MIMARU dziecko od 7 lat liczy się jak dorosły — szukajcie pokoju dla 4 DOROSŁYCH, nie 3+1. Linki „Sprawdź dostępność" na stronie Hotele.'},
   {when:'TERAZ', what:'Ryokan w Hakone — zabezpieczyć na Booking', note:'Hakone Ashinoko Hanaori (Tōgendai, nad jeziorem Ashi), pokój Standard 32 m² dla 4 osób, 3 dorosłych + dziecko 10 lat, kolacja + śniadanie, czwartek 6.05: 2 878 zł, zostały 3 pokoje — stan z 7.09.2026, darmowe anulowanie do 3.05.2027.'},
-  {when:'✅ 8.09.2026', what:'Bilety lotnicze — KUPIONE', note:'Etihad 27.04–7.05 ze stopoverem w Abu Zabi w drodze tam, 3 600 zł/os. (14 400 zł za 4 os.), jedna rezerwacja na etihad.com. Do domknięcia w „Manage booking”: walizka rejestrowana na powrót (~220 zł).'},
+  {when:'✅ 8.09.2026', what:'Bilety lotnicze — KUPIONE', note:'Etihad 27.04–7.05 ze stopoverem w Abu Zabi w drodze tam, 3 600 zł/os. (14 400 zł za 4 os.), jedna rezerwacja na etihad.com. Bez bagażu rejestrowanego — lecimy w obie strony na podręcznych 7 kg/os.'},
   {when:'✅ 8.09.2026', what:'Miejsca obok siebie — zgłoszone (sprawa #9700179)', note:'Etihad dodał do rezerwacji bezpłatną notatkę: rodzina podróżuje razem, 10-latek ma siedzieć bezpośrednio obok rodzica, 13-latek możliwie blisko reszty — dotyczy wszystkich odcinków. Miejsc nie kupiono; konkretne przydział nastąpi przy odprawie, zależnie od dostępności.'},
-  {when:'przy zakupie', what:'Walizka na powrót', note:'Lecimy z podręcznymi 7 kg/os. (Economy Basic nie ma bagażu rejestrowanego w cenie). Walizka rejestrowana TYLKO na odcinek powrotny (~220 zł) — na zakupy; samą walizkę można kupić w Japonii.'},
+  {when:'DECYZJA 5.05 wieczorem', what:'Walizka na powrót — tylko jeśli zabraknie miejsca', note:'Domyślnie NIE kupujemy (oszczędność ~220 zł). Przy pakowaniu 5.05 zważcie bagaże: jeśli zakupy nie mieszczą się w 7 kg/os., dokupcie bagaż w „Manage booking” — działa do 30 h przed wylotem, czyli do ~12:00 w czwartek 6.05, i jest do 65% tańsze niż na lotnisku. Po tym oknie zostaje odprawa online (do 1 h przed) i lada na Naricie — najdrożej.'},
   {when:'~II 2027', what:'DECYZJA: Nintendo Museum (Uji) — grać w loterię?', note:'Domyślnie NIE. Jeśli tak i wygracie: 2.05 po południu kosztem Kinkaku-ji i bufora. Szczegóły w „Decyzje otwarte”.'},
   {when:'II–III 2027', what:'DECYZJA: kaligrafia czy klasa ninja (2.05, opcja)', note:'Domyślnie NIC — wolne popołudnie zostaje wolne. Jeśli rodzina chce warsztatów: podział (mama shodō, tata + dzieci ninja), oba przy Nishiki.'},
   {when:'IX–X 2026', what:'DECYZJA: Pokémon Room czy zwykły apartament (Ueno)', note:'Domyślnie zwykły 4 łóżka; Pokémon tylko przy dopłacie < ~150 zł/noc.'},
@@ -181,9 +181,10 @@ const PERIODS = [
 /* WYBRANY BILET (etihad.com, 7.09.2026): 3–14.05 ze stopoverem tam, Economy Basic.
    13 600 zł za 4 os. (3 dorosłych + dziecko) — wycena z 7.09.2026,
    hotel 4★ w Abu Zabi (Grand Millenium Al Wahda) w pakiecie. Bagaż: kabinowe w cenie,
-   + 1 walizka rejestrowana na powrót ~220 zł. FLIGHT (niżej) zostaje jako odniesienie
+   bez bagażu rejestrowanego — decyzja z 8.09: próbujemy zmieścić się w podręcznych.
+   FLIGHT (niżej) zostaje jako odniesienie
    rynkowe z Google (round-trip) dla wykresu trendu. */
-const TICKET = {family:14400, bag:220, total:14620, label:'27.04–7.05 ze stopoverem tam — KUPIONE 8.09.2026 (3 600 zł/os.)'};
+const TICKET = {family:14400, bag:0, total:14400, label:'27.04–7.05 ze stopoverem tam — KUPIONE 8.09.2026 (3 600 zł/os.)'};
 const FLIGHT = {airline:'Etihad'};
 /* Od 4.09.2026 wybrany scenariusz = ROUND-TRIP (open-jaw zdrożał — 7.09.2026 już ~7,9 tys./os.). */
 FLIGHT.history = CHECKS.filter(c=>(c.rt||{}).etihad!=null).map(c=>[c.date, c.rt.etihad]);
@@ -1157,7 +1158,7 @@ const DAYS = [
   ['19:30','Kolacja w Shibuyi','Kaiten-zushi (sushi z taśmy) albo yakiniku. Mega Don Quijote (czynny całą dobę) tylko jeśli ktoś ma jeszcze siłę — to nie jest punkt programu.'],
  ],
  facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Dużo, z pauzą','Chodzenie'],['Streetwear + Nintendo','Dla dzieci'],['Tokio (2/3)','Nocleg']],
- tips:['Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej, ~6.04) — kupujcie w dniu startu, nie czekajcie na prognozę; przy deszczu próbujcie zmiany daty w systemie biletowym.','Supreme robi dropy w soboty — we wtorek wchodzi się z ulicy, bez kolejek i losowań, ale nowości bywają wyprzedane; w Golden Week sklepy są pełne turystów.','BAPE robi tax-free od 5 000 ¥ — paszporty przy sobie. Pamiętajcie o wadze: lecimy z podręcznymi 7 kg/os., a bluza to ~600–800 g. Jeśli zakupy urosną, tanią walizkę kupicie w Don Quijote (~3 000–5 000 ¥) i nadacie ją na powrót.','Nintendo TOKYO ma limity wejść w tłoczne dni — jeśli kolejka przekracza pół godziny, odpuśćcie; Pokémon Center jest jutro w Nihombashi.'],
+ tips:['Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej, ~6.04) — kupujcie w dniu startu, nie czekajcie na prognozę; przy deszczu próbujcie zmiany daty w systemie biletowym.','Supreme robi dropy w soboty — we wtorek wchodzi się z ulicy, bez kolejek i losowań, ale nowości bywają wyprzedane; w Golden Week sklepy są pełne turystów.','BAPE robi tax-free od 5 000 ¥ — paszporty przy sobie. Waga jest twardym limitem: lecimy bez bagażu rejestrowanego, a bluza waży 600–800 g. Cała rodzina ma ~7,8 kg zapasu w czterech podręcznych i to jest cały budżet na zakupy — z Ikebukuro, Akihabary i Nintendo też. Bilans robicie 5.05 przy pakowaniu.','Nintendo TOKYO ma limity wejść w tłoczne dni — jeśli kolejka przekracza pół godziny, odpuśćcie; Pokémon Center jest jutro w Nihombashi.'],
  links:[A('meiji','Meiji Jingū'),A('streetwear','Streetwear: Supreme, BAPE, Stüssy, Palace'),A('shibuya-sky','Shibuya Sky')],
  pc:{q:'Ile czasu na sklepy streetwear?',opts:[['Krótko: BAPE i Supreme przed lunchem, reszta tylko po drodze','~1,5 h oglądania; reszta dnia bez presji','dzieci mogą chcieć więcej'],['Długo: Cat Street do 15:30','ich dzień, ich tempo — Kith i Human Made też po drodze','wypada pauza w Miyashita albo Nintendo']]},
  more:[['Skąd ten dzień','Trzecia noc w Tokio (zamiast piątej w Kiocie) rozładowała dawny „wielki dzień Tokio” na dwa spokojniejsze i oddała planowi rzeczy, które wcześniej wypadły: Meiji Jingū i Harajuku. Tokio ma dla dziesięcio- i trzynastolatka więcej niż Kioto — a mama dostaje chram i targ. Sklepy streetwear (Supreme, BAPE, Stüssy, Palace) dopisały dzieci 8.09 — wszystkie stoją na Cat Street, więc weszły w dzień bez dodatkowego przejazdu. Muzeum drzeworytów Ōta wypadło tego samego dnia: za dużo warunków (zamknięcia po świętach, zmiany wystaw) na jedną godzinę planu.']]},
@@ -1173,10 +1174,10 @@ const DAYS = [
   ['14:30','Odpoczynek w hotelu','Godzina oddechu przed wieczorem — to ostatni dzień Golden Week, od jutra miasto wraca do rytmu.'],
   ['16:30','Akihabara — opcjonalnie','Elektryczne miasteczko: gachapony, salony gier retro, sklepy z anime i elektroniką. To zawór dnia: jeśli po Pokémonach nikt nie ma siły, zostańcie w Ueno.'],
   ['19:00','Kolacja w Akihabarze','Kaiten-zushi albo curry — proste i szybkie po intensywnym dniu.'],
-  ['21:00','Powrót, dogrywka prania i pakowanie','Ostatni wieczór w Tokio. Pralnia samoobsługowa jest w hotelu (detergent na recepcji), więc jeden wsad w trakcie pakowania i wracacie do Polski w czystych rzeczach — w Hakone prania już nie będzie. Jutro rano wymeldowanie i prosto w góry: cały bagaż jedzie z nami.'],
+  ['21:00','Pakowanie, pranie i ważenie bagaży','Ostatni wieczór w Tokio i <b>moment decyzji o bagażu</b>: spakujcie się z zakupami i zważcie wszystkie cztery podręczne. Limit to 7 kg na osobę. Jeśli się nie mieści, dokupcie bagaż rejestrowany w „Manage booking” — działa do ~12:00 jutro i jest do 65% tańsze niż na lotnisku. Przy okazji pralnia samoobsługowa w hotelu (detergent na recepcji): jeden wsad i wracacie w czystych rzeczach, bo w Hakone prania nie ma.'],
  ],
  facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Ich dzień','Dla dzieci'],['Tokio (3/3)','Nocleg']],
- tips:['Rezerwacja Pokémon Café otwiera się 31 dni wcześniej o 18:00 czasu japońskiego — łapcie slot punktualnie.','5 maja to ostatni dzień Golden Week — Pokémon Center bywa pełne, dlatego rezerwacja Café jest kotwicą dnia.','Ustalcie dzieciom limit na gachapony z góry — inaczej wyjdziecie z Akihabary z walizką kapsułek 😉'],
+ tips:['Rezerwacja Pokémon Café otwiera się 31 dni wcześniej o 18:00 czasu japońskiego — łapcie slot punktualnie.','5 maja to ostatni dzień Golden Week — Pokémon Center bywa pełne, dlatego rezerwacja Café jest kotwicą dnia.','Ustalcie dzieciom limit na gachapony z góry — inaczej wyjdziecie z Akihabary z walizką kapsułek 😉','Wieczorem ważycie bagaże. Lecimy bez rejestrowanego, więc to dziś zapada decyzja, czy zakupy zmieszczą się w 7 kg/os. — dokupienie bagażu jutro po południu jest już znacznie droższe.'],
  links:[A('pokemon','Pokémon Center + Café'),A('akihabara','Akihabara')],
  more:[]},
 
@@ -1210,13 +1211,13 @@ const DAYS = [
   ['11:20','Shinkansen Odawara → Tokyo Station','~35 min (Kodama/Hikari); miejscówki kupione wcześniej.'],
   ['12:00','Tokyo Station','Character Street tylko, jeśli do NEX zostaje co najmniej 40 minut realnego zapasu — inaczej prosto na peron.'],
   ['12:48','Narita Express','~55 min na lotnisko (12:18 to wersja dla szybkich).'],
-  ['13:45','Nadanie walizki z zakupami','Jeśli dokupiliście walizkę na pamiątki — tu ją nadajecie (bagaż rejestrowany na powrót jest opłacony przy bilecie). Reszta leci w kabinie.'],
+  ['13:45','Narita — ważenie przed odprawą','Wagi stoją przy stanowiskach Etihada. Ostatnia szansa przełożyć cięższe rzeczy na siebie; bagaż rejestrowany da się jeszcze dokupić przy odprawie, ale to najdroższy wariant.'],
   ['15:00','Odprawa i kontrola','Zwrot tax-free przy wyjściu.'],
   ['18:00','Wylot','Narita → Abu Zabi (przesiadka ~2,5 h) → Warszawa.'],
   ['06:50','Warszawa','Lądowanie w sobotę 8.05 — okaeri! Niedziela na dojście do siebie przed poniedziałkową wycieczką klasową.'],
  ],
  facts:[['Średnia','Intensywność'],['Autobus + shinkansen + NEX','Przejazdy'],['Niewiele','Chodzenie'],['Fudżi na do widzenia','Dla dzieci'],['Lot nocny','Nocleg']],
- tips:['Miejscówki Odawara→Tokio i NEX kupcie 6.05 na dworcu w Odawarze albo w SmartEX — piątkowe pociągi bywają pełne.','Podręczne są ważone przy odprawie — 7 kg/os. Nadwyżkę przełóżcie do walizki rejestrowanej; paragony tax-free trzymajcie razem z paszportami.'],
+ tips:['Miejscówki Odawara→Tokio i NEX kupcie 6.05 na dworcu w Odawarze albo w SmartEX — piątkowe pociągi bywają pełne.','Podręczne są ważone przy odprawie — 7 kg/os., bez bagażu rejestrowanego. Nadwyżkę ratujecie kurtką i kieszeniami (to, co na sobie, się nie liczy); paragony tax-free trzymajcie razem z paszportami.'],
  links:[A('nex','Narita Express')],
  pc:{q:'Do Odawary: shuttle 10:00 czy autobus 9:15?',opts:[['Shuttle 10:00 (domyślnie, jeśli są miejsca)','bezpłatny, bez przesiadek, pod sam dworzec; pobudka bez pośpiechu i kąpiel od 5:00','zapisy przy zameldowaniu — gdy pełny, decyzja zapada wieczorem 6.05'],['Autobus 9:15','pewny, w cenie Free Pass, niezależny od zapisów','75–90 min z przesiadką w Yumoto; wcześniejsza pobudka']]},
  more:[['Dlaczego 7 maja','Dziecko 10 maja jedzie na wycieczkę klasową — musimy być w Polsce 8 maja. Wylot z Narity w piątek 7.05 daje lądowanie w sobotę rano i niedzielę na jet lag. Hakone na końcu trasy pozwala z gór jechać prosto na lotnisko, bez ostatniej nocy w Tokio.']]},];
@@ -1467,7 +1468,7 @@ function indexPage(){
     <div class="stt"><b>11</b><span>dni podróży</span></div>
     <div class="stt"><b>3</b><span>bazy w Japonii</span></div>
     <div class="stt"><b>8</b><span>nocy w Japonii</span></div>
-    <div class="stt"><b>~42<small>tys zł</small></b><span>budżet 2+2</span></div>
+    <div class="stt"><b>~41<small>tys zł</small></b><span>budżet 2+2</span></div>
   </section>
 
   <section>
@@ -1512,7 +1513,7 @@ function kosztyPage(){
 
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
-    <div class="pflag">✈️ <span><b>Bilet kupiony: Etihad ${TICKET.label} — ${plz(TICKET.family)} za 4 osoby</b> (z hotelem 4★ w Abu Zabi w pakiecie) + walizka na powrót ~${plz(TICKET.bag)}. Szczegóły i tło rynkowe na zakładce <a href="loty.html">Loty</a>.</span></div>
+    <div class="pflag">✈️ <span><b>Bilet kupiony: Etihad ${TICKET.label} — ${plz(TICKET.family)} za 4 osoby</b> (z hotelem 4★ w Abu Zabi w pakiecie), bez bagażu rejestrowanego. Szczegóły i tło rynkowe na zakładce <a href="loty.html">Loty</a>.</span></div>
     <div class="card"><ul class="tips">
       <li>Ta kwota zasila pole „Loty" w kalkulatorze poniżej i odświeża się automatycznie co dwa dni.</li>
       <li>Porównanie linii, wykres trendu, progi „kup / czekaj", kalendarz wyprzedaży i wybór terminu — wszystko na osobnej zakładce.</li>
@@ -1539,7 +1540,7 @@ function kosztyPage(){
       <table>
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
-          <tr><td class="cat">✈️ Loty<span class="hint">Etihad ze stopoverem (cena z etihad.com 7.09: 13 600 zł) + walizka na powrót</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="${TICKET.total}" min="0" step="100"></td></tr>
+          <tr><td class="cat">✈️ Loty<span class="hint">Etihad ze stopoverem, kupione 8.09 za 14 400 zł; bez bagażu rejestrowanego (walizka na powrót ~220 zł tylko awaryjnie)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="${TICKET.total}" min="0" step="100"></td></tr>
           <tr><td class="cat">🏨 Noclegi<span class="hint">Kioto 4 800 (4 noce) + Tokio 3 800 (3 noce) + Hanaori 2 878 = 11 478 zł; Abu Zabi gratis</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1435" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca: Nozomi ×2 ~2 400 zł, Odawara→Tokio ~310, NEX ×2 ~500, Free Pass + Romancecar ~550, Kintetsu Ltd. Exp. ~210, metro/IC ~600, transfery w Abu Zabi ~150</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4800" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
@@ -1727,7 +1728,7 @@ function decyzjePage(){
     <h2 class="stitle">Kalendarz przygotowań — deadline'y</h2>
     <p class="lead-p">Do kiedy co załatwić. Trzy alerty (loty, noclegi, pogoda) same przypomną się w aplikacji.</p>
     <div class="card"><ul class="tips">
-      <li><b>✈️ Loty — KUPIONE (8.09.2026):</b> Etihad 27.04–7.05 ze stopoverem tam, 14 620 zł za 4 osoby z walizką na powrót, hotel 4★ w Abu Zabi w pakiecie. Miejsca obok siebie zgłoszone bezpłatnie (sprawa #9700179). <a href="loty.html">Szczegóły →</a></li>
+      <li><b>✈️ Loty — KUPIONE (8.09.2026):</b> Etihad 27.04–7.05 ze stopoverem tam, 14 400 zł za 4 osoby, hotel 4★ w Abu Zabi w pakiecie. Bez bagażu rejestrowanego (podręczne 7 kg/os.); miejsca obok siebie zgłoszone bezpłatnie (sprawa #9700179). <a href="loty.html">Szczegóły →</a></li>
       <li><b>🏨 Noclegi — rezerwować wrzesień–październik 2026</b> z darmowym anulowaniem. Pokoje 4-osobowe — zwłaszcza w ryokanach — znikają pierwsze, a początek maja to ogon Golden Week. Trzy bazy: Kioto (4 noce), Tokio (3), Hakone (1). <span class="ipill y">alert: 15.09.2026</span></li>
       <li><b>🎟️ Rezerwacje czasowe:</b> Nintendo Museum — loteria ~luty 2027 · warsztaty kultury w Kioto — 1–2 miesiące wcześniej · Shibuya Sky — sprzedaż od ~6.04.2027 (4 tyg. przed 4.05; slot na zachód słońca) · Pokémon Café — rezerwacja rusza 4.04.2027 o 18:00 czasu japońskiego (31 dni przed 5.05).</li>
       <li><b>☔ Pogoda — dostrajać najpóźniej ~7 dni przed</b> (wcześniej prognoza jest niewiarygodna). Bilet na Shibuya Sky jest kupiony wcześniej (sloty znikają w dniu startu sprzedaży) — przy złej prognozie spróbujcie zmiany daty w systemie biletowym. <b>Rano danego dnia:</b> status kolejki w Hakone (hakonenavi.jp — wiatr/gaz), w razie czego Open-Air Museum; Fudżi to loteria. Bufor (puste popołudnie 2.05) i zawory (Nishiki, Kinkaku-ji, Nintendo TOKYO, Akihabara) pochłaniają deszcz bez przebudowy. <span class="ipill y">alert: 20.04.2027</span></li>
@@ -1845,7 +1846,7 @@ function drukPage(){
     </div>
     <div class="cfacts">
       <div><b>11</b>dni podróży</div><div><b>8</b>nocy w Japonii</div>
-      <div><b>3</b>bazy w Japonii</div><div><b>~42<i>tys. zł</i></b>budżet 2+2</div>
+      <div><b>3</b>bazy w Japonii</div><div><b>~41<i>tys. zł</i></b>budżet 2+2</div>
     </div>
     <h3 class="toch">Spis treści</h3>
     <ol class="toc">${toc}</ol>
@@ -1866,7 +1867,7 @@ function drukPage(){
 
     <h3>Terminy, których nie można przegapić</h3>
     <table class="agenda">
-      <tr><td class="t">✅ 8.09.2026</td><td><b>Bilety lotnicze — kupione</b><span class="dsc">Etihad 27.04–7.05 ze stopoverem, 3 600 zł/os. Zostało: walizka na powrót i miejsca w „Manage booking”.</span></td></tr>
+      <tr><td class="t">✅ 8.09.2026</td><td><b>Bilety lotnicze — kupione</b><span class="dsc">Etihad 27.04–7.05 ze stopoverem, 3 600 zł/os. Bez bagażu rejestrowanego; miejsca zgłoszone (#9700179).</span></td></tr>
       <tr><td class="t">IX–X 2026</td><td><b>Noclegi</b><span class="dsc">Rezerwować z darmowym anulowaniem — pokoje 4-osobowe i ryokan nad jeziorem Ashi znikają pierwsze.</span></td></tr>
       <tr><td class="t">~II 2027</td><td><b>Nintendo Museum</b><span class="dsc">Loteria biletowa (opcja na dzień w Narze).</span></td></tr>
       <tr><td class="t">~IV 2027</td><td><b>Miejscówki kolejowe</b><span class="dsc">NEX + shinkansen do Kioto (29.04), Kioto→Tokio (3.05, święto!), Odawara→Tokio + NEX (7.05). W Golden Week bez miejscówek nie ma miejsc — kupić w SmartEX.</span></td></tr>
@@ -1891,7 +1892,7 @@ function drukPage(){
       <li><b>Alarmowe:</b> 110 policja · 119 pogotowie i straż. Woda z kranu jest zdatna do picia.</li>
       <li><b>Zwyczaje:</b> buty zdejmujemy w ryokanie i świątyniach; w pociągach cisza; koszy na śmieci prawie nie ma.</li>
       <li><b>Pranie:</b> pralnie samoobsługowe w obu MIMARU. Główne pranie 2.05 (niedziela) po 14:15 w Kiocie, ~400 ¥ wsad plus ~100 ¥ za 30 min suszenia; dogrywka 5.05 wieczorem w Tokio. W Hakone prania nie ma.</li>
-      <li><b>Bagaż:</b> tylko podręczny — 7 kg i 56×36×23 cm na osobę, <b>razem z wagą walizki</b> (miękka 1,2–1,5 kg, twarda 2,4–3,0 kg). Pakujemy na 5 dni: 4 T-shirty, 1 spodnie zapasowe, 5 kompletów bielizny i skarpet, kurtka przeciwdeszczowa, klapki. Najcięższe rzeczy na sobie. Na powrót jedna walizka rejestrowana na zakupy.</li>
+      <li><b>Bagaż:</b> tylko podręczny — 7 kg i 56×36×23 cm na osobę, <b>razem z wagą walizki</b> (miękka 1,2–1,5 kg, twarda 2,4–3,0 kg). Pakujemy na 5 dni: 4 T-shirty, 1 spodnie zapasowe, 5 kompletów bielizny i skarpet, kurtka przeciwdeszczowa, klapki. Najcięższe rzeczy na sobie. Bez bagażu rejestrowanego w obie strony — zakupy muszą zmieścić się w limicie; awaryjnie walizkę dokupuje się w „Manage booking” do 30 h przed wylotem.</li>
       <li><b>Tax-free</b> od ~5 000 ¥ za okazaniem paszportu.</li>
     </ul>
     <div class="pfoot">Japonia 27 kwietnia – 7 maja 2027 · Aneks praktyczny</div>
@@ -2086,11 +2087,12 @@ function lotyPage(){
     <div class="card">
       <div class="scenrow"><span><b>Etihad, ${TICKET.label}</b> · Economy Basic · 3 dorosłych + 1 dziecko</span><b>${plz(TICKET.family)}</b></div>
       <div class="scenrow"><span>W pakiecie: nocleg 4★ w Abu Zabi (Grand Millenium Al Wahda) + opłata stopover 224 zł</span><b>0 zł</b></div>
-      <div class="scenrow"><span>Walizka rejestrowana na powrót — na zakupy (w cenie tylko podręczne 7 kg/os.)</span><b>~${plz(TICKET.bag)}</b></div>
+      <div class="scenrow"><span>Bagaż rejestrowany — świadomie pomijamy (w cenie podręczne 7 kg/os.)</span><b>0 zł</b></div>
       <div class="scentot"><span>Razem loty</span><b>~${plz(TICKET.total)}</b></div>
       <ul class="tips" style="margin-top:14px">
         <li>WAW 11:50 → AUH 19:25 (27.04) · nocleg · AUH 21:25 → Narita 12:45 (29.04) · powrót Narita 18:00 (7.05) → WAW 6:50 <b>w sobotę 8.05</b>.</li>
         <li>Miejsca obok siebie: 8.09 Etihad dodał bezpłatną notatkę do rezerwacji (rodzina razem, 10-latek przy rodzicu, 13-latek blisko reszty, wszystkie odcinki) — sprawa #9700179. Płatnych miejsc nie kupiono; konkretny przydział przy odprawie, zależnie od dostępności.</li>
+        <li><b>Bez bagażu rejestrowanego w obie strony</b> (decyzja 8.09) — cztery podręczne po 7 kg to cały bagaż wyjazdu. Walizkę na powrót (~220 zł) można dokupić w „Manage booking” do 30 h przed wylotem, jeśli zakupy nie zmieszczą się w limicie.</li>
         <li>Termin przesunięty 7.09 z 3–14 maja na 27.04–7.05 (wycieczka klasowa dziecka 10.05); w Google ta sama cena biletu, kwota ze stopoverem do potwierdzenia w kasie.</li>
       </ul>
     </div>
@@ -2100,7 +2102,7 @@ function lotyPage(){
     <h2 class="stitle">Kupione — co jeszcze domknąć</h2>
     <div class="card"><ul class="tips">
       <li><b>Kupione 8.09.2026</b> — Etihad 27.04–7.05 ze stopoverem tam, 3 600 zł/os. (14 400 zł za 4 osoby). Decyzja zapadła 4.09, gdy cena weszła w próg okazji (≤3 500 zł/os. ekwiwalentu w Google); w kasie wyszło o ~150 zł/os. więcej.</li>
-      <li><b>Do domknięcia w „Manage booking”:</b> dane paszportowe całej czwórki. Walizka rejestrowana na powrót już w cenie biletu; miejsca obok siebie zgłoszone bezpłatnie 8.09 (sprawa #9700179).</li>
+      <li><b>Do domknięcia w „Manage booking”:</b> dane paszportowe całej czwórki. Miejsca obok siebie zgłoszone bezpłatnie 8.09 (sprawa #9700179); bagażu rejestrowanego świadomie nie kupujemy — decyzja wraca 5.05 wieczorem przy pakowaniu.</li>
       <li><b>Monitoring cen wyłączony 8.09</b> — wykres niżej zostaje jako archiwum rynku; „Bilety lotnicze” są odhaczone na <a href="decyzje.html">checkliście</a>.</li>
       <li><b>Zmiany/anulowanie:</b> Economy Basic ma najniższą elastyczność — daty są jednak przemyślane od lipca, a ubezpieczenie turystyczne (checklista, ~kwiecień) domyka ryzyko.</li>
     </ul></div>
@@ -2193,7 +2195,7 @@ function pogodaPage(){
     <p class="lead-p">Lecimy Etihadem w taryfie Economy Basic: jedna sztuka podręczna na osobę, <b>7 kg i 56×36×23 cm</b>, bez bagażu rejestrowanego w cenie. Cztery małe walizki jadą z nami przez cały wyjazd — dlatego kurier na lotnisko wypadł z planu.</p>
     <div class="card"><ul class="tips">
       <li><b>Waga jest limitem, nie objętość.</b> 7 kg waży się przy odprawie. Źródła różnią się co do tego, czy w ekonomii Etihadu dochodzi jeszcze mała sztuka osobista — przy locie bez bagażu rejestrowanego to realna różnica, więc potwierdźcie w „Manage booking”.</li>
-      <li><b>Zakupy na powrót to jedyne ryzyko.</b> Bluza ze streetwearu waży 600–800 g, pluszaki i gachapony zjadają resztę. Dlatego trzymamy <b>jedną walizkę rejestrowaną na lot powrotny (~220 zł)</b> — dokupcie ją w „Manage booking”, a samą walizkę taniej kupicie na miejscu (Don Quijote, ~3 000–5 000 ¥).</li>
+      <li><b>Zakupy na powrót to jedyne ryzyko — i nie ma zaworu.</b> Decyzją z 8.09 lecimy bez bagażu rejestrowanego w obie strony, więc streetwear, pluszaki i gachapony muszą zmieścić się w tych 7 kg. Zapas całej rodziny to ~7,8 kg (patrz tabele niżej) i to jest cały budżet na pamiątki. <b>Plan B:</b> przy pakowaniu 5.05 zważcie bagaże — jeśli nie wychodzi, walizkę dokupicie w „Manage booking” (~220 zł) do 30 h przed wylotem, czyli do ~12:00 w czwartek 6.05. Później zostaje odprawa online i lada na lotnisku, gdzie ta sama walizka kosztuje wielokrotnie więcej.</li>
       <li><b>Kurier niepotrzebny.</b> Takkyūbin (~2 000–2 800 ¥/szt.) opłaca się przy dużych walizkach — przy podręcznych taniej i prościej wziąć je ze sobą. Jedyny odcinek, gdzie warto rozważyć dowóz, to pętla w Hakone: bagaż zostawiacie przy dworcu Yumoto, czeka w ryokanie.</li>
     </ul></div>
   </section>
