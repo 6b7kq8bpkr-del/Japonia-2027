@@ -81,7 +81,7 @@ const BOOKINGS = [
   {when:'IX–X 2026', what:'Noclegi w Japonii (3 bazy)', note:'Z darmowym anulowaniem. UWAGA: w MIMARU dziecko od 7 lat liczy się jak dorosły — szukajcie pokoju dla 4 DOROSŁYCH, nie 3+1. Linki „Sprawdź dostępność" na stronie Hotele.'},
   {when:'TERAZ', what:'Ryokan w Hakone — zabezpieczyć na Booking', note:'Hakone Ashinoko Hanaori (Tōgendai, nad jeziorem Ashi), pokój Standard 32 m² dla 4 osób, 3 dorosłych + dziecko 10 lat, kolacja + śniadanie, czwartek 6.05: 2 878 zł, zostały 3 pokoje, darmowe anulowanie do 3.05.2027.'},
   {when:'✅ 8.09.2026', what:'Bilety lotnicze — KUPIONE', note:'Etihad 27.04–7.05 ze stopoverem w Abu Zabi w drodze tam, 3 600 zł/os. (14 400 zł za 4 os.), jedna rezerwacja na etihad.com. Do domknięcia w „Manage booking”: walizka rejestrowana na powrót (~220 zł) i miejsca obok siebie na nocnych odcinkach.'},
-  {when:'przy zakupie', what:'Walizka na powrót + miejsca obok siebie', note:'Bagaż rejestrowany tylko na odcinek powrotny (~220 zł); miejsca na nocnych odcinkach — Basic ich nie gwarantuje.'},
+  {when:'przy zakupie', what:'Walizka na powrót + miejsca obok siebie', note:'Lecimy z podręcznymi 7 kg/os. (Economy Basic nie ma bagażu rejestrowanego w cenie). Walizka rejestrowana TYLKO na odcinek powrotny (~220 zł) — na zakupy; samą walizkę można kupić w Japonii. Miejsca na nocnych odcinkach: Basic ich nie gwarantuje.'},
   {when:'~II 2027', what:'DECYZJA: Nintendo Museum (Uji) — grać w loterię?', note:'Domyślnie NIE. Jeśli tak i wygracie: 2.05 po południu kosztem Kinkaku-ji i bufora. Szczegóły w „Decyzje otwarte”.'},
   {when:'II–III 2027', what:'DECYZJA: kaligrafia czy klasa ninja (1.05)', note:'Domyślnie podział (mama shodō, tata + dzieci ninja). Rezerwacje obu warsztatów przy Nishiki.'},
   {when:'IX–X 2026', what:'DECYZJA: Pokémon Room czy zwykły apartament (Ueno)', note:'Domyślnie zwykły 4 łóżka; Pokémon tylko przy dopłacie < ~150 zł/noc.'},
@@ -1025,7 +1025,7 @@ const DAYS = [
   ['21:30','Sen w prawdziwym łóżku','Zamiast nocy w samolocie — jet lag rozbity na raty.'],
  ],
  facts:[['Łagodna','Intensywność'],['Lot 5,5 h','Przejazdy'],['Minimalne','Chodzenie'],['Łatwy etap','Dla dzieci'],['Abu Zabi (gratis)','Nocleg']],
- tips:['Pakiet hotelowy stopover rezerwuje się na etihad.com najpóźniej 3 dni przed wylotem — zróbcie to od razu po kupnie biletów.','Do walizki podręcznej: stroje na jeden gorący dzień (35–40°C) — duże bagaże można nadać od razu do Tokio.'],
+ tips:['Pakiet hotelowy stopover rezerwuje się na etihad.com najpóźniej 3 dni przed wylotem — zróbcie to od razu po kupnie biletów.','Lecimy tylko z podręcznymi, więc na dzień w Abu Zabi macie wszystko przy sobie — lekkie, zakrywające ubrania spakujcie na wierzch. W hotelu jest przechowalnia, bagaże zostawiacie tam na czas zwiedzania.'],
  links:[A('stopover','Pakiet stopover Etihad')],
  more:[['Dlaczego stopover','Postój trwa ~26 h, więc łapie się na darmowy hotel (program Etihadu dla ekonomii i biznesu). Podróż dzieli się na 6 + 10 godzin lotu z pełną nocą snu pośrodku — z dziećmi to zupełnie inna jakość niż 18 godzin ciurkiem.']]},
 
@@ -1151,7 +1151,7 @@ const DAYS = [
   ['19:30','Kolacja w Shibuyi','Kaiten-zushi (sushi z taśmy) albo yakiniku.'],
  ],
  facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Dużo','Chodzenie'],['Streetwear + Nintendo','Dla dzieci'],['Tokio (2/3)','Nocleg']],
- tips:['Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej) — rezerwujcie dopiero przy dobrej prognozie.','Supreme robi dropy w soboty — we wtorek wchodzi się z ulicy, bez kolejek i losowań, ale nowości bywają wyprzedane; w Golden Week sklepy są pełne turystów.','BAPE robi tax-free od 5 000 ¥ — paszporty przy sobie. Zakupy zmieszczą się jeszcze w walizkach: kurier na lotnisko rusza dopiero jutro wieczorem.','Nintendo TOKYO ma limity wejść w tłoczne dni — jeśli kolejka przekracza pół godziny, odpuśćcie; Pokémon Center jest jutro w Ikebukuro.'],
+ tips:['Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej) — rezerwujcie dopiero przy dobrej prognozie.','Supreme robi dropy w soboty — we wtorek wchodzi się z ulicy, bez kolejek i losowań, ale nowości bywają wyprzedane; w Golden Week sklepy są pełne turystów.','BAPE robi tax-free od 5 000 ¥ — paszporty przy sobie. Pamiętajcie o wadze: lecimy z podręcznymi 7 kg/os., a bluza to ~600–800 g. Jeśli zakupy urosną, tanią walizkę kupicie w Don Quijote (~3 000–5 000 ¥) i nadacie ją na powrót.','Nintendo TOKYO ma limity wejść w tłoczne dni — jeśli kolejka przekracza pół godziny, odpuśćcie; Pokémon Center jest jutro w Ikebukuro.'],
  links:[A('meiji','Meiji Jingū'),A('streetwear','Streetwear: Supreme, BAPE, Stüssy, Palace'),A('shibuya-sky','Shibuya Sky')],
  pc:{q:'Ile czasu na sklepy streetwear?',opts:[['Krótko: trzy sklepy przed lunchem, Palace po drodze','~1,5 h oglądania; reszta dnia bez presji','dzieci mogą chcieć więcej'],['Długo: Cat Street do 15:00','ich dzień, ich tempo — Kith i Human Made też po drodze','wypada Nintendo albo Don Quijote']]},
  more:[['Skąd ten dzień','Trzecia noc w Tokio (zamiast piątej w Kiocie) rozładowała dawny „wielki dzień Tokio” na dwa spokojniejsze i oddała planowi rzeczy, które wcześniej wypadły: Meiji Jingū i Harajuku. Tokio ma dla dziesięcio- i trzynastolatka więcej niż Kioto — a mama dostaje chram i targ. Sklepy streetwear (Supreme, BAPE, Stüssy, Palace) dopisały dzieci 8.09 — wszystkie stoją na Cat Street, więc weszły w dzień bez dodatkowego przejazdu. Muzeum drzeworytów Ōta wypadło tego samego dnia: za dużo warunków (zamknięcia po świętach, zmiany wystaw) na jedną godzinę planu.']]},
@@ -1167,18 +1167,18 @@ const DAYS = [
   ['15:00','Odpoczynek w hotelu','Godzina oddechu przed wieczorem — to ostatni dzień Golden Week, od jutra miasto wraca do rytmu.'],
   ['16:30','Akihabara','Elektryczne miasteczko: gachapony, salony gier retro, sklepy z anime i elektroniką.'],
   ['19:00','Kolacja w Akihabarze','Kaiten-zushi albo curry — proste i szybkie po intensywnym dniu.'],
-  ['21:00','Walizki kurierem na lotnisko','Takkyūbin z recepcji prosto na Naritę (odbiór 7.05 w terminalu) — do Hakone jedziemy z plecakami.'],
+  ['21:00','Powrót do hotelu i pakowanie','Ostatni wieczór w Tokio — jutro rano wymeldowanie i prosto w góry. Spakujcie się dziś: jedziemy z podręcznymi, więc cały bagaż jedzie z nami.'],
  ],
  facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Ich dzień','Dla dzieci'],['Tokio (3/3)','Nocleg']],
  tips:['Rezerwacja Pokémon Café otwiera się 31 dni wcześniej o 18:00 czasu japońskiego — łapcie slot punktualnie.','5 maja to ostatni dzień Golden Week — Pokémon Center bywa pełne, dlatego rezerwacja Café jest kotwicą dnia.','Ustalcie dzieciom limit na gachapony z góry — inaczej wyjdziecie z Akihabary z walizką kapsułek 😉'],
- links:[A('pokemon','Pokémon Center + Café'),A('akihabara','Akihabara'),A('takkyubin','Takkyūbin na lotnisko')],
+ links:[A('pokemon','Pokémon Center + Café'),A('akihabara','Akihabara')],
  more:[]},
 
 {date:'2027-05-06',dow:'czwartek',dd:'6 maja',city:'hakone',title:'Tsukiji o świcie, pętla Hakone i noc nad jeziorem',
  lead:'Pętla wulkaniczna, jezioro z bramą torii i pierwsza noc po japońsku: yukata, kolacja w ryokanie i gorące źródła.',
  chips:['Kultura: targ Tsukiji, ryokan, onsen','Dzieci: kolejki, statek, czarne jajka','Nocleg nad jeziorem Ashi'],
  tl:[
-  ['07:45','Targ Tsukiji','Pierwszy dzień po świętach — targ pracuje: sushi i tamagoyaki na patyku na śniadanie. Walizki pojechały wczoraj na lotnisko, dziś tylko plecaki.'],
+  ['07:45','Targ Tsukiji','Pierwszy dzień po świętach — targ pracuje: sushi i tamagoyaki na patyku na śniadanie. Bagaż mamy ze sobą po wymeldowaniu; alejki są ciasne, więc na tę godzinę wrzućcie podręczne do szafek na stacji Tsukiji (linia Hibiya).'],
   ['09:30','Metro do Shinjuku',''],
   ['10:00','Romancecar z Shinjuku','Ekspres z rezerwowanymi miejscami, ~85 min do Hakone-Yumoto; dzień po Golden Week jest luźniej.'],
   ['11:25','Hakone-Yumoto → kolejka górska do Gōry','Tōzan z zakosami ~40 min; Hakone Free Pass kupiony w Shinjuku.'],
@@ -1192,8 +1192,8 @@ const DAYS = [
   ['18:30','Kolacja w ryokanie','Kolacja i śniadanie w cenie. Wieczorem druga kąpiel dla chętnych — łaźnie czynne do późna.'],
  ],
  facts:[['Średnia','Intensywność'],['Romancecar + kolejki','Przejazdy'],['Umiarkowane','Chodzenie'],['Frajda z kolejek','Dla dzieci'],['Ryokan','Nocleg']],
- tips:['Fudżi najczęściej widać rano — trzymajcie kciuki przy porannej kolejce linowej i na jeziorze.','Nadanie dużych walizek kurierem (~2 000–2 500 ¥/szt.) oszczędza taszczenia po górach i przesiadkach.'],
- links:[A('tsukiji','Tsukiji'),A('hakone-pass','Hakone Free Pass + Romancecar'),A('owakudani','Ōwakudani'),A('ashi','Jezioro Ashi'),A('takkyubin','Takkyūbin')],
+ tips:['Fudżi najczęściej widać rano — trzymajcie kciuki przy porannej kolejce linowej i na jeziorze.','Cała pętla — kolejka zębata, linowa, Ōwakudani, statek — z podręcznymi jest do zrobienia, ale jeśli chcecie mieć wolne ręce, przy dworcu Hakone-Yumoto oddacie bagaż do 12:30 i znajdziecie go w ryokanie po 15:00 (~800–1 100 ¥/szt.). Jesteście w Yumoto o 11:25, więc zdążycie.'],
+ links:[A('tsukiji','Tsukiji'),A('hakone-pass','Hakone Free Pass + Romancecar'),A('owakudani','Ōwakudani'),A('ashi','Jezioro Ashi'),A('takkyubin','Bagaż: dowóz w Hakone')],
  pc:{q:'Dołożyć Hakone Open-Air Museum?',opts:[['Nie — tylko pętla i ryokan','sobota jest tłoczna; onsen o 16:30 to nagroda','—'],['Tak (1,5 h, ~¥5 000)','rzeźby do wspinania i pawilon Picassa; jedyny plan B przy wietrze','wejście do ryokanu przesuwa się na 17:30']]},
  more:[['Kontekst','Ryokan to nie tylko nocleg, ale całe doświadczenie: śpi się na futonach na tatami, chodzi w yukacie, a kolacja kaiseki i onsen są częścią wieczoru. To najspokojniejszy punkt całego wyjazdu.'],['Plan B na wiatr i chmury','Kolejka linowa nad Ōwakudani bywa zawieszana przy silnym wietrze lub alertach wulkanicznych — rano sprawdźcie status na hakonenavi.jp. Awaryjnie: Hakone Open-Air Museum (rzeźby do wspinania, pawilon Picassa, kąpiel stóp) plus rejs po Ashi, który pływa niemal zawsze.']]},
 
@@ -1206,14 +1206,14 @@ const DAYS = [
   ['10:40','Shinkansen Odawara → Tokyo Station','~35 min (Kodama/Hikari); miejscówki kupione wcześniej.'],
   ['11:30','Tokyo Station','Ostatnie zakupy na Character Street — 30 minut.'],
   ['12:18','Narita Express','~55 min na lotnisko.'],
-  ['13:30','Odbiór walizek z takkyūbin','Lada Yamato w terminalu Etihada (przy nadawaniu w hotelu podać numer lotu i terminal) — nadane 5.05 z Ueno.'],
+  ['13:30','Nadanie walizki z zakupami','Jeśli dokupiliście walizkę na pamiątki — tu ją nadajecie (bagaż rejestrowany na powrót jest opłacony przy bilecie). Reszta leci w kabinie.'],
   ['15:00','Odprawa i kontrola','Zwrot tax-free przy wyjściu.'],
   ['18:00','Wylot','Narita → Abu Zabi (przesiadka ~2,5 h) → Warszawa.'],
   ['06:50','Warszawa','Lądowanie w sobotę 8.05 — okaeri! Niedziela na dojście do siebie przed poniedziałkową wycieczką klasową.'],
  ],
  facts:[['Średnia','Intensywność'],['Autobus + shinkansen + NEX','Przejazdy'],['Niewiele','Chodzenie'],['Fudżi na do widzenia','Dla dzieci'],['Lot nocny','Nocleg']],
- tips:['Miejscówki Odawara→Tokio i NEX kupcie 6.05 na dworcu w Odawarze albo w SmartEX — piątkowe pociągi bywają pełne.','Zostawcie ~5 kg zapasu w walizkach na pamiątki; paragony tax-free trzymajcie razem z paszportami.'],
- links:[A('nex','Narita Express'),A('takkyubin','Takkyūbin na lotnisko')],
+ tips:['Miejscówki Odawara→Tokio i NEX kupcie 6.05 na dworcu w Odawarze albo w SmartEX — piątkowe pociągi bywają pełne.','Podręczne są ważone przy odprawie — 7 kg/os. Nadwyżkę przełóżcie do walizki rejestrowanej; paragony tax-free trzymajcie razem z paszportami.'],
+ links:[A('nex','Narita Express')],
  more:[['Dlaczego 7 maja','Dziecko 10 maja jedzie na wycieczkę klasową — musimy być w Polsce 8 maja. Wylot z Narity w piątek 7.05 daje lądowanie w sobotę rano i niedzielę na jet lag. Hakone na końcu trasy pozwala z gór jechać prosto na lotnisko, bez ostatniej nocy w Tokio.']]},];
 
 /* ============================ HOTELS ============================ */
@@ -1266,7 +1266,7 @@ const DAYFLEX = {
   '2027-05-02':['Arashiyama rano','Kinkaku-ji; całe popołudnie jest opcjonalne'],
   '2027-05-03':['shinkansen do Tokio (miejscówki!)','wieczorną Asakusę można skrócić'],
   '2027-05-04':['Shibuya Sky (rezerwacja!) + Cat Street ze sklepami streetwear','Nintendo TOKYO i Don Quijote — jedno z dwóch, gdy kolejki'],
-  '2027-05-05':['Pokémon Café (rezerwacja!) + kurier walizek na lotnisko','Akihabarę wieczorem'],
+  '2027-05-05':['Pokémon Café (rezerwacja!)','Akihabarę wieczorem'],
   '2027-05-06':['ryokan nad jeziorem + Ōwakudani','rejs i Hakone-jinja — gdy jesteście spóźnieni, meldujecie się i zostajecie nad wodą (ryokan jest przy przystani)'],
   '2027-05-07':['autobus 9:15 + shinkansen + NEX + lot 18:00','zakupy na Tokyo Station dowolnie'],
 };
@@ -1876,7 +1876,7 @@ function drukPage(){
       <tr><td class="t">3.05</td><td><b>Kioto → Tokio</b><span class="dsc">Shinkansen ~¥14 170 dorosły / ~¥7 080 dziecko — święto, miejscówki obowiązkowe</span></td></tr>
       <tr><td class="t">7.05</td><td><b>Odawara → Tokio → Narita</b><span class="dsc">Shinkansen ~¥3 500 + Narita Express ~¥3 070 (dorosły)</span></td></tr>
     </table>
-    <p class="note"><b>JR Pass się nie opłaca</b> (~¥50 000/os.) — dwa shinkanseny punktowo to wciąż ~2× taniej. Do Hakone: Hakone Free Pass (Odakyu). W miastach: karty IC Suica/PASMO/ICOCA. Bagaże między bazami: kurier takkyūbin (~¥2 000/szt.).</p>
+    <p class="note"><b>JR Pass się nie opłaca</b> (~¥50 000/os.) — dwa shinkanseny punktowo to wciąż ~2× taniej. Do Hakone: Hakone Free Pass (Odakyu). W miastach: karty IC Suica/PASMO/ICOCA. Bagaż: tylko podręczny 7 kg/os., jedzie z nami — bez kuriera.</p>
 
     <h3>Praktyka</h3>
     <ul class="plist">
@@ -1885,7 +1885,7 @@ function drukPage(){
       <li><b>Prąd:</b> 100 V, gniazdka typu A (dwa płaskie bolce) — potrzebny adapter.</li>
       <li><b>Alarmowe:</b> 110 policja · 119 pogotowie i straż. Woda z kranu jest zdatna do picia.</li>
       <li><b>Zwyczaje:</b> buty zdejmujemy w ryokanie i świątyniach; w pociągach cisza; koszy na śmieci prawie nie ma.</li>
-      <li><b>Bagaż:</b> podręczny + plecak wystarczą — pranie w aparthotelach MIMARU (Kioto). Limit ~7 kg/os. w kabinie.</li>
+      <li><b>Bagaż:</b> tylko podręczny — 7 kg i 56×36×23 cm na osobę; pranie w aparthotelach MIMARU. Na powrót jedna walizka rejestrowana na zakupy.</li>
       <li><b>Tax-free</b> od ~5 000 ¥ za okazaniem paszportu.</li>
     </ul>
     <div class="pfoot">Japonia 27 kwietnia – 7 maja 2027 · Aneks praktyczny</div>
@@ -2080,7 +2080,7 @@ function lotyPage(){
     <div class="card">
       <div class="scenrow"><span><b>Etihad, ${TICKET.label}</b> · Economy Basic · 3 dorosłych + 1 dziecko</span><b>${plz(TICKET.family)}</b></div>
       <div class="scenrow"><span>W pakiecie: nocleg 4★ w Abu Zabi (Grand Millenium Al Wahda) + opłata stopover 224 zł</span><b>0 zł</b></div>
-      <div class="scenrow"><span>Walizka rejestrowana na powrót (kabinowe 7 kg w cenie)</span><b>~${plz(TICKET.bag)}</b></div>
+      <div class="scenrow"><span>Walizka rejestrowana na powrót — na zakupy (w cenie tylko podręczne 7 kg/os.)</span><b>~${plz(TICKET.bag)}</b></div>
       <div class="scentot"><span>Razem loty</span><b>~${plz(TICKET.total)}</b></div>
       <ul class="tips" style="margin-top:14px">
         <li>WAW 11:50 → AUH 19:25 (27.04) · nocleg · AUH 21:25 → Narita 12:45 (29.04) · powrót Narita 18:00 (7.05) → WAW 6:50 <b>w sobotę 8.05</b>.</li>
@@ -2193,14 +2193,14 @@ function pogodaPage(){
     </ul></div>
   </section>
   <section>
-    <h2 class="stitle">Bagaż — podręczny + plecak wystarczy</h2>
-    <p class="lead-p">Przy pięciu zmianach bazy i jeździe pociągami lekki bagaż to nie oszczędność, tylko wygoda. Tania taryfa Etihad i tak jest bez bagażu rejestrowanego — z podręcznym nic nie dopłacacie.</p>
+    <h2 class="stitle">Bagaż — tylko podręczny, 7 kg na osobę</h2>
+    <p class="lead-p">Lecimy Etihadem w taryfie Economy Basic: jedna sztuka podręczna na osobę, <b>7 kg i 56×36×23 cm</b>, bez bagażu rejestrowanego w cenie. Cztery małe walizki jadą z nami przez cały wyjazd — dlatego kurier na lotnisko wypadł z planu.</p>
     <div class="card"><ul class="tips">
-      <li><b>Pakujcie na ~5–6 dni, nie na 13.</b> Aparthotele MIMARU (Tokio, Kioto) mają pralkę i suszarkę — pranie robicie w Kioto i komplet ubrań wraca do obiegu.</li>
-      <li><b>Waga, nie objętość, jest limitem.</b> W klasie ekonomicznej Etihad to zwykle ~7 kg/os. (podręczny + mała sztuka osobista) — dokładny limit potwierdźcie przy zakupie biletu.</li>
-      <li><b>Zakupy na powrót to jedyne ryzyko.</b> Pokémony, gachapony i Don Quijote potrafią spuchnąć bagaż — dokupcie jedną walizkę rejestrowaną tylko na lot powrotny (dopłata za odcinek) albo tanią składaną walizkę już w Japonii.</li>
-      <li><b>Hakone bez targania:</b> to tylko 1 noc — główne bagaże wyślijcie kurierem <i>takkyubin</i> z hotelu w Tokio prosto do Kioto (~1500–2000 ¥/szt., doba), a w góry jedziecie z samymi plecakami.</li>
-      <li>Kosmetyki zapewnia hotel, a czego zabraknie — dokupicie za grosze (Uniqlo, Don Quijote na każdym rogu). W kabinie pamiętajcie o limicie płynów 100 ml.</li>
+      <li><b>Pakujcie na ~5 dni, nie na 11.</b> Aparthotele MIMARU (Kioto, Tokio) mają pralkę i suszarkę — pranie robicie w Kiocie i komplet ubrań wraca do obiegu.</li>
+      <li><b>Waga jest limitem, nie objętość.</b> 7 kg waży się przy odprawie. Źródła różnią się co do tego, czy w ekonomii Etihadu dochodzi jeszcze mała sztuka osobista — przy locie bez bagażu rejestrowanego to realna różnica, więc potwierdźcie w „Manage booking”.</li>
+      <li><b>Zakupy na powrót to jedyne ryzyko.</b> Bluza ze streetwearu waży 600–800 g, pluszaki i gachapony zjadają resztę. Dlatego trzymamy <b>jedną walizkę rejestrowaną na lot powrotny (~220 zł)</b> — dokupcie ją w „Manage booking”, a samą walizkę taniej kupicie na miejscu (Don Quijote, ~3 000–5 000 ¥).</li>
+      <li><b>Kurier niepotrzebny.</b> Takkyūbin (~2 000–2 800 ¥/szt.) opłaca się przy dużych walizkach — przy podręcznych taniej i prościej wziąć je ze sobą. Jedyny odcinek, gdzie warto rozważyć dowóz, to pętla w Hakone: bagaż zostawiacie przy dworcu Yumoto, czeka w ryokanie.</li>
+      <li><b>Podręczny to jedyny bagaż — nic ostrego.</b> Nożyczki, scyzoryk, duże płyny zostają w domu; w kabinie obowiązuje limit 100 ml. Kosmetyki zapewnia hotel, a czego zabraknie, dokupicie za grosze (Uniqlo, Don Quijote na każdym rogu).</li>
     </ul></div>
   </section>
   <section>
@@ -2274,7 +2274,7 @@ function niezbednikPage(){
     ${seg('🚄 Przejazdy między miastami',[
       '<b>JR Pass się przy naszej trasie nie opłaca</b> (~50 000 ¥/os.) — bilety punktowe wychodzą około dwa razy taniej.',
       'Do Hakone: <b>Hakone Free Pass</b> (Odakyu) — obejmuje kolejkę linową, statek po jeziorze, autobusy i pociąg górski.',
-      'Bagaże między bazami: kurier <b>takkyūbin</b> (~2 000–2 500 ¥/szt., doba) — zamiast targać walizki po schodach.',
+      'Bagaż: <b>tylko podręczny 7 kg/os.</b>, jedzie z nami — kurier między bazami niepotrzebny. W Hakone można go oddać przy dworcu Yumoto i odebrać w ryokanie (~800–1 100 ¥/szt.).',
       'Szczegółowe ceny naszych odcinków są w <a href="koszty.html">Kosztach</a>.'])}
     ${seg('📶 Internet i prąd',[
       'Dla czterech osób najprościej <b>jeden router pocket WiFi</b> (odbiór na lotnisku albo kurierem do hotelu) — łączy wszystkie urządzenia.',
@@ -2672,10 +2672,10 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     </div>
 
     <div class="acard" id="takkyubin">
-      <h3>📦 Takkyūbin (Yamato)</h3>
-      <div class="desc">Kurierska wysyłka walizek hotel → hotel (z pominięciem Hakone — tam jedziecie z plecakami). Nadanie w recepcji rano, odbiór następnego dnia. Standard w Japonii, działa jak szwajcarski zegarek.</div>
-      <div class="meta"><span>🕒 zwykle doręczenie następnego dnia</span><span>💴 ~2 000–2 800 ¥/walizka</span></div>
-      <div class="links"><a href="https://www.global-yamato.com/en/hands-free-travel/" target="_blank" rel="noopener">Yamato Transport →</a></div>
+      <h3>📦 Bagaż w drodze — dowóz w Hakone i kurier</h3>
+      <div class="desc"><b>Przy naszym bagażu (podręczny 7 kg/os.) kurier na lotnisko wypadł z planu — walizki jadą z nami.</b> Zostają dwie rzeczy warte znajomości. <b>Hakone Luggage Transport:</b> przy dworcu Hakone-Yumoto oddajecie bagaż do 12:30, czeka w ryokanie od 15:00 — cała pętla (kolejka zębata, linowa, Ōwakudani, statek) bez taszczenia. Zgłasza się przy okienku na miejscu, obsługuje ~260 obiektów w Hakone, więc Hanaori potwierdźcie na ladzie. <b>Takkyūbin (Yamato):</b> ten sam pomysł na dużą skalę, hotel → hotel lub hotel → lotnisko, doręczenie następnego dnia — sensowny dopiero przy walizkach rejestrowanych.</div>
+      <div class="meta"><span>🕒 Hakone: oddanie do 12:30, dostawa od 15:00 · takkyūbin: następnego dnia</span><span>💴 Hakone ~800–1 100 ¥/szt. · takkyūbin ~2 000–2 800 ¥/walizka</span><span>📍 okienko przy dworcu Hakone-Yumoto / recepcja hotelu</span></div>
+      <div class="links"><a href="https://www.hakonenavi.jp/hakone-luggage-transport-service/en/" target="_blank" rel="noopener">Hakone Luggage Transport →</a><a href="https://www.global-yamato.com/en/hands-free-travel/" target="_blank" rel="noopener">Yamato Transport →</a></div>
     </div>
 
   </div>
