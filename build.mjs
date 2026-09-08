@@ -160,7 +160,7 @@ const DAYCROWD = {
   '2027-05-01':'sobota Golden Week — Nara pełna od południa; jelenie i Tōdai-ji zaliczcie do 12:00, herbata po południu w Kiocie',
   '2027-05-02':'niedziela Golden Week — bambus o 9:15 to ostatni moment znośnego tłumu; popołudnie celowo puste',
   '2027-05-03':'Dzień Konstytucji — szczyt wyjazdów krajowych: pociąg pełny (miejscówki!), Asakusa po południu tłoczna, wieczorem luźniej',
-  '2027-05-04':'Dzień Zieleni — Meiji Jingū odświętne i pełne; Nintendo TOKYO w PARCO w święto bywa na numerki — wejdźcie zaraz po lunchu; Shibuya Sky ma slot, więc tłum nie gra roli',
+  '2027-05-04':'Dzień Zieleni — Meiji Jingū odświętne i pełne; sklepy streetwear na Cat Street w Golden Week pełne, ale bez sobotnich dropów Supreme; Nintendo TOKYO w PARCO w święto bywa na numerki; Shibuya Sky ma slot, więc tłum nie gra roli',
   '2027-05-05':'Dzień Dziecka, ostatni dzień Golden Week — koinobori wszędzie; Pokémon Center pełne, dlatego rezerwacja Café',
   '2027-05-06':'pierwszy dzień PO Golden Week — Tsukiji pracuje, w Hakone jeszcze sporo ludzi (wielu bierze czwartek–piątek wolne), ale ryokan już w cenie tygodniowej',
   '2027-05-07':'piątek — poranne pociągi z Odawary bywają pełne; miejscówki kupione dzień wcześniej',
@@ -1002,7 +1002,7 @@ const GEO = {
   '2027-04-28':[[24.4128,54.4750,'Wielki Meczet Szejka Zajida'],[24.5333,54.3981,'Luwr Abu Zabi'],[24.4330,54.6511,'Lotnisko (wylot 21:25)']],
   '2027-04-29':[[35.772,140.393,'Narita (przylot 12:45)'],[35.681,139.767,'Tokyo Station (NEX → shinkansen)'],[34.9858,135.7588,'Kioto — zameldowanie']],
   '2027-05-05':[[35.7142,139.7744,'Park Ueno (poranek)'],[35.7295,139.7190,'Pokémon Center (Ikebukuro)'],[35.6817,139.7740,'Pokémon Café (Nihombashi)'],[35.7022,139.7741,'Akihabara']],
-  '2027-05-04':[[35.6764,139.6993,'Meiji Jingū'],[35.6702,139.7026,'Harajuku / Takeshita-dōri'],[35.6619,139.6987,'Shibuya PARCO (Nintendo TOKYO)'],[35.6595,139.7005,'Shibuya + Shibuya Sky']],
+  '2027-05-04':[[35.6764,139.6993,'Meiji Jingū'],[35.6702,139.7026,'Harajuku / Takeshita-dōri'],[35.6688,139.7068,'Cat Street — Supreme · BAPE · Stüssy · Palace'],[35.6619,139.6987,'Shibuya PARCO (Nintendo TOKYO)'],[35.6595,139.7005,'Shibuya + Shibuya Sky']],
   '2027-05-06':[[35.6654,139.7707,'Targ Tsukiji'],[35.6896,139.7006,'Shinjuku'],[35.2503,139.0503,'Gōra'],[35.2445,139.0197,'Ōwakudani'],[35.2337,139.0155,'Tōgendai — ryokan Hanaori'],[35.2044,139.0247,'Moto-Hakone / Hakone-jinja']],
   '2027-05-03':[[34.9858,135.7588,'Kioto'],[35.681,139.767,'Tokyo Station'],[35.7108,139.7823,'Hotel w Ueno'],[35.7148,139.7967,'Asakusa / Sensō-ji']],
   '2027-04-30':[[34.9671,135.7727,'Fushimi Inari'],[34.9948,135.7850,'Kiyomizu-dera'],[35.0050,135.7649,'Nishiki Market']],
@@ -1136,24 +1136,25 @@ const DAYS = [
  links:[A('sensoji','Sensō-ji'),A('smartex','SmartEX — miejscówki')],
  more:[]},
 
-{date:'2027-05-04',dow:'wtorek',dd:'4 maja',city:'tokio',title:'Meiji, Harajuku i zachód słońca nad Shibuyą',
- lead:'Las wokół chramu Meiji dla mamy, kolorowe Harajuku i sklep Nintendo dla dzieci — a na finał wspólne Tokio z tarasu 229 metrów nad ziemią.',
- chips:['Kultura: Meiji Jingū','Dzieci: Harajuku i Nintendo TOKYO','Shibuya Sky'],
+{date:'2027-05-04',dow:'wtorek',dd:'4 maja',city:'tokio',title:'Meiji, streetwear na Cat Street i zachód słońca nad Shibuyą',
+ lead:'Las wokół chramu Meiji dla mamy, Cat Street z Supreme, BAPE, Stüssy i Palace dla dzieci — a na finał wspólne Tokio z tarasu 229 metrów nad ziemią.',
+ chips:['Kultura: Meiji Jingū','Dzieci: Supreme · BAPE · Stüssy · Palace · Nintendo','Shibuya Sky'],
  tl:[
   ['09:30','Meiji Jingū','Chram w środku 70-hektarowego lasu w sercu miasta. Dzień Zieleni to święto, więc będzie odświętnie i ludno — przyjdźcie przed 10:00; bywa, że trafia się na tradycyjny ślub shintō. Dla mamy opcjonalnie Muzeum Meiji Jingū na terenie chramu (budynek Kengo Kumy, ~30 min, ~1 000 ¥).'],
-  ['11:00','Harajuku i Takeshita-dōri','Uliczka kolorowych sklepów i naleśników crepe — żywioł nastolatków. Wejście 2 minuty od bramy chramu.'],
-  ['12:15','Lunch przy Omotesandō',''],
-  ['13:30','Cat Street → Shibuya','Spacer ~25 min bocznymi uliczkami sklepów i kawiarni — bez metra.'],
-  ['14:15','Shibuya PARCO: Nintendo TOKYO','6. piętro: oficjalny sklep Nintendo (Mario, Zelda, Animal Crossing), obok Pokémon Center Shibuya i Capcom Store. W święto bywa wejście na numerki — dlatego zaraz po lunchu.'],
-  ['16:00','Shibuya','Słynne skrzyżowanie, pomnik Hachikō, Mega Don Quijote na pamiątkowe szaleństwo.'],
+  ['11:00','Takeshita-dōri — szybko','Uliczka crepe i tanich gadżetów, wejście 2 minuty od bramy chramu. Pół godziny wystarczy, bo prawdziwy cel dzieci jest 5 minut dalej.'],
+  ['11:40','Ura-Harajuku: BAPE → Stüssy → Supreme','Trzy sklepy w promieniu 300 m (Jingūmae 4-21-5, 4-28-2, 4-32-7), wszystkie od 11:00. Budżet ustalcie PRZED wejściem: koszulka ~6–13 tys. ¥, bluza ~20–45 tys. ¥.'],
+  ['13:00','Lunch na Cat Street',''],
+  ['14:00','Palace Tokyo i Cat Street do Shibuyi','Palace (Jingūmae 5-9-20) w tygodniu otwiera o 12:00; dalej ~20 min spacerem Cat Street do Miyashita Park — po drodze Human Made, na końcu Kith Tokyo.'],
+  ['15:00','Shibuya PARCO: Nintendo TOKYO','6. piętro: oficjalny sklep Nintendo (Mario, Zelda, Animal Crossing), obok Pokémon Center Shibuya i Capcom Store. Tuż obok drugi Supreme i drugi BAPE — gdyby w Harajuku było za tłoczno.'],
+  ['16:15','Shibuya','Słynne skrzyżowanie, pomnik Hachikō, Mega Don Quijote na pamiątkowe szaleństwo.'],
   ['17:45','Shibuya Sky','Otwarty taras na zachód słońca — rezerwacja online, slot łapcie w dniu startu sprzedaży.'],
   ['19:30','Kolacja w Shibuyi','Kaiten-zushi (sushi z taśmy) albo yakiniku.'],
  ],
- facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Harajuku + Nintendo','Dla dzieci'],['Tokio (2/3)','Nocleg']],
- tips:['Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej) — rezerwujcie dopiero przy dobrej prognozie.','Nintendo TOKYO ma limity wejść w tłoczne dni — jeśli kolejka przekracza pół godziny, odpuśćcie; Pokémon Center jest jutro w Ikebukuro.'],
- links:[A('meiji','Meiji Jingū'),A('shibuya-sky','Shibuya Sky')],
- pc:{q:'Nintendo TOKYO — czekać w kolejce czy odpuścić?',opts:[['Wejść, jeśli kolejka jest krótsza niż 30 min','sklep jest po drodze do Shibuya Sky, dzieci będą pamiętać','w święto bywa system numerków'],['Odpuścić','więcej czasu na skrzyżowanie i Don Quijote','dzieci mogą żałować — powiedzcie im to od razu']]},
- more:[['Skąd ten dzień','Trzecia noc w Tokio (zamiast piątej w Kiocie) rozładowała dawny „wielki dzień Tokio” na dwa spokojniejsze i oddała planowi rzeczy, które wcześniej wypadły: Meiji Jingū i Harajuku. Tokio ma dla dziesięcio- i trzynastolatka więcej niż Kioto — a mama dostaje chram i targ. Muzeum drzeworytów Ōta wypadło 8.09: za dużo warunków (zamknięcia po świętach, zmiany wystaw) na jedną godzinę planu.']]},
+ facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Dużo','Chodzenie'],['Streetwear + Nintendo','Dla dzieci'],['Tokio (2/3)','Nocleg']],
+ tips:['Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (4 tyg. wcześniej) — rezerwujcie dopiero przy dobrej prognozie.','Supreme robi dropy w soboty — we wtorek wchodzi się z ulicy, bez kolejek i losowań, ale nowości bywają wyprzedane; w Golden Week sklepy są pełne turystów.','BAPE robi tax-free od 5 000 ¥ — paszporty przy sobie. Zakupy zmieszczą się jeszcze w walizkach: kurier na lotnisko rusza dopiero jutro wieczorem.','Nintendo TOKYO ma limity wejść w tłoczne dni — jeśli kolejka przekracza pół godziny, odpuśćcie; Pokémon Center jest jutro w Ikebukuro.'],
+ links:[A('meiji','Meiji Jingū'),A('streetwear','Streetwear: Supreme, BAPE, Stüssy, Palace'),A('shibuya-sky','Shibuya Sky')],
+ pc:{q:'Ile czasu na sklepy streetwear?',opts:[['Krótko: trzy sklepy przed lunchem, Palace po drodze','~1,5 h oglądania; reszta dnia bez presji','dzieci mogą chcieć więcej'],['Długo: Cat Street do 15:00','ich dzień, ich tempo — Kith i Human Made też po drodze','wypada Nintendo albo Don Quijote']]},
+ more:[['Skąd ten dzień','Trzecia noc w Tokio (zamiast piątej w Kiocie) rozładowała dawny „wielki dzień Tokio” na dwa spokojniejsze i oddała planowi rzeczy, które wcześniej wypadły: Meiji Jingū i Harajuku. Tokio ma dla dziesięcio- i trzynastolatka więcej niż Kioto — a mama dostaje chram i targ. Sklepy streetwear (Supreme, BAPE, Stüssy, Palace) dopisały dzieci 8.09 — wszystkie stoją na Cat Street, więc weszły w dzień bez dodatkowego przejazdu. Muzeum drzeworytów Ōta wypadło tego samego dnia: za dużo warunków (zamknięcia po świętach, zmiany wystaw) na jedną godzinę planu.']]},
 
 {date:'2027-05-05',dow:'środa',dd:'5 maja',city:'tokio',title:'Dzień Dziecka: karpie koinobori, Pokémony i Akihabara',
  lead:'Kodomo no hi — ich święto w ich mieście: poranek w parku Ueno, świat Pokémonów, a wieczorem neony Akihabary. Tsukiji przenieśliśmy na jutro, bo w święto targ nie pracuje.',
@@ -1251,7 +1252,7 @@ const DAYINT = {
   '2027-05-01':['y','Nara rano + herbata i kaligrafia po południu'],
   '2027-05-02':['g','Arashiyama + Złoty Pawilon, popołudnie luzem (bufor)'],
   '2027-05-03':['g','Shinkansen do Tokio, wieczór w Asakusie'],
-  '2027-05-04':['y','Meiji + Harajuku + Nintendo TOKYO + Shibuya Sky'],
+  '2027-05-04':['y','Meiji + Cat Street (streetwear) + Nintendo + Shibuya Sky'],
   '2027-05-05':['y','Dzień Dziecka: park Ueno + Pokémony + Akihabara'],
   '2027-05-06':['y','Tsukiji o świcie + pętla Hakone + ryokan (reset)'],
   '2027-05-07':['y','Onsen, Odawara → Narita, wylot'],
@@ -1264,7 +1265,7 @@ const DAYFLEX = {
   '2027-05-01':['ceremonia herbaty (rezerwacja)','Kasuga Taisha i pokaz mochi; kaligrafię można odpuścić'],
   '2027-05-02':['Arashiyama rano','Kinkaku-ji; całe popołudnie jest opcjonalne'],
   '2027-05-03':['shinkansen do Tokio (miejscówki!)','wieczorną Asakusę można skrócić'],
-  '2027-05-04':['Shibuya Sky (rezerwacja!)','Nintendo TOKYO i Don Quijote — jedno z dwóch, gdy kolejki'],
+  '2027-05-04':['Shibuya Sky (rezerwacja!) + Cat Street ze sklepami streetwear','Nintendo TOKYO i Don Quijote — jedno z dwóch, gdy kolejki'],
   '2027-05-05':['Pokémon Café (rezerwacja!) + kurier walizek na lotnisko','Akihabarę wieczorem'],
   '2027-05-06':['ryokan nad jeziorem + Ōwakudani','rejs i Hakone-jinja — gdy jesteście spóźnieni, meldujecie się i zostajecie nad wodą (ryokan jest przy przystani)'],
   '2027-05-07':['autobus 9:15 + shinkansen + NEX + lot 18:00','zakupy na Tokyo Station dowolnie'],
@@ -1538,7 +1539,7 @@ function kosztyPage(){
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 shinkanseny + NEX ×2 + metro + Hakone</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4200" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">warsztaty kultury, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2200" min="0" step="100"></td></tr>
-          <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td></tr>
+          <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane; streetwear dla dzieci (4.05) liczcie osobno — koszulka ~150–300 zł, bluza ~500–1 000 zł</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td></tr>
         </tbody>
         <tfoot><tr class="tot"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr></tfoot>
       </table>
@@ -1738,7 +1739,7 @@ function decyzjePage(){
         <tr><td class="dcol">1 maja</td><td>Tōdai-ji, ceremonia herbaty, kaligrafia</td><td>jelenie w Narze; równolegle klasa ninja</td></tr>
         <tr><td class="dcol">2 maja</td><td>zen Tenryū-ji, Złoty Pawilon</td><td>małpy Iwatayama, popołudnie bez planu</td></tr>
         <tr><td class="dcol">3 maja</td><td>Sensō-ji o zmroku</td><td>Nakamise, pierwsze gachapony</td></tr>
-        <tr><td class="dcol">4 maja</td><td>chram Meiji Jingū (i jego muzeum, jeśli mama chce)</td><td>Harajuku, Nintendo TOKYO, Shibuya Sky o zachodzie</td></tr>
+        <tr><td class="dcol">4 maja</td><td>chram Meiji Jingū (i jego muzeum, jeśli mama chce)</td><td>Cat Street: Supreme, BAPE, Stüssy, Palace; Nintendo TOKYO; Shibuya Sky o zachodzie</td></tr>
         <tr><td class="dcol">5 maja</td><td>poranek w parku Ueno, Kan’ei-ji</td><td>Dzień Dziecka: Pokémon Center + Café, Akihabara</td></tr>
         <tr><td class="dcol">6 maja</td><td>targ Tsukiji, ryokan nad jeziorem: yukata, kolacja, onsen</td><td>kolejki, statek „piracki”, czarne jajka</td></tr>
       </tbody></table>
@@ -1754,7 +1755,7 @@ function decyzjePage(){
       <details><summary>Stopover w Abu Zabi — wypadł i wrócił</summary><p>W planie od lipca, wycięty 4.09 rano (open-jaw z Kansai zdrożał do ~5,5 tys./os.), by wrócić tego samego dnia przy kasie: finalna wycena Etihada pokazała, że <b>stopover w drodze tam to najtańsza kombinacja w ogóle</b> — 7.09 termin 3–14 wyceniono na 13 600 zł za 4 osoby, z hotelem 4★ (Grand Millenium Al Wahda) w pakiecie i zielonym potwierdzeniem „Stopover included" dla maja 2027. Google tej taryfy w ogóle nie umiał policzyć. Przelot rozbity na 5,5 + 10 h z nocą snu pośrodku — z dziećmi dużo lepszy niż 18 h ciurkiem.</p></details>
       <details><summary>Trasa i bazy: Kioto 4 · Tokio 3 · Hakone 1</summary><p>Szkielet zgodny z najlepiej ocenianymi (4,9–5,0★) rodzinnymi tourami, z jedną świadomą korektą pod nasz skład: <b>trzecia noc w Tokio kosztem piątej w Kiocie</b>. Przy przylocie w południe dwie noce dawały Tokio ledwie półtora dnia i jeden przeładowany „czerwony” dzień; przy trzech Tokio dostaje spokojne dwa dni, a Kioto (4 noce, z wypadami do Nary i na Arashiyamę) nadal mieści wszystko poza osobnym dniem warsztatów — te weszły w popołudnie po Narze. Ryokan w środku jako „reset”, po drodze doba w Abu Zabi z darmowym hotelem.</p></details>
       <details><summary>Ryokan w środku trasy — wyższa półka</summary><p>To jedyna noc, gdy nocleg JEST atrakcją (onsen, kaiseki, tatami). Dlatego tu — i tylko tu — warto dopłacić: ryokan z kolacją i onsenem nad jeziorem to wspomnienie, nie tylko łóżko. Wybraliśmy Hanaori Standard ze wspólną łaźnią (rozdzieloną płciowo); pokój z prywatną kąpielą to +1 278 zł — opcja w „Decyzjach otwartych”. Reszta hoteli (MIMARU) zostaje standardowa, bo pokój dla 4 i lokalizacja liczą się bardziej niż gwiazdki.</p></details>
-      <details><summary>Zakup biletów (kronika 8.09)</summary><p>Kupione na etihad.com: 27.04–7.05 ze stopoverem w Abu Zabi w drodze tam, <b>3 600 zł/os. — 14 400 zł za czworo</b>, o 800 zł więcej niż wycena z 7.09 (13 600), wciąż w progu okazji. Monitoring cen i alerty zakupowe wyłączone. Tego samego dnia wypadło Muzeum Ōta — 4.05 idzie Meiji → Harajuku → Shibuya PARCO → Shibuya Sky, bez muzeum.</p></details>
+      <details><summary>Zakup biletów (kronika 8.09)</summary><p>Kupione na etihad.com: 27.04–7.05 ze stopoverem w Abu Zabi w drodze tam, <b>3 600 zł/os. — 14 400 zł za czworo</b>, o 800 zł więcej niż wycena z 7.09 (13 600), wciąż w progu okazji. Monitoring cen i alerty zakupowe wyłączone. Tego samego dnia wypadło Muzeum Ōta — 4.05 idzie Meiji → Harajuku → Cat Street (Supreme, BAPE, Stüssy, Palace — życzenie dzieci) → Shibuya PARCO → Shibuya Sky, bez muzeum.</p></details>
       <details><summary>Jak wybraliśmy bilet (kronika 4.09)</summary><p>Rano: open-jaw z Kansai zdrożał do ~5 460 zł/os., a round-trip do Narity staniał do ~3 450 — przełączyliśmy plan na round-trip 3–14. Wieczorem, przy realnej rezerwacji na etihad.com, okazało się, że google’owa cena round-tripu u przewoźnika nie istnieje, za to <b>wariant ze stopoverem kosztuje 13 600 zł za całą rodzinę</b> (3–14, wycena z 7.09) — mniej niż cokolwiek innego. Finał: wróciliśmy do pierwotnego kształtu podróży (Abu Zabi + przylot 5.05), o dzień krótszego i z lądowaniem w piątek. Lekcja: Google dobrze śledzi proste taryfy, ale przy stopoverach ostatnie słowo ma strona przewoźnika.</p></details>
     </div>
   </section>
@@ -2457,6 +2458,13 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
 
   <h2 id="tokio" class="stitle" style="scroll-margin-top:80px">🏙️ Tokio</h2>
   <div class="agrid">
+
+    <div class="acard" id="streetwear">
+      <h3>👟 Streetwear w Harajuku — Supreme, BAPE, Stüssy, Palace</h3>
+      <div class="desc">Wszystkie cztery sklepy stoją w promieniu ~400 m wokół Cat Street (Ura-Harajuku), 5–10 minut pieszo od Takeshita-dōri — dlatego siedzą w dniu 4.05 między chramem Meiji a Shibuyą. BAPE Store Harajuku (Jingūmae 4-21-5 — pierwszy sklep Nigo, z ruchomą taśmą na buty), Stüssy Harajuku Chapter (4-28-2), Supreme Harajuku (4-32-7, 2. piętro) i Palace Tokyo (5-9-20, po drugiej stronie Omotesandō). Po drodze do Shibuyi: Kith Tokyo w Miyashita Park i Human Made (marka Nigo). W Shibuyi, tuż przy PARCO, jest drugi Supreme i drugi BAPE — gdyby w Harajuku było za tłoczno. Supreme robi dropy w soboty (kolejki, losowania) — we wtorek wchodzi się z ulicy, ale nowości bywają wyprzedane.</div>
+      <div class="meta"><span>🕒 BAPE i Supreme 11:00–20:00 · Stüssy 11:00–19:00 · Palace pn–pt 12:00–20:00</span><span>💴 orientacyjnie: koszulki 6–13 tys. ¥ (~140–300 zł), bluzy 20–45 tys. ¥ (~470–1 050 zł); Supreme najtaniej, BAPE najdrożej; BAPE tax-free od 5 000 ¥ na paszport</span><span>📍 Ura-Harajuku / Cat Street — z Takeshita-dōri w stronę Omotesandō</span></div>
+      <div class="links"><a href="https://en.jp.bape.com/pages/store-list/harajuku" target="_blank" rel="noopener">BAPE Harajuku →</a><a href="https://www.stussy.com/blogs/chapters" target="_blank" rel="noopener">Stüssy Chapters →</a><a href="https://usa.palaceskateboards.com/shop/tokyo" target="_blank" rel="noopener">Palace Tokyo →</a><a href="https://www.sneakerfreaker.com/city-guides/tokyo/supreme-tokyo" target="_blank" rel="noopener">Supreme Harajuku (przewodnik) →</a></div>
+    </div>
 
     <div class="acard" id="akihabara">
       <h3>🕹️ Akihabara — elektryczne miasteczko</h3>
