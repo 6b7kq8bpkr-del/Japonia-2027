@@ -1611,7 +1611,7 @@ function hotelePage(){
         <div class="hstay">${H.stay}</div>
         <h3>${H.name}</h3>
         <p class="desc">${H.desc}</p>
-        <div class="meta"><span>💴 <b>${H.price}</b> — orientacyjnie, maj = sprawdzić przy rezerwacji</span><span>📍 ${H.near}</span></div>
+        <div class="meta"><span>💴 <b>${H.price}</b></span><span>📍 ${H.near}</span></div>
         ${H.jp?`<div class="jpaddr"><span lang="ja">${H.jp}</span><button type="button" class="jpcopy" data-addr="${H.jp}" title="Skopiuj adres">Kopiuj</button></div>`:''}
         <div class="links"><a href="${gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a>${H.book?`<a href="${H.book}" target="_blank" rel="noopener">Rezerwacja na Booking →</a>`:''}</div>
       </div>
