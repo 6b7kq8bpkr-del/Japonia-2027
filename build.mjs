@@ -1052,7 +1052,7 @@ const DAYS = [
   ['12:45','Lądowanie na Naricie','Imigracja z kodem QR Visit Japan Web (wypełnić w samolocie), odbiór bagaży.'],
   ['14:18','Narita Express do Tokyo Station','~60 min (jeśli imigracja się przeciągnie — NEX 14:48; jeździ co pół godziny).'],
   ['16:00','Shinkansen do Kioto','~2 h 15; miejscówki w SmartEX na 16:00 — 45 minut zapasu na przesiadkę; gdyby udało się wcześniej, SmartEX zmienia pociąg bezpłatnie. Fudżi po prawej (miejsca D/E).'],
-  ['18:15','Kioto — zameldowanie','MIMARU przy dworcu: bagaże, prysznic, oddech.'],
+  ['18:15','Kioto — zameldowanie','MIMARU przy dworcu: bagaże, prysznic, oddech. Strój z wczorajszego upału w Abu Zabi przepierzcie ręcznie i powieście — pralnia czeka na niedzielę 2.05.'],
   ['19:15','Lekka kolacja przy dworcu','Ramen albo obanzai; potem kombini po zapasy i karty ICOCA.'],
   ['21:00','Wczesny sen','Domykamy jet lag — jutro pierwszy pełny dzień.'],
  ],
@@ -1103,7 +1103,7 @@ const DAYS = [
 
 {date:'2027-05-02',dow:'niedziela',dd:'2 maja',city:'kioto',title:'Bambusy, Złoty Pawilon i wolne popołudnie',
  lead:'Poranek wśród bambusów i między małpami, w południe Złoty Pawilon, a potem Kioto bez planu — niedziela Golden Week, więc celowo bez planu na popołudnie.',
- chips:['Kultura: zen Tenryū-ji i Kinkaku-ji','Dzieci: małpy Iwatayama','Popołudnie luzem'],
+ chips:['Kultura: zen Tenryū-ji i Kinkaku-ji','Dzieci: małpy Iwatayama','Popołudnie luzem + pranie'],
  tl:[
   ['08:45','Pociąg do Saga-Arashiyama','~15 min z Kioto.'],
   ['09:15','Las bambusowy','Szumi i jest najspokojniejszy o poranku.'],
@@ -1111,11 +1111,12 @@ const DAYS = [
   ['11:15','Małpy na Iwatayamie','20 min wspinaczki, panorama Kioto i makaki przy siatce.'],
   ['12:30','Lunch w Arashiyamie',''],
   ['13:45','Kinkaku-ji','Złoty Pawilon odbity w stawie — autobusem ~30 min z Arashiyamy; 45 minut wystarczy.'],
-  ['15:15','Popołudnie do wyboru','Nishiki Market (spiżarnia Kioto — 10 min od hotelu), Ścieżka Filozofów albo po prostu odpoczynek w pokoju — jutro shinkansen do Tokio, więc dziś bez gonitwy.'],
-  ['18:30','Kolacja w okolicy','Bez rezerwacji, gdzie akurat pasuje.'],
+  ['15:15','Pranie w pralni hotelowej','Główny postój pralniczy wyjazdu — pralnia samoobsługowa MIMARU: 4 pralki i 4 suszarki, ~400 ¥ za wsad z detergentem, ~100 ¥ za 30 min suszenia. Po południu jest pusto, po 19:00 kolejka. Dwa wsady wystarczą na czworo i domykają ubrania do końca wyjazdu.'],
+  ['15:45','Popołudnie do wyboru','Nishiki Market (spiżarnia Kioto — 10 min od hotelu), Ścieżka Filozofów albo po prostu odpoczynek w pokoju — jutro shinkansen do Tokio, więc dziś bez gonitwy. Suszarka pracuje w tym czasie.'],
+  ['18:30','Kolacja w okolicy','Bez rezerwacji, gdzie akurat pasuje; po drodze odbieracie suche pranie.'],
  ],
  facts:[['Łagodna','Intensywność'],['Pociąg lokalny','Przejazdy'],['Sporo rano','Chodzenie'],['Małpy','Dla dzieci'],['Kioto (4/4)','Nocleg']],
- tips:['Przy małpach na Iwatayamie nie noście jedzenia w widocznych torbach; automat z wodą jest na szczycie.','Las bambusowy o 9:15 nie jest już pusty jak o świcie, ale wciąż robi wrażenie — idźcie w głąb, dalej od wejścia.','Popołudnie jest celowo puste: jeśli któryś wcześniejszy punkt wypadł przez pogodę, tu jest miejsce, żeby go nadrobić — albo po prostu odpocząć.'],
+ tips:['Przy małpach na Iwatayamie nie noście jedzenia w widocznych torbach; automat z wodą jest na szczycie.','Las bambusowy o 9:15 nie jest już pusty jak o świcie, ale wciąż robi wrażenie — idźcie w głąb, dalej od wejścia.','Popołudnie jest celowo puste: jeśli któryś wcześniejszy punkt wypadł przez pogodę, tu jest miejsce, żeby go nadrobić — albo po prostu odpocząć.','To także jedyny zaplanowany postój pralniczy: pakujemy na 5 dni, więc dziś pranie decyduje o tym, w czym chodzicie przez drugą połowę wyjazdu. Plan pakowania jest na stronie Pogoda.'],
  links:[A('arashiyama','Arashiyama'),A('monkeys','Monkey Park Iwatayama'),A('kinkakuji','Kinkaku-ji')],
  pc:{q:'Po Arashiyamie: Kinkaku-ji czy od razu luz?',opts:[['Kinkaku-ji (45 min + autobus ~30 min)','jedyny Złoty Pawilon w planie; w deszczu pusty','ostatni pełny dzień gęstnieje'],['Luz od 14:00','prawdziwy bufor przed drogą','mama traci Kinkaku-ji']]},
  more:[]},
@@ -1167,7 +1168,7 @@ const DAYS = [
   ['15:00','Odpoczynek w hotelu','Godzina oddechu przed wieczorem — to ostatni dzień Golden Week, od jutra miasto wraca do rytmu.'],
   ['16:30','Akihabara','Elektryczne miasteczko: gachapony, salony gier retro, sklepy z anime i elektroniką.'],
   ['19:00','Kolacja w Akihabarze','Kaiten-zushi albo curry — proste i szybkie po intensywnym dniu.'],
-  ['21:00','Powrót do hotelu i pakowanie','Ostatni wieczór w Tokio — jutro rano wymeldowanie i prosto w góry. Spakujcie się dziś: jedziemy z podręcznymi, więc cały bagaż jedzie z nami.'],
+  ['21:00','Powrót, dogrywka prania i pakowanie','Ostatni wieczór w Tokio. Pralnia samoobsługowa jest w hotelu (detergent na recepcji), więc jeden wsad w trakcie pakowania i wracacie do Polski w czystych rzeczach — w Hakone prania już nie będzie. Jutro rano wymeldowanie i prosto w góry: cały bagaż jedzie z nami.'],
  ],
  facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Ich dzień','Dla dzieci'],['Tokio (3/3)','Nocleg']],
  tips:['Rezerwacja Pokémon Café otwiera się 31 dni wcześniej o 18:00 czasu japońskiego — łapcie slot punktualnie.','5 maja to ostatni dzień Golden Week — Pokémon Center bywa pełne, dlatego rezerwacja Café jest kotwicą dnia.','Ustalcie dzieciom limit na gachapony z góry — inaczej wyjdziecie z Akihabary z walizką kapsułek 😉'],
@@ -1224,13 +1225,13 @@ const HOTELS = [
  mapsq:'Grand Millennium Al Wahda, Abu Dhabi',
  site:'https://www.millenniumhotels.com/en/abu-dhabi/grand-millennium-al-wahda/'},
 {id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 4 noce (29.04–3.05)',
- desc:'Ta sama rodzinna formuła co w Tokio, tuż przy dworcu Kioto. To nasza główna baza — cztery noce w jednym pokoju, bez pakowania. Idealny punkt wypadowy na Narę (Kintetsu) i Arashiyamę (JR); 3.05 shinkansen do Tokio odjeżdża spod samych drzwi.',
+ desc:'Ta sama rodzinna formuła co w Tokio, tuż przy dworcu Kioto. To nasza główna baza — cztery noce w jednym pokoju, bez pakowania. Idealny punkt wypadowy na Narę (Kintetsu) i Arashiyamę (JR); 3.05 shinkansen do Tokio odjeżdża spod samych drzwi. Tu wypada główne pranie wyjazdu (2.05 po południu): pralnia samoobsługowa z czterema pralkami i suszarkami, detergent wbudowany.',
  price:'4 800 zł za 4 noce (29.04–3.05, Golden Week) — ~1 200 zł/noc, apartament 4-os.',near:'3 min pieszo od dworca Kyoto',
  book:'https://www.booking.com/hotel/jp/mimaru-jing-du-station.html',
   jp:'京都市下京区・京都駅八条口すぐ',
  site:'https://mimaruhotels.com/en/hotel/kyoto-station/'},
 {id:'tokio1',name:'MIMARU Tokyo Ueno EAST',stay:'Tokio · 3 noce (3–6.05)',
- desc:'Aparthotel projektowany pod rodziny: apartament dla 4 osób z aneksem kuchennym i osobną sypialnią. Spokojna okolica Ueno, ~10 min metrem do Asakusy, wygodny start po przylocie.',
+ desc:'Aparthotel projektowany pod rodziny: apartament dla 4 osób z aneksem kuchennym i osobną sypialnią. Spokojna okolica Ueno, ~10 min metrem do Asakusy. Pralnia samoobsługowa na miejscu (detergent na recepcji) — 5.05 wieczorem robimy tu dogrywkę prania przed powrotem.',
  price:'3 800 zł za 3 noce (3–6.05) — ~1 267 zł/noc, apartament 4-os.',near:'metro Inarichō / JR Ueno',
  book:'https://www.booking.com/hotel/jp/mimaru-tokyo-ueno-east.html',
   jp:'東京都台東区東上野4-26-3',
@@ -1885,7 +1886,8 @@ function drukPage(){
       <li><b>Prąd:</b> 100 V, gniazdka typu A (dwa płaskie bolce) — potrzebny adapter.</li>
       <li><b>Alarmowe:</b> 110 policja · 119 pogotowie i straż. Woda z kranu jest zdatna do picia.</li>
       <li><b>Zwyczaje:</b> buty zdejmujemy w ryokanie i świątyniach; w pociągach cisza; koszy na śmieci prawie nie ma.</li>
-      <li><b>Bagaż:</b> tylko podręczny — 7 kg i 56×36×23 cm na osobę; pranie w aparthotelach MIMARU. Na powrót jedna walizka rejestrowana na zakupy.</li>
+      <li><b>Pranie:</b> pralnie samoobsługowe w obu MIMARU. Główne pranie 2.05 (niedziela) po 15:15 w Kiocie, ~400 ¥ wsad plus ~100 ¥ za 30 min suszenia; dogrywka 5.05 wieczorem w Tokio. W Hakone prania nie ma.</li>
+      <li><b>Bagaż:</b> tylko podręczny — 7 kg i 56×36×23 cm na osobę, <b>razem z wagą walizki</b> (miękka 1,2–1,5 kg, twarda 2,4–3,0 kg). Pakujemy na 5 dni: 4 T-shirty, 1 spodnie zapasowe, 5 kompletów bielizny i skarpet, kurtka przeciwdeszczowa, klapki. Najcięższe rzeczy na sobie. Na powrót jedna walizka rejestrowana na zakupy.</li>
       <li><b>Tax-free</b> od ~5 000 ¥ za okazaniem paszportu.</li>
     </ul>
     <div class="pfoot">Japonia 27 kwietnia – 7 maja 2027 · Aneks praktyczny</div>
@@ -2183,20 +2185,92 @@ function pogodaPage(){
     <p class="note" style="margin-top:10px">Wartości to średnie klimatyczne — dokładna prognoza na 2027 pojawi się bliżej wyjazdu.</p>
   </section>
   <section>
-    <h2 class="stitle">Co spakować</h2>
+    <h2 class="stitle">Plan pakowania — 7 kg na osobę</h2>
+    <p class="lead-p">Cztery podręczne to cały bagaż wyjazdu. <b>Limit 7 kg obejmuje samą walizkę</b>, a to jest różnica, która decyduje o wszystkim: twarda kabinówka waży 2,4–3,0 kg i zjada 40% przydziału, miękka torba albo plecak 1,2–1,5 kg. Wybierzcie miękkie — zostaje wtedy ~5,5 kg na rzeczy. Drugi trik: <b>najcięższe ubrania i buty macie na sobie</b> w dniu lotu, bo to się nie liczy.</p>
+    <div class="card" style="padding:0;overflow:hidden"><div style="overflow-x:auto"><table class="rhythm">
+      <thead><tr><th>Dorosły — do bagażu</th><th>Ile</th><th>Waga</th></tr></thead>
+      <tbody>
+        <tr><td class="dcol">T-shirty</td><td>4</td><td>600 g</td></tr>
+        <tr><td class="dcol">Longsleeve lub koszula <small>(meczet w Abu Zabi wymaga zakrytych ramion)</small></td><td>1</td><td>250 g</td></tr>
+        <tr><td class="dcol">Spodnie zapasowe, lekkie</td><td>1</td><td>350 g</td></tr>
+        <tr><td class="dcol">Szorty <small>(tylko na Abu Zabi i cieplejsze popołudnia)</small></td><td>1</td><td>200 g</td></tr>
+        <tr><td class="dcol">Bielizna</td><td>5</td><td>250 g</td></tr>
+        <tr><td class="dcol">Skarpety <small>(bez dziur — buty zdejmuje się kilka razy dziennie)</small></td><td>5</td><td>250 g</td></tr>
+        <tr><td class="dcol">Koszulka do spania <small>(w ryokanie jest yukata)</small></td><td>1</td><td>200 g</td></tr>
+        <tr><td class="dcol">Buty wsuwane lub klapki</td><td>1 para</td><td>350 g</td></tr>
+        <tr><td class="dcol">Kurtka przeciwdeszczowa, składana</td><td>1</td><td>250 g</td></tr>
+        <tr><td class="dcol">Parasol składany</td><td>1</td><td>250 g</td></tr>
+        <tr><td class="dcol">Kosmetyczka <small>(wszystko do 100 ml — reszta jest w hotelu)</small></td><td>—</td><td>400 g</td></tr>
+        <tr><td class="dcol">Apteczka podręczna</td><td>—</td><td>200 g</td></tr>
+        <tr><td class="dcol">Ładowarka, kable, powerbank, adapter typu A</td><td>—</td><td>540 g</td></tr>
+        <tr><td class="dcol">Płócienna torba na zakupy + worek na brudne</td><td>2</td><td>150 g</td></tr>
+        <tr><td class="dcol"><b>Razem w bagażu</b></td><td></td><td><b>~4,2 kg</b></td></tr>
+        <tr><td class="dcol"><b>Z miękką walizką 1,5 kg</b></td><td></td><td><b>~5,7 kg — zapas 1,3 kg</b></td></tr>
+      </tbody>
+    </table></div></div>
+    <p class="note" style="margin-top:10px">Na sobie w dniu lotu: buty do chodzenia, długie spodnie, T-shirt i bluza. To ~2 kg, których nikt nie waży.</p>
+
+    <div class="card" style="padding:0;overflow:hidden;margin-top:16px"><div style="overflow-x:auto"><table class="rhythm">
+      <thead><tr><th>Dziecko (10 i 13 lat) — do bagażu</th><th>Ile</th><th>Waga</th></tr></thead>
+      <tbody>
+        <tr><td class="dcol">T-shirty</td><td>4</td><td>400 g</td></tr>
+        <tr><td class="dcol">Bluza</td><td>1</td><td>350 g</td></tr>
+        <tr><td class="dcol">Spodnie zapasowe</td><td>1</td><td>300 g</td></tr>
+        <tr><td class="dcol">Szorty</td><td>1</td><td>150 g</td></tr>
+        <tr><td class="dcol">Bielizna</td><td>5</td><td>175 g</td></tr>
+        <tr><td class="dcol">Skarpety</td><td>5</td><td>175 g</td></tr>
+        <tr><td class="dcol">Piżama</td><td>1</td><td>200 g</td></tr>
+        <tr><td class="dcol">Klapki</td><td>1 para</td><td>250 g</td></tr>
+        <tr><td class="dcol">Kurtka przeciwdeszczowa</td><td>1</td><td>200 g</td></tr>
+        <tr><td class="dcol">Kosmetyczka</td><td>—</td><td>150 g</td></tr>
+        <tr><td class="dcol">Na lot: słuchawki, konsola albo tablet, książka</td><td>—</td><td>600 g</td></tr>
+        <tr><td class="dcol">Butelka na wodę <small>(pusta przez kontrolę, potem z kranu)</small></td><td>1</td><td>100 g</td></tr>
+        <tr><td class="dcol">Notes i długopisy <small>(pieczątki goshuin i bilety)</small></td><td>—</td><td>150 g</td></tr>
+        <tr><td class="dcol"><b>Razem w bagażu</b></td><td></td><td><b>~3,2 kg</b></td></tr>
+        <tr><td class="dcol"><b>Z walizką dziecięcą 1,2 kg</b></td><td></td><td><b>~4,4 kg — zapas 2,6 kg</b></td></tr>
+      </tbody>
+    </table></div></div>
+    <p class="note" style="margin-top:10px">Bagaże dzieci są najlżejsze i to jest zamierzone: ten zapas 2,6 kg na osobę to miejsce na streetwear z Cat Street i pluszaki z Ikebukuro. Cała rodzina wyjeżdża z ~20 kg z 28 dostępnych.</p>
+
+    <h2 class="stitle" style="margin-top:34px">Czego nie pakować</h2>
     <div class="card"><ul class="tips">
-      <li>Ubrania na warstwy — rano i wieczorem chłodniej, zwłaszcza w Hakone.</li>
-      <li>Lekka kurtka lub wiatrówka i składany parasol (~9 dni z deszczem w miesiącu, zwykle przelotnie).</li>
-      <li>Wygodne buty łatwe do zdejmowania — świątynie, tatami i warsztaty tego wymagają.</li>
-      <li>Krem z filtrem i nakrycia głowy — słońce o tej porze potrafi mocno operować.</li>
-      <li>Coś cieplejszego na wieczór w ryokanie w Hakone; zmierzch ok. 18:30.</li>
+      <li><b>Ręczników, piżamy na Hakone i kosmetyków podstawowych.</b> Ryokan daje yukatę, ręczniki i wszystko do onsenu; MIMARU i hotel w Abu Zabi dają szampon i mydło.</li>
+      <li><b>Proszku do prania.</b> W pralkach w Kiocie detergent jest wbudowany, w Tokio kupicie go na recepcji.</li>
+      <li><b>Nożyczek, scyzoryka, płynów powyżej 100 ml.</b> Lecimy bez bagażu rejestrowanego w obie strony, więc podręczny przechodzi przez kontrolę z całą zawartością.</li>
+      <li><b>Zapasowych butów „na wszelki wypadek”.</b> Jedna para na nogach plus wsuwane to komplet; para butów to 700–900 g, czyli 15% przydziału.</li>
+      <li>Weźcie za to <b>małą wagę bagażową</b> (~80 g). Przy limicie 7 kg i zakupach w Tokio to jedyny sposób, żeby nie zgadywać przed odprawą.</li>
+    </ul></div>
+
+    <h2 class="stitle" style="margin-top:34px">Pranie — gdzie i kiedy</h2>
+    <p class="lead-p">Pakujemy na pięć dni, więc jedno porządne pranie w połowie wyjazdu domyka garderobę do końca. Oba MIMARU mają <b>pralnie samoobsługowe</b>, nie pralki w pokojach.</p>
+    <div class="card" style="padding:0;overflow:hidden"><div style="overflow-x:auto"><table class="rhythm">
+      <thead><tr><th>Kiedy</th><th>Gdzie</th><th>Co robimy</th></tr></thead>
+      <tbody>
+        <tr><td class="dcol">29.04, czwartek, wieczór</td><td>MIMARU Kyoto Station</td><td>Nie pranie, tylko ratunek: strój z Abu Zabi po dniu w 40°C przepierzcie ręcznie i powieście. Reszta czeka.</td></tr>
+        <tr><td class="dcol"><b>2.05, niedziela, 15:15</b></td><td><b>MIMARU Kyoto Station</b></td><td><b>Główne pranie wyjazdu.</b> Popołudnie jest w planie celowo puste. Cztery pralki i cztery suszarki, ~400 ¥ za wsad z detergentem, ~100 ¥ za 30 minut suszenia. Dwa wsady na rodzinę, gotowe przed kolacją.</td></tr>
+        <tr><td class="dcol">5.05, środa, 21:00</td><td>MIMARU Tokyo Ueno EAST</td><td>Dogrywka przy pakowaniu, jeśli chcecie wrócić w czystych rzeczach. Detergent kupujecie na recepcji.</td></tr>
+      </tbody>
+    </table></div></div>
+    <div class="card" style="margin-top:16px"><ul class="tips">
+      <li><b>Pierzcie po południu, nie wieczorem.</b> Pralnia w Kiocie robi się zatłoczona po 19:00, gdy wszyscy wracają ze zwiedzania. O 15:30 zwykle jest pusta.</li>
+      <li><b>Suszarka jest wolniejsza niż pralka.</b> Pranie 30 minut, suszenie realnie 60–90 minut. Wsad wrzucony o 15:30 jest suchy przed kolacją o 18:30.</li>
+      <li><b>Nie ma prania w Hakone.</b> Ryokan to jedna noc i jedziemy stamtąd prosto na lotnisko, więc 5.05 w Tokio to ostatnia okazja.</li>
+    </ul></div>
+
+    <h2 class="stitle" style="margin-top:34px">Pogoda w bagażu — od 40°C do 9°C</h2>
+    <div class="card"><ul class="tips">
+      <li><b>Rozpiętość jest ekstremalna:</b> Abu Zabi 28.04 potrafi mieć 40°C, a noc w Hakone 6.05 schodzi do 9°C. Dlatego warstwy, nie grube rzeczy.</li>
+      <li><b>Strój na meczet trzymajcie na wierzchu</b> — zakryte ramiona i nogi; kobiety dostają abaję na miejscu. To jedyny dzień, gdy to jest potrzebne.</li>
+      <li>Lekka kurtka lub wiatrówka i składany parasol — w maju pada zwykle przelotnie, ~9 dni w miesiącu.</li>
+      <li>Buty łatwe do zdejmowania — świątynie, tatami, warsztat kaligrafii i ryokan wymagają tego kilka razy dziennie.</li>
+      <li>Krem z filtrem i nakrycie głowy: słońce o tej porze operuje mocno, zwłaszcza w Naście i na Fushimi.</li>
     </ul></div>
   </section>
   <section>
     <h2 class="stitle">Bagaż — tylko podręczny, 7 kg na osobę</h2>
     <p class="lead-p">Lecimy Etihadem w taryfie Economy Basic: jedna sztuka podręczna na osobę, <b>7 kg i 56×36×23 cm</b>, bez bagażu rejestrowanego w cenie. Cztery małe walizki jadą z nami przez cały wyjazd — dlatego kurier na lotnisko wypadł z planu.</p>
     <div class="card"><ul class="tips">
-      <li><b>Pakujcie na ~5 dni, nie na 11.</b> Aparthotele MIMARU (Kioto, Tokio) mają pralkę i suszarkę — pranie robicie w Kiocie i komplet ubrań wraca do obiegu.</li>
+      <li><b>Pakujcie na ~5 dni, nie na 11.</b> Oba MIMARU mają pralnie samoobsługowe (nie pralki w pokojach) — główne pranie wypada 2.05 po południu w Kiocie i komplet ubrań wraca do obiegu. Szczegóły w planie pakowania wyżej.</li>
       <li><b>Waga jest limitem, nie objętość.</b> 7 kg waży się przy odprawie. Źródła różnią się co do tego, czy w ekonomii Etihadu dochodzi jeszcze mała sztuka osobista — przy locie bez bagażu rejestrowanego to realna różnica, więc potwierdźcie w „Manage booking”.</li>
       <li><b>Zakupy na powrót to jedyne ryzyko.</b> Bluza ze streetwearu waży 600–800 g, pluszaki i gachapony zjadają resztę. Dlatego trzymamy <b>jedną walizkę rejestrowaną na lot powrotny (~220 zł)</b> — dokupcie ją w „Manage booking”, a samą walizkę taniej kupicie na miejscu (Don Quijote, ~3 000–5 000 ¥).</li>
       <li><b>Kurier niepotrzebny.</b> Takkyūbin (~2 000–2 800 ¥/szt.) opłaca się przy dużych walizkach — przy podręcznych taniej i prościej wziąć je ze sobą. Jedyny odcinek, gdzie warto rozważyć dowóz, to pętla w Hakone: bagaż zostawiacie przy dworcu Yumoto, czeka w ryokanie.</li>
