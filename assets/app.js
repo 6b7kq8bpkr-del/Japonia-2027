@@ -136,7 +136,7 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   var chk=document.getElementById('wstopover');
   function rng(f){var v=D.map(f); return {min:Math.min.apply(null,v), max:Math.max.apply(null,v)};}
   var P=rng(function(a){return a.price;}), Q=rng(function(a){return a.q;});
-  function plz(n){return String(Math.round(n)).replace(/B(?=(d{3})+(?!d))/g,' ')+' zł';}
+  function plz(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';}
   function pts(v,r,inv){return r.max===r.min?100:((inv?(r.max-v):(v-r.min))/(r.max-r.min)*100);}
   // premia za stopover liczy się tylko, gdy nocleg faktycznie jest bezpłatny
   function bonusOn(){return !chk || chk.checked;}

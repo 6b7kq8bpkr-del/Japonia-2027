@@ -10,3 +10,6 @@ japonia-artifact.html
 
 # Prompt roboczy — nie publikować
 PROMPT-ULEPSZANIE.md
+private/
+check.mjs
+README.md

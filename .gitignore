@@ -2,3 +2,6 @@
 .vercel
 node_modules
 japonia-artifact.html
+
+# Numery rezerwacji — nigdy do repo ani na Vercel
+private/
