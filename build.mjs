@@ -1523,7 +1523,7 @@ function kosztyPage(){
 
   <section>
     <h2 class="stitle">Transport w Japonii — zweryfikowane taryfy</h2>
-    <p class="lead-p">Sprawdzone w lipcu 2026 (miejscówki; kurs ¥100 ≈ 2,33 zł). Młodsze dziecko (do 11 lat) płaci taryfę dziecięcą — na kolei dokładnie połowę.</p>
+    <p class="lead-p">Taryfy sprawdzone w lipcu 2026; przeliczenia po kursie NBP z 7.09.2026: ¥100 ≈ 2,4 zł. Młodsze dziecko (do 11 lat) płaci taryfę dziecięcą — na kolei dokładnie połowę.</p>
     ${seg('Przejazdy między miastami',[
       '<b>Narita → Tokio → Kioto</b> (29.04): NEX ~¥3 070 + shinkansen ~¥14 170/dorosły',
       
@@ -1544,7 +1544,7 @@ function kosztyPage(){
           <tr><td class="cat">🏨 Noclegi<span class="hint">Kioto 4 800 (4 noce) + Tokio 3 800 (3 noce) + Hanaori 2 878 = 11 478 zł; Abu Zabi gratis</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1435" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca: Nozomi ×2 ~2 400 zł, Odawara→Tokio ~310, NEX ×2 ~500, Free Pass + Romancecar ~550, Kintetsu Ltd. Exp. ~210, metro/IC ~600, transfery w Abu Zabi ~150</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4800" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
-          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">warsztaty kultury, Pokémon Café, akwarium, Shibuya Sky</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2200" min="0" step="100"></td></tr>
+          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">podstawa ~1 065 zł: ceremonia herbaty ~430, Pokémon Café ~180, Shibuya Sky ~200, świątynie + małpy + drobiazgi ~255; reszta (~1 135) na opcje: kaligrafia/ninja, Open-Air Museum, Kinkaku-ji, teamLab</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2200" min="0" step="100"></td></tr>
           <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane; streetwear dla dzieci (4.05) liczcie osobno — koszulka ~150–300 zł, bluza ~500–1 000 zł</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td></tr>
         </tbody>
         <tfoot><tr class="tot"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr></tfoot>
@@ -2491,7 +2491,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     <div class="acard" id="railway">
       <h3>🚄 Kyoto Railway Museum (plan B)</h3>
       <div class="desc">53 prawdziwe pociągi — od parowozów po shinkansen, do którego się wchodzi; symulator maszynisty losowany za 100 ¥. Najlepszy kryty zapasowy plan na deszczowy dzień w Kioto.</div>
-      <div class="meta"><span>🕒 10:00–17:00 (śr. zamknięte)</span><span>💴 1 500 ¥ dorosły / 500 ¥ dzieci → 4 os. ≈ 4 000 ¥ (~105 zł)</span><span>📍 20 min pieszo od dworca Kioto (Umekōji)</span></div>
+      <div class="meta"><span>🕒 10:00–17:00 (śr. zamknięte)</span><span>💴 1 500 ¥ dorosły / 500 ¥ dzieci → 4 os. ≈ 4 000 ¥ (~95 zł)</span><span>📍 20 min pieszo od dworca Kioto (Umekōji)</span></div>
       <div class="links"><a href="https://www.kyotorailwaymuseum.jp/en/" target="_blank" rel="noopener">strona muzeum →</a></div>
     </div>
     <div class="acard" id="nintendomuseum">
@@ -2542,7 +2542,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     <div class="acard" id="streetwear">
       <h3>👟 Streetwear w Harajuku — Supreme, BAPE, Stüssy, Palace</h3>
       <div class="desc">Wszystkie cztery sklepy stoją w promieniu ~400 m wokół Cat Street (Ura-Harajuku), 5–10 minut pieszo od Takeshita-dōri — dlatego siedzą w dniu 4.05 między chramem Meiji a Shibuyą. BAPE Store Harajuku (Jingūmae 4-21-5 — pierwszy sklep Nigo, z ruchomą taśmą na buty), Stüssy Harajuku Chapter (4-28-2), Supreme Harajuku (4-32-7, 2. piętro) i Palace Tokyo (5-9-20, po drugiej stronie Omotesandō). Po drodze do Shibuyi: Kith Tokyo w Miyashita Park i Human Made (marka Nigo). W Shibuyi, tuż przy PARCO, jest drugi Supreme i drugi BAPE — gdyby w Harajuku było za tłoczno. Supreme robi dropy w soboty (kolejki, losowania) — we wtorek wchodzi się z ulicy, ale nowości bywają wyprzedane.</div>
-      <div class="meta"><span>🕒 BAPE i Supreme 11:00–20:00 · Stüssy 11:00–19:00 · Palace pn–pt 12:00–20:00</span><span>💴 orientacyjnie: koszulki 6–13 tys. ¥ (~140–300 zł), bluzy 20–45 tys. ¥ (~470–1 050 zł); Supreme najtaniej, BAPE najdrożej; BAPE tax-free od 5 000 ¥ na paszport</span><span>📍 Ura-Harajuku / Cat Street — z Takeshita-dōri w stronę Omotesandō</span></div>
+      <div class="meta"><span>🕒 BAPE i Supreme 11:00–20:00 · Stüssy 11:00–19:00 · Palace pn–pt 12:00–20:00</span><span>💴 orientacyjnie: koszulki 6–13 tys. ¥ (~145–310 zł), bluzy 20–45 tys. ¥ (~480–1 080 zł); Supreme najtaniej, BAPE najdrożej; BAPE tax-free od 5 000 ¥ na paszport</span><span>📍 Ura-Harajuku / Cat Street — z Takeshita-dōri w stronę Omotesandō</span></div>
       <div class="links"><a href="https://en.jp.bape.com/pages/store-list/harajuku" target="_blank" rel="noopener">BAPE Harajuku →</a><a href="https://www.stussy.com/blogs/chapters" target="_blank" rel="noopener">Stüssy Chapters →</a><a href="https://usa.palaceskateboards.com/shop/tokyo" target="_blank" rel="noopener">Palace Tokyo →</a><a href="https://www.sneakerfreaker.com/city-guides/tokyo/supreme-tokyo" target="_blank" rel="noopener">Supreme Harajuku (przewodnik) →</a></div>
     </div>
 
@@ -2644,7 +2644,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     <div class="acard" id="openair">
       <h3>🎨 Hakone Open-Air Museum</h3>
       <div class="desc">Park rzeźby, po którym dzieci mogą się wspinać: sieciowa pajęczyna Woods of Net, wieża z witraży, pawilon Picassa i kąpiel stóp w onsenowej wodzie. Ulubiony punkt rodzinnych tourów — i najlepszy plan B, gdy wiatr zatrzyma kolejkę linową.</div>
-      <div class="meta"><span>🕒 9:00–17:00</span><span>💴 2 000 ¥ dorosły / 800 ¥ dzieci szkolne → 4 os. ≈ 5 600 ¥ (~145 zł)</span><span>📍 stacja Chōkoku-no-Mori, 5 min kolejką od Gōry</span></div>
+      <div class="meta"><span>🕒 9:00–17:00</span><span>💴 2 000 ¥ dorosły / 800 ¥ dzieci szkolne → 4 os. ≈ 5 600 ¥ (~135 zł)</span><span>📍 stacja Chōkoku-no-Mori, 5 min kolejką od Gōry</span></div>
       <div class="links"><a href="https://www.hakone-oam.or.jp/en/" target="_blank" rel="noopener">strona muzeum →</a></div>
     </div>
   </div>
@@ -2721,7 +2721,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     <div class="acard" id="taiko">
       <h3>🥁 Warsztat taiko (bębny japońskie)</h3>
       <div class="desc">Godzina walenia w wielkie bębny pod okiem instruktora — głośno, fizycznie, zero bariery językowej. Obecny w programach Audley, G Adventures i Intrepid; rodziny wymieniają go jednym tchem z sumo. Sesje też w Kioto (Gion), gdyby pasowało wcześniej.</div>
-      <div class="meta"><span>🕒 sesje ~60 min w ciągu dnia</span><span>💴 ~6 000 ¥/os → 4 os. ≈ 24 000 ¥ (~620 zł)</span><span>📍 Taiko-Lab Kioto / Taiko Center (Gion)</span></div>
+      <div class="meta"><span>🕒 sesje ~60 min w ciągu dnia</span><span>💴 ~6 000 ¥/os → 4 os. ≈ 24 000 ¥ (~575 zł)</span><span>📍 Taiko-Lab Kioto / Taiko Center (Gion)</span></div>
       <span class="rezerwuj">rezerwuj online ~2–4 tyg. wcześniej</span>
       <div class="links"><a href="https://www.taiko-center.co.jp/school/en/" target="_blank" rel="noopener">Taiko Center →</a></div>
     </div>
