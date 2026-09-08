@@ -1839,7 +1839,7 @@ function drukPage(){
     </div>
     <div class="cfacts">
       <div><b>11</b>dni podróży</div><div><b>8</b>nocy w Japonii</div>
-      <div><b>3</b>bazy w Japonii</div><div><b>~40<i>tys. zł</i></b>budżet 2+2</div>
+      <div><b>3</b>bazy w Japonii</div><div><b>~41<i>tys. zł</i></b>budżet 2+2</div>
     </div>
     <h3 class="toch">Spis treści</h3>
     <ol class="toc">${toc}</ol>
