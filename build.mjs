@@ -86,7 +86,7 @@ const BOOKINGS = [
   {when:'~II 2027', what:'DECYZJA: Nintendo Museum (Uji) — grać w loterię?', note:'Domyślnie NIE. Jeśli tak i wygracie: 2.05 po południu kosztem Kinkaku-ji i bufora. Szczegóły w „Decyzje otwarte”.'},
   {when:'II–III 2027', what:'Warsztat furoshiki (2.05, sesja 14:00)', note:'Punkt córki — pakowanie prezentów w chustę, 4 000 ¥/os., dwie chusty na własność. Domyślnie mama z córką; Marumasu Nishimuraya w Nakagyō (metro Karasuma-Oike) albo MAIKOYA przy Nishiki. Klasa ninja i kaligrafia wypadły z planu.'},
   {when:'IX–X 2026', what:'DECYZJA: Pokémon Room czy zwykły apartament (Ueno)', note:'Domyślnie zwykły 4 łóżka; Pokémon tylko przy dopłacie < ~150 zł/noc.'},
-  {when:'II–III 2027', what:'Ceremonia herbaty W KIMONIE (1.05, 16:30)', note:'Punkt mamy — ubranie w kimono plus ceremonia, ~90 min, ~7 000–8 400 ¥/os. Rezerwacja 1–2 miesiące wcześniej; przy rezerwacji podajcie wzrost każdej osoby (dobierają rozmiar). MAIKOYA: Karasuma Shijo ma wariant rodzinny.'},
+  {when:'II–III 2027', what:'Kimono + herbata + kaligrafia (1.05, od 16:30)', note:'Punkty mamy — ubranie w kimono i ceremonia (~90 min, ~7 000–8 400 ¥/os.), po niej kaligrafia shodō o 18:00 (~60 min, ~4 000–6 000 ¥/os., zwykle sama mama). ZAMÓWCIE JEDNYM PAKIETEM w tym samym domu MAIKOYA — osobne rezerwacje w Golden Week wypadają w różnych lokalizacjach. Rezerwacja 1–2 miesiące wcześniej; podajcie wzrost każdej osoby.'},
   {when:'29.03 · 3.04 · 7.04', what:'Miejscówki na shinkansen (SmartEX)', note:'SmartEX przyjmuje zgłoszenia już od roku przed przejazdem (od 5:30 JST); pociąg i miejsca potwierdza o 14:00 JST dokładnie miesiąc przed: 29.03 → Tokio→Kioto 29.04 (16:30–17:00); 3.04 → Kioto→Tokio 3.05 (święto!); 7.04 → Odawara→Tokio 7.05. Zgłoście od razu — w Golden Week Nozomi jeżdżą wyłącznie z rezerwacją, a tańsza taryfa Hayatoku 7 w szczycie nie obowiązuje. NEX (JR East) i Romancecar (Odakyu) osobno, miesiąc przed.'},
   {when:'TERAZ (bilety kupione)', what:'Noclegi — darmowe anulowanie', note:'Kolejność: MIMARU Kyoto Station 29.04–3.05 (4 800 zł; zostało 1–5 apartamentów w Golden Week!) → MIMARU Ueno 3–6.05 (3 800 zł) → Hanaori 6.05 (2 878 zł, zostały 3 pokoje — stan z 7.09.2026). Wszystkie z bezpłatnym anulowaniem, więc rezerwacja dziś nic nie ryzykuje.'},
     {when:'~1.04.2027', what:'Ubezpieczenie turystyczne', note:'Leczenie + NNW dla czterech osób.'},
@@ -122,11 +122,16 @@ const OPEN_DECISIONS = [
    opts:[['Tylko pętla + ryokan','spokojniej; sobota i tak jest tłoczna; onsen o 16:30 to nagroda','—'],
          ['Dodać Open-Air Museum','rzeźby, po których dzieci mogą się wspinać; pawilon Picassa; jedyny sensowny plan B przy wietrze','dzień gęstnieje; wejście do ryokanu przesuwa się na 17:30']],
    def:'Tylko pętla. Open-Air Museum wchodzi automatycznie, gdy kolejka linowa stoi (wiatr) albo pada.'},
+  {id:'shodo-kto', day:'2027-05-01', q:'1.05: kto zostaje na kaligrafię o 18:00?', by:'przy rezerwacji pakietu (II–III 2027)', impact:'~4 000–6 000 ¥/os., godzina wieczoru',
+   opts:[['Mama sama (domyślnie)','ma swój punkt bez ciągnięcia kogokolwiek; tata z dziećmi nad Kamo, spotkanie na kolacji','rodzina rozdziela się na godzinę'],
+         ['Mama z córką','córka lubi rękodzieło, a po herbacie i tak są razem','dwa razy drożej'],
+         ['Wszyscy czworo','wspólne zdjęcie i cztery znaki na ścianę','trzecia godzina siedzenia — 13-latek raczej odpadnie']],
+   def:'Mama sama albo z córką. Kaligrafia dopisana 8.09 na wyraźną prośbę mamy; wchodzi po ceremonii w tym samym domu, więc nie kosztuje żadnego przejazdu — kosztuje godzinę wieczoru tych, którzy zostaną.'},
   {id:'ninja-vs-shodo', day:'2027-05-02', q:'2.05: kto idzie na warsztat furoshiki?', by:'rezerwacja II–III 2027 (sesja 14:00)', impact:'4 000 ¥/os.',
    opts:[['Mama z córką','warsztat jest pomysłem córki; tata z synem biorą Nishiki albo salon gier i nikt nikogo nie ciągnie','dzień rozjeżdża się na dwa plany'],
          ['Cała czwórka','16 000 ¥, wspólne zdjęcie i cztery pary rąk, które umieją zawiązać torbę z chusty','13-latek może uznać, że to nie jego bajka'],
          ['Nikt','2.05 wraca do roli czystego bufora','córka traci punkt, o który sama poprosiła']],
-   def:'Mama z córką. Klasa ninja i kaligrafia wypadają — córka poprosiła konkretnie o pakowanie, a trzy warsztaty w jednym popołudniu to znowu maraton. Jeśli syn będzie chciał czegoś swojego, ninja przy Nishiki wciąż da się dograć na miejscu.'},
+   def:'Mama z córką. Klasa ninja wypada — córka poprosiła konkretnie o pakowanie, a kaligrafia ma już swoje miejsce wieczorem 1.05. Jeśli syn będzie chciał czegoś swojego, ninja przy Nishiki wciąż da się dograć na miejscu.'},
   {id:'kinkaku', day:'2027-05-02', q:'2.05 po praniu: Kinkaku-ji czy luz?', by:'na miejscu, po powrocie z Arashiyamy', impact:'~2,5 h z dojazdami',
    opts:[['Luz','prawdziwy bufor przed drogą; dzieci po małpach mają dość; jutro shinkansen i nowe miasto','mama traci Kinkaku-ji'],
          ['Kinkaku-ji (45 min + autobus ~40 min w każdą stronę)','jedyny Złoty Pawilon w planie; w deszczu bywa pusty','ostatni pełny dzień Kioto gęstnieje']],
@@ -1054,9 +1059,9 @@ const DAYS = [
  pc:{q:'Po sjeście: Kiyomizu czy od razu Gion?',opts:[['Kiyomizu o 15:00 (domyślnie)','taras nad doliną i zejście uliczkami do Gion — najlepsza godzina Kioto','tłum Golden Week, 10 min pod górę'],['Od razu Yasaka i Gion o 17:00','trzy godziny więcej luzu; wieczór ten sam','Kiyomizu tylko, jeśli 2.05 zostanie na nie miejsce']]},
  more:[]},
 
-{date:'2027-05-01',dow:'sobota',dd:'1 maja',city:'nara',title:'Nara rano, herbata po południu, wolny wieczór',
- lead:'Rano pierwsza stolica Japonii — kłaniające się jelenie i 15-metrowy Budda — po powrocie godzina w hotelu, ceremonia herbaty i wieczór bez planu.',
- chips:['Kultura: Tōdai-ji + herbata w kimonie','Dzieci: jelenie i mochi','Wolny wieczór'],
+{date:'2027-05-01',dow:'sobota',dd:'1 maja',city:'nara',title:'Nara rano, kimono i pędzel po południu',
+ lead:'Rano pierwsza stolica Japonii — kłaniające się jelenie i 15-metrowy Budda — a po powrocie dzień mamy: kimono, ceremonia herbaty i kaligrafia, wszystko w jednym domu.',
+ chips:['Kultura: Tōdai-ji, herbata i kaligrafia w kimonie','Dzieci: jelenie i mochi','Wieczór do wyboru'],
  tl:[
   ['09:15','Kintetsu Limited Express do Nary','~35 min z Kioto. Miejsca rezerwowane ma tylko Limited Express (dopłata ~520 ¥); zwykły Express i Rapid Express jadą dłużej i bez rezerwacji.'],
   ['10:00','Jelenie w parku','~1200 oswojonych jeleni sika kłania się za krakersy shika-senbei.'],
@@ -1065,11 +1070,11 @@ const DAYS = [
   ['13:30','Powrót do Kioto','~35 min Kintetsu.'],
   ['14:15','Dwie godziny w hotelu','Prysznic, przebranie, drzemka — do herbaciarni wchodzi się w czystych skarpetach.'],
   ['16:30','Ceremonia herbaty w kimonie','Punkt mamy, teraz w pełnej wersji: najpierw ubranie w kimono, potem ceremonia po angielsku (~90 min razem). MAIKOYA robi to w kilku domach w Kiocie — Karasuma Shijo ma osobny wariant rodzinny dla dzieci 7–12 lat. Dzieci też dostają kimona, więc zdjęcia robią się same. Do 6. lat wstępu na salę nie ma; nas to nie dotyczy.'],
-  ['18:00','Wolny wieczór','Spacer nad rzeką Kamo albo powrót do pokoju — w kimonach można zostać do wieczora, jeśli macie ochotę pochodzić. Dziś nic więcej w planie.'],
-  ['19:00','Kolacja','Yudōfu — tofu po kiotyjsku, albo lekkie kaiseki.'],
+  ['18:00','Kaligrafia — dla chętnych','Drugi punkt mamy, w tym samym domu i wciąż w kimonie: shodō na tatami, około godziny. Uczą po kolei hiragany, katakany i kanji, a swój znak zabieracie ze sobą. Kto nie chce siedzieć trzeciej godziny — tata z dziećmi albo tylko syn — ma wolne: nad rzeką Kamo jest pięć minut stąd. Zamówcie to jako jeden pakiet z herbatą, nie osobno.'],
+  ['19:15','Kolacja','Spotkanie w komplecie. Yudōfu — tofu po kiotyjsku, albo lekkie kaiseki.'],
  ],
  facts:[['Średnia','Intensywność'],['Pociąg + pieszo','Przejazdy'],['Umiarkowane','Chodzenie'],['Jelenie = hit','Dla dzieci'],['Kioto (3/4)','Nocleg']],
- tips:['Jelenie bywają nachalne: krakersy trzymajcie wysoko, karmcie po jednym — a ukłon przed jeleniem naprawdę działa.','Kasuga Taisha (aleja 2 000 kamiennych lampionów) wypadła z osi dnia — to 25 minut w głąb parku w każdą stronę. Jeśli o 11:45 wszyscy mają siłę, idźcie i przesuńcie lunch na 13:00; jeśli nie, lunch.','Kimono trzeba zarezerwować z wyprzedzeniem i podać wzrost każdej osoby — dobierają rozmiar. Zaplanujcie ~20 minut na wybór wzoru: to jest część zabawy, nie formalność.','Dla graczy (opcja): wracając, można wysiąść w Ujī — Nintendo Museum (bilety w loterii ~3 miesiące wcześniej, paszporty całej czwórki). Odpuściliśmy je wcześniej świadomie, ale topowe biura stawiają je najwyżej dla dzieci w tym wieku — decyzja Wasza.'],
+ tips:['Jelenie bywają nachalne: krakersy trzymajcie wysoko, karmcie po jednym — a ukłon przed jeleniem naprawdę działa.','Kasuga Taisha (aleja 2 000 kamiennych lampionów) wypadła z osi dnia — to 25 minut w głąb parku w każdą stronę. Jeśli o 11:45 wszyscy mają siłę, idźcie i przesuńcie lunch na 13:00; jeśli nie, lunch.','Kimono trzeba zarezerwować z wyprzedzeniem i podać wzrost każdej osoby — dobierają rozmiar. Zaplanujcie ~20 minut na wybór wzoru: to jest część zabawy, nie formalność.','Herbatę i kaligrafię rezerwujcie jednym zamówieniem w tym samym domu MAIKOYA. Dwie osobne rezerwacje w Golden Week potrafią wypaść w różnych lokalizacjach i wtedy między nimi trzeba się przemieszczać.','Dla graczy (opcja): wracając, można wysiąść w Ujī — Nintendo Museum (bilety w loterii ~3 miesiące wcześniej, paszporty całej czwórki). Odpuściliśmy je wcześniej świadomie, ale topowe biura stawiają je najwyżej dla dzieci w tym wieku — decyzja Wasza.'],
  links:[A('nara-park','Park Nara'),A('todaiji','Tōdai-ji'),A('kasuga','Kasuga Taisha (opcja)'),A('mochi','Nakatanidō'),A('culture','Ceremonia herbaty w kimonie'),A('nintendomuseum','Nintendo Museum (opcja)')],
  pc:{q:'Kasuga Taisha — iść czy odpuścić?',opts:[['Odpuścić (domyślnie)','lunch o 12:00, w Kiocie o 14:00 z dwiema godzinami luzu przed herbatą','mama traci aleję lampionów'],['Iść','najbardziej filmowe miejsce Nary','+50 min chodzenia, lunch o 13:00, w hotelu tylko chwila']]},
  more:[]},
@@ -1225,7 +1230,7 @@ const DAYINT = {
   '2027-04-28':['y','Wielki Meczet + Luwr + nocny lot'],
   '2027-04-29':['g','Przylot + shinkansen do Kioto'],
   '2027-04-30':['y','Fushimi rano, sjesta, Kiyomizu i Gion po południu'],
-  '2027-05-01':['y','Nara rano + herbata po południu, wolny wieczór'],
+  '2027-05-01':['y','Nara rano + kimono, herbata i kaligrafia po południu'],
   '2027-05-02':['y','Arashiyama rano, furoshiki po południu, potem luz'],
   '2027-05-03':['g','Shinkansen do Tokio, wieczór w Asakusie'],
   '2027-05-04':['y','Meiji + Cat Street (streetwear) + Nintendo + Shibuya Sky'],
@@ -1238,7 +1243,7 @@ const DAYFLEX = {
   '2027-04-28':['nocny lot 21:25 do Tokio','Luwr opcjonalny; meczet zostawić'],
   '2027-04-29':['NEX + shinkansen (miejscówki!)','wieczór — tylko kolacja i sen'],
   '2027-04-30':['Fushimi Inari rano + Gion o zmroku','Kiyomizu — gdy sjesta się przeciąga, jedźcie od razu na Yasakę i Gion; Nishiki jest na 2.05'],
-  '2027-05-01':['ceremonia herbaty w kimonie (rezerwacja!)','Kasuga Taisha; pokaz mochi zależy od godziny'],
+  '2027-05-01':['kimono + ceremonia herbaty (rezerwacja!)','kaligrafię o 18:00 bierze tylko część rodziny; Kasuga Taisha'],
   '2027-05-02':['Arashiyama rano + warsztat furoshiki 14:00','Kinkaku-ji i małpy — gdy poranek się przeciąga, warsztat ma pierwszeństwo'],
   '2027-05-03':['shinkansen do Tokio (miejscówki!)','wieczorną Asakusę można skrócić'],
   '2027-05-04':['Shibuya Sky (rezerwacja!) + Cat Street ze sklepami streetwear','Nintendo TOKYO, gdy kolejki; Don Quijote to już tylko opcja po kolacji'],
@@ -1522,7 +1527,7 @@ function kosztyPage(){
           <tr><td class="cat">🏨 Noclegi<span class="hint">Kioto 4 800 (4 noce) + Tokio 3 800 (3 noce) + Hanaori 2 878 = 11 478 zł; Abu Zabi gratis</span></td><td class="num"><input type="number" id="nights" class="sm" value="8" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="1435" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca, kurs NBP 2,40: Nozomi ×2 ~2 500 zł, Odawara→Tokio ~320, NEX ×2 ~520, Free Pass + Romancecar ~570, Kintetsu Ltd. Exp. ~215, metro/IC ~620, taksówka pod Kiyomizu ~50, transfery w Abu Zabi ~150</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="4900" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="11" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="500" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
-          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">podstawa ~1 560 zł: herbata w kimonie 4 os. ~740, furoshiki mama z córką ~190, Pokémon Café ~180, Shibuya Sky ~200, świątynie + małpy + drobiazgi ~250; reszta (~640) na opcje: Open-Air Museum, Kinkaku-ji, teamLab, furoshiki dla całej czwórki</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2200" min="0" step="100"></td></tr>
+          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">podstawa ~1 680 zł: herbata w kimonie 4 os. ~740, kaligrafia mama ~120, furoshiki mama z córką ~190, Pokémon Café ~180, Shibuya Sky ~200, świątynie + małpy + drobiazgi ~250; reszta (~520) na opcje: Open-Air Museum, Kinkaku-ji, teamLab, warsztaty dla większej liczby osób</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="2200" min="0" step="100"></td></tr>
           <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane; streetwear dla dzieci (4.05) liczcie osobno — koszulka ~150–300 zł, bluza ~500–1 000 zł</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" value="3000" min="0" step="100"></td></tr>
         </tbody>
         <tfoot><tr class="tot"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr></tfoot>
@@ -1720,7 +1725,7 @@ function decyzjePage(){
       <table class="rhythm"><thead><tr><th>Dzień</th><th>Kultura (mama)</th><th>Frajda (dzieci)</th></tr></thead><tbody>
         <tr><td class="dcol">29 kwietnia</td><td>pierwszy wieczór w Kiocie</td><td>Fudżi z okna shinkansena</td></tr>
         <tr><td class="dcol">30 kwietnia</td><td>Fushimi Inari, Kiyomizu-dera, Sannenzaka</td><td>tysiąc bram do biegania, lody matcha</td></tr>
-        <tr><td class="dcol">1 maja</td><td>Tōdai-ji, <b>ceremonia herbaty w kimonie</b></td><td>jelenie w Narze, pokaz mochi; dzieci też w kimonach</td></tr>
+        <tr><td class="dcol">1 maja</td><td>Tōdai-ji, <b>herbata i kaligrafia w kimonie</b></td><td>jelenie w Narze, pokaz mochi; dzieci w kimonach, kaligrafia dla chętnych</td></tr>
         <tr><td class="dcol">2 maja</td><td>zen Tenryū-ji, Nishiki; opcja: Kinkaku-ji</td><td>małpy Iwatayama i <b>warsztat furoshiki</b> (punkt córki)</td></tr>
         <tr><td class="dcol">3 maja</td><td>Sensō-ji o zmroku</td><td>Nakamise, pierwsze gachapony</td></tr>
         <tr><td class="dcol">4 maja</td><td>chram Meiji Jingū (i jego muzeum, jeśli mama chce)</td><td>Cat Street: Supreme, BAPE, Stüssy, Palace; Nintendo TOKYO; Shibuya Sky o zachodzie</td></tr>
@@ -1728,7 +1733,7 @@ function decyzjePage(){
         <tr><td class="dcol">6 maja</td><td>ryokan nad jeziorem: yukata, onsen, kolacja; rejs tylko opcjonalnie</td><td>kolejki, statek „piracki”, czarne jajka</td></tr>
       </tbody></table>
     </div>
-    <div class="dnote" style="margin-top:12px">📌 Co świadomie odpuściliśmy: ikebanę, kaligrafię i osobny dzień warsztatów (zostały dwa punkty, każdy czyjś: herbata w kimonie po Narze i furoshiki 2.05), turniej sumo — zaczyna się 9.05, dwa dni po naszym powrocie (w katalogu jest pokaz z byłymi zawodnikami, dostępny codziennie) i Osakę. Zasada „bez kimona na całe popołudnie” zostaje w mocy, ale 8.09 doprecyzowana: mama chciała je przymierzyć, więc ceremonia herbaty 1.05 jest teraz wersją <b>z kimonem</b> (~90 min) zamiast całodniowego wynajmu. Tego samego dnia doszedł <b>warsztat furoshiki</b> 2.05 o 14:00 — pakowanie prezentów w chustę, o które poprosiła córka; klasa ninja i kaligrafia w zamian wypadły, żeby popołudnie nie zrobiło się znowu maratonem.</div>
+    <div class="dnote" style="margin-top:12px">📌 Co świadomie odpuściliśmy: ikebanę, klasę ninja i osobny dzień warsztatów (zostały trzy punkty, każdy czyjś: kimono z herbatą i kaligrafia 1.05 dla mamy, furoshiki 2.05 dla córki), turniej sumo — zaczyna się 9.05, dwa dni po naszym powrocie (w katalogu jest pokaz z byłymi zawodnikami, dostępny codziennie) i Osakę. Zasada „bez kimona na całe popołudnie” zostaje w mocy, ale 8.09 doprecyzowana: mama chciała je przymierzyć, więc ceremonia herbaty 1.05 jest teraz wersją <b>z kimonem</b> (~90 min) zamiast całodniowego wynajmu, a po niej wraca <b>kaligrafia</b> (~60 min, ten sam dom, dla chętnych). Tego samego dnia doszedł <b>warsztat furoshiki</b> 2.05 o 14:00 — pakowanie prezentów w chustę, o które poprosiła córka. Wypadła za to klasa ninja: rodzina ma teraz trzy warsztaty i to wystarczy.</div>
   </section>
 
   <section>
@@ -1768,7 +1773,7 @@ function decyzjePage(){
       <details><summary>✂️ Chcę krócej / taniej</summary><p>Już skrócone do 11 dni (27.04–7.05): odpadła Osaka, żeby chronić budżet. Kolejność dalszych cięć na miejscu: <b>Kiyomizu (30.04) → Kasuga (1.05) → Akihabara (5.05) → małpy Iwatayama (2.05)</b>. Krócej niż to — nie: Kioto ma już tylko cztery noce.</p></details>
       <details><summary>➕ Chcę dłużej</summary><p>Z tyłu nie da się — 8.05 to twarda data (wycieczka klasowa). Z przodu 26.04 to ta sama cena biletu i dzień w Kiocie za ~1 800 zł (Golden Week) — wróciłby wypad do Osaki. Do rozważenia, jeśli budżet i urlop pozwolą.</p></details>
       <details><summary>🎮 Chcę więcej frajdy dla dzieci</summary><p>W odwodzie (opcje, nie obowiązki): <b>klasa ninja</b> w Kioto (przy Nishiki), <b>warsztat taiko</b>, <b>Round1 + karaoke</b> (jest i w Kiocie, przy Kawaramachi), <b>Hakone Open-Air Museum</b> oraz <b>Nintendo Museum</b> w Ujī (loteria biletów ~luty 2027, paszporty). Karty i ceny: <a href="atrakcje.html">Atrakcje</a>.</p></details>
-      <details><summary>😌 Chcę luźniej na miejscu</summary><p>Plan przeszedł 8.09 kurację odchudzającą i żaden dzień nie jest już „Intensywny”: 30.04 ma dwugodzinną sjestę w hotelu między Fushimi a Kiyomizu, 1.05 kończy się po herbacie w kimonie (kaligrafia i ninja wypadły, 2.05 ma warsztat furoshiki), 4.05 ma godzinę na trawniku Miyashita Park, a 6.05 zaczyna się śniadaniem zamiast targu o świcie. Zawory, gdy i to za dużo: Kiyomizu (30.04), Kasuga (1.05), Nintendo TOKYO (4.05), Akihabara (5.05), rejs po Ashi (6.05). Decyzje podejmujcie przy śniadaniu, nie z wyprzedzeniem.</p></details>
+      <details><summary>😌 Chcę luźniej na miejscu</summary><p>Plan przeszedł 8.09 kurację odchudzającą i żaden dzień nie jest już „Intensywny”: 30.04 ma dwugodzinną sjestę w hotelu między Fushimi a Kiyomizu, 1.05 kończy się kimonem, herbatą i kaligrafią dla chętnych, 2.05 ma warsztat furoshiki, 4.05 ma godzinę na trawniku Miyashita Park, a 6.05 zaczyna się śniadaniem zamiast targu o świcie. Zawory, gdy i to za dużo: Kiyomizu (30.04), Kasuga (1.05), Nintendo TOKYO (4.05), Akihabara (5.05), rejs po Ashi (6.05). Decyzje podejmujcie przy śniadaniu, nie z wyprzedzeniem.</p></details>
       <details><summary>🏨 Chcę wyższy standard hoteli</summary><p>Poza ryokanem — raczej nie warto. W Japonii „gwiazdki" bywają pułapką: droższe hotele często mają mniejsze pokoje mieszczące 3 os. (dwa pokoje = drożej i rozdziela rodzinę) i gorszą lokalizację. MIMARU (apartament dla 4) to wybór ekspercki, nie kompromis. Zapas budżetu lepiej wydać na przeżycia niż na łóżka.</p></details>
     </div>
   </section>
@@ -2435,11 +2440,11 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     </div>
 
     <div class="acard" id="culture">
-      <h3>🎎 Ceremonia herbaty w kimonie</h3>
-      <div class="desc">Punkt mamy i jedyne kimono w planie: najpierw wybór wzoru i ubranie, potem ceremonia prowadzona po angielsku — łącznie około półtorej godziny. Dzieci dostają własne kimona, a MAIKOYA ma w Karasuma Shijo osobny wariant rodzinny dla siedmio- do dwunastolatków (młodsze dzieci na salę nie wchodzą). Świadomie nie bierzemy całodniowego wynajmu kimona: chodzenie w nim po mieście w upale bywa męką, a tu dostajecie samo doświadczenie. Alternatywa bez kimona: Camellia w Gion, sama ceremonia i taniej.</div>
-      <div class="meta"><span>🕒 ~90 min; sloty rano i po południu; domy w Karasuma Shijo, Gion-Kiyomizu i przy Nishiki</span><span>💴 kimono + ceremonia ~7 000–8 400 ¥/os (4 os. ≈ 700–800 zł); sama ceremonia od ~3 300 ¥/os</span><span>📍 Kioto, kilka lokalizacji — wybierzcie najbliższą dworca</span></div>
+      <h3>🎎 Kimono, herbata i kaligrafia</h3>
+      <div class="desc">Punkt mamy i jedyne kimono w planie: najpierw wybór wzoru i ubranie, potem ceremonia prowadzona po angielsku — łącznie około półtorej godziny. Dzieci dostają własne kimona, a MAIKOYA ma w Karasuma Shijo osobny wariant rodzinny dla siedmio- do dwunastolatków (młodsze dzieci na salę nie wchodzą). Świadomie nie bierzemy całodniowego wynajmu kimona: chodzenie w nim po mieście w upale bywa męką, a tu dostajecie samo doświadczenie. Po ceremonii, w tym samym domu i wciąż w kimonie, można dołożyć <b>kaligrafię shodō</b> — około godziny na tatami, hiragana, katakana i kanji po kolei, a swój znak zabieracie na pamiątkę. To drugi punkt mamy; reszta rodziny nie musi zostawać. Zamawiajcie oba jako jeden pakiet, bo osobne rezerwacje w Golden Week potrafią wypaść w różnych domach. Alternatywa bez kimona: Camellia w Gion, sama ceremonia i taniej.</div>
+      <div class="meta"><span>🕒 kimono + herbata ~90 min, kaligrafia ~60 min; domy w Karasuma Shijo, Gion-Kiyomizu i przy Nishiki</span><span>💴 kimono + ceremonia ~7 000–8 400 ¥/os (4 os. ≈ 700–800 zł); kaligrafia dokładana ~4 000–6 000 ¥/os — cenę pakietu potwierdźcie przy rezerwacji; sama ceremonia od ~3 300 ¥/os</span><span>📍 Kioto, kilka lokalizacji — wybierzcie najbliższą dworca</span></div>
       <span class="rezerwuj">rezerwuj 1–2 miesiące wcześniej; podajcie wzrost każdej osoby</span>
-      <div class="links"><a href="https://mai-ko.com/culture/tea-ceremony/" target="_blank" rel="noopener">MAIKOYA — kimono + herbata →</a><a href="https://www.tea-kyoto.com/" target="_blank" rel="noopener">Camellia (bez kimona) →</a></div>
+      <div class="links"><a href="https://mai-ko.com/culture/tea-ceremony/" target="_blank" rel="noopener">MAIKOYA — kimono + herbata →</a><a href="https://mai-ko.com/culture/calligraphy/" target="_blank" rel="noopener">MAIKOYA — kaligrafia →</a><a href="https://www.tea-kyoto.com/" target="_blank" rel="noopener">Camellia (bez kimona) →</a></div>
     </div>
 
     <div class="acard" id="furoshiki">
