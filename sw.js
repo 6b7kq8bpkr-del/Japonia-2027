@@ -1,5 +1,5 @@
-/* Service worker planu Japonia 2027 — wersja 679f1709cc · HTML/CSS/JS network-first, obrazy cache-first */
-const CACHE = 'jp2027-679f1709cc';
+/* Service worker planu Japonia 2027 — wersja 5650774b27 · HTML/CSS/JS network-first, obrazy cache-first */
+const CACHE = 'jp2027-5650774b27';
 const PRECACHE = ["./","index.html","decyzje.html","atrakcje.html","hotele.html","loty.html","koszty.html","pogoda.html","niezbednik.html","druk.html","assets/style.css","assets/app.js","assets/icon.svg","days/2027-04-27.html","days/2027-04-28.html","days/2027-04-29.html","days/2027-04-30.html","days/2027-05-01.html","days/2027-05-02.html","days/2027-05-03.html","days/2027-05-04.html","days/2027-05-05.html","days/2027-05-06.html","days/2027-05-07.html","assets/img/fushimi.webp","assets/img/todaiji.webp","assets/img/abudhabi.webp","assets/img/mosque.webp","assets/img/yasaka.webp","assets/img/akihabara.webp","assets/img/shibuya.webp","assets/img/fuji.webp","assets/img/sensoji.webp","assets/img/bamboo.webp","assets/img/tokyostation.webp","assets/img/hotels/auh.webp","assets/img/hotels/kioto.webp","assets/img/hotels/tokio1.webp","assets/img/hotels/hakone.webp"];
 self.addEventListener('install', function(e){
   self.skipWaiting();

@@ -1730,6 +1730,8 @@ Urban Kielichowski</pre></details>
       <div class="decdef">✅ <b>Domyślnie:</b> ${x.def}</div>
     </div>`;}).join('')}
     </div>
+    <h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:26px 0 8px">Rozstrzygnięte</h3>
+    <div class="card"><ul class="tips">${OPEN_DECISIONS.filter(decClosed).map(x=>`<li><b>${x.q.replace(/\s*—\s*ROZSTRZYGNIĘTE\s*$/,'')}</b> — ${x.def} <span style="font-family:var(--mono);font-size:11px;color:var(--success)">${x.by.replace(/^✅\s*/,'✅ ')}</span></li>`).join('')}</ul></div>
   </section>
 
   <section>
