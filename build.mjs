@@ -78,68 +78,37 @@ const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5
 /* Lista rzeczy do zarezerwowania, w kolejności terminów. Renderowana jako checklista
    na decyzje.html; stan trzymany w localStorage (klucz jp2027.checklist). */
 const BOOKINGS = [
-  {when:'TERAZ — zajmuje 3 minuty', what:'Odebrać Etihad Stopover Pass (zniżki w Abu Zabi)', note:'Należy się do rezerwacji stopoveru, ale sam nie przyjdzie — trzeba go wygenerować na theabudhabipass.com/etihad-stopover-pass: „Get pass now”, potem potwierdzenie e-mailem kodem jednorazowym. Daje zniżki na atrakcje, w tym te z naszego planu na 28.04 — Luwr Abu Zabi i Qasr Al Watan. Zróbcie to teraz, nie na lotnisku: na miejscu będzie roaming i pośpiech.'},
-  {when:'TERAZ — mail od Hanaori czeka', what:'Odpisać ryokanowi: kąpiel + dojazd 7.05 + yukaty', note:'Hanaori zapytał o specjalne życzenia (8.09.2026) — jednym mailem załatwiacie trzy rzeczy: (1) PRYWATNA KĄPIEL ok. 15:30, są tylko dwie na obiekt, poproście o cenę i długość sesji — dopóki hotel nie potwierdzi, w planie jest to opcja; (2) DOJAZD DO ODAWARY 7.05 — shuttle hotelu od 1.10.2026 jeździ tylko do Gōry, więc zapytajcie o najwcześniejszy poranny autobus z Tōgendai do Odawary i czy recepcja zamówi na 9:30 taksówkę jako plan B; (3) YUKATY w rozmiarach dziecięcych — podajcie wzrost dzieci. Szablon maila jest pod checklistą. Tatuaży nie mamy, więc duże łaźnie bez ograniczeń.'},
-  {when:'TERAZ', what:'Uzgodnić kwotę biletów z wyciągiem karty', note:'E-bilety sumują się do 13 643,36 zł, a w budżecie stoi 14 400 zł. Różnica 756,64 zł to najpewniej opłata pakietu stopover (~224 zł) i opłaty serwisowe — potwierdźcie na wyciągu i poprawcie pole „Loty” w kalkulatorze, jeśli faktyczna kwota jest inna.'},
-  {when:'TERAZ', what:'Terminy bezpłatnego odwołania noclegów → do kalendarza', note:'Każda z trzech rezerwacji Booking ma bezpłatne odwołanie tylko do konkretnej daty — sprawdźcie ją w potwierdzeniach i wpiszcie do kalendarza z przypomnieniem tydzień wcześniej. Po tym terminie pieniądze są zablokowane, a plan przestaje być odwracalny.'},
-  {when:'II–III 2027', what:'Warsztat furoshiki (2.05, sesja 14:00)', note:'Punkt córki — pakowanie prezentów w chustę, 4 000 ¥/os., dwie chusty na własność. Domyślnie mama z córką; Marumasu Nishimuraya w Nakagyō (metro Karasuma-Oike) albo MAIKOYA przy Nishiki. Klasa ninja i kaligrafia wypadły z planu.'},
-  {when:'II–III 2027', what:'Kimono + herbata + kaligrafia (1.05, od 16:30)', note:'Punkty mamy — ubranie w kimono i ceremonia (~90 min, ~7 000–8 400 ¥/os.), po niej kaligrafia shodō o 18:00 (~60 min, ~4 000–6 000 ¥/os., zwykle sama mama). ZAMÓWCIE JEDNYM PAKIETEM w tym samym domu MAIKOYA — osobne rezerwacje w Golden Week wypadają w różnych lokalizacjach. Rezerwacja 1–2 miesiące wcześniej; podajcie wzrost każdej osoby.'},
-  {when:'II–III 2027', what:'Pokaz sumo — 3.05, sesja 18:00 (Asakusa Sumo Club)', note:'Punkt dzieci. Rezerwacja przez GetYourGuide: 2 dorosłych + 2 dzieci (13 i 10 lat — cena dziecięca pokazuje się po podaniu wieku), sesja 18:00 w poniedziałek 3.05, święto. W cenie chanko bez limitu i zdjęcie z zawodnikami (wejście na ring wedle uznania prowadzącego); ~80 miejsc na sesję, bezpłatne anulowanie do 24 h. Rezerwujcie razem z warsztatami w Kioto.'},
-  {when:'29.03 · 3.04 · 7.04', what:'Miejscówki na shinkansen (SmartEX)', note:'SmartEX przyjmuje zgłoszenia już od roku przed przejazdem (od 5:30 JST); pociąg i miejsca potwierdza o 14:00 JST dokładnie miesiąc przed: 29.03 → Tokio→Kioto 29.04 (16:30–17:00); 3.04 → Kioto→Tokio 3.05 (święto!); 7.04 → Odawara→Tokio 7.05. Zgłoście od razu — w Golden Week Nozomi jeżdżą wyłącznie z rezerwacją, a tańsza taryfa Hayatoku 7 w szczycie nie obowiązuje. NEX (JR East) i Romancecar (Odakyu) osobno, miesiąc przed. Standardowa sprzedaż wszystkich miejsc rusza dokładnie miesiąc przed o 10:00 JST — gdyby zgłoszenie z wyprzedzeniem nie przeszło, kupujcie wtedy, o 3:00 czasu polskiego.'},
-  {when:'~1.04.2027', what:'Ubezpieczenie turystyczne', note:'Leczenie + NNW dla czterech osób.'},
-  {when:'19.04.2027, 17:00', what:'Shibuya Sky — slot na zachód 4.05', note:'Sprzedaż online rusza dokładnie 14 dni przed, o północy czasu japońskiego: dla 4.05 to 20.04 o 0:00 JST, czyli 19.04 o 17:00 w Polsce. Kupić od razu — sloty na zachód znikają w kilka godzin; nie czekać na prognozę. Zasadę (14 dni) potwierdzić w 2027.'},
-  {when:'31 dni przed', what:'Pokémon Café', note:'Rezerwacja otwiera się o 18:00 czasu japońskiego, dokładnie 31 dni wcześniej.'},
-  {when:'~2 tyg. przed', what:'Internet: pocket WiFi albo eSIM', note:'Router odbiera się na lotnisku; eSIM wgrywa się przed wylotem.'},
-  {when:'~1 tydz. przed', what:'Visit Japan Web', note:'Zgłoszenie celne i imigracyjne online — kody QR dla każdej osoby.'},
-  {when:'~7 dni przed', what:'Dostrojenie planu do pogody', note:'Wtedy prognoza staje się wiarygodna.'},
-  {when:'przed wylotem', what:'Karty IC (Suica/ICOCA)', note:'Można dodać Suica do Apple Wallet jeszcze przed wyjazdem.'},
-  {when:'DECYZJA 5.05 wieczorem', what:'Walizka na powrót — tylko jeśli zabraknie miejsca', note:'Domyślnie NIE kupujemy (oszczędność ~220 zł). Przy pakowaniu 5.05 zważcie bagaże: jeśli zakupy nie mieszczą się w 7 kg/os., dokupcie bagaż w „Manage booking” — działa do 30 h przed wylotem, czyli do ~12:00 w czwartek 6.05, i jest do 65% tańsze niż na lotnisku. Po tym oknie zostaje odprawa online (do 1 h przed) i lada na Naricie — najdrożej.'},
-  {when:'✅ 8.09.2026', what:'Bilety lotnicze — KUPIONE', note:'Etihad 27.04–7.05 ze stopoverem w Abu Zabi w drodze tam, 3 600 zł/os. (14 400 zł za 4 os.), jedna rezerwacja na etihad.com. Bez bagażu rejestrowanego — lecimy w obie strony na podręcznych 7 kg/os.'},
-  {when:'✅ 8.09.2026', what:'Miejsca obok siebie — zgłoszone u Etihada', note:'Etihad dodał do rezerwacji bezpłatną notatkę: rodzina podróżuje razem, 10-latek ma siedzieć bezpośrednio obok rodzica, 13-latek możliwie blisko reszty — dotyczy wszystkich odcinków. Miejsc nie kupiono; konkretne przydział nastąpi przy odprawie, zależnie od dostępności.'},
-  {when:'✅ 8.09.2026', what:'Noclegi w Japonii — ZAREZERWOWANE (3 bazy, 12 033 zł)', note:'Wszystkie trzy potwierdzone, każdy z bezpłatnym odwołaniem: MIMARU Kyoto Station 29.04–3.05 za 5 266 zł, MIMARU Tokyo Akasaka 3–6.05 za 3 413 zł, Hakone Ashinoko Hanaori 6–7.05 za 3 354 zł z kolacją i śniadaniem.'},
-  {when:'✅ 8.09.2026', what:'Hotel w Abu Zabi — VOUCHER PRZYSZEDŁ', note:'Grand Millennium Al Wahda, 27–28.04, dwa pokoje Standard po 2 osoby, doba liczona od zameldowania (24 h), BEZ śniadania (Room Only). Numery rezerwacji i potwierdzenia hotelu — w voucherze PDF i w prywatnej notatce, nie na stronie. Bezzwrotne od 8.09.2026. Kontakt w razie problemów: abudhabistopover@etihad.com, +971 2 406 3400 (pn–pt 9:00–17:00 czasu ZEA), poza godzinami +971 50 642 4022. Zapiszcie numery offline — w telefonie, nie tylko w skrzynce.'},
+  {id:'hanaori-transfer-v2',when:'Teraz',what:'Skorygować pytanie do Hanaori o transport',note:'Wysłany 8.09 mail pytał o dawny shuttle do Odawary. Napiszcie uzupełnienie: pokój ma już prywatną kąpiel, potrzebne są wskazówki dojazdu do Odawary 7.05 około 10:30 i wariant taksówką. Nowy szablon niżej.'},
+  {id:'flight-total',when:'Teraz',what:'Uzgodnić koszt lotów z obciążeniem karty',note:'Suma czterech e-biletów to 13 643,36 zł. W budżecie ostrożnie zostaje 14 400 zł do uzgodnienia. Przyczyna różnicy 756,64 zł nie jest potwierdzona; nie przypisujemy jej do konkretnej opłaty.'},
+  {id:'hotel-deadlines-v2',when:'Przed 21.04.2027',what:'Zapisać terminy anulowania w swoim kalendarzu',note:'Potwierdzenia sprawdzone w Gmailu: Kioto do 21.04 23:59 JST, Tokio do 25.04 23:59 JST, Hanaori do 2.05 23:59 JST. W Polsce to tego samego dnia 16:59. Dodajcie osobiste przypomnienia dzień wcześniej. Strona sama nie wysyła powiadomień.'},
+  {id:'furoshiki',when:'Luty-marzec 2027',what:'Zarezerwować furoshiki 2.05',note:'Cel: sesja około 14:00, domyślnie mama z córką. Potwierdźcie adres, wiek, cenę i czas trwania; dopiero wtedy godzina staje się stała.'},
+  {id:'tea',when:'Luty-marzec 2027',what:'Potwierdzić rodzinny pakiet herbaty i kaligrafię',note:'1.05 celujemy w herbatę około 16:30 i kaligrafię dla chętnych około 18:15. Ta sama lokalizacja, krótki wariant z kimonem. Sprawdźcie, czy konkretny pakiet przyjmuje dzieci w wieku 10 i 13 lat.'},
+  {id:'sumo',when:'Luty-marzec 2027',what:'Zdecydować i ewentualnie zarezerwować sumo',note:'3.05 cel: sesja 18:00 w Asakusie. Dopóki nie ma biletu, to opcja. Sprawdźcie cenę całej rodziny, menu, warunki anulowania i zakres udziału publiczności.'},
+  {id:'rail',when:'Teraz; kontrola 29.03, 3.04 i 7.04',what:'Zabezpieczyć miejsca na kolei',note:'SmartEX pozwala na część rezerwacji z dużym wyprzedzeniem. Sprawdźcie finalny status, pociąg i cztery miejsca. Standardowa sprzedaż miesiąc przed o 10:00 JST (03:00 w Polsce): 29.03 dla 29.04, 3.04 dla 3.05, 7.04 dla 7.05. NEX osobno w JR East; Romancecar na 6.05 osobno w Odakyu od 6.04.'},
+  {id:'insurance',when:'Teraz / przed wyjazdem',what:'Sprawdzić paszporty, warunki wjazdu i ubezpieczenie',note:'Sprawdźcie dokumenty wszystkich osób dla Japonii i ZEA. Polisa powinna odpowiadać trasie i planowanym aktywnościom; ochrony kosztów rezygnacji nie odkładajcie do kwietnia bez sprawdzenia terminu zakupu.'},
+  {id:'sky',when:'19.04.2027 około 17:00 PL',what:'Shibuya Sky na 4.05',note:'Według obecnej zasady sprzedaż od 0:00 JST dwa tygodnie przed wejściem. Potwierdźcie tę regułę w kwietniu 2027 oraz sposób zakupu dla 10-latki. Slot 17:45 jest celem, nie rezerwacją.'},
+  {id:'cafe-v2',when:'Od 1.03.2027 sprawdzaj NEWS',what:'Sprawdzić otwarcie rezerwacji Pokémon Café',note:'W 2026 operator zmieniał okna sprzedaży i ogłaszał je w NEWS. Dawna reguła 31 dni o 18:00 nie jest pewnym terminem dla maja 2027. Przy braku stolika zostaje Pokémon Center TOKYO DX i zwykły lunch.'},
+  {id:'internet',when:'Dwa tygodnie przed',what:'Przygotować internet na obu etapach',note:'eSIM obejmujący Japonię nie musi działać w ZEA. Minimum dwa telefony z dostępem do sieci, gdy rodzina rozdziela się na warsztatach.'},
+  {id:'pass',when:'Przed zakupem atrakcji w Abu Zabi',what:'Sprawdzić i odebrać Stopover Pass',note:'Sprawdźcie aktualne zniżki oraz warunki na oficjalnej stronie programu. To dodatek, nie warunek udanego dnia.'},
+  {id:'vjw',when:'Tydzień przed wylotem',what:'Visit Japan Web i dokumenty offline',note:'Wypełnijcie zgłoszenia dla całej rodziny i zapiszcie kody, bilety oraz vouchery w telefonach dorosłych. Dane rezerwacji pozostają poza publiczną stroną.'},
+  {id:'weather-v2',when:'20.04, 24.04, 1-2.05; potem 48 h przed dniem',what:'Sprawdzić pogodę przed kosztownymi zmianami',note:'20.04 przegląd przed terminem anulowania Kioto, 24.04 przed Tokio, 1-2.05 przed Hanaori. Prognoza tak wcześnie jest orientacyjna. 5.05 sprawdźcie ostrzeżenia dla Hakone; po 2.05 zmiana noclegu może kosztować pełną cenę. Drobne atrakcje dopasujcie 48-24 h wcześniej, transport i alerty ponownie rano.'},
+  {id:'ic',when:'Przed wyjazdem / po przylocie',what:'Karty IC dla rodziny',note:'Trzy taryfy dorosłe i jedna dziecięca w japońskiej kolei. Dla młodszego dziecka kupcie odpowiednią fizyczną kartę z dokumentem wieku; zagraniczny Android nie zawsze obsługuje mobilną Suicę.'},
+  {id:'bags-v2',when:'5.05 przed kolacją',what:'Zważyć bagaże i wycenić ewentualną dopłatę',note:'Sprawdźcie każdy limit z rezerwacji Etihad. Dodatkowy bagaż wyceńcie w Manage Booking; cena i termin zakupu zależą od trasy oraz taryfy. Nie zakładajcie stałej dopłaty 220 zł.'},
+  {id:'flights-done',when:'✅ Potwierdzone',what:'Loty Etihad',note:'Wylot 27.04, stopover w Abu Zabi, Narita 29.04. Powrót z Narity 7.05; lądowanie WAW 8.05 o 06:50.'},
+  {id:'seats-note',when:'✅ Prośba zgłoszona',what:'Miejsca rodzinne',note:'Notatka u Etihada jest zgłoszona, ale nie stanowi przydziału konkretnych foteli. Sprawdźcie miejsca po odprawie online.'},
+  {id:'hotels-done',when:'✅ Rezerwacje potwierdzone',what:'Trzy hotele w Japonii',note:'Potwierdzenia Booking z 8.09: kwoty w JPY, zapłacono 0 JPY w chwili wystawienia. Zarezerwowane nie znaczy opłacone. Szczegóły pokojów, posiłków i terminów na stronie Hotele.'},
+  {id:'auh-done',when:'✅ Voucher otrzymany',what:'Stopover: Grand Millennium Al Wahda',note:'Dwa pokoje, 27-28.04, bez śniadania. Późne wymeldowanie potwierdźcie z recepcją na podstawie warunków vouchera.'},
 ];
-/* DECYZJE OTWARTE — jedno miejsce na wszystko, co jeszcze NIE jest rozstrzygnięte.
-   Każda: opcje z „za/przeciw”, domyślny wybór, do kiedy i co zmienia w agendzie. */
-const decClosed = x => /ROZSTRZYGNIĘTE/.test(x.q) || /^✅/.test(x.by);
-const OPEN_DECISIONS = [
-  {id:'auh-rooms', day:'2027-04-27', q:'Abu Zabi: jeden pokój czy dwa? — ROZSTRZYGNIĘTE', by:'✅ 8.09.2026 — voucher Etihad Holidays', impact:'zamknięte; oba pokoje w pakiecie, bez dopłaty',
-   opts:[['Dwa pokoje Standard po 2 osoby — POTWIERDZONE','voucher wymienia Room 1 i Room 2, oba w cenie pakietu; wszyscy czworo wpisani jako „Adult”, więc dostawki są zbędne','w każdym pokoju powinien spać rodzic z dzieckiem — 10-latka nie zostaje sama z bratem'],
-         ['Jeden pokój rodzinny','—','nieaktualne: voucher przyznał dwa']],
-   def:'Dwa pokoje, bez dopłaty. Zostaje tylko podział: rodzic + dziecko w każdym pokoju.'},
-  {id:'pokemon-room', day:'2027-04-29', q:'MIMARU: zwykły apartament czy Pokémon Room? — ROZSTRZYGNIĘTE', by:'✅ 8.09.2026 — zarezerwowane zwykłe apartamenty (Kyoto Station i Tokyo Akasaka)', impact:'zamknięte',
-   opts:[['Apartament 4 pojedyncze łóżka (38 m²)','tańszy, każdy ma łóżko, dwa aneksy sypialne','bez „wow” dla dzieci'],
-         ['Pokémon Room','dzieci pamiętają to latami; jeden Pokémon Center w planie i tak jest','dopłata + znika szybciej; tematyka „wchodzi” na trzy noce']],
-   def:'Zwykły apartament. Pokémon Room tylko przy dopłacie poniżej ~150 zł/noc — Pokémony mają w planie swój dzień.'},
-  {id:'ryokan-which', day:'2027-05-06', q:'Ryokan: Hanaori nad jeziorem czy prywatna kąpiel w pokoju? — ROZSTRZYGNIĘTE', by:'✅ 8.09.2026 — Hanaori zarezerwowany za 3 354 zł', impact:'zamknięte; prywatną kąpiel dobieramy osobno',
-   opts:[['Hakone Ashinoko Hanaori — 3 354 zł (✅ ZAREZERWOWANY)','stoi w Tōgendai, gdzie kończy się kolejka linowa: zero dojazdu, można zostać nad wodą do zmierzchu; 9,1 z 3 217 opinii (największa próbka); 32 m², 2 łóżka + sofa + futon; onsen z widokiem na jezioro','kąpiel jest WSPÓLNA, nie w pokoju; w opiniach: zakaz wstępu z tatuażami (nas nie dotyczy)'],
-         ['Sengokuhara Shinanoki — 1 859 zł','najtaniej; prywatna kąpiel na tarasie pokoju (38 m²); bez wspólnej łaźni','25 min autobusem znad jeziora; 8,9 z 1 129 opinii'],
-         ['Balinese Airu — 3 982 zł','prywatny rotenburo z widokiem na góry; 150 m od stacji Yumoto (rano 15 min do Odawary)','20 m² na cztery osoby, same futony; najdroższy'],
-         ['Hanaori z prywatną kąpielą — 4 156 zł','wszystko naraz: lokalizacja i kąpiel w pokoju','ponad dwa razy drożej niż Shinanoki']],
-   def:'Hanaori Standard — user wybrał lokalizację i dużą próbkę opinii zamiast prywatnej kąpieli. Uwaga: onsen jest wspólny i rozdzielony płciowo, więc trzynastolatek idzie z tatą.'},
-  {id:'ryokan-meals', day:'2027-05-06', q:'Ryokan: z kolacją i śniadaniem czy bez? — ROZSTRZYGNIĘTE', by:'✅ 8.09.2026 — Hanaori zarezerwowany z kolacją i śniadaniem', impact:'zamknięte',
-   opts:[['Pakiet z kolacją i śniadaniem','to JEST atrakcja dnia; w Hakone wieczorem i tak nie ma dokąd wyjść; w Hanaori kolacja to bufet (dzieciom łatwiej), kaiseki tylko w innych ryokanach','+~10% ceny; kaiseki może być dla dzieci trudne'],
-         ['Tylko nocleg','taniej','kolacja poza ryokanem = logistyka bez samochodu, wieczór stracony']],
-   def:'Z pakietem — tak zarezerwowane (3 354 zł za noc z kolacją i śniadaniem).'},
-  {id:'openair', day:'2027-05-06', q:'Hakone: Open-Air Museum czy tylko pętla?', by:'rano 6.05 (pogoda, wiatr)', impact:'~1,5 h i ~¥5 000',
-   opts:[['Tylko pętla + ryokan','spokojniej; sobota i tak jest tłoczna; onsen o 16:30 to nagroda','—'],
-         ['Dodać Open-Air Museum','rzeźby, po których dzieci mogą się wspinać; pawilon Picassa; jedyny sensowny plan B przy wietrze','dzień gęstnieje; wejście do ryokanu przesuwa się na 17:30']],
-   def:'Tylko pętla. Open-Air Museum wchodzi automatycznie, gdy kolejka linowa stoi (wiatr) albo pada.'},
-  {id:'shodo-kto', day:'2027-05-01', q:'1.05: kto zostaje na kaligrafię o 18:00?', by:'przy rezerwacji pakietu (II–III 2027)', impact:'~4 000–6 000 ¥/os., godzina wieczoru',
-   opts:[['Mama sama (domyślnie)','ma swój punkt bez ciągnięcia kogokolwiek; tata z dziećmi nad Kamo, spotkanie na kolacji','rodzina rozdziela się na godzinę'],
-         ['Mama z córką','córka lubi rękodzieło, a po herbacie i tak są razem','dwa razy drożej'],
-         ['Wszyscy czworo','wspólne zdjęcie i cztery znaki na ścianę','trzecia godzina siedzenia — 13-latek raczej odpadnie']],
-   def:'Mama sama albo z córką. Kaligrafia dopisana 8.09 na wyraźną prośbę mamy; wchodzi po ceremonii w tym samym domu, więc nie kosztuje żadnego przejazdu — kosztuje godzinę wieczoru tych, którzy zostaną.'},
-  {id:'ninja-vs-shodo', day:'2027-05-02', q:'2.05: kto idzie na warsztat furoshiki?', by:'rezerwacja II–III 2027 (sesja 14:00)', impact:'4 000 ¥/os.',
-   opts:[['Mama z córką','warsztat jest pomysłem córki; tata z synem biorą Nishiki albo salon gier i nikt nikogo nie ciągnie','dzień rozjeżdża się na dwa plany'],
-         ['Cała czwórka','16 000 ¥, wspólne zdjęcie i cztery pary rąk, które umieją zawiązać torbę z chusty','13-latek może uznać, że to nie jego bajka'],
-         ['Nikt','2.05 wraca do roli czystego bufora','córka traci punkt, o który sama poprosiła']],
-   def:'Mama z córką. Klasa ninja wypada — córka poprosiła konkretnie o pakowanie, a kaligrafia ma już swoje miejsce wieczorem 1.05. Jeśli syn będzie chciał czegoś swojego, ninja przy Nishiki wciąż da się dograć na miejscu.'},
-  {id:'kinkaku', day:'2027-05-02', q:'2.05 po praniu: Kinkaku-ji czy luz?', by:'na miejscu, po powrocie z Arashiyamy', impact:'~2,5 h z dojazdami',
-   opts:[['Luz','prawdziwy bufor przed drogą; dzieci po małpach mają dość; jutro shinkansen i nowe miasto','mama traci Kinkaku-ji'],
-         ['Kinkaku-ji (45 min + autobus ~40 min w każdą stronę)','jedyny Złoty Pawilon w planie; w deszczu bywa pusty','ostatni pełny dzień Kioto gęstnieje']],
-   def:'Luz. Kinkaku-ji tylko przy wyraźnie wysokiej energii po Arashiyamie — audyt z 8.09 zdjął go z planu podstawowego.'},
-  ];
+const DEADLINES = [
+  {date:'2027-03-01',label:'Od 1 marca',title:'Pokémon Café i warsztaty',text:'Sprawdzajcie komunikaty o sprzedaży na maj. Potwierdźcie godziny herbaty i furoshiki.',href:'decyzje.html#do-zalatwienia'},
+  {date:'2027-03-29',label:'29.03 / 3.04 / 6.04 / 7.04',title:'Pociągi dla całej rodziny',text:'Potwierdźcie miejsca i rozkłady. SmartEX, JR East i Odakyu to różne systemy.',href:'decyzje.html#do-zalatwienia'},
+  {date:'2027-04-19',label:'19 kwietnia, 17:00 PL*',title:'Shibuya Sky',text:'Planowany start sprzedaży na 4.05 według obecnej reguły. *Potwierdźcie w 2027.',href:'atrakcje.html#shibuya-sky'},
+  {date:'2027-04-21',label:'21 kwietnia, 23:59 JST',title:'Ostatni bezpłatny termin: Kioto',text:'16:59 w Polsce. Decyzję podejmijcie dzień wcześniej.',href:'hotele.html#kioto'},
+  {date:'2027-04-25',label:'25 kwietnia, 23:59 JST',title:'Ostatni bezpłatny termin: Tokio',text:'16:59 w Polsce. Sprawdźcie plan i prognozę 24.04.',href:'hotele.html#tokio1'},
+  {date:'2027-05-02',label:'2 maja, 23:59 JST',title:'Ostatni bezpłatny termin: Hanaori',text:'Będziecie w Kioto: obowiązuje lokalny czas Japonii. Wcześniej sprawdźcie ryzyko pogody w Hakone.',href:'hotele.html#hakone'},
+  {date:'2027-05-05',label:'5 maja; potem rano 6 i 7 maja',title:'Pogoda i transport w Hakone',text:'Ostrzeżenia oraz kursowanie dróg i kolei. Zmiana hotelu po 2.05 może być już płatna.',href:'days/2027-05-06.html#warunki'},
+];
+
 /* Dni zamknięcia atrakcji (0=nd … 6=sb). Sprawdzane przy budowie względem dnia tygodnia każdego dnia planu. */
 const CLOSED = {
   ota:{days:[1],note:'poniedziałki + kilka dni na przełomie miesiąca (zmiana wystawy)'},
@@ -149,30 +118,33 @@ const CLOSED = {
   nishiki:{days:[],note:'część stoisk zamknięta w środy i niedziele'},
 };
 const DAYRAIN = {
-  '2027-04-29':'Dzień podróży — deszcz nie przeszkadza; z dworca Kioto do hotelu jest zadaszone przejście.',
-  '2027-04-30':'Fushimi pod parasolem działa (bramy osłaniają), ale ślisko — skróćcie do dolnej pętli. Kiyomizu zamieńcie na kryte Nishiki i pasaż Teramachi.',
-  '2027-05-01':'Tōdai-ji jest pod dachem, jelenie chowają się pod drzewami — skróćcie park i wróćcie wcześniej. Herbata jest w środku, więc popołudnie nic nie traci.',
-  '2027-05-02':'Bambus w deszczu jest wyjątkowo filmowy, ale małpy odpuśćcie (śliska ścieżka). Kinkaku-ji w deszczu pusty. Popołudnie: teamLab Biovortex przy dworcu (sobota — Kyoto Railway Museum otwarte).',
-  '2027-05-03':'Dzień podróży — Asakusa ma kryty deptak Nakamise; Sensō-ji, ramen i wcześniejszy sen.',
-  '2027-05-04':'Meiji Jingū pod parasolem działa (las osłania), a Shibuya PARCO i Mega Don Quijote są pod dachem. Shibuya Sky w chmurach to strata biletu — spróbujcie zmienić datę w systemie biletowym; jeśli się nie da, kryty taras ma Tokyo Skytree. Wieczór: teamLab Planets (rezerwacja) albo rodzinne karaoke.',
-  '2027-05-05':'Pokémon Center i Café są w środku. Hie-jinja to pięć minut pod parasolem, a tunel torii na deszczu wygląda nawet lepiej. Akihabara to i tak wnętrza — salony gier i sklepy — więc w deszcz przestaje być opcjonalna i staje się planem.',
-  '2027-05-06':'Kolejka linowa w Hakone staje przy wietrze (status: hakonenavi.jp) — wtedy Hakone Open-Air Museum + rejs po Ashi, który pływa prawie zawsze. Onsen i kolacja to i tak sedno dnia.',
-  '2027-05-07':'Droga na lotnisko jedzie niezależnie od pogody. Fudżi z shinkansena — tylko przy słońcu.',
+  '2027-04-27':'Przy opóźnionym locie uprzedźcie hotel. Po dotarciu tylko jedzenie i odpoczynek.',
+  '2027-04-28':'Przy upale albo złym samopoczuciu skróćcie zwiedzanie do meczetu. Zachowajcie przerwę przed nocnym lotem.',
+  '2027-04-29':'Sprawdzajcie informacje JR po wylądowaniu. Przy opóźnieniu zmieńcie rezerwację dalszego pociągu przed odjazdem; poinformujcie hotel o późnym meldunku.',
+  '2027-04-30':'Lekki deszcz: krótka dolna pętla Fushimi. Silny deszcz: Nishiki lub pasaż Teramachi zamiast świątyń; sjesta zostaje.',
+  '2027-05-01':'Skróćcie park w Narze; Tōdai-ji i warsztat są pod dachem. Jeśli nie jedziecie do Nary, nie zmieniajcie automatycznie potwierdzonej godziny herbaty.',
+  '2027-05-02':'Odpuśćcie małpy i śliskie podejścia. Furoshiki zostaje; zamiast Arashiyamy krótki spacer w krytym pasażu i wcześniejszy lunch.',
+  '2027-05-03':'Krótka Asakusa z parasolem. Jeśli sumo jest zarezerwowane, zachowajcie dojazd na sesję i ograniczcie spacer.',
+  '2027-05-04':'Sklepy i kawiarnia pozostają. Status dachu Shibuya Sky sprawdźcie u operatora; sama rezerwacja nie gwarantuje wejścia na otwarty taras. Nie kupujcie w ciemno drugiego punktu widokowego.',
+  '2027-05-05':'Pokémony są pod dachem. Reszta dnia może zostać w hotelu; Akihabara nie staje się obowiązkowa tylko dlatego, że pada.',
+  '2027-05-06':'Sprawdźcie kolejkę, statki i autobusy oddzielnie. Wiatr może zatrzymać także rejsy. Przy działających drogach jedźcie do hotelu autobusem według wskazówek recepcji; przy poważnych ostrzeżeniach rozważcie zmianę noclegu już 5.05.',
+  '2027-05-07':'Sprawdźcie drogi i kolej wieczorem 6.05 oraz rano. Przy spodziewanych zakłóceniach uzgodnijcie wcześniejszy wyjazd; sklepy na dworcu są pierwszą rzeczą do pominięcia.',
 };
 const DAYCROWD = {
-  '2027-04-29':'Dzień Shōwa — pierwszy dzień Golden Week: shinkansen po południu pełny, miejscówki kupione w SmartEX; wieczór w Kiocie spokojny',
-  '2027-04-30':'piątek Golden Week — na Fushimi bądźcie przed 9:00, potem tłum rośnie z godziny na godzinę Kiyomizu o 15:00 w Golden Week jest pełne, ale taras jest ogromny — tłum rozchodzi się po Sannenzace.',
-  '2027-05-01':'sobota Golden Week — Nara pełna od południa; jelenie i Tōdai-ji zaliczcie do 12:00, herbata po południu w Kiocie',
-  '2027-05-02':'niedziela Golden Week — bambus o 9:15 to ostatni moment znośnego tłumu; popołudnie celowo puste',
-  '2027-05-03':'Dzień Konstytucji — szczyt wyjazdów krajowych: pociąg pełny (miejscówki!), Asakusa po południu tłoczna, wieczorem luźniej',
-  '2027-05-04':'Dzień Zieleni — dlatego poranek jest ułożony pod tłum: Meiji Jingū przed 9:00, Takeshita przed 11:00, butiki na otwarcie o 11:00 (po południu Takeshita ma policyjny ruch jednokierunkowy). Przeniesienie streetwearu na dzień roboczy po świętach nie wchodzi w grę — 6.05 to Hakone, 7.05 wylot. Sklepy w Golden Week pełne, ale bez sobotnich dropów Supreme; Nintendo TOKYO w PARCO w święto bywa na numerki; Shibuya Sky ma slot, więc tłum nie gra roli',
-  '2027-05-05':'Dzień Dziecka, ostatni dzień Golden Week — koinobori wszędzie; Pokémon Center pełne, dlatego rezerwacja Café',
-  '2027-05-06':'pierwszy dzień PO Golden Week — w Hakone jeszcze sporo ludzi (wielu bierze czwartek–piątek wolne), ale ryokan już w cenie tygodniowej',
-  '2027-05-07':'piątek — poranne pociągi z Odawary bywają pełne; miejscówki kupione dzień wcześniej',
+  '2027-04-29':'Dzień Shōwa i początek Golden Week. Miejscówki na shinkansen są kluczowe; zostawcie zapas na formalności na lotnisku.',
+  '2027-04-30':'Kioto już w okresie Golden Week. Późniejszy start oznacza więcej ludzi, ale chroni sen po podróży; wybierajcie krótszą trasę.',
+  '2027-05-01':'Sobota Golden Week. Nie przedłużajcie Nary kosztem odpoczynku i dojazdu na warsztat.',
+  '2027-05-02':'Niedziela Golden Week. Wybierzcie ogród albo małpy; wyjazd do centrum około 12:15 chroni warsztat.',
+  '2027-05-03':'Święto Konstytucji. Pociąg i ewentualne sumo rezerwujcie z wyprzedzeniem. Obecność na miejscu nie gwarantuje biletu.',
+  '2027-05-04':'Dzień Zieleni. Limit dwóch sklepów i przerwa pozwalają utrzymać średnie tempo; wszystkie opcje naraz zrobiłyby z tego intensywny dzień.',
+  '2027-05-05':'Dzień Dziecka. Jedna wizyta Pokémon, a Café tylko po zdobyciu rezerwacji. Wolne popołudnie zostaje.',
+  '2027-05-06':'Po głównych świętach nadal możliwe kolejki. Jeśli się przeciągają, skróćcie Ōwakudani zamiast spóźniać się do ryokanu.',
+  '2027-05-07':'Miejscówki i kolejny realny pociąg są ważniejsze niż spacer po dworcu. Zaplanujcie dotarcie na lotnisko przed 14:30.',
 };
+
 const PERIODS = [
   {label:'27.04–7.05', sub:'KUPIONY 8.09.2026 · 11 dni, powrót przed wycieczką klasową 10.05', price:3600, best:true,
-   pros:['Kupiony za 3 600 zł/os. ze stopoverem (etihad.com, 8.09); dzień krócej niż 3–14 = ~1 800 zł mniej na ziemi','Kioto PRZED świętami, Tokio W święta — pod prąd tłumów','Ryokan w czwartek tuż po Golden Week — łatwiej o pokój i ciszej niż w święta'],
+   pros:['Kupiony; kwota końcowa do uzgodnienia z kartą. 3 600 zł/os. poniżej to wcześniejsza średnia budżetowa','Kioto 29.04-3.05 i Tokio 3-6.05: oba etapy zahaczają o Golden Week','Ryokan w czwartek tuż po Golden Week — łatwiej o pokój i ciszej niż w święta'],
    cons:['Cały pobyt w Golden Week — miejscówki na shinkansen i rezerwacje obowiązkowe','Przylot 29.04 w Dzień Shōwa','Bez Osaki']},
   {label:'26.04–7.05', sub:'o dzień dłużej', price:3449,
    pros:['Ta sama cena biletu','Wraca wypad do Osaki (2.05)'],
@@ -184,13 +156,13 @@ const PERIODS = [
 
 /* WYBRANY BILET (etihad.com, 7.09.2026): 3–14.05 ze stopoverem tam, Economy Basic.
    13 600 zł za 4 os. (3 dorosłych + dziecko) — wycena z 7.09.2026,
-   hotel 4★ w Abu Zabi (Grand Millenium Al Wahda) w pakiecie. Bagaż: kabinowe w cenie,
+   hotel 4★ w Abu Zabi (Grand Millennium Al Wahda) w pakiecie. Bagaż: kabinowe w cenie,
    bez bagażu rejestrowanego — decyzja z 8.09: próbujemy zmieścić się w podręcznych.
    FLIGHT (niżej) zostaje jako odniesienie
    rynkowe z Google (round-trip) dla wykresu trendu. */
 const CALC = {nights:8, nightRate:1504, transport:5000, days:11, foodRate:500, attractions:3300, extras:3000};
 const BUILD_ID = new Intl.DateTimeFormat('pl-PL',{timeZone:'Europe/Warsaw',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).format(new Date()).replace(',','');
-const TICKET = {family:14400, bag:0, total:14400, label:'27.04–7.05 ze stopoverem tam — KUPIONE 8.09.2026 (3 600 zł/os.)'};
+const TICKET = {family:14400, bag:0, total:14400, label:'27.04-7.05 ze stopoverem tam; powrót do WAW 8.05 - kupione 8.09.2026'};
 const FLIGHT = {airline:'Etihad'};
 /* Od 4.09.2026 wybrany scenariusz = ROUND-TRIP (open-jaw zdrożał — 7.09.2026 już ~7,9 tys./os.). */
 FLIGHT.history = CHECKS.filter(c=>(c.rt||{}).etihad!=null).map(c=>[c.date, c.rt.etihad]);
@@ -257,7 +229,59 @@ const trend = () => {
 /* ============================ SHARED CSS ============================ */
 const WAVE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M0 24a24 24 0 0148 0'/%3E%3Cpath d='M0 24a17 17 0 0148 0'/%3E%3Cpath d='M0 24a10 10 0 0148 0'/%3E%3C/g%3E%3C/svg%3E";
 
-const CSS = `/* ============================================================
+const CSS = `
+/* Czytelna agenda: streszczenie przed szczegółami */
+html{scroll-padding-top:125px}
+.skip-link{position:fixed;top:-80px;left:16px;z-index:10000;background:var(--panel);padding:12px 18px}
+.skip-link:focus{top:10px}
+.section-nav{display:flex;gap:6px;overflow-x:auto;margin:20px 0 0;padding:4px 0 8px;scrollbar-width:thin}
+.section-nav a{flex:0 0 auto;min-height:44px;display:flex;align-items:center;padding:8px 15px;border:1px solid var(--line);border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:14px;background:var(--panel)}
+.section-nav a:hover{background:var(--wash)}
+.day-hero .hbg{height:clamp(150px,23vw,250px)}
+.day-hero .hero-inner{padding:22px 26px;max-width:740px}
+.day-hero h1{font-size:clamp(27px,4vw,38px)}
+.day-brief{margin-top:22px;background:var(--panel);padding:24px;border:1px solid var(--line);border-radius:var(--radius-lg)}
+.brief-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;border-bottom:1px solid var(--line);padding-bottom:16px}
+.brief-stats span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.brief-stats b{font-size:15px;line-height:1.4}
+.pace.g{color:var(--success)}.pace.r{color:var(--hanko)}.pace.y{color:#835316}
+.brief-focus{font-size:18px;font-weight:600;margin:18px 0 12px}
+.brief-rules{margin:0;display:grid;gap:12px}
+.brief-rules>div{display:grid;grid-template-columns:130px 1fr;gap:12px;font-size:14px}
+.brief-rules dt{font-weight:600}.brief-rules dd{margin:0;color:var(--muted)}
+.brief-rules .guard{border-top:1px solid var(--line);padding-top:12px}
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.section-heading .stitle{margin-bottom:0}.section-heading .reset{margin:0;min-height:44px}
+.timing-note{max-width:76ch}
+.tline .event{border:0;padding:0}.tline .event summary{cursor:pointer;list-style:none;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;padding-right:25px;position:relative;min-height:34px}
+.tline .event summary::-webkit-details-marker{display:none}
+.tline .event summary::after{content:"+";position:absolute;right:0;color:var(--ai);font-family:var(--mono)}
+.tline .event[open] summary::after{content:"−"}
+.event-tag{font-family:var(--sans);font-size:11px;line-height:1.4;padding:2px 6px;border-radius:3px;background:var(--wash);color:var(--muted);white-space:nowrap}
+.event-tag.lot{background:var(--wash-green);color:var(--success)}
+.event-tag.rezerwacja{background:#faf0dc;color:#835316}
+.event-tag.bufor{background:var(--wash-blue);color:var(--ai)}
+.tline .opcja .bd::before{border-color:var(--muted)}
+.option-detail,.detail-catalog{margin-top:16px}.option-detail summary,.detail-catalog>summary{cursor:pointer;font-weight:600;min-height:36px}
+.detail-catalog section{margin-top:12px}
+.return-note{display:flex;gap:18px;flex-wrap:wrap;padding:16px 0;border-bottom:1px solid var(--line);font-size:14px}
+.readiness{padding:18px 22px;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--success);border-radius:var(--radius);margin-top:24px}
+.readiness p{margin:6px 0;font-size:14px}.readiness a{font-weight:600}
+.deadlines{list-style:none;margin:0;padding:0}
+.deadlines li{display:grid;grid-template-columns:190px 1fr;gap:20px;padding:16px 0;border-top:1px solid var(--line)}
+.deadlines time{font-size:13px;color:var(--ai);font-weight:600}
+.deadlines p{margin:4px 0 0;font-size:13px;color:var(--muted)}
+.tt-title small{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);font-weight:400;margin-top:5px}
+@media(max-width:640px){
+ .day-brief{padding:18px}.brief-stats{grid-template-columns:1fr 1fr;gap:12px}.brief-stats>div:last-child{grid-column:1/-1}
+ .brief-rules>div{grid-template-columns:1fr;gap:3px}
+ .day-hero .hero-inner{padding:19px 20px;margin-top:-28px}
+ .section-nav a{padding:8px 12px}.tline .tm{font-size:12px;white-space:normal}
+ .tline li{grid-template-columns:53px minmax(0,1fr);gap:10px}.tline .bd{padding-left:15px}
+ .deadlines li{grid-template-columns:1fr;gap:6px}
+}
+@media print{.section-nav,.section-heading button{display:none}}
+/* ============================================================
    Japonia 2027 — „Tablica peronowa”
    System: chłodny papier + atrament indygo (aizome) + pieczęć hanko jako status.
    Kroje: Shippori Mincho (tytuły), IBM Plex Sans (tekst), IBM Plex Mono (godziny, daty, kwoty).
@@ -486,6 +510,25 @@ section{margin-top:var(--s6)}
 .calc input.sm{width:62px}.calc .x{color:var(--muted);padding:0 5px}
 .calc .tot td{border-bottom:none;border-top:2px solid var(--ink);font-size:17px;font-weight:600;padding-top:14px}
 .calc .tot .big{font-family:var(--mono);color:var(--ai);font-size:26px;text-align:right}
+@media(max-width:600px){
+  .calc table,.calc tbody,.calc tfoot{display:block;width:100%;min-width:0}
+  .calc thead{display:none}
+  .calc tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;border-bottom:1px solid var(--line);padding:14px 0}
+  .calc td{display:block;min-width:0;border:0;padding:0}
+  .calc td.cat{grid-column:1/-1}
+  .calc td:nth-child(2):not(:has(input)){display:none}
+  .calc td:nth-child(3){grid-column:2}
+  .calc input{font-size:16px;min-height:44px}
+  .calc input.sm{width:58px}
+  .calc input#nightRate,.calc input#foodRate{width:92px}
+  .calc .tot td{border:0;padding:0}
+  .calc .tot{border-top:2px solid var(--ink);border-bottom:0}
+  .calc .tot .big{font-size:22px}
+}
+@media(max-width:380px){
+  .calc tr:has(input.sm){grid-template-columns:1fr}
+  .calc tr:has(input.sm) td:nth-child(3){grid-column:1}
+}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:14px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
 @media(max-width:620px){.stats{grid-template-columns:1fr}}
 .stat{background:var(--panel);padding:14px 16px}
@@ -635,6 +678,8 @@ footer a{font-weight:600;text-decoration:none}
 .scenrow{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13.5px}
 .scenrow:last-of-type{border-bottom:none}
 .scenrow b{white-space:nowrap;font-weight:600}
+.scenrow>span{min-width:0}
+.scenrow>span b{white-space:normal;overflow-wrap:anywhere}
 .scentot{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:var(--s2);padding-top:var(--s2);border-top:2px solid var(--ink)}
 .scentot b{font-family:var(--mono);font-weight:600;font-size:20px}
 .scenc ul{list-style:none;margin:var(--s3) 0 0;padding:0;font-size:12.5px;display:flex;flex-direction:column;gap:4px}
@@ -702,6 +747,7 @@ footer a{font-weight:600;text-decoration:none}
 
 /* ---------- pogoda na żywo ---------- */
 .wxwrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.wxwrap:has(>table){display:block;max-width:100%;overflow-x:auto}
 .wxcard{min-width:0;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--panel)}
 .wxcard h3{margin:0 0 6px;font-size:15px;color:var(--ai);font-weight:600}
 .wxnow{margin:0;font-family:var(--mono);font-size:26px;font-weight:600;line-height:1.15}
@@ -717,8 +763,19 @@ footer a{font-weight:600;text-decoration:none}
 fs.writeFileSync(DIR + '/assets/style.css', CSS);
 
 /* ============================ APP JS ============================ */
-const APP = `document.addEventListener('keydown',function(e){
-  if(e.target.matches('input,textarea')) return;
+const APP = `
+(function(){
+  document.addEventListener('DOMContentLoaded',function(){
+    var button=document.getElementById('timelineToggle');
+    if(!button)return;
+    var items=Array.from(document.querySelectorAll('.tline details'));
+    function sync(){var all=items.length>0&&items.every(function(d){return d.open;});button.textContent=all?'Zwiń szczegóły':'Rozwiń szczegóły';button.setAttribute('aria-expanded',String(all));}
+    button.addEventListener('click',function(){var open=!items.every(function(d){return d.open;});items.forEach(function(d){d.open=open;});sync();});
+    items.forEach(function(d){d.addEventListener('toggle',sync);});
+  });
+})();
+document.addEventListener('keydown',function(e){
+  if(e.defaultPrevented||e.altKey||e.ctrlKey||e.metaKey||e.target.closest('input,textarea,select,button,summary,[contenteditable],#map')) return;
   if(e.key==='ArrowRight'){var n=document.getElementById('navNext'); if(n&&n.href) location.href=n.href;}
   if(e.key==='ArrowLeft'){var p=document.getElementById('navPrev'); if(p&&p.href) location.href=p.href;}
 });
@@ -790,7 +847,9 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
       L.marker(ll,{icon:L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],html:'<div class="mk">'+(i+1)+'</div>'})})
         .addTo(map).bindPopup((i+1)+'. '+s[2]);
     });
-    if(pts.length>1) L.polyline(pts,{color:'#c8402c',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
+    var routeEl=document.getElementById('geo-route');
+    var linePts=routeEl?JSON.parse(routeEl.textContent):pts;
+    if(linePts.length>1) L.polyline(linePts,{color:'#c8402c',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
     map.fitBounds(pts,{padding:[34,34]});
     setTimeout(function(){map.invalidateSize();},80);
   }
@@ -813,8 +872,16 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
 /* ---- checklista rezerwacji (stan w localStorage) ---- */
 (function(){
   var list=document.querySelector('.cklist'); if(!list) return;
-  var KEY='jp2027.checklist', boxes=[].slice.call(list.querySelectorAll('input[data-ck]'));
-  var saved={}; try{saved=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){}
+  var KEY='jp2027.checklist.v2', boxes=[].slice.call(list.querySelectorAll('input[data-ck]'));
+  var saved={}; try{
+    var current=localStorage.getItem(KEY);
+    saved=JSON.parse(current)||{};
+    if(current===null){
+      var old=JSON.parse(localStorage.getItem('jp2027.checklist'))||{};
+      ['pass',null,'flight-total',null,'furoshiki','tea','sumo','rail','insurance','sky',null,'internet','vjw',null,'ic',null].forEach(function(id,i){if(id&&old[i])saved[id]=true;});
+      localStorage.setItem(KEY,JSON.stringify(saved));
+    }
+  }catch(e){}
   function draw(){
     var done=0;
     boxes.forEach(function(b){
@@ -827,19 +894,19 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
     var next=boxes.filter(function(b){return !b.checked;})[0];
     document.getElementById('cknext').textContent = next
       ? 'następne: '+next.closest('li').querySelector('.ckwhat b').textContent
-      : 'wszystko zarezerwowane 🎉';
+      : 'lista odhaczona - sprawdźcie potwierdzenia rezerwacji';
   }
   boxes.forEach(function(b,i){
-    b.checked=!!saved[i];
+    b.checked=!!saved[b.dataset.ck];
     b.addEventListener('change',function(){
-      saved[i]=b.checked;
+      saved[b.dataset.ck]=b.checked;
       try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
       draw();
     });
   });
   var rb=document.getElementById('ckreset');
   if(rb) rb.addEventListener('click',function(){
-    boxes.forEach(function(b,i){b.checked=false; saved[i]=false;});
+    boxes.forEach(function(b,i){b.checked=false; saved[b.dataset.ck]=false;});
     try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
     draw();
   });
@@ -900,9 +967,9 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   var LOC=[
     {n:'🕌 Abu Zabi',la:24.4539,lo:54.3773,tz:'Asia/Dubai'},
     {n:'⛩️ Kioto',la:35.0116,lo:135.7681,tz:'Asia/Tokyo'},
-    {n:'🦌 Nara',la:34.6851,lo:135.8048,tz:'Asia/Tokyo'},
-    {n:'🏙️ Tokio',la:35.6762,lo:139.6503,tz:'Asia/Tokyo'},
-    {n:'♨️ Hakone',la:35.2324,lo:139.1069,tz:'Asia/Tokyo'}
+    {n:'🦌 Nara',la:34.6851,lo:135.8430,tz:'Asia/Tokyo'},
+    {n:'🏙️ Tokio',la:35.6723,lo:139.7367,tz:'Asia/Tokyo'},
+    {n:'♨️ Hakone (jezioro Ashi)',la:35.2337,lo:139.0155,tz:'Asia/Tokyo'}
   ];
   function ico(c){return c===0?'☀️':c<=3?'⛅':(c===45||c===48)?'🌫️':(c>=51&&c<=57)?'🌦️':(c>=61&&c<=67)?'🌧️':(c>=71&&c<=77)?'🌨️':(c>=80&&c<=82)?'🌦️':(c>=85&&c<=86)?'🌨️':c>=95?'⛈️':'☁️';}
   function lbl(c){return c===0?'Bezchmurnie':c<=3?'Częściowe zachmurzenie':(c===45||c===48)?'Mgła':(c>=51&&c<=57)?'Mżawka':(c>=61&&c<=67)?'Deszcz':(c>=71&&c<=77)?'Śnieg':(c>=80&&c<=82)?'Przelotny deszcz':(c>=85&&c<=86)?'Przelotny śnieg':c>=95?'Burza':'Zachmurzenie';}
@@ -971,306 +1038,282 @@ const cardImg = (c,ph,alt,eager) => `<img class="dcimg" src="${ph}" alt="" width
   + `loading="${eager?'eager':'lazy'}" decoding="async">`
   + `<span class="dcgrad" style="background:linear-gradient(to top,rgba(${CITY[c].c1},.92),rgba(${CITY[c].c1},.10))"></span>`;
 const JPSTOPS = [
-  [34.9853,135.7581,'Kioto — pierwsza baza, 4 noce (stąd Nara i Arashiyama)'],
-  [35.6804,139.7690,'Tokio — święta Golden Week (3 noce; atrakcje z rezerwacją na godzinę)'],
-  [35.2337,139.0155,'Hakone — ryokan nad jeziorem Ashi (1 noc), stąd na lotnisko'],
+  [35.772,140.393,'Narita - przylot 29.04 i odlot 7.05'],
+  [34.9858,135.7588,'Kioto - 4 noce, 29.04-3.05'],
+  [34.6851,135.8430,'Nara - wycieczka z Kioto 1.05, bez zmiany hotelu'],
+  [35.681,139.767,'Tokio - 3 noce, 3-6.05; przejazd przez dworzec także 29.04 i 7.05'],
+  [35.2337,139.0155,'Hakone - 1 noc, 6-7.05; potem przez Odawarę i Tokio na Naritę'],
 ];
+const JPROUTE = [0,3,1,2,1,3,4,3,0].map(i=>JPSTOPS[i].slice(0,2));
 const GEO = {
-  '2027-04-27':[[52.1657,20.9671,'Lotnisko Chopina (wylot 11:50)'],[24.4330,54.6511,'Lotnisko Abu Zabi (19:25)'],[24.4539,54.3773,'Grand Millenium Al Wahda']],
-  '2027-04-28':[[24.4128,54.4750,'Wielki Meczet Szejka Zajida'],[24.5333,54.3981,'Luwr Abu Zabi'],[24.4330,54.6511,'Lotnisko (wylot 21:25)']],
-  '2027-04-29':[[35.772,140.393,'Narita (przylot 12:45)'],[35.681,139.767,'Tokyo Station (NEX → shinkansen)'],[34.9858,135.7588,'Kioto — zameldowanie']],
-  '2027-05-05':[[35.6745,139.7395,'Hie-jinja (poranek)'],[35.6817,139.7740,'Pokémon Center TOKYO DX + Café (Nihombashi)'],[35.7022,139.7741,'Akihabara']],
-  '2027-05-04':[[35.6764,139.6993,'Meiji Jingū'],[35.6702,139.7026,'Harajuku / Takeshita-dōri'],[35.6688,139.7068,'Cat Street — Supreme · BAPE · Stüssy · Palace'],[35.6619,139.6987,'Shibuya PARCO (Nintendo TOKYO)'],[35.6595,139.7005,'Shibuya + Shibuya Sky']],
-  '2027-05-06':[[35.6896,139.7006,'Shinjuku (Romancecar)'],[35.2503,139.0503,'Gōra'],[35.2445,139.0197,'Ōwakudani'],[35.2337,139.0155,'Tōgendai — ryokan Hanaori'],[35.2044,139.0247,'Moto-Hakone / Hakone-jinja (opcja: rejs)']],
-  '2027-05-03':[[34.9858,135.7588,'Kioto'],[35.681,139.767,'Tokyo Station'],[35.6735,139.7365,'Hotel w Akasace'],[35.7148,139.7967,'Asakusa / Sensō-ji'],[35.7124,139.7929,'Asakusa Sumo Club (pokaz 18:00)']],
-  '2027-04-30':[[34.9671,135.7727,'Fushimi Inari'],[34.9948,135.7850,'Kiyomizu-dera'],[35.0050,135.7649,'Nishiki Market']],
-  '2027-05-01':[[34.6851,135.8430,'Park Nara'],[34.6889,135.8398,'Tōdai-ji'],[34.6819,135.8483,'Kasuga Taisha'],[35.0037,135.7756,'Warsztaty w Kioto']],
-  '2027-05-02':[[35.0170,135.6716,'Arashiyama (bambus)'],[35.0110,135.6770,'Małpy Iwatayama'],[35.0394,135.7292,'Kinkaku-ji'],[35.0116,135.7681,'Powrót do Kioto']],
-  '2027-05-07':[[35.2337,139.0155,'Tōgendai (jezioro Ashi)'],[35.2564,139.1553,'Odawara'],[35.681,139.767,'Tokyo Station'],[35.772,140.393,'Narita → wylot 18:00']],
+  '2027-04-27':[[52.1657,20.9671,'Lotnisko Chopina (wylot 11:50)'],[24.4330,54.6511,'Lotnisko Abu Zabi (19:35)'],[24.4539,54.3773,'Al Wahda - okolica hotelu; dokładny adres w karcie noclegu']],
+  '2027-04-28':[[24.4128,54.4750,'Wielki Meczet Szejka Zajida'],[24.5333,54.3981,'Luwr Abu Zabi - opcja zamiast pałacu'],[24.4539,54.3773,'Al Wahda - odpoczynek w hotelu'],[24.4330,54.6511,'Lotnisko (wylot 21:25)']],
+  '2027-04-29':[[35.772,140.393,'Narita (przylot 12:45)'],[35.681,139.767,'Tokyo Station (NEX → shinkansen)'],[34.9858,135.7588,'Kyoto Station - hotel po stronie południowej']],
+  '2027-04-30':[[34.9671,135.7727,'Fushimi Inari - krótka pętla'],[34.9858,135.7588,'Kyoto Station - lunch i odpoczynek w hotelu'],[34.9948,135.7850,'Kiyomizu-dera - opcjonalny dodatkowy bilet'],[35.0030,135.7780,'Gion - spacer']],
+  '2027-05-01':[[34.6851,135.8430,'Park Nara'],[34.6889,135.8398,'Tōdai-ji'],[34.9858,135.7588,'Kyoto Station - powrót i odpoczynek']],
+  '2027-05-02':[[35.0170,135.6716,'Arashiyama - bambusy'],[35.0158,135.6740,'Tenryū-ji - ogród (zamiennie z małpami)'],[35.0110,135.6770,'Iwatayama - małpy, TYLKO zamiast ogrodu'],[35.0105,135.7595,'Centrum Kioto - rejon warsztatów; adres po rezerwacji']],
+  '2027-05-03':[[34.9858,135.7588,'Kyoto Station'],[35.681,139.767,'Tokyo Station'],[35.6723,139.7367,'Akasaka - okolica bazy; hotel z linku w karcie'],[35.7148,139.7967,'Asakusa / Sensō-ji'],[35.7124,139.7929,'Asakusa Sumo Club - opcja, cel sesji 18:00']],
+  '2027-05-04':[[35.6764,139.6993,'Meiji Jingū'],[35.6702,139.7026,'Harajuku'],[35.6688,139.7068,'Cat Street - wybierzcie dwa sklepy'],[35.6619,139.6987,'Shibuya PARCO / Nintendo - opcja'],[35.6595,139.7005,'Shibuya Sky - po zdobyciu biletu']],
+  '2027-05-05':[[35.6745,139.7395,'Hie-jinja - krótki spacer, opcja'],[35.6817,139.7740,'Pokémon Center TOKYO DX; Café tylko z rezerwacją'],[35.7022,139.7741,'Akihabara - opcja na 60-90 minut']],
+  '2027-05-06':[[35.6896,139.7006,'Shinjuku (Romancecar)'],[35.2332,139.1036,'Hakone-Yumoto - przesiadka'],[35.2503,139.0503,'Gōra'],[35.2445,139.0197,'Ōwakudani - jeśli kolejka działa'],[35.2337,139.0155,'Tōgendai - Hanaori w pobliżu, nocleg']],
+  '2027-05-07':[[35.2337,139.0155,'Tōgendai - wyjazd około 09:00'],[35.2564,139.1553,'Odawara - cel około 10:30'],[35.681,139.767,'Tokyo Station - przesiadka na NEX'],[35.772,140.393,'Narita - cel przed 14:30, wylot 18:00']],
 };
 const A = (id,label)=>({id,label}); // attraction link helper
 
 const DAYS = [
-{date:'2027-04-27',dow:'wtorek',dd:'27 kwietnia',city:'abudhabi',title:'Wylot i wieczór w Abu Zabi',
- lead:'Startujemy z Warszawy, a zamiast nocnej przesiadki — hotel 4★ gratis od Etihadu i spokojny sen po pierwszym locie.',
- chips:['Stopover Etihad','Grand Millenium 4★ gratis','Tylko 5,5 h lotu'],
+{date:'2027-04-27',dow:'wtorek',dd:'27 kwietnia',city:'abudhabi',title:'Wylot i noc w Abu Zabi',level:'g',stay:'auh',
+ lead:'Pierwszy lot, hotel z pakietu stopover i sen. Zwiedzanie Abu Zabi zostawiamy na jutro.',
+ chips:['Lot 11:50','Hotel potwierdzony','Dwa pokoje'],
+ brief:{start:'08:50 na WAW',end:'około 21:30',focus:'Dotrzeć do hotelu i wyspać się.',must:'Lot 11:50 i nocleg z vouchera.',cut:'Zakupy i wieczorne wyjście po zameldowaniu.',check:'Przy meldowaniu potwierdźcie godzinę wymeldowania 28.04. Śniadanie nie jest w pakiecie.'},
  tl:[
-  ['08:45','Wyjazd na Lotnisko Chopina',''],
-  ['09:20','Check-in Etihad','Bilet ze stopoverem (multi-city); odprawa online 30 h wcześniej.'],
-  ['11:50','Wylot WAW → Abu Zabi','5 h 35 min lotu.'],
-  ['19:35','Lądowanie w Abu Zabi','Czas lokalny (+2 h vs Polska).'],
-  ['20:30','Transfer do hotelu i zameldowanie','Grand Millennium Al Wahda, Hazza Bin Zayed Street (Al Wahda Complex). Numery rezerwacji i potwierdzenia hotelu miejcie w telefonie (voucher PDF i prywatna notatka) — recepcja pyta o numer, nie o nazwisko. <b>Macie dwa pokoje po dwie osoby</b> (Etihad liczy oba dzieci jako dorosłych), więc w każdym śpi rodzic z dzieckiem — Martyna nie zostaje sama z bratem w obcym hotelu.'],
-  ['21:30','Sen w prawdziwym łóżku','Zamiast nocy w samolocie — jet lag rozbity na raty. Pakiet stopover daje <b>dobę hotelową liczoną od zameldowania</b>, nie do południa: pokoje są wasze do jutrzejszego wieczoru. Potwierdźcie to na recepcji przy meldowaniu — voucher zastrzega „subject to terms and conditions”.'],
+  ['08:50','Lotnisko Chopina','Cel: trzy godziny przed odlotem. Dojazd z domu zaplanujcie osobno. Odprawa online od 30 h przed lotem; sprawdźcie przydział miejsc dla całej rodziny.','bufor'],
+  ['11:50','WAW → Abu Zabi','Godzina z e-biletu. Przed wyjazdem sprawdźcie powiadomienia Etihada.','lot'],
+  ['19:35','Lądowanie w Abu Zabi','Czas lokalny: dwie godziny później niż w Polsce. Kontrola graniczna i taksówka do hotelu.','lot'],
+  ['20:45','Grand Millennium Al Wahda','Orientacyjny meldunek po formalnościach i transferze. Voucher offline; dwa pokoje, rodzic z dzieckiem w każdym. Potwierdźcie możliwość korzystania z pokojów jutro do 17:00.','bufor'],
+  ['21:30','Lekka kolacja i sen','Jeśli lot lub dojazd się opóźni, tylko posiłek i odpoczynek.'],
  ],
- facts:[['Łagodna','Intensywność'],['Lot 5,5 h','Przejazdy'],['Minimalne','Chodzenie'],['Łatwy etap','Dla dzieci'],['Abu Zabi (gratis)','Nocleg']],
- tips:['Pakiet hotelowy stopover rezerwuje się na etihad.com najpóźniej 3 dni przed wylotem — zróbcie to od razu po kupnie biletów.','Lecimy tylko z podręcznymi, więc na dzień w Abu Zabi macie wszystko przy sobie — lekkie, zakrywające ubrania spakujcie na wierzch. W hotelu jest przechowalnia, bagaże zostawiacie tam na czas zwiedzania.'],
- links:[A('stopover','Pakiet stopover Etihad')],
- more:[['Dlaczego stopover','Postój trwa ~26 h, więc łapie się na darmowy hotel (program Etihadu dla ekonomii i biznesu). Podróż dzieli się na 6 + 10 godzin lotu z pełną nocą snu pośrodku — z dziećmi to zupełnie inna jakość niż 18 godzin ciurkiem.']]},
+ facts:[['Niewiele','Chodzenie'],['Lot + taksówka','Transport']],
+ tips:['Notatka o miejscach rodzinnych nie jest przydziałem foteli. Przy odprawie sprawdźcie, czy młodsze dziecko siedzi bezpośrednio obok rodzica.','Do hotelu jedźcie oficjalną taksówką z lotniska. Przewidywany czas transferu nie obejmuje kontroli granicznej.'],
+ links:[A('stopover','Pakiet stopover Etihad')],more:[]},
 
-{date:'2027-04-28',dow:'środa',dd:'28 kwietnia',city:'abudhabi',title:'Dzień w Abu Zabi i nocny lot do Tokio',
- lead:'Poranek w jednym z najpiękniejszych meczetów świata, popołudnie w klimatyzowanym Luwrze — wieczorem lecimy dalej.',
- chips:['Wielki Meczet','35–40°C!','Wylot 21:25'],
+{date:'2027-04-28',dow:'środa',dd:'28 kwietnia',city:'abudhabi',title:'Abu Zabi, odpoczynek i nocny lot',level:'y',
+ lead:'Wielki Meczet rano, jedna atrakcja w klimatyzacji dla chętnych i odpoczynek przed lotem do Japonii.',
+ chips:['Meczet rano','Luwr albo pałac','Lot 21:25'],
+ brief:{start:'08:30 śniadanie',end:'21:25 wylot',focus:'Zobaczyć meczet i zachować energię na nocny lot.',must:'Wyjazd z hotelu 17:30; cel na lotnisku 18:15.',cut:'Luwr lub Qasr Al Watan, jeśli upał albo zmęczenie daje się we znaki.',check:'Pokój po południu zależy od warunków vouchera i potwierdzenia recepcji. W razie wcześniejszego wymeldowania zostawcie bagaż w hotelu.'},
  tl:[
-  ['08:00','Śniadanie — płatne osobno','<b>Uwaga: pakiet obejmuje sam pokój (Room Only), śniadania w nim nie ma.</b> Do wyboru: bufet w hotelu za dopłatą przy recepcji albo kawa i coś ciepłego w Al Wahda Mall, z którym hotel łączy się bezpośrednio — taniej i bez wychodzenia w upał. Bagaży nigdzie nie zdajecie: pokoje zostają wasze na cały dzień.'],
-  ['09:00','Wielki Meczet Szejka Zajida','82 kopuły, największy dywan świata; wstęp darmowy, stroje zakrywające (abaje do wypożyczenia na miejscu).'],
-  ['12:00','Klimatyzowany azyl','Luwr Abu Zabi (kopuła-deszcz światła) albo pałac Qasr Al Watan — jedno z dwóch, nigdy oba: w środku dnia na zewnątrz jest 35–40°C, a wieczorem czeka dziesięciogodzinny nocny lot. <b>Bilety kupujcie ze zniżką ze Stopover Pass</b> — należy się do rezerwacji, ale trzeba go odebrać samemu przed wyjazdem (patrz checklista).'],
-  ['15:30','Powrót do pokoju','Tu doba liczona od zameldowania zarabia na siebie: prysznic i przebranie przed dziesięciogodzinnym lotem we własnym pokoju, dzieci mogą się położyć, a nie czekać z bagażami w lobby. Basen jest do końca pobytu.'],
-  ['18:30','Transfer na lotnisko',''],
-  ['21:25','Wylot Abu Zabi → Tokio','10 h 20 min; kolacja na pokładzie i spać — zegarki na czas japoński (+5 h).'],
+  ['08:30','Śniadanie','Płatne osobno. W hotelu albo w otwartej kawiarni w okolicy.'],
+  ['09:00','Taksówka do Wielkiego Meczetu','Zapas na dojazd, kontrolę i dojście do wejścia.'],
+  ['09:30','Wielki Meczet Szejka Zajida','Zarezerwujcie bezpłatny wstęp. Przywieźcie własne zakrywające ubrania: długie rękawy i nogawki, dla kobiet również chusta na włosy. Nie opierajcie planu na dostępności abai na miejscu.'],
+  ['12:00','Lunch i Luwr albo Qasr Al Watan','Wybierzcie jedno miejsce w klimatyzacji. Sprawdźcie godziny, cenę i warunki Stopover Pass przed zakupem.','opcja'],
+  ['14:30','Odpoczynek w hotelu','Prysznic i drzemka, jeśli recepcja potwierdziła pokój do późnego popołudnia. W innym przypadku odpoczynek w klimatyzowanej części hotelu i odbiór bagażu.','bufor'],
+  ['17:30','Transfer na lotnisko','Cel: być w terminalu około 18:15. Przy większym ruchu wyjedźcie wcześniej.','bufor'],
+  ['18:15','Formalności i spokojna kolacja','Sprawdźcie bramkę oraz godzinę boardingu na karcie pokładowej.','bufor'],
+  ['21:25','Abu Zabi → Narita','Nocny lot. Japonia jest pięć godzin przed Abu Zabi.','lot'],
  ],
- facts:[['Łagodna','Intensywność'],['Taxi + lot 10 h','Przejazdy'],['Umiarkowane','Chodzenie'],['Meczet robi „wow"','Dla dzieci'],['Nocny lot','Nocleg']],
- tips:['Meczet zwiedzajcie RANO — najmniejszy upał i tłum; rezerwacja wejścia online (darmowa) z wyprzedzeniem.','Kobiety i dziewczynki: zakryte ramiona i kolana; abaje wypożyczają bezpłatnie przy wejściu.'],
- links:[A('mosque','Wielki Meczet'),A('louvread','Luwr Abu Zabi')],
- more:[['Kontekst','Meczet Szejka Zajida mieści 40 tysięcy wiernych; marmur, złoto i kryształowe żyrandole robią wrażenie niezależnie od wieku. Luwr AD to filia paryskiego Luwru pod słynną kopułą Jeana Nouvela — „deszcz światła" nad galeriami.']]},
+ facts:[['Mało spacerów w upale','Chodzenie'],['Taksówki + nocny lot','Transport']],
+ tips:['Woda, cień i przerwy w klimatyzacji. Temperatura w planie jest opisem sezonu, a nie prognozą na ten dzień.','Zasady ubioru i aktualne wejścia: <a href="https://www.szgmc.gov.ae/en/individual-booking" target="_blank" rel="noopener">oficjalna strona meczetu</a>.'],
+ links:[A('mosque','Wielki Meczet'),A('louvread','Luwr Abu Zabi')],more:[]},
 
-{date:'2027-04-29',dow:'czwartek',dd:'29 kwietnia',city:'kioto',title:'Przylot do Tokio i shinkansen do Kioto',
- lead:'Lądujemy w południe i od razu jedziemy do dawnej stolicy — żeby Kioto zobaczyć PRZED szczytem Golden Week, a święta spędzić w Tokio, które znosi je lepiej.',
- chips:['Kultura: pierwszy wieczór w Kiocie','Dzieci: Fudżi z okna shinkansena','NEX + shinkansen'],
+{date:'2027-04-29',dow:'czwartek',dd:'29 kwietnia',city:'kioto',title:'Narita → Kioto. Tylko podróż i odpoczynek',level:'r',stay:'kioto',
+ lead:'Po nocnym locie czeka jeszcze przejazd do Kioto. Dzisiejszym planem jest sprawne dotarcie do hotelu, kolacja i sen.',
+ chips:['Przylot 12:45','Golden Week','Bez wieczornego zwiedzania'],
+ brief:{start:'12:45 przylot',end:'około 20:00 w hotelu',focus:'Dotrzeć do Kioto bez pośpiechu na przesiadkach.',must:'Lot i nocleg w Kioto. Shinkansen około 16:30-17:00, po rezerwacji.',cut:'Wszystkie atrakcje po przyjeździe.',check:'NEX kupcie na realną godzinę po kontroli granicznej. Jeśli grozi spóźnienie, zmieńcie shinkansen przed jego odjazdem zgodnie z taryfą.'},
  tl:[
-  ['12:45','Lądowanie na Naricie','Imigracja z kodem QR Visit Japan Web (wypełnić w samolocie), odbiór bagaży.'],
-  ['14:18','Narita Express do Tokyo Station','~60 min (jeśli imigracja się przeciągnie — NEX 14:48; jeździ co pół godziny).'],
-  ['16:45','Shinkansen do Kioto','~2 h 15; miejscówki w SmartEX na 16:30–17:00 — po lądowaniu o 12:45 to realny zapas na imigrację i NEX (przesiadka na 16:00 była krucha: przy NEX 14:48 praktycznie odpadała). Gdyby wszystko poszło wyjątkowo szybko, SmartEX zmienia na wcześniejszy pociąg bezpłatnie. Fudżi po prawej (miejsca D/E).'],
-  ['19:00','Kioto — zameldowanie','MIMARU przy dworcu: bagaże, prysznic, oddech. Strój z wczorajszego upału w Abu Zabi przepierzcie ręcznie i powieście — pralnia czeka na niedzielę 2.05.'],
-  ['19:45','Lekka kolacja przy dworcu','Ramen albo obanzai; potem kombini po zapasy i karty ICOCA.'],
-  ['21:30','Wczesny sen','Domykamy jet lag — jutro pierwszy pełny dzień.'],
+  ['12:45','Lądowanie na Naricie','Visit Japan Web przygotujcie przed wylotem, a kody każdej osoby zapiszcie offline. Kontrola graniczna może potrwać dłużej niż zwykle.','lot'],
+  ['14:30','Narita Express do Tokyo Station','Orientacyjny cel, nie potwierdzony rozkład. Wybierzcie dostępny pociąg po przejściu formalności; sama jazda trwa około godziny.','rezerwacja'],
+  ['15:45','Tokyo Station: przesiadka i jedzenie','Zostawcie co najmniej 30-45 minut na dojście, toalety, bilety i ekiben.','bufor'],
+  ['16:45','Shinkansen do Kioto','Cel w oknie 16:30-17:00. Rezerwujcie razem 3 taryfy dorosłe i 1 dziecięcą. Dobierzcie taryfę dopuszczającą zmianę po opóźnionym locie; dostępność wcześniejszego pociągu nie jest gwarantowana.','rezerwacja'],
+  ['19:30','MIMARU Kyoto Station','Orientacyjny meldunek. Przy dużym opóźnieniu uprzedźcie recepcję.'],
+  ['20:00','Kolacja przy dworcu i sen','Prosty posiłek; bez szukania popularnej restauracji z kolejką.'],
  ],
- facts:[['Intensywna — dzień podróży','Intensywność'],['NEX + shinkansen','Przejazdy'],['Minimalne','Chodzenie'],['Fudżi z pociągu','Dla dzieci'],['Kioto (1/4)','Nocleg']],
- tips:['Visit Japan Web wypełnijcie dla całej czwórki przed podróżą — na lotnisku pokazujecie kod QR.','SmartEX (aplikacja JR Central) pozwala kupić miejscówki na Nozomi kartą zagraniczną z wyprzedzeniem — w Golden Week to konieczność, nie wygoda. Jedziecie z bagażem podręcznym, więc bez rezerwacji miejsc na duże walizki.','Karty IC: ICOCA kupicie na dworcu Kioto; Suica w Apple Wallet działa też w Kansai.'],
- links:[A('nex','Narita Express'),A('smartex','SmartEX — miejscówki'),A('vjw','Visit Japan Web')],
- more:[['Dlaczego Kioto najpierw','Golden Week (29.04–5.05) to szczyt podróży krajowych. Kioto w święta 3–5 maja pęka w szwach (to cel numer jeden krajowych wyjazdów), Tokio znosi je lepiej: dzielnice biurowe i metro pustoszeją, a nasze punkty mają wejścia na godzinę (Shibuya Sky, Pokémon Café) albo dużo miejsca (las Meiji). Odwracamy więc trasę: Kioto 29.04–3.05, święta w Tokio, na koniec Hakone tuż po świętach i z gór prosto na lotnisko. Wersja 11-dniowa (bez Osaki) chroni budżet.']]},
+ facts:[['Niewiele, ale z bagażem','Chodzenie'],['NEX + shinkansen','Transport']],
+ tips:['Dwa oddzielne systemy: NEX rezerwujecie w JR East, shinkansen w SmartEX.','29 kwietnia jest świętem. Rezerwacja złożona z wyprzedzeniem to nie zawsze potwierdzone miejsca; sprawdźcie końcowe potwierdzenie.','Przy odwołaniu dalszej kolei skontaktujcie się z obsługą JR i hotelem; nie jedźcie w ciemno do innego miasta.'],
+ links:[A('nex','Narita Express'),A('smartex','SmartEX'),A('vjw','Visit Japan Web')],more:[]},
 
-{date:'2027-04-30',dow:'piątek',dd:'30 kwietnia',city:'kioto',title:'Kioto wschodnie: torii rano, sjesta, tarasy i Gion o zmroku',
- lead:'Tysiące bram Fushimi Inari o poranku, dwie godziny w hotelu w środku dnia, a potem taras Kiyomizu-dera, uliczki jak sprzed wieków i wieczorem Gion i Pontocho — Kioto, o którym się marzy, bez maratonu.',
- chips:['Kultura: Fushimi, Kiyomizu, Gion o zmroku','Dzieci: tysiąc bram i lody matcha','Sjesta w środku dnia'],
+{date:'2027-04-30',dow:'piątek',dd:'30 kwietnia',city:'kioto',title:'Bramy Fushimi, sjesta i wieczór w Gion',level:'y',stay:'kioto',
+ lead:'Pierwszy pełny dzień Japonii ma dwie części: czerwone torii rano i stare Kioto po odpoczynku. Zakres spaceru zależy od snu po podróży.',
+ chips:['Start po śniadaniu','Dwie godziny odpoczynku','Kiyomizu do wyboru'],
+ brief:{start:'09:00 z hotelu',end:'około 20:00',focus:'Fushimi Inari i atmosfera starego Kioto.',must:'Odpoczynek 12:30-14:30. Żadna atrakcja nie jest obowiązkiem.',cut:'Kiyomizu przy zmęczeniu; zamiast niego krótki spacer po Gion.',check:'Jeśli po podróży nie wyśpicie się, zacznijcie później i skróćcie pętlę torii.'},
  tl:[
-  ['08:30','Pociąg do Inari','JR Nara Line, dwa przystanki z dworca Kioto (5 min).'],
-  ['09:00','Fushimi Inari','Tysiące cynobrowych bram torii; im wyżej (do rozdroża Yotsutsuji), tym luźniej. Dolna pętla to ~1,5 h — na szczyt nie idziemy.'],
-  ['11:00','Powrót pod dworzec i lunch','Kyoto Ramen Kōji na 10. piętrze dworca albo cokolwiek po drodze — hotel jest 3 minuty dalej.'],
-  ['12:30','Sjesta w hotelu','Dwie godziny w pokoju. To pierwszy pełny dzień po nocnym locie: o 13:00 organizm dzieci po prostu siada. Ten odpoczynek jest warunkiem wieczoru, nie stratą.'],
-  ['14:30','Taksówka pod Kiyomizu','Spod hotelu ~15 min, ~1 500–2 000 ¥ za czworo. Autobus 206 w Golden Week to 30–40 min w tłoku — nie w ten dzień.'],
-  ['15:00','Kiyomizu-dera','Drewniany taras nad doliną i wodospad Otowa — trzy strumienie życzeń. Późne popołudnie ma lepsze światło niż południe.'],
-  ['16:15','Sannenzaka i Ninenzaka','Zabytkowe uliczki w dół — lody matcha po drodze, ewentualnie Kōdai-ji.'],
-  ['17:15','Yasaka i park Maruyama','Świątynia na końcu Shijō, o tej porze już bez tłumu.'],
-  ['17:45','Gion — Hanamikoji','Drewniane machiya; o zmroku szansa minąć maiko w drodze na występ.'],
-  ['18:45','Pontocho','Wąska uliczka latarni nad rzeką Kamo — kolacja obanzai albo yakitori.'],
+  ['09:00','Pociąg do Inari','Dojście do peronu plus kilka minut jazdy JR Nara Line.'],
+  ['09:30','Fushimi Inari','Dolna część torii przez 60-90 minut. Nie planujemy szczytu ani długiej wspinaczki. W Golden Week tłum jest normalny także rano.'],
+  ['11:30','Lunch blisko hotelu','Przy dworcu Kioto; wybierzcie lokal bez długiej kolejki.'],
+  ['12:30','Odpoczynek w pokoju','Dwie godziny przerwy. Zostają w planie nawet przy późniejszym starcie.','bufor'],
+  ['14:30','Taksówka w stronę Kiyomizu','Liczcie również ruch drogowy i dojście pod górę; samochód nie podjeżdża pod sam taras.'],
+  ['15:15','Kiyomizu-dera','Taras i zejście zabytkowymi uliczkami Sannenzaka oraz Ninenzaka. Bez dokładania kolejnej świątyni.','opcja'],
+  ['17:00','Yasaka i Gion','Krótki spacer publicznymi ulicami. Uszanujcie zakazy fotografowania i prywatne uliczki; nie zatrzymujcie maiko.'],
+  ['18:30','Kolacja i powrót','Pontocho lub okolice Kamo, jeśli macie siłę. W krótszym wariancie kolacja pod hotelem.'],
  ],
- facts:[['Średnia, z sjestą','Intensywność'],['Pociąg + autobus + pieszo','Przejazdy'],['Sporo, pod górę','Chodzenie'],['Lisy i tarasy','Dla dzieci'],['Kioto (2/4)','Nocleg']],
- tips:['O 9:00 w bramach jest już tłoczniej niż o świcie — ale spokojny start wygrywa; im wyżej podejdziecie, tym mniej ludzi.','Sjesta nie jest opcjonalna. Jeśli o 14:30 nikt nie chce wstać, jedźcie od razu na Yasakę i Gion (17:00) — Kiyomizu wraca 2.05 po południu, jeśli będzie ochota.','Na Kiyomizu z wodospadu Otowa pije się tylko z jednego strumienia — wybór trzech naraz uchodzi za zachłanność.','Plan B na deszcz w Kioto: Kyoto Railway Museum (symulator shinkansena!) albo teamLab Biovortex przy dworcu — oba kryte i uwielbiane przez dzieci.'],
- links:[A('fushimi','Fushimi Inari'),A('kiyomizu','Kiyomizu-dera'),A('gion','Gion'),A('nishiki','Nishiki Market')],
- pc:{q:'Po sjeście: Kiyomizu czy od razu Gion?',opts:[['Kiyomizu o 15:00 (domyślnie)','taras nad doliną i zejście uliczkami do Gion — najlepsza godzina Kioto','tłum Golden Week, 10 min pod górę'],['Od razu Yasaka i Gion o 17:00','trzy godziny więcej luzu; wieczór ten sam','Kiyomizu tylko, jeśli 2.05 zostanie na nie miejsce']]},
- more:[]},
+ facts:[['Umiarkowanie; więcej z Kiyomizu','Chodzenie'],['JR + taksówka + pieszo','Transport']],
+ tips:['Jeżeli deszcz robi ścieżki śliskimi, odpuśćcie schody i wybierzcie kryte pasaże.','Pominięte Kiyomizu nie przechodzi automatycznie na 2 maja: ten dzień ma już warsztat i pranie.'],
+ links:[A('fushimi','Fushimi Inari'),A('kiyomizu','Kiyomizu-dera'),A('gion','Gion')],more:[]},
 
-{date:'2027-05-01',dow:'sobota',dd:'1 maja',city:'nara',title:'Nara rano, kimono i pędzel po południu',
- lead:'Rano pierwsza stolica Japonii — kłaniające się jelenie i 15-metrowy Budda — a po powrocie dzień mamy: kimono, ceremonia herbaty i kaligrafia, wszystko w jednym domu.',
- chips:['Kultura: Tōdai-ji, herbata i kaligrafia w kimonie','Dzieci: jelenie i mochi','Wieczór do wyboru'],
+{date:'2027-05-01',dow:'sobota',dd:'1 maja',city:'nara',title:'Nara i rodzinne spotkanie z herbatą',level:'y',stay:'kioto',
+ lead:'Jelenie i Wielki Budda przed południem. Po powrocie odpoczynek, krótka ceremonia herbaty z kimonem i kaligrafia dla chętnych.',
+ chips:['Nara do lunchu','Kimono około 90 minut','Kaligrafia dla chętnych'],
+ brief:{start:'około 09:00',end:'około 19:30',focus:'Nara i herbata; jeden dłuższy warsztat dla rodziny.',must:'Po rezerwacji: adres i godzina herbaty. Powrót z Nary około 13:15.',cut:'Kasuga Taisha i kaligrafia dla osób, które potrzebują odpoczynku.',check:'Herbatę i ewentualną kaligrafię potwierdźcie w tej samej lokalizacji. Godziny 16:30 i 18:15 są propozycją do rezerwacji.'},
  tl:[
-  ['09:15','Kintetsu Limited Express do Nary','~35 min z Kioto. Miejsca rezerwowane ma tylko Limited Express (dopłata ~520 ¥); zwykły Express i Rapid Express jadą dłużej i bez rezerwacji.'],
-  ['10:00','Jelenie w parku','~1200 oswojonych jeleni sika kłania się za krakersy shika-senbei.'],
-  ['10:45','Tōdai-ji','Wielki Budda z brązu; dzieci przeciskają się przez „nozdrze Buddy" w filarze.'],
-  ['12:00','Lunch i pokaz mochi','Arkada Higashimuki — udon i street food; Nakatanidō jest w tej samej arkadzie: dwóch mistrzów wali młotami w rytmie, degustacja na ciepło (pokazy nie mają gwarantowanej godziny — jeśli akurat nie trwa, mochi i tak kupicie).'],
-  ['13:30','Powrót do Kioto','~35 min Kintetsu.'],
-  ['14:15','Dwie godziny w hotelu','Prysznic, przebranie, drzemka — do herbaciarni wchodzi się w czystych skarpetach.'],
-  ['16:30','Ceremonia herbaty w kimonie','Punkt mamy, teraz w pełnej wersji: najpierw ubranie w kimono, potem ceremonia po angielsku (~90 min razem). MAIKOYA robi to w kilku domach w Kiocie — Karasuma Shijo ma osobny wariant rodzinny dla dzieci 7–12 lat. Dzieci też dostają kimona, więc zdjęcia robią się same. Do 6. lat wstępu na salę nie ma; nas to nie dotyczy.'],
-  ['18:00','Kaligrafia — dla chętnych','Drugi punkt mamy, w tym samym domu i wciąż w kimonie: shodō na tatami, około godziny. Uczą po kolei hiragany, katakany i kanji, a swój znak zabieracie ze sobą. Kto nie chce siedzieć trzeciej godziny — tata z dziećmi albo tylko syn — ma wolne: nad rzeką Kamo jest pięć minut stąd. Zamówcie to jako jeden pakiet z herbatą, nie osobno.'],
-  ['19:15','Kolacja','Spotkanie w komplecie. Yudōfu — tofu po kiotyjsku, albo lekkie kaiseki.'],
+  ['09:15','Kintetsu do Nary','Cel: Limited Express z miejscami rezerwowanymi; rozkład i dopłatę sprawdźcie przy zakupie. Zwykły Express jest innym produktem.','rezerwacja'],
+  ['10:00','Park Nara','Jelenie są dzikimi zwierzętami. Karmcie tylko dozwolonymi krakersami, bez drażnienia i pokazywania jedzenia nad głową; trzymajcie się razem.'],
+  ['10:45','Tōdai-ji','Wielki Budda. Ograniczcie park do tej części zamiast iść dalej w stronę Kasuga Taisha.'],
+  ['12:00','Lunch i mochi','Okolice Higashimuki. Pokaz w Nakatanidō tylko jeśli akurat się odbywa; nie czekajcie kosztem pociągu.'],
+  ['13:15','Powrót do Kioto','W hotelu orientacyjnie około 14:15.'],
+  ['14:15','Odpoczynek i przebranie','Około 90 minut w pokoju, potem spokojny dojazd do potwierdzonego adresu.','bufor'],
+  ['15:45','Wyjście do herbaciarni','Zapas na dojazd; miejsce sprawdźcie w potwierdzeniu, MAIKOYA ma kilka lokalizacji.'],
+  ['16:30','Herbata w kimonie','Proponowany slot. Wariant rodzinny odpowiedni dla wieku 10 i 13 lat, około 90 minut z przebraniem. Kimono tylko na to doświadczenie.','rezerwacja'],
+  ['18:15','Kaligrafia dla mamy lub mamy z córką','Wyłącznie jeśli organizator potwierdzi ten sam adres i godzinę. Pozostali mają przerwę z drugim rodzicem; ustalcie miejsce spotkania.','opcja'],
+  ['19:30','Wspólna kolacja','W pobliżu warsztatu albo hotelu.'],
  ],
- facts:[['Średnia','Intensywność'],['Pociąg + pieszo','Przejazdy'],['Umiarkowane','Chodzenie'],['Jelenie = hit','Dla dzieci'],['Kioto (3/4)','Nocleg']],
- tips:['Jelenie bywają nachalne: krakersy trzymajcie wysoko, karmcie po jednym — a ukłon przed jeleniem naprawdę działa.','Kasuga Taisha (aleja 2 000 kamiennych lampionów) wypadła z osi dnia — to 25 minut w głąb parku w każdą stronę. Jeśli o 11:45 wszyscy mają siłę, idźcie i przesuńcie lunch na 13:00; jeśli nie, lunch.','Kimono trzeba zarezerwować z wyprzedzeniem i podać wzrost każdej osoby — dobierają rozmiar. Zaplanujcie ~20 minut na wybór wzoru: to jest część zabawy, nie formalność.','Herbatę i kaligrafię rezerwujcie jednym zamówieniem w tym samym domu MAIKOYA. Dwie osobne rezerwacje w Golden Week potrafią wypaść w różnych lokalizacjach i wtedy między nimi trzeba się przemieszczać.'],
- links:[A('nara-park','Park Nara'),A('todaiji','Tōdai-ji'),A('kasuga','Kasuga Taisha (opcja)'),A('mochi','Nakatanidō'),A('culture','Ceremonia herbaty w kimonie')],
- pc:{q:'Kasuga Taisha — iść czy odpuścić?',opts:[['Odpuścić (domyślnie)','lunch o 12:00, w Kiocie o 14:00 z dwiema godzinami luzu przed herbatą','mama traci aleję lampionów'],['Iść','najbardziej filmowe miejsce Nary','+50 min chodzenia, lunch o 13:00, w hotelu tylko chwila']]},
- more:[]},
+ facts:[['Umiarkowanie','Chodzenie'],['Kintetsu + dojazd na warsztat','Transport']],
+ tips:['Przy późniejszym slocie herbaty nie wydłużajcie Nary: odzyskany czas przeznaczcie na pokój.','Ceny i zasady wieku zależą od wybranego warsztatu. Nie zakładajcie dwóch taryf dziecięcych.'],
+ links:[A('nara-park','Park Nara'),A('todaiji','Tōdai-ji'),A('mochi','Nakatanidō'),A('culture','Herbata i kaligrafia')],more:[]},
 
-{date:'2027-05-02',dow:'niedziela',dd:'2 maja',city:'kioto',title:'Bambusy, małpy i warsztat pakowania',
- lead:'Poranek wśród bambusów i między małpami, po południu warsztat furoshiki dla córki, a potem Kioto bez planu — Złoty Pawilon tylko jeśli zostanie energia.',
- chips:['Kultura: zen Tenryū-ji, furoshiki','Dzieci: małpy i warsztat pakowania','Pranie i luz po południu'],
+{date:'2027-05-02',dow:'niedziela',dd:'2 maja',city:'kioto',title:'Bambusy, furoshiki i spokojne popołudnie',level:'y',stay:'kioto',
+ lead:'Krótka Arashiyama rano, warsztat pakowania prezentów dla córki i wolny wieczór. Pranie robimy po powrocie, bez biegania przez hotel w środku dnia.',
+ chips:['Ogród albo małpy','Furoshiki 14:00 - planowany slot','Pranie po warsztacie'],
+ brief:{start:'09:00 z hotelu',end:'około 19:00',focus:'Bambusy i furoshiki, bez dokładania drugiej wycieczki.',must:'Opuścić Arashiyamę około 12:15, jeśli potwierdzicie warsztat 14:00.',cut:'Małpy zamiast Tenryū-ji, nigdy oba. Kinkaku-ji poza planem tego dnia.',check:'Potwierdźcie adres warsztatu. Przed nim lunch w centrum; nie wracajcie po drodze do hotelu.'},
  tl:[
-  ['08:45','Pociąg do Saga-Arashiyama','~15 min z Kioto.'],
-  ['09:15','Las bambusowy','Szumi i jest najspokojniejszy o poranku.'],
-  ['10:00','Tenryū-ji','Ogrody zen wpisane na listę UNESCO.'],
-  ['11:15','Małpy na Iwatayamie — pierwsze do skreślenia','20 min wspinaczki, panorama Kioto i makaki przy siatce. Jeśli o 11:00 nie stoicie jeszcze pod wejściem, odpuśćcie: wspinaczka z powrotem to ponad godzina, a warsztat o 14:00 jest stały.'],
-  ['12:15','Lunch w Arashiyamie','Krótszy niż zwykle — o 14:00 zaczyna się warsztat.'],
-  ['13:05','Powrót do hotelu','JR z Saga-Arashiyama, ~15 min. Po drodze wrzucacie pranie do pralni w hotelu: samo wrzucenie to 5 minut, wsad kręci się bez was (~400 ¥ z detergentem).'],
-  ['13:40','Metro do Karasuma-Oike','Dwa przystanki linią Karasuma, potem 5 minut pieszo. Razem ~15 minut od drzwi do drzwi.'],
-  ['14:00','Warsztat pakowania — furoshiki','Punkt córki. W jednej chuście uczą kilkunastu sposobów pakowania: prezenty, butelki, pudełka, torba z węzłów. Trwa 1–2 h, 4 000 ¥ od osoby, a dwie małe chusty zabieracie ze sobą — czyli prezenty z Japonii wracają zapakowane po japońsku. Sesje są dwie dziennie, 10:00 i 14:00; poranna nam nie pasuje przez Arashiyamę.'],
-  ['16:15','Odbiór prania i popołudnie do wyboru','Suszarka kończy, gdy wracacie. Reszta dnia bez planu: targ Nishiki (10 min od hotelu — to nasz targ zamiast Tsukiji), spacer albo pokój. Kinkaku-ji tylko przy naprawdę wysokiej energii, bo to ~40 min autobusem w każdą stronę. Jutro shinkansen do Tokio, więc dziś bez gonitwy.'],
-  ['18:30','Kolacja w okolicy','Bez rezerwacji, gdzie akurat pasuje; po drodze odbieracie suche pranie.'],
+  ['09:00','JR do Saga-Arashiyama','Zapas na dojście do peronu i krótki pociąg.'],
+  ['09:45','Las bambusowy','Spokojny spacer. W niedzielę Golden Week będzie tłoczno; nie ścigamy pustego kadru.'],
+  ['10:30','Ogród Tenryū-ji','Domyślnie ogród i spacer nad rzeką. Jeśli wszyscy wolą małpy, zamieńcie ogród na Iwatayamę i pilnujcie godziny powrotu.'],
+  ['12:15','Wyjazd z Arashiyamy do centrum','Kierunek Karasuma-Oike: JR do Nijō i metro Tōzai, według bieżącej trasy. Zarezerwujcie około 45-60 minut od miejsca spaceru do okolicy warsztatu.','bufor'],
+  ['13:00','Lunch blisko warsztatu','Prosty posiłek i toaleta. Stawcie się 10-15 minut przed potwierdzoną sesją.'],
+  ['14:00','Furoshiki','Planowana sesja, około 1-2 godzin. Domyślnie mama z córką; tata z synem mają lunch lub spacer w centrum, z ustalonym miejscem spotkania.','rezerwacja'],
+  ['16:15','Powrót do hotelu i pranie','Pranie i suszenie wymagają osobnego czasu oraz wolnych urządzeń. Nie zakładajcie, że pranie wysuszy się samo podczas warsztatu.','bufor'],
+  ['18:30','Kolacja i pakowanie','Blisko hotelu. Jutro zmiana miasta.'],
  ],
- facts:[['Średnia','Intensywność'],['Pociąg lokalny','Przejazdy'],['Sporo rano, luz po południu','Chodzenie'],['Małpy','Dla dzieci'],['Kioto (4/4)','Nocleg']],
- tips:['Przy małpach na Iwatayamie nie noście jedzenia w widocznych torbach; automat z wodą jest na szczycie.','Las bambusowy o 9:15 nie jest już pusty jak o świcie, ale wciąż robi wrażenie — idźcie w głąb, dalej od wejścia.','Warsztat o 14:00 jest jedynym sztywnym punktem dnia — poranek w Arashiyamie trzeba pod niego przyciąć. Jeśli poranek się przeciąga, odpuśćcie małpy Iwatayama, nie warsztat.','To także jedyny zaplanowany postój pralniczy: pakujemy na 5 dni, więc dziś pranie decyduje o tym, w czym chodzicie przez drugą połowę wyjazdu. Plan pakowania jest na stronie Pogoda.'],
- links:[A('arashiyama','Arashiyama'),A('monkeys','Monkey Park Iwatayama'),A('furoshiki','Warsztat furoshiki'),A('kinkakuji','Kinkaku-ji (opcja)')],
- pc:{q:'Kto idzie na furoshiki?',opts:[['Mama z córką (domyślnie)','warsztat jest jej pomysłem; tata z synem mają wolne popołudnie na Nishiki albo salon gier','dwa plany zamiast jednego'],['Cała czwórka','16 000 ¥, ale każdy wychodzi z chustami i umie zapakować prezent','13-latek może uznać za mało swoje'],['Nikt — zostaje czysty bufor','2.05 wraca do roli bufora; Arashiyama bez pośpiechu','córka traci punkt, o który prosiła']]},
- more:[]},
+ facts:[['Umiarkowanie; więcej z małpami','Chodzenie'],['JR + metro','Transport']],
+ tips:['Małpy dokładają podejście i powrót. Jeśli o 11:30 nie zaczynacie zejścia, ograniczcie pobyt i wróćcie do centrum.','Przy deszczu rezygnujecie z małp. Warsztat zostaje; przed nim można wybrać kryty pasaż zamiast Arashiyamy.','Nishiki to opcja dla części rodziny podczas warsztatu, a nie obowiązkowy punkt po praniu.'],
+ links:[A('arashiyama','Arashiyama'),A('monkeys','Małpy - zamiast ogrodu'),A('furoshiki','Warsztat furoshiki'),A('nishiki','Nishiki - opcja')],
+ pc:{q:'Ogród czy małpy?',opts:[['Tenryū-ji (domyślnie)','spokojniej, łatwo skrócić spacer','mniej aktywnie'],['Iwatayama zamiast ogrodu','makaki i widok na Kioto','podejście; trzeba zacząć zejście do 11:30']]},more:[]},
 
-{date:'2027-05-03',dow:'poniedziałek',dd:'3 maja',city:'tokio',title:'Shinkansen do Tokio i wieczorna Asakusa',
- lead:'Dzień Konstytucji — Japonia jedzie na wakacje, my jedziemy pod prąd: z Kioto do Tokio. Asakusa w święto będzie odświętna i pełna — wieczór może należeć do sumo: pokaz z byłymi zawodnikami i chanko zamiast kolacji (gdy będzie rezerwacja), a podświetlona Sensō-ji na deser.',
- chips:['Dzieci: pokaz sumo (po rezerwacji)','Kultura: Sensō-ji podświetlona','Shinkansen'],
+{date:'2027-05-03',dow:'poniedziałek',dd:'3 maja',city:'tokio',title:'Do Tokio i wieczorna Asakusa',level:'y',stay:'tokio1',
+ lead:'Zmiana miasta, lunch i godzina w pokoju. Wieczorem Asakusa; pokaz sumo z kolacją po potwierdzeniu rezerwacji.',
+ chips:['Shinkansen około 10:00','Odpoczynek po meldunku','Sumo po rezerwacji'],
+ brief:{start:'09:00 śniadanie',end:'20:00 lub 21:30 z sumo',focus:'Spokojnie zmienić bazę i zobaczyć Asakusę.',must:'Shinkansen po rezerwacji, meldunek od 15:00 i godzina odpoczynku.',cut:'Sumo pozostaje opcją przed zakupem. Przy zakupionym pokazie skróćcie spacer.',check:'Rozkład pociągu i sesja sumo wymagają potwierdzeń. Z hotelu do Asakusy liczcie około 45-60 minut z dojściami.'},
  tl:[
-  ['09:00','Śniadanie i wymeldowanie','Cztery noce w Kiocie za nami.'],
-  ['10:00','Shinkansen do Tokio','~2 h 15; miejscówki kupione wcześniej — w święta pociągi są pełne.'],
-  ['12:30','Tokyo Station → Akasaka','Metro Marunouchi do Akasaka-mitsuke, ~10 min, potem 5 min pieszo. Pokoje są od 15:00, więc na razie zostawiacie bagaże w recepcji.'],
-  ['13:00','Lunch w Akasace','Dzielnica żyje z restauracji — od yakitori po family restaurant — i w święto jest tu luźno, bo biura stoją puste. Jeśli zostanie pół godziny: Toyokawa Inari Betsuin, chram z setkami kamiennych lisów, 5 minut od hotelu.'],
-  ['15:00','Zameldowanie i godzina w pokoju','Rozpakowanie, prysznic, dzieci na łóżkach. Po shinkansenie i lunchu ta godzina robi różnicę dla całego wieczoru — a świąteczny szczyt w Asakusie właśnie mija.'],
-  ['16:15','Ginza Line do Asakusy','Z Tameike-sannō bez przesiadki, ~25 min. Ostatnia stacja linii.'],
-  ['16:45','Asakusa za dnia','Brama Kaminarimon, deptak Nakamise i Sensō-ji — w święto tłoczno jak w niedzielę, ale po 17:00 fala odpływa. Godzina wystarczy na obejście świątyni i pierwsze gachapony; boczne uliczki (Denbōin-dōri) są luźniejsze od głównego deptaku.'],
-  ['17:45','Do Asakusa Sumo Club','5 minut pieszo od Sensō-ji: 2-10-12 Asakusa, przy stacji Tsukuba Express. Wejście kwadrans przed sesją.'],
-  ['18:00','Pokaz sumo z chanko-nabe — po rezerwacji','Dwie godziny: byli zawodnicy pokazują rytuały (sól, shiko, wejście na dohyō), walczą pokazowo i objaśniają zasady po angielsku. Chętni widzowie zwykle mogą wejść na dohyō i spróbować przepchnąć zawodnika — zależy to od prowadzącego, więc nie obiecujcie tego dzieciom z góry. Chanko-nabe bez limitu jest w cenie, więc to zarazem kolacja. Około 80 miejsc na sesję: w Golden Week rezerwacja z góry, nie z ulicy. <b>Dopóki rezerwacji nie ma, to opcja</b> — bez niej wieczór wygląda jak wcześniej: Sensō-ji o zmroku i kolacja w Asakusie.'],
-  ['20:00','Sensō-ji podświetlona','Pięć minut z powrotem pod pagodę: stragany zwinięte, tłum poszedł, świątynia oświetlona do około 23:00. To najspokojniejsza i najładniejsza wersja tego miejsca — kwadrans, nie więcej.'],
-  ['20:45','Powrót do Akasaki','Ginza Line prosto do Tameike-sannō, ~25 min; w pokoju około 21:15. Pokój już znacie, bagaże rozpakowane — jedyny wieczór w Tokio, który kończy się po 21:00, i wiadomo, dla czego.'],
+  ['09:00','Śniadanie i wymeldowanie','Na dworcu bądźcie 20-30 minut przed swoim pociągiem.'],
+  ['10:00','Shinkansen Kioto → Tokio','Planowana pora. 3 maja jest świętem; miejsca dla czworga rezerwujcie razem.','rezerwacja'],
+  ['12:30','Dojazd do Akasaki','Wybierzcie metro z dojściem do hotelu albo taksówkę ze stacji. Sam czas jazdy metrem nie jest czasem od drzwi do drzwi.'],
+  ['13:15','Bagaże w recepcji i lunch','Pokój zwykle dostępny od 15:00. Zostawienie bagażu uzgodnijcie w hotelu.'],
+  ['15:00','Meldunek i przerwa','Prysznic i co najmniej godzina w pokoju.','bufor'],
+  ['16:15','Do Asakusy','Ginza Line z Tameike-sannō lub Akasaka-mitsuke; dodajcie czas dojścia z hotelu i ze stacji.'],
+  ['17:15','Krótki spacer przy Sensō-ji','Przy pokazie o 18:00 skróćcie do okolic świątyni i bądźcie u organizatora 15 minut przed sesją.'],
+  ['18:00','Sumo i chanko-nabe','Wybrana propozycja, jeszcze bez potwierdzonego biletu. Około dwóch godzin. Udział publiczności na ringu zależy od prowadzącego. Bez biletu: zwykła kolacja i spacer.','opcja'],
+  ['20:15','Powrót po pokazie','Sensō-ji o zmroku tylko po drodze, bez kolejnego długiego spaceru. W hotelu około 21:15-21:30.'],
  ],
- facts:[['Średnia','Intensywność'],['Shinkansen + metro','Przejazdy'],['Umiarkowane','Chodzenie'],['Pierwsze Tokio','Dla dzieci'],['Tokio (1/3)','Nocleg']],
- tips:['Suica w Apple/Google Pay płaci za metro i w sklepach; dzieciom fizyczne karty kodomo (−50%).','W Golden Week Tokio jest inne niż zwykle: biura zamknięte, metro w porannym szczycie puste, za to miejsca turystyczne pełne rodzin z całej Japonii. Rano należy do Was, wieczorem trzeba mieć rezerwacje.','Pokaz sumo rezerwujcie przez GetYourGuide (sesja 18:00, 3 maja) — od ~99 USD za dorosłego (≈360 zł) z chanko bez limitu, zdjęciem i próbą na ringu, dzieci taniej; bezpłatne anulowanie do 24 h przed. Zróbcie to razem z warsztatami w Kioto, luty–marzec: sesja wieczorna w święto wyprzedaje się pierwsza.'],
- links:[A('sensoji','Sensō-ji'),A('sumo-show','Pokaz sumo z chanko'),A('smartex','SmartEX — miejscówki')],
- more:[]},
+ facts:[['Umiarkowanie','Chodzenie'],['Shinkansen + metro','Transport']],
+ tips:['Bez sumo zakończcie wieczór wcześniej; z sumo jutro nie planujcie wyjścia przed 9:00.','Dziecko 13-letnie ma w JR zwykle taryfę dorosłą; dziecięca karta IC jest dla młodszego dziecka.'],
+ links:[A('sensoji','Sensō-ji'),A('sumo-show','Pokaz sumo'),A('smartex','SmartEX')],more:[]},
 
-{date:'2027-05-04',dow:'wtorek',dd:'4 maja',city:'tokio',title:'Meiji, streetwear na Cat Street i zachód słońca nad Shibuyą',
- lead:'Las wokół chramu Meiji dla mamy, Cat Street z Supreme, BAPE, Stüssy i Palace dla dzieci — a na finał wspólne Tokio z tarasu 229 metrów nad ziemią.',
- chips:['Kultura: Meiji Jingū','Dzieci: Supreme · BAPE · Stüssy · Palace · Nintendo','Shibuya Sky'],
+{date:'2027-05-04',dow:'wtorek',dd:'4 maja',city:'tokio',title:'Meiji, dwa sklepy i panorama Tokio',level:'y',stay:'tokio1',
+ lead:'Las Meiji, dwa wybrane sklepy i widok z Shibuya Sky. Dłuższe zakupy zastępują Nintendo, a odpoczynek zostaje.',
+ chips:['Start 09:15','Dwa sklepy','Shibuya Sky po zakupie biletu'],
+ brief:{start:'09:15 z hotelu',end:'około 20:30',focus:'Meiji i Shibuya w jednym rejonie miasta.',must:'Godzina odpoczynku; Shibuya Sky dopiero po zakupie konkretnego slotu.',cut:'Takeshita i Nintendo przy kolejkach. Nie dodawajcie trzeciego i czwartego sklepu.',check:'Slot 17:45 to cel. Przy zamkniętym dachu zasady zmiany lub zwrotu zależą od biletu; sprawdźcie je przed zakupem.'},
  tl:[
-  ['08:45','Meiji Jingū','Chram w środku 70-hektarowego lasu w sercu miasta. Dzień Zieleni to święto, więc będzie odświętnie i ludno — dlatego jesteśmy tu przed 9:00, zanim ruszy fala (Chiyoda Line z Akasaki prosto do Meiji-jingūmae, ~10 min — wyjście z hotelu 8:25); bywa, że trafia się na tradycyjny ślub shintō. Dla mamy opcjonalnie Muzeum Meiji Jingū na terenie chramu (budynek Kengo Kumy, ~30 min, ~1 000 ¥).'],
-  ['10:15','Takeshita-dōri — zanim się zapełni','Uliczka crepe i tanich gadżetów, wejście 2 minuty od bramy chramu. Sklepy otwierają się 10:00–11:00, a tłum w święto wzbiera po południu — wtedy policja puszcza ruch jednokierunkowo. Pół godziny o tej porze wystarczy; prawdziwy cel dzieci jest 5 minut dalej.'],
-  ['11:00','Ura-Harajuku: BAPE i Supreme — na otwarcie','Dwa główne sklepy 5 minut od siebie (Jingūmae 4-21-5 i 4-32-7), oba od 11:00 — stańcie pod drzwiami punktualnie: w święto pierwsza godzina po otwarciu to najspokojniejszy moment dnia, potem robi się kolejka na wejście. Stüssy (4-28-2) leży dokładnie między nimi — zajrzyjcie tylko, jeśli jest ochota; cztery sklepy to za dużo na jeden poranek. Budżet ustalcie PRZED wejściem: koszulka ~6–13 tys. ¥, bluza ~20–45 tys. ¥.'],
-  ['13:00','Lunch na Cat Street',''],
-  ['14:00','Cat Street do Shibuyi','~20 min spacerem. Limit sklepów na dziś to dwa — BAPE i Supreme — więc Human Made, Palace i Kith mijacie oknem; wchodzicie tylko, jeśli ktoś naprawdę chce, kosztem pauzy w parku.'],
-  ['14:45','Miyashita Park — pauza','Park na dachu galerii nad Cat Street: trawnik, ławki, kawa. Godzina siedzenia — od rana jesteście na nogach, a wieczór ma być przyjemnością, nie maratonem.'],
-  ['15:45','Shibuya PARCO: Nintendo TOKYO — opcja','6. piętro: oficjalny sklep Nintendo (Mario, Zelda, Animal Crossing), obok Pokémon Center Shibuya i Capcom Store. W święto bywa wejście na numerki — to naturalny kandydat do skreślenia: jeśli po pauzie ktoś ma dość, idziecie prosto przez Hachikō na Shibuya Sky.'],
-  ['17:15','Skrzyżowanie i Hachikō — po drodze','Słynne skrzyżowanie jest 5 minut od PARCO, pod samym Shibuya Sky; pomnik Hachikō przy stacji. Nie osobny punkt, tylko droga.'],
-  ['17:45','Shibuya Sky','Otwarty taras na zachód słońca — rezerwacja online, slot łapcie w dniu startu sprzedaży.'],
-  ['19:30','Kolacja w Shibuyi','Kaiten-zushi (sushi z taśmy) albo yakiniku. Mega Don Quijote (czynny całą dobę) tylko jeśli ktoś ma jeszcze siłę — to nie jest punkt programu. Do hotelu 10 min linią Ginza z Shibuyi do Akasaka-mitsuke.'],
+  ['09:15','Wyjście do Meiji','Chiyoda Line z Akasaki. Z dojściami i spacerem od wejścia do chramu potrzeba więcej niż samych 10 minut jazdy.'],
+  ['09:45','Meiji Jingū','Około godziny w lesie i przy chramie. Bez dodatkowego muzeum.'],
+  ['11:15','Harajuku: dwa sklepy','Domyślnie BAPE i Supreme. Jeśli kolejka do jednego przekracza 20-30 minut, wybierzcie drugi. Takeshita tylko po drodze.'],
+  ['13:00','Lunch','Cat Street lub boczne ulice; restauracja bez długiej kolejki.'],
+  ['14:00','Spacer w stronę Shibuyi','Oglądanie witryn po drodze. Dłuższe zakupy zastępują Nintendo.'],
+  ['14:45','Miyashita Park lub kawiarnia','Godzina siedzenia, napoje i toaleta. W deszczu wybierzcie wnętrze.','bufor'],
+  ['16:00','Nintendo TOKYO','Wyłącznie przy energii i krótkiej kolejce. Pokémon Center pomijamy - mamy jedną wizytę jutro.','opcja'],
+  ['17:15','Hachikō i wejście do Shibuya Sky','Bądźcie przy wejściu na 14. piętrze zgodnie z instrukcją biletu.'],
+  ['17:45','Shibuya Sky','Planowana pora na widoki przed i po zachodzie; zależna od zakupionego slotu i pogody.','rezerwacja'],
+  ['19:15','Kolacja i powrót','Sushi albo yakiniku. Bez dodatkowych zakupów po kolacji.'],
  ],
- facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Dużo, z pauzą','Chodzenie'],['Streetwear + Nintendo','Dla dzieci'],['Tokio (2/3)','Nocleg']],
- tips:['Bilety na Shibuya Sky o zachodzie znikają pierwszego dnia sprzedaży (14 dni wcześniej: 20.04 o 0:00 JST, czyli 19.04 o 17:00 w Polsce) — kupujcie w dniu startu, nie czekajcie na prognozę; przy deszczu próbujcie zmiany daty w systemie biletowym.','Supreme robi dropy w soboty — we wtorek wchodzi się z ulicy, bez losowań, ale nowości bywają wyprzedane; w Golden Week sklepy są pełne turystów, stąd wejście na otwarcie. Gdyby w Harajuku była kolejka na wejście, drugi Supreme i drugi BAPE stoją przy PARCO w Shibuyi — tam jesteście po południu.','BAPE robi tax-free od 5 000 ¥ — paszporty przy sobie. Waga jest twardym limitem: lecimy bez bagażu rejestrowanego, a bluza waży 600–800 g. Cała rodzina ma ~7,8 kg zapasu w czterech podręcznych i to jest cały budżet na zakupy — z Nihombashi, Akihabary i Nintendo też. Bilans robicie 5.05 przy pakowaniu.','Nintendo TOKYO ma limity wejść w tłoczne dni — jeśli kolejka przekracza pół godziny, odpuśćcie; Pokémon Center jest jutro w Nihombashi.'],
- links:[A('meiji','Meiji Jingū'),A('streetwear','Streetwear: Supreme, BAPE, Stüssy, Palace'),A('shibuya-sky','Shibuya Sky')],
- pc:{q:'Ile czasu na sklepy streetwear?',opts:[['Krótko: BAPE i Supreme przed lunchem, reszta tylko po drodze','~1,5 h oglądania; reszta dnia bez presji','dzieci mogą chcieć więcej'],['Długo: Cat Street do 15:30','ich dzień, ich tempo — Kith i Human Made też po drodze','wypada pauza w Miyashita albo Nintendo']]},
- more:[['Skąd ten dzień','Trzecia noc w Tokio (zamiast piątej w Kiocie) rozładowała dawny „wielki dzień Tokio” na dwa spokojniejsze i oddała planowi rzeczy, które wcześniej wypadły: Meiji Jingū i Harajuku. Tokio ma dla dziesięcio- i trzynastolatka więcej niż Kioto — a mama dostaje chram i targ. Sklepy streetwear (Supreme, BAPE, Stüssy, Palace) dopisały dzieci 8.09 — wszystkie stoją na Cat Street, więc weszły w dzień bez dodatkowego przejazdu. Muzeum drzeworytów Ōta wypadło tego samego dnia: za dużo warunków (zamknięcia po świętach, zmiany wystaw) na jedną godzinę planu.']]},
+ facts:[['Umiarkowanie; dużo przy wszystkich opcjach','Chodzenie'],['Metro + pieszo','Transport']],
+ tips:['Aktualne okno sprzedaży i zasady dziecięcego biletu sprawdźcie na oficjalnej stronie Shibuya Sky przed zakupem.','Zakupy tax-free w 2027 działają w nowym systemie zwrotu. Zachowujcie dokumenty i towary do kontroli wywozu; szczegóły w Niezbędniku.'],
+ links:[A('meiji','Meiji Jingū'),A('streetwear','Streetwear'),A('shibuya-sky','Shibuya Sky')],more:[]},
 
-{date:'2027-05-05',dow:'środa',dd:'5 maja',city:'tokio',title:'Dzień Dziecka: karpie koinobori, Pokémony i Akihabara',
- lead:'Kodomo no hi — ich święto w ich mieście: poranek w tunelu czerwonych torii pod hotelem, świat Pokémonów, a wieczorem neony Akihabary.',
- chips:['Kultura: tunel torii Hie-jinja','Dzieci: Dzień Dziecka z Pokémonami i Akihabarą','Pokémon Café — rezerwacja'],
+{date:'2027-05-05',dow:'środa',dd:'5 maja',city:'tokio',title:'Pokémony i wolne popołudnie',level:'g',stay:'tokio1',
+ lead:'Jeden Pokémon Center, Café jeśli zdobędziecie stolik, a później czas bez obowiązkowego zwiedzania. To dzień na złapanie oddechu i przygotowanie do Hakone.',
+ chips:['Dzień Dziecka','Jedna wizyta Pokémon','Wolne popołudnie'],
+ brief:{start:'09:30 lub później',end:'około 19:30',focus:'Pokémon Center TOKYO DX i odpoczynek.',must:'Café tylko z potwierdzoną rezerwacją. Wieczorem pakowanie i sprawdzenie bagażu.',cut:'Hie-jinja i Akihabara. Bez Café zostaje sklep oraz zwykły lunch.',check:'12:30 jest przykładem slotu, nie rezerwacją. Cały dzień dopasujcie do zdobytej godziny.'},
  tl:[
-  ['09:00','Hie-jinja — tunel torii','Pięć minut pieszo od hotelu i wstęp wolny: tylnym wejściem wchodzi się po schodach tunelem 90 czerwonych torii — mniejszy brat Fushimi, który dzieci znają już z Kioto, tylko w środku Tokio i bez tłumu. Chram otwiera się o 5:00, więc o 9:00 jest tu jeszcze spokojnie; wystarczy 30–45 min. Koinobori — karpie z tkaniny — wiszą w tym tygodniu w całym mieście; największa instalacja to 333 karpie pod Tokyo Tower (do ~6.05), ~15 min metrem, jeśli chcecie je zobaczyć z bliska.'],
-  ['10:30','Metro do Nihombashi','Ginza Line z Tameike-sannō, ~10 min — bez przejazdu przez pół miasta.'],
-  ['11:00','Pokémon Center TOKYO DX','Takashimaya S.C., budynek wschodni, 5. piętro — flagowy sklep z ekskluzywnymi pluszakami i kartami. Café jest na tym samym piętrze, więc to jedna wizyta, nie dwie.'],
-  ['12:30','Pokémon Café','Tematyczny lunch z wizytą Pikachu — rezerwacja z góry, te same drzwi co sklep.'],
-  ['14:30','Odpoczynek w hotelu','Godzina oddechu przed wieczorem — to ostatni dzień Golden Week, od jutra miasto wraca do rytmu.'],
-  ['16:30','Akihabara — opcjonalnie','Z Tameike-sannō linią Ginza do Suehirochō, ~15 min. Elektryczne miasteczko: gachapony, salony gier, sklepy z anime i elektroniką. Dwie godziny wystarczą. To zawór dnia: jeśli po Pokémonach nikt nie ma siły, zostańcie w Akasace.'],
-  ['18:45','Powrót do Akasaki','Ginza Line bez przesiadki, ~15 min.'],
-  ['19:15','Kolacja w Akasace','Pod hotelem, nie w Akihabarze: po intensywnym dniu nikt nie szuka stolika w tłumie, a Akasaka to dzielnica yakitori i izakayi, z family restaurantem dla dzieci na każdym rogu. Po kolacji jesteście pięć minut od pralni i walizek.'],
-  ['21:00','Pakowanie, pranie i ważenie bagaży','Ostatni wieczór w Tokio i <b>moment decyzji o bagażu</b>: spakujcie się z zakupami i zważcie wszystkie cztery podręczne. Limit to 7 kg na osobę. Jeśli się nie mieści, dokupcie bagaż rejestrowany w „Manage booking” — działa do ~12:00 jutro i jest do 65% tańsze niż na lotnisku. Przy okazji pralnia samoobsługowa w hotelu (detergent na recepcji): jeden wsad i wracacie w czystych rzeczach, bo w Hakone prania nie ma.'],
+  ['09:30','Śniadanie i Hie-jinja dla chętnych','Krótki spacer do chramu; czas dojścia sprawdźcie z hotelu. Przy zmęczeniu śniadanie trwa dłużej.','opcja'],
+  ['10:30','Metro do Nihombashi','Z dojściami zaplanujcie około 30-45 minut.'],
+  ['11:15','Pokémon Center TOKYO DX','Takashimaya S.C. East, 5. piętro. Jedyny Pokémon Center w programie. W święto możliwe kolejki lub organizacja wejść.'],
+  ['12:30','Pokémon Café albo zwykły lunch','Café wyłącznie po potwierdzeniu slotu. Przy rezerwacji bądźcie 15 minut wcześniej; bez niej nie czekajcie godzinami na zwolniony stolik.','opcja'],
+  ['14:30','Wolne popołudnie','Domyślnie hotel i odpoczynek. Akihabara może zastąpić część wolnego czasu: 60-90 minut, tylko jeśli wszyscy mają ochotę.','bufor'],
+  ['17:00','Pranie, pakowanie i ważenie','Zacznijcie wcześnie, żeby starczyło czasu na suszenie. Limit sprawdźcie dla każdego bagażu. Gdy potrzebny jest dodatkowy, wyceńcie go dziś w Manage Booking.'],
+  ['18:30','Kolacja blisko hotelu','Potem dokończenie pakowania i spokojny wieczór.'],
  ],
- facts:[['Średnia','Intensywność'],['Metro','Przejazdy'],['Sporo','Chodzenie'],['Ich dzień','Dla dzieci'],['Tokio (3/3)','Nocleg']],
- tips:['Rezerwacja Pokémon Café otwiera się 31 dni wcześniej o 18:00 czasu japońskiego — łapcie slot punktualnie.','5 maja to ostatni dzień Golden Week — Pokémon Center bywa pełne, dlatego rezerwacja Café jest kotwicą dnia.','Ustalcie dzieciom limit na gachapony z góry — inaczej wyjdziecie z Akihabary z walizką kapsułek 😉','Wieczorem ważycie bagaże. Lecimy bez rejestrowanego, więc to dziś zapada decyzja, czy zakupy zmieszczą się w 7 kg/os. — dokupienie bagażu jutro po południu jest już znacznie droższe.'],
- links:[A('pokemon','Pokémon Center + Café'),A('akihabara','Akihabara')],
- more:[]},
+ facts:[['Niewiele w wariancie podstawowym','Chodzenie'],['Metro','Transport']],
+ tips:['Brak stolika w Café nie psuje dnia: sklep pozostaje główną atrakcją.','Nie zakładajcie konkretnej dopłaty za bagaż. Cena i termin zakupu wynikają z Waszej rezerwacji w Etihad.'],
+ links:[A('pokemon','Pokémon Center i Café'),A('akihabara','Akihabara - opcja')],more:[]},
 
-{date:'2027-05-06',dow:'czwartek',dd:'6 maja',city:'hakone',title:'Pętla Hakone i noc nad jeziorem',
- lead:'Pętla wulkaniczna, jezioro z bramą torii i pierwsza noc po japońsku: yukata, kolacja w ryokanie i dwie kąpiele — prywatna po przyjeździe (gdy hotel potwierdzi), duża nad jeziorem wieczorem.',
- chips:['Kultura: ryokan i onsen','Dzieci: kolejki i czarne jajka','Nocleg nad jeziorem Ashi'],
+{date:'2027-05-06',dow:'czwartek',dd:'6 maja',city:'hakone',title:'Hakone i odpoczynek nad jeziorem',level:'y',stay:'hakone',
+ lead:'Kolejki i Ōwakudani przy dobrej pogodzie, a od popołudnia ryokan, kolacja i onsen. Najważniejszy jest spokojny pobyt w Hanaori.',
+ chips:['Romancecar po rezerwacji','Meldunek od 15:00','Bez porannej kąpieli jutro'],
+ brief:{start:'09:00 z hotelu',end:'od 15:30 w ryokanie',focus:'Dotrzeć nad jezioro i odpocząć.',must:'Nocleg i kolacja w Hanaori. Cel meldunku 15:00-16:00.',cut:'Rejs, Hakone-jinja i dodatkowe muzeum. Kolejka tylko gdy działa i są dobre warunki.',check:'Rano sprawdźcie status wszystkich środków transportu. Pokój Deluxe ma prywatną kąpiel; nie rezerwujcie jej ponownie jako dodatkowej usługi.'},
  tl:[
-  ['08:30','Śniadanie bez pośpiechu i wymeldowanie','Pierwszy dzień po Golden Week. Wszystko spakowane wczoraj, bagaż podręczny jedzie z nami — bez pobudki o świcie.'],
-  ['09:30','Do Shinjuku','Marunouchi z Akasaka-mitsuke, ~12 min bez przesiadki — z walizkami to najspokojniejsza opcja w mieście. Romancecar odjeżdża z peronów Odakyu pod dworcem.'],
-  ['10:00','Romancecar z Shinjuku','Ekspres z rezerwowanymi miejscami, ~85 min do Hakone-Yumoto; dzień po Golden Week jest luźniej.'],
-  ['11:25','Hakone-Yumoto → kolejka górska do Gōry','Tōzan z zakosami ~40 min; Hakone Free Pass kupiony w Shinjuku.'],
-  ['12:20','Kolejka linowa Sōunzan → Ōwakudani','Pola siarkowe i czarne jajka kuro-tamago (+7 lat życia od sztuki); lunch na górze.'],
-  ['14:15','Kolej linowa do Tōgendai','Przy dobrej pogodzie Fudżi nad jeziorem. Ryokan stoi przy samej stacji.'],
-  ['14:30','Tōgendai — brzeg jeziora','Hanaori melduje od 15:00, więc pół godziny na spacer brzegiem i kawę; przystań i hotel są obok siebie.'],
-  ['15:30','Zameldowanie i prywatna kąpiel (po potwierdzeniu przez hotel)','Nie kąpiemy się rano, więc <b>dziś jest cały onsen tego wyjazdu</b> — stąd dwa wejścia zamiast jednego. Zaczynamy od prywatnej kąpieli, jeśli hotel potwierdzi rezerwację — są tylko dwie na obiekt, a bez potwierdzenia zaczynacie od dużych łaźni. Hanaori ma dwie półotwarte do wynajęcia i wchodzicie do niej we czworo. Duże łaźnie są rozdzielone na panów i panie, a Marcel w wieku 13 lat idzie już do męskiej — prywatna zdejmuje z pierwszego razu całą niezręczność. To jest punkt dnia; tu świadomie niczego nie zaliczamy.'],
-  ['17:00','Taras nad jeziorem','Yukata, herbata, dzieci nad wodą. Rejs po Ashi i torii Hakone-jinja są opcją w decyzji niżej — nie planem.'],
-  ['18:30','Kolacja w ryokanie','Bufet w cenie razem ze śniadaniem.'],
-  ['20:00','Duża łaźnia z widokiem na jezioro','Drugie wejście i zarazem ostatnie — rano już nie wracamy do wody. Ta z widokiem na jezioro jest tym, po co przyjeżdża się do Hanaori, a prywatna kąpiel jej nie zastąpi. Tata z Marcelem do męskiej, mama z Martyną do damskiej; po popołudniowej kąpieli nikogo to już nie onieśmiela. Łaźnie czynne do północy, więc godzina jest orientacyjna.'],
+  ['08:00','Śniadanie i kontrola pogody','Bagaże spakowane wczoraj. Sprawdźcie status Hakone Navi; przy ostrzeżeniach o poważnych zakłóceniach uzgodnijcie dojazd z hotelem.'],
+  ['09:00','Wyjście do Shinjuku','Dojście do metra, przejazd i znalezienie peronów Odakyu: zostawcie 45-60 minut z bagażem.'],
+  ['10:00','Romancecar do Hakone-Yumoto','Proponowana pora; rozkład 2027 i miejsca do potwierdzenia. Free Pass i dopłata Romancecar to osobne składniki.','rezerwacja'],
+  ['11:45','Kolej górska do Gōry','Następnie kolejka do Sōunzan i linowa do Ōwakudani. Bufory na przesiadki i kolejki; w razie opóźnień skróćcie pobyt na górze.'],
+  ['13:00','Ōwakudani i lunch','Tylko gdy rejon i kolejka są otwarte. Widok na Fudżi zależy od warunków. Czarne jajka to ciekawostka, nie obowiązkowy przystanek.'],
+  ['14:30','Zjazd do Tōgendai','Kolejką linową nad jezioro, następnie pieszo do Hanaori.'],
+  ['15:30','Meldunek i odpoczynek','Potwierdzony pokój Deluxe ma prywatną kąpiel na świeżym powietrzu. Kąpiel i odpoczynek w swoim tempie, bez dodatkowej rezerwacji kashikiri.'],
+  ['16:30','Potwierdzenie jutrzejszego wyjazdu','Z recepcją: aktualny poranny autobus do Odawary i możliwość taksówki dla 4 osób z bagażami. Sprawdźcie ostrzeżenia drogowe na piątek.','bufor'],
+  ['18:30','Kolacja w ryokanie','W cenie noclegu. Ostateczną godzinę posiłku ustala hotel.'],
+  ['20:00','Onsen lub spokojny wieczór','Duże łaźnie są rozdzielone płciowo. Kąpiel jest dobrowolna; rano już jej nie planujemy.','opcja'],
  ],
- facts:[['Średnia','Intensywność'],['Romancecar + kolejki','Przejazdy'],['Umiarkowane','Chodzenie'],['Frajda z kolejek','Dla dzieci'],['Ryokan','Nocleg']],
- tips:['Tsukiji wypadło z planu: pobudka 6:30 po wieczorze z praniem i pakowaniem to nie był dobry pomysł, a targ dla mamy jest w Kiocie — Nishiki 2.05 po południu.','Fudżi najczęściej widać rano — trzymajcie kciuki przy porannej kolejce linowej i na jeziorze.','Prywatną kąpiel zarezerwujcie z góry — są tylko dwie na cały obiekt, a Hanaori nie podaje w internecie ani cen, ani długości sesji. Ryokan sam napisał z pytaniem o życzenia (8.09.2026), więc to jest kanał do załatwienia i kąpieli, i porannego dojazdu do Odawary 7.05 (shuttle hotelu jeździ już tylko do Gōry). Recepcja: +81 460-83-8739, 10:00–18:00.','Tatuaży w rodzinie nie ma, więc duże łaźnie są bez przeszkód — obie, i ta z widokiem na ogród, i ta nad jeziorem.','Cała pętla — kolejka zębata, linowa, Ōwakudani, statek — z podręcznymi jest do zrobienia, ale jeśli chcecie mieć wolne ręce, przy dworcu Hakone-Yumoto oddacie bagaż do 12:30 i znajdziecie go w ryokanie po 15:00 (~800–1 100 ¥/szt.). Jesteście w Yumoto o 11:25, więc zdążycie.'],
- links:[A('hakone-pass','Hakone Free Pass + Romancecar'),A('owakudani','Ōwakudani'),A('ashi','Jezioro Ashi'),A('takkyubin','Bagaż: dowóz w Hakone')],
- pc:{q:'Rejs po Ashi i Hakone-jinja — dokładać?',opts:[['Nie — onsen i taras (domyślnie)','ryokan miał być regeneracją: kąpiel o 15:00, spokojna kolacja, druga kąpiel wieczorem','mama traci torii na wodzie'],['Tak, tylko przy czasie i pogodzie','galeon do Moto-Hakone 30 min, torii 10 min od przystani, ostatni kurs powrotny ~17:00','trzygodzinny wypad; onsen dopiero ~17:30, przy chmurach bez sensu']]},
- more:[['Kontekst','Ryokan to nie tylko nocleg, ale całe doświadczenie: śpi się na futonach na tatami, chodzi w yukacie, a kolacja (w Hanaori bufet) i onsen są częścią wieczoru. To najspokojniejszy punkt całego wyjazdu.'],['Plan B na wiatr i chmury','Kolejka linowa nad Ōwakudani bywa zawieszana przy silnym wietrze lub alertach wulkanicznych — rano sprawdźcie status na hakonenavi.jp. Awaryjnie: Hakone Open-Air Museum (rzeźby do wspinania, pawilon Picassa, kąpiel stóp) plus rejs po Ashi, który pływa niemal zawsze.']]},
+ facts:[['Umiarkowanie, kilka przesiadek','Chodzenie'],['Romancecar + kolejki','Transport']],
+ tips:['Przy wietrze rejs nie jest pewnym planem B: statki również mogą stanąć.','Gdy nie działa kolejka linowa, jedźcie z Hakone-Yumoto autobusem w stronę Tōgendai tylko po potwierdzeniu kursowania. Alternatywę przez Gōrę uzgodnijcie z recepcją; nie dodawajcie muzeum kosztem dojazdu i meldunku.','Status transportu: <a href="https://www.hakonenavi.jp/international/en/status_information" target="_blank" rel="noopener">Hakone Navi</a>. Przy poważnym ostrzeżeniu pogodowym 5.05 trzeba rozważyć zmianę noclegu, uwzględniając warunki anulowania.'],
+ links:[A('hakone-pass','Hakone Free Pass i Romancecar'),A('owakudani','Ōwakudani'),A('ashi','Jezioro Ashi')],
+ more:[['Co przy niedziałającej kolejce?','Celem pozostaje hotel, nie zamknięcie pętli turystycznej. Sprawdźcie autobusy i drogi z Hakone-Yumoto do Tōgendai. Przy poważnych zakłóceniach skontaktujcie się z recepcją przed wjazdem w góry.']]},
 
-{date:'2027-05-07',dow:'piątek',dd:'7 maja',city:'hakone',title:'Śniadanie nad jeziorem i z gór prosto na lotnisko',
- lead:'Spokojne śniadanie nad jeziorem, a potem prosto z gór na Naritę — bez wracania do Tokio na noc.',
- chips:['Poranek bez pośpiechu','Dzieci: Fudżi z okna shinkansena','Wylot 18:00'],
+{date:'2027-05-07',dow:'piątek',dd:'7 maja',city:'hakone',title:'Z Hakone na lotnisko z zapasem',level:'r',
+ lead:'To dzień podróży. Śniadanie, wczesny wyjazd z gór i lot z Narity o 18:00. Lunch i sklepy na dworcu tylko z rzeczywistego zapasu czasu.',
+ chips:['Wyjazd około 09:00','Cel Narita 14:00-14:30','Powrót 8.05 rano'],
+ brief:{start:'08:00 śniadanie',end:'8.05 o 06:50 w WAW',focus:'Dotrzeć na Naritę co najmniej trzy godziny przed lotem.',must:'Wyjazd z Tōgendai około 09:00; lot NRT 18:00.',cut:'Sklepy na Tokyo Station. Przy opóźnieniu lunch kupcie na wynos.',check:'Rozkład i połączenia potwierdźcie 6.05. Jeśli do 09:15 autobus nie odjeżdża, wdrażajcie wcześniej ustalony z recepcją wariant taksówką.'},
  tl:[
-  ['08:00','Śniadanie w ryokanie','Bez porannej kąpieli — kąpiele zrobiliśmy wczoraj, obie. Dzięki temu dziś śpicie dłużej, a przed autobusem zostaje czas na spokojne spakowanie i ostatnie spojrzenie na jezioro z tarasu.'],
-  ['08:50','Na przystanek Tōgendai','Przystanek Hakone Tozan Bus (linia T) jest przy stacji kolejki, 2 minuty od hotelu. Rozkład na 2027 sprawdźcie wieczorem 6.05 w recepcji i bądźcie na przystanku 10 minut przed odjazdem.'],
-  ['09:15','Autobus do Odawary','Hakone Tozan Bus linii T jedzie z Tōgendai przez Sengoku i Miyanoshita prosto pod dworzec Odawara (wyjście wschodnie); przejazd jest w cenie Free Pass. Liczcie 75–90 minut, nie 60: droga jest górska, a rano bywa korek pod Yumoto. Na dworcu około 10:45. <b>Shuttle hotelu do Odawary nie istnieje od 1.10.2026</b> — jeździ tylko do Gōry (warianty niżej, „Na miejscu”).'],
-  ['11:20','Shinkansen Odawara → Tokyo Station','~35 min (Kodama/Hikari); miejscówki kupione wcześniej.'],
-  ['12:00','Tokyo Station — lunch i Character Street','Godzina i trzy kwadranse do pociągu: to jest czas, który zabraliśmy z lotniska. Lunch na Ramen Street (podziemia Yaesu) albo ekiben na peron, potem Character Street dla dzieci — bez zerkania na zegarek.'],
-  ['13:48','Narita Express','~55 min na lotnisko. NEX jeździ co pół godziny: gdyby shinkansen z Odawary się spóźnił, pociąg o 14:18 wciąż daje ponad 2 h 45 na Naricie. Plan B z Nippori: Skyliner.'],
-  ['14:45','Narita — ważenie przed odprawą','Wagi stoją przy stanowiskach Etihada. Ostatnia szansa przełożyć cięższe rzeczy na siebie; bagaż rejestrowany da się jeszcze dokupić przy odprawie, ale to najdroższy wariant.'],
-  ['15:15','Odprawa i kontrola','Trzy godziny przed wylotem — tyle zaleca Etihad. Odprawa online z telefonu (lecimy z podręcznymi), potem kontrola i paszporty: w piątkowe popołudnie 40–60 minut. Zwrot tax-free przy wyjściu.'],
-  ['18:00','Wylot','Narita → Abu Zabi (przesiadka ~2,5 h) → Warszawa.'],
-  ['06:50','Warszawa','Lądowanie w sobotę 8.05 — okaeri! Niedziela na dojście do siebie przed poniedziałkową wycieczką klasową.'],
+  ['08:00','Śniadanie i wymeldowanie','Bez porannej kąpieli. Wszystko spakowane przed wyjściem.'],
+  ['08:45','Przystanek Tōgendai','Cel: poranny autobus około 09:00. Dokładna godzina zależy od rozkładu 2027; wybierzcie kurs pozwalający być w Odawarze około 10:30.','bufor'],
+  ['09:00','Autobus linii T do Odawary','Zapas 75-90 minut. Potwierdźcie kurs z recepcją dzień wcześniej. Hotelowy shuttle jeździ tylko do Gōry, a nie do Odawary.','rezerwacja'],
+  ['10:30','Odawara: przejście na shinkansen','Cel przyjazdu; minimum 25-30 minut na przejście i bilety. Przy opóźnieniu sprawdźcie następne połączenie i zrezygnujcie z przystanku na zakupy.','bufor'],
+  ['11:15','Shinkansen do Tokyo Station','Cel: pociąg zatrzymujący się w Odawarze, około 35-40 minut jazdy. Konkretna godzina i miejsca po publikacji rozkładu.','rezerwacja'],
+  ['12:00','Tokyo Station: przesiadka i szybki lunch','Przejście do podziemnych peronów NEX może zająć 20-30 minut. Jedzenie na wynos; bez planowanej wizyty w Character Street.','bufor'],
+  ['13:00','Narita Express','Wybierzcie połączenie dające przyjazd do właściwego terminala około 14:00-14:30. Nie zakładajcie rozkładu co pół godziny jako gwarancji.','rezerwacja'],
+  ['14:15','Narita: formalności przed lotem','Orientacyjny cel przyjazdu. Sprawdźcie terminal, stanowiska Etihada i procedurę wywozu zakupów tax-free. Nadawany bagaż może wymagać okazania towarów przed jego oddaniem.','bufor'],
+  ['15:00','Odprawa, kontrola i bramka','Odprawa online nie wyklucza sprawdzenia dokumentów przy stanowisku. Przestrzegajcie godzin z karty pokładowej.'],
+  ['18:00','Narita → Abu Zabi → Warszawa','Godzina pierwszego lotu z e-biletu. W Abu Zabi pozostajecie w tranzycie, bez drugiego stopoveru hotelowego.','lot'],
+  ['8.05 06:50','Lądowanie w Warszawie','Sobota 8 maja. Powrót do domu i spokojny weekend po podróży.','lot'],
  ],
- facts:[['Średnia','Intensywność'],['Autobus + shinkansen + NEX','Przejazdy'],['Niewiele','Chodzenie'],['Fudżi na do widzenia','Dla dzieci'],['Lot nocny','Nocleg']],
- tips:['Shuttle hotelowy Hanaori od 1.10.2026 jeździ wyłącznie hotel ⇔ Gōra (z hotelu 9:30, 10:30, 11:30…, ok. 20 min, bez rezerwacji) — do Odawary nie dowozi. Dlatego rano jedziemy autobusem linii T; taksówkę jako plan B zamawia recepcja dzień wcześniej.','Miejscówki Odawara→Tokio zgłoście w SmartEX (potwierdzenie 7.04); NEX 13:48 kupcie w aplikacji JR East albo w automacie na Tokyo Station — na tę godzinę jest luz. 6.05 nie mijacie dworca w Odawarze (Romancecar jedzie do Hakone-Yumoto).','Podręczne są ważone przy odprawie — 7 kg/os., bez bagażu rejestrowanego. Nadwyżkę ratujecie kurtką i kieszeniami (to, co na sobie, się nie liczy); paragony tax-free trzymajcie razem z paszportami.'],
- links:[A('nex','Narita Express')],
- pc:{q:'Do Odawary: autobus linii T, shuttle do Gōry z kolejką czy taksówka?',opts:[['Autobus linii T z Tōgendai ok. 9:15 (domyślnie)','bez przesiadek, pod sam dworzec, w cenie Free Pass, niezależny od hotelu','75–90 min i wcześniejsza pobudka; rozkład 2027 do potwierdzenia w recepcji'],['Shuttle hotelu 9:30 do Gōry → kolejka Tozan do Yumoto → Odakyu do Odawary','bezpłatny i bez rezerwacji; kolejka górska jest atrakcją samą w sobie','dwie przesiadki z walizkami, ~80–90 min, w Odawarze dopiero ok. 11:00 — na shinkansen 11:20 za ciasno'],['Taksówka spod hotelu ok. 9:30','~45 min drzwi w drzwi, bez dźwigania','~12 000–15 000 ¥; zamówić w recepcji dzień wcześniej']]},
- more:[['Dlaczego 7 maja','Dziecko 10 maja jedzie na wycieczkę klasową — musimy być w Polsce 8 maja. Wylot z Narity w piątek 7.05 daje lądowanie w sobotę rano i niedzielę na jet lag. Hakone na końcu trasy pozwala z gór jechać prosto na lotnisko, bez ostatniej nocy w Tokio.']]},];
+ facts:[['Mało, ale długi dzień podróży','Chodzenie'],['Autobus + 2 pociągi + 2 loty','Transport']],
+ tips:['Taksówka jest wariantem do uzgodnienia, nie gwarancją dostępności. Potwierdźcie cenę, miejsce na cztery osoby i bagaże oraz sposób zamówienia.','Przy problemach z NEX poproście obsługę JR o aktualną alternatywę. Nie jedźcie samodzielnie na inne lotnisko ani nie zakładajcie, że każda trasa będzie działać.','Towary tax-free i dokumenty miejcie dostępne do kontroli. Zapasu na lotnisku nie przeznaczamy z góry na zakupy.'],
+ links:[A('nex','Narita Express'),A('smartex','SmartEX')],
+ more:[['Dlaczego wcześniejszy wyjazd?','Przed lotem są trzy niezależne odcinki transportu. Godzina dodatkowego zapasu jest tu bardziej wartościowa niż kolejny sklep. Zmiana połączenia lub taksówka może kosztować więcej; rezerwa budżetowa służy właśnie takim sytuacjom.']]},
+];
 
 /* ============================ HOTELS ============================ */
 const HOTELS = [
-{id:'auh',name:'Grand Millenium Al Wahda',stay:'Abu Zabi · 1 noc (27–28.04) · 2 pokoje, GRATIS z pakietu',
- desc:'Hotel 4★ z pakietu Etihad Stopover — najlepszy z listy: duży basen (bezcenny przy 35–40°C), bezpośrednie połączenie z centrum handlowym Al Wahda Mall (klimatyzowany lunch i zakupy przed nocnym lotem) i ~15 min taksówką od Wielkiego Meczetu. <b>Voucher przyszedł 8.09.2026: dwa pokoje Standard po dwie osoby, doba liczona od zameldowania (24 h), bez śniadania (Room Only).</b> Numery rezerwacji i potwierdzenia hotelu — w voucherze PDF. Dostawki niepotrzebne — przy dwóch pokojach każdy ma łóżko. Rezerwacja jest bezzwrotna od 8.09.2026.',
- price:'0 zł (pakiet stopover; opłata ~224 zł już w bilecie) — śniadanie płatne osobno',near:'centrum Abu Zabi, przy Al Wahda Mall; taxi z lotniska ~60–80 AED',
- mapsq:'Grand Millennium Al Wahda, Abu Dhabi',
- site:'https://www.millenniumhotels.com/en/abu-dhabi/grand-millennium-al-wahda/'},
-{id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 4 noce (29.04–3.05)',
- desc:'Ta sama rodzinna formuła co w Tokio, tuż przy dworcu Kioto. To nasza główna baza — cztery noce w jednym pokoju, bez pakowania. Idealny punkt wypadowy na Narę (Kintetsu) i Arashiyamę (JR); 3.05 shinkansen do Tokio odjeżdża spod samych drzwi. Tu wypada główne pranie wyjazdu (2.05 po południu): pralnia samoobsługowa z czterema pralkami i suszarkami, detergent wbudowany.',
- price:'✅ ZAREZERWOWANE 8.09.2026 — 5 266 zł za 4 noce (29.04–3.05) = ~1 317 zł/noc, apartament 4-os.; bezpłatne odwołanie',near:'3 min pieszo od dworca Kyoto',
- book:'https://www.booking.com/hotel/jp/mimaru-jing-du-station.html',
-  jp:'京都市下京区・京都駅八条口すぐ',
- site:'https://mimaruhotels.com/en/hotel/kyoto-station/'},
-{id:'tokio1',name:'MIMARU Tokyo AKASAKA',stay:'Tokio · 3 noce (3–6.05)',
- desc:'Aparthotel pod rodziny: apartament 40 m² dla czterech osób z pełnym aneksem kuchennym. Wybrany 8.09 za logistykę tego konkretnego bloku — z Akasaki każdy ważny przejazd jest bez przesiadki i krótki: Harajuku ~10 min linią Chiyoda, Shinjuku z walizkami ~12 min linią Marunouchi, Nihombashi ~10 min linią Ginza. Chram Hie-jinja z tunelem 90 czerwonych torii stoi pięć minut pieszo — stąd poranek 5.05. Dzielnica cicha wieczorem, restauracyjna. Pralnia samoobsługowa na miejscu (w pokojach nie ma pralek) — 5.05 wieczorem robimy tu dogrywkę prania.',
- price:'✅ ZAREZERWOWANE 8.09.2026 — 3 413 zł za 3 noce (3–6.05) = ~1 138 zł/noc, apartament 4-os.; bezpłatne odwołanie',near:'metro Akasaka (Chiyoda) 4 min pieszo; Akasaka-mitsuke i Tameike-sannō w zasięgu spaceru',
- book:'https://www.booking.com/hotel/jp/mimaru-tokyo-akasaka.html',
-  jp:'東京都港区赤坂7-9-6',
- site:'https://mimaruhotels.com/en/hotel/akasaka/'},
-{id:'hakone',img:'hakone-ashi.webp',name:'Hakone Ashinoko Hanaori',stay:'Hakone · 1 noc (z czwartku 6.05 na piątek 7.05) · nad jeziorem Ashi',
- desc:'Nowoczesny ryokan <b>w Tōgendai, nad samym jeziorem Ashi</b> — dokładnie tam, gdzie kończy się nasza kolejka linowa z Ōwakudani i skąd odpływa statek. Zero dojazdu do noclegu. Pokój Standard: 32 m², 2 łóżka + rozkładana sofa + futon, balkon, prywatna łazienka; kolacja i śniadanie w cenie. Duże łaźnie onsen z widokiem na jezioro i Fudżi. <b>Ocena 9,1 z ponad 3 200 opinii</b> — największa próbka spośród ryokanów, które sprawdzaliśmy. Bezpłatny shuttle hotelu od 1.10.2026 jeździ tylko do Gōry (z hotelu 9:30–17:00 mniej więcej co godzinę, ok. 20 min, bez rezerwacji) — do Odawary już nie; 7.05 rano jedziemy autobusem linii T z Tōgendai. Zameldowanie od 15:00, łaźnie 15:00–24:00 i 5:00–10:00. <span style="color:var(--muted);font-size:12px">Zdjęcie: jezioro Ashi z torii chramu Hakone i Fudżi, 10 maja o świcie — fot. Charlie fong, CC BY-SA 4.0, Wikimedia Commons.</span>',
- price:'✅ ZAREZERWOWANE 8.09.2026 — 3 354 zł za noc 6–7.05, z kolacją i śniadaniem; bezpłatne odwołanie',near:'Motohakone-Tōgendai 160, nad jeziorem Ashi — przystanek kolejki linowej i przystań statków tuż obok',
- mapsq:'Hakone Ashinoko Hanaori, Togendai',
- site:'https://www.booking.com/hotel/jp/hakone-ashinoko-hanaori.pl.html'},
+ {id:'auh',name:'Grand Millennium Al Wahda',stay:'Abu Zabi · 27-28.04 · 1 noc, dwa pokoje',
+ desc:'Hotel z pakietu stopover. Dwa pokoje Standard po dwie osoby, bez śniadania. Każdy rodzic z jednym dzieckiem. Godzinę wymeldowania 28.04 potwierdźcie na recepcji; plan zakłada wyjazd na lotnisko o 17:30.',
+ price:'Nocleg w pakiecie; rozliczenie całości lotu i stopoveru do uzgodnienia',near:'Hazza Bin Zayed Street, Al Wahda Complex',
+ cancel:'Rezerwacja bezzwrotna według vouchera. Numery i warunki w prywatnym potwierdzeniu.',
+ mapsq:'Grand Millennium Al Wahda, Abu Dhabi',site:'https://www.millenniumhotels.com/en/abu-dhabi/grand-millennium-al-wahda/'},
+ {id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 29.04-3.05 · 4 noce',
+ desc:'Apartament rodzinny dla 2+2, z kuchnią. W potwierdzeniu nie ma posiłków. Meldunek 15:00-22:00, wymeldowanie do 11:00; przy opóźnionym locie uprzedźcie recepcję. Pranie planujemy 2.05 po warsztacie.',
+ price:'219 283 JPY (około 5 263 zł przy 0,024 zł/JPY); zarezerwowane, w potwierdzeniu zapłacono 0 JPY. Podatek miejski może być dodatkowy.',
+ cancel:'Bezpłatnie do 21.04.2027, 23:59 JST (16:59 w Polsce). Później opłata według potwierdzenia: pełna cena.',
+ near:'Przy południowej stronie dworca Kyoto (Hachijō)',jp:'京都市南区東九条東山王町15-1',
+ book:'https://www.booking.com/hotel/jp/mimaru-jing-du-station.html',site:'https://mimaruhotels.com/en/hotel/kyoto-station/'},
+ {id:'tokio1',name:'MIMARU Tokyo AKASAKA',stay:'Tokio · 3-6.05 · 3 noce',
+ desc:'Zarezerwowany apartament japoński, a nie wariant z czterema łóżkami: dwa łóżka i futony. Kuchnia, bez posiłków, pralnia samoobsługowa na miejscu. Meldunek 15:00-22:00. W zgłoszeniu do hotelu widnieje przyjazd 18:00-19:00; przed podróżą uzgodnijcie planowany meldunek około 15:00.',
+ price:'142 128 JPY (około 3 411 zł przy 0,024 zł/JPY); zarezerwowane, w potwierdzeniu zapłacono 0 JPY. Podatek miejski może być dodatkowy.',
+ cancel:'Bezpłatnie do 25.04.2027, 23:59 JST (16:59 w Polsce). Później opłata według potwierdzenia: pełna cena.',
+ near:'Akasaka (linia Chiyoda) około 4 min pieszo. Do innych stacji i peronów trzeba doliczyć dojście.',jp:'東京都港区赤坂7-9-6',
+ book:'https://www.booking.com/hotel/jp/mimaru-tokyo-akasaka.html',site:'https://mimaruhotels.com/en/hotel/akasaka/'},
+ {id:'hakone',img:'hakone-ashi.webp',name:'Hakone Ashinoko Hanaori',stay:'Hakone · 6-7.05 · 1 noc',
+ desc:'Potwierdzenie Booking: <b>Japanese-Western Deluxe Room with Open-air Bath</b>. Macie prywatną kąpiel na świeżym powietrzu przy pokoju, łóżka oraz futony, śniadanie i kolację. Nie trzeba rezerwować dodatkowej płatnej kąpieli tylko po to, żeby mieć prywatność. Meldunek 15:00-20:00, wymeldowanie do 10:00. Od 1.10.2026 hotelowy shuttle jeździ do Gōry; do Odawary planujemy autobus linii T. Zdjęcie przedstawia jezioro Ashi, nie zarezerwowany pokój (Charlie fong, CC BY-SA 4.0).',
+ price:'139 032 JPY (około 3 337 zł przy 0,024 zł/JPY); zarezerwowane, w potwierdzeniu zapłacono 0 JPY. Dodatkowo 600 JPY podatku onsen według wiadomości.',
+ cancel:'Bezpłatnie do 2.05.2027, 23:59 JST (16:59 w Polsce). Od 3.05 opłata według potwierdzenia: pełna cena.',
+ near:'Motohakone-Tōgendai 160; blisko stacji kolejki, przystanku i jeziora',mapsq:'Hakone Ashinoko Hanaori, Togendai',
+ site:'https://ashinoko-hanaori.orixhotelsandresorts.com/',book:'https://www.booking.com/hotel/jp/hakone-ashinoko-hanaori.pl.html'},
 ];
+
 const gmapsQ = name => 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);
 // day date -> hotel id (check-in days)
-const DAYHOTEL = {'2027-04-27':'auh','2027-04-29':'kioto','2027-05-03':'tokio1','2027-05-06':'hakone'};
+const DAYHOTEL = Object.fromEntries(DAYS.filter(d=>d.stay).map(d=>[d.date,d.stay]));
 const WXGEO = {'2027-04-29':[34.9858,135.7588],'2027-05-03':[35.7148,139.7967],'2027-05-06':[35.2455,139.0195]}; // prognoza tam, gdzie spędzamy dzień/noc
-const DAYINT = {
-  '2027-04-27':['g','Wylot z Warszawy + hotel w Abu Zabi'],
-  '2027-04-28':['y','Wielki Meczet + Luwr + nocny lot'],
-  '2027-04-29':['r','Dzień podróży: przylot, NEX, shinkansen do Kioto — po zameldowaniu nic'],
-  '2027-04-30':['y','Fushimi rano, sjesta, Kiyomizu i Gion po południu'],
-  '2027-05-01':['y','Nara rano + kimono, herbata i kaligrafia po południu'],
-  '2027-05-02':['y','Arashiyama rano, furoshiki po południu, potem luz'],
-  '2027-05-03':['y','Shinkansen do Tokio, Asakusa i (po rezerwacji) pokaz sumo'],
-  '2027-05-04':['y','Meiji + dwa sklepy streetwear + Shibuya Sky (Nintendo opcjonalnie)'],
-  '2027-05-05':['y','Dzień Dziecka: Hie-jinja + Pokémony + Akihabara'],
-  '2027-05-06':['y','Spokojny poranek + pętla Hakone + ryokan (reset)'],
-  '2027-05-07':['y','Autobus do Odawary → Narita, wylot; lądowanie w Warszawie 8.05 rano'],
-};
-const DAYFLEX = {
-  '2027-04-27':['lot z Warszawy + hotel z pakietu','dzień tranzytowy — nic do wycięcia'],
-  '2027-04-28':['nocny lot 21:25 do Tokio','Luwr opcjonalny; meczet zostawić'],
-  '2027-04-29':['NEX + shinkansen (miejscówki!)','wieczór — tylko kolacja i sen'],
-  '2027-04-30':['Fushimi Inari rano + Gion o zmroku','Kiyomizu — gdy sjesta się przeciąga, jedźcie od razu na Yasakę i Gion; Nishiki jest na 2.05'],
-  '2027-05-01':['kimono + ceremonia herbaty (rezerwacja!)','kaligrafię o 18:00 bierze tylko część rodziny; Kasuga Taisha'],
-  '2027-05-02':['warsztat furoshiki 14:00 — punkt stały','małpy na Iwatayamie skreślamy pierwsze, gdy poranek się przeciąga; Kinkaku-ji to i tak opcja'],
-  '2027-05-03':['shinkansen do Tokio (miejscówki!)','Asakusę można skrócić do samego zmierzchu; lunch i godzina w pokoju to bufor'],
-  '2027-05-04':['Shibuya Sky (rezerwacja!) + Cat Street ze sklepami streetwear','Nintendo TOKYO, gdy kolejki; Don Quijote to już tylko opcja po kolacji'],
-  '2027-05-05':['Pokémon Café (rezerwacja!)','Akihabarę wieczorem'],
-  '2027-05-06':['ryokan nad jeziorem + Ōwakudani','rejs po Ashi i Hakone-jinja są tylko opcją — domyślnie od 15:00 onsen i taras'],
-  '2027-05-07':['autobus linii T z Tōgendai ok. 9:15 + shinkansen 11:20 + NEX 13:48 + lot 18:00','lunch na Tokyo Station — gdy shinkansen się spóźni, jecie już na lotnisku'],
-};
+const DAYINT = Object.fromEntries(DAYS.map(d=>[d.date,[d.level,d.brief.focus]]));
+const DAYFLEX = Object.fromEntries(DAYS.map(d=>[d.date,[d.brief.must,d.brief.cut]]));
+const LEVEL_LABEL = {g:'Lekki', y:'Średni', r:'Intensywny - podróż'};
+const ITEM_LABEL = {lot:'Lot z biletu',rezerwacja:'Do potwierdzenia',opcja:'Opcja',bufor:'Zapas / odpoczynek'};
+const TIMING_NOTE = 'Wszystkie godziny są miejscowe. Loty według e-biletów; pozostałe godziny to plan do dopasowania do rozkładów i rezerwacji. „Do potwierdzenia” nie oznacza kupionego biletu.';
 
 /* ============================ TEMPLATES ============================ */
 const TABS = [['index.html','Agenda'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['niezbednik.html','Niezbędnik'],['pogoda.html','Przed wyjazdem'],['koszty.html','Koszty'],['decyzje.html','Kulisy']];
 function nav(active,prefix){
-  const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on"':'')}>${l}</a>`).join('');
+  const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on" aria-current="page"':'')}>${l}</a>`).join('');
   return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html"><span class="bj" aria-hidden="true">日本</span>Japonia 2027<span class="bcode">27.04–08.05</span></a><nav class="tabs">${t}</nav></div></div>`;
 }
 function pills(curIdx){
   const items = DAYS.map((d,i)=>{
     const [dd] = d.dd.split(' ');
-    return `<a href="${d.date}.html"${(i===curIdx?' class="on"':'')}><b>${i+1}</b><span>${d.date.slice(8,10)}.${d.date.slice(5,7)}</span></a>`;
+    return `<a href="${d.date}.html"${(i===curIdx?' class="on" aria-current="date"':'')}><b>${i+1}</b><span>${d.date.slice(8,10)}.${d.date.slice(5,7)}</span></a>`;
   }).join('');
   return `<div class="pills">${items}</div>`;
 }
@@ -1298,7 +1341,8 @@ function shell({title,desc,prefix,active,inner,pillsIdx}){
 <div class="progress" id="progress"></div>
 ${nav(active,prefix)}
 ${pillsIdx!=null?pills(pillsIdx):''}
-<main class="wrap">
+<a class="skip-link" href="#tresc">Przejdź do treści</a>
+<main class="wrap" id="tresc">
 ${inner}
 </main>
 <button class="totop" id="totop" aria-label="Do góry">↑</button>
@@ -1308,9 +1352,9 @@ ${inner}
 </html>`;
 }
 function footer(prefix){
-  return `<footer>Przewodnik rodzinny · Japonia 27 kwietnia – 8 maja 2027 · strona prywatna (noindex) · wydanie ${BUILD_ID}<br>
+  return `<footer>Przewodnik rodzinny · Japonia 27 kwietnia – 8 maja 2027 · strona nieindeksowana · wydanie ${BUILD_ID}<br>
   Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br>
-  Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="${prefix}index.html">Strona główna</a> · <a href="${prefix}druk.html">Plan do druku (PDF)</a></footer>`;
+  Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="${prefix}index.html">Strona główna</a> · <a href="${prefix}druk.html">Drukuj / zapisz jako PDF</a></footer>`;
 }
 
 /* Wyciąga z karty katalogu godziny/ceny/uwagi — żeby strona dnia miała je NA MIEJSCU. */
@@ -1332,92 +1376,50 @@ function dayMeta(d){
     const m = atrMeta(l.id); if (!m) return '';
     const c = CLOSED[l.id]; const conflict = c && c.days.includes(wd);
     if (conflict) console.warn('⚠ ZAMKNIĘTE', d.date, l.id, c.note);
-    const closed = conflict ? `<b style="color:var(--shu)">⚠ zamknięte w ${DOW[wd]} — ${c.note}</b>` : (m.closed || (c ? c.note : '')) ;
+    const closed = conflict ? `<b style="color:var(--shu)">⚠ zamknięte w ${DOW[wd]} - ${c.note}</b>` : (m.closed || (c ? c.note : '')) ;
     return `<tr><td class="dcol">${l.label}</td><td>${m.hours||'—'}</td><td>${m.price||'—'}</td><td>${m.book?'<b>tak</b>':'nie'}${closed?'<br><small>📅 '+closed+'</small>':''}</td></tr>`;
   }).join('');
   return rows ? `
   <section>
-    <h2 class="stitle">Godziny, ceny, rezerwacje — na dziś</h2>
+    <h2 class="stitle">Orientacyjne godziny i ceny</h2>
     <div class="card" style="padding:0;overflow:hidden"><div style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Miejsce</th><th>Godziny</th><th>Cena</th><th>Rezerwacja</th></tr></thead><tbody>${rows}</tbody></table></div></div>
-    <p class="note" style="margin-top:6px">Dane z katalogu atrakcji (${d.dow}). Przy zmianie kolejności dni sprawdźcie dni zamknięcia — build ostrzega o kolizjach.</p>
+    <p class="note" style="margin-top:6px">Katalog orientacyjny. Przed zakupem sprawdźcie cenę dla wieku 10 i 13 lat, godziny oraz warunki u operatora.</p>
   </section>` : '';
 }
 function dayPage(d,i){
-  const prefix='../';
-  const prev=DAYS[i-1], next=DAYS[i+1];
-  const tl = d.tl.map(x=>`<li><div class="tm">${x[0]}</div><div class="bd"><p class="h">${x[1]}</p>${x[2]?`<p class="d">${x[2]}</p>`:''}</div></li>`).join('');
-  const facts = d.facts.map((f,idx)=>{
-    const span=(d.facts.length%2===1 && idx===d.facts.length-1)?' style="grid-column:1/-1"':'';
-    return `<div${span}><div class="fv">${f[0]}</div><div class="fk">${f[1]}</div></div>`;
-  }).join('');
-  const tips = d.tips.map(t=>`<li>${t}</li>`).join('');
-  const links = d.links.length?`<div class="linklist">${d.links.map(l=>`<a href="${prefix}atrakcje.html#${l.id}">🎟️ ${l.label}</a>`).join('')}</div>`:'';
-  const pc = d.pc?`<div class="pc"><div class="pch">🧭 Na miejscu: ${d.pc.q}</div>${d.pc.opts.map(o=>`<div class="row"><span class="opt">${o[0]}</span> — <span class="plus">za:</span> ${o[1]}; <span class="minus">przeciw:</span> ${o[2]}.</div>`).join('')}</div>`:'';
-  const more = d.more.length?`<section class="more"><h2 class="stitle">Więcej o tym dniu</h2><div class="card">${d.more.map(m=>`<details><summary>${m[0]}</summary><p>${m[1]}</p></details>`).join('')}</div></section>`:'';
-  const fx = DAYFLEX[d.date];
-  const metaSec = dayMeta(d);
-  const rainNote = DAYRAIN[d.date] ? `<div class="dayflag rain"><b>☔ Jeśli pada:</b> ${DAYRAIN[d.date]}</div>` : '';
-  const crowdNote = DAYCROWD[d.date] ? `<div class="dayflag"><b>👥 Tłum i dzień tygodnia:</b> ${DAYCROWD[d.date]}</div>` : '';
-  const wx = (GEO[d.date]&&GEO[d.date][0]) ? `<div class="dayflag wxday" data-date="${d.date}" data-la="${(WXGEO[d.date]||GEO[d.date][0])[0]}" data-lo="${(WXGEO[d.date]||GEO[d.date][0])[1]}" style="display:none"></div>` : '';
-  const flexNote = fx ? `<div class="flex"><span class="fxlock"><b>🔒 Nie ruszać:</b> ${fx[0]}</span><span class="fxcut"><b>✂️ Można odpuścić:</b> ${fx[1]}</span></div>` : '';
-  const hid = DAYHOTEL[d.date];
-  const hotelBox = hid ? (()=>{const H=HOTELS.find(h=>h.id===hid);
-    return `<a class="hotelbox" href="../hotele.html#${H.id}">🏨 <span><b>Nocleg: ${H.name}</b> — szczegóły, cena i link do mapy →</span></a>`;})() : '';
-  const geo = GEO[d.date]||[];
-  const gdir = geo.length?`https://www.google.com/maps/dir/${geo.map(g=>g[0]+','+g[1]).join('/')}`:'#';
-  const legend = geo.map((g,idx)=>`<li><span class="mn">${idx+1}</span> ${g[2]}</li>`).join('');
-  const mapSec = geo.length?`
-  <section>
-    <h2 class="stitle">Trasa dnia</h2>
-    <div class="card">
-      <div class="maphold"><button class="mapbtn" id="mapActivate">🗺️ Aktywuj mapę</button><div id="map" class="map"></div></div>
-      <ol class="maplegend">${legend}</ol>
-      <a class="gmap" href="${gdir}" target="_blank" rel="noopener">📍 Otwórz trasę w Google Maps ↗</a>
-      <p class="note" style="margin-top:6px">Orientacyjna trasa — linia łączy główne punkty; dokładny przebieg dróg sprawdź w Google Maps.</p>
-      <script type="application/json" id="geo">${JSON.stringify(geo)}</script>
-    </div>
-  </section>`:'';
-  const inner = `
-  <header class="hero kb">
-    <div class="hbg"><div class="hbg-img" style="background:${heroBg(d.city, DAYIMG[d.date])}"></div></div>
-    <div class="hero-inner">
-    <p class="eyebrow">Dzień ${i+1} z ${DAYS.length} · ${d.dow} · ${d.dd}</p>
-    <h1>${d.title}</h1>
-    <p class="lead">${d.lead}</p>
-    <div class="chips">${d.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
-  </div>
-  </header>
-
-  <section>
-    <h2 class="stitle">Plan dnia</h2>
-    <div class="card"><ul class="tline">${tl}</ul></div>
-  </section>
-
-  <section>
-    <h2 class="stitle">W skrócie</h2>
-    <div class="facts">${facts}</div>
-    ${flexNote}${crowdNote}${rainNote}${wx}
-    ${hotelBox}
-    ${pc}
-  </section>
-  ${mapSec}
-
-  <section>
-    <h2 class="stitle">Wskazówki praktyczne</h2>
-    <div class="card"><ul class="tips">${tips}</ul>${links?'<div style="margin-top:14px">'+links+'</div>':''}</div>
-  </section>
-  ${metaSec}${more}
-
-  <nav class="daynav">
-    ${prev?`<a id="navPrev" href="${prev.date}.html"><div class="dir">← Poprzedni</div><div class="ttl">${prev.dd}</div></a>`:`<a id="navPrev" href="${prefix}index.html"><div class="dir">←</div><div class="ttl">Start</div></a>`}
-    <a class="home" href="${prefix}index.html" title="Strona główna">⌂</a>
-    ${next?`<a class="nx" id="navNext" href="${next.date}.html"><div class="dir">Następny →</div><div class="ttl">${next.dd}</div></a>`:`<a class="nx" id="navNext" href="${prefix}index.html"><div class="dir">→</div><div class="ttl">Koniec</div></a>`}
-  </nav>
-  <p class="kbd">Przełączaj dni strzałkami ← → na klawiaturze albo z paska u góry.</p>
-  ${footer(prefix)}`;
-  return shell({title:`Dzień ${i+1}: ${d.title} · Japonia 2027`,desc:d.lead,prefix,active:'index.html',inner,pillsIdx:i});
+  const prefix='../', prev=DAYS[i-1], next=DAYS[i+1], H=HOTELS.find(h=>h.id===d.stay);
+  const tl=d.tl.map(([time,title,desc,kind])=>'<li class="'+(kind||'plan')+'"><div class="tm">'+time.replace('8.05 ','8.05<br>')+'</div><div class="bd">'+
+    (desc?'<details class="event"><summary><span class="h">'+title+'</span>'+(kind?'<span class="event-tag '+kind+'">'+ITEM_LABEL[kind]+'</span>':'')+'</summary><p class="d">'+desc+'</p></details>':'<p class="h">'+title+'</p>')+'</div></li>').join('');
+  const geo=GEO[d.date]||[];
+  const gdir=geo.length?'https://www.google.com/maps/dir/'+geo.map(g=>g[0]+','+g[1]).join('/'):'#';
+  const brief=d.brief;
+  const mapSec=geo.length?'<section id="mapa"><h2 class="stitle">Mapa dnia</h2><div class="card"><div class="maphold"><button class="mapbtn" id="mapActivate">Aktywuj mapę</button><div id="map" class="map"></div></div><ol class="maplegend">'+geo.map((g,i)=>'<li><span class="mn">'+(i+1)+'</span> '+g[2]+'</li>').join('')+'</ol><a class="gmap" href="'+gdir+'" target="_blank" rel="noopener">Otwórz punkty w Google Maps ↗</a><p class="note">Linia łączy punkty orientacyjnie. Google Maps może domyślnie wybrać samochód; ustawcie właściwy środek transportu i datę.</p><script type="application/json" id="geo">'+JSON.stringify(geo)+'</script></div></section>':'';
+  const weather=WXGEO[d.date]||geo[0];
+  const inner = '<header class="hero kb day-hero"><div class="hbg"><div class="hbg-img" style="background:'+heroBg(d.city,DAYIMG[d.date])+'"></div></div><div class="hero-inner">'+
+    '<p class="eyebrow">Dzień '+(i+1)+' z '+DAYS.length+' · '+d.dow+' · '+d.dd+'</p><h1>'+d.title+'</h1><p class="lead">'+d.lead+'</p></div></header>'+
+    '<nav class="section-nav" aria-label="Skróty tego dnia"><a href="#skrot">W minutę</a><a href="#plan">Godziny</a><a href="#mapa">Mapa</a><a href="#warunki">Plan B</a><a href="#nocleg">Nocleg</a></nav>'+
+    '<section id="skrot" class="day-brief"><h2 class="stitle">Ten dzień w minutę</h2><div class="brief-stats"><div><span>Start</span><b>'+brief.start+'</b></div><div><span>Koniec</span><b>'+brief.end+'</b></div><div><span>Tempo podstawowe</span><b class="pace '+d.level+'">'+LEVEL_LABEL[d.level]+'</b></div></div>'+
+    '<p class="brief-focus">'+brief.focus+'</p><dl class="brief-rules"><div><dt>Chronimy</dt><dd>'+brief.must+'</dd></div><div><dt>Można odpuścić</dt><dd>'+brief.cut+'</dd></div><div class="guard"><dt>Sprawdź</dt><dd>'+brief.check+'</dd></div></dl></section>'+
+    '<section id="plan"><div class="section-heading"><h2 class="stitle">Godzina po godzinie</h2><button class="reset" type="button" id="timelineToggle" aria-expanded="false">Rozwiń szczegóły</button></div><p class="note timing-note">'+TIMING_NOTE+'</p><div class="card"><ul class="tline">'+tl+'</ul></div></section>'+
+    '<section id="warunki"><h2 class="stitle">Gdy warunki się zmienią</h2><div class="dayflag rain"><b>Plan B:</b> '+(DAYRAIN[d.date]||brief.cut)+'</div>'+
+    (DAYCROWD[d.date]?'<div class="dayflag"><b>Tłum i tempo:</b> '+DAYCROWD[d.date]+'</div>':'')+
+    (weather?'<div class="dayflag wxday" data-date="'+d.date+'" data-la="'+weather[0]+'" data-lo="'+weather[1]+'" style="display:none"></div>':'')+
+    (d.pc?'<details class="card option-detail"><summary>'+d.pc.q+'</summary>'+d.pc.opts.map(o=>'<p><b>'+o[0]+'</b><br>Za: '+o[1]+'.<br>Przeciw: '+o[2]+'.</p>').join('')+'</details>':'')+'</section>'+
+    mapSec+
+    '<section id="nocleg"><h2 class="stitle">Gdzie śpimy</h2>'+
+    (H?'<div class="card"><b>'+H.name+'</b><p>'+H.stay+'</p><p class="note">'+H.cancel+'</p><div class="linklist"><a href="../hotele.html#'+H.id+'">Pokój i rezerwacja</a><a href="'+gmapsQ(H.mapsq||H.name)+'" target="_blank" rel="noopener">Dojazd w Google Maps ↗</a></div></div>':'<div class="card">'+(d.date==='2027-04-28'?'Noc w samolocie do Japonii.':'Noc w podróży powrotnej; lądowanie WAW 8 maja o 06:50.')+'</div>')+'</section>'+
+    '<section><h2 class="stitle">Przydatne na miejscu</h2><div class="card"><ul class="tips">'+d.tips.map(t=>'<li>'+t+'</li>').join('')+'</ul><div class="linklist" style="margin-top:16px">'+d.links.map(l=>'<a href="../atrakcje.html#'+l.id+'">'+l.label+'</a>').join('')+'</div></div></section>'+
+    '<details class="more detail-catalog"><summary>Godziny i ceny miejsc z katalogu</summary>'+dayMeta(d)+'</details>'+
+    '<nav class="daynav" aria-label="Sąsiednie dni"><a id="navPrev" href="'+(prev?prev.date+'.html':'../index.html#dni')+'"><div class="dir">← Poprzedni</div><div class="ttl">'+(prev?prev.dd:'Agenda')+'</div></a><a class="home" href="../index.html#dni" aria-label="Wszystkie dni">☰</a><a class="nx" id="navNext" href="'+(next?next.date+'.html':'../index.html#powrot')+'"><div class="dir">'+(next?'Następny →':'Powrót →')+'</div><div class="ttl">'+(next?next.dd:'8 maja')+'</div></a></nav>'+footer(prefix);
+  return shell({title:'Dzień '+(i+1)+': '+d.title+' · Japonia 2027',desc:d.lead,prefix,active:'index.html',inner,pillsIdx:i});
 }
 
+function deadlineList(prefix=''){
+  return '<ol class="deadlines">'+DEADLINES.map(d=>'<li><time datetime="'+d.date+'">'+d.label+'</time><div><a href="'+prefix+d.href+'"><b>'+d.title+'</b></a><p>'+d.text+'</p></div></li>').join('')+'</ol>';
+}
+function readiness(){
+  return '<div class="readiness"><b>Loty i cztery pobyty hotelowe potwierdzone</b><p>Do domknięcia: miejsca w pociągach, bilety na atrakcje i dojazd z Hakone. Potwierdzenia hoteli z 8.09 wskazują płatność na później.</p><a href="decyzje.html#do-zalatwienia">Sprawdź listę do załatwienia →</a> · <a href="#terminy">Terminy i pogoda</a></div>';
+}
 /* ---- index ---- */
 function indexPage(){
   const intLbl={g:'Lekki',y:'Średni',r:'Intensywny'};
@@ -1428,27 +1430,27 @@ function indexPage(){
     <span class="tt-n">${String(i+1).padStart(2,'0')}</span>
     <span class="tt-date"><b>${dnum}.${mm}</b><i>${DOW3[d.dow]||d.dow}</i></span>
     <span class="tt-city" style="--c:rgb(${CITY[d.city].c1})">${CITYNAME[d.city]||d.city}</span>
-    <span class="tt-title">${d.title}</span>
+    <span class="tt-title">${d.title}<small>${d.brief.start} · ${intLbl[it[0]]}${d.level==='r'?' (podróż)':''}</small></span>
     ${it?`<span class="tt-int ${it[0]}" title="${intLbl[it[0]]} dzień" aria-label="${intLbl[it[0]]} dzień"></span>`:'<span></span>'}
     <img class="tt-img" src="${DAYIMG[d.date]}" alt="" width="88" height="56" loading="${i<3?'eager':'lazy'}" decoding="async">
   </a></li>`;}).join('');
   const quick = `<div class="lines">
-    <a class="line" href="atrakcje.html"><b>Atrakcje</b><span>Godziny, ceny, dni zamknięcia i linki do rezerwacji — 44 miejsca.</span></a>
-      <a class="line" href="hotele.html"><b>Hotele</b><span>Trzy bazy na 8 nocy w Japonii i noc w Abu Zabi w cenie biletu — wszystko zarezerwowane.</span></a>
+    <a class="line" href="atrakcje.html"><b>Atrakcje</b><span>Miejsca z planu i propozycje rezerwowe, z linkami do operatorów.</span></a>
+      <a class="line" href="hotele.html"><b>Hotele</b><span>Pokoje, posiłki i terminy odwołania. Hanaori Deluxe z prywatną kąpielą.</span></a>
       <a class="line" href="niezbednik.html"><b>Niezbędnik</b><span>Przejazdy, pieniądze, internet, zwyczaje, numery alarmowe.</span></a>
       <a class="line" href="pogoda.html"><b>Przed wyjazdem</b><span>Klimat na przełomie kwietnia i maja, plan pakowania na 7 kg, plany B na deszcz.</span></a>
       <a class="line" href="druk.html"><b>Przewodnik do druku</b><span>Cały plan na kartkach — do wydruku albo offline na telefon.</span></a>
       <a class="line" href="koszty.html"><b>Budżet</b><span>Kalkulator kosztów i zweryfikowane taryfy kolejowe — ~43 tys. zł.</span></a>
-      <a class="line" href="decyzje.html"><b>Kulisy planu</b><span>Zaplecze, nie lektura obowiązkowa: co jeszcze do załatwienia, kilka otwartych wyborów, kronika zmian. Archiwum cen lotów: strona Loty.</span></a>
+      <a class="line" href="decyzje.html"><b>Kulisy planu</b><span>Co jeszcze załatwić, dlaczego taka trasa i jak zmienić dzień bez pośpiechu.</span></a>
   </div>`;
   const inner = `
   <header class="hero home">
     <div class="hbg"><div class="hbg-img" style="background-image:url('${IMG.fuji}')"></div></div>
     <div class="hgrad"></div>
     <div class="hero-inner">
-      <p class="eyebrow">Przewodnik rodzinny · 2+2 · 11 dni · Narita → Kioto → Tokio → Hakone</p>
+      <p class="eyebrow">Przewodnik rodzinny · 2+2 · 11 dni programu + powrót · Narita → Kioto → Tokio → Hakone</p>
       <h1>Japonia 2027</h1>
-      <p class="lead">27 kwietnia – 8 maja 2027 (lądowanie w Warszawie w sobotę 8.05 o 6:50) · Abu Zabi (stopover z hotelem gratis) – Kioto – Tokio – Hakone, z wypadem do Nary. Trasa odwrócona pod Golden Week: Kioto przed szczytem świąt, święta w Tokio (znosi je lepiej niż Kioto), na koniec ryokan i z gór prosto na lotnisko.</p>
+      <p class="lead">27 kwietnia - 8 maja 2027. Noc w Abu Zabi, cztery noce w Kioto z wypadem do Nary, trzy w Tokio i prywatna kąpiel w Hakone. Kultura, Pokémony i czas na odpoczynek. Powrót do Warszawy 8 maja o 06:50.</p>
       <div class="chips"><span class="chip hanko">Bilety kupione</span><span class="chip">noc w Abu Zabi gratis</span><span class="chip">8 nocy w Japonii</span><span class="chip">Dzień Dziecka w Tokio</span><span class="chip">ryokan nad jeziorem</span></div>
     </div>
     <div class="scrollcue" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
@@ -1462,25 +1464,28 @@ function indexPage(){
     <div class="stt"><b>~43<small>tys zł</small></b><span>budżet 2+2</span></div>
   </section>
 
-  <section>
+  ${readiness()}
+  <nav class="section-nav" aria-label="Skróty agendy"><a href="#dni">Dni</a><a href="#trasa">Mapa Japonii</a><a href="#terminy">Terminy</a><a href="druk.html">Druk / PDF</a></nav>
+  <section id="dni">
     <h2 class="stitle">Dzień po dniu</h2>
-    <p class="lead-p">Kliknij dowolny dzień, żeby zobaczyć plan godzinowy, wskazówki i „w skrócie". Golden Week trwa do 5 maja i oba przejazdy shinkansenem (29.04 i 3.05) wypadają w jej szczycie — dlatego miejscówki są rezerwowane z wyprzedzeniem, a atrakcje w Tokio bierzemy rano, zanim ruszy fala.</p>
-    <ol class="tt">${cards}</ol>
+    <p class="lead-p">Każdy dzień zaczyna się krótkim podsumowaniem: po co jedziemy, co chronimy i co można odpuścić. Dalej są godziny, mapa, nocleg i plan B. W Golden Week rezerwacje wymagają wyprzedzenia; oba duże przejazdy kolejowe wypadają w tym okresie.</p>
+    <ol class="tt">${cards}</ol><div class="return-note" id="powrot"><b>8 maja · sobota · 06:50</b><span>Lądowanie w Warszawie. Spokojny powrót do domu i weekend na odpoczynek.</span></div>
     <p class="note" style="margin-top:12px">Znacznik przy wierszu to obciążenie dnia: <b style="color:var(--success)">●</b> lekki · <b style="color:var(--warn)">●</b> średni · <b style="color:var(--hanko)">●</b> intensywny. Zaplecze planu: <a href="decyzje.html">Kulisy</a>.</p>
   </section>
 
-  <section>
+  <section id="trasa">
     <h2 class="stitle">Nasza trasa po Japonii</h2>
     <p class="lead-p">Cała podróż na jednej mapie, tym razem od zachodu: z Narity od razu shinkansenem do Kioto (cztery noce, wypady do Nary i Arashiyamy), na święta Golden Week do Tokio (trzy noce), a na koniec ryokan w Hakone — i z gór prosto na lotnisko. Dzień w Abu Zabi (stopover w drodze tam) jest poza tą mapą.</p>
     <div class="card">
       <div class="maphold"><button class="mapbtn" id="mapActivate">🗺️ Aktywuj mapę</button><div id="map" class="map"></div></div>
       <ol class="maplegend">${JPSTOPS.map(s=>`<li>${s[2]}</li>`).join('')}</ol>
       <a class="gmap" href="https://www.google.com/maps/dir/Narita+Airport/Kyoto,+Japan/Tokyo,+Japan/Hakone,+Kanagawa/Narita+Airport" target="_blank" rel="noopener">📍 Otwórz trasę w Google Maps ↗</a>
-      <p class="note" style="margin-top:6px">Linia pokazuje kierunek podróży (Kioto → Tokio → Hakone); z Hakone jedziemy prosto na Naritę.</p>
-      <script type="application/json" id="geo">${JSON.stringify(JPSTOPS)}</script>
+      <p class="note" style="margin-top:6px">Linia jest schematem, nie przebiegiem torów. Nara to wypad z Kioto; po Hakone wracacie przez Odawarę i Tokio na Naritę. Dokładne wejścia do hoteli otwierajcie z ich kart.</p>
+      <script type="application/json" id="geo">${JSON.stringify(JPSTOPS)}</script><script type="application/json" id="geo-route">${JSON.stringify(JPROUTE)}</script>
     </div>
   </section>
 
+  <section id="terminy"><h2 class="stitle">Najważniejsze terminy</h2><p class="lead-p">Terminy hoteli z potwierdzeń Booking sprawdzonych 9.09.2026. Po zmianie rezerwacji sprawdźcie je ponownie. Daty poniżej nie uruchamiają automatycznych powiadomień.</p>${deadlineList()}</section>
   <section>
     <h2 class="stitle">Przewodnik</h2>
     ${quick}
@@ -1498,45 +1503,46 @@ function kosztyPage(){
     <div class="hero-inner">
     <p class="eyebrow">Bilety lotnicze i budżet</p>
     <h1>Bilety i koszty</h1>
-    <p class="lead">Bilety kupione 8.09.2026 za 14 400 zł, noclegi zarezerwowane tego samego dnia za 12 033 zł. Poniżej to, co jeszcze zostało do wydania: zweryfikowane taryfy kolejowe i kalkulator budżetu dla całej rodziny.</p>
+    <p class="lead">Loty i hotele są zarezerwowane. Poniżej oddzielamy kwoty z dokumentów od szacunków: e-bilety 13 643,36 zł, hotele w Japonii 500 443 JPY przed dodatkowymi podatkami. Budżet w złotych pozostaje orientacyjny.</p>
   </div>
   </header>
 
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
-    <div class="pflag">✈️ <span><b>Bilet kupiony: Etihad ${TICKET.label} — ${plz(TICKET.family)} za 4 osoby</b> (z hotelem 4★ w Abu Zabi w pakiecie), bez bagażu rejestrowanego. Szczegóły i tło rynkowe na zakładce <a href="loty.html">Loty</a>.</span></div>
+    <div class="pflag">✈️ <span><b>Etihad ${TICKET.label}</b>. Rezerwa w kalkulatorze: ${plz(TICKET.family)} za rodzinę do uzgodnienia z kartą (z hotelem 4★ w Abu Zabi w pakiecie), bez bagażu rejestrowanego. Szczegóły i tło rynkowe na zakładce <a href="loty.html">Loty</a>.</span></div>
     <div class="card"><ul class="tips">
-      <li>Ta kwota to cena z zakupu — pole „Loty" w kalkulatorze jest już stałe, monitoring cen wyłączony.</li>
+      <li>E-bilety sumują się do 13 643,36 zł. Kalkulator ostrożnie przyjmuje 14 400 zł; różnica 756,64 zł wymaga uzgodnienia z obciążeniem karty. Pole jest edytowalne.</li>
       <li>Historia cen, porównanie linii i wybór terminu zostały na zakładce Loty jako archiwum — pokazują, dlaczego wybór padł na Etihad ze stopoverem.</li>
     </ul>
     <a class="gmap" href="loty.html">✈️ Zobacz ceny, trendy i strategię zakupu → </a></div>
   </section>
 
   <section>
-    <h2 class="stitle">Transport w Japonii — zweryfikowane taryfy</h2>
-    <p class="lead-p">Taryfy sprawdzone w lipcu 2026; przeliczenia po kursie NBP z 7.09.2026: ¥100 ≈ 2,40 zł. Młodsze dziecko (do 11 lat) płaci taryfę dziecięcą — na kolei dokładnie połowę.</p>
+    <h2 class="stitle">Transport w Japonii - podstawa budżetu</h2>
+    <p class="lead-p">Kontrola 9.09.2026. Przeliczenie planistyczne: 100 JPY = 2,40 zł. Taryfy na konkretny pociąg i dzień w 2027 trzeba potwierdzić; Golden Week może oznaczać dopłatę sezonową. Liczymy trzy bilety dorosłe i jeden dziecięcy.</p>
     ${seg('Przejazdy między miastami',[
-      '<b>Narita → Tokio → Kioto</b> (29.04): NEX ~¥3 070 + shinkansen ~¥14 170/dorosły',
+      '<b>Narita → Tokio → Kioto</b> (29.04): NEX obecnie 3 140 JPY/dorosły w jedną stronę; shinkansen planistycznie około 14-15 tys. JPY/dorosły. NEX kupuje się w JR East, shinkansen w SmartEX.',
       
       
-      '<b>Kioto → Tokio</b> (3.05): shinkansen ~¥14 170/dorosły','<b>Odawara → Tokio → Narita</b> (7.05): shinkansen ~¥3 500 + NEX ~¥3 070',
-      '<b>Razem dla 2+2: ~¥118 000 ≈ 2 750 zł</b> (kolej międzymiastowa; metro i Hakone osobno)',
-      'JR Pass (~¥50 000/os.) wciąż się <b>nie opłaca</b> — dwa shinkanseny to za mało'])}
+      '<b>Kioto → Tokio</b> (3.05): shinkansen około 14-15 tys. JPY/dorosły. Rozkład i cztery miejsca potwierdźcie po finalizacji rezerwacji.', '<b>Odawara → Tokio → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
+      '<b>Kolej międzymiastowa: orientacyjnie 3,1-3,4 tys. zł za rodzinę</b>; do tego Hakone, Nara, komunikacja miejska i taksówki. Cały transport ma osobny zapas w kalkulatorze.', '<b>Do sprawdzenia przed zakupem:</b> N’EX TOKYO Round Trip Ticket ważny 14 dni: obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko, czyli 18 200 JPY (około 437 zł) za oba przejazdy rodziny. Daty 29.04 i 7.05 mieszczą się w ważności. Sprawdźcie uprawnienia i zarezerwujcie konkretne pociągi.',
+      'Standardowy JR Pass nie jest tu domyślnym zakupem. Porównajcie pełny koszt z biletami punktowymi; uprawnienie do Nozomi wymaga dodatkowych warunków/opłaty'])}
   </section>
 
+  <p class="note">Źródła taryf: <a href="https://www.jreast.co.jp/en/multi/nex/tickets/" target="_blank" rel="noopener">JR East NEX</a>, <a href="https://www.jreast.co.jp/en/multi/pass/nex.html" target="_blank" rel="noopener">bilet NEX tam i z powrotem</a>, <a href="https://smart-ex.jp/en/product/plan/service/" target="_blank" rel="noopener">SmartEX i dopłaty sezonowe</a>, <a href="https://www.hakonenavi.jp/international/en/discount_passes/free_pass" target="_blank" rel="noopener">Hakone Freepass</a>.</p>
   <section>
     <h2 class="stitle">Kalkulator kosztów</h2>
-    <p class="lead-p">Szacunek dla <b>2+2</b> na cały wyjazd. Młodsze dziecko (do 11 lat) = taryfa dziecięca: lot ~−15–25%, kolej −50%, wiele atrakcji taniej. Wszystkie pola możesz edytować — suma liczy się na bieżąco, a zmiany zapisują się w przeglądarce.</p>
+    <p class="lead-p">Szacunek dla <b>2+2</b> na cały wyjazd. W japońskiej kolei liczymy trzy taryfy dorosłe i jedną dziecięcą (10 lat); zaokrąglenia zależą od biletu. Linie lotnicze i atrakcje mają własne progi wieku. Wszystkie pola możesz edytować — suma liczy się na bieżąco, a zmiany zapisują się w przeglądarce.</p>
     <div class="card calc">
       <table>
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
-          <tr><td class="cat">✈️ Loty<span class="hint">Etihad ze stopoverem, kupione 8.09 — obciążenie 14 400 zł (e-bilety 13 643,36 zł + ok. 757 zł opłat; do uzgodnienia z wyciągiem); bez bagażu rejestrowanego (walizka na powrót ~220 zł tylko awaryjnie)</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" value="${TICKET.total}" min="0" step="100"></td></tr>
-          <tr><td class="cat">🏨 Noclegi<span class="hint">Wszystkie trzy zarezerwowane 8.09, ceny potwierdzone: Kyoto Station 5 266 (4 noce) + Tokyo Akasaka 3 413 (3 noce) + Hanaori 3 354 (1 noc z kolacją i śniadaniem) = <b>12 033 zł</b>; Abu Zabi gratis w pakiecie stopover</span></td><td class="num"><input type="number" id="nights" class="sm" value="${CALC.nights}" min="0"><span class="x">×</span><input type="number" id="nightRate" class="sm" value="${CALC.nightRate}" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
-          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca, kurs NBP 2,40: Nozomi ×2 ~2 500 zł, Odawara→Tokio ~320, NEX ×2 ~520, Free Pass + Romancecar ~650 (7 100/1 600 ¥ + 1 200/600 ¥), Kintetsu Ltd. Exp. ~215, metro/IC ~620, taksówka pod Kiyomizu ~50, transfery w Abu Zabi ~150</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" value="${CALC.transport}" min="0" step="100"></td></tr>
-          <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" class="sm" value="${CALC.days}" min="0"><span class="x">×</span><input type="number" id="foodRate" class="sm" value="${CALC.foodRate}" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
-          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">podstawa ~1 680 zł: herbata w kimonie 4 os. ~740, kaligrafia mama ~120, furoshiki mama z córką ~190, Pokémon Café ~180, Shibuya Sky ~200, świątynie + małpy + drobiazgi ~250; reszta (~520) na opcje: Open-Air Museum, Kinkaku-ji, teamLab, warsztaty dla większej liczby osób; pokaz sumo 3.05 z chanko ~1 100 zł za 2+2 (liczy się też jako kolacja)</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" value="${CALC.attractions}" min="0" step="100"></td></tr>
-          <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane; streetwear dla dzieci (4.05) liczcie osobno — koszulka ~150–300 zł, bluza ~500–1 000 zł</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" value="${CALC.extras}" min="0" step="100"></td></tr>
+          <tr><td class="cat">✈️ Loty<span class="hint">E-bilety: 13 643,36 zł. Wpisane 14 400 zł to ostrożna rezerwa do uzgodnienia z kartą, nie potwierdzone rozliczenie dopłat. Bez bagażu rejestrowanego; ewentualną dopłatę wyceńcie w Manage Booking.</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" aria-label="Koszt lotów za rodzinę, zł" value="${TICKET.total}" min="0" step="100"></td></tr>
+          <tr><td class="cat">🏨 Noclegi<span class="hint">Trzy rezerwacje: łącznie <b>500 443 JPY</b>; w potwierdzeniach z 8.09 zapłacono 0 JPY. Średnia poniżej daje około 12 tys. zł, zależnie od kursu i podatków. Abu Zabi z vouchera stopover.</span></td><td class="num"><input type="number" id="nights" aria-label="Liczba nocy w Japonii" class="sm" value="${CALC.nights}" min="0"><span class="x">×</span><input type="number" id="nightRate" aria-label="Średni koszt noclegu rodzinnego, zł" class="sm" value="${CALC.nightRate}" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
+          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca, kurs NBP 2,40: pociągi dalekobieżne około 3,1-3,4 tys. zł; Hakone Freepass i Romancecar, Nara, metro, taksówki oraz transfery w Abu Zabi osobno. 5 000 zł jest budżetem z zapasem, nie sumą opłaconych biletów</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" aria-label="Budżet transportu, zł" value="${CALC.transport}" min="0" step="100"></td></tr>
+          <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" aria-label="Liczba dni wyżywienia" class="sm" value="${CALC.days}" min="0"><span class="x">×</span><input type="number" id="foodRate" aria-label="Wyżywienie rodziny na dzień, zł" class="sm" value="${CALC.foodRate}" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
+          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">Pula na herbatę, furoshiki, kaligrafię dla chętnych, świątynie, Café i taras oraz opcjonalny pokaz sumo. Ceny pakietów i progi wieku trzeba potwierdzić. Jeśli pokaz zawiera kolację, nie liczcie tego posiłku drugi raz w wyżywieniu.</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" aria-label="Budżet atrakcji, zł" value="${CALC.attractions}" min="0" step="100"></td></tr>
+          <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane; streetwear dla dzieci (4.05) liczcie osobno — koszulka ~150–300 zł, bluza ~500–1 000 zł</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" aria-label="Rezerwa i dodatkowe wydatki, zł" value="${CALC.extras}" min="0" step="100"></td></tr>
         </tbody>
         <tfoot><tr class="tot"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr></tfoot>
       </table>
@@ -1561,15 +1567,15 @@ function kosztyPage(){
     var D=${JSON.stringify({flights:TICKET.total,...CALC})};
     var ids=Object.keys(D),KEY="jp2027.calc";
     var fmt=function(n){return Math.round(n).toLocaleString("pl-PL")+" zł";};
-    function num(id){var v=parseFloat(document.getElementById(id).value);return isNaN(v)?0:v;}
+    function num(id){var v=parseFloat(document.getElementById(id).value);return Number.isFinite(v)?Math.max(0,v):0;}
     function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
     // Przywróć zapisane wartości, ALE nowa cena lotu ma pierwszeństwo:
     // jeśli użytkownik nie zmieniał pola "loty" ręcznie, wskocz na świeży kurs.
     var priceRefreshed=false;
     try{
       var s=JSON.parse(localStorage.getItem(KEY))||{};
-      // s._fd==null => zapis sprzed wprowadzenia znacznika (stara, nieaktualna cena) => przyjmij świeżą
-      var untouched = s._fd==null || Number(s.flights)===Number(s._fd);
+      // Brak dawnego domyślnego kosztu nie jest zgodą na nadpisanie własnej kwoty.
+      var untouched = s.flights==null || (s._fd!=null && Number(s.flights)===Number(s._fd));
       ids.forEach(function(id){
         if(id==="flights" && (untouched || s.flights==null)) return; // zostaw nowy domyślny
         if(s[id]!=null) document.getElementById(id).value=s[id];
@@ -1600,7 +1606,7 @@ function kosztyPage(){
       document.getElementById("budgetPct").textContent=fmt(total);
       var o={};ids.forEach(function(id){o[id]=num(id);});o._fd=D.flights;try{localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}
     }
-    ids.forEach(function(id){document.getElementById(id).addEventListener("input",calc);});
+    ids.forEach(function(id){document.getElementById(id).addEventListener("input",function(){if(Number(this.value)<0)this.value=0;calc();});});
     document.getElementById("resetBtn").addEventListener("click",function(){ids.forEach(function(id){document.getElementById(id).value=D[id];});calc();});
     calc();
   })();
@@ -1616,7 +1622,7 @@ function hotelePage(){
         <div class="hstay">${H.stay}</div>
         <h3>${H.name}</h3>
         <p class="desc">${H.desc}</p>
-        <div class="meta"><span>💴 <b>${H.price}</b></span><span>📍 ${H.near}</span></div>
+        <div class="meta"><span>💴 <b>${H.price}</b></span><span>📍 ${H.near}</span></div><p class="booking-deadline"><b>Anulowanie:</b> ${H.cancel}</p>
         ${H.jp?`<div class="jpaddr"><span lang="ja">${H.jp}</span><button type="button" class="jpcopy" data-addr="${H.jp}" title="Skopiuj adres">Kopiuj</button></div>`:''}
         <div class="links"><a href="${gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a>${H.book?`<a href="${H.book}" target="_blank" rel="noopener">Rezerwacja na Booking →</a>`:''}</div>
       </div>
@@ -1626,8 +1632,8 @@ function hotelePage(){
       </a>
     </div>`).join('');
   const HOTELGEO=[
-    [34.9880,135.7590,'MIMARU Kyoto Station · Kioto (4 noce — pierwsza baza)'],
-    [35.6735,139.7365,'MIMARU Tokyo AKASAKA · Tokio (3 noce)'],
+    [34.9858,135.7588,'Kyoto Station - okolica pierwszej bazy (4 noce)'],
+    [35.6723,139.7367,'Akasaka - okolica bazy w Tokio (3 noce)'],
     [35.2337,139.0155,'Hakone Ashinoko Hanaori · Tōgendai, jezioro Ashi (1 noc)'],
   ];
   const inner=`
@@ -1636,26 +1642,26 @@ function hotelePage(){
     <div class="hero-inner">
     <p class="eyebrow">Noclegi · 8 nocy w Japonii + noc w Abu Zabi · 4 obiekty · chronologicznie</p>
     <h1>Hotele</h1>
-    <p class="lead">Trzy bazy pod rodzinę 2+2: aparthotele MIMARU z aneksami i pralką oraz ryokan nad jeziorem Ashi na jedną górską noc. Cztery pierwsze noce w jednym apartamencie w Kiocie, potem trzy w Tokio.</p>
+    <p class="lead">Trzy bazy pod rodzinę 2+2: aparthotele MIMARU z kuchnią i wspólnymi pralniami samoobsługowymi oraz ryokan nad jeziorem Ashi na jedną górską noc. Cztery pierwsze noce w jednym apartamencie w Kiocie, potem trzy w Tokio.</p>
   </div>
   </header>
   <section>
     <div class="hlist">${cards}</div>
   </section>
   <section>
-    <h2 class="stitle">Mapa baz w Japonii</h2>
+    <h2 class="stitle">Mapa baz w Japonii</h2><p class="lead-p">Punkty pokazują okolice baz, nie wejścia do budynków. Do hotelu nawigujcie z jego zdjęcia lub przycisku Google Maps powyżej.</p>
     <div class="card">
       <div class="maphold"><button class="mapbtn" id="mapActivate">🗺️ Aktywuj mapę</button><div id="map" class="map"></div></div>
       <ol class="maplegend">${HOTELGEO.map((g,i)=>`<li><span class="mn">${i+1}</span> ${g[2]}</li>`).join('')}</ol>
-      <a class="gmap" href="https://www.google.com/maps/dir/${HOTELGEO.map(g=>g[0]+','+g[1]).join('/')}" target="_blank" rel="noopener">📍 Trasa baz w Google Maps ↗</a>
+      <a class="gmap" href="https://www.google.com/maps/dir/${HOTELGEO.map(g=>g[0]+','+g[1]).join('/')}" target="_blank" rel="noopener">Orientacyjna trasa baz w Google Maps ↗</a>
       <script type="application/json" id="geo">${JSON.stringify(HOTELGEO)}</script>
     </div>
   </section>
   <section>
     <div class="card"><ul class="tips">
-      <li><b>Rezerwujcie wrzesień–październik 2026</b> z darmowym anulowaniem (Booking/strony hoteli) — pokoje 4-osobowe znikają pierwsze, a początek maja łapie ogon Golden Week.</li>
-      <li>Ryokan w Hakone: Hanaori nad jeziorem Ashi, pokój Standard dla 4 osób z kolacją i śniadaniem — zarezerwowany, bezpłatne odwołanie.</li>
-      <li>Wszystkie trzy noclegi zarezerwowane i potwierdzone 8.09.2026, każdy z bezpłatnym odwołaniem. Suma 8 płatnych nocy = <b>12 033 zł</b> (Kioto 5 266 + Akasaka 3 413 + Hanaori 3 354; w kalkulatorze 8 × 1 504 zł jako średnia; Abu Zabi gratis w pakiecie stopover). <b>Wpiszcie do kalendarza terminy bezpłatnego odwołania</b> — po nich rezerwacje stają się bezzwrotne.</li>
+      <li><b>Rezerwacje są potwierdzone.</b> Przy ewentualnej zmianie najpierw sprawdźcie dostępność nowego pokoju dla czterech osób i oba terminy anulowania. Pobyt w Kiocie wypada podczas Golden Week.</li>
+      <li>Ryokan w Hakone: Hanaori nad jeziorem Ashi, pokój Deluxe dla 4 osób z prywatną kąpielą, kolacją i śniadaniem. Bezpłatne anulowanie tylko do 2.05.2027, 23:59 JST.</li>
+      <li>Potwierdzenia trzech hoteli z 8.09 podają łącznie <b>500 443 JPY i zapłacono 0 JPY</b>. Około 12 tys. zł to przeliczenie planistyczne, nie ostateczny rachunek. Podatki miejscowe i kurs płatności mogą zmienić koszt. <b>Terminy bezpłatnego anulowania są różne</b> i widoczne przy każdym hotelu.</li>
       
       <li>Adresy dla taksówkarza najlepiej pokazywać z Google Maps po japońsku — kliknięcie zdjęcia hotelu otwiera właściwe miejsce od razu.</li>
     </ul></div>
@@ -1666,157 +1672,35 @@ function hotelePage(){
 
 /* ---- decyzje / dlaczego ---- */
 function decyzjePage(){
-  const pill={g:'Lekki',y:'Średni',r:'Intensywny'};
-  const rows=DAYS.map((d,i)=>{const it=DAYINT[d.date]||['y',''];return `<tr><td class="dcol">${i+1} · ${d.dd}</td><td>${it[1]}</td><td><span class="ipill ${it[0]}">${pill[it[0]]}</span></td></tr>`;}).join('');
-  const inner=`
-  <header class="hero kb">
-    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.62),rgba(200,64,44,.5)),url('${IMG.fushimi}') center/cover"></div></div>
-    <div class="hero-inner">
-    <p class="eyebrow">Zrozum i zmień plan</p>
-    <h1>Kulisy planu</h1>
-    <p class="lead">Cała logika za tym planem w jednym miejscu — co jest stałe, co możesz ruszyć i jak. Żebyście modyfikowali go świadomie, nie na wyczucie.</p>
-  </div>
-  </header>
+  const rows=DAYS.map((d,i)=>'<tr><td><a href="days/'+d.date+'.html">'+d.dd+'</a></td><td>'+d.brief.focus+'</td><td><span class="ipill '+d.level+'">'+LEVEL_LABEL[d.level]+'</span></td></tr>').join('');
+  const checklist=BOOKINGS.filter(b=>!/^✅/.test(b.when)).map(b=>'<li><label><input type="checkbox" data-ck="'+b.id+'"><span class="ckwhen">'+b.when+'</span><span class="ckwhat"><b>'+b.what+'</b><i>'+b.note+'</i></span></label></li>').join('');
+  const inner='<header class="hero kb"><div class="hbg"><div class="hbg-img" style="background:'+heroBg('kioto',IMG.fushimi)+'"></div></div><div class="hero-inner"><p class="eyebrow">Rezerwacje i logika podróży</p><h1>Kulisy planu</h1><p class="lead">Co jest potwierdzone, czego jeszcze dopilnować i jak zachować spokojne tempo.</p></div></header>'+
+    '<nav class="section-nav" aria-label="Skróty"><a href="#do-zalatwienia">Do załatwienia</a><a href="#terminy">Terminy</a><a href="#rytm">Rytm</a><a href="#zmiany">Jak zmieniać</a></nav>'+
+    '<section id="do-zalatwienia"><h2 class="stitle">Do załatwienia</h2><p class="lead-p">Zaznaczenia to Wasza osobista lista na tym urządzeniu. Nie zmieniają statusu rezerwacji, nie synchronizują się z telefonem i nie wysyłają powiadomień.</p><div class="card"><div class="ckhead"><b id="ckcount">0</b><span id="cknext"></span></div><div class="ckbar"><div id="ckfill"></div></div><ul class="cklist">'+checklist+'</ul><button class="reset" type="button" id="ckreset">Wyczyść zaznaczenia</button></div></section>'+
+    '<section><h2 class="stitle">Potwierdzone elementy</h2><div class="card"><ul class="tips">'+BOOKINGS.filter(b=>/^✅/.test(b.when)).map(b=>'<li><b>'+b.what+'</b>: '+b.note+'</li>').join('')+'</ul></div></section>'+
+    '<section id="terminy"><h2 class="stitle">Terminy i pogoda</h2>'+deadlineList()+'<p class="note">Prognoza 7 dni wcześniej jest wskazówką, nie gwarancją. Ostrzeżenia pogodowe, status transportu i zasady anulowania są osobnymi rzeczami. Termin bezpłatnego odwołania Hanaori mija przed wyjazdem do Hakone.</p></section>'+
+    '<section id="rytm"><h2 class="stitle">Rytm rodziny 2+2</h2><p class="lead-p">Dwa najbardziej wymagające dni to podróże: 29.04 i 7.05. Dni zwiedzania mają przerwy, a 5.05 wolne popołudnie. Wszystkie dodatki naraz podniosłyby tempo ponad ocenę w tabeli.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
+    '<section id="zmiany"><h2 class="stitle">Jak modyfikować plan</h2><div class="card more">'+
+    '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. Każdy dzień ma własną listę do skreślenia. Opuszczona atrakcja nie przechodzi automatycznie na jutro. 2.05 wybieracie ogród albo małpy; 4.05 dwa sklepy; 5.05 Akihabara jest dodatkiem.</p></details>'+
+    '<details><summary>Czy zmieniać kolejność Nary i Arashiyamy?</summary><p>Można rozważyć przed zakupem warsztatów. Po rezerwacji herbaty i furoshiki trzeba najpierw uzgodnić zmianę ich dat. W Golden Week nie zakładajcie dostępności nowych godzin.</p></details>'+
+    '<details><summary>Dlaczego 4 noce Kioto, 3 Tokio i 1 Hakone?</summary><p>Trzy bazy mieszczą klasyczne miejsca, zainteresowania dzieci i jedną noc odpoczynku w ryokanie. Dalsze skracanie odbiera czas Japonii; Osaka i Okinawa zwiększyłyby liczbę przejazdów. Hakone jest na końcu, dlatego zabezpieczamy poranny wyjazd na lot.</p></details>'+
+    '<details><summary>Co naprawdę oznacza odwrócona trasa w Golden Week?</summary><p>Kioto 29.04-3.05 nadal wypada w popularnym okresie, a nie poza świętami. Przeniesienie do Tokio 3.05 ogranicza pobyt w Kioto podczas kolejnych świąt, lecz nie gwarantuje pustych atrakcji. Potrzebne są miejscówki i realne bufory.</p></details>'+
+    '<details><summary>Jak reagować na pogodę?</summary><p>20 i 24.04 sprawdźcie sytuację przed terminami hoteli miejskich. 1-2.05 porównajcie prognozę dla Hakone z kosztem ewentualnej zmiany. 5.05 sprawdźcie ostrzeżenia, a rano 6 i 7.05 kursowanie transportu. Przy silnym wietrze statek nie zastępuje automatycznie kolejki.</p></details>'+
+    '<details><summary>Co z budżetem?</summary><p>Hotele są zarezerwowane w JPY, lecz w potwierdzeniach nie były jeszcze opłacone. Koszt w złotych zależy od płatności i kursu; podatki miejscowe mogą być dodatkowe. Loty: suma e-biletów 13 643,36 zł, w budżecie zostaje 14 400 zł do uzgodnienia z kartą. Nie przeliczamy niepotwierdzonych dopłat jako faktów.</p></details>'+
+    '</div></section>'+
+    `<section id="hotel-mail"><h2 class="stitle">Uzupełnienie do wysłanego maila Hanaori</h2><p class="lead-p">Wysłana wiadomość pytała o stary shuttle do Odawary i dodatkową prywatną kąpiel. Potwierdzenie pokoju rozstrzyga drugą sprawę; do ustalenia zostaje dojazd. Poniższy tekst nie został wysłany.</p><details class="card"><summary>Otwórz gotowy tekst po angielsku</summary><pre style="white-space:pre-wrap;font:14px/1.6 var(--sans)">Dear Hanaori team,
 
-  <section>
-    <h2 class="stitle">Rytm wyjazdu</h2>
-    <p class="lead-p">Zmęczenie u rodzin przychodzi w 4.–5. dniu — dlatego reset (ryokan + najlżejszy dzień) wypada dokładnie tam, a zielone dni to bufory. Żaden intensywny dzień nie następuje po intensywnym.</p>
-    <div class="card" style="overflow-x:auto"><table class="rhythm">
-      <thead><tr><th>Dzień</th><th>Sedno</th><th style="text-align:right">Obciążenie</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table></div>
-    <div class="dnote" style="margin-top:12px">💡 <b>Jeden dzień jest intensywny — 29.04, dzień podróży</b> (nocny lot, imigracja, NEX, shinkansen): po zameldowaniu w Kiocie nie planujemy już nic. Reszta to dni lekkie i średnie, a średnie trzymają się tylko dzięki regułom skracania: 2.05 warsztat jest stały, a małpy pierwsze do skreślenia; 3.05 sumo to opcja, dopóki nie ma rezerwacji; 4.05 limit to dwa sklepy, Nintendo opcjonalnie. Golden Week rozwiązujemy trasą, nie tempem — oba shinkanseny wypadają w szczycie, więc jadą z miejscówkami. Reset w ryokanie wypada na sam koniec, jako nagroda.</div>
-  </section>
+Thank you for your help. A small correction to our earlier message: our Booking.com confirmation is for a Japanese-Western Deluxe Room with Open-air Bath, so we do not need an additional private-bath reservation.
 
-  <section>
-    <h2 class="stitle">Do załatwienia</h2>
-    <p class="lead-p">Tylko to, co jeszcze otwarte, w kolejności terminów. Odhaczaj po kolei — stan zapisuje się w tej przeglądarce. Rzeczy zamknięte są w osobnej liście niżej i nie liczą się do licznika.</p>
-    <div class="card">
-      <div class="ckhead"><b id="ckcount">—</b><span id="cknext"></span></div>
-      <div class="ckbar"><div id="ckfill"></div></div>
-      <ul class="cklist">${BOOKINGS.filter(b=>!/^✅/.test(b.when)).map((b,i)=>
-        `<li><label><input type="checkbox" data-ck="${i}">
-          <span class="ckwhen">${b.when}</span>
-          <span class="ckwhat"><b>${b.what}</b>${b.note?`<i>${b.note}</i>`:''}</span></label></li>`).join('')}</ul>
-      <button class="reset" id="ckreset" type="button">↺ Wyczyść zaznaczenia</button>
-    </div>
-    <details class="card" style="margin-top:14px"><summary style="cursor:pointer;font-weight:600">✉️ Szablon odpowiedzi do Hanaori (kąpiel + dojazd + yukaty)</summary><p class="lead-p" style="margin-top:10px">Ryokan zapytał 8.09.2026 o specjalne życzenia. Jeden mail załatwia trzy sprawy; uzupełnijcie tylko wzrost dzieci. O tatuażach nie trzeba pisać.</p><pre style="white-space:pre-wrap;font-family:var(--mono,ui-monospace,monospace);font-size:.86rem;line-height:1.5;background:var(--wash,rgba(0,0,0,.04));padding:14px 16px;border-radius:var(--radius,6px);overflow-x:auto">Subject: Special Requests for Our Stay (6–7 May 2027) – Private Bath, Morning Transfer, and Yukata Sizes
+We have also seen your notice that the shuttle now runs to Gora, not Odawara. For Friday 7 May 2027, we would like to reach Odawara Station around 10:30, ahead of our international flight from Narita at 18:00.
 
-Dear Hanaori team,
+Could you please advise which morning bus from Togendai would be suitable, and whether you can help arrange a taxi for four people with four cabin bags if needed? Please let us know the approximate fare and when we should confirm the transport closer to our stay.
 
-Thank you for your message. We are a family of four (2 adults, and children aged 13 and 10) arriving on Thursday 6 May 2027, checking out on Friday 7 May.
-
-We would like to ask about three things:
-
-1. Private bath (kashikiri): we would like to reserve one, ideally around 15:30 on 6 May, shortly after check-in. Could you tell us the price and the length of one session, and confirm whether all four of us may use it together?
-
-2. Transfer to Odawara on Friday 7 May: we understand that the hotel shuttle now runs to Gora only. We need to be at Odawara Station by about 11:00 for the Shinkansen, as we have an international flight that afternoon. Could you please advise the earliest morning bus from Togendai to Odawara Station, and whether the front desk could book a taxi for us at 9:30 as a backup?
-
-3. Yukata: could you please prepare children's sizes? Our son is ___ cm tall and our daughter is ___ cm.
-
-We are looking forward to our stay.
-
-Kind regards,
-[imię i nazwisko]</pre></details>
-  </section>
-
-  <section>
-    <h2 class="stitle">Decyzje otwarte</h2>
-    <p class="lead-p">Wszystko, co jeszcze <b>nie jest</b> rozstrzygnięte — w jednym miejscu, z domyślnym wyborem, żeby brak decyzji nie blokował planu. Sprawy już rozstrzygnięte są niżej — po jednej linijce, bez opcji, bo wyboru już nie ma.</p>
-    <div class="decgrid">
-    ${OPEN_DECISIONS.filter(x=>!decClosed(x)).map(x=>{const D=DAYS.find(d=>d.date===x.day);return `<div class="decc" id="dec-${x.id}">
-      <h4>${x.q}</h4>
-      <div class="decmeta"><span>📅 do: <b>${x.by}</b></span><span>🎯 dotyczy: ${D?`<a href="days/${x.day}.html">${D.dd}</a>`:'—'}</span><span>⚖️ stawka: ${x.impact}</span></div>
-      ${x.opts.map(o=>`<div class="decopt"><b>${o[0]}</b> — za: ${o[1]}${o[2]&&o[2]!=='—'?'; przeciw: '+o[2]:''}</div>`).join('')}
-      <div class="decdef">✅ <b>Domyślnie:</b> ${x.def}</div>
-    </div>`;}).join('')}
-    </div>
-    <h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:26px 0 8px">Rozstrzygnięte</h3>
-    <div class="card"><ul class="tips">${OPEN_DECISIONS.filter(decClosed).map(x=>`<li><b>${x.q.replace(/\s*—\s*ROZSTRZYGNIĘTE\s*$/,'')}</b> — ${x.def} <span style="font-family:var(--mono);font-size:11px;color:var(--success)">${x.by.replace(/^✅\s*/,'✅ ')}</span></li>`).join('')}</ul></div>
-  </section>
-
-  <section>
-    <h2 class="stitle">Załatwione — dla porządku</h2>
-    <p class="lead-p">Zamknięte 8.09.2026. Zostawione tu, żeby numery i warunki były pod ręką — nie ma czego odhaczać.</p>
-    <div class="card"><ul class="tips">${BOOKINGS.filter(b=>/^✅/.test(b.when)).map(b=>`<li><b>${b.what}</b> <span style="font-family:var(--mono);font-size:11px;color:var(--success)">${b.when}</span><br><span style="color:var(--muted);font-size:13px">${b.note}</span></li>`).join('')}</ul></div>
-  </section>
-
-  <section>
-    <h2 class="stitle">Kalendarz przygotowań — deadline'y</h2>
-    <p class="lead-p">Loty i noclegi są zamknięte; został alert pogodowy, który przypomni się w aplikacji.</p>
-    <div class="card"><ul class="tips">
-      <li><b>✈️ Loty — KUPIONE (8.09.2026):</b> Etihad 27.04–7.05 ze stopoverem tam, 14 400 zł za 4 osoby, hotel 4★ w Abu Zabi w pakiecie. Bez bagażu rejestrowanego (podręczne 7 kg/os.); miejsca obok siebie zgłoszone bezpłatnie (numer sprawy w mailu od Etihada). <a href="loty.html">Szczegóły →</a></li>
-      <li><b>🏨 Noclegi — ZAREZERWOWANE (8.09.2026):</b> Kyoto Station (4 noce), Tokyo Akasaka (3), Hanaori (1, z kolacją i śniadaniem) — 12 033 zł, wszystkie z bezpłatnym odwołaniem; hotel w Abu Zabi z vouchera stopover. Jedyne, co zostało: wpisać terminy bezpłatnego odwołania do kalendarza. <a href="hotele.html">Szczegóły →</a></li>
-      <li><b>🎟️ Rezerwacje czasowe:</b> warsztaty kultury w Kioto i pokaz sumo (3.05) — luty–marzec 2027 · Shibuya Sky — sprzedaż 14 dni przed: 19.04.2027 o 17:00 czasu polskiego (0:00 JST 20.04), slot na zachód słońca · Pokémon Café — rezerwacja rusza 4.04.2027 o 18:00 czasu japońskiego (31 dni przed 5.05).</li>
-      <li><b>☔ Pogoda — dostrajać najpóźniej ~7 dni przed</b> (wcześniej prognoza jest niewiarygodna). Bilet na Shibuya Sky jest kupiony wcześniej (sloty znikają w dniu startu sprzedaży) — przy złej prognozie spróbujcie zmiany daty w systemie biletowym. <b>Rano danego dnia:</b> status kolejki w Hakone (hakonenavi.jp — wiatr/gaz), w razie czego Open-Air Museum; Fudżi to loteria. Bufor (puste popołudnie 2.05) i zawory (Nishiki, Kinkaku-ji, Nintendo TOKYO, Akihabara) pochłaniają deszcz bez przebudowy. <span class="ipill y">alert: 20.04.2027</span></li>
-    </ul></div>
-  </section>
-
-  <section>
-    <h2 class="stitle">Dla mamy i dla dzieci — jak to pogodziliśmy</h2>
-    <p class="lead-p">Dwa serca tego planu: fascynacja mamy kulturą Japonii i to, żeby dziesięcio- i trzynastolatek nie zwiedzali „na siłę”. Zasada: <b>każdy dzień w Japonii ma jeden mocny punkt dla każdej ze stron</b>, a to, co dla dzieci nudne, trwa krótko albo dzieje się równolegle (tata + dzieci gdzie indziej).</p>
-    <div class="card" style="padding:0;overflow:hidden">
-      <table class="rhythm"><thead><tr><th>Dzień</th><th>Kultura (mama)</th><th>Frajda (dzieci)</th></tr></thead><tbody>
-        <tr><td class="dcol">29 kwietnia</td><td>pierwszy wieczór w Kiocie</td><td>Fudżi z okna shinkansena</td></tr>
-        <tr><td class="dcol">30 kwietnia</td><td>Fushimi Inari, Kiyomizu-dera, Sannenzaka</td><td>tysiąc bram do biegania, lody matcha</td></tr>
-        <tr><td class="dcol">1 maja</td><td>Tōdai-ji, <b>herbata i kaligrafia w kimonie</b></td><td>jelenie w Narze, pokaz mochi; dzieci w kimonach, kaligrafia dla chętnych</td></tr>
-        <tr><td class="dcol">2 maja</td><td>zen Tenryū-ji, Nishiki; opcja: Kinkaku-ji</td><td>małpy Iwatayama i <b>warsztat furoshiki</b> (punkt córki)</td></tr>
-        <tr><td class="dcol">3 maja</td><td>Sensō-ji o zmroku</td><td>Nakamise, pierwsze gachapony</td></tr>
-        <tr><td class="dcol">4 maja</td><td>chram Meiji Jingū (i jego muzeum, jeśli mama chce)</td><td>Cat Street: Supreme, BAPE, Stüssy, Palace; Nintendo TOKYO; Shibuya Sky o zachodzie</td></tr>
-        <tr><td class="dcol">5 maja</td><td>poranek w Hie-jinja (tunel 90 torii, 5 min od hotelu)</td><td>Dzień Dziecka: Pokémon Center + Café, Akihabara</td></tr>
-        <tr><td class="dcol">6 maja</td><td>ryokan nad jeziorem: yukata, onsen, kolacja; rejs tylko opcjonalnie</td><td>kolejki, statek „piracki”, czarne jajka</td></tr>
-      </tbody></table>
-    </div>
-    <div class="dnote" style="margin-top:12px">📌 Co świadomie odpuściliśmy: ikebanę, klasę ninja i osobny dzień warsztatów (zostały trzy punkty, każdy czyjś: kimono z herbatą i kaligrafia 1.05 dla mamy, furoshiki 2.05 dla córki), turniej sumo — zaczyna się 9.05, dwa dni po naszym powrocie (zamiast niego 3.05 o 18:00 wchodzi pokaz z byłymi zawodnikami w Asakusie, z chanko i dziećmi na ringu) — i Osakę. Zasada „bez kimona na całe popołudnie” zostaje w mocy, ale 8.09 doprecyzowana: mama chciała je przymierzyć, więc ceremonia herbaty 1.05 jest teraz wersją <b>z kimonem</b> (~90 min) zamiast całodniowego wynajmu, a po niej wraca <b>kaligrafia</b> (~60 min, ten sam dom, dla chętnych). Tego samego dnia doszedł <b>warsztat furoshiki</b> 2.05 o 14:00 — pakowanie prezentów w chustę, o które poprosiła córka. Wypadła za to klasa ninja: rodzina ma teraz trzy warsztaty i to wystarczy.</div>
-  </section>
-
-  <section>
-    <h2 class="stitle">Kluczowe decyzje — i dlaczego</h2>
-    <div class="card more">
-      <details><summary>Daty 27 kwietnia – 7 maja</summary><p>Wymuszone kalendarzem szkolnym: dziecko 10 maja jedzie na wycieczkę klasową, więc lądujemy w sobotę 8.05; wersja 11-dniowa, żeby chronić budżet. Bilet Etihada w tym terminie kosztował w Google tyle samo co w maju (3 449 zł/os.); kupiony 8.09.2026 na etihad.com za 3 600 zł/os. ze stopoverem. Cena, którą płacimy, to Golden Week — dlatego trasa jest odwrócona: Kioto 29.04–3.05 (przed szczytem świąt), święta 3–5.05 w Tokio, które znosi je lepiej niż Kioto, i Hakone 6.05, dzień po świętach, gdy ryokany wracają do cen tygodniowych.</p></details>
-      <details><summary>Długość: 8 nocy w Japonii + doba w Abu Zabi</summary><p>Jedenaście dni (27.04–7.05) to kompromis między twardą datą powrotu (8.05, wycieczka klasowa 10.05) a budżetem: dzień dłużej kosztowałby ~1 800 zł (noc w Kiocie w Golden Week + wyżywienie) i oddałby wypad do Osaki. Cztery noce w Kiocie mieszczą Fushimi, Narę z herbatą i Arashiyamę; trzy w Tokio — Meiji, Pokémony i Dzień Dziecka; na koniec ryokan tuż po świętach.</p></details>
-      <details><summary>Stopover w Abu Zabi — wypadł i wrócił</summary><p>W planie od lipca, wycięty 4.09 rano (open-jaw z Kansai zdrożał do ~5,5 tys./os.), by wrócić tego samego dnia przy kasie: finalna wycena Etihada pokazała, że <b>stopover w drodze tam to najtańsza kombinacja w ogóle</b> — 7.09 termin 3–14 wyceniono na 13 600 zł za 4 osoby, z hotelem 4★ (Grand Millenium Al Wahda) w pakiecie i zielonym potwierdzeniem „Stopover included" dla maja 2027. Google tej taryfy w ogóle nie umiał policzyć. Przelot rozbity na 5,5 + 10 h z nocą snu pośrodku — z dziećmi dużo lepszy niż 18 h ciurkiem.</p></details>
-      <details><summary>Trasa i bazy: Kioto 4 · Tokio 3 · Hakone 1</summary><p>Szkielet zgodny z najlepiej ocenianymi (4,9–5,0★) rodzinnymi tourami, z jedną świadomą korektą pod nasz skład: <b>trzecia noc w Tokio kosztem piątej w Kiocie</b>. Przy przylocie w południe dwie noce dawały Tokio ledwie półtora dnia i jeden przeładowany „czerwony” dzień; przy trzech Tokio dostaje spokojne dwa dni, a Kioto (4 noce, z wypadami do Nary i na Arashiyamę) nadal mieści wszystko poza osobnym dniem warsztatów — te weszły w popołudnie po Narze. Ryokan w środku jako „reset”, po drodze doba w Abu Zabi z darmowym hotelem.</p></details>
-      <details><summary>Ryokan w środku trasy — wyższa półka</summary><p>To jedyna noc, gdy nocleg JEST atrakcją (onsen, kolacja w yukacie, tatami). Dlatego tu — i tylko tu — warto dopłacić: ryokan z kolacją i onsenem nad jeziorem to wspomnienie, nie tylko łóżko. Wybraliśmy Hanaori Standard ze wspólną łaźnią (rozdzieloną płciowo); pokój z prywatną kąpielą to +1 278 zł — opcja w „Decyzjach otwartych”. Reszta hoteli (MIMARU) zostaje standardowa, bo pokój dla 4 i lokalizacja liczą się bardziej niż gwiazdki.</p></details>
-      <details><summary>Zakup biletów (kronika 8.09)</summary><p>Kupione na etihad.com: 27.04–7.05 ze stopoverem w Abu Zabi w drodze tam, <b>3 600 zł/os. — 14 400 zł za czworo</b>, o 800 zł więcej niż wycena z 7.09 (13 600), wciąż w progu okazji. Monitoring cen i alerty zakupowe wyłączone. Tego samego dnia wypadło Muzeum Ōta — 4.05 idzie Meiji → Harajuku → Cat Street (Supreme, BAPE, Stüssy, Palace — życzenie dzieci) → Shibuya PARCO → Shibuya Sky, bez muzeum. Wieczorem plan dostał luz: sjesta 30.04, wolny wieczór 1.05 (warsztaty jako opcja 2.05), pauza w Miyashita 4.05, Tsukiji o świcie wypadło (targ = Nishiki 2.05), shuttle jako opcja 7.05. Po zewnętrznym audycie (ten sam dzień): Nozomi 29.04 na 16:30–17:00, herbata 1.05 o 16:30, Kinkaku-ji opcjonalnie, Pokémon Center DX w Nihombashi zamiast Ikebukuro, Hakone bez rejsu w planie podstawowym (Hanaori melduje od 15:00), 7.05 shuttle 10:00 albo autobus liczony na 75–90 min; koszt kolei przeliczony na 3 taryfy dorosłe + 1 dziecięcą (~4 800 zł), SmartEX zgłoszenia rok przed, mapa bez Osaki. Później tego dnia 7.05 dostał NEX 13:48 zamiast 12:48: 4 h 15 na Naricie zeszło do 3 h 15 (zalecenie Etihada), a zyskana godzina poszła na lunch i Character Street na Tokyo Station. Poranek 4.05 (Dzień Zieleni) przestawiony pod tłum: Meiji przed 9:00, Takeshita 10:15, butiki na otwarcie 11:00. Tego samego dnia baza w Tokio zmieniła się z Ueno EAST na <b>MIMARU Akasaka</b> — decydowały trzy przejazdy bez przesiadki (Harajuku, Shinjuku z walizkami, Nihombashi); poranek 5.05 przeszedł z parku Ueno na <b>Hie-jinja</b> z tunelem 90 torii, pięć minut pieszo od nowego hotelu. Pod nową bazę przepisane też dwa wieczory: 3.05 meldujemy się o 15:00 i jedziemy do Asakusy dopiero na zmierzch (zamiast sześciu godzin w świątecznym tłumie i meldunku o 20:30), a 5.05 kolacja jest w Akasace pod hotelem, nie w Akihabarze. Tego samego dnia <b>wszystkie trzy noclegi zostały zarezerwowane i potwierdzone</b> (Kioto 5 266, Akasaka 3 413, Hanaori 3 354 = 12 033 zł, każdy z bezpłatnym odwołaniem) — budżet całości urósł z ~41 do ~42 tys. zł. Wieczorem doszła jeszcze zmiana w Hakone: rodzina nie chce kąpać się rano, więc <b>cały onsen mieści się w czwartek</b> — prywatna kąpiel o 15:30 i duża łaźnia nad jeziorem o 20:00; piątek zaczyna się samym śniadaniem o 8:00. Tatuaży nie ma, więc duże łaźnie są bez ograniczeń. Na koniec dnia audyt całej strony po tej serii zmian — z jedną poprawką techniczną: service worker podawał stronę z pamięci podręcznej i dopiero w tle pobierał nową, więc po każdej zmianie pierwsze otwarcie pokazywało poprzednią wersję; od teraz HTML jest pobierany z sieci, a pamięć służy tylko offline. Wieczorem doszedł jeszcze voucher hotelowy ze stopoveru: <b>dwa pokoje zamiast jednego</b> — co zamyka starą decyzję — <b>doba liczona od zameldowania</b> zamiast wymeldowania w południe (28.04 nie oddajemy bagaży do przechowalni, pokój jest nasz do wieczora) i <b>brak śniadania w pakiecie</b> (Room Only), o czym plan wcześniej milczał. Do checklisty doszedł Stopover Pass ze zniżkami na Luwr i Qasr Al Watan. Na sam koniec porządki: cztery rozstrzygnięte decyzje (pokoje w Abu Zabi, Pokémon Room, wybór ryokanu, posiłki w ryokanie) zeszły z listy otwartych do jednej linijki każda, checklista pokazuje tylko to, co zostało do zrobienia, a alert „noclegi 15.09” w aplikacji został usunięty — nie ma już czego przypominać. Wieczorem trzy decyzje rodzinne: <b>pokaz sumo wchodzi do planu</b> (3.05, Asakusa Sumo Club, sesja 18:00 z chanko — dzieci na ringu; w budżecie +~1 100 zł, razem ~43 tys.), <b>Nintendo Museum w Ujī wypada</b> definitywnie (karta, decyzja, loteria — wszystko usunięte), a strona zmienia charakter: <b>przewodnik z agendą, nie planner</b> — nawigacja zaczyna się od Agendy i Atrakcji, „Dlaczego tak?” stało się „Kulisami” na końcu, archiwum cen lotów zeszło z paska. Karta Hanaori dostała nowe zdjęcie: zamiast anonimowego rotenburo — jezioro Ashi z torii i Fudżi o majowym świcie, czyli widok, po który jedzie się do Tōgendai (samego hotelu na Commons nie ma). <b>Zewnętrzny audyt (8.09 wieczorem) i jego realizacja:</b> najważniejsze — <b>shuttle Hanaori do Odawary przestaje jeździć 30.09.2026</b> (od 1.10 kursuje tylko do Gōry), więc 7.05 jedziemy autobusem linii T z Tōgendai, z taksówką jako planem B, a mail do hotelu pyta o dojazd zamiast o shuttle. Z publicznych stron zniknęły numery rezerwacji, potwierdzeń i sprawy u Etihada (są w prywatnej notatce poza serwisem); daty wyjazdu to 27.04–8.05 (lądowanie w sobotę rano), pigułki dni pokazują właściwy miesiąc; kalkulator ma jedno źródło wartości, więc „Przywróć domyślne” nie cofa już budżetu; suma e-biletów (13 643,36 zł) do uzgodnienia z obciążeniem 14 400 zł trafiła do checklisty. Realistyczne oznaczenia: 29.04 to dzień intensywny (podróż), 3.05 średni; sumo jest opcją do czasu rezerwacji i nie obiecuje dzieciom ringu; 2.05 małpy pierwsze do skreślenia; 4.05 dwa sklepy, Nintendo opcjonalnie; prywatna kąpiel 6.05 „po potwierdzeniu”. Zaktualizowane: Shibuya Sky sprzedaje 14 dni przed (19.04 o 17:00 PL), Hakone Free Pass 7 100/1 600 ¥ plus Romancecar 1 200/600 ¥, oba shinkanseny wypadają w szczycie Golden Week. Technicznie: prognoza na 29.04, 3.05 i 6.05 liczona dla właściwego miejsca, naprawiony formatter kwot na stronie Loty, Osaka przeniesiona do archiwum w Atrakcjach, „Pogoda” to „Przed wyjazdem”, strona pokazuje numer wydania i komunikat o nowej wersji, a build kończy się testem dat, kwot i linków. Poza tym: zniknęły ostatnie ślady Ueno i Ikebukuro (plan na deszcz 5.05, tabele decyzji), tytuł 7.05 przestał obiecywać poranny onsen, Koszty i Loty mówią już o kupionych biletach zamiast o progach „kup / czekaj”, decyzja o Pokémon Room jest zamknięta, a szablon maila do Hanaori wisi pod checklistą.</p></details>
-      <details><summary>Jak wybraliśmy bilet (kronika 4.09)</summary><p>Rano: open-jaw z Kansai zdrożał do ~5 460 zł/os., a round-trip do Narity staniał do ~3 450 — przełączyliśmy plan na round-trip 3–14. Wieczorem, przy realnej rezerwacji na etihad.com, okazało się, że google’owa cena round-tripu u przewoźnika nie istnieje, za to <b>wariant ze stopoverem kosztuje 13 600 zł za całą rodzinę</b> (3–14, wycena z 7.09) — mniej niż cokolwiek innego. Finał: wróciliśmy do pierwotnego kształtu podróży (Abu Zabi + przylot 5.05), o dzień krótszego i z lądowaniem w piątek. Lekcja: Google dobrze śledzi proste taryfy, ale przy stopoverach ostatnie słowo ma strona przewoźnika.</p></details>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="stitle">Co jest stałe, a co możesz ruszyć</h2>
-    <div class="twocol">
-      <div class="card"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 8px">Stałe (kotwice)</h3><ul class="tips">
-        <li>Daty i godziny lotów Etihad</li>
-        <li>Wylot z Narity — 7.05, 18:00 (twarda data: 8.05 w Polsce)</li>
-        <li>Ryokan-reset w Hakone (środek trasy)</li>
-        <li>Shinkanseny: Tokio→Kioto (29.04), Kioto→Tokio (3.05), Odawara→Tokio (7.05) — miejscówki z góry</li>
-      </ul></div>
-      <div class="card"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 8px">Elastyczne</h3><ul class="tips">
-        <li>Poszczególne atrakcje w każdym dniu</li>
-        <li>Kolejność Nara ↔ Arashiyama</li>
-        <li>Popołudnie 2.05 bez planu — bufor</li>
-        <li>Zakres warsztatów; opcje ninja / taiko / Round1</li>
-      </ul></div>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="stitle">Jak modyfikować</h2>
-    <div class="card more">
-      <details><summary>✂️ Chcę krócej / taniej</summary><p>Już skrócone do 11 dni (27.04–7.05): odpadła Osaka, żeby chronić budżet. Kolejność dalszych cięć na miejscu: <b>Kiyomizu (30.04) → Kasuga (1.05) → Akihabara (5.05) → małpy Iwatayama (2.05)</b>. Krócej niż to — nie: Kioto ma już tylko cztery noce.</p></details>
-      <details><summary>➕ Chcę dłużej</summary><p>Z tyłu nie da się — 8.05 to twarda data (wycieczka klasowa). Z przodu 26.04 to ta sama cena biletu i dzień w Kiocie za ~1 800 zł (Golden Week) — wróciłby wypad do Osaki. Do rozważenia, jeśli budżet i urlop pozwolą.</p></details>
-      <details><summary>🎮 Chcę więcej frajdy dla dzieci</summary><p>W odwodzie (opcje, nie obowiązki): <b>klasa ninja</b> w Kioto (przy Nishiki), <b>warsztat taiko</b>, <b>Round1 + karaoke</b> (jest i w Kiocie, przy Kawaramachi) oraz <b>Hakone Open-Air Museum</b>. Pokaz sumo z chanko jest już w planie (3.05). Karty i ceny: <a href="atrakcje.html">Atrakcje</a>.</p></details>
-      <details><summary>😌 Chcę luźniej na miejscu</summary><p>Plan przeszedł 8.09 kurację odchudzającą i żaden dzień nie jest już „Intensywny”: 30.04 ma dwugodzinną sjestę w hotelu między Fushimi a Kiyomizu, 1.05 kończy się kimonem, herbatą i kaligrafią dla chętnych, 2.05 ma warsztat furoshiki, 4.05 ma godzinę na trawniku Miyashita Park, a 6.05 zaczyna się śniadaniem zamiast targu o świcie. Zawory, gdy i to za dużo: Kiyomizu (30.04), Kasuga (1.05), Nintendo TOKYO (4.05), Akihabara (5.05), rejs po Ashi (6.05). Decyzje podejmujcie przy śniadaniu, nie z wyprzedzeniem.</p></details>
-      <details><summary>🏨 Chcę wyższy standard hoteli</summary><p>Poza ryokanem — raczej nie warto. W Japonii „gwiazdki" bywają pułapką: droższe hotele często mają mniejsze pokoje mieszczące 3 os. (dwa pokoje = drożej i rozdziela rodzinę) i gorszą lokalizację. MIMARU (apartament dla 4) to wybór ekspercki, nie kompromis. Zapas budżetu lepiej wydać na przeżycia niż na łóżka.</p></details>
-    </div>
-  </section>
-
-  <p class="kbd" style="margin-top:24px"><a href="index.html" style="font-weight:700">← wróć do planu dzień po dniu</a></p>
-  ${footer('')}`;
-  return shell({title:'Kulisy planu · Japonia 2027',desc:'Logika planu wyjazdu do Japonii: rytm, kluczowe decyzje, co stałe vs elastyczne i jak modyfikować.',prefix:'',active:'decyzje.html',inner,pillsIdx:null});
+Thank you very much.
+[imię i nazwisko]</pre></details></section>`+
+    '<section><h2 class="stitle">Źródła do ponownego sprawdzenia</h2><div class="linklist"><a href="https://ashinoko-hanaori.orixhotelsandresorts.com/news/10593/" target="_blank" rel="noopener">Hanaori: zmiana shuttle</a><a href="https://www.hakonenavi.jp/international/en/status_information" target="_blank" rel="noopener">Transport Hakone</a><a href="https://www.shibuya-scramble-square.com/sky/ticket/" target="_blank" rel="noopener">Shibuya Sky</a><a href="https://www.pokemon-cafe.jp/ja/cafe/news/" target="_blank" rel="noopener">Pokémon Café: NEWS</a><a href="https://www.etihad.com/en/manage/check-in" target="_blank" rel="noopener">Odprawa Etihad</a></div><p class="note">Stan sprawdzenia: 9.09.2026. Dane pokojów i terminów odwołania z potwierdzeń Booking; dokumenty i numery pozostają prywatne. <a href="loty.html">Historia wyboru lotów</a>.</p></section>'+footer('');
+  return shell({title:'Kulisy planu · Japonia 2027',desc:'Co jeszcze zarezerwować, terminy odwołania hoteli i zasady spokojnej rodzinnej agendy.',prefix:'',active:'decyzje.html',inner,pillsIdx:null});
 }
-
 /* ---- pogoda ---- */
 /* ============ PLAN DO DRUKU / PDF (wzorzec: PDF-y islandzkie) ============ */
 function drukPage(){
@@ -1829,7 +1713,7 @@ function drukPage(){
   const days = DAYS.map((d,i)=>{
     const it = DAYINT[d.date], fx = DAYFLEX[d.date], hid = DAYHOTEL[d.date];
     const H = hid ? HOTELS.find(h=>h.id===hid) : null;
-    const rows = d.tl.map(([t,h,desc])=>`<tr><td class="t">${t}</td><td><b>${h}</b>${desc?`<span class="dsc">${desc}</span>`:''}</td></tr>`).join('');
+    const rows = d.tl.map(([t,h,desc,kind])=>`<tr><td class="t">${t}</td><td><b>${h}</b>${kind?` <small>[${ITEM_LABEL[kind]}]</small>`:''}${desc?`<span class="dsc">${desc}</span>`:''}</td></tr>`).join('');
     const facts = d.facts.map(([v,k])=>`<span><b>${v}</b>${k}</span>`).join('');
     return `<section class="pg day">
       <div class="dhead">
@@ -1837,18 +1721,18 @@ function drukPage(){
         <div class="dwhen">${d.dow} · ${d.dd} 2027${it?` · <b class="ti-${it[0]}">${IL[it[0]]}</b>`:''}</div>
       </div>
       <h2>${d.title}</h2>
-      <p class="lead">${d.lead}</p>
+      <p class="lead">${d.lead}</p><p class="note"><b>${d.brief.start} · ${d.brief.end}</b><br>${TIMING_NOTE}</p><p class="blk"><b>Ważne:</b> ${d.brief.check}</p>
       <table class="agenda">${rows}</table>
       <div class="facts">${facts}</div>
-      ${fx?`<div class="flex"><p><b>🔒 Nie ruszać:</b> ${fx[0]}</p><p><b>✂️ Można odpuścić:</b> ${fx[1]}</p></div>`:''}
-      ${H?`<p class="blk"><b>🏨 Nocleg:</b> ${H.name} — ${H.near}</p>`:''}
+      ${fx?`<div class="flex"><p><b>Chronimy:</b> ${fx[0]}</p><p><b>✂️ Można odpuścić:</b> ${fx[1]}</p></div>`:''}
+      ${H?`<p class="blk"><b>🏨 Nocleg:</b> ${H.name} - ${H.near}<br>${H.cancel}</p>`:''}
       ${d.tips&&d.tips.length?`<div class="blk"><b>Wskazówki</b><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`:''}
       ${DAYRAIN[d.date]?`<div class="blk"><b>☔ Jeśli pada</b><p>${DAYRAIN[d.date]}</p></div>`:''}
       <div class="pfoot">Japonia 27 kwietnia – 8 maja 2027 · Dzień ${i+1} — ${d.dd}</div>
     </section>`;
   }).join('');
 
-  const hotels = HOTELS.map(H=>`<tr><td><b>${H.name}</b><span class="dsc">${H.stay}</span></td><td class="r">${H.price}</td></tr>`).join('');
+  const hotels = HOTELS.map(H=>`<tr><td><b>${H.name}</b><span class="dsc">${H.stay}</span><span class="dsc">${H.cancel}</span></td><td>${H.price}</td></tr>`).join('');
 
   const inner = `<div class="sheet">
 
@@ -1862,7 +1746,7 @@ function drukPage(){
       <div class="rule"></div>
     </div>
     <div class="cfacts">
-      <div><b>11</b>dni podróży</div><div><b>8</b>nocy w Japonii</div>
+      <div><b>11</b>dni programu + powrót</div><div><b>8</b>nocy w Japonii</div>
       <div><b>3</b>bazy w Japonii</div><div><b>~43<i>tys. zł</i></b>budżet 2+2</div>
     </div>
     <h3 class="toch">Spis treści</h3>
@@ -1882,35 +1766,22 @@ function drukPage(){
     <table class="agenda">${hotels}</table>
     
 
-    <h3>Terminy, których nie można przegapić</h3>
-    <table class="agenda">
-      <tr><td class="t">✅ 8.09.2026</td><td><b>Bilety lotnicze — kupione</b><span class="dsc">Etihad 27.04–7.05 ze stopoverem, 3 600 zł/os. Bez bagażu rejestrowanego; miejsca obok siebie zgłoszone u Etihada.</span></td></tr>
-      <tr><td class="t">✅ 8.09.2026</td><td><b>Noclegi</b><span class="dsc">Zarezerwowane: MIMARU Kyoto Station, MIMARU Tokyo Akasaka, Hanaori — 12 033 zł, bezpłatne odwołanie; Abu Zabi z vouchera stopover.</span></td></tr>
-      <tr><td class="t">II–III 2027</td><td><b>Pokaz sumo (3.05, 18:00)</b><span class="dsc">Asakusa Sumo Club przez GetYourGuide — 2+2, z chanko; sesja świąteczna wyprzedaje się pierwsza.</span></td></tr>
-      <tr><td class="t">~IV 2027</td><td><b>Miejscówki kolejowe</b><span class="dsc">NEX + shinkansen do Kioto (29.04), Kioto→Tokio (3.05, święto!), Odawara→Tokio + NEX (7.05). W Golden Week bez miejscówek nie ma miejsc — kupić w SmartEX.</span></td></tr>
-      <tr><td class="t">~6.04</td><td><b>Shibuya Sky</b><span class="dsc">Slot na zachód słońca 4.05 — kupić w dniu startu sprzedaży, nie czekać na prognozę.</span></td></tr>
-      <tr><td class="t">31 dni</td><td><b>Pokémon Café</b><span class="dsc">Rezerwacja otwiera się 31 dni wcześniej o 18:00 czasu japońskiego.</span></td></tr>
-      <tr><td class="t">~7 dni</td><td><b>Dostrojenie do pogody</b><span class="dsc">Wcześniej prognoza jest niewiarygodna. Rano danego dnia: status kolejki w Hakone (hakonenavi.jp).</span></td></tr>
-    </table>
-
-    <h3>Transport w Japonii</h3>
-    <table class="agenda">
-      <tr><td class="t">29.04</td><td><b>Narita → Tokio → Kioto</b><span class="dsc">Narita Express ~¥3 070 + shinkansen ~¥14 170 (dorosły) — miejscówki w SmartEX</span></td></tr>
-      <tr><td class="t">3.05</td><td><b>Kioto → Tokio</b><span class="dsc">Shinkansen ~¥14 170 dorosły / ~¥7 080 dziecko — święto, miejscówki obowiązkowe</span></td></tr>
-      <tr><td class="t">7.05</td><td><b>Odawara → Tokio → Narita</b><span class="dsc">Shinkansen ~¥3 500 + Narita Express ~¥3 070 (dorosły)</span></td></tr>
-    </table>
-    <p class="note"><b>JR Pass się nie opłaca</b> (~¥50 000/os.) — dwa shinkanseny punktowo to wciąż ~2× taniej. Do Hakone: Hakone Free Pass (Odakyu). W miastach: karty IC Suica/PASMO/ICOCA. Bagaż: tylko podręczny 7 kg/os., jedzie z nami — bez kuriera.</p>
-
+    <h3>Terminy i rezerwacje</h3>
+    <p class="note">Loty oraz noclegi są potwierdzone. Warsztaty, sumo, Café i taras nie są jeszcze rezerwacjami. Daty sprzedaży wymagają ponownej kontroli w 2027.</p>
+    <table class="agenda">${DEADLINES.map(x=>`<tr><td>${x.label}</td><td><b>${x.title}</b><span class="dsc">${x.text}</span></td></tr>`).join('')}</table>
+    <h3>Transport i pieniądze</h3>
+    <p class="note">Shinkanseny: SmartEX. NEX: JR East. Romancecar: Odakyu. Terminy, warunki zmiany i miejscówki sprawdzajcie w każdym systemie osobno. Na przylocie rezerwacja kolei powinna pozwalać na opóźnienie lotu i formalności.</p>
+    <p class="note">E-bilety razem 13 643,36 zł; w budżecie 14 400 zł do uzgodnienia z kartą. Trzy hotele: 500 443 JPY, w potwierdzeniach zapłacono 0 JPY; podatki dodatkowo. Koszt w złotych zależy od kursu płatności. Aktualne podstawy szacunków: japonia-2027.vercel.app/koszty.html.</p>
     <h3>Praktyka</h3>
     <ul class="plist">
       <li><b>Gotówka:</b> bankomaty 7-Eleven i Japan Post przyjmują karty zagraniczne. Napiwków się nie daje.</li>
-      <li><b>Internet:</b> jeden router pocket WiFi na 4 osoby albo eSIM wgrany przed wylotem.</li>
+      <li><b>Internet:</b> minimum dwa telefony z niezależnym internetem, gdy rozdzielacie się na warsztaty. Pakiet na Japonię nie musi działać w ZEA.</li>
       <li><b>Prąd:</b> 100 V, gniazdka typu A (dwa płaskie bolce) — potrzebny adapter.</li>
       <li><b>Alarmowe:</b> 110 policja · 119 pogotowie i straż. Woda z kranu jest zdatna do picia.</li>
       <li><b>Zwyczaje:</b> buty zdejmujemy w ryokanie i świątyniach; w pociągach cisza; koszy na śmieci prawie nie ma.</li>
-      <li><b>Pranie:</b> pralnie samoobsługowe w obu MIMARU. Główne pranie 2.05 (niedziela) po 14:15 w Kiocie, ~400 ¥ wsad plus ~100 ¥ za 30 min suszenia; dogrywka 5.05 wieczorem w Tokio. W Hakone prania nie ma.</li>
-      <li><b>Bagaż:</b> tylko podręczny — 7 kg i 56×36×23 cm na osobę, <b>razem z wagą walizki</b> (miękka 1,2–1,5 kg, twarda 2,4–3,0 kg). Pakujemy na 5 dni: 4 T-shirty, 1 spodnie zapasowe, 5 kompletów bielizny i skarpet, kurtka przeciwdeszczowa, klapki. Najcięższe rzeczy na sobie. Bez bagażu rejestrowanego w obie strony — zakupy muszą zmieścić się w limicie; awaryjnie walizkę dokupuje się w „Manage booking” do 30 h przed wylotem.</li>
-      <li><b>Tax-free</b> od ~5 000 ¥ za okazaniem paszportu.</li>
+      <li><b>Pranie:</b> pralnie samoobsługowe w obu MIMARU. Główne pranie 2.05 po 16:15 w Kiocie, po powrocie z warsztatu; dogrywka 5.05 wieczorem w Tokio. Opłaty i dostępność maszyn potwierdźcie na miejscu. W Hakone prania nie ma.</li>
+      <li><b>Bagaż:</b> tylko podręczny — 7 kg i 56×36×23 cm na osobę, <b>razem z wagą walizki</b> (miękka 1,2–1,5 kg, twarda 2,4–3,0 kg). Pakujemy na 5 dni: 4 T-shirty, 1 spodnie zapasowe, 5 kompletów bielizny i skarpet, kurtka przeciwdeszczowa, klapki. Najcięższe rzeczy na sobie. Bez bagażu rejestrowanego w obie strony — zakupy muszą zmieścić się w limicie; ewentualną dopłatę i termin zakupu sprawdźcie w Manage Booking po ważeniu 5.05. Nie zakładamy stałej ceny.</li>
+      <li><b>Tax-free w 2027:</b> nowy system zwrotu po potwierdzeniu wywozu. Płaćcie zgodnie z zasadami sklepu, zachowajcie dokumenty i dostęp do towarów przed nadaniem bagażu. Nie zakładajcie automatycznego zwrotu gotówki na lotnisku.</li>
     </ul>
     <div class="pfoot">Japonia 27 kwietnia – 8 maja 2027 · Aneks praktyczny</div>
   </section>
@@ -2007,7 +1878,7 @@ h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:22px 0 8px}
   .agenda{font-size:9.5pt}
   .agenda tr,.toc li,.facts span,.flex p{page-break-inside:avoid;break-inside:avoid}
   .day h2,.dhead{page-break-after:avoid;break-after:avoid}
-  .pfoot{position:absolute;bottom:0;left:0;right:0}
+  .pfoot{position:static;margin-top:8mm}
   .pg{padding-bottom:14mm}
   a{color:inherit;text-decoration:none}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -2020,7 +1891,7 @@ h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:22px 0 8px}
   <a href="index.html">← wróć do strony</a>
   <button class="btn" type="button" onclick="window.print()">🖨️ Drukuj / zapisz jako PDF</button>
 </div>
-<p class="hint">Kliknij <b>„Drukuj / zapisz jako PDF"</b>, a w oknie drukowania wybierz miejsce docelowe <b>„Zapisz jako PDF"</b>. Ustaw format <b>A4</b> i włącz <b>grafikę tła</b>, żeby zachować kolory okładki. Każdy dzień drukuje się na osobnej stronie — całość ma ${DAYS.length + 2} stron.</p>
+<p class="hint">Kliknij <b>„Drukuj / zapisz jako PDF"</b>, a w oknie drukowania wybierz miejsce docelowe <b>„Zapisz jako PDF"</b>. Ustaw format <b>A4</b> i włącz <b>grafikę tła</b>, żeby zachować kolory okładki. Każdy dzień zaczyna się na nowej stronie. Liczba stron zależy od ustawień drukowania; przed zapisaniem sprawdź podgląd, marginesy i wyłącz nagłówki przeglądarki.</p>
 ${inner}
 </body>
 </html>`;
@@ -2081,21 +1952,21 @@ function lotyPage(){
     <div class="hero-inner">
     <p class="eyebrow">Ceny · trendy · rekomendacje</p>
     <h1>Loty</h1>
-    <p class="lead">Bilet: Etihad ze stopoverem, termin 27.04–7.05 — <b>kupiony 8.09.2026 za 3 600 zł/os.</b> (14 400 zł za rodzinę, z nocą w Abu Zabi w pakiecie). Niżej — jak do tego doszło i archiwum cen rynkowych.</p>
+    <p class="lead"><b>Etihad jest kupiony.</b> Wylot 27.04, noc w Abu Zabi, Narita 29.04; powrót z Japonii 7.05 i lądowanie w Warszawie 8.05. E-bilety: 13 643,36 zł. Kwota budżetowa 14 400 zł wymaga uzgodnienia z kartą. Porównania niżej są archiwalne.</p>
     </div>
   </header>
 
   <section>
-    <h2 class="stitle">Ceny dziś — kluczowe linie</h2>
-    <p class="lead-p">Za 1 dorosłego, w obie strony, wylot 27.04 / powrót 7.05.2027 (lądowanie w WAW 8.05 rano). Ostatnia kontrola cen: <b>${dpl(LAST_CHECKED)}</b>${LAST_CHECKED!==FLIGHT.checked?` · ostatnia zmiana: ${dpl(FLIGHT.checked)}`:''}. To tło rynkowe (zwykły round-trip wg Google) — nasz wybrany wariant ze stopoverem jest opisany wyżej. Ranking wg wag niżej zostaje jako ciekawostka porównawcza.</p>
+    <h2 class="stitle">Archiwum cen - kluczowe linie</h2>
+    <p class="lead-p">Historyczne odczyty za jednego dorosłego, dla wcześniejszych wariantów round-trip (m.in. 3-14 maja), a nie aktualna wycena kupionej trasy ze stopoverem. Ostatnia zapisana kontrola: <b>${dpl(LAST_CHECKED)}</b>${LAST_CHECKED!==FLIGHT.checked?` · ostatnia zmiana: ${dpl(FLIGHT.checked)}`:''}. To tło rynkowe (zwykły round-trip wg Google) — nasz wybrany wariant ze stopoverem jest opisany wyżej. Ranking wg wag niżej zostaje jako ciekawostka porównawcza.</p>
     <div class="alist">${rows}</div>
-    <div class="dnote" style="margin-top:14px">★ Etihad to trasa z planu — jako jedyna <b>może dać darmowy nocleg 4★ w Abu Zabi</b> (program stopover), wart ~600–900 zł. To jednak <b>opcja warunkowa</b>: program jest formalnie potwierdzony do stycznia 2027, więc na maj 2027 trzeba go potwierdzić przy zakupie. W rankingu niżej można tę premię włączyć i wyłączyć jednym kliknięciem.</div>
+    <div class="dnote" style="margin-top:14px">Wasz nocleg stopover ma już voucher: Grand Millennium Al Wahda, dwa pokoje, 27-28.04, bez śniadania. Archiwalny ranking ocenia stopover warunkowo; nie potwierdza dostępności hotelu w innych ofertach ani bieżących cen.</div>
   </section>
 
   <section>
     <h2 class="stitle">Trend cen</h2>
     ${priceChart()}
-    ${FLIGHT.history.length>1?`<div class="card" style="margin-top:16px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">Historia odczytów — Etihad (trasa z planu)</h3><div class="wxwrap"><table><thead><tr><th>Data</th><th style="text-align:right">Cena / dorosły</th><th style="text-align:right">Zmiana</th><th style="text-align:right">Rodzina 2+2</th></tr></thead><tbody>${FLIGHT.history.slice().reverse().map((h,i,arr)=>{const p=arr[i+1];const d=p?h[1]-p[1]:null;const c=d==null?'—':(d===0?'→ 0':(d<0?`▼ ${plz(Math.abs(d))}`:`▲ ${plz(d)}`));const col=d==null||d===0?'var(--muted)':(d<0?'var(--success)':'var(--shu)');return `<tr><td>${dpl(h[0])}</td><td class="num">${plz(h[1])}</td><td class="num" style="color:${col};font-weight:700">${c}</td><td class="num" style="color:var(--muted)">${plz(Math.round(h[1]*3.8/100)*100)}</td></tr>`;}).join('')}</tbody></table></div></div>`:''}
+    ${FLIGHT.history.length>1?`<div class="card" style="margin-top:16px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">Historia odczytów - Etihad, wcześniejsze warianty</h3><div class="wxwrap"><table><thead><tr><th>Data</th><th style="text-align:right">Cena / dorosły</th><th style="text-align:right">Zmiana</th><th style="text-align:right">Rodzina 2+2</th></tr></thead><tbody>${FLIGHT.history.slice().reverse().map((h,i,arr)=>{const p=arr[i+1];const d=p?h[1]-p[1]:null;const c=d==null?'—':(d===0?'→ 0':(d<0?`▼ ${plz(Math.abs(d))}`:`▲ ${plz(d)}`));const col=d==null||d===0?'var(--muted)':(d<0?'var(--success)':'var(--shu)');return `<tr><td>${dpl(h[0])}</td><td class="num">${plz(h[1])}</td><td class="num" style="color:${col};font-weight:700">${c}</td><td class="num" style="color:var(--muted)">${plz(Math.round(h[1]*3.8/100)*100)}</td></tr>`;}).join('')}</tbody></table></div></div>`:''}
   </section>
 
   <section>
@@ -2103,14 +1974,14 @@ function lotyPage(){
     <p class="lead-p">Rozstrzygnięcie zapadło na etihad.com — finalna wycena przewoźnika, której Google nie umiał policzyć (kombinacja stopover + powrót z Narity wycenia się tam absurdalnie).</p>
     <div class="card">
       <div class="scenrow"><span><b>Etihad, ${TICKET.label}</b> · Economy Basic · 3 dorosłych + 1 dziecko</span><b>${plz(TICKET.family)}</b></div>
-      <div class="scenrow"><span>W pakiecie: nocleg 4★ w Abu Zabi (Grand Millenium Al Wahda) + opłata stopover 224 zł</span><b>0 zł</b></div>
+      <div class="scenrow"><span>Nocleg stopover: Grand Millennium Al Wahda, voucher otrzymany</span><b>0 zł</b></div>
       <div class="scenrow"><span>Bagaż rejestrowany — świadomie pomijamy (w cenie podręczne 7 kg/os.)</span><b>0 zł</b></div>
-      <div class="scentot"><span>Razem loty</span><b>~${plz(TICKET.total)}</b></div>
+      <div class="scentot"><span>Rezerwa budżetowa do rozliczenia</span><b>~${plz(TICKET.total)}</b></div>
       <ul class="tips" style="margin-top:14px">
-        <li>WAW 11:50 → AUH 19:25 (27.04) · nocleg · AUH 21:25 → Narita 12:45 (29.04) · powrót Narita 18:00 (7.05) → WAW 6:50 <b>w sobotę 8.05</b>.</li>
-      <li><b>Kwota do uzgodnienia:</b> cztery e-bilety sumują się do <b>13 643,36 zł</b>, a obciążenie przyjęte w budżecie to 14 400 zł. Różnica 756,64 zł to najpewniej opłata pakietu stopover (~224 zł) i opłaty serwisowe — sprawdźcie na wyciągu karty i poprawcie kwotę w kalkulatorze, jeśli trzeba.</li>
+        <li>WAW 11:50 → AUH 19:35 (27.04) · nocleg · AUH 21:25 → Narita 12:45 (29.04) · powrót Narita 18:00 (7.05) → WAW 6:50 <b>w sobotę 8.05</b>.</li>
+      <li><b>Kwota do uzgodnienia:</b> cztery e-bilety sumują się do <b>13 643,36 zł</b>, a obciążenie przyjęte w budżecie to 14 400 zł. Przyczyna różnicy 756,64 zł nie jest potwierdzona. Sprawdźcie transakcje na karcie i dokumenty dopłat; nie przypisujemy tej kwoty do domniemanej opłaty.</li>
         <li>Miejsca obok siebie: 8.09 Etihad dodał bezpłatną notatkę do rezerwacji (rodzina razem, 10-latek przy rodzicu, 13-latek blisko reszty, wszystkie odcinki) — numer sprawy w mailu od Etihada. Płatnych miejsc nie kupiono; konkretny przydział przy odprawie, zależnie od dostępności.</li>
-        <li><b>Bez bagażu rejestrowanego w obie strony</b> (decyzja 8.09) — cztery podręczne po 7 kg to cały bagaż wyjazdu. Walizkę na powrót (~220 zł) można dokupić w „Manage booking” do 30 h przed wylotem, jeśli zakupy nie zmieszczą się w limicie.</li>
+        <li><b>Bez bagażu rejestrowanego w obie strony</b> (decyzja 8.09) — cztery podręczne po 7 kg to cały bagaż wyjazdu. 5.05 zważcie każdy bagaż. Jeśli przekroczy limit, sprawdźcie cenę i termin zakupu bagażu rejestrowanego w Manage Booking. Nie zakładamy stałej dopłaty ani dostępności tej samej ceny na lotnisku.</li>
         <li>Termin przesunięty 7.09 z 3–14 maja na 27.04–7.05 (wycieczka klasowa dziecka 10.05); w Google ta sama cena biletu, kwota ze stopoverem do potwierdzenia w kasie.</li>
       </ul>
     </div>
@@ -2119,10 +1990,10 @@ function lotyPage(){
   <section>
     <h2 class="stitle">Kupione — co jeszcze domknąć</h2>
     <div class="card"><ul class="tips">
-      <li><b>Kupione 8.09.2026</b> — Etihad 27.04–7.05 ze stopoverem tam, 3 600 zł/os. (14 400 zł za 4 osoby). Decyzja zapadła 4.09, gdy cena weszła w próg okazji (≤3 500 zł/os. ekwiwalentu w Google); w kasie wyszło o ~150 zł/os. więcej.</li>
+      <li><b>Kupione 8.09.2026.</b> Bilety i voucher są potwierdzone. Do uzgodnienia zostaje pełne rozliczenie kwoty na karcie, nie ponowny wybór przewoźnika.</li>
       <li><b>Do domknięcia w „Manage booking”:</b> dane paszportowe całej czwórki. Miejsca obok siebie zgłoszone bezpłatnie 8.09 (numer sprawy w mailu od Etihada); bagażu rejestrowanego świadomie nie kupujemy — decyzja wraca 5.05 wieczorem przy pakowaniu.</li>
       <li><b>Monitoring cen wyłączony 8.09</b> — wykres niżej zostaje jako archiwum rynku; „Bilety lotnicze” są odhaczone na <a href="decyzje.html">checkliście</a>.</li>
-      <li><b>Zmiany/anulowanie:</b> Economy Basic ma najniższą elastyczność — daty są jednak przemyślane od lipca, a ubezpieczenie turystyczne (checklista, ~kwiecień) domyka ryzyko.</li>
+      <li><b>Zmiany/anulowanie:</b> sprawdźcie warunki wystawionej taryfy przed zmianą. Ubezpieczenie nie gwarantuje zwrotu przy dowolnej rezygnacji; zakres, wyłączenia i termin zakupu ochrony kosztów rezygnacji trzeba sprawdzić teraz.</li>
     </ul></div>
   </section>
 
@@ -2138,15 +2009,15 @@ function lotyPage(){
       <p style="margin:0 0 14px;font-size:14px">Domyślne wagi <b>nie są ustawione z ręki</b> — wynikają z tego, jak szeroko rozstrzelone jest dziś każde kryterium, przeliczone na złotówki: cena wprost, wygoda wg Twojej reguły <b>8 h w drodze ≡ ${plz(8*PLN_PER_HOUR)} na bilecie</b> (czyli ${plz(PLN_PER_HOUR)}/h), jakość tak, że jej pełna rozpiętość (0–100 pkt w rankingu AirlineRatings) warta jest ${plz(QUALITY_PLN)}. Możesz je dowolnie przesunąć.</p>
       <div class="wgrow">
         <label for="wprice">💰 Cena <b id="wlab_p">${wPrice0}%</b></label>
-        <input type="range" id="wprice" min="0" max="100" step="5" value="${wPrice0}">
+        <input type="range" id="wprice" aria-label="Waga ceny" min="0" max="100" step="5" value="${wPrice0}">
       </div>
       <div class="wgrow">
         <label for="wtime">🛋️ Wygoda podróży <b id="wlab_t">${wComfort0}%</b></label>
-        <input type="range" id="wtime" min="0" max="100" step="5" value="${wComfort0}">
+        <input type="range" id="wtime" aria-label="Waga wygody" min="0" max="100" step="5" value="${wComfort0}">
       </div>
       <div class="wgrow">
         <label for="wqual">⭐ Jakość linii <b id="wlab_q">${wQual0}%</b></label>
-        <input type="range" id="wqual" min="0" max="100" step="5" value="${wQual0}">
+        <input type="range" id="wqual" aria-label="Waga jakości" min="0" max="100" step="5" value="${wQual0}">
       </div>
       <div id="scorelist" class="scorelist" style="margin-top:6px"></div>
       <p class="note" style="margin-top:12px">Punkty ceny: najtańsza linia = 100, najdroższa = 0. Punkty wygody: najlepsza kombinacja czasu, przesiadek i stopoveru = 100, najsłabsza = 0 (czas liczony od wylotu do lądowania). Punkty jakości: pozycja w rankingu <i>AirlineRatings „World's Best Airlines 2026"</i>. Premia za darmowy nocleg wchodzi do wygody tylko przy zaznaczonym przełączniku powyżej — bez niej Etihad i Emirates idą praktycznie łeb w łeb.</p>
@@ -2165,7 +2036,7 @@ function lotyPage(){
       <div class="gridlabs">${labs}</div>
       <p class="note" style="margin-top:8px">Maj 2027 · najtaniej <b>${plz(gmin)}</b> (3.05), najdrożej <b>${plz(gmax)}</b> (2.05). Wyloty 1–2 maja są droższe przez ogon Golden Week.</p>
     </div>
-    <div class="dnote" style="margin-top:14px">🏁 <b>Termin przesunięty na 27.04–7.05</b> (dziecko 10.05 jedzie na wycieczkę klasową). W Google identyczna cena co 3–14 (3 449 zł/os.); wycena stopoveru z 7.09: 13 600 zł za 4 osoby; przy zakupie 8.09 wyszło 3 600 zł/os. (14 400 zł). Etihad wycenił tę kombinację taniej niż jakikolwiek wariant widoczny w Google, z hotelem 4★ w Abu Zabi w pakiecie. Powrót 14.05 kosztowałby +2 977 zł, a „tani" round-trip z Google w kasie przewoźnika nie istniał. Lekcja: przy nietypowych taryfach (stopover) ostatnie słowo ma zawsze strona przewoźnika.</div>
+    <div class="dnote" style="margin-top:14px">🏁 <b>Termin przesunięty na 27.04–7.05</b> (dziecko 10.05 jedzie na wycieczkę klasową). W Google identyczna cena co 3–14 (3 449 zł/os.); wycena stopoveru z 7.09: 13 600 zł za 4 osoby; przy zakupie 8.09 wyszło 3 600 zł/os. (14 400 zł). To zapis wcześniejszego porównania, nie bieżąca oferta ani rozliczenie transakcji. Warianty miały różne trasy i warunki; kwotę kupionego biletu należy brać z dokumentów oraz obciążenia karty.</div>
   </section>
 
   <section>
@@ -2213,7 +2084,7 @@ function pogodaPage(){
     <p class="lead-p">Lecimy Etihadem w taryfie Economy Basic: jedna sztuka podręczna na osobę, <b>7 kg i 56×36×23 cm</b>, bez bagażu rejestrowanego w cenie. Cztery małe walizki jadą z nami przez cały wyjazd — dlatego kurier na lotnisko wypadł z planu.</p>
     <div class="card"><ul class="tips">
       <li><b>Waga jest limitem, nie objętość.</b> 7 kg waży się przy odprawie. Źródła różnią się co do tego, czy w ekonomii Etihadu dochodzi jeszcze mała sztuka osobista — przy locie bez bagażu rejestrowanego to realna różnica, więc potwierdźcie w „Manage booking”.</li>
-      <li><b>Zakupy na powrót to jedyne ryzyko — i nie ma zaworu.</b> Decyzją z 8.09 lecimy bez bagażu rejestrowanego w obie strony, więc streetwear, pluszaki i gachapony muszą zmieścić się w tych 7 kg. Zapas całej rodziny to ~7,8 kg (patrz tabele niżej) i to jest cały budżet na pamiątki. <b>Plan B:</b> przy pakowaniu 5.05 zważcie bagaże — jeśli nie wychodzi, walizkę dokupicie w „Manage booking” (~220 zł) do 30 h przed wylotem, czyli do ~12:00 w czwartek 6.05. Później zostaje odprawa online i lada na lotnisku, gdzie ta sama walizka kosztuje wielokrotnie więcej.</li>
+      <li><b>Zakupy muszą mieścić się w limicie każdego pasażera.</b> Tabele wag są przykładem, nie wynikiem ważenia waszych walizek. Zapas jednej osoby nie zwiększa automatycznie limitu drugiej. <b>Plan B:</b> 5.05 przed kolacją zważcie każdy bagaż i w razie potrzeby wyceńcie bagaż rejestrowany w Manage Booking. Sprawdźcie warunki trasy z przesiadką; dopłata i termin zakupu nie są tutaj potwierdzone.</li>
       <li><b>Kurier niepotrzebny.</b> Takkyūbin (~2 000–2 800 ¥/szt.) opłaca się przy dużych walizkach — przy podręcznych taniej i prościej wziąć je ze sobą. Jedyny odcinek, gdzie warto rozważyć dowóz, to pętla w Hakone: bagaż zostawiacie przy dworcu Yumoto, czeka w ryokanie.</li>
     </ul></div>
   </section>
@@ -2269,7 +2140,7 @@ function pogodaPage(){
     <h2 class="stitle" style="margin-top:34px">Czego nie pakować</h2>
     <div class="card"><ul class="tips">
       <li><b>Ręczników, piżamy na Hakone i kosmetyków podstawowych.</b> Ryokan daje yukatę, ręczniki i wszystko do onsenu; MIMARU i hotel w Abu Zabi dają szampon i mydło.</li>
-      <li><b>Proszku do prania.</b> W pralkach w Kiocie detergent jest wbudowany, w Tokio kupicie go na recepcji.</li>
+      <li><b>Dużego opakowania detergentu.</b> Sposób dozowania i ewentualny zakup środka do prania sprawdźcie w pralni lub recepcji.</li>
       <li><b>Nożyczek, scyzoryka, płynów powyżej 100 ml.</b> Lecimy bez bagażu rejestrowanego w obie strony, więc podręczny przechodzi przez kontrolę z całą zawartością.</li>
       <li><b>Zapasowych butów „na wszelki wypadek”.</b> Jedna para na nogach plus wsuwane to komplet; para butów to 700–900 g, czyli 15% przydziału.</li>
       <li>Weźcie za to <b>małą wagę bagażową</b> (~80 g). Przy limicie 7 kg i zakupach w Tokio to jedyny sposób, żeby nie zgadywać przed odprawą.</li>
@@ -2281,13 +2152,13 @@ function pogodaPage(){
       <thead><tr><th>Kiedy</th><th>Gdzie</th><th>Co robimy</th></tr></thead>
       <tbody>
         <tr><td class="dcol">29.04, czwartek, wieczór</td><td>MIMARU Kyoto Station</td><td>Nie pranie, tylko ratunek: strój z Abu Zabi po dniu w 40°C przepierzcie ręcznie i powieście. Reszta czeka.</td></tr>
-        <tr><td class="dcol"><b>2.05, niedziela, 14:15</b></td><td><b>MIMARU Kyoto Station</b></td><td><b>Główne pranie wyjazdu.</b> Popołudnie jest w planie celowo puste. Cztery pralki i cztery suszarki, ~400 ¥ za wsad z detergentem, ~100 ¥ za 30 minut suszenia. Dwa wsady na rodzinę, gotowe przed kolacją.</td></tr>
+        <tr><td class="dcol"><b>2.05, niedziela, po 16:15</b></td><td><b>MIMARU Kyoto Station</b></td><td><b>Główne pranie wyjazdu.</b> Po powrocie z warsztatu. Dostępność maszyn, detergent i cenę sprawdźcie na miejscu. Zarezerwujcie około 2-3 godzin z suszeniem; kolacja blisko hotelu.</td></tr>
         <tr><td class="dcol">5.05, środa, 21:00</td><td>MIMARU Tokyo Akasaka</td><td>Dogrywka przy pakowaniu, jeśli chcecie wrócić w czystych rzeczach. Detergent kupujecie na recepcji.</td></tr>
       </tbody>
     </table></div></div>
     <div class="card" style="margin-top:16px"><ul class="tips">
       <li><b>Pierzcie po południu, nie wieczorem.</b> Pralnia w Kiocie robi się zatłoczona po 19:00, gdy wszyscy wracają ze zwiedzania. O 14:30 zwykle jest pusta.</li>
-      <li><b>Suszarka jest wolniejsza niż pralka.</b> Pranie 30 minut, suszenie realnie 60–90 minut. Wsad wrzucony o 14:30 jest suchy przed 17:00 — z zapasem przed kolacją.</li>
+      <li><b>Suszarka jest wolniejsza niż pralka.</b> Pranie 30 minut, suszenie realnie 60–90 minut. Maszyny mogą być zajęte. Jeden rodzic może dopilnować prania, a drugi wyjść z dziećmi na krótki posiłek; nie planujcie na ten wieczór sztywnej rezerwacji.</li>
       <li><b>Nie ma prania w Hakone.</b> Ryokan to jedna noc i jedziemy stamtąd prosto na lotnisko, więc 5.05 w Tokio to ostatnia okazja.</li>
     </ul></div>
 
@@ -2362,12 +2233,12 @@ function niezbednikPage(){
     <h2 class="stitle">Na co dzień</h2>
     ${seg('💴 Pieniądze i płatności',[
       'Japonia wciąż lubi <b>gotówkę</b> — małe knajpki, świątynie, targi i automaty często nie przyjmą karty.',
-      'Bankomaty przyjmujące karty zagraniczne: <b>7-Eleven</b> i poczta (<b>Japan Post</b>) — są dosłownie wszędzie i działają całą dobę.',
+      'Karty zagraniczne obsługują m.in. bankomaty <b>Seven Bank</b> i <b>Japan Post</b>. Godziny zależą od lokalizacji i przerw serwisowych; miejcie nieduży zapas gotówki.',
       'Karta zbliżeniowa działa w sieciówkach, dużych sklepach i na dworcach.',
       '<b>Napiwków się nie daje</b> — próba zostawienia reszty bywa odbierana jako niezręczność.'])}
     ${seg('🚃 Poruszanie się po miastach',[
-      'Karty <b>IC</b> — Suica/PASMO (Tokio) albo ICOCA (Kansai) — działają w całym kraju: metro, autobusy, a nawet sklepy. Jeden dotyk, bez kupowania biletów.',
-      'Dzieci mają <b>wersje dziecięce</b> (taniej) — trzeba raz okazać wiek na stacji.',
+      'Karty <b>IC</b> — Suica/PASMO (Tokio) albo ICOCA (Kansai) — działają w wielu uczestniczących sieciach transportu i sklepach, ale nie na każdej trasie. Nie zastępują automatycznie biletu i miejscówki na shinkansen ani dopłaty na pociąg ekspresowy.',
+      'Dla <b>10-latki karta dziecięca</b> z dokumentem wieku; 13-latek korzysta na kolei z taryfy dorosłej. Sprawdźcie obsługę kart dziecięcych w wybranym systemie.',
       'Na iPhonie: <b>Suica w Apple Wallet</b>, doładowanie kartą — można założyć jeszcze przed wyjazdem.'])}
     ${seg('🚄 Przejazdy między miastami',[
       '<b>JR Pass się przy naszej trasie nie opłaca</b> (~50 000 ¥/os.) — bilety punktowe wychodzą około dwa razy taniej.',
@@ -2375,18 +2246,18 @@ function niezbednikPage(){
       'Bagaż: <b>tylko podręczny 7 kg/os.</b>, jedzie z nami — kurier między bazami niepotrzebny. W Hakone można go oddać przy dworcu Yumoto i odebrać w ryokanie (~800–1 100 ¥/szt.).',
       'Szczegółowe ceny naszych odcinków są w <a href="koszty.html">Kosztach</a>.'])}
     ${seg('📶 Internet i prąd',[
-      'Dla czterech osób najprościej <b>jeden router pocket WiFi</b> (odbiór na lotnisku albo kurierem do hotelu) — łączy wszystkie urządzenia.',
-      'Alternatywa: <b>eSIM</b> (Airalo, Ubigi) wgrany na każdy telefon jeszcze przed wylotem.',
+      'Przy wspólnym zwiedzaniu pocket WiFi może wystarczyć. Gdy rodzina rozdziela się na warsztaty, <b>każdy dorosły potrzebuje niezależnego internetu</b> i zapisanych adresów.',
+      'Alternatywa: <b>eSIM w zgodnym telefonie</b>, przygotowana przed wylotem. Sprawdźcie aktywację, roaming danych i osobne pokrycie ZEA oraz Japonii; nazwa pakietu „Japan” nie oznacza internetu w Abu Zabi.',
       '<b>Prąd: 100 V, gniazdka typu A</b> (dwa płaskie bolce) — polskie wtyczki nie pasują, potrzebny adapter. Ładowarki 100–240 V działają bez przetwornicy.'])}
     ${seg('🙇 Zwyczaje, które warto znać',[
       '<b>Buty zdejmujemy</b> w ryokanie, świątyniach i części restauracji — stąd buty łatwe do zdejmowania.',
       'W pociągach obowiązuje <b>cisza</b>, telefon na milczek, rozmowy szeptem.',
       '<b>Koszy na śmieci prawie nie ma</b> — noście małą torebkę na odpadki i wyrzucajcie w hotelu albo w konbini.',
       'Nie je się i nie pije w ruchu — zwykle staje się obok automatu albo sklepu.',
-      '<b>Tatuaże</b>: w publicznych onsenach zwykle obowiązuje zakaz i w opiniach o Hanaori jest to potwierdzone — <b>nas nie dotyczy</b>, więc duże łaźnie są otwarte. Prywatną kąpiel rezerwujemy dla wygody, nie z konieczności.'])}
+      '<b>Onsen:</b> sprawdźcie regulamin publicznych łaźni, m.in. zasady tatuaży i kąpieli dzieci. Wasz pokój Hanaori Deluxe ma już prywatną kąpiel na świeżym powietrzu - dodatkowa rezerwacja nie jest potrzebna.'])}
     ${seg('🛍️ Tax-free i aplikacje',[
-      'W sklepach z oznaczeniem <b>„Tax-Free"</b> zwrot podatku od zakupów powyżej ok. 5 000 ¥ — <b>przy kasie, za okazaniem paszportu</b> (nie na lotnisku).',
-      'Towary „konsumpcyjne" (kosmetyki, słodycze) pakują zaklejone — formalnie nie należy ich otwierać przed wyjazdem z Japonii.',
+      '<b>Od 1.11.2026 obowiązuje nowy system zwrotu</b>, więc dotyczy waszego wyjazdu. W sklepie tax-free okazujecie paszport i płacicie kwotę brutto; zwrot następuje po potwierdzeniu wywozu przez urząd celny, zgodnie z procedurą sklepu/operatora.',
+      'Zachowajcie towary i dokumenty do kontroli przed wywozem, także przed oddaniem bagażu rejestrowanego. Nie zakładajcie automatycznej wypłaty gotówki na lotnisku. <a href="https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00019.html" target="_blank" rel="noopener">Oficjalne zasady nowego systemu →</a>',
       'Warto mieć: <b>Google Maps</b>, <b>Google Translate</b> (tłumaczy menu aparatem — bardzo się przydaje), <b>Navitime</b> lub Japan Travel do połączeń kolejowych.'])}
     ${seg('🗣️ Pięć zwrotów, które załatwiają 90% sytuacji',[
       '<i lang="ja">Sumimasen</i> (すみません) — „przepraszam / przepraszam, czy mogę…" — uniwersalne zagajenie.',
@@ -2415,7 +2286,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
       <h3>🕌 Wielki Meczet Szejka Zajida</h3>
       <div class="desc">82 białe kopuły, największy ręcznie tkany dywan świata i kryształowe żyrandole — jedno z najbardziej imponujących wnętrz, jakie zobaczycie gdziekolwiek. Robi „wow" niezależnie od wieku.</div>
       <div class="meta"><span>🕒 sob–czw 9:00–22:00, pt od 9:00 (przerwy na modlitwy)</span><span>💴 wstęp darmowy (darmowa rezerwacja online)</span><span>📍 ~20 min taxi z centrum; zwiedzać RANO — chłodniej i pusto</span></div>
-      <span class="rezerwuj">dress code: zakryte ramiona i kolana; abaje gratis na miejscu</span>
+      <span class="rezerwuj">dress code: luźny, nieprześwitujący strój; kobiety zakrywają włosy, nadgarstki i kostki. Weźcie własną chustę; nie zakładajcie darmowej abai</span>
       <div class="links"><a href="https://www.szgmc.gov.ae/en" target="_blank" rel="noopener">rezerwacja wejścia →</a></div>
     </div>
 
@@ -2561,7 +2432,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     <div class="acard" id="streetwear">
       <h3>👟 Streetwear w Harajuku — Supreme, BAPE, Stüssy, Palace</h3>
       <div class="desc">Wszystkie cztery sklepy stoją w promieniu ~400 m wokół Cat Street (Ura-Harajuku), 5–10 minut pieszo od Takeshita-dōri — dlatego siedzą w dniu 4.05 między chramem Meiji a Shibuyą. BAPE Store Harajuku (Jingūmae 4-21-5 — pierwszy sklep Nigo, z ruchomą taśmą na buty), Stüssy Harajuku Chapter (4-28-2), Supreme Harajuku (4-32-7, 2. piętro) i Palace Tokyo (5-9-20, po drugiej stronie Omotesandō). Po drodze do Shibuyi: Kith Tokyo w Miyashita Park i Human Made (marka Nigo). W Shibuyi, tuż przy PARCO, jest drugi Supreme i drugi BAPE — gdyby w Harajuku było za tłoczno. Supreme robi dropy w soboty (kolejki, losowania) — we wtorek wchodzi się z ulicy, ale nowości bywają wyprzedane.</div>
-      <div class="meta"><span>🕒 BAPE i Supreme 11:00–20:00 · Stüssy 11:00–19:00 · Palace pn–pt 12:00–20:00</span><span>💴 orientacyjnie: koszulki 6–13 tys. ¥ (~145–310 zł), bluzy 20–45 tys. ¥ (~480–1 080 zł); Supreme najtaniej, BAPE najdrożej; BAPE tax-free od 5 000 ¥ na paszport</span><span>📍 Ura-Harajuku / Cat Street — z Takeshita-dōri w stronę Omotesandō</span></div>
+      <div class="meta"><span>🕒 BAPE i Supreme 11:00–20:00 · Stüssy 11:00–19:00 · Palace pn–pt 12:00–20:00</span><span>💴 orientacyjnie: koszulki 6–13 tys. ¥ (~145–310 zł), bluzy 20–45 tys. ¥ (~480–1 080 zł); Supreme najtaniej, BAPE najdrożej; tax-free według zasad sklepu i nowego systemu zwrotu (Niezbędnik)</span><span>📍 Ura-Harajuku / Cat Street — z Takeshita-dōri w stronę Omotesandō</span></div>
       <div class="links"><a href="https://en.jp.bape.com/pages/store-list/harajuku" target="_blank" rel="noopener">BAPE Harajuku →</a><a href="https://www.stussy.com/blogs/chapters" target="_blank" rel="noopener">Stüssy Chapters →</a><a href="https://usa.palaceskateboards.com/shop/tokyo" target="_blank" rel="noopener">Palace Tokyo →</a><a href="https://www.sneakerfreaker.com/city-guides/tokyo/supreme-tokyo" target="_blank" rel="noopener">Supreme Harajuku (przewodnik) →</a></div>
     </div>
 
@@ -2603,7 +2474,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     <div class="acard" id="shibuya-sky">
       <h3>🌆 Shibuya Sky</h3>
       <div class="desc">Otwarty taras na dachu 229-metrowego wieżowca — widok na słynne skrzyżowanie, a przy dobrej pogodzie na Fudżi. Najlepszy slot: zachód słońca.</div>
-      <div class="meta"><span>🕒 10:00–22:30 (sloty co 20 min)</span><span>💴 online: dorosły ~2 600 ¥, 12–17 lat ~2 000 ¥, 6–11 lat ~1 200 ¥ → 4 os. ≈ 8 400 ¥ (~200 zł)</span><span>📍 Shibuya Scramble Square, 14 p. wejście</span></div>
+      <div class="meta"><span>🕒 10:00–22:30 (sloty co 20 min)</span><span>💴 cena zależy od daty i godziny; sprawdźcie aktualną taryfę całej rodziny oraz osobne zasady zakupu biletu 10-latki</span><span>📍 Shibuya Scramble Square, 14 p. wejście</span></div>
       <span class="rezerwuj">rezerwuj — sprzedaż 14 dni wcześniej (0:00 JST)</span>
       <div class="links"><a href="https://www.shibuya-scramble-square.com/sky/" target="_blank" rel="noopener">bilety online →</a></div>
     </div>
@@ -2612,8 +2483,8 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
       <h3>⚡ Pokémon Center TOKYO DX + Pokémon Café</h3>
       <div class="desc">Flagowy sklep Pokémon i Café na tym samym piętrze tego samego budynku (Nihombashi Takashimaya S.C., budynek wschodni, 5. piętro; 10 min metrem od Ueno) — ekskluzywne pluszaki i karty, a obok tematyczne dania i wizyta Pikachu przy stoliku. Największy sklep w Japonii (Mega Tokyo, Ikebukuro) wypadł z planu: to był niepotrzebny przejazd przez miasto.</div>
       <div class="meta"><span>🕒 sklep 10:30–21:00; Café sloty 10:30–21:00</span><span>💴 sklep — wstęp darmowy; Café ~1 500–2 200 ¥/os za danie</span><span>📍 Nihombashi Takashimaya S.C. East, 5F (metro Nihombashi)</span></div>
-      <span class="rezerwuj">Café: rezerwacja 31 dni wcześniej, 18:00 czasu jap.</span>
-      <div class="links"><a href="https://www.pokemon.co.jp/shop/en/" target="_blank" rel="noopener">Pokémon Center — lista sklepów →</a><a href="https://reserve.pokemon-cafe.jp/" target="_blank" rel="noopener">rezerwacja Café →</a></div>
+      <span class="rezerwuj">Café: okna sprzedaży ogłaszane w NEWS; termin na maj 2027 do potwierdzenia</span>
+      <div class="links"><a href="https://www.pokemon.co.jp/shop/en/" target="_blank" rel="noopener">Pokémon Center — lista sklepów →</a><a href="https://www.pokemon-cafe.jp/ja/cafe/news/" target="_blank" rel="noopener">NEWS i daty sprzedaży →</a><a href="https://reserve.pokemon-cafe.jp/" target="_blank" rel="noopener">rezerwacja Café →</a></div>
     </div>
 
     <div class="acard" id="tsukiji">
@@ -2709,22 +2580,22 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
 
     <div class="acard" id="vjw">
       <h3>🛂 Visit Japan Web</h3>
-      <div class="desc">Obowiązkowa odprawa imigracyjno-celna online — wypełnijcie dla całej czwórki przed wylotem (albo w samolocie), na lotnisku pokazuje się kod QR zamiast papierków.</div>
-      <div class="meta"><span>🕒 wypełnić do 6 h przed lądowaniem</span><span>💴 darmowe</span></div>
+      <div class="desc">Visit Japan Web ułatwia przygotowanie formalności imigracyjnych i celnych. Przygotujcie dane całej rodziny przed wylotem, sprawdźcie kody i zapiszcie dokumenty offline. Sam kod nie gwarantuje zgody na wjazd; postępujcie według instrukcji służb na lotnisku.</div>
+      <div class="meta"><span>🕒 przygotujcie przed wyjazdem; nie opierajcie tego na internecie w samolocie</span><span>💴 serwis bezpłatny</span></div>
       <div class="links"><a href="https://www.vjw.digital.go.jp/" target="_blank" rel="noopener">vjw.digital.go.jp →</a></div>
     </div>
 
     <div class="acard" id="nex">
       <h3>🚄 Narita Express + Suica</h3>
       <div class="desc">NEX: lotnisko ↔ Tokyo Station w ~55 min, miejsca rezerwowane. Suica: karta/apka do metra, autobusów i sklepów — ładujecie i „pikacie".</div>
-      <div class="meta"><span>💴 NEX ~3 070 ¥/os (dzieci 50%); Suica od ręki w Apple Pay/Google Pay</span></div>
+      <div class="meta"><span>💴 NEX Narita-Tokio: obecnie 3 140 JPY/dorosły w jedną stronę; bilet 14-dniowy tam i z powrotem 5 200/2 600 JPY. Szczegóły w Kosztach. Suica: sprawdźcie zgodność telefonu; dla 10-latki karta dziecięca z dokumentem wieku.</span></div>
       <div class="links"><a href="https://www.jreast.co.jp/multi/en/nex/" target="_blank" rel="noopener">Narita Express →</a><a href="https://www.jreast.co.jp/multi/en/welcomesuica/" target="_blank" rel="noopener">Welcome Suica →</a></div>
     </div>
 
     <div class="acard" id="smartex">
       <h3>🚅 SmartEX — shinkanseny</h3>
       <div class="desc">Oficjalna apka/serwis do rezerwacji shinkansenów Tōkaidō (nasze odcinki: Tokio→Kioto 29.04, Kioto→Tokio 3.05, Odawara→Tokio 7.05). Miejsca da się wybrać na mapce — bierzcie D/E (okno E = strona Fudżi).</div>
-      <div class="meta"><span>🕒 zgłoszenie do roku przed; pociąg i miejsca potwierdzane o 14:00 JST miesiąc przed</span><span>💴 np. Tokio→Kioto ~14 500 ¥/os (dzieci 50%)</span></div>
+      <div class="meta"><span>🕒 część rezerwacji do roku przed; wczesny rozkład jest wstępny. Według bieżących zasad potwierdzenie od 8:00 JST miesiąc przed, z wiadomością e-mail. Zwykła sprzedaż miesięczna od 10:00 JST.</span><span>💴 planistycznie Tokio-Kioto około 14-15 tys. JPY/dorosły; taryfa zależy od pociągu, sezonu i produktu</span></div>
       <div class="links"><a href="https://smart-ex.jp/en/" target="_blank" rel="noopener">SmartEX →</a></div>
     </div>
 
@@ -2762,7 +2633,7 @@ function atrakcjePage(){
   <p class="note" style="margin-top:16px">Ceny i godziny — stan na lipiec 2026, orientacyjne; przed rezerwacją sprawdźcie na stronach oficjalnych.</p>
   <h2 id="osaka" class="stitle" style="scroll-margin-top:80px">🗄️ Archiwum — poza planem: Osaka</h2>
   <p class="lead-p"><b>To nie jest część planu.</b> Osaka wypadła z trasy przy skracaniu wyjazdu do 11 dni; karty zostają jako notatki na inną podróż. Także w sekcjach wyżej kilka kart jest oznaczonych jako „wypadło” lub „opcja” — to samo: materiał odniesienia, nie program.</p>
-  <p class="note" style="margin:-6px 0 14px">Osaka wypadła z planu przy skracaniu wyjazdu do 11 dni. Katalog zostaje — to 40 minut pociągiem z Kioto, więc gdyby popołudnie 2.05 okazało się zbędne, wszystko jest pod ręką.</p>
+  <p class="note" style="margin:-6px 0 14px">Nie dokładamy Osaki do 2.05: tego dnia są Arashiyama, warsztat i pranie. Katalog poniżej jest materiałem na osobny wariant podróży.</p>
   <div class="agrid">
 
     <div class="acard" id="kuromon">

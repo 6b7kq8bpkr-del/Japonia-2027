@@ -1,5 +1,16 @@
+
+(function(){
+  document.addEventListener('DOMContentLoaded',function(){
+    var button=document.getElementById('timelineToggle');
+    if(!button)return;
+    var items=Array.from(document.querySelectorAll('.tline details'));
+    function sync(){var all=items.length>0&&items.every(function(d){return d.open;});button.textContent=all?'Zwiń szczegóły':'Rozwiń szczegóły';button.setAttribute('aria-expanded',String(all));}
+    button.addEventListener('click',function(){var open=!items.every(function(d){return d.open;});items.forEach(function(d){d.open=open;});sync();});
+    items.forEach(function(d){d.addEventListener('toggle',sync);});
+  });
+})();
 document.addEventListener('keydown',function(e){
-  if(e.target.matches('input,textarea')) return;
+  if(e.defaultPrevented||e.altKey||e.ctrlKey||e.metaKey||e.target.closest('input,textarea,select,button,summary,[contenteditable],#map')) return;
   if(e.key==='ArrowRight'){var n=document.getElementById('navNext'); if(n&&n.href) location.href=n.href;}
   if(e.key==='ArrowLeft'){var p=document.getElementById('navPrev'); if(p&&p.href) location.href=p.href;}
 });
@@ -71,7 +82,9 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
       L.marker(ll,{icon:L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],html:'<div class="mk">'+(i+1)+'</div>'})})
         .addTo(map).bindPopup((i+1)+'. '+s[2]);
     });
-    if(pts.length>1) L.polyline(pts,{color:'#c8402c',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
+    var routeEl=document.getElementById('geo-route');
+    var linePts=routeEl?JSON.parse(routeEl.textContent):pts;
+    if(linePts.length>1) L.polyline(linePts,{color:'#c8402c',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
     map.fitBounds(pts,{padding:[34,34]});
     setTimeout(function(){map.invalidateSize();},80);
   }
@@ -94,8 +107,16 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
 /* ---- checklista rezerwacji (stan w localStorage) ---- */
 (function(){
   var list=document.querySelector('.cklist'); if(!list) return;
-  var KEY='jp2027.checklist', boxes=[].slice.call(list.querySelectorAll('input[data-ck]'));
-  var saved={}; try{saved=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){}
+  var KEY='jp2027.checklist.v2', boxes=[].slice.call(list.querySelectorAll('input[data-ck]'));
+  var saved={}; try{
+    var current=localStorage.getItem(KEY);
+    saved=JSON.parse(current)||{};
+    if(current===null){
+      var old=JSON.parse(localStorage.getItem('jp2027.checklist'))||{};
+      ['pass',null,'flight-total',null,'furoshiki','tea','sumo','rail','insurance','sky',null,'internet','vjw',null,'ic',null].forEach(function(id,i){if(id&&old[i])saved[id]=true;});
+      localStorage.setItem(KEY,JSON.stringify(saved));
+    }
+  }catch(e){}
   function draw(){
     var done=0;
     boxes.forEach(function(b){
@@ -108,19 +129,19 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
     var next=boxes.filter(function(b){return !b.checked;})[0];
     document.getElementById('cknext').textContent = next
       ? 'następne: '+next.closest('li').querySelector('.ckwhat b').textContent
-      : 'wszystko zarezerwowane 🎉';
+      : 'lista odhaczona - sprawdźcie potwierdzenia rezerwacji';
   }
   boxes.forEach(function(b,i){
-    b.checked=!!saved[i];
+    b.checked=!!saved[b.dataset.ck];
     b.addEventListener('change',function(){
-      saved[i]=b.checked;
+      saved[b.dataset.ck]=b.checked;
       try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
       draw();
     });
   });
   var rb=document.getElementById('ckreset');
   if(rb) rb.addEventListener('click',function(){
-    boxes.forEach(function(b,i){b.checked=false; saved[i]=false;});
+    boxes.forEach(function(b,i){b.checked=false; saved[b.dataset.ck]=false;});
     try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
     draw();
   });
@@ -181,9 +202,9 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   var LOC=[
     {n:'🕌 Abu Zabi',la:24.4539,lo:54.3773,tz:'Asia/Dubai'},
     {n:'⛩️ Kioto',la:35.0116,lo:135.7681,tz:'Asia/Tokyo'},
-    {n:'🦌 Nara',la:34.6851,lo:135.8048,tz:'Asia/Tokyo'},
-    {n:'🏙️ Tokio',la:35.6762,lo:139.6503,tz:'Asia/Tokyo'},
-    {n:'♨️ Hakone',la:35.2324,lo:139.1069,tz:'Asia/Tokyo'}
+    {n:'🦌 Nara',la:34.6851,lo:135.8430,tz:'Asia/Tokyo'},
+    {n:'🏙️ Tokio',la:35.6723,lo:139.7367,tz:'Asia/Tokyo'},
+    {n:'♨️ Hakone (jezioro Ashi)',la:35.2337,lo:139.0155,tz:'Asia/Tokyo'}
   ];
   function ico(c){return c===0?'☀️':c<=3?'⛅':(c===45||c===48)?'🌫️':(c>=51&&c<=57)?'🌦️':(c>=61&&c<=67)?'🌧️':(c>=71&&c<=77)?'🌨️':(c>=80&&c<=82)?'🌦️':(c>=85&&c<=86)?'🌨️':c>=95?'⛈️':'☁️';}
   function lbl(c){return c===0?'Bezchmurnie':c<=3?'Częściowe zachmurzenie':(c===45||c===48)?'Mgła':(c>=51&&c<=57)?'Mżawka':(c>=61&&c<=67)?'Deszcz':(c>=71&&c<=77)?'Śnieg':(c>=80&&c<=82)?'Przelotny deszcz':(c>=85&&c<=86)?'Przelotny śnieg':c>=95?'Burza':'Zachmurzenie';}

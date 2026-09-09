@@ -1,3 +1,55 @@
+
+/* Czytelna agenda: streszczenie przed szczegółami */
+html{scroll-padding-top:125px}
+.skip-link{position:fixed;top:-80px;left:16px;z-index:10000;background:var(--panel);padding:12px 18px}
+.skip-link:focus{top:10px}
+.section-nav{display:flex;gap:6px;overflow-x:auto;margin:20px 0 0;padding:4px 0 8px;scrollbar-width:thin}
+.section-nav a{flex:0 0 auto;min-height:44px;display:flex;align-items:center;padding:8px 15px;border:1px solid var(--line);border-radius:var(--radius);text-decoration:none;font-weight:600;font-size:14px;background:var(--panel)}
+.section-nav a:hover{background:var(--wash)}
+.day-hero .hbg{height:clamp(150px,23vw,250px)}
+.day-hero .hero-inner{padding:22px 26px;max-width:740px}
+.day-hero h1{font-size:clamp(27px,4vw,38px)}
+.day-brief{margin-top:22px;background:var(--panel);padding:24px;border:1px solid var(--line);border-radius:var(--radius-lg)}
+.brief-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;border-bottom:1px solid var(--line);padding-bottom:16px}
+.brief-stats span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.brief-stats b{font-size:15px;line-height:1.4}
+.pace.g{color:var(--success)}.pace.r{color:var(--hanko)}.pace.y{color:#835316}
+.brief-focus{font-size:18px;font-weight:600;margin:18px 0 12px}
+.brief-rules{margin:0;display:grid;gap:12px}
+.brief-rules>div{display:grid;grid-template-columns:130px 1fr;gap:12px;font-size:14px}
+.brief-rules dt{font-weight:600}.brief-rules dd{margin:0;color:var(--muted)}
+.brief-rules .guard{border-top:1px solid var(--line);padding-top:12px}
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.section-heading .stitle{margin-bottom:0}.section-heading .reset{margin:0;min-height:44px}
+.timing-note{max-width:76ch}
+.tline .event{border:0;padding:0}.tline .event summary{cursor:pointer;list-style:none;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;padding-right:25px;position:relative;min-height:34px}
+.tline .event summary::-webkit-details-marker{display:none}
+.tline .event summary::after{content:"+";position:absolute;right:0;color:var(--ai);font-family:var(--mono)}
+.tline .event[open] summary::after{content:"−"}
+.event-tag{font-family:var(--sans);font-size:11px;line-height:1.4;padding:2px 6px;border-radius:3px;background:var(--wash);color:var(--muted);white-space:nowrap}
+.event-tag.lot{background:var(--wash-green);color:var(--success)}
+.event-tag.rezerwacja{background:#faf0dc;color:#835316}
+.event-tag.bufor{background:var(--wash-blue);color:var(--ai)}
+.tline .opcja .bd::before{border-color:var(--muted)}
+.option-detail,.detail-catalog{margin-top:16px}.option-detail summary,.detail-catalog>summary{cursor:pointer;font-weight:600;min-height:36px}
+.detail-catalog section{margin-top:12px}
+.return-note{display:flex;gap:18px;flex-wrap:wrap;padding:16px 0;border-bottom:1px solid var(--line);font-size:14px}
+.readiness{padding:18px 22px;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--success);border-radius:var(--radius);margin-top:24px}
+.readiness p{margin:6px 0;font-size:14px}.readiness a{font-weight:600}
+.deadlines{list-style:none;margin:0;padding:0}
+.deadlines li{display:grid;grid-template-columns:190px 1fr;gap:20px;padding:16px 0;border-top:1px solid var(--line)}
+.deadlines time{font-size:13px;color:var(--ai);font-weight:600}
+.deadlines p{margin:4px 0 0;font-size:13px;color:var(--muted)}
+.tt-title small{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);font-weight:400;margin-top:5px}
+@media(max-width:640px){
+ .day-brief{padding:18px}.brief-stats{grid-template-columns:1fr 1fr;gap:12px}.brief-stats>div:last-child{grid-column:1/-1}
+ .brief-rules>div{grid-template-columns:1fr;gap:3px}
+ .day-hero .hero-inner{padding:19px 20px;margin-top:-28px}
+ .section-nav a{padding:8px 12px}.tline .tm{font-size:12px;white-space:normal}
+ .tline li{grid-template-columns:53px minmax(0,1fr);gap:10px}.tline .bd{padding-left:15px}
+ .deadlines li{grid-template-columns:1fr;gap:6px}
+}
+@media print{.section-nav,.section-heading button{display:none}}
 /* ============================================================
    Japonia 2027 — „Tablica peronowa”
    System: chłodny papier + atrament indygo (aizome) + pieczęć hanko jako status.
@@ -227,6 +279,25 @@ section{margin-top:var(--s6)}
 .calc input.sm{width:62px}.calc .x{color:var(--muted);padding:0 5px}
 .calc .tot td{border-bottom:none;border-top:2px solid var(--ink);font-size:17px;font-weight:600;padding-top:14px}
 .calc .tot .big{font-family:var(--mono);color:var(--ai);font-size:26px;text-align:right}
+@media(max-width:600px){
+  .calc table,.calc tbody,.calc tfoot{display:block;width:100%;min-width:0}
+  .calc thead{display:none}
+  .calc tr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;border-bottom:1px solid var(--line);padding:14px 0}
+  .calc td{display:block;min-width:0;border:0;padding:0}
+  .calc td.cat{grid-column:1/-1}
+  .calc td:nth-child(2):not(:has(input)){display:none}
+  .calc td:nth-child(3){grid-column:2}
+  .calc input{font-size:16px;min-height:44px}
+  .calc input.sm{width:58px}
+  .calc input#nightRate,.calc input#foodRate{width:92px}
+  .calc .tot td{border:0;padding:0}
+  .calc .tot{border-top:2px solid var(--ink);border-bottom:0}
+  .calc .tot .big{font-size:22px}
+}
+@media(max-width:380px){
+  .calc tr:has(input.sm){grid-template-columns:1fr}
+  .calc tr:has(input.sm) td:nth-child(3){grid-column:1}
+}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:14px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
 @media(max-width:620px){.stats{grid-template-columns:1fr}}
 .stat{background:var(--panel);padding:14px 16px}
@@ -376,6 +447,8 @@ footer a{font-weight:600;text-decoration:none}
 .scenrow{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13.5px}
 .scenrow:last-of-type{border-bottom:none}
 .scenrow b{white-space:nowrap;font-weight:600}
+.scenrow>span{min-width:0}
+.scenrow>span b{white-space:normal;overflow-wrap:anywhere}
 .scentot{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-top:var(--s2);padding-top:var(--s2);border-top:2px solid var(--ink)}
 .scentot b{font-family:var(--mono);font-weight:600;font-size:20px}
 .scenc ul{list-style:none;margin:var(--s3) 0 0;padding:0;font-size:12.5px;display:flex;flex-direction:column;gap:4px}
@@ -443,6 +516,7 @@ footer a{font-weight:600;text-decoration:none}
 
 /* ---------- pogoda na żywo ---------- */
 .wxwrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.wxwrap:has(>table){display:block;max-width:100%;overflow-x:auto}
 .wxcard{min-width:0;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--panel)}
 .wxcard h3{margin:0 0 6px;font-size:15px;color:var(--ai);font-weight:600}
 .wxnow{margin:0;font-family:var(--mono);font-size:26px;font-weight:600;line-height:1.15}
