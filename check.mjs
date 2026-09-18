@@ -44,7 +44,7 @@ for(const d of DAYS){
     const now=base+(+m[3]*60+ +m[4])*60000;
     if(+m[3]>23||+m[4]>59||now<previousTime) errs.push(`${d.date}: niespójna chronologia przy ${title}`);
     previousTime=now;
-    if(kind&&!['lot','rezerwacja','opcja','bufor'].includes(kind)) errs.push(`${d.date}: nieznany status ${kind}`);
+    if(kind&&!['lot','zarezerwowane','rezerwacja','opcja','bufor'].includes(kind)) errs.push(`${d.date}: nieznany status ${kind}`);
   }
 }
 const idsSource=src.slice(src.indexOf('const BOOKINGS = ['),src.indexOf('/* Dni zamknięcia atrakcji'));

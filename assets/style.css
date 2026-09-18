@@ -28,6 +28,7 @@ html{scroll-padding-top:125px}
 .tline .event[open] summary::after{content:"−"}
 .event-tag{font-family:var(--sans);font-size:11px;line-height:1.4;padding:2px 6px;border-radius:3px;background:var(--wash);color:var(--muted);white-space:nowrap}
 .event-tag.lot{background:var(--wash-green);color:var(--success)}
+.event-tag.zarezerwowane{background:var(--wash-green);color:var(--success)}
 .event-tag.rezerwacja{background:#faf0dc;color:#835316}
 .event-tag.bufor{background:var(--wash-blue);color:var(--ai)}
 .tline .opcja .bd::before{border-color:var(--muted)}

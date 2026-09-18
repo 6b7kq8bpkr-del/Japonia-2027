@@ -84,7 +84,7 @@ const BOOKINGS = [
   {id:'furoshiki',when:'Luty-marzec 2027',what:'Zarezerwować furoshiki 2.05',note:'Cel: sesja około 14:00, domyślnie mama z córką. Potwierdźcie adres, wiek, cenę i czas trwania; dopiero wtedy godzina staje się stała.'},
   {id:'tea',when:'Luty-marzec 2027',what:'Potwierdzić rodzinny pakiet herbaty i kaligrafię',note:'1.05 celujemy w herbatę około 16:30 i kaligrafię dla chętnych około 18:15. Ta sama lokalizacja, krótki wariant z kimonem. Sprawdźcie, czy konkretny pakiet przyjmuje dzieci w wieku 10 i 13 lat.'},
   {id:'sumo',when:'Luty-marzec 2027',what:'Zdecydować i ewentualnie zarezerwować sumo',note:'3.05 cel: sesja 18:00 w Asakusie. Dopóki nie ma biletu, to opcja. Sprawdźcie cenę całej rodziny, menu, warunki anulowania i zakres udziału publiczności.'},
-  {id:'rail',when:'Teraz; kontrola 29.03, 3.04 i 7.04',what:'Zabezpieczyć miejsca na kolei',note:'SmartEX pozwala na część rezerwacji z dużym wyprzedzeniem. Sprawdźcie finalny status, pociąg i cztery miejsca. Standardowa sprzedaż miesiąc przed o 10:00 JST (03:00 w Polsce): 29.03 dla 29.04, 3.04 dla 3.05, 7.04 dla 7.05. NEX osobno w JR East; Romancecar na 6.05 osobno w Odakyu od 6.04.'},
+  {id:'rail-v2',when:'29.03 i 3.04 maile; 6.04 i 7.04 zakupy',what:'Domknąć kolej: potwierdzenia miejsc, Odawara-Tokio, NEX, Romancecar',note:'Dwa długie przejazdy są już zarezerwowane w SmartEX (patrz: potwierdzone elementy). Zostało: (1) 29.03 i 3.04 po 8:00 JST (1:00 w Polsce) sprawdzić maile z ostatecznym numerem pociągu i czterema miejscami obok siebie; (2) Odawara-Tokio na 7.05: standardowa sprzedaż od 7.04 o 10:00 JST (03:00 w Polsce); (3) NEX osobno w JR East; (4) Romancecar na 6.05 osobno w Odakyu od 6.04; (5) ustalić w SmartEX sposób wejścia na peron dla całej czwórki: kod QR albo odbiór biletów w automacie.'},
   {id:'insurance',when:'Teraz / przed wyjazdem',what:'Sprawdzić paszporty, warunki wjazdu i ubezpieczenie',note:'Sprawdźcie dokumenty wszystkich osób dla Japonii i ZEA. Polisa powinna odpowiadać trasie i planowanym aktywnościom; ochrony kosztów rezygnacji nie odkładajcie do kwietnia bez sprawdzenia terminu zakupu.'},
   {id:'sky',when:'19.04.2027 około 17:00 PL',what:'Shibuya Sky na 4.05',note:'Według obecnej zasady sprzedaż od 0:00 JST dwa tygodnie przed wejściem. Potwierdźcie tę regułę w kwietniu 2027 oraz sposób zakupu dla 10-latki. Slot 17:45 jest celem, nie rezerwacją.'},
   {id:'cafe-v2',when:'Od 1.03.2027 sprawdzaj NEWS',what:'Sprawdzić otwarcie rezerwacji Pokémon Café',note:'W 2026 operator zmieniał okna sprzedaży i ogłaszał je w NEWS. Dawna reguła 31 dni o 18:00 nie jest pewnym terminem dla maja 2027. Przy braku stolika zostaje Pokémon Center TOKYO DX i zwykły lunch.'},
@@ -97,11 +97,12 @@ const BOOKINGS = [
   {id:'flights-done',when:'✅ Potwierdzone',what:'Loty Etihad',note:'Wylot 27.04, stopover w Abu Zabi, Narita 29.04. Powrót z Narity 7.05; lądowanie WAW 8.05 o 06:50.'},
   {id:'seats-note',when:'✅ Prośba zgłoszona',what:'Miejsca rodzinne',note:'Notatka u Etihada jest zgłoszona, ale nie stanowi przydziału konkretnych foteli. Sprawdźcie miejsca po odprawie online.'},
   {id:'hotels-done',when:'✅ Rezerwacje potwierdzone',what:'Trzy hotele w Japonii',note:'Potwierdzenia Booking z 8.09: kwoty w JPY, zapłacono 0 JPY w chwili wystawienia. Zarezerwowane nie znaczy opłacone. Szczegóły pokojów, posiłków i terminów na stronie Hotele.'},
+  {id:'shinkansen-done',when:'✅ Zarezerwowane 18.09.2026',what:'Shinkanseny Tokio-Kioto 29.04 i Kioto-Tokio 3.05',note:'SmartEX: 29.04 Nozomi 51, Tokyo 16:48 - Kioto 19:00; 3.05 Nozomi 6, Kioto 10:01 - Tokio 12:15. Każdy przejazd 50 290 JPY (3 × 14 370 JPY + dziecko 7 180 JPY), razem 100 580 JPY, około 2 414 zł po kursie 2,40. Numery pociągów i miejsca są wstępne do maili z 29.03 i 3.04. Numery rezerwacji pozostają poza publiczną stroną.'},
   {id:'auh-done',when:'✅ Voucher otrzymany',what:'Stopover: Grand Millennium Al Wahda',note:'Dwa pokoje, 27-28.04, bez śniadania. Późne wymeldowanie potwierdźcie z recepcją na podstawie warunków vouchera.'},
 ];
 const DEADLINES = [
   {date:'2027-03-01',label:'Od 1 marca',title:'Pokémon Café i warsztaty',text:'Sprawdzajcie komunikaty o sprzedaży na maj. Potwierdźcie godziny herbaty i furoshiki.',href:'decyzje.html#do-zalatwienia'},
-  {date:'2027-03-29',label:'29.03 / 3.04 / 6.04 / 7.04',title:'Pociągi dla całej rodziny',text:'Potwierdźcie miejsca i rozkłady. SmartEX, JR East i Odakyu to różne systemy.',href:'decyzje.html#do-zalatwienia'},
+  {date:'2027-03-29',label:'29.03 / 3.04 / 6.04 / 7.04',title:'Pociągi dla całej rodziny',text:'Shinkanseny 29.04 i 3.05 są zarezerwowane: 29.03 i 3.04 przyjdą maile z ostatecznym pociągiem i miejscami. 6.04 Romancecar, 7.04 Odawara-Tokio. SmartEX, JR East i Odakyu to różne systemy.',href:'decyzje.html#do-zalatwienia'},
   {date:'2027-04-19',label:'19 kwietnia, 17:00 PL*',title:'Shibuya Sky',text:'Planowany start sprzedaży na 4.05 według obecnej reguły. *Potwierdźcie w 2027.',href:'atrakcje.html#shibuya-sky'},
   {date:'2027-04-21',label:'21 kwietnia, 23:59 JST',title:'Ostatni bezpłatny termin: Kioto',text:'16:59 w Polsce. Decyzję podejmijcie dzień wcześniej.',href:'hotele.html#kioto'},
   {date:'2027-04-25',label:'25 kwietnia, 23:59 JST',title:'Ostatni bezpłatny termin: Tokio',text:'16:59 w Polsce. Sprawdźcie plan i prognozę 24.04.',href:'hotele.html#tokio1'},
@@ -259,6 +260,7 @@ html{scroll-padding-top:125px}
 .tline .event[open] summary::after{content:"−"}
 .event-tag{font-family:var(--sans);font-size:11px;line-height:1.4;padding:2px 6px;border-radius:3px;background:var(--wash);color:var(--muted);white-space:nowrap}
 .event-tag.lot{background:var(--wash-green);color:var(--success)}
+.event-tag.zarezerwowane{background:var(--wash-green);color:var(--success)}
 .event-tag.rezerwacja{background:#faf0dc;color:#835316}
 .event-tag.bufor{background:var(--wash-blue);color:var(--ai)}
 .tline .opcja .bd::before{border-color:var(--muted)}
@@ -1097,17 +1099,17 @@ const DAYS = [
 {date:'2027-04-29',dow:'czwartek',dd:'29 kwietnia',city:'kioto',title:'Narita → Kioto. Tylko podróż i odpoczynek',level:'r',stay:'kioto',
  lead:'Po nocnym locie czeka jeszcze przejazd do Kioto. Dzisiejszym planem jest sprawne dotarcie do hotelu, kolacja i sen.',
  chips:['Przylot 12:45','Golden Week','Bez wieczornego zwiedzania'],
- brief:{start:'12:45 przylot',end:'około 20:00 w hotelu',focus:'Dotrzeć do Kioto bez pośpiechu na przesiadkach.',must:'Lot i nocleg w Kioto. Shinkansen około 16:30-17:00, po rezerwacji.',cut:'Wszystkie atrakcje po przyjeździe.',check:'NEX kupcie na realną godzinę po kontroli granicznej. Jeśli grozi spóźnienie, zmieńcie shinkansen przed jego odjazdem zgodnie z taryfą.'},
+ brief:{start:'12:45 przylot',end:'około 20:00 w hotelu',focus:'Dotrzeć do Kioto bez pośpiechu na przesiadkach.',must:'Lot, zarezerwowany shinkansen Nozomi 51 o 16:48 i nocleg w Kioto.',cut:'Wszystkie atrakcje po przyjeździe.',check:'NEX kupcie na realną godzinę po kontroli granicznej, z przyjazdem na Tokyo Station najpóźniej około 16:15. Jeśli grozi spóźnienie, zmieńcie rezerwację w SmartEX przed 16:48; po odjeździe pociągu zmiana w aplikacji nie jest już możliwa.'},
  tl:[
   ['12:45','Lądowanie na Naricie','Visit Japan Web przygotujcie przed wylotem, a kody każdej osoby zapiszcie offline. Kontrola graniczna może potrwać dłużej niż zwykle.','lot'],
   ['14:30','Narita Express do Tokyo Station','Orientacyjny cel, nie potwierdzony rozkład. Wybierzcie dostępny pociąg po przejściu formalności; sama jazda trwa około godziny.','rezerwacja'],
   ['15:45','Tokyo Station: przesiadka i jedzenie','Zostawcie co najmniej 30-45 minut na dojście, toalety, bilety i ekiben.','bufor'],
-  ['16:45','Shinkansen do Kioto','Cel w oknie 16:30-17:00. Rezerwujcie razem 3 taryfy dorosłe i 1 dziecięcą. Dobierzcie taryfę dopuszczającą zmianę po opóźnionym locie; dostępność wcześniejszego pociągu nie jest gwarantowana.','rezerwacja'],
-  ['19:30','MIMARU Kyoto Station','Orientacyjny meldunek. Przy dużym opóźnieniu uprzedźcie recepcję.'],
+  ['16:48','Shinkansen Nozomi 51 do Kioto','Zarezerwowany 18.09.2026 w SmartEX: Tokyo 16:48, Kioto 19:00, 3 taryfy dorosłe i 1 dziecięca, wagon zwykły. Numer pociągu i miejsca są wstępne; ostateczne przyjdą mailem 29.03 po 8:00 JST (1:00 w Polsce). Przy opóźnionym locie zmieńcie rezerwację w SmartEX przed odjazdem; w Golden Week wolnych miejsc w kolejnych pociągach może nie być.','zarezerwowane'],
+  ['19:30','MIMARU Kyoto Station','Pociąg jest w Kioto planowo o 19:00; hotel stoi kilka minut od wyjścia Hachijō. Przy dużym opóźnieniu uprzedźcie recepcję.'],
   ['20:00','Kolacja przy dworcu i sen','Prosty posiłek; bez szukania popularnej restauracji z kolejką.'],
  ],
  facts:[['Niewiele, ale z bagażem','Chodzenie'],['NEX + shinkansen','Transport']],
- tips:['Dwa oddzielne systemy: NEX rezerwujecie w JR East, shinkansen w SmartEX.','29 kwietnia jest świętem. Rezerwacja złożona z wyprzedzeniem to nie zawsze potwierdzone miejsca; sprawdźcie końcowe potwierdzenie.','Przy odwołaniu dalszej kolei skontaktujcie się z obsługą JR i hotelem; nie jedźcie w ciemno do innego miasta.'],
+ tips:['Dwa oddzielne systemy: NEX rezerwujecie w JR East, shinkansen w SmartEX.','29 kwietnia jest świętem. Shinkansen jest zarezerwowany, ale numer pociągu i miejsca potwierdzi dopiero mail z 29.03; po marcowej zmianie rozkładu godzina może przesunąć się o kilka minut.','Przy odwołaniu dalszej kolei skontaktujcie się z obsługą JR i hotelem; nie jedźcie w ciemno do innego miasta.'],
  links:[A('nex','Narita Express'),A('smartex','SmartEX'),A('vjw','Visit Japan Web')],more:[]},
 
 {date:'2027-04-30',dow:'piątek',dd:'30 kwietnia',city:'kioto',title:'Bramy Fushimi, sjesta i wieczór w Gion',level:'y',stay:'kioto',
@@ -1169,12 +1171,12 @@ const DAYS = [
 
 {date:'2027-05-03',dow:'poniedziałek',dd:'3 maja',city:'tokio',title:'Do Tokio i wieczorna Asakusa',level:'y',stay:'tokio1',
  lead:'Zmiana miasta, lunch i godzina w pokoju. Wieczorem Asakusa; pokaz sumo z kolacją po potwierdzeniu rezerwacji.',
- chips:['Shinkansen około 10:00','Odpoczynek po meldunku','Sumo po rezerwacji'],
- brief:{start:'09:00 śniadanie',end:'20:00 lub 21:30 z sumo',focus:'Spokojnie zmienić bazę i zobaczyć Asakusę.',must:'Shinkansen po rezerwacji, meldunek od 15:00 i godzina odpoczynku.',cut:'Sumo pozostaje opcją przed zakupem. Przy zakupionym pokazie skróćcie spacer.',check:'Rozkład pociągu i sesja sumo wymagają potwierdzeń. Z hotelu do Asakusy liczcie około 45-60 minut z dojściami.'},
+ chips:['Nozomi 6 o 10:01','Odpoczynek po meldunku','Sumo po rezerwacji'],
+ brief:{start:'09:00 śniadanie',end:'20:00 lub 21:30 z sumo',focus:'Spokojnie zmienić bazę i zobaczyć Asakusę.',must:'Zarezerwowany shinkansen Nozomi 6 o 10:01, meldunek od 15:00 i godzina odpoczynku.',cut:'Sumo pozostaje opcją przed zakupem. Przy zakupionym pokazie skróćcie spacer.',check:'Numer pociągu i miejsca potwierdzi mail 3.04; sesja sumo wymaga rezerwacji. Z hotelu do Asakusy liczcie około 45-60 minut z dojściami.'},
  tl:[
   ['09:00','Śniadanie i wymeldowanie','Na dworcu bądźcie 20-30 minut przed swoim pociągiem.'],
-  ['10:00','Shinkansen Kioto → Tokio','Planowana pora. 3 maja jest świętem; miejsca dla czworga rezerwujcie razem.','rezerwacja'],
-  ['12:30','Dojazd do Akasaki','Wybierzcie metro z dojściem do hotelu albo taksówkę ze stacji. Sam czas jazdy metrem nie jest czasem od drzwi do drzwi.'],
+  ['10:01','Shinkansen Nozomi 6 Kioto → Tokio','Zarezerwowany 18.09.2026 w SmartEX: Kioto 10:01, Tokio 12:15, 3 taryfy dorosłe i 1 dziecięca, wagon zwykły. Numer pociągu i miejsca są wstępne; ostateczne przyjdą mailem 3.04 po 8:00 JST (1:00 w Polsce).','zarezerwowane'],
+  ['12:30','Dojazd do Akasaki','Pociąg jest na Tokyo Station planowo o 12:15. Wybierzcie metro z dojściem do hotelu albo taksówkę ze stacji. Sam czas jazdy metrem nie jest czasem od drzwi do drzwi.'],
   ['13:15','Bagaże w recepcji i lunch','Pokój zwykle dostępny od 15:00. Zostawienie bagażu uzgodnijcie w hotelu.'],
   ['15:00','Meldunek i przerwa','Prysznic i co najmniej godzina w pokoju.','bufor'],
   ['16:15','Do Asakusy','Ginza Line z Tameike-sannō lub Akasaka-mitsuke; dodajcie czas dojścia z hotelu i ze stacji.'],
@@ -1301,8 +1303,8 @@ const WXGEO = {'2027-04-29':[34.9858,135.7588],'2027-05-03':[35.7148,139.7967],'
 const DAYINT = Object.fromEntries(DAYS.map(d=>[d.date,[d.level,d.brief.focus]]));
 const DAYFLEX = Object.fromEntries(DAYS.map(d=>[d.date,[d.brief.must,d.brief.cut]]));
 const LEVEL_LABEL = {g:'Lekki', y:'Średni', r:'Intensywny - podróż'};
-const ITEM_LABEL = {lot:'Lot z biletu',rezerwacja:'Do potwierdzenia',opcja:'Opcja',bufor:'Zapas / odpoczynek'};
-const TIMING_NOTE = 'Wszystkie godziny są miejscowe. Loty według e-biletów; pozostałe godziny to plan do dopasowania do rozkładów i rezerwacji. „Do potwierdzenia” nie oznacza kupionego biletu.';
+const ITEM_LABEL = {lot:'Lot z biletu',zarezerwowane:'Zarezerwowane',rezerwacja:'Do potwierdzenia',opcja:'Opcja',bufor:'Zapas / odpoczynek'};
+const TIMING_NOTE = 'Wszystkie godziny są miejscowe. Loty według e-biletów; pozostałe godziny to plan do dopasowania do rozkładów i rezerwacji. „Do potwierdzenia” nie oznacza kupionego biletu. „Zarezerwowane” oznacza przyjętą rezerwację; numer pociągu i miejsca mogą być jeszcze wstępne.';
 
 /* ============================ TEMPLATES ============================ */
 const TABS = [['index.html','Agenda'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['niezbednik.html','Niezbędnik'],['pogoda.html','Przed wyjazdem'],['koszty.html','Koszty'],['decyzje.html','Kulisy']];
@@ -1521,11 +1523,11 @@ function kosztyPage(){
     <h2 class="stitle">Transport w Japonii - podstawa budżetu</h2>
     <p class="lead-p">Kontrola 9.09.2026. Przeliczenie planistyczne: 100 JPY = 2,40 zł. Taryfy na konkretny pociąg i dzień w 2027 trzeba potwierdzić; Golden Week może oznaczać dopłatę sezonową. Liczymy trzy bilety dorosłe i jeden dziecięcy.</p>
     ${seg('Przejazdy między miastami',[
-      '<b>Narita → Tokio → Kioto</b> (29.04): NEX obecnie 3 140 JPY/dorosły w jedną stronę; shinkansen planistycznie około 14-15 tys. JPY/dorosły. NEX kupuje się w JR East, shinkansen w SmartEX.',
+      '<b>Narita → Tokio → Kioto</b> (29.04): NEX obecnie 3 140 JPY/dorosły w jedną stronę; shinkansen zarezerwowany w SmartEX: 50 290 JPY za rodzinę (14 370 JPY dorosły, 7 180 JPY dziecko). NEX kupuje się osobno w JR East.',
       
       
-      '<b>Kioto → Tokio</b> (3.05): shinkansen około 14-15 tys. JPY/dorosły. Rozkład i cztery miejsca potwierdźcie po finalizacji rezerwacji.', '<b>Odawara → Tokio → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
-      '<b>Kolej międzymiastowa: orientacyjnie 3,1-3,4 tys. zł za rodzinę</b>; do tego Hakone, Nara, komunikacja miejska i taksówki. Cały transport ma osobny zapas w kalkulatorze.', '<b>Do sprawdzenia przed zakupem:</b> N’EX TOKYO Round Trip Ticket ważny 14 dni: obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko, czyli 18 200 JPY (około 437 zł) za oba przejazdy rodziny. Daty 29.04 i 7.05 mieszczą się w ważności. Sprawdźcie uprawnienia i zarezerwujcie konkretne pociągi.',
+      '<b>Kioto → Tokio</b> (3.05): shinkansen zarezerwowany w SmartEX, 50 290 JPY za rodzinę. Ostateczny pociąg i cztery miejsca potwierdzi mail z 3.04.', '<b>Odawara → Tokio → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
+      '<b>Kolej międzymiastowa: około 3,2 tys. zł za rodzinę</b>, z czego 100 580 JPY (około 2 414 zł) to dwa zarezerwowane shinkanseny; do tego Hakone, Nara, komunikacja miejska i taksówki. Cały transport ma osobny zapas w kalkulatorze.', '<b>Do sprawdzenia przed zakupem:</b> N’EX TOKYO Round Trip Ticket ważny 14 dni: obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko, czyli 18 200 JPY (około 437 zł) za oba przejazdy rodziny. Daty 29.04 i 7.05 mieszczą się w ważności. Sprawdźcie uprawnienia i zarezerwujcie konkretne pociągi.',
       'Standardowy JR Pass nie jest tu domyślnym zakupem. Porównajcie pełny koszt z biletami punktowymi; uprawnienie do Nozomi wymaga dodatkowych warunków/opłaty'])}
   </section>
 
@@ -1539,7 +1541,7 @@ function kosztyPage(){
         <tbody>
           <tr><td class="cat">✈️ Loty<span class="hint">E-bilety: 13 643,36 zł. Wpisane 14 400 zł to ostrożna rezerwa do uzgodnienia z kartą, nie potwierdzone rozliczenie dopłat. Bez bagażu rejestrowanego; ewentualną dopłatę wyceńcie w Manage Booking.</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" aria-label="Koszt lotów za rodzinę, zł" value="${TICKET.total}" min="0" step="100"></td></tr>
           <tr><td class="cat">🏨 Noclegi<span class="hint">Trzy rezerwacje: łącznie <b>500 443 JPY</b>; w potwierdzeniach z 8.09 zapłacono 0 JPY. Średnia poniżej daje około 12 tys. zł, zależnie od kursu i podatków. Abu Zabi z vouchera stopover.</span></td><td class="num"><input type="number" id="nights" aria-label="Liczba nocy w Japonii" class="sm" value="${CALC.nights}" min="0"><span class="x">×</span><input type="number" id="nightRate" aria-label="Średni koszt noclegu rodzinnego, zł" class="sm" value="${CALC.nightRate}" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
-          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca, kurs NBP 2,40: pociągi dalekobieżne około 3,1-3,4 tys. zł; Hakone Freepass i Romancecar, Nara, metro, taksówki oraz transfery w Abu Zabi osobno. 5 000 zł jest budżetem z zapasem, nie sumą opłaconych biletów</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" aria-label="Budżet transportu, zł" value="${CALC.transport}" min="0" step="100"></td></tr>
+          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca, kurs NBP 2,40: pociągi dalekobieżne około 3,2 tys. zł, w tym dwa zarezerwowane shinkanseny za 100 580 JPY (około 2 414 zł); Hakone Freepass i Romancecar, Nara, metro, taksówki oraz transfery w Abu Zabi osobno. 5 000 zł jest budżetem z zapasem, nie sumą opłaconych biletów</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" aria-label="Budżet transportu, zł" value="${CALC.transport}" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" aria-label="Liczba dni wyżywienia" class="sm" value="${CALC.days}" min="0"><span class="x">×</span><input type="number" id="foodRate" aria-label="Wyżywienie rodziny na dzień, zł" class="sm" value="${CALC.foodRate}" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
           <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">Pula na herbatę, furoshiki, kaligrafię dla chętnych, świątynie, Café i taras oraz opcjonalny pokaz sumo. Ceny pakietów i progi wieku trzeba potwierdzić. Jeśli pokaz zawiera kolację, nie liczcie tego posiłku drugi raz w wyżywieniu.</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" aria-label="Budżet atrakcji, zł" value="${CALC.attractions}" min="0" step="100"></td></tr>
           <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane; streetwear dla dzieci (4.05) liczcie osobno — koszulka ~150–300 zł, bluza ~500–1 000 zł</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" aria-label="Rezerwa i dodatkowe wydatki, zł" value="${CALC.extras}" min="0" step="100"></td></tr>
@@ -2594,8 +2596,8 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
 
     <div class="acard" id="smartex">
       <h3>🚅 SmartEX — shinkanseny</h3>
-      <div class="desc">Oficjalna apka/serwis do rezerwacji shinkansenów Tōkaidō (nasze odcinki: Tokio→Kioto 29.04, Kioto→Tokio 3.05, Odawara→Tokio 7.05). Miejsca da się wybrać na mapce — bierzcie D/E (okno E = strona Fudżi).</div>
-      <div class="meta"><span>🕒 część rezerwacji do roku przed; wczesny rozkład jest wstępny. Według bieżących zasad potwierdzenie od 8:00 JST miesiąc przed, z wiadomością e-mail. Zwykła sprzedaż miesięczna od 10:00 JST.</span><span>💴 planistycznie Tokio-Kioto około 14-15 tys. JPY/dorosły; taryfa zależy od pociągu, sezonu i produktu</span></div>
+      <div class="desc">Oficjalna apka/serwis do rezerwacji shinkansenów Tōkaidō (nasze odcinki: Tokio→Kioto 29.04, Kioto→Tokio 3.05, Odawara→Tokio 7.05). <b>Zarezerwowane 18.09.2026:</b> 29.04 Nozomi 51, Tokyo 16:48 - Kioto 19:00, oraz 3.05 Nozomi 6, Kioto 10:01 - Tokio 12:15, po 50 290 JPY za rodzinę. Do kupienia został odcinek Odawara→Tokio 7.05. Po finalizacji sprawdźcie miejsca na mapce: rząd D/E, okno E to strona Fudżi.</div>
+      <div class="meta"><span>🕒 część rezerwacji do roku przed; wczesny rozkład jest wstępny. Według bieżących zasad potwierdzenie od 8:00 JST miesiąc przed, z wiadomością e-mail. Zwykła sprzedaż miesięczna od 10:00 JST.</span><span>💴 nasza taryfa Tokio-Kioto: 14 370 JPY dorosły, 7 180 JPY dziecko (szczyt sezonu); Odawara-Tokio planistycznie 3,5-4 tys. JPY/dorosły</span></div>
       <div class="links"><a href="https://smart-ex.jp/en/" target="_blank" rel="noopener">SmartEX →</a></div>
     </div>
 
