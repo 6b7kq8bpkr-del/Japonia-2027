@@ -1443,6 +1443,7 @@ function indexPage(){
       <a class="line" href="pogoda.html"><b>Przed wyjazdem</b><span>Klimat na przełomie kwietnia i maja, plan pakowania na 7 kg, plany B na deszcz.</span></a>
       <a class="line" href="druk.html"><b>Przewodnik do druku</b><span>Cały plan na kartkach — do wydruku albo offline na telefon.</span></a>
       <a class="line" href="koszty.html"><b>Budżet</b><span>Kalkulator kosztów i zweryfikowane taryfy kolejowe — ~43 tys. zł.</span></a>
+      <a class="line" href="rezerwacje.html"><b>🔒 Rezerwacje</b><span>Numery rezerwacji i kontakty, dostęp na hasło.</span></a>
       <a class="line" href="decyzje.html"><b>Kulisy planu</b><span>Co jeszcze załatwić, dlaczego taka trasa i jak zmienić dzień bez pośpiechu.</span></a>
   </div>`;
   const inner = `
@@ -1679,7 +1680,7 @@ function decyzjePage(){
   const inner='<header class="hero kb"><div class="hbg"><div class="hbg-img" style="background:'+heroBg('kioto',IMG.fushimi)+'"></div></div><div class="hero-inner"><p class="eyebrow">Rezerwacje i logika podróży</p><h1>Kulisy planu</h1><p class="lead">Co jest potwierdzone, czego jeszcze dopilnować i jak zachować spokojne tempo.</p></div></header>'+
     '<nav class="section-nav" aria-label="Skróty"><a href="#do-zalatwienia">Do załatwienia</a><a href="#terminy">Terminy</a><a href="#rytm">Rytm</a><a href="#zmiany">Jak zmieniać</a></nav>'+
     '<section id="do-zalatwienia"><h2 class="stitle">Do załatwienia</h2><p class="lead-p">Zaznaczenia to Wasza osobista lista na tym urządzeniu. Nie zmieniają statusu rezerwacji, nie synchronizują się z telefonem i nie wysyłają powiadomień.</p><div class="card"><div class="ckhead"><b id="ckcount">0</b><span id="cknext"></span></div><div class="ckbar"><div id="ckfill"></div></div><ul class="cklist">'+checklist+'</ul><button class="reset" type="button" id="ckreset">Wyczyść zaznaczenia</button></div></section>'+
-    '<section><h2 class="stitle">Potwierdzone elementy</h2><div class="card"><ul class="tips">'+BOOKINGS.filter(b=>/^✅/.test(b.when)).map(b=>'<li><b>'+b.what+'</b>: '+b.note+'</li>').join('')+'</ul></div></section>'+
+    '<section><h2 class="stitle">Potwierdzone elementy</h2><div class="card"><p class="note" style="margin-top:0">Numery rezerwacji: <a href="rezerwacje.html">🔒 Rezerwacje (na hasło)</a>.</p><ul class="tips">'+BOOKINGS.filter(b=>/^✅/.test(b.when)).map(b=>'<li><b>'+b.what+'</b>: '+b.note+'</li>').join('')+'</ul></div></section>'+
     '<section id="terminy"><h2 class="stitle">Terminy i pogoda</h2>'+deadlineList()+'<p class="note">Prognoza 7 dni wcześniej jest wskazówką, nie gwarancją. Ostrzeżenia pogodowe, status transportu i zasady anulowania są osobnymi rzeczami. Termin bezpłatnego odwołania Hanaori mija przed wyjazdem do Hakone.</p></section>'+
     '<section id="rytm"><h2 class="stitle">Rytm rodziny 2+2</h2><p class="lead-p">Dwa najbardziej wymagające dni to podróże: 29.04 i 7.05. Dni zwiedzania mają przerwy, a 5.05 wolne popołudnie. Wszystkie dodatki naraz podniosłyby tempo ponad ocenę w tabeli.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
     '<section id="zmiany"><h2 class="stitle">Jak modyfikować plan</h2><div class="card more">'+
@@ -2691,6 +2692,37 @@ fs.writeFileSync(DIR + '/loty.html', lotyPage());
 fs.writeFileSync(DIR + '/koszty.html', kosztyPage());
 fs.writeFileSync(DIR + '/pogoda.html', pogodaPage());
 fs.writeFileSync(DIR + '/niezbednik.html', niezbednikPage());
+/* ===== Rezerwacje na hasło: treść z private/rezerwacje.md szyfrowana AES-256-GCM (klucz PBKDF2 z private/haslo.txt) ===== */
+{
+  const crypto = await import('node:crypto');
+  const srcP = DIR + '/private/rezerwacje.md', pwP = DIR + '/private/haslo.txt';
+  if (fs.existsSync(srcP) && fs.existsSync(pwP)) {
+    const e = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+    const lines = fs.readFileSync(srcP,'utf8').split('\n');
+    const rows = lines.filter(l=>/^\|/.test(l) && !/^\|\s*-/.test(l)).map(l=>l.split('|').slice(1,-1).map(c=>e(c.trim())));
+    const rest = lines.filter(l=>l.trim() && !/^\|/.test(l) && !/^#/.test(l)).map(l=>'<p>'+e(l)+'</p>').join('');
+    const html = '<div style="overflow-x:auto"><table class="restab"><thead><tr>'+rows[0].map(c=>'<th>'+c+'</th>').join('')+'</tr></thead><tbody>'+rows.slice(1).map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'+rest;
+    const IT = 600000, salt = crypto.randomBytes(16), iv = crypto.randomBytes(12);
+    const key = crypto.pbkdf2Sync(fs.readFileSync(pwP,'utf8').trim(), salt, IT, 32, 'sha256');
+    const c = crypto.createCipheriv('aes-256-gcm', key, iv);
+    const ct = Buffer.concat([c.update(html,'utf8'), c.final(), c.getAuthTag()]);
+    const blob = JSON.stringify({it:IT, s:salt.toString('base64'), iv:iv.toString('base64'), ct:ct.toString('base64')});
+    const inner = `<header class="hero kb"><div class="hero-inner"><p class="eyebrow">Tylko dla rodziny</p><h1>Rezerwacje</h1><p class="lead">Numery rezerwacji, potwierdzeń i kontakty. Treść jest zaszyfrowana i odszyfrowuje się w przeglądarce po podaniu hasła.</p></div></header>
+<section><div class="card"><form id="rf" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><label for="rp"><b>Hasło</b></label><input id="rp" type="password" autocomplete="current-password" style="padding:9px 12px;border:1px solid var(--line);border-radius:6px;font:inherit;background:var(--panel);color:var(--ink)"><button type="submit" class="reset" style="margin:0">Otwórz</button><span id="rm" role="status" style="color:var(--hanko)"></span></form><div id="rc" hidden></div></div></section>
+${footer('')}
+<style>.restab{border-collapse:collapse;width:100%;font-size:14px}.restab th,.restab td{border-top:1px solid var(--line);padding:9px 8px;text-align:left;vertical-align:top}.restab th{font-size:12px;color:var(--muted)}#rc p{margin:12px 0 0;font-size:14px}</style>
+<script>(function(){var B=${blob},f=document.getElementById('rf'),m=document.getElementById('rm'),out=document.getElementById('rc');
+function b(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0);});}
+async function open(pw){var k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);
+var key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b(B.s),iterations:B.it,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['decrypt']);
+var pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b(B.iv)},key,b(B.ct));out.innerHTML=new TextDecoder().decode(pt);out.hidden=false;f.hidden=true;}
+f.addEventListener('submit',function(ev){ev.preventDefault();m.textContent='Sprawdzam…';var pw=document.getElementById('rp').value;
+open(pw).then(function(){try{sessionStorage.setItem('jp.rez',pw);}catch(e){}},function(){m.textContent='Błędne hasło.';});});
+try{var s=sessionStorage.getItem('jp.rez');if(s)open(s).catch(function(){});}catch(e){}})();</script>`;
+    fs.writeFileSync(DIR + '/rezerwacje.html', shell({title:'Rezerwacje · Japonia 2027',desc:'Rezerwacje rodziny, dostęp na hasło.',prefix:'',active:'',inner,pillsIdx:null}));
+  }
+}
+
 fs.writeFileSync(DIR + '/atrakcje.html', ATR);
 
 /* ---- OFFLINE: service worker + manifest + ikona ----
