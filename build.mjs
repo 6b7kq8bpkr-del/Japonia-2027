@@ -124,7 +124,7 @@ const DAYRAIN = {
   '2027-04-29':'Sprawdzajcie informacje JR po wylądowaniu. Przy opóźnieniu zmieńcie rezerwację dalszego pociągu przed odjazdem; poinformujcie hotel o późnym meldunku.',
   '2027-04-30':'Lekki deszcz: krótka dolna pętla Fushimi. Silny deszcz: Nishiki lub pasaż Teramachi zamiast świątyń; sjesta zostaje.',
   '2027-05-01':'Skróćcie park w Narze; Tōdai-ji i warsztat są pod dachem. Jeśli nie jedziecie do Nary, nie zmieniajcie automatycznie potwierdzonej godziny herbaty.',
-  '2027-05-02':'Odpuśćcie małpy i śliskie podejścia. Furoshiki zostaje; zamiast Arashiyamy krótki spacer w krytym pasażu i wcześniejszy lunch.',
+  '2027-05-02':'Ninomaru ma wnętrza, ale dojście i ogrody są na zewnątrz. Przy ulewie odpuśćcie ogrody lub cały zamek; wybierzcie Nishiki i kryte pasaże. Furoshiki i odpoczynek zostają.',
   '2027-05-03':'Krótka Asakusa z parasolem. Jeśli sumo jest zarezerwowane, zachowajcie dojazd na sesję i ograniczcie spacer.',
   '2027-05-04':'Sklepy i kawiarnia pozostają. Status dachu Shibuya Sky sprawdźcie u operatora; sama rezerwacja nie gwarantuje wejścia na otwarty taras. Nie kupujcie w ciemno drugiego punktu widokowego.',
   '2027-05-05':'Pokémony są pod dachem. Reszta dnia może zostać w hotelu; Akihabara nie staje się obowiązkowa tylko dlatego, że pada.',
@@ -135,7 +135,7 @@ const DAYCROWD = {
   '2027-04-29':'Dzień Shōwa i początek Golden Week. Miejscówki na shinkansen są kluczowe; zostawcie zapas na formalności na lotnisku.',
   '2027-04-30':'Kioto już w okresie Golden Week. Późniejszy start oznacza więcej ludzi, ale chroni sen po podróży; wybierajcie krótszą trasę.',
   '2027-05-01':'Sobota Golden Week. Nie przedłużajcie Nary kosztem odpoczynku i dojazdu na warsztat.',
-  '2027-05-02':'Niedziela Golden Week. Wybierzcie ogród albo małpy; wyjazd do centrum około 12:15 chroni warsztat.',
+  '2027-05-02':'Niedziela Golden Week. W Nijō wybierzcie Ninomaru, bez dokładania Honmaru. Na Nishiki nie blokujcie przejść i jedzcie przy stoisku; przed warsztatem zostawcie bufor na dojazd.',
   '2027-05-03':'Święto Konstytucji. Pociąg i ewentualne sumo rezerwujcie z wyprzedzeniem. Obecność na miejscu nie gwarantuje biletu.',
   '2027-05-04':'Dzień Zieleni. Limit dwóch sklepów i przerwa pozwalają utrzymać średnie tempo; wszystkie opcje naraz zrobiłyby z tego intensywny dzień.',
   '2027-05-05':'Dzień Dziecka. Jedna wizyta Pokémon, a Café tylko po zdobyciu rezerwacji. Wolne popołudnie zostaje.',
@@ -1019,9 +1019,9 @@ const IMG = {
 // one distinct photo per day
 const DAYIMG = {
   '2027-04-30':IMG.fushimi, '2027-05-01':IMG.todaiji,
-  '2027-04-27':IMG.abudhabi, '2027-04-28':IMG.mosque, '2027-04-29':IMG.yasaka, '2027-05-05':IMG.akihabara,
+  '2027-04-27':IMG.abudhabi, '2027-04-28':IMG.mosque, '2027-04-29':'/assets/img/hotels/kioto.webp', '2027-05-05':IMG.akihabara,
   '2027-05-04':IMG.shibuya, '2027-05-06':IMG.fuji, '2027-05-03':IMG.sensoji,
-  '2027-05-02':IMG.bamboo, '2027-05-07':IMG.tokyostation,
+  '2027-05-02':IMG.yasaka, '2027-05-07':IMG.tokyostation,
 };
 const CITY = {
   tokio:{c1:'20,32,64',c2:'14,39,67',photo:IMG.shibuya},
@@ -1053,7 +1053,7 @@ const GEO = {
   '2027-04-29':[[35.772,140.393,'Narita (przylot 12:45)'],[35.681,139.767,'Tokyo Station (NEX → shinkansen)'],[34.9858,135.7588,'Kyoto Station - hotel po stronie południowej']],
   '2027-04-30':[[34.9671,135.7727,'Fushimi Inari - krótka pętla'],[34.9858,135.7588,'Kyoto Station - lunch i odpoczynek w hotelu'],[34.9948,135.7850,'Kiyomizu-dera - opcjonalny dodatkowy bilet'],[35.0030,135.7780,'Gion - spacer']],
   '2027-05-01':[[34.6851,135.8430,'Park Nara'],[34.6889,135.8398,'Tōdai-ji'],[34.9858,135.7588,'Kyoto Station - powrót i odpoczynek']],
-  '2027-05-02':[[35.0170,135.6716,'Arashiyama - bambusy'],[35.0158,135.6740,'Tenryū-ji - ogród (zamiennie z małpami)'],[35.0110,135.6770,'Iwatayama - małpy, TYLKO zamiast ogrodu'],[35.0105,135.7595,'Centrum Kioto - rejon warsztatów; adres po rezerwacji']],
+  '2027-05-02':[[35.0142,135.7482,'Nijō - pałac Ninomaru'],[35.0050,135.7649,'Nishiki Market - spacer i lunch'],[35.0077,135.7666,'Rokkaku / Tominokoji - wachlarze, opcjonalnie; dokładny sklep z linku'],[35.0105,135.7595,'Centrum Kioto - rejon warsztatów; adres po rezerwacji']],
   '2027-05-03':[[34.9858,135.7588,'Kyoto Station'],[35.681,139.767,'Tokyo Station'],[35.6723,139.7367,'Akasaka - okolica bazy; hotel z linku w karcie'],[35.7148,139.7967,'Asakusa / Sensō-ji'],[35.7124,139.7929,'Asakusa Sumo Club - opcja, cel sesji 18:00']],
   '2027-05-04':[[35.6764,139.6993,'Meiji Jingū'],[35.6702,139.7026,'Harajuku'],[35.6688,139.7068,'Cat Street - wybierzcie dwa sklepy'],[35.6619,139.6987,'Shibuya PARCO / Nintendo - opcja'],[35.6595,139.7005,'Shibuya Sky - po zdobyciu biletu']],
   '2027-05-05':[[35.6745,139.7395,'Hie-jinja - krótki spacer, opcja'],[35.6817,139.7740,'Pokémon Center TOKYO DX; Café tylko z rezerwacją'],[35.7022,139.7741,'Akihabara - opcja na 60-90 minut']],
@@ -1119,16 +1119,16 @@ const DAYS = [
  tl:[
   ['09:00','Pociąg do Inari','Dojście do peronu plus kilka minut jazdy JR Nara Line.'],
   ['09:30','Fushimi Inari','Dolna część torii przez 60-90 minut. Nie planujemy szczytu ani długiej wspinaczki. W Golden Week tłum jest normalny także rano.'],
-  ['11:30','Lunch blisko hotelu','Przy dworcu Kioto; wybierzcie lokal bez długiej kolejki.'],
+  ['11:30','Ramen Koji na dworcu Kioto','Poziom 10F, przy południowej stronie wielkich schodów, nie 9F. Kilka ramenowni do wyboru; jeśli kolejki są długie, zjedzcie gdzie indziej przy hotelu. Potem sjesta.'],
   ['12:30','Odpoczynek w pokoju','Dwie godziny przerwy. Zostają w planie nawet przy późniejszym starcie.','bufor'],
   ['14:30','Taksówka w stronę Kiyomizu','Liczcie również ruch drogowy i dojście pod górę; samochód nie podjeżdża pod sam taras.'],
   ['15:15','Kiyomizu-dera','Taras i zejście zabytkowymi uliczkami Sannenzaka oraz Ninenzaka. Bez dokładania kolejnej świątyni.','opcja'],
-  ['17:00','Yasaka i Gion','Krótki spacer publicznymi ulicami. Uszanujcie zakazy fotografowania i prywatne uliczki; nie zatrzymujcie maiko.'],
-  ['18:30','Kolacja i powrót','Pontocho lub okolice Kamo, jeśli macie siłę. W krótszym wariancie kolacja pod hotelem.'],
+  ['17:00','Yasaka i Gion','Spacer publicznymi ulicami z przerwą na herbatę lub coś słodkiego. Uszanujcie zakazy fotografowania i prywatne uliczki; nie zatrzymujcie maiko.'],
+  ['18:30','Kolacja i Gion o zmierzchu','Po kolacji krótki spacer przy Shirakawa lub nad Kamo, jeśli macie siłę. To wieczorna atmosfera polecana przez przewodników, bez kolejnego biletu. Powrót około 20:00; przy zmęczeniu kolacja pod hotelem.'],
  ],
  facts:[['Umiarkowanie; więcej z Kiyomizu','Chodzenie'],['JR + taksówka + pieszo','Transport']],
  tips:['Jeżeli deszcz robi ścieżki śliskimi, odpuśćcie schody i wybierzcie kryte pasaże.','Pominięte Kiyomizu nie przechodzi automatycznie na 2 maja: ten dzień ma już warsztat i pranie.'],
- links:[A('fushimi','Fushimi Inari'),A('kiyomizu','Kiyomizu-dera'),A('gion','Gion')],more:[]},
+ links:[A('fushimi','Fushimi Inari'),A('ramen-koji','Ramen Koji - 10F'),A('kiyomizu','Kiyomizu-dera'),A('gion','Gion')],more:[]},
 
 {date:'2027-05-01',dow:'sobota',dd:'1 maja',city:'nara',title:'Nara i rodzinne spotkanie z herbatą',level:'y',stay:'kioto',
  lead:'Jelenie i Wielki Budda przed południem. Po powrocie odpoczynek, krótka ceremonia herbaty z kimonem i kaligrafia dla chętnych.',
@@ -1137,7 +1137,7 @@ const DAYS = [
  tl:[
   ['09:15','Kintetsu do Nary','Cel: Limited Express z miejscami rezerwowanymi; rozkład i dopłatę sprawdźcie przy zakupie. Zwykły Express jest innym produktem.','rezerwacja'],
   ['10:00','Park Nara','Jelenie są dzikimi zwierzętami. Karmcie tylko dozwolonymi krakersami, bez drażnienia i pokazywania jedzenia nad głową; trzymajcie się razem.'],
-  ['10:45','Tōdai-ji','Wielki Budda. Ograniczcie park do tej części zamiast iść dalej w stronę Kasuga Taisha.'],
+  ['10:45','Tōdai-ji albo więcej spaceru po Narze','Wielki Budda, jeśli chcecie wejść. Alternatywnie bez biletu: spokojny park, staw i uliczki w stronę Higashimuki. Bez obowiązku zaliczenia kolejnych świątyń; nie dokładamy Kasuga Taisha.'],
   ['12:00','Lunch i mochi','Okolice Higashimuki. Pokaz w Nakatanidō tylko jeśli akurat się odbywa; nie czekajcie kosztem pociągu.'],
   ['13:15','Powrót do Kioto','W hotelu orientacyjnie około 14:15.'],
   ['14:15','Odpoczynek i przebranie','Około 90 minut w pokoju, potem spokojny dojazd do potwierdzonego adresu.','bufor'],
@@ -1147,27 +1147,27 @@ const DAYS = [
   ['19:30','Wspólna kolacja','W pobliżu warsztatu albo hotelu.'],
  ],
  facts:[['Umiarkowanie','Chodzenie'],['Kintetsu + dojazd na warsztat','Transport']],
- tips:['Przy późniejszym slocie herbaty nie wydłużajcie Nary: odzyskany czas przeznaczcie na pokój.','Ceny i zasady wieku zależą od wybranego warsztatu. Nie zakładajcie dwóch taryf dziecięcych.'],
- links:[A('nara-park','Park Nara'),A('todaiji','Tōdai-ji'),A('mochi','Nakatanidō'),A('culture','Herbata i kaligrafia')],more:[]},
+ tips:['Nara ma być spacerem, nie wyścigiem między zabytkami. Jeśli przed rezerwacją herbaty wolicie pełniejszy dzień w Narze, zrezygnujcie z popołudniowego warsztatu, zamiast ściskać oba programy.','KOTO z polecenia przewodnika jest przy Kinkaku-ji, daleko od dworca. To zamiennik obecnej ceremonii, nie druga herbata. Przy wyborze KOTO trzeba od nowa ustalić godzinę, dojazd i zrezygnować z dokładanej kaligrafii.','Ceny i zasady wieku zależą od wybranego warsztatu. Nie zakładajcie dwóch taryf dziecięcych.'],
+ links:[A('nara-park','Park Nara'),A('todaiji','Tōdai-ji'),A('mochi','Nakatanidō'),A('culture','Herbata i kaligrafia'),A('tea-koto','KOTO - alternatywa')],more:[]},
 
-{date:'2027-05-02',dow:'niedziela',dd:'2 maja',city:'kioto',title:'Bambusy, furoshiki i spokojne popołudnie',level:'y',stay:'kioto',
- lead:'Krótka Arashiyama rano, warsztat pakowania prezentów dla córki i wolny wieczór. Pranie robimy po powrocie, bez biegania przez hotel w środku dnia.',
- chips:['Ogród albo małpy','Furoshiki 14:00 - planowany slot','Pranie po warsztacie'],
- brief:{start:'09:00 z hotelu',end:'około 19:00',focus:'Bambusy i furoshiki, bez dokładania drugiej wycieczki.',must:'Opuścić Arashiyamę około 12:15, jeśli potwierdzicie warsztat 14:00.',cut:'Małpy zamiast Tenryū-ji, nigdy oba. Kinkaku-ji poza planem tego dnia.',check:'Potwierdźcie adres warsztatu. Przed nim lunch w centrum; nie wracajcie po drodze do hotelu.'},
+{date:'2027-05-02',dow:'niedziela',dd:'2 maja',city:'kioto',title:'Centrum Kioto: Nijō, Nishiki i furoshiki',level:'y',stay:'kioto',
+ lead:'Pałac shogunów, spacer po targu i rodzinne pamiątki. Centrum zamiast wycieczki do Arashiyamy: mniej przejazdów i późniejsze wyjście z hotelu.',
+ chips:['Start 09:30','Nishiki i wachlarze','Furoshiki 14:00 - planowany slot'],
+ brief:{start:'09:30 z hotelu',end:'około 19:00',focus:'Ninomaru i Nishiki, potem furoshiki dla chętnych.',must:'Po rezerwacji: godzina i adres furoshiki; pranie oraz pakowanie przed zmianą miasta.',cut:'Zakup wachlarza i ogrody Nijō. Przy bardzo wolnym tempie sam targ zamiast zamku.',check:'Bilet do Nijō ma obejmować Ninomaru. Warsztat 14:00 jest propozycją, nie potwierdzoną rezerwacją. Z targu wyjdźcie około 13:00.'},
  tl:[
-  ['09:00','JR do Saga-Arashiyama','Zapas na dojście do peronu i krótki pociąg.'],
-  ['09:45','Las bambusowy','Spokojny spacer. W niedzielę Golden Week będzie tłoczno; nie ścigamy pustego kadru.'],
-  ['10:30','Ogród Tenryū-ji','Domyślnie ogród i spacer nad rzeką. Jeśli wszyscy wolą małpy, zamieńcie ogród na Iwatayamę i pilnujcie godziny powrotu.'],
-  ['12:15','Wyjazd z Arashiyamy do centrum','Kierunek Karasuma-Oike: JR do Nijō i metro Tōzai, według bieżącej trasy. Zarezerwujcie około 45-60 minut od miejsca spaceru do okolicy warsztatu.','bufor'],
-  ['13:00','Lunch blisko warsztatu','Prosty posiłek i toaleta. Stawcie się 10-15 minut przed potwierdzoną sesją.'],
+  ['09:30','Wyjazd do zamku Nijō','Metro z przesiadką do Nijōjō-mae albo taksówka. Zostawcie około 30 minut plus zapas na wejście.'],
+  ['10:15','Nijō: pałac Ninomaru','Około 75-90 minut na pałac i krótki fragment ogrodu. To rezydencja shogunów ze wskazówek przewodnika. Bez dodatkowego zwiedzania Honmaru; przy dużej kolejce skróćcie ogród.'],
+  ['11:45','Przejazd w stronę Nishiki','Zapas na dojście i przejazd; nie planujemy marszu przez pół miasta.','bufor'],
+  ['12:15','Nishiki Market: spacer i lunch','Około 45 minut na wybrane stoiska, jedzenie przy nich i spokojny spacer. Jeśli zamiast targowego lunchu wolicie sushi, Kura w centrum jest zamiennikiem, nie drugim obiadem. Wachlarz sensu tylko jeśli zostaje czas; inaczej podczas warsztatu kupują go osoby, które nie uczestniczą.'],
+  ['13:00','Dojazd do potwierdzonego warsztatu','Cel: być 10-15 minut przed sesją. Nie wracajcie po drodze do hotelu. Lokalizacja warsztatu decyduje, ile czasu zostaje na targ.','bufor'],
   ['14:00','Furoshiki','Planowana sesja, około 1-2 godzin. Domyślnie mama z córką; tata z synem mają lunch lub spacer w centrum, z ustalonym miejscem spotkania.','rezerwacja'],
   ['16:15','Powrót do hotelu i pranie','Pranie i suszenie wymagają osobnego czasu oraz wolnych urządzeń. Nie zakładajcie, że pranie wysuszy się samo podczas warsztatu.','bufor'],
   ['18:30','Kolacja i pakowanie','Blisko hotelu. Jutro zmiana miasta.'],
  ],
- facts:[['Umiarkowanie; więcej z małpami','Chodzenie'],['JR + metro','Transport']],
- tips:['Małpy dokładają podejście i powrót. Jeśli o 11:30 nie zaczynacie zejścia, ograniczcie pobyt i wróćcie do centrum.','Przy deszczu rezygnujecie z małp. Warsztat zostaje; przed nim można wybrać kryty pasaż zamiast Arashiyamy.','Nishiki to opcja dla części rodziny podczas warsztatu, a nie obowiązkowy punkt po praniu.'],
- links:[A('arashiyama','Arashiyama'),A('monkeys','Małpy - zamiast ogrodu'),A('furoshiki','Warsztat furoshiki'),A('nishiki','Nishiki - opcja')],
- pc:{q:'Ogród czy małpy?',opts:[['Tenryū-ji (domyślnie)','spokojniej, łatwo skrócić spacer','mniej aktywnie'],['Iwatayama zamiast ogrodu','makaki i widok na Kioto','podejście; trzeba zacząć zejście do 11:30']]},more:[]},
+ facts:[['Umiarkowanie; bez górskich podejść','Chodzenie'],['Metro / taksówka + pieszo','Transport']],
+ tips:['Wachlarz sensu: Miyawaki Baisenan przy Rokkaku, niedaleko Nishiki. To krótki zakup pamiątki, nie kolejny warsztat.','Ninomaru nie jest pałacem cesarskim ani zamkiem w Osace. Wybierzcie właściwy bilet; aktualne zasady są w karcie atrakcji.','Arashiyama zostaje alternatywą: jeśli wybierzecie bambusy, zastępują Nijō i Nishiki, a nie dochodzą do nich. Warsztat i pranie nadal ograniczają czas.'],
+ links:[A('nijo','Nijō i Ninomaru'),A('nishiki','Nishiki Market'),A('sensu','Japoński wachlarz'),A('kura','Kura Sushi - zamiast lunchu'),A('furoshiki','Warsztat furoshiki'),A('arashiyama','Arashiyama - alternatywa')],
+ pc:{q:'Centrum czy Arashiyama?',opts:[['Centrum (rekomendowane)','późniejszy start, pałac i targ pasują do wskazówek przewodnika','mniej przyrody; w Nishiki tłum'],['Arashiyama zamiast Nijō i Nishiki','bambusy i ogród Tenryū-ji','start około 09:00; wyjazd do centrum około 12:15 przed warsztatem, bez dokładania małp']]},more:[]},
 
 {date:'2027-05-03',dow:'poniedziałek',dd:'3 maja',city:'tokio',title:'Do Tokio i wieczorna Asakusa',level:'y',stay:'tokio1',
  lead:'Zmiana miasta, lunch i godzina w pokoju. Wieczorem Asakusa; pokaz sumo z kolacją po potwierdzeniu rezerwacji.',
@@ -1478,7 +1478,7 @@ function indexPage(){
 
   <section id="trasa">
     <h2 class="stitle">Nasza trasa po Japonii</h2>
-    <p class="lead-p">Cała podróż na jednej mapie, tym razem od zachodu: z Narity od razu shinkansenem do Kioto (cztery noce, wypady do Nary i Arashiyamy), na święta Golden Week do Tokio (trzy noce), a na koniec ryokan w Hakone — i z gór prosto na lotnisko. Dzień w Abu Zabi (stopover w drodze tam) jest poza tą mapą.</p>
+    <p class="lead-p">Cała podróż na jednej mapie: z Narity shinkansenem do Kioto (cztery noce, Nara oraz centrum z Nijō i Nishiki), potem Tokio (trzy noce), a na koniec ryokan w Hakone i dojazd na lotnisko. Arashiyama pozostaje zamiennikiem dnia w centrum, nie dodatkową wycieczką. Abu Zabi jest poza tą mapą.</p>
     <div class="card">
       <div class="maphold"><button class="mapbtn" id="mapActivate">🗺️ Aktywuj mapę</button><div id="map" class="map"></div></div>
       <ol class="maplegend">${JPSTOPS.map(s=>`<li>${s[2]}</li>`).join('')}</ol>
@@ -1684,8 +1684,9 @@ function decyzjePage(){
     '<section id="terminy"><h2 class="stitle">Terminy i pogoda</h2>'+deadlineList()+'<p class="note">Prognoza 7 dni wcześniej jest wskazówką, nie gwarancją. Ostrzeżenia pogodowe, status transportu i zasady anulowania są osobnymi rzeczami. Termin bezpłatnego odwołania Hanaori mija przed wyjazdem do Hakone.</p></section>'+
     '<section id="rytm"><h2 class="stitle">Rytm rodziny 2+2</h2><p class="lead-p">Dwa najbardziej wymagające dni to podróże: 29.04 i 7.05. Dni zwiedzania mają przerwy, a 5.05 wolne popołudnie. Wszystkie dodatki naraz podniosłyby tempo ponad ocenę w tabeli.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
     '<section id="zmiany"><h2 class="stitle">Jak modyfikować plan</h2><div class="card more">'+
-    '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. Każdy dzień ma własną listę do skreślenia. Opuszczona atrakcja nie przechodzi automatycznie na jutro. 2.05 wybieracie ogród albo małpy; 4.05 dwa sklepy; 5.05 Akihabara jest dodatkiem.</p></details>'+
-    '<details><summary>Czy zmieniać kolejność Nary i Arashiyamy?</summary><p>Można rozważyć przed zakupem warsztatów. Po rezerwacji herbaty i furoshiki trzeba najpierw uzgodnić zmianę ich dat. W Golden Week nie zakładajcie dostępności nowych godzin.</p></details>'+
+    '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. Każdy dzień ma własną listę do skreślenia. Opuszczona atrakcja nie przechodzi automatycznie na jutro. 2.05 odpuszczacie ogrody lub zakupy; 4.05 ograniczacie sklepy; 5.05 Akihabara jest dodatkiem.</p></details>'+
+    '<details><summary>Co zmieniły wskazówki przewodników?</summary><p>30.04 ramen na dworcu i Gion o zmierzchu; 1.05 Nara ze spacerem zamiast kolejnych świątyń; 2.05 Nijō i Nishiki zamiast Arashiyamy, z wachlarzem jako drobną pamiątką. Furoshiki, pranie, hotele i pociągi pozostają. KOTO to alternatywa dla obecnej herbaty, a Osaka pozostaje poza programem. <a href="atrakcje.html#guide-tips">Wskazówki, źródła i warianty →</a></p></details>'+
+    '<details><summary>Czy wrócić do Arashiyamy lub dodać Osakę?</summary><p>Arashiyama może zastąpić Nijō i Nishiki 2.05. Osaka wymaga rezygnacji z wycieczki do Nary lub dnia w centrum i ponownego ułożenia warsztatów, więc nie dokładamy jej automatycznie. Po rezerwacji herbaty i furoshiki najpierw uzgodnijcie zmianę ich dat. W Golden Week nie zakładajcie dostępności nowych godzin.</p></details>'+
     '<details><summary>Dlaczego 4 noce Kioto, 3 Tokio i 1 Hakone?</summary><p>Trzy bazy mieszczą klasyczne miejsca, zainteresowania dzieci i jedną noc odpoczynku w ryokanie. Dalsze skracanie odbiera czas Japonii; Osaka i Okinawa zwiększyłyby liczbę przejazdów. Hakone jest na końcu, dlatego zabezpieczamy poranny wyjazd na lot.</p></details>'+
     '<details><summary>Co naprawdę oznacza odwrócona trasa w Golden Week?</summary><p>Kioto 29.04-3.05 nadal wypada w popularnym okresie, a nie poza świętami. Przeniesienie do Tokio 3.05 ogranicza pobyt w Kioto podczas kolejnych świąt, lecz nie gwarantuje pustych atrakcji. Potrzebne są miejscówki i realne bufory.</p></details>'+
     '<details><summary>Jak reagować na pogodę?</summary><p>20 i 24.04 sprawdźcie sytuację przed terminami hoteli miejskich. 1-2.05 porównajcie prognozę dla Hakone z kosztem ewentualnej zmiany. 5.05 sprawdźcie ostrzeżenia, a rano 6 i 7.05 kursowanie transportu. Przy silnym wietrze statek nie zastępuje automatycznie kolejki.</p></details>'+
@@ -2083,6 +2084,10 @@ function pogodaPage(){
     <p class="note" style="margin-top:10px">Wartości to średnie klimatyczne — dokładna prognoza na 2027 pojawi się bliżej wyjazdu.</p>
   </section>
   <section>
+    <h2 id="kwitnienie" class="stitle">Kwitnienie: sprawdzamy, nie obiecujemy sakury</h2>
+    <div class="card"><p>W styczniu i lutym 2027 sprawdźcie pierwsze publikacje sezonowe <a href="https://n-kishou.com/corp/news-contents/sakura/?lang=en" target="_blank" rel="noopener">Japan Meteorological Corporation</a>. To prognozy, nie pewny kalendarz wszystkich kwiatów. Dat publikacji na sezon 2027 jeszcze tutaj nie potwierdzamy.</p><p>Tokio odwiedzacie 3-6 maja, zwykle już po głównym sezonie wiśni. Jeśli przewodnik miał na myśli <b>Shinjuku Gyoen</b>, jego oficjalny opis podaje szczyt późnych odmian około połowy kwietnia. Nie wpisujemy więc dodatkowego ogrodu wyłącznie dla sakury. Zieleń i inne kwiaty mogą być powodem spaceru, ale tylko zamiast innej opcji.</p><p><b>Decyzja 48-72 godziny przed spacerem:</b> sprawdźcie aktualny komunikat o kwitnieniu konkretnego ogrodu, pogodę i ewentualne rezerwacje. Nie przenosimy trasy ani hoteli za kwiatami. <a href="https://policies.env.go.jp/national-garden/shinjukugyoen/english/highlights/sakura/" target="_blank" rel="noopener">Sezon sakury w Shinjuku Gyoen →</a></p><p class="note">Źródła sprawdzone 20.09.2026; to informacja sezonowa, nie prognoza na Wasze dni.</p></div>
+  </section>
+  <section>
     <h2 class="stitle">Ile wolno zabrać</h2>
     <p class="lead-p">Lecimy Etihadem w taryfie Economy Basic: jedna sztuka podręczna na osobę, <b>7 kg i 56×36×23 cm</b>, bez bagażu rejestrowanego w cenie. Cztery małe walizki jadą z nami przez cały wyjazd — dlatego kurier na lotnisko wypadł z planu.</p>
     <div class="card"><ul class="tips">
@@ -2316,7 +2321,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     <div class="acard" id="fushimi">
       <h3>⛩️ Fushimi Inari Taisha</h3>
       <div class="desc">Tysiące cynobrowych bram torii wijących się po zboczu góry Inari. Do rozdroża Yotsutsuji (~45 min pod górę) — widok na całe Kioto. Lisy-strażnicy na każdym kroku.</div>
-      <div class="meta"><span>🕒 24 h — być przed 7:30!</span><span>💴 darmowe</span><span>📍 JR Inari (2 przystanki z dworca Kioto)</span></div>
+      <div class="meta"><span>🕒 teren dostępny całą dobę; w naszym planie około 9:30, z krótszą pętlą</span><span>💴 darmowe</span><span>📍 JR Inari (2 przystanki z dworca Kioto)</span></div>
       <div class="links"><a href="https://inari.jp/en/" target="_blank" rel="noopener">strona oficjalna →</a></div>
     </div>
 
@@ -2327,6 +2332,43 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
       <div class="links"><a href="https://www.kiyomizudera.or.jp/en/" target="_blank" rel="noopener">strona oficjalna →</a></div>
     </div>
 
+    <div class="acard" id="nijo">
+      <h3>Nijō: pałac Ninomaru</h3>
+      <div class="desc">Rezydencja shogunów ze wskazówek przewodnika. Pokoje audiencyjne, malowidła i drewniane korytarze dają inne doświadczenie niż kolejna świątynia. W planie 2.05 około 10:15; wybieramy Ninomaru i krótki ogród, bez dokładania Honmaru. Bilet powinien obejmować pałac, nie tylko teren zamku.</div>
+      <div class="meta"><span>🕒 planujcie 75-90 min; obecnie wejście na teren 8:45-16:00, zamknięcie 17:00</span><span>💴 aktualny bilet rodzinny sprawdźcie u operatora; niepotwierdzona cena na 2027</span><span>📍 metro Nijōjō-mae</span></div>
+      <p class="note">Według obecnych zasad Ninomaru nie wymaga rezerwacji godziny; Honmaru wymaga. Sprawdźcie kalendarz na 2.05.2027. W pałacach nie wolno fotografować. Weryfikacja 20.09.2026.</p>
+      <div class="links"><a href="https://nijo-jocastle.city.kyoto.lg.jp/guide/annai/?lang=en" target="_blank" rel="noopener">Godziny i zasady →</a><a href="https://nijo-jocastle.city.kyoto.lg.jp/guide/faq/?lang=en" target="_blank" rel="noopener">Bilety i czas wizyty →</a><a href="https://www.google.com/maps/search/?api=1&query=Nijo+Castle+Kyoto" target="_blank" rel="noopener">Google Maps →</a></div>
+    </div>
+
+    <div class="acard" id="ramen-koji">
+      <h3>Kyoto Ramen Koji: poziom 10F dworca</h3>
+      <div class="desc">Polecenie przewodnika trafia na lunch 30.04 przed odpoczynkiem w hotelu. To kilka ramenowni na poziomie 10F, nie 9F, po południowej stronie wielkich schodów. Wybierzcie krótszą kolejkę; po długim przylocie 29.04 nie robimy z tego obowiązku.</div>
+      <div class="meta"><span>🕒 obecnie 11:00-22:00, ostatnie zamówienia 21:30</span><span>💴 według menu wybranej ramenowni</span><span>📍 Kyoto Station Building, 10F</span></div>
+      <div class="links"><a href="https://www.kyoto-station-building.co.jp/ramen_koji/" target="_blank" rel="noopener">Restauracje i dojście →</a><a href="https://www.google.com/maps/search/?api=1&query=Kyoto+Ramen+Koji" target="_blank" rel="noopener">Google Maps →</a></div>
+    </div>
+
+    <div class="acard" id="sensu">
+      <h3>Wachlarz sensu: mała pamiątka z Kioto</h3>
+      <div class="desc">Miyawaki Baisenan przy Rokkaku, niedaleko Nishiki. Opcjonalne 15-20 minut na wybór wachlarza 2.05, nie kolejny warsztat. Jeśli czas przed furoshiki się kończy, zakupy przejmują osoby nieuczestniczące w warsztacie albo po prostu je odpuszczacie.</div>
+      <div class="meta"><span>🕒 sklep główny obecnie 10:00-18:00; sprawdźcie godziny świąteczne</span><span>💴 zakup według własnego limitu, bez obowiązku</span><span>📍 Daikokucho 80-3, Rokkaku / Tominokoji, Kioto</span></div>
+      <div class="links"><a href="https://baisenan.co.jp/about/shop/" target="_blank" rel="noopener">Sklep i adres →</a><a href="https://www.google.com/maps/search/?api=1&query=Miyawaki+Baisenan+Kyoto" target="_blank" rel="noopener">Google Maps →</a></div>
+    </div>
+
+    <div class="acard" id="kura">
+      <h3>Kura Sushi: jeden swobodny posiłek</h3>
+      <div class="desc">Sieciówka z polecenia przewodnika. Lokal Kyoto przy Shinkyogoku pasuje do spaceru po centrum 2.05. Wybierzcie go zamiast lunchu na Nishiki, jeśli tego dnia wolicie sushi; nie dokładamy kolejnego posiłku ani specjalnego przejazdu.</div>
+      <div class="meta"><span>🕒 godziny i kolejkę sprawdźcie w dniu wizyty</span><span>💴 zależnie od liczby i rodzaju talerzyków; cennik na stronie lokalu</span><span>📍 Sakuranocho 415, Kyoto Shochikuza B1F</span></div>
+      <div class="links"><a href="https://shop.kurasushi.co.jp/detail/598" target="_blank" rel="noopener">Lokal, godziny i rezerwacja →</a><a href="https://www.google.com/maps/search/?api=1&query=Kura+Sushi+415+Sakuranocho+Kyoto" target="_blank" rel="noopener">Google Maps →</a></div>
+    </div>
+
+    <div class="acard" id="tea-koto">
+      <h3>Tea Ceremony KOTO: alternatywa z polecenia</h3>
+      <div class="desc">KOTO leży przy Kinkaku-ji, nie w Gion ani przy dworcu. Warto rozważyć, jeśli sama ceremonia jest priorytetem, ale dojazd komplikuje powrót z Nary. Nie dopisujemy drugiej herbaty: KOTO zastępuje MAIKOYA lub Camellię. Wybór wymaga potwierdzenia czasu sesji, ceny, wieku dzieci i nowego buforu na dojazd; kaligrafia nie przechodzi automatycznie do tego pakietu.</div>
+      <div class="meta"><span>🕒 termin i długość sesji do potwierdzenia u organizatora</span><span>💴 aktualna oferta dla czterech osób do wyceny</span><span>📍 37 Kinugasa Nishi-Goshonouchicho, przy Złotym Pawilonie</span></div>
+      <p class="note">Obecna strona podaje około 50 minut autobusem od Kyoto Station; w Golden Week potrzebny dodatkowy zapas. Jeśli połączymy KOTO ze Złotym Pawilonem 2.05, zastępują one Nijō i Nishiki, a herbatę usuwamy z 1.05. Furoshiki wymaga ponownego sprawdzenia godzin. To wariant, nie aktywna rezerwacja.</p>
+      <div class="links"><a href="https://jpn.teaceremony-kyoto.com/" target="_blank" rel="noopener">KOTO oficjalnie →</a><a href="https://teaceremony-kyoto.com/access" target="_blank" rel="noopener">Adres i dojazd →</a><a href="https://www.google.com/maps/search/?api=1&query=Tea+Ceremony+Koto+Kyoto" target="_blank" rel="noopener">Google Maps →</a></div>
+    </div>
+
     <div class="acard" id="kinkakuji">
       <h3>✨ Kinkaku-ji (Złoty Pawilon)</h3>
       <div class="desc">Pawilon pokryty płatkami złota odbijający się w stawie — najsłynniejsza pocztówka Kioto. Najładniej w porannym słońcu, zwiedzanie ~45 min.</div>
@@ -2335,7 +2377,8 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     </div>
 
     <div class="acard" id="arashiyama">
-      <h3>🎋 Arashiyama: las bambusowy + Tenryū-ji</h3>
+      <h3>🎋 Arashiyama: alternatywa dla centrum</h3>
+      <p class="note">Od aktualizacji 20.09 poza głównym programem. Może zastąpić Nijō i Nishiki 2.05; nie dokładamy jej przed ani po nich.</p>
       <div class="desc">Aleja wśród 20-metrowych bambusów (pusta tylko wcześnie rano) i przylegające ogrody zen świątyni Tenryū-ji (UNESCO) z widokiem na góry.</div>
       <div class="meta"><span>🕒 las 24 h; Tenryū-ji 8:30–17:00</span><span>💴 las darmowy; Tenryū-ji ogrody 500 ¥ / dzieci 300 ¥</span><span>📍 JR Saga-Arashiyama (15 min z Kioto)</span></div>
       <div class="links"><a href="https://www.tenryuji.com/en/" target="_blank" rel="noopener">Tenryū-ji →</a></div>
@@ -2401,7 +2444,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
 
     <div class="acard" id="nara-park">
       <h3>🦌 Park Nara i jelenie</h3>
-      <div class="desc">~1 200 oswojonych jeleni sika swobodnie chodzących po parku. Kłaniają się za krakersy shika-senbei. Karmić po jednym, trzymać zapas wysoko!</div>
+      <div class="desc">Jelenie swobodnie chodzą po parku, ale pozostają dzikimi zwierzętami. Spacerujcie bez pośpiechu, trzymajcie się razem i karmcie tylko przeznaczonymi dla nich krakersami. Nie drażnijcie ich ani nie unoście jedzenia nad głową. Można też po prostu obserwować bez karmienia.</div>
       <div class="meta"><span>🕒 24 h</span><span>💴 park darmowy; senbei ~200 ¥/paczka</span><span>📍 10 min pieszo ze stacji Kintetsu-Nara</span></div>
       <div class="links"><a href="https://www.visitnara.jp/" target="_blank" rel="noopener">Visit Nara →</a></div>
     </div>
@@ -2620,7 +2663,7 @@ function atrakcjePage(){
   // section headings -> stitle
   body = body.replace(/<h2 id="([^"]+)">([^<]+)<\/h2>/g,'<h2 id="$1" class="stitle" style="scroll-margin-top:80px">$2</h2>');
   const toc = `<nav class="toc" style="margin-bottom:18px">
-    <a href="#abuzabi">🕌 Abu Zabi</a><a href="#kioto">⛩️ Kioto</a><a href="#nara">🦌 Nara</a><a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a>
+    <a href="#guide-tips">Wskazówki przewodników</a><a href="#abuzabi">🕌 Abu Zabi</a><a href="#kioto">⛩️ Kioto</a><a href="#nara">🦌 Nara</a><a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a>
     <a href="#sumo-s">🥋 Sumo</a><a href="#praktyczne">🧳 Praktyczne</a><a href="#osaka">🗄️ Archiwum</a></nav>`;
   const inner=`
   <header class="hero kb">
@@ -2632,12 +2675,37 @@ function atrakcjePage(){
   </div>
   </header>
   ${toc}
+  <section id="guide-tips"><h2 class="stitle">Wskazówki przewodników w naszym planie</h2>
+    <div class="card"><ul class="tips">
+      <li><a href="days/2027-04-30.html">30.04: ramen na dworcu i wieczorny Gion</a>. Ramen Koji jest na 10F; spacer po kolacji tylko przy zapasie energii.</li>
+      <li><a href="days/2027-05-01.html">1.05: czas na spacer w Narze</a>. Wielki Budda jest wyborem, nie obowiązkiem. <a href="#tea-koto">KOTO</a> zapisane jako zamiennik jednej ceremonii, z uwagą o dalszym dojeździe.</li>
+      <li><a href="days/2027-05-02.html">2.05: centrum Kioto</a>. Nijō i Ninomaru, Nishiki oraz opcjonalny wachlarz. Furoshiki i odpoczynek zostają; Arashiyama przechodzi do alternatyw.</li>
+      <li><a href="#kura">Kura Sushi</a> zamiast jednego lunchu. <a href="#sushiro-esaka">Sushiro Esaka</a> zapisane poza trasą, bez specjalnej wyprawy na sushi.</li>
+      <li><a href="#housing-living">Muzeum życia codziennego w Osace</a> i <a href="#osaka-castle">zamek</a> pozostają opcjami na zmieniony dzień, nie dodatkami do obecnej agendy.</li>
+      <li><a href="pogoda.html#kwitnienie">Kwitnienie i ogrody Tokio</a>: przegląd publikacji zimą, decyzja o konkretnym spacerze 48-72 godziny wcześniej. Bez obietnicy majowej sakury.</li>
+    </ul><p class="note">Weryfikacja nowych wskazówek: 20.09.2026. Linki do źródeł są przy miejscach. Godziny na Golden Week 2027 i dostępność sesji wymagają ponownego sprawdzenia; niczego tu nie zarezerwowano.</p></div>
+  </section>
   ${body}
-  <p class="note" style="margin-top:16px">Ceny i godziny — stan na lipiec 2026, orientacyjne; przed rezerwacją sprawdźcie na stronach oficjalnych.</p>
+  <p class="note" style="margin-top:16px">Starsze karty: orientacyjne dane z lipca 2026. Nowe wskazówki przewodników sprawdzone 20.09.2026; nie jest to potwierdzenie cenników ani godzin na 2027. Przed rezerwacją sprawdźcie strony oficjalne.</p>
   <h2 id="osaka" class="stitle" style="scroll-margin-top:80px">🗄️ Archiwum — poza planem: Osaka</h2>
   <p class="lead-p"><b>To nie jest część planu.</b> Osaka wypadła z trasy przy skracaniu wyjazdu do 11 dni; karty zostają jako notatki na inną podróż. Także w sekcjach wyżej kilka kart jest oznaczonych jako „wypadło” lub „opcja” — to samo: materiał odniesienia, nie program.</p>
-  <p class="note" style="margin:-6px 0 14px">Nie dokładamy Osaki do 2.05: tego dnia są Arashiyama, warsztat i pranie. Katalog poniżej jest materiałem na osobny wariant podróży.</p>
+  <p class="note" style="margin:-6px 0 14px">Nie dokładamy Osaki do 2.05: tego dnia jest centrum Kioto, warsztat i pranie. Jeśli zechcecie zmienić priorytety, Osaka musi zastąpić Narę albo dzień w centrum, po uzgodnieniu warsztatów. W takim wariancie wybierzcie muzeum życia codziennego albo zamek, nie wszystko naraz. Rekomendacja na tę podróż: zachować Narę i Kioto.</p>
   <div class="agrid">
+
+    <div class="acard" id="housing-living">
+      <h3>Osaka Museum of Housing and Living</h3>
+      <div class="desc">Spacer przez odtworzone wnętrza i ulice dawnej Osaki pod dachem. Oficjalny komunikat określa zamknięcie od 1.09.2026 do 5.01.2027 włącznie. Z tego wynika planowana dostępność przed naszym wyjazdem, ale otwarcie i kalendarz na maj trzeba ponownie potwierdzić. To alternatywa przy świadomej zmianie trasy, nie obecny punkt programu.</div>
+      <div class="meta"><span>🕒 standardowo 10:00-17:00; ostatnie wejście 16:30, zwykle zamknięte we wtorki</span><span>💴 aktualne bilety sprawdźcie po ponownym otwarciu</span><span>📍 Tenjimbashisuji Rokuchome, wyjście 3</span></div>
+      <p class="note">Stan komunikatu sprawdzony 20.09.2026. Wystawy specjalne i atrakcje dodatkowe mogą mieć inne terminy.</p>
+      <div class="links"><a href="https://www.osaka-angenet.jp/konjyakukan/" target="_blank" rel="noopener">Komunikat muzeum →</a><a href="https://osaka-info.jp/en/spot/osaka-museum-housing-living/" target="_blank" rel="noopener">Oficjalna informacja turystyczna →</a><a href="https://www.google.com/maps/search/?api=1&query=Osaka+Museum+of+Housing+and+Living" target="_blank" rel="noopener">Google Maps →</a></div>
+    </div>
+
+    <div class="acard" id="sushiro-esaka">
+      <h3>Sushiro Esaka: polecenie poza trasą</h3>
+      <div class="desc">Potwierdzony lokal w Esace, w mieście Suita na północ od Osaki. Zachowujemy wskazówkę, ale nie planujemy dodatkowego przejazdu z Kioto tylko na posiłek w sieciówce. Sens ma przy pobycie w tej okolicy; w obecnym programie prostszy jest Kura Sushi w centrum Kioto.</div>
+      <div class="meta"><span>📍 Enokicho 2-1, Crossing Esaka 3F, Suita</span></div>
+      <div class="links"><a href="https://www.akindo-sushiro.co.jp/shop/detail.php?id=216" target="_blank" rel="noopener">Sushiro Esaka oficjalnie →</a><a href="https://www.google.com/maps/search/?api=1&query=Sushiro+Esaka+Suita" target="_blank" rel="noopener">Google Maps →</a></div>
+    </div>
 
     <div class="acard" id="kuromon">
       <h3>🦐 Kuromon Ichiba</h3>
@@ -2649,7 +2717,8 @@ function atrakcjePage(){
     <div class="acard" id="osaka-castle">
       <h3>🏯 Zamek w Osace</h3>
       <div class="desc">Ikona miasta w parku pełnym fos i murów z gigantycznych głazów. W środku muzeum Toyotomiego Hideyoshiego i taras widokowy na 8. piętrze.</div>
-      <div class="meta"><span>🕒 9:00–17:00</span><span>💴 muzeum 600 ¥, dzieci do lat 15 darmowo; park darmowy</span><span>📍 metro Tanimachi 4-chōme</span></div>
+      <div class="meta"><span>🕒 godziny na wybrany dzień sprawdźcie u operatora</span><span>💴 wieża muzealna biletowana; cenę dla wieku dzieci sprawdźcie przed zakupem</span><span>📍 metro Tanimachi 4-chōme</span></div>
+      <p class="note">Opcja, nie element bieżącej trasy. Dla historii shogunów wybraliśmy już Ninomaru w Kioto 2.05. Zamek w Osace oznaczałby kolejny przejazd i podobny blok zwiedzania.</p>
       <div class="links"><a href="https://www.osakacastle.net/english/" target="_blank" rel="noopener">strona zamku →</a></div>
     </div>
 
