@@ -202,7 +202,7 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   var LOC=[
     {n:'🕌 Abu Zabi',la:24.4539,lo:54.3773,tz:'Asia/Dubai'},
     {n:'⛩️ Kioto',la:35.0116,lo:135.7681,tz:'Asia/Tokyo'},
-    {n:'🦌 Nara',la:34.6851,lo:135.8430,tz:'Asia/Tokyo'},
+    {n:'Osaka',la:34.6937,lo:135.5023,tz:'Asia/Tokyo'},
     {n:'🏙️ Tokio',la:35.6723,lo:139.7367,tz:'Asia/Tokyo'},
     {n:'♨️ Hakone (jezioro Ashi)',la:35.2337,lo:139.0155,tz:'Asia/Tokyo'}
   ];
