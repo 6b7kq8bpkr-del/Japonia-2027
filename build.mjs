@@ -81,13 +81,13 @@ const BOOKINGS = [
   {id:'hanaori-transfer-v2',when:'Teraz',what:'Skorygować pytanie do Hanaori o transport',note:'Wysłany 8.09 mail pytał o dawny shuttle do Odawary. Napiszcie uzupełnienie: pokój ma już prywatną kąpiel, potrzebne są wskazówki dojazdu do Odawary 7.05 około 10:30 i wariant taksówką. Nowy szablon niżej.'},
   {id:'flight-total',when:'Teraz',what:'Uzgodnić koszt lotów z obciążeniem karty',note:'Suma czterech e-biletów to 13 643,36 zł. W budżecie ostrożnie zostaje 14 400 zł do uzgodnienia. Przyczyna różnicy 756,64 zł nie jest potwierdzona; nie przypisujemy jej do konkretnej opłaty.'},
   {id:'hotel-deadlines-v2',when:'Przed 21.04.2027',what:'Zapisać terminy anulowania w swoim kalendarzu',note:'Potwierdzenia sprawdzone w Gmailu: Kioto do 21.04 23:59 JST, Tokio do 25.04 23:59 JST, Hanaori do 2.05 23:59 JST. W Polsce to tego samego dnia 16:59. Dodajcie osobiste przypomnienia dzień wcześniej. Strona sama nie wysyła powiadomień.'},
-  {id:'kinugasa-v1',when:'Przed rezerwacją warsztatów',what:'Uzgodnić furoshiki w Kinugasa na 2.05',note:'Pinezka ze zdjęcia wskazuje prawdopodobnie Kyo-komono Kinugasa przy Ryōan-ji. Sklep sprzedaje chusty i wachlarze; warsztat znamy z polecenia przewodnika, bez publicznego cennika. Zapytajcie o naukę pakowania, język, czas, cenę i udział dzieci 10 i 12 lat. Cel 11:45; do potwierdzenia. Nie rezerwujcie równolegle Marumasu.'},
-  {id:'tea-koto-v1',when:'Luty-marzec 2027',what:'Zarezerwować KOTO 2.05 około 10:30',note:'Jedna ceremonia, około 45 min, bez dodatkowej kaligrafii i bez całodniowego kimona. Na 2.05 Marcel ma jeszcze 12 lat: obecny cennik KOTO 2 × 3300 + 2 × 2500 = 11 600 JPY; potwierdźcie cenę i dostępność na 2027. Godzina jest celem, nie rezerwacją.'},
+  {id:'kinugasa-v2',when:'Przed rezerwacją warsztatów',what:'Uzgodnić furoshiki w Kinugasa na 2.05',note:'Pinezka ze zdjęcia wskazuje prawdopodobnie Kyo-komono Kinugasa przy Ryōan-ji. Sklep sprzedaje chusty i wachlarze; warsztat znamy z polecenia przewodnika, bez publicznego cennika. Zapytajcie o naukę pakowania, język, czas, cenę i udział dzieci 10 i 12 lat. Cel 9:45, przed herbatą; do potwierdzenia. Nie rezerwujcie równolegle Marumasu.'},
+  {id:'tea-koto-v2',when:'Luty-marzec 2027',what:'Zarezerwować KOTO 2.05 na 11:45',note:'Jedna ceremonia, około 45 min, bez dodatkowej kaligrafii i bez całodniowego kimona. Na 2.05 Marcel ma jeszcze 12 lat: obecny cennik KOTO 2 × 3300 + 2 × 2500 = 11 600 JPY; potwierdźcie cenę i dostępność na 2027. Wspólne sesje zaczynają się o 11:45, 13:00, 14:15, 15:30 i 16:45; sesji o 10:30 nie ma. Celujemy w pierwszą.'},
   {id:'osaka-v1',when:'Styczeń 2027 i ponownie przed wyjazdem',what:'Sprawdzić muzeum w Osace i Sushiro Esaka na 1.05',note:'Muzeum zapowiedziało zamknięcie do 5.01.2027 włącznie; potwierdźcie ponowne otwarcie i kalendarz maja. Sushiro Esaka: godziny, kolejka i ewentualna rezerwacja. Zamek zastępuje muzeum, nie dochodzi do niego.'},
   {id:'sumo',when:'Luty-marzec 2027',what:'Zdecydować i ewentualnie zarezerwować sumo',note:'3.05 cel: sesja 18:00 w Asakusie. Dopóki nie ma biletu, to opcja. Sprawdźcie cenę całej rodziny, menu, warunki anulowania i zakres udziału publiczności.'},
   {id:'rail-v2',when:'29.03 i 3.04 maile; 6.04 i 7.04 zakupy',what:'Domknąć kolej: potwierdzenia miejsc, Odawara-Tokio, NEX, Romancecar',note:'Dwa długie przejazdy są już zarezerwowane w SmartEX (patrz: potwierdzone elementy). Zostało: (1) 29.03 i 3.04 po 8:00 JST (1:00 w Polsce) sprawdzić maile z ostatecznym numerem pociągu i czterema miejscami obok siebie; (2) Odawara-Tokio na 7.05: standardowa sprzedaż od 7.04 o 10:00 JST (03:00 w Polsce); (3) NEX osobno w JR East; (4) Romancecar na 6.05 osobno w Odakyu od 6.04; (5) ustalić w SmartEX sposób wejścia na peron dla całej czwórki: kod QR albo odbiór biletów w automacie.'},
   {id:'insurance',when:'Teraz / przed wyjazdem',what:'Sprawdzić paszporty, warunki wjazdu i ubezpieczenie',note:'Sprawdźcie dokumenty wszystkich osób dla Japonii i ZEA. Polisa powinna odpowiadać trasie i planowanym aktywnościom; ochrony kosztów rezygnacji nie odkładajcie do kwietnia bez sprawdzenia terminu zakupu.'},
-  {id:'sky',when:'19.04.2027 około 17:00 PL',what:'Shibuya Sky na 4.05',note:'Według obecnej zasady sprzedaż od 0:00 JST dwa tygodnie przed wejściem. Potwierdźcie tę regułę w kwietniu 2027 oraz sposób zakupu dla 10-latki. Slot 17:45 jest celem, nie rezerwacją.'},
+  {id:'sky-v2',when:'19.04.2027 około 17:00 PL',what:'Shibuya Sky na 4.05',note:'Według obecnej zasady sprzedaż od 0:00 JST dwa tygodnie przed wejściem. Sloty są 20-minutowe; celem jest 17:40-17:59 (zachód słońca 18:30). Online kupcie trzy bilety dorosłe: taryfa dorosła obowiązuje od 12 lat, obecnie 3 400 JPY po 15:00. Bilet dla dziecka poniżej 12 lat (1 200 JPY) jest według strony Shibuya Sky sprzedawany tylko w kasie na 14. piętrze w dniu wizyty. Przy biletach kupionych z zagranicy miejcie przy wejściu paszporty. Potwierdźcie te zasady w kwietniu 2027.'},
   {id:'cafe-v2',when:'Od 1.03.2027 sprawdzaj NEWS',what:'Sprawdzić otwarcie rezerwacji Pokémon Café',note:'W 2026 operator zmieniał okna sprzedaży i ogłaszał je w NEWS. Dawna reguła 31 dni o 18:00 nie jest pewnym terminem dla maja 2027. Przy braku stolika zostaje Pokémon Center TOKYO DX i zwykły lunch.'},
   {id:'internet',when:'Dwa tygodnie przed',what:'Przygotować internet na obu etapach',note:'eSIM obejmujący Japonię nie musi działać w ZEA. Minimum dwa telefony z dostępem do sieci, gdy rodzina rozdziela się na warsztatach.'},
   {id:'pass',when:'Przed zakupem atrakcji w Abu Zabi',what:'Sprawdzić i odebrać Stopover Pass',note:'Sprawdźcie aktualne zniżki oraz warunki na oficjalnej stronie programu. To dodatek, nie warunek udanego dnia.'},
@@ -1054,7 +1054,7 @@ const GEO = {
   '2027-04-29':[[35.772,140.393,'Narita (przylot 12:45)'],[35.681,139.767,'Tokyo Station (NEX → shinkansen)'],[34.9858,135.7588,'Kyoto Station - hotel po stronie południowej']],
   '2027-04-30':[[34.9671,135.7727,'Fushimi Inari - krótka pętla'],[34.9858,135.7588,'Kyoto Station - ramen i odpoczynek w hotelu'],[35.0142,135.7482,'Nijō - Ninomaru, opcjonalnie po sjeście'],[35.0030,135.7780,'Gion - wieczorny spacer']],
   '2027-05-01':[[34.9858,135.7588,'Kyoto Station - wyjazd i powrót'],[34.7335,135.5002,'Shin-Osaka - przesiadka na metro'],[34.7580,135.4970,'Esaka - okolica Sushiro; wejście z linku restauracji'],[34.7108,135.5102,'Osaka Museum of Housing and Living'],[34.6687,135.5013,'Dōtonbori - krótki spacer i kolacja']],
-  '2027-05-02':[[35.0394,135.7312,'KOTO - okolica herbaciarni przy Kinkaku-ji; adres w rezerwacji'],[35.032420,135.720016,'Pinezka ze zdjęcia - prawdopodobnie Kyo-komono Kinugasa'],[35.0050,135.7649,'Nishiki Market - opcja po warsztacie'],[34.9858,135.7588,'Kyoto Station - hotel, pranie i pakowanie']],
+  '2027-05-02':[[35.032420,135.720016,'Pinezka ze zdjęcia - prawdopodobnie Kyo-komono Kinugasa'],[35.0394,135.7312,'KOTO - okolica herbaciarni przy Kinkaku-ji; adres w rezerwacji'],[35.0050,135.7649,'Nishiki Market - opcja po herbacie'],[34.9858,135.7588,'Kyoto Station - hotel, pranie i pakowanie']],
   '2027-05-03':[[34.9858,135.7588,'Kyoto Station'],[35.681,139.767,'Tokyo Station'],[35.6723,139.7367,'Akasaka - okolica bazy; hotel z linku w karcie'],[35.7148,139.7967,'Asakusa / Sensō-ji'],[35.7124,139.7929,'Asakusa Sumo Club - opcja, cel sesji 18:00']],
   '2027-05-04':[[35.6764,139.6993,'Meiji Jingū'],[35.6702,139.7026,'Harajuku'],[35.6688,139.7068,'Cat Street - wybierzcie dwa sklepy'],[35.6619,139.6987,'Shibuya PARCO / Nintendo - opcja'],[35.6595,139.7005,'Shibuya Sky - po zdobyciu biletu']],
   '2027-05-05':[[35.6745,139.7395,'Hie-jinja - krótki spacer, opcja'],[35.6817,139.7740,'Pokémon Center TOKYO DX; Café tylko z rezerwacją'],[35.7022,139.7741,'Akihabara - opcja na 60-90 minut']],
@@ -1086,7 +1086,7 @@ const DAYS = [
  tl:[
   ['08:30','Śniadanie','Płatne osobno. W hotelu albo w otwartej kawiarni w okolicy.'],
   ['09:00','Taksówka do Wielkiego Meczetu','Zapas na dojazd, kontrolę i dojście do wejścia.'],
-  ['09:30','Wielki Meczet Szejka Zajida','Zarezerwujcie bezpłatny wstęp. Przywieźcie własne zakrywające ubrania: długie rękawy i nogawki, dla kobiet również chusta na włosy. Nie opierajcie planu na dostępności abai na miejscu.'],
+  ['09:30','Wielki Meczet Szejka Zajida','Zarezerwujcie wejście online. Goście z zagranicy płacą obecnie 10 AED od osoby; kwotę pokaże formularz. Przywieźcie własne zakrywające ubrania: długie rękawy i nogawki, dla kobiet również chusta na włosy. Nie opierajcie planu na dostępności abai na miejscu.'],
   ['12:00','Lunch i Luwr albo Qasr Al Watan','Wybierzcie jedno miejsce w klimatyzacji. Sprawdźcie godziny, cenę i warunki Stopover Pass przed zakupem.','opcja'],
   ['14:30','Odpoczynek w hotelu','Prysznic i drzemka, jeśli recepcja potwierdziła pokój do późnego popołudnia. W innym przypadku odpoczynek w klimatyzowanej części hotelu i odbiór bagażu.','bufor'],
   ['17:30','Transfer na lotnisko','Cel: być w terminalu około 18:15. Przy większym ruchu wyjedźcie wcześniej.','bufor'],
@@ -1103,8 +1103,8 @@ const DAYS = [
  brief:{start:'12:45 przylot',end:'około 20:00 w hotelu',focus:'Dotrzeć do Kioto bez pośpiechu na przesiadkach.',must:'Lot, zarezerwowany shinkansen Nozomi 51 o 16:48 i nocleg w Kioto.',cut:'Wszystkie atrakcje po przyjeździe.',check:'NEX kupcie na realną godzinę po kontroli granicznej, z przyjazdem na Tokyo Station najpóźniej około 16:15. Jeśli grozi spóźnienie, zmieńcie rezerwację w SmartEX przed 16:48; po odjeździe pociągu zmiana w aplikacji nie jest już możliwa.'},
  tl:[
   ['12:45','Lądowanie na Naricie','Visit Japan Web przygotujcie przed wylotem, a kody każdej osoby zapiszcie offline. Kontrola graniczna może potrwać dłużej niż zwykle.','lot'],
-  ['14:30','Narita Express do Tokyo Station','Orientacyjny cel, nie potwierdzony rozkład. Wybierzcie dostępny pociąg po przejściu formalności; sama jazda trwa około godziny.','rezerwacja'],
-  ['15:45','Tokyo Station: przesiadka i jedzenie','Zostawcie co najmniej 30-45 minut na dojście, toalety, bilety i ekiben.','bufor'],
+  ['14:20','Narita Express do Tokyo Station','Według obecnego rozkładu z Terminalu 1 odjeżdżają pociągi 14:20 (Tokyo Station 15:15) i 14:45 (15:45). Ostatni, który jeszcze daje przesiadkę, to 15:14 (16:14). Wybierzcie pociąg po przejściu formalności; rozkład na 2027 potwierdźcie przy zakupie.','rezerwacja'],
+  ['15:15','Tokyo Station: przesiadka i jedzenie','Zostawcie co najmniej 30-45 minut na dojście, toalety, bilety i ekiben.','bufor'],
   ['16:48','Shinkansen Nozomi 51 do Kioto','Zarezerwowany 18.09.2026 w SmartEX: Tokyo 16:48, Kioto 19:00, 3 taryfy dorosłe i 1 dziecięca, wagon zwykły. Numer pociągu i miejsca są wstępne; ostateczne przyjdą mailem 29.03 po 8:00 JST (1:00 w Polsce). Przy opóźnionym locie zmieńcie rezerwację w SmartEX przed odjazdem; w Golden Week wolnych miejsc w kolejnych pociągach może nie być.','zarezerwowane'],
   ['19:30','MIMARU Kyoto Station','Pociąg jest w Kioto planowo o 19:00; hotel stoi kilka minut od wyjścia Hachijō. Przy dużym opóźnieniu uprzedźcie recepcję.'],
   ['20:00','Kolacja przy dworcu i sen','Prosty posiłek; bez szukania popularnej restauracji z kolejką.'],
@@ -1154,18 +1154,18 @@ const DAYS = [
 
 {date:'2027-05-02',dow:'niedziela',dd:'2 maja',city:'kioto',title:'KOTO, sklep Kinugasa i spacer po Nishiki',level:'y',stay:'kioto',
  lead:'Dwa miejsca z Waszych zdjęć na północnym zachodzie Kioto: ceremonia herbaty i sklep z chustami oraz wachlarzami. Potem opcjonalny targ, bez kolejnego zabytku.',
- chips:['Start 09:30','KOTO 45 min','Furoshiki do uzgodnienia'],
- brief:{start:'09:30 z hotelu',end:'około 19:00',focus:'KOTO i Kinugasa; Nishiki zależnie od energii.',must:'Po rezerwacji: godziny KOTO i warsztatu; pranie oraz pakowanie przed zmianą miasta.',cut:'Nishiki przy dłuższym warsztacie lub zmęczeniu. Nie dodajemy Kinkaku-ji, Ryōan-ji ani kaligrafii.',check:'Sklep z pinezki to prawdopodobnie Kinugasa. Warsztat z polecenia nie jest publicznie potwierdzony; zapytajcie o dostępność, czas, cenę i język. Godziny są propozycją.'},
+ chips:['Start 09:00','KOTO o 11:45','Furoshiki do uzgodnienia'],
+ brief:{start:'09:00 z hotelu',end:'około 19:00',focus:'Kinugasa i KOTO; Nishiki zależnie od energii.',must:'Po rezerwacji: godziny KOTO i warsztatu; pranie oraz pakowanie przed zmianą miasta.',cut:'Nishiki przy dłuższym warsztacie lub zmęczeniu. Nie dodajemy Kinkaku-ji, Ryōan-ji ani kaligrafii.',check:'Sklep z pinezki to prawdopodobnie Kinugasa. Warsztat z polecenia nie jest publicznie potwierdzony; zapytajcie o dostępność, czas, cenę i język. KOTO prowadzi wspólne sesje o 11:45, 13:00, 14:15, 15:30 i 16:45; celujemy w pierwszą. O 23:59 mija bezpłatne odwołanie Hanaori.'},
  tl:[
-  ['09:30','Dojazd do KOTO przy Kinkaku-ji','Na ten poranek rozważcie taksówkę dla czwórki. Zostawcie godzinę z zapasem na ruch i bądźcie około 10:15; autobus może wymagać wcześniejszego wyjścia.'],
-  ['10:30','Tea Ceremony KOTO','Cel rezerwacji: 45-minutowa ceremonia po angielsku, bez obowiązkowego kimona. Według obecnego cennika 11 600 JPY za 2 dorosłych i dzieci 10 oraz 12 lat; cena na 2027 do potwierdzenia.','rezerwacja'],
-  ['11:15','Dojazd do sklepiku przy Ryōan-ji','Około 30 minut buforu: krótka taksówka albo autobus 59 z dojściami i oczekiwaniem.','bufor'],
-  ['11:45','Kinugasa: furoshiki i wachlarze','Wizyta w sklepie wskazanym najprawdopodobniej na zdjęciu. Rezerwujemy w planie do 90 minut na naukę pakowania, ale sam warsztat, język i cenę trzeba uzgodnić. Jeśli sklep nie prowadzi sesji: 20-30 minut na zakupy i wolny czas; nie udajemy potwierdzonej rezerwacji.','rezerwacja'],
-  ['13:15','Lunch i spokojna przerwa','W okolicy albo po drodze do centrum. Bez dokładania świątyń; odpoczynek siedzący.','bufor'],
-  ['14:00','Przejazd do centrum lub prosto do hotelu','Nishiki tylko jeśli nie jesteście zmęczeni. Przy dłuższym warsztacie odpuśćcie targ, nie pakowanie.'],
-  ['14:45','Nishiki Market i krótki spacer','Około 45 minut na targ i jedną przekąskę. Wachlarz można kupić już w Kinugasa, więc drugi sklep nie jest obowiązkowy.','opcja'],
+  ['09:00','Dojazd do sklepiku przy Ryōan-ji','Na ten poranek rozważcie taksówkę dla czwórki: około pół godziny jazdy, w święto z zapasem. Sklep otwiera się o 9:30.'],
+  ['09:45','Kinugasa: furoshiki i wachlarze','Wizyta w sklepie wskazanym najprawdopodobniej na zdjęciu. W planie do 90 minut na naukę pakowania, ale sam warsztat, język i cenę trzeba uzgodnić; sklep nie ogłasza go publicznie. Jeśli sesji nie będzie: 20-30 minut na zakupy i odpowiednio późniejsze wyjście z hotelu.','rezerwacja'],
+  ['11:15','Przejazd do KOTO przy Kinkaku-ji','Autobus 59 między Ryōanji-mae a Kinkakuji-michi jedzie 6 minut, w niedzielę mniej więcej co kwadrans; do tego dojścia. Krótka taksówka jest równie dobra. Bądźcie na miejscu około 11:30.','bufor'],
+  ['11:45','Tea Ceremony KOTO','Pierwsza wspólna sesja dnia: 11:45-12:30, po angielsku, bez obowiązkowego kimona. Kolejne zaczynają się o 13:00, 14:15, 15:30 i 16:45. Według obecnego cennika 11 600 JPY za 2 dorosłych i dzieci 10 oraz 12 lat; cena na 2027 do potwierdzenia.','rezerwacja'],
+  ['12:45','Lunch i spokojna przerwa','W okolicy albo po drodze do centrum. Bez dokładania świątyń; odpoczynek siedzący.','bufor'],
+  ['13:45','Przejazd do centrum lub prosto do hotelu','Nishiki tylko jeśli nie jesteście zmęczeni. Przy dłuższym warsztacie odpuśćcie targ, nie pakowanie.'],
+  ['14:30','Nishiki Market i krótki spacer','Około 45 minut na targ i jedną przekąskę. Wachlarz można kupić już w Kinugasa, więc drugi sklep nie jest obowiązkowy.','opcja'],
   ['15:45','Hotel, odpoczynek i pranie','Pranie oraz suszenie wymagają wolnych urządzeń i osobnego czasu. Jutro wyjazd do Tokio.','bufor'],
-  ['18:30','Kolacja i pakowanie','Blisko hotelu. Jutro zmiana miasta.'],
+  ['18:30','Kolacja i pakowanie','Blisko hotelu. Jutro zmiana miasta. Przed snem sprawdźcie prognozę dla Hakone na 6-7.05: do 23:59 można jeszcze bezpłatnie odwołać Hanaori.'],
  ],
  facts:[['Umiarkowanie; bez górskich podejść','Chodzenie'],['Metro / taksówka + pieszo','Transport']],
  tips:['Marcel kończy 13 lat dopiero 5 maja. Na KOTO 2 maja sprawdzamy taryfę 6-12 lat; w kolei nadal jest taryfą dorosłą.','KOTO zastępuje poprzednią herbatę w MAIKOYA, a Kinugasa planowany warsztat Marumasu. Nie rezerwujcie obu par równocześnie.','Jeśli warsztatu w Kinugasa nie da się uzgodnić, zostaje sam sklep. Zorganizowany warsztat Marumasu jest planem B, wymagającym osobnej godziny i zastąpienia Nishiki, nie dodatkiem.'],
@@ -1182,9 +1182,9 @@ const DAYS = [
   ['13:15','Bagaże w recepcji i lunch','Pokój zwykle dostępny od 15:00. Zostawienie bagażu uzgodnijcie w hotelu.'],
   ['15:00','Meldunek i przerwa','Prysznic i co najmniej godzina w pokoju.','bufor'],
   ['16:15','Do Asakusy','Ginza Line z Tameike-sannō lub Akasaka-mitsuke; dodajcie czas dojścia z hotelu i ze stacji.'],
-  ['17:15','Krótki spacer przy Sensō-ji','Przy pokazie o 18:00 skróćcie do okolic świątyni i bądźcie u organizatora 15 minut przed sesją.'],
+  ['17:15','Krótki spacer przy Sensō-ji','Pawilon główny zamykają o 17:00, więc zostaje brama Kaminarimon, Nakamise i dziedziniec. Przy pokazie o 18:00 bądźcie u organizatora 15 minut przed sesją.'],
   ['18:00','Sumo i chanko-nabe','Wybrana propozycja, jeszcze bez potwierdzonego biletu. Około dwóch godzin. Udział publiczności na ringu zależy od prowadzącego. Bez biletu: zwykła kolacja i spacer.','opcja'],
-  ['20:15','Powrót po pokazie','Sensō-ji o zmroku tylko po drodze, bez kolejnego długiego spaceru. W hotelu około 21:15-21:30.'],
+  ['20:15','Powrót po pokazie','Podświetlona Sensō-ji tylko po drodze (iluminacja do około 23:00), bez kolejnego długiego spaceru. W hotelu około 21:15-21:30.'],
  ],
  facts:[['Umiarkowanie','Chodzenie'],['Shinkansen + metro','Transport']],
  tips:['Bez sumo zakończcie wieczór wcześniej; z sumo jutro nie planujcie wyjścia przed 9:00.','Dziecko 13-letnie ma w JR zwykle taryfę dorosłą; dziecięca karta IC jest dla młodszego dziecka.'],
@@ -1193,7 +1193,7 @@ const DAYS = [
 {date:'2027-05-04',dow:'wtorek',dd:'4 maja',city:'tokio',title:'Meiji, dwa sklepy i panorama Tokio',level:'y',stay:'tokio1',
  lead:'Las Meiji, dwa wybrane sklepy i widok z Shibuya Sky. Dłuższe zakupy zastępują Nintendo, a odpoczynek zostaje.',
  chips:['Start 09:15','Dwa sklepy','Shibuya Sky po zakupie biletu'],
- brief:{start:'09:15 z hotelu',end:'około 20:30',focus:'Meiji i Shibuya w jednym rejonie miasta.',must:'Godzina odpoczynku; Shibuya Sky dopiero po zakupie konkretnego slotu.',cut:'Takeshita i Nintendo przy kolejkach. Nie dodawajcie trzeciego i czwartego sklepu.',check:'Slot 17:45 to cel. Przy zamkniętym dachu zasady zmiany lub zwrotu zależą od biletu; sprawdźcie je przed zakupem.'},
+ brief:{start:'09:15 z hotelu',end:'około 20:30',focus:'Meiji i Shibuya w jednym rejonie miasta.',must:'Godzina odpoczynku; Shibuya Sky dopiero po zakupie konkretnego slotu.',cut:'Takeshita i Nintendo przy kolejkach. Nie dodawajcie trzeciego i czwartego sklepu.',check:'Slot 17:40-17:59 to cel. Przy zamkniętym dachu zasady zmiany lub zwrotu zależą od biletu; sprawdźcie je przed zakupem.'},
  tl:[
   ['09:15','Wyjście do Meiji','Chiyoda Line z Akasaki. Z dojściami i spacerem od wejścia do chramu potrzeba więcej niż samych 10 minut jazdy.'],
   ['09:45','Meiji Jingū','Około godziny w lesie i przy chramie. Bez dodatkowego muzeum.'],
@@ -1202,8 +1202,8 @@ const DAYS = [
   ['14:00','Spacer w stronę Shibuyi','Oglądanie witryn po drodze. Dłuższe zakupy zastępują Nintendo.'],
   ['14:45','Miyashita Park lub kawiarnia','Godzina siedzenia, napoje i toaleta. W deszczu wybierzcie wnętrze.','bufor'],
   ['16:00','Nintendo TOKYO','Wyłącznie przy energii i krótkiej kolejce. Pokémon Center pomijamy - mamy jedną wizytę jutro.','opcja'],
-  ['17:15','Hachikō i wejście do Shibuya Sky','Bądźcie przy wejściu na 14. piętrze zgodnie z instrukcją biletu.'],
-  ['17:45','Shibuya Sky','Planowana pora na widoki przed i po zachodzie; zależna od zakupionego slotu i pogody.','rezerwacja'],
+  ['17:15','Hachikō i wejście do Shibuya Sky','Bądźcie przy wejściu na 14. piętrze zgodnie z instrukcją biletu. Bilet dla dziecka poniżej 12 lat kupuje się w tamtejszej kasie w dniu wizyty; miejcie przy sobie paszporty.'],
+  ['17:40','Shibuya Sky','Sloty są 20-minutowe; celem jest 17:40-17:59, czyli widoki przed zachodem (18:30) i po nim. Zależne od zakupionego slotu i pogody.','rezerwacja'],
   ['19:15','Kolacja i powrót','Sushi albo yakiniku. Bez dodatkowych zakupów po kolacji.'],
  ],
  facts:[['Umiarkowanie; dużo przy wszystkich opcjach','Chodzenie'],['Metro + pieszo','Transport']],
@@ -1250,17 +1250,17 @@ const DAYS = [
 
 {date:'2027-05-07',dow:'piątek',dd:'7 maja',city:'hakone',title:'Z Hakone na lotnisko z zapasem',level:'r',
  lead:'To dzień podróży. Śniadanie, wczesny wyjazd z gór i lot z Narity o 18:00. Lunch i sklepy na dworcu tylko z rzeczywistego zapasu czasu.',
- chips:['Wyjazd około 09:00','Cel Narita 14:00-14:30','Powrót 8.05 rano'],
+ chips:['Wyjazd około 09:00','Narita około 14:00','Powrót 8.05 rano'],
  brief:{start:'08:00 śniadanie',end:'8.05 o 06:50 w WAW',focus:'Dotrzeć na Naritę co najmniej trzy godziny przed lotem.',must:'Wyjazd z Tōgendai około 09:00; lot NRT 18:00.',cut:'Sklepy na Tokyo Station. Przy opóźnieniu lunch kupcie na wynos.',check:'Rozkład i połączenia potwierdźcie 6.05. Jeśli do 09:15 autobus nie odjeżdża, wdrażajcie wcześniej ustalony z recepcją wariant taksówką.'},
  tl:[
   ['08:00','Śniadanie i wymeldowanie','Bez porannej kąpieli. Wszystko spakowane przed wyjściem.'],
-  ['08:45','Przystanek Tōgendai','Cel: poranny autobus około 09:00. Dokładna godzina zależy od rozkładu 2027; wybierzcie kurs pozwalający być w Odawarze około 10:30.','bufor'],
-  ['09:00','Autobus linii T do Odawary','Zapas 75-90 minut. Potwierdźcie kurs z recepcją dzień wcześniej. Hotelowy shuttle jeździ tylko do Gōry, a nie do Odawary.','rezerwacja'],
-  ['10:30','Odawara: przejście na shinkansen','Cel przyjazdu; minimum 25-30 minut na przejście i bilety. Przy opóźnieniu sprawdźcie następne połączenie i zrezygnujcie z przystanku na zakupy.','bufor'],
-  ['11:15','Shinkansen do Tokyo Station','Cel: pociąg zatrzymujący się w Odawarze, około 35-40 minut jazdy. Konkretna godzina i miejsca po publikacji rozkładu.','rezerwacja'],
-  ['12:00','Tokyo Station: przesiadka i szybki lunch','Przejście do podziemnych peronów NEX może zająć 20-30 minut. Jedzenie na wynos; bez planowanej wizyty w Character Street.','bufor'],
-  ['13:00','Narita Express','Wybierzcie połączenie dające przyjazd do właściwego terminala około 14:00-14:30. Nie zakładajcie rozkładu co pół godziny jako gwarancji.','rezerwacja'],
-  ['14:15','Narita: formalności przed lotem','Orientacyjny cel przyjazdu. Sprawdźcie terminal, stanowiska Etihada i procedurę wywozu zakupów tax-free. Nadawany bagaż może wymagać okazania towarów przed jego oddaniem.','bufor'],
+  ['08:45','Przystanek Tōgendai','Obecny rozkład w dni robocze: 8:40, 9:00, 9:20 i 9:35. Celem jest kurs o 9:00; rozkład na 2027 potwierdźcie z recepcją.','bufor'],
+  ['09:00','Autobus linii T do Odawary','Według rozkładu 65 minut, przyjazd 10:05. Potwierdźcie kurs z recepcją dzień wcześniej. Hotelowy shuttle jeździ tylko do Gōry, a nie do Odawary.','rezerwacja'],
+  ['10:05','Odawara: przejście na shinkansen','Przyjazd według rozkładu; do pociągu o 11:14 zostaje około godziny zapasu na korki w górach. Przy opóźnieniu sprawdźcie następne połączenie i zrezygnujcie z przystanku na zakupy.','bufor'],
+  ['11:14','Shinkansen Kodama do Tokyo Station','Obecny rozkład: Kodama 808, Odawara 11:14, Tokyo Station 11:48. Wcześniejszy odjeżdża o 10:45, późniejszy o 11:44. Konkretna godzina i miejsca po publikacji rozkładu.','rezerwacja'],
+  ['11:50','Tokyo Station: przesiadka i szybki lunch','Przejście do podziemnych peronów NEX może zająć 20-30 minut. Jedzenie na wynos; bez planowanej wizyty w Character Street.','bufor'],
+  ['13:03','Narita Express','Obecny rozkład: Tokyo Station 13:03, Terminal 1 o 13:57. Wcześniejszy 12:33 (na lotnisku 13:26), późniejszy 13:33 (14:31). Rozkład na 2027 potwierdźcie przy zakupie.','rezerwacja'],
+  ['14:00','Narita: formalności przed lotem','Etihad odprawia w Terminalu 1. Sprawdźcie stanowiska i procedurę wywozu zakupów tax-free: towary pokazuje się celnikom przed oddaniem bagażu.','bufor'],
   ['15:00','Odprawa, kontrola i bramka','Odprawa online nie wyklucza sprawdzenia dokumentów przy stanowisku. Przestrzegajcie godzin z karty pokładowej.'],
   ['18:00','Narita → Abu Zabi → Warszawa','Godzina pierwszego lotu z e-biletu. W Abu Zabi pozostajecie w tranzycie, bez drugiego stopoveru hotelowego.','lot'],
   ['8.05 06:50','Lądowanie w Warszawie','Sobota 8 maja. Powrót do domu i spokojny weekend po podróży.','lot'],
@@ -2296,7 +2296,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     <div class="acard" id="mosque">
       <h3>🕌 Wielki Meczet Szejka Zajida</h3>
       <div class="desc">82 białe kopuły, największy ręcznie tkany dywan świata i kryształowe żyrandole — jedno z najbardziej imponujących wnętrz, jakie zobaczycie gdziekolwiek. Robi „wow" niezależnie od wieku.</div>
-      <div class="meta"><span>🕒 sob–czw 9:00–22:00, pt od 9:00 (przerwy na modlitwy)</span><span>💴 wstęp darmowy (darmowa rezerwacja online)</span><span>📍 ~20 min taxi z centrum; zwiedzać RANO — chłodniej i pusto</span></div>
+      <div class="meta"><span>🕒 sob–czw 9:00–21:00, ostatnie wejście 20:30; w piątki inne godziny</span><span>💴 goście z zagranicy: obecnie 10 AED od osoby, rezerwacja wejścia online (stan 12.11.2026)</span><span>📍 ~20 min taxi z centrum; zwiedzać RANO — chłodniej i pusto</span></div>
       <span class="rezerwuj">dress code: luźny, nieprześwitujący strój; kobiety zakrywają włosy, nadgarstki i kostki. Weźcie własną chustę; nie zakładajcie darmowej abai</span>
       <div class="links"><a href="https://www.szgmc.gov.ae/en" target="_blank" rel="noopener">rezerwacja wejścia →</a></div>
     </div>
@@ -2366,15 +2366,15 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
 
     <div class="acard" id="tea-koto">
       <h3>Tea Ceremony KOTO: herbaciarnia ze zdjęcia</h3>
-      <div class="desc">W głównym planie 2.05, cel 10:30. Jedna 45-minutowa ceremonia, bez dokładanej kaligrafii i bez obowiązkowego kimona. Zastępuje poprzednie MAIKOYA / Camellię. KOTO leży przy Kinkaku-ji, dogodnie do połączenia ze sklepem Kinugasa przy Ryōan-ji.</div>
-      <div class="meta"><span>🕒 ceremonia współdzielona 45 min; godzina 10:30 do rezerwacji</span><span>💴 obecnie 3300 JPY dorosły, 2500 JPY dziecko 6-12 lat; rodzina 11 600 JPY</span><span>📍 37 Kinugasa Nishi-Goshonouchicho, przy Złotym Pawilonie</span></div>
+      <div class="desc">W głównym planie 2.05, sesja 11:45. Jedna 45-minutowa ceremonia, bez dokładanej kaligrafii i bez obowiązkowego kimona. Zastępuje poprzednie MAIKOYA / Camellię. KOTO leży przy Kinkaku-ji, dogodnie do połączenia ze sklepem Kinugasa przy Ryōan-ji.</div>
+      <div class="meta"><span>🕒 ceremonia współdzielona 45 min; sesje 11:45, 13:00, 14:15, 15:30 i 16:45</span><span>💴 obecnie 3300 JPY dorosły, 2500 JPY dziecko 6-12 lat; rodzina 11 600 JPY</span><span>📍 37 Kinugasa Nishi-Goshonouchicho, przy Złotym Pawilonie</span></div>
       <p class="note">Cennik sprawdzony 20.09.2026, nie gwarancja ceny na 2027. Marcel ma 12 lat do 4.05 włącznie: tutaj są dwa bilety dziecięce, choć w pociągach jeden. Potwierdźcie sesję po angielsku, wiek i zasady anulowania. Nie rezerwujemy dodatkowego zwiedzania świątyni tylko z powodu bliskości.</p>
       <div class="links"><a href="https://jpn.teaceremony-kyoto.com/teaceremony-koto/plan-price" target="_blank" rel="noopener">Oficjalne warianty i ceny →</a><a href="https://teaceremony-kyoto.com/access" target="_blank" rel="noopener">Adres i dojazd →</a><a href="https://www.google.com/maps/search/?api=1&query=Tea+Ceremony+Koto+Kyoto" target="_blank" rel="noopener">Google Maps →</a></div>
     </div>
 
     <div class="acard" id="kinugasa">
       <h3>Kyo-komono Kinugasa: sklepik z polecenia</h3>
-      <div class="desc">Pinezka 35.032420, 135.720016 ze zdjęcia wskazuje okolice tego sklepu przy Ryōan-ji; na zdjęciu nie ma jego nazwy, więc identyfikację traktujemy jako prawdopodobną. Oficjalna strona potwierdza furoshiki, wachlarze sensu i drobne wyroby z tkanin. Cel wizyty 2.05 około 11:45 po KOTO.</div>
+      <div class="desc">Pinezka 35.032420, 135.720016 ze zdjęcia wskazuje okolice tego sklepu przy Ryōan-ji; na zdjęciu nie ma jego nazwy, więc identyfikację traktujemy jako prawdopodobną. Oficjalna strona potwierdza furoshiki, wachlarze sensu i drobne wyroby z tkanin. Cel wizyty 2.05 około 9:45, przed KOTO.</div>
       <div class="meta"><span>🕒 sklep obecnie 9:30-17:30; zwykle wolne wtorki, wyjątki sezonowe</span><span>💴 warsztat: cena niepotwierdzona, nie oznacza 0 JPY</span><span>📍 5 Ryōanji Goryōnoshitachō, przy przystanku Ryōanji-mae</span></div>
       <p class="note"><b>Nauka pakowania wymaga uzgodnienia.</b> Informacja pochodzi od przewodnika, nie z publicznej oferty. Przed wpisaniem stałej godziny zapytajcie, czy sklep z pinezki to właściwe miejsce, czy organizuje sesję dla 4 osób, ile trwa, w jakim języku i czy chusta jest w cenie. W planie bufor do 90 minut, nie deklarowany czas usługi. Bez potwierdzenia zostaje krótka wizyta zakupowa.</p>
       <div class="links"><a href="https://kyoto-kinugasa.co.jp/en/" target="_blank" rel="noopener">Oficjalna strona i kontakt →</a><a href="tel:+81754612631">Zadzwoń do sklepu →</a><a href="https://www.google.com/maps/search/?api=1&query=35.032420%2C135.720016" target="_blank" rel="noopener">Pinezka z Waszego zdjęcia →</a><a href="https://www.google.com/maps/search/?api=1&query=Kyo+komono+Kinugasa+Ryoanji+Kyoto" target="_blank" rel="noopener">Znajdź sklep w Google Maps →</a></div>
@@ -2532,7 +2532,7 @@ const ATR_BODY = String.raw`<h2 id="abuzabi" class="stitle" style="scroll-margin
     <div class="acard" id="shibuya-sky">
       <h3>🌆 Shibuya Sky</h3>
       <div class="desc">Otwarty taras na dachu 229-metrowego wieżowca — widok na słynne skrzyżowanie, a przy dobrej pogodzie na Fudżi. Najlepszy slot: zachód słońca.</div>
-      <div class="meta"><span>🕒 10:00–22:30 (sloty co 20 min)</span><span>💴 cena zależy od daty i godziny; sprawdźcie aktualną taryfę całej rodziny oraz osobne zasady zakupu biletu 10-latki</span><span>📍 Shibuya Scramble Square, 14 p. wejście</span></div>
+      <div class="meta"><span>🕒 10:00–22:30 (sloty co 20 min)</span><span>💴 od 12 lat online 2 700 ¥ do 14:59 i 3 400 ¥ od 15:00; dziecko poniżej 12 lat 1 200 ¥, tylko w kasie na 14. piętrze w dniu wizyty (stan 12.11.2026)</span><span>📍 Shibuya Scramble Square, 14 p. wejście</span></div>
       <span class="rezerwuj">rezerwuj — sprzedaż 14 dni wcześniej (0:00 JST)</span>
       <div class="links"><a href="https://www.shibuya-scramble-square.com/sky/" target="_blank" rel="noopener">bilety online →</a></div>
     </div>
