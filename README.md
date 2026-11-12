@@ -23,3 +23,8 @@ Publicznie dostępny, nieindeksowany serwis (noindex nie jest ochroną dostępu)
 ./deploy.sh
 ```
 Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie.
+
+## Zdjęcia i skala
+- Zdjęcia z Wikimedia Commons leżą w `assets/img/p/` w dwóch rozmiarach (`nazwa.webp` 1800 px i `nazwa-s.webp` 760 px). Autor i licencja każdego są w `data/zdjecia.mjs` i wyświetlają się w Kulisach; nowe zdjęcie zawsze dodawaj razem z atrybucją.
+- Galeria dnia (`DAYPHOTOS`), zdjęcia kart atrakcji (`CARDIMG`) i zdjęcie przewodnie dnia (`DAYIMG`) są w `build.mjs`.
+- Wszystkie wymiary w `src/style.css` są w `rem`, a `rem` rośnie z szerokością ekranu (laptop ok. 118%, Full HD 144%, 4K do 275%). Nowe style pisz w `rem`, nie w `px`.

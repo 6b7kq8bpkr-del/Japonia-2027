@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {ZDJECIA} from './data/zdjecia.mjs';
 import {DAYS, GEO, DAYRAIN, DAYCROWD, BOOKINGS, DEADLINES, HOTELS, fill} from './data/index.mjs';
 /* Każda strona HTML przechodzi przez fill(): tokeny {{klucz}} z szablonów zamieniają się na fakty z data/fakty.mjs. */
 const page = (file, html) => fs.writeFileSync(DIR + '/' + file, fill(html));
@@ -40,13 +41,35 @@ const IMG = {
   dotonbori:'/assets/img/dotonbori.webp', sumo:'/assets/img/sumo.webp', tokyostation:'/assets/img/tokyostation.webp',
   abudhabi:'/assets/img/abudhabi.webp', mosque:'/assets/img/mosque.webp',
 };
-// one distinct photo per day
+// Zdjęcia w wysokiej rozdzielczości (data/zdjecia.mjs) zastępują stare pliki o tej samej nazwie.
+for (const k of Object.keys(ZDJECIA)) IMG[k] = ZDJECIA[k].src;
+const small = p => p.includes('/img/p/') ? p.replace('.webp','-s.webp') : p;
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+// jedno zdjęcie przewodnie na dzień
 const DAYIMG = {
-  '2027-04-30':IMG.fushimi, '2027-05-01':IMG.dotonbori,
-  '2027-04-27':IMG.abudhabi, '2027-04-28':IMG.mosque, '2027-04-29':'/assets/img/hotels/kioto.webp', '2027-05-05':IMG.akihabara,
-  '2027-05-04':IMG.shibuya, '2027-05-06':IMG.fuji, '2027-05-03':IMG.sensoji,
-  '2027-05-02':IMG.yasaka, '2027-05-07':IMG.tokyostation,
+  '2027-04-27':IMG.abudhabi, '2027-04-28':IMG.mosque, '2027-04-29':IMG.shinkansen, '2027-04-30':IMG.fushimi,
+  '2027-05-01':IMG.dotonbori, '2027-05-02':IMG.tea, '2027-05-03':IMG.sensoji, '2027-05-04':IMG.shibuya,
+  '2027-05-05':IMG.pokemon, '2027-05-06':IMG.fuji, '2027-05-07':IMG.nex,
 };
+// galeria dnia: [klucz zdjęcia, podpis]. Podpis mówi wprost, gdy zdjęcie jest poglądowe.
+const DAYPHOTOS = {
+  '2027-04-27':[['abudhabi','Abu Zabi: nabrzeże Corniche']],
+  '2027-04-29':[['nex','Narita Express'],['shinkansen','Shinkansen pod Fudżi'],['kyotostation','Hala dworca w Kioto']],
+  '2027-04-30':[['fushimi','Fushimi Inari: tunel bram torii'],['nijo','Nijō: pałac Ninomaru'],['yasaka','Lampiony chramu Yasaka w Gion']],
+  '2027-05-01':[['sushi','Sushi z taśmy (zdjęcie poglądowe)'],['osakamuseum','Muzeum życia codziennego: dawna Osaka w miniaturze'],['dotonbori','Dōtonbori po zmroku'],['osakacastle','Zamek w Osace: opcja zamiast muzeum']],
+  '2027-05-02':[['furoshiki','Furoshiki: chusty do pakowania (zdjęcie poglądowe)'],['tea','Ceremonia herbaty (zdjęcie poglądowe)'],['nishiki','Nishiki Market']],
+  '2027-05-03':[['sensoji','Sensō-ji: brama Kaminarimon'],['sumo','Sumo: wejście zawodników na ring (zdjęcie z turnieju)']],
+  '2027-05-04':[['meiji','Meiji Jingū: brama torii'],['harajuku','Harajuku: naleśnik z ulicy Takeshita'],['shibuya','Skrzyżowanie Shibuya o zmierzchu']],
+  '2027-05-05':[['pokemon','Pokémon Center (zdjęcie z innego sklepu w Tokio)'],['akihabara','Akihabara wieczorem']],
+  '2027-05-06':[['romancecar','Romancecar z Shinjuku'],['hakonetozan','Kolej górska Hakone Tozan'],['owakudani','Ōwakudani i kolej linowa'],['ashi','Torii chramu Hakone nad jeziorem Ashi']],
+  '2027-05-07':[['fuji','Jezioro Ashi i Fudżi'],['nex','Narita Express na lotnisko']],
+};
+const photo = (k,cap,sizes) => { const z=ZDJECIA[k]; return '<figure><img src="'+small(z.src)+'" srcset="'+small(z.src)+' 760w, '+z.src+' '+z.w+'w" sizes="'+sizes+'" width="'+z.w+'" height="'+z.h+'" alt="'+esc(cap)+'" loading="lazy" decoding="async"><figcaption>'+cap+'</figcaption></figure>'; };
+// zdjęcie w karcie atrakcji: id karty -> klucz zdjęcia
+const CARDIMG = {fushimi:'fushimi',nijo:'nijo','tea-koto':'tea',kinugasa:'furoshiki',nishiki:'nishiki',gion:'yasaka','sushiro-esaka':'sushi','housing-living':'osakamuseum',dotonbori:'dotonbori','osaka-castle':'osakacastle',
+  'sumo-show':'sumo',sensoji:'sensoji',meiji:'meiji','shibuya-sky':'shibuya',pokemon:'pokemon',akihabara:'akihabara',streetwear:'harajuku','hakone-pass':'romancecar',owakudani:'owakudani',ashi:'ashi',nex:'nex',smartex:'shinkansen',
+  kinkakuji:'kinkakuji',arashiyama:'bamboo','nara-park':'deer',todaiji:'todaiji',stopover:'abudhabi'};
+const creditsList = () => '<ol class="credits">'+Object.values(ZDJECIA).map(z=>'<li><a href="'+z.strona+'" target="_blank" rel="noopener">'+esc(z.tytul)+'</a>, fot. '+esc(z.autor)+', '+z.licencja+'</li>').join('')+'</ol>';
 const CITY = {
   tokio:{c1:'20,32,64',c2:'14,39,67',photo:IMG.shibuya},
   hakone:{c1:'20,58,58',c2:'15,54,52',photo:IMG.fuji},
@@ -56,7 +79,7 @@ const CITY = {
   abudhabi:{c1:'110,74,20',c2:'40,60,80',photo:IMG.abudhabi},
 };
 // hero: light tint so the PHOTO is the star; card: bottom-weighted for a legible title
-const heroBg = (c,ph) => `linear-gradient(120deg,rgba(${CITY[c].c1},.58),rgba(${CITY[c].c2},.34)),url('${ph}') center/cover`;
+const heroBg = (c,ph) => `linear-gradient(120deg,rgba(${CITY[c].c1},.28),rgba(${CITY[c].c2},.06)),url('${ph}') center/cover`;
 const cardBg = (c,ph) => `linear-gradient(to top,rgba(${CITY[c].c1},.92),rgba(${CITY[c].c1},.10)),url('${ph}') center/cover`;
 /* kafelek dnia: zdjęcie jako <img loading="lazy"> pod gradientem — natywne leniwe ładowanie
    i jawne wymiary (bez przeskoku układu). Gradient zostaje w tle elementu. */
@@ -127,14 +150,14 @@ ${inner}
 </main>
 <button class="totop" id="totop" aria-label="Do góry">↑</button>
 <script src="${prefix}assets/app.js"></script>
-<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('${prefix}sw.js').then(function(r){function show(){if(document.getElementById('swtoast'))return;var t=document.createElement('div');t.id='swtoast';t.setAttribute('role','status');t.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#0f224d;color:#fff;padding:12px 16px;border-radius:8px;box-shadow:0 8px 22px rgba(0,0,0,.35);font:14px/1.4 system-ui,sans-serif;display:flex;gap:12px;align-items:center;max-width:92vw';t.innerHTML='Dostępna nowa wersja przewodnika. <button type="button" style="background:#c8102e;color:#fff;border:0;border-radius:6px;padding:7px 12px;font:inherit;cursor:pointer">Odśwież</button>';t.querySelector('button').onclick=function(){location.reload();};document.body.appendChild(t);}if(r.waiting&&navigator.serviceWorker.controller)show();r.addEventListener('updatefound',function(){var w=r.installing;if(!w)return;w.addEventListener('statechange',function(){if(w.state==='installed'&&navigator.serviceWorker.controller)show();});});}).catch(function(){});});</script>
+<script>if('serviceWorker' in navigator)addEventListener('load',function(){navigator.serviceWorker.register('${prefix}sw.js').then(function(r){function show(){if(document.getElementById('swtoast'))return;var t=document.createElement('div');t.id='swtoast';t.setAttribute('role','status');t.style.cssText='position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9999;background:#0f224d;color:#fff;padding:12px 16px;border-radius:8px;box-shadow:0 8px 22px rgba(0,0,0,.35);font:14px/1.4 system-ui,sans-serif;display:flex;gap:12px;align-items:center;max-width:92vw';t.innerHTML='Dostępna nowa wersja przewodnika. <button type="button" style="background:#c8102e;color:#fff;border:0;border-radius:0.375rem;padding:0.4375rem 0.75rem;font:inherit;cursor:pointer">Odśwież</button>';t.querySelector('button').onclick=function(){location.reload();};document.body.appendChild(t);}if(r.waiting&&navigator.serviceWorker.controller)show();r.addEventListener('updatefound',function(){var w=r.installing;if(!w)return;w.addEventListener('statechange',function(){if(w.state==='installed'&&navigator.serviceWorker.controller)show();});});}).catch(function(){});});</script>
 </body>
 </html>`;
 }
 function footer(prefix){
   return `<footer>Przewodnik rodzinny · Japonia 27 kwietnia – 8 maja 2027 · strona nieindeksowana · wydanie ${BUILD_ID}<br>
   Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br>
-  Zdjęcia: Wikimedia Commons (licencje CC) · mapy: © OpenStreetMap · <a href="${prefix}index.html">Strona główna</a> · <a href="${prefix}druk.html">Drukuj / zapisz jako PDF</a></footer>`;
+  <a href="${prefix}decyzje.html#zdjecia">Zdjęcia: Wikimedia Commons, autorzy i licencje</a> · mapy: © OpenStreetMap · <a href="${prefix}index.html">Strona główna</a> · <a href="${prefix}druk.html">Drukuj / zapisz jako PDF</a></footer>`;
 }
 
 /* Wyciąga z karty katalogu godziny/ceny/uwagi — żeby strona dnia miała je NA MIEJSCU. */
@@ -163,7 +186,7 @@ function dayMeta(d){
   <section>
     <h2 class="stitle">Orientacyjne godziny i ceny</h2>
     <div class="card" style="padding:0;overflow:hidden"><div style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Miejsce</th><th>Godziny</th><th>Cena</th><th>Rezerwacja</th></tr></thead><tbody>${rows}</tbody></table></div></div>
-    <p class="note" style="margin-top:6px">Katalog orientacyjny. Przed zakupem sprawdźcie cenę według wieku dzieci w dniu wizyty, godziny oraz warunki u operatora. Marcel kończy 13 lat 5 maja.</p>
+    <p class="note" style="margin-top:0.375rem">Katalog orientacyjny. Przed zakupem sprawdźcie cenę według wieku dzieci w dniu wizyty, godziny oraz warunki u operatora. Marcel kończy 13 lat 5 maja.</p>
   </section>` : '';
 }
 function dayPage(d,i){
@@ -181,6 +204,7 @@ function dayPage(d,i){
     '<nav class="section-nav" aria-label="Skróty tego dnia"><a href="#skrot">W minutę</a><a href="#plan">Godziny</a><a href="#mapa">Mapa</a><a href="#warunki">Plan B</a><a href="#nocleg">Nocleg</a></nav>'+
     '<section id="skrot" class="day-brief"><h2 class="stitle">Ten dzień w minutę</h2><div class="brief-stats"><div><span>Start</span><b>'+brief.start+'</b></div><div><span>Koniec</span><b>'+brief.end+'</b></div><div><span>Tempo podstawowe</span><b class="pace '+d.level+'">'+LEVEL_LABEL[d.level]+'</b></div></div>'+
     '<p class="brief-focus">'+brief.focus+'</p><dl class="brief-rules"><div><dt>Chronimy</dt><dd>'+brief.must+'</dd></div><div><dt>Można odpuścić</dt><dd>'+brief.cut+'</dd></div><div class="guard"><dt>Sprawdź</dt><dd>'+brief.check+'</dd></div></dl></section>'+
+    (DAYPHOTOS[d.date]?'<section id="kadry"><h2 class="stitle">W kadrze</h2><div class="dayphotos">'+DAYPHOTOS[d.date].map(([k,c])=>photo(k,c,'(max-width:640px) 100vw, 33vw')).join('')+'</div></section>':'')+
     '<section id="plan"><div class="section-heading"><h2 class="stitle">Godzina po godzinie</h2><button class="reset" type="button" id="timelineToggle" aria-expanded="false">Rozwiń szczegóły</button></div><p class="note timing-note">'+TIMING_NOTE+'</p><div class="card"><ul class="tline" data-date="'+d.date+'">'+tl+'</ul></div></section>'+
     '<section id="warunki"><h2 class="stitle">Gdy warunki się zmienią</h2><div class="dayflag rain"><b>Plan B:</b> '+(DAYRAIN[d.date]||brief.cut)+'</div>'+
     (DAYCROWD[d.date]?'<div class="dayflag"><b>Tłum i tempo:</b> '+DAYCROWD[d.date]+'</div>':'')+
@@ -189,7 +213,7 @@ function dayPage(d,i){
     mapSec+
     '<section id="nocleg"><h2 class="stitle">Gdzie śpimy</h2>'+
     (H?'<div class="card"><b>'+H.name+'</b><p>'+H.stay+'</p><p class="note">'+H.cancel+'</p><div class="linklist"><a href="../hotele.html#'+H.id+'">Pokój i rezerwacja</a><a href="'+gmapsQ(H.mapsq||H.name)+'" target="_blank" rel="noopener">Dojazd w Google Maps ↗</a></div></div>':'<div class="card">'+(d.date==='2027-04-28'?'Noc w samolocie do Japonii.':'Noc w podróży powrotnej; lądowanie WAW 8 maja o {{lot.waw.przylot}}.')+'</div>')+'</section>'+
-    '<section><h2 class="stitle">Przydatne na miejscu</h2><div class="card"><ul class="tips">'+d.tips.map(t=>'<li>'+t+'</li>').join('')+'</ul><div class="linklist" style="margin-top:16px">'+d.links.map(l=>'<a href="../atrakcje.html#'+l.id+'">'+l.label+'</a>').join('')+'</div></div></section>'+
+    '<section><h2 class="stitle">Przydatne na miejscu</h2><div class="card"><ul class="tips">'+d.tips.map(t=>'<li>'+t+'</li>').join('')+'</ul><div class="linklist" style="margin-top:1rem">'+d.links.map(l=>'<a href="../atrakcje.html#'+l.id+'">'+l.label+'</a>').join('')+'</div></div></section>'+
     (metadata?'<details class="more detail-catalog"><summary>Godziny i ceny miejsc z katalogu</summary>'+metadata+'</details>':'')+
     '<nav class="daynav" aria-label="Sąsiednie dni"><a id="navPrev" href="'+(prev?prev.date+'.html':'../index.html#dni')+'"><div class="dir">← Poprzedni</div><div class="ttl">'+(prev?prev.dd:'Agenda')+'</div></a><a class="home" href="../index.html#dni" aria-label="Wszystkie dni">☰</a><a class="nx" id="navNext" href="'+(next?next.date+'.html':'../index.html#powrot')+'"><div class="dir">'+(next?'Następny →':'Powrót →')+'</div><div class="ttl">'+(next?next.dd:'8 maja')+'</div></a></nav>'+footer(prefix);
   return shell({title:'Dzień '+(i+1)+': '+d.title+' · Japonia 2027',desc:d.lead,prefix,active:'index.html',inner,pillsIdx:i});
@@ -213,7 +237,7 @@ function indexPage(){
     <span class="tt-city" style="--c:rgb(${CITY[d.city].c1})">${CITYNAME[d.city]||d.city}</span>
     <span class="tt-title">${d.title}<small>${d.brief.start} · ${intLbl[it[0]]}${d.level==='r'?' (podróż)':''}</small></span>
     ${it?`<span class="tt-int ${it[0]}" title="${intLbl[it[0]]} dzień" aria-label="${intLbl[it[0]]} dzień"></span>`:'<span></span>'}
-    <img class="tt-img" src="${DAYIMG[d.date]}" alt="" width="88" height="56" loading="${i<3?'eager':'lazy'}" decoding="async">
+    <img class="tt-img" src="${small(DAYIMG[d.date])}" alt="" width="88" height="56" loading="${i<3?'eager':'lazy'}" decoding="async">
   </a></li>`;}).join('');
   const quick = `<div class="lines">
     <a class="line" href="atrakcje.html"><b>Atrakcje</b><span>Miejsca z planu i propozycje rezerwowe, z linkami do operatorów.</span></a>
@@ -253,7 +277,7 @@ function indexPage(){
     <h2 class="stitle">Dzień po dniu</h2>
     <p class="lead-p">Każdy dzień zaczyna się krótkim podsumowaniem: po co jedziemy, co chronimy i co można odpuścić. Dalej są godziny, mapa, nocleg i plan B. W Golden Week rezerwacje wymagają wyprzedzenia; oba duże przejazdy kolejowe wypadają w tym okresie.</p>
     <ol class="tt">${cards}</ol><div class="return-note" id="powrot"><b>8 maja · sobota · {{lot.waw.przylot}}</b><span>Lądowanie w Warszawie. Spokojny powrót do domu i weekend na odpoczynek.</span></div>
-    <p class="note" style="margin-top:12px">Znacznik przy wierszu to obciążenie dnia: <b style="color:var(--success)">●</b> lekki · <b style="color:var(--warn)">●</b> średni · <b style="color:var(--hanko)">●</b> intensywny. Zaplecze planu: <a href="decyzje.html">Kulisy</a>.</p>
+    <p class="note" style="margin-top:0.75rem">Znacznik przy wierszu to obciążenie dnia: <b style="color:var(--success)">●</b> lekki · <b style="color:var(--warn)">●</b> średni · <b style="color:var(--hanko)">●</b> intensywny. Zaplecze planu: <a href="decyzje.html">Kulisy</a>.</p>
   </section>
 
   <section id="trasa">
@@ -263,7 +287,7 @@ function indexPage(){
       <div class="maphold"><button class="mapbtn" id="mapActivate">🗺️ Aktywuj mapę</button><div id="map" class="map"></div></div>
       <ol class="maplegend">${JPSTOPS.map(s=>`<li>${s[2]}</li>`).join('')}</ol>
       <a class="gmap" href="https://www.google.com/maps/dir/Narita+Airport/Kyoto,+Japan/Tokyo,+Japan/Hakone,+Kanagawa/Narita+Airport" target="_blank" rel="noopener">📍 Otwórz trasę w Google Maps ↗</a>
-      <p class="note" style="margin-top:6px">Linia jest schematem, nie przebiegiem torów. Osaka to wypad z Kioto bez zmiany hotelu; po Hakone wracacie przez Odawarę i Tokio na Naritę. Dokładne wejścia do hoteli otwierajcie z ich kart.</p>
+      <p class="note" style="margin-top:0.375rem">Linia jest schematem, nie przebiegiem torów. Osaka to wypad z Kioto bez zmiany hotelu; po Hakone wracacie przez Odawarę i Tokio na Naritę. Dokładne wejścia do hoteli otwierajcie z ich kart.</p>
       <script type="application/json" id="geo">${JSON.stringify(JPSTOPS)}</script><script type="application/json" id="geo-route">${JSON.stringify(JPROUTE)}</script>
     </div>
   </section>
@@ -279,7 +303,7 @@ function indexPage(){
 
 /* ---- koszty (strategy + calculator) ---- */
 function kosztyPage(){
-  const seg = (t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const seg = (t,items)=>`<div class="card" style="margin-bottom:0.875rem"><h3 style="font-family:var(--serif);font-weight:500;font-size:1.25rem;margin:0 0 0.625rem">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
   const inner = `
   <header class="hero kb">
     <div class="hbg"><div class="hbg-img" style="background:linear-gradient(135deg,#122740,#2f6d4f)"></div></div>
@@ -335,12 +359,12 @@ function kosztyPage(){
       <div class="stat"><div class="k">Na dzień (4 os.)</div><div class="v" id="perDay">—</div></div>
       <div class="stat"><div class="k">Nocleg / noc</div><div class="v" id="perNight">—</div></div>
     </div>
-    <div class="card" style="margin-top:14px">
+    <div class="card" style="margin-top:0.875rem">
       <div style="display:flex;justify-content:space-between"><strong>Budżet: 40 000 – 60 000 zł</strong><span id="budgetPct" style="font-weight:800"></span></div>
       <div class="bar"><div class="fill" id="barFill"></div></div>
       <div class="barlab"><span>0</span><span>40k</span><span>60k</span><span>70k</span></div>
-      <div id="verdict" style="font-weight:700;margin-top:8px"></div>
-      <div class="note" style="margin-top:10px">Orientacyjne kwoty w PLN. JR Pass zwykle się nie opłaca przy trasie Tokio–Kioto.</div>
+      <div id="verdict" style="font-weight:700;margin-top:0.5rem"></div>
+      <div class="note" style="margin-top:0.625rem">Orientacyjne kwoty w PLN. JR Pass zwykle się nie opłaca przy trasie Tokio–Kioto.</div>
       <button class="reset" id="resetBtn" type="button">↺ Przywróć wartości domyślne</button>
     </div>
   </section>
@@ -472,7 +496,7 @@ function decyzjePage(){
     '<details><summary>Jak reagować na pogodę?</summary><p>20 i 24.04 sprawdźcie sytuację przed terminami hoteli miejskich. 1-2.05 porównajcie prognozę dla Hakone z kosztem ewentualnej zmiany. 5.05 sprawdźcie ostrzeżenia, a rano 6 i 7.05 kursowanie transportu. Przy silnym wietrze statek nie zastępuje automatycznie kolejki.</p></details>'+
     '<details><summary>Co z budżetem?</summary><p>Hotele są zarezerwowane w JPY, lecz w potwierdzeniach nie były jeszcze opłacone. Koszt w złotych zależy od płatności i kursu; podatki miejscowe mogą być dodatkowe. Loty: suma e-biletów {{bilety.suma}}, w budżecie zostaje {{bilety.budzet}} do uzgodnienia z kartą. Nie przeliczamy niepotwierdzonych dopłat jako faktów.</p></details>'+
     '</div></section>'+
-    `<section id="hotel-mail"><h2 class="stitle">Uzupełnienie do wysłanego maila Hanaori</h2><p class="lead-p">Wysłana wiadomość pytała o stary shuttle do Odawary i dodatkową prywatną kąpiel. Potwierdzenie pokoju rozstrzyga drugą sprawę; do ustalenia zostaje dojazd. Poniższy tekst nie został wysłany.</p><details class="card"><summary>Otwórz gotowy tekst po angielsku</summary><pre style="white-space:pre-wrap;font:14px/1.6 var(--sans)">Dear Hanaori team,
+    `<section id="hotel-mail"><h2 class="stitle">Uzupełnienie do wysłanego maila Hanaori</h2><p class="lead-p">Wysłana wiadomość pytała o stary shuttle do Odawary i dodatkową prywatną kąpiel. Potwierdzenie pokoju rozstrzyga drugą sprawę; do ustalenia zostaje dojazd. Poniższy tekst nie został wysłany.</p><details class="card"><summary>Otwórz gotowy tekst po angielsku</summary><pre style="white-space:pre-wrap;font:0.875rem/1.6 var(--sans)">Dear Hanaori team,
 
 Thank you for your help. A small correction to our earlier message: our Booking.com confirmation is for a Japanese-Western Deluxe Room with Open-air Bath, so we do not need an additional private-bath reservation.
 
@@ -482,6 +506,7 @@ Could you please advise which morning bus from Togendai would be suitable, and w
 
 Thank you very much.
 [imię i nazwisko]</pre></details></section>`+
+    '<section id="zdjecia"><h2 class="stitle">Zdjęcia: autorzy i licencje</h2><p class="lead-p">Zdjęcia pochodzą z Wikimedia Commons. Część jest poglądowa i nie przedstawia dokładnie miejsca z naszej rezerwacji; podpis mówi o tym wprost.</p>'+creditsList()+'<p class="note">Pozostałe zdjęcia (meczet, dworzec w Tokio, hotele): Wikimedia Commons, licencje CC.</p></section>'+
     '<section><h2 class="stitle">Źródła do ponownego sprawdzenia</h2><div class="linklist"><a href="https://ashinoko-hanaori.orixhotelsandresorts.com/news/10593/" target="_blank" rel="noopener">Hanaori: zmiana shuttle</a><a href="https://www.hakonenavi.jp/international/en/status_information" target="_blank" rel="noopener">Transport Hakone</a><a href="https://www.shibuya-scramble-square.com/sky/ticket/" target="_blank" rel="noopener">Shibuya Sky</a><a href="https://www.pokemon-cafe.jp/ja/cafe/news/" target="_blank" rel="noopener">Pokémon Café: NEWS</a><a href="https://www.etihad.com/en/manage/check-in" target="_blank" rel="noopener">Odprawa Etihad</a></div><p class="note">Stan sprawdzenia: 9.09.2026. Dane pokojów i terminów odwołania z potwierdzeń Booking; dokumenty i numery pozostają prywatne. <a href="loty.html">Historia wyboru lotów</a>.</p></section>'+footer('');
   return shell({title:'Kulisy planu · Japonia 2027',desc:'Co jeszcze zarezerwować, terminy odwołania hoteli i zasady spokojnej rodzinnej agendy.',prefix:'',active:'decyzje.html',inner,pillsIdx:null});
 }
@@ -700,7 +725,7 @@ function lotyPage(){
       <div class="scenrow"><span>Nocleg stopover: Grand Millennium Al Wahda, voucher otrzymany</span><b>0 zł</b></div>
       <div class="scenrow"><span>Bagaż rejestrowany — świadomie pomijamy (w cenie podręczne 7 kg/os.)</span><b>0 zł</b></div>
       <div class="scentot"><span>Rezerwa budżetowa do rozliczenia</span><b>~${plz(TICKET.total)}</b></div>
-      <ul class="tips" style="margin-top:14px">
+      <ul class="tips" style="margin-top:0.875rem">
         <li>WAW {{lot.waw.odlot}} → AUH {{lot.auh.przylot}} (27.04) · nocleg · AUH {{lot.auh.odlot}} → Narita {{lot.nrt.przylot}} (29.04) · powrót Narita {{lot.nrt.odlot}} (7.05) → WAW {{lot.waw.przylot|h}} <b>w sobotę 8.05</b>.</li>
       <li><b>Kwota do uzgodnienia:</b> cztery e-bilety sumują się do <b>{{bilety.suma}}</b>, a obciążenie przyjęte w budżecie to {{bilety.budzet}}. Przyczyna różnicy 756,64 zł nie jest potwierdzona. Sprawdźcie transakcje na karcie i dokumenty dopłat; nie przypisujemy tej kwoty do domniemanej opłaty.</li>
         <li>Miejsca obok siebie: 8.09 Etihad dodał bezpłatną notatkę do rezerwacji (rodzina razem, 10-latek przy rodzicu, 13-latek blisko reszty, wszystkie odcinki) — numer sprawy w mailu od Etihada. Płatnych miejsc nie kupiono; konkretny przydział przy odprawie, zależnie od dostępności.</li>
@@ -757,7 +782,7 @@ function pogodaPage(){
       <thead><tr><th>Region</th><th style="text-align:right">Dzień</th><th style="text-align:right">Noc</th><th>Uwaga</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>
-    <p class="note" style="margin-top:10px">Wartości to średnie klimatyczne — dokładna prognoza na 2027 pojawi się bliżej wyjazdu.</p>
+    <p class="note" style="margin-top:0.625rem">Wartości to średnie klimatyczne — dokładna prognoza na 2027 pojawi się bliżej wyjazdu.</p>
   </section>
   <section>
     <h2 id="kwitnienie" class="stitle">Kwitnienie: sprawdzamy, nie obiecujemy sakury</h2>
@@ -797,9 +822,9 @@ function pogodaPage(){
         <tr><td class="dcol"><b>Z miękką walizką 1,5 kg</b></td><td></td><td><b>~5,7 kg — zapas 1,3 kg</b></td></tr>
       </tbody>
     </table></div></div>
-    <p class="note" style="margin-top:10px">Na sobie w dniu lotu: buty do chodzenia, długie spodnie, T-shirt i bluza. To ~2 kg, których nikt nie waży.</p>
+    <p class="note" style="margin-top:0.625rem">Na sobie w dniu lotu: buty do chodzenia, długie spodnie, T-shirt i bluza. To ~2 kg, których nikt nie waży.</p>
 
-    <div class="card" style="padding:0;overflow:hidden;margin-top:16px"><div style="overflow-x:auto"><table class="rhythm">
+    <div class="card" style="padding:0;overflow:hidden;margin-top:1rem"><div style="overflow-x:auto"><table class="rhythm">
       <thead><tr><th>Dziecko (10 i 13 lat) — do bagażu</th><th>Ile</th><th>Waga</th></tr></thead>
       <tbody>
         <tr><td class="dcol">T-shirty</td><td>4</td><td>400 g</td></tr>
@@ -819,9 +844,9 @@ function pogodaPage(){
         <tr><td class="dcol"><b>Z walizką dziecięcą 1,2 kg</b></td><td></td><td><b>~4,4 kg — zapas 2,6 kg</b></td></tr>
       </tbody>
     </table></div></div>
-    <p class="note" style="margin-top:10px">Bagaże dzieci są najlżejsze i to jest zamierzone: ten zapas 2,6 kg na osobę to miejsce na streetwear z Cat Street i pluszaki z Nihombashi. Cała rodzina wyjeżdża z ~20 kg z 28 dostępnych.</p>
+    <p class="note" style="margin-top:0.625rem">Bagaże dzieci są najlżejsze i to jest zamierzone: ten zapas 2,6 kg na osobę to miejsce na streetwear z Cat Street i pluszaki z Nihombashi. Cała rodzina wyjeżdża z ~20 kg z 28 dostępnych.</p>
 
-    <h2 class="stitle" style="margin-top:34px">Czego nie pakować</h2>
+    <h2 class="stitle" style="margin-top:2.125rem">Czego nie pakować</h2>
     <div class="card"><ul class="tips">
       <li><b>Ręczników, piżamy na Hakone i kosmetyków podstawowych.</b> Ryokan daje yukatę, ręczniki i wszystko do onsenu; MIMARU i hotel w Abu Zabi dają szampon i mydło.</li>
       <li><b>Dużego opakowania detergentu.</b> Sposób dozowania i ewentualny zakup środka do prania sprawdźcie w pralni lub recepcji.</li>
@@ -830,7 +855,7 @@ function pogodaPage(){
       <li>Weźcie za to <b>małą wagę bagażową</b> (~80 g). Przy limicie 7 kg i zakupach w Tokio to jedyny sposób, żeby nie zgadywać przed odprawą.</li>
     </ul></div>
 
-    <h2 class="stitle" style="margin-top:34px">Pranie — gdzie i kiedy</h2>
+    <h2 class="stitle" style="margin-top:2.125rem">Pranie — gdzie i kiedy</h2>
     <p class="lead-p">Pakujemy na pięć dni, więc jedno porządne pranie w połowie wyjazdu domyka garderobę do końca. Oba MIMARU mają <b>pralnie samoobsługowe</b>, nie pralki w pokojach.</p>
     <div class="card" style="padding:0;overflow:hidden"><div style="overflow-x:auto"><table class="rhythm">
       <thead><tr><th>Kiedy</th><th>Gdzie</th><th>Co robimy</th></tr></thead>
@@ -840,13 +865,13 @@ function pogodaPage(){
         <tr><td class="dcol">5.05, środa, 21:00</td><td>MIMARU Tokyo Akasaka</td><td>Dogrywka przy pakowaniu, jeśli chcecie wrócić w czystych rzeczach. Detergent kupujecie na recepcji.</td></tr>
       </tbody>
     </table></div></div>
-    <div class="card" style="margin-top:16px"><ul class="tips">
+    <div class="card" style="margin-top:1rem"><ul class="tips">
       <li><b>Pierzcie po południu, nie wieczorem.</b> Pralnia w Kiocie robi się zatłoczona po 19:00, gdy wszyscy wracają ze zwiedzania. O 14:30 zwykle jest pusta.</li>
       <li><b>Suszarka jest wolniejsza niż pralka.</b> Pranie 30 minut, suszenie realnie 60–90 minut. Maszyny mogą być zajęte. Jeden rodzic może dopilnować prania, a drugi wyjść z dziećmi na krótki posiłek; nie planujcie na ten wieczór sztywnej rezerwacji.</li>
       <li><b>Nie ma prania w Hakone.</b> Ryokan to jedna noc i jedziemy stamtąd prosto na lotnisko, więc 5.05 w Tokio to ostatnia okazja.</li>
     </ul></div>
 
-    <h2 class="stitle" style="margin-top:34px">Pogoda w bagażu — od 40°C do 9°C</h2>
+    <h2 class="stitle" style="margin-top:2.125rem">Pogoda w bagażu — od 40°C do 9°C</h2>
     <div class="card"><ul class="tips">
       <li><b>Rozpiętość jest ekstremalna:</b> Abu Zabi 28.04 potrafi mieć 40°C, a noc w Hakone 6.05 schodzi do 9°C. Dlatego warstwy, nie grube rzeczy.</li>
       <li><b>Strój na meczet trzymajcie na wierzchu</b> — zakryte ramiona i nogi; kobiety dostają abaję na miejscu. To jedyny dzień, gdy to jest potrzebne.</li>
@@ -876,7 +901,7 @@ function pogodaPage(){
    (b) treść istniała wyłącznie w wygenerowanym HTML — skasowanie pliku wywracało build
        i bezpowrotnie gubiło 41 kart. Teraz źródłem jest ta stała. */
 function niezbednikPage(){
-  const seg=(t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const seg=(t,items)=>`<div class="card" style="margin-bottom:0.875rem"><h3 style="font-family:var(--serif);font-weight:500;font-size:1.25rem;margin:0 0 0.625rem">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
   const inner=`
   <header class="hero kb">
     <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.60),rgba(18,39,64,.44)),url('${IMG.tokyostation}') center/cover"></div></div>
@@ -895,7 +920,7 @@ function niezbednikPage(){
         <a href="tel:110"><b>110</b><span>policja</span></a>
         <a href="tel:119"><b>119</b><span>pogotowie · straż</span></a>
       </div>
-      <p class="note" style="margin:10px 0 0">Oba numery działają z każdego telefonu, także bez karty SIM i bez zasięgu sieci własnego operatora.</p>
+      <p class="note" style="margin:0.625rem 0 0">Oba numery działają z każdego telefonu, także bez karty SIM i bez zasięgu sieci własnego operatora.</p>
 
       <div class="sosblock">
         <h4>Ambasada RP w Tokio</h4>
@@ -905,7 +930,7 @@ function niezbednikPage(){
         <p>Sprawy paszportowe: wtorek–czwartek 9:30–12:00, po umówieniu przez e-Konsulat.</p>
       </div>
 
-      <ul class="tips" style="margin-top:16px">
+      <ul class="tips" style="margin-top:1rem">
         <li><b>Zgubiony paszport:</b> najpierw zgłoszenie na policji (dostaniecie zaświadczenie), potem ambasada wydaje paszport tymczasowy. Miejcie <b>zdjęcia paszportów w telefonie</b> — bardzo przyspiesza sprawę.</li>
         <li><b>Zgubiona rzecz:</b> w Japonii niemal wszystko wraca. Pytajcie w budce policyjnej <i lang="ja">kōban</i> (交番) albo w biurze rzeczy znalezionych na stacji.</li>
         <li><b>Ubezpieczenie:</b> numer polisy i telefon assistance zapiszcie offline — szpital zapyta o nie od razu.</li>
@@ -967,12 +992,13 @@ const ATR_BODY = fill(fs.readFileSync(DIR + '/data/atrakcje.html','utf8'));
 
 function atrakcjePage(){
   let body = ATR_BODY;
+  for (const [id,k] of Object.entries(CARDIMG)) { const z=ZDJECIA[k], tag='<div class="acard" id="'+id+'">'; if(!body.includes(tag)) throw new Error('Brak karty '+id); body = body.replace(tag, '<div class="acard has-img" id="'+id+'"><img class="acimg" src="'+small(z.src)+'" srcset="'+small(z.src)+' 760w, '+z.src+' '+z.w+'w" sizes="(max-width:680px) 100vw, 50vw" width="'+z.w+'" height="'+z.h+'" alt="" loading="lazy" decoding="async">'); }
   // map old classes to new ones
   body = body.split('class="grid"').join('class="agrid"');
   body = body.split('class="acard"').join('class="acard"'); // same
   // section headings -> stitle
-  body = body.replace(/<h2 id="([^"]+)">([^<]+)<\/h2>/g,'<h2 id="$1" class="stitle" style="scroll-margin-top:80px">$2</h2>');
-  const toc = `<nav class="toc" style="margin-bottom:18px">
+  body = body.replace(/<h2 id="([^"]+)">([^<]+)<\/h2>/g,'<h2 id="$1" class="stitle" style="scroll-margin-top:5rem">$2</h2>');
+  const toc = `<nav class="toc" style="margin-bottom:1.125rem">
     <a href="#guide-tips">Wskazówki przewodników</a><a href="#abuzabi">🕌 Abu Zabi</a><a href="#kioto">⛩️ Kioto</a><a href="#osaka">Osaka</a><a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a>
     <a href="#praktyczne">🧳 Praktyczne</a><a href="#poza-planem">Poza planem</a></nav>`;
   const inner=`
@@ -996,7 +1022,7 @@ function atrakcjePage(){
     </ul><p class="note">Weryfikacja nowych wskazówek: 20.09.2026. Linki do źródeł są przy miejscach. Godziny na Golden Week 2027 i dostępność sesji wymagają ponownego sprawdzenia; niczego tu nie zarezerwowano.</p></div>
   </section>
   ${body}
-  <p class="note" style="margin-top:16px">Starsze karty: orientacyjne dane z lipca 2026. Nowe wskazówki przewodników sprawdzone 20.09.2026; nie jest to potwierdzenie cenników ani godzin na 2027. Przed rezerwacją sprawdźcie strony oficjalne.</p>
+  <p class="note" style="margin-top:1rem">Starsze karty: orientacyjne dane z lipca 2026. Nowe wskazówki przewodników sprawdzone 20.09.2026; nie jest to potwierdzenie cenników ani godzin na 2027. Przed rezerwacją sprawdźcie strony oficjalne.</p>
   ${footer('')}`;
   return shell({title:'Atrakcje: godziny, ceny, rezerwacje · Japonia 2027',desc:'Katalog atrakcji wyjazdu do Japonii z godzinami, cenami i linkami do rezerwacji.',prefix:'',active:'atrakcje.html',inner,pillsIdx:null});
 }
@@ -1038,7 +1064,7 @@ const PRECACHE = [
   './','index.html','decyzje.html','atrakcje.html','hotele.html','loty.html','koszty.html','pogoda.html','niezbednik.html','druk.html',
   'assets/style.css','assets/app.js','assets/icon.svg',
   ...DAYS.map(d=>`days/${d.date}.html`),
-  ...[...new Set(Object.values(DAYIMG))].map(p=>p.replace(/^\//,'')),
+  ...[...new Set(Object.values(DAYIMG))].flatMap(p=>[...new Set([p,small(p)])]).map(p=>p.replace(/^\//,'')),
   ...HOTELS.map(h=>`assets/img/hotels/${h.img||h.id+'.webp'}`),
 ];
 /* Wersja cache = skrót TREŚCI wszystkich generowanych plików. Dzięki temu każda zmiana

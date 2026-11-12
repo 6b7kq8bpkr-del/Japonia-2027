@@ -71,7 +71,7 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
     var c=document.createElement('link'); c.rel='stylesheet';
     c.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css'; document.head.appendChild(c);
     var s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
-    s.onload=cb; s.onerror=function(){mapDiv.innerHTML='<p style="padding:16px">Nie udało się załadować mapy — użyj linku do Google Maps.</p>';};
+    s.onload=cb; s.onerror=function(){mapDiv.innerHTML='<p style="padding:1rem">Nie udało się załadować mapy — użyj linku do Google Maps.</p>';};
     document.head.appendChild(s);
   }
   function render(stops){
