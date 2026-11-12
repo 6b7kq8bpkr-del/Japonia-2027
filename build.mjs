@@ -56,7 +56,7 @@ const DAYPHOTOS = {
   '2027-04-27':[['abudhabi','Abu Zabi: nabrzeże Corniche']],
   '2027-04-29':[['nex','Narita Express'],['shinkansen','Shinkansen pod Fudżi'],['kyotostation','Hala dworca w Kioto']],
   '2027-04-30':[['fushimi','Fushimi Inari: tunel bram torii'],['nijo','Nijō: pałac Ninomaru'],['yasaka','Lampiony chramu Yasaka w Gion']],
-  '2027-05-01':[['sushi','Sushi z taśmy (zdjęcie poglądowe)'],['osakamuseum','Muzeum życia codziennego: dawna Osaka w miniaturze'],['dotonbori','Dōtonbori po zmroku'],['osakacastle','Zamek w Osace: opcja zamiast muzeum']],
+  '2027-05-01':[['sushi','Sushi z taśmy (zdjęcie poglądowe)'],['osakamuseum','Muzeum życia codziennego: dawna Osaka w miniaturze'],['dotonbori','Dōtonbori nocą - zdjęcie poglądowe; nasza wizyta za dnia'],['osakacastle','Zamek w Osace: opcja zamiast muzeum']],
   '2027-05-02':[['furoshiki','Furoshiki: chusty do pakowania (zdjęcie poglądowe)'],['tea','Ceremonia herbaty (zdjęcie poglądowe)'],['nishiki','Nishiki Market']],
   '2027-05-03':[['sensoji','Sensō-ji: brama Kaminarimon'],['sumo','Sumo: wejście zawodników na ring (zdjęcie z turnieju)']],
   '2027-05-04':[['meiji','Meiji Jingū: brama torii'],['harajuku','Harajuku: naleśnik z ulicy Takeshita'],['shibuya','Skrzyżowanie Shibuya o zmierzchu']],
@@ -90,10 +90,12 @@ const JPSTOPS = [
   [35.772,140.393,'Narita - przylot 29.04 i odlot 7.05'],
   [34.9858,135.7588,'Kioto - 4 noce, 29.04-3.05'],
   [34.6937,135.5023,'Osaka - wycieczka z Kioto 1.05, bez zmiany hotelu'],
-  [35.681,139.767,'Tokio - 3 noce, 3-6.05; przejazd przez dworzec także 29.04 i 7.05'],
-  [35.2337,139.0155,'Hakone - 1 noc, 6-7.05; potem przez Odawarę i Tokio na Naritę'],
+  [35.681,139.767,'Tokio - 3 noce, 3-6.05'],
+  [35.2337,139.0155,'Hakone - 1 noc, 6-7.05; potem przez Odawarę i Shinagawę na Naritę'],
+  [35.6285,139.7388,'Shinagawa - przesiadki NEX/shinkansen 29.04 i 7.05'],
+  [35.2564,139.1553,'Odawara - transfer z Hanaori i shinkansen 7.05'],
 ];
-const JPROUTE = [0,3,1,2,1,3,4,3,0].map(i=>JPSTOPS[i].slice(0,2));
+const JPROUTE = [0,5,1,2,1,3,4,6,5,0].map(i=>JPSTOPS[i].slice(0,2));
 
 /* ============================ HOTELS ============================ */
 
@@ -103,7 +105,7 @@ const DAYHOTEL = Object.fromEntries(DAYS.filter(d=>d.stay).map(d=>[d.date,d.stay
 const WXGEO = {'2027-04-29':[34.9858,135.7588],'2027-05-01':[34.6937,135.5023],'2027-05-03':[35.7148,139.7967],'2027-05-06':[35.2455,139.0195]}; // prognoza tam, gdzie spędzamy dzień/noc
 const DAYINT = Object.fromEntries(DAYS.map(d=>[d.date,[d.level,d.brief.focus]]));
 const DAYFLEX = Object.fromEntries(DAYS.map(d=>[d.date,[d.brief.must,d.brief.cut]]));
-const LEVEL_LABEL = {g:'Lekki', y:'Średni', r:'Intensywny - podróż'};
+const LEVEL_LABEL = {g:'Lekki', y:'Średni', r:'Intensywny'};
 const ITEM_LABEL = {lot:'Lot z biletu',zarezerwowane:'Zarezerwowane',rezerwacja:'Do potwierdzenia',opcja:'Opcja',bufor:'Zapas / odpoczynek'};
 const TIMING_NOTE = 'Wszystkie godziny są miejscowe. Loty według e-biletów; pozostałe godziny to plan do dopasowania do rozkładów i rezerwacji. „Do potwierdzenia” nie oznacza kupionego biletu. „Zarezerwowane” oznacza przyjętą rezerwację; numer pociągu i miejsca mogą być jeszcze wstępne.';
 
@@ -241,7 +243,7 @@ function indexPage(){
   </a></li>`;}).join('');
   const quick = `<div class="lines">
     <a class="line" href="atrakcje.html"><b>Atrakcje</b><span>Miejsca z planu i propozycje rezerwowe, z linkami do operatorów.</span></a>
-      <a class="line" href="hotele.html"><b>Hotele</b><span>Pokoje, posiłki i terminy odwołania. Hanaori Deluxe z prywatną kąpielą.</span></a>
+      <a class="line" href="hotele.html"><b>Hotele</b><span>Pokoje, posiłki i terminy odwołania. Hanaori Deluxe z prywatną wanną; rodzinny onsen osobno.</span></a>
       <a class="line" href="niezbednik.html"><b>Niezbędnik</b><span>Przejazdy, pieniądze, internet, zwyczaje, numery alarmowe.</span></a>
       <a class="line" href="pogoda.html"><b>Przed wyjazdem</b><span>Klimat na przełomie kwietnia i maja, plan pakowania na 7 kg, plany B na deszcz.</span></a>
       <a class="line" href="druk.html"><b>Przewodnik do druku</b><span>Cały plan na kartkach — do wydruku albo offline na telefon.</span></a>
@@ -287,7 +289,7 @@ function indexPage(){
       <div class="maphold"><button class="mapbtn" id="mapActivate">🗺️ Aktywuj mapę</button><div id="map" class="map"></div></div>
       <ol class="maplegend">${JPSTOPS.map(s=>`<li>${s[2]}</li>`).join('')}</ol>
       <a class="gmap" href="https://www.google.com/maps/dir/Narita+Airport/Kyoto,+Japan/Tokyo,+Japan/Hakone,+Kanagawa/Narita+Airport" target="_blank" rel="noopener">📍 Otwórz trasę w Google Maps ↗</a>
-      <p class="note" style="margin-top:0.375rem">Linia jest schematem, nie przebiegiem torów. Osaka to wypad z Kioto bez zmiany hotelu; po Hakone wracacie przez Odawarę i Tokio na Naritę. Dokładne wejścia do hoteli otwierajcie z ich kart.</p>
+      <p class="note" style="margin-top:0.375rem">Linia jest schematem, nie przebiegiem torów. Osaka to wypad z Kioto bez zmiany hotelu; po Hakone wracacie przez Odawarę i Shinagawę na Naritę. Dokładne wejścia do hoteli otwierajcie z ich kart.</p>
       <script type="application/json" id="geo">${JSON.stringify(JPSTOPS)}</script><script type="application/json" id="geo-route">${JSON.stringify(JPROUTE)}</script>
     </div>
   </section>
@@ -467,7 +469,7 @@ function hotelePage(){
   <section>
     <div class="card"><ul class="tips">
       <li><b>Rezerwacje są potwierdzone.</b> Przy ewentualnej zmianie najpierw sprawdźcie dostępność nowego pokoju dla czterech osób i oba terminy anulowania. Pobyt w Kiocie wypada podczas Golden Week.</li>
-      <li>Ryokan w Hakone: Hanaori nad jeziorem Ashi, pokój Deluxe dla 4 osób z prywatną kąpielą, kolacją i śniadaniem. Bezpłatne anulowanie tylko do 2.05.2027, 23:59 JST.</li>
+      <li>Ryokan w Hakone: Hanaori nad jeziorem Ashi, pokój Deluxe dla 4 osób z prywatną wanną bez wody termalnej, kolacją i śniadaniem. Rodzinny onsen jest osobną, niezarezerwowaną opcją. Bezpłatne anulowanie tylko do 2.05.2027, 23:59 JST.</li>
       <li>Potwierdzenia trzech hoteli z 8.09 podają łącznie <b>500 443 JPY i zapłacono 0 JPY</b>. Około 12 tys. zł to przeliczenie planistyczne, nie ostateczny rachunek. Podatki miejscowe i kurs płatności mogą zmienić koszt. <b>Terminy bezpłatnego anulowania są różne</b> i widoczne przy każdym hotelu.</li>
       
       <li>Adresy dla taksówkarza najlepiej pokazywać z Google Maps po japońsku — kliknięcie zdjęcia hotelu otwiera właściwe miejsce od razu.</li>
@@ -486,7 +488,7 @@ function decyzjePage(){
     '<section id="do-zalatwienia"><h2 class="stitle">Do załatwienia</h2><p class="lead-p">Zaznaczenia to Wasza osobista lista na tym urządzeniu. Nie zmieniają statusu rezerwacji, nie synchronizują się z telefonem i nie wysyłają powiadomień.</p><div class="card"><div class="ckhead"><b id="ckcount">0</b><span id="cknext"></span></div><div class="ckbar"><div id="ckfill"></div></div><ul class="cklist">'+checklist+'</ul><button class="reset" type="button" id="ckreset">Wyczyść zaznaczenia</button></div></section>'+
     '<section><h2 class="stitle">Potwierdzone elementy</h2><div class="card"><p class="note" style="margin-top:0">Numery rezerwacji trzymamy poza stroną: w potwierdzeniach i w osobnym pliku zapisanym w telefonach dorosłych.</p><ul class="tips">'+BOOKINGS.filter(b=>/^✅/.test(b.when)).map(b=>'<li><b>'+b.what+'</b>: '+b.note+'</li>').join('')+'</ul></div></section>'+
     '<section id="terminy"><h2 class="stitle">Terminy i pogoda</h2>'+deadlineList()+'<p class="note">Prognoza 7 dni wcześniej jest wskazówką, nie gwarancją. Ostrzeżenia pogodowe, status transportu i zasady anulowania są osobnymi rzeczami. Termin bezpłatnego odwołania Hanaori mija przed wyjazdem do Hakone.</p></section>'+
-    '<section id="rytm"><h2 class="stitle">Rytm rodziny 2+2</h2><p class="lead-p">Dwa najbardziej wymagające dni to podróże: 29.04 i 7.05. Dni zwiedzania mają przerwy, a 5.05 wolne popołudnie. Wszystkie dodatki naraz podniosłyby tempo ponad ocenę w tabeli.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
+    '<section id="rytm"><h2 class="stitle">Rytm rodziny 2+2</h2><p class="lead-p">Najbardziej wymagające podróże to 29.04 i 7.05. Intensywne są także pełny dzień Osaki 1.05 i długi spacer przez Harajuku i Shibuyę 4.05. Chronimy przerwy i wolne popołudnie 5.05; przy zmęczeniu skracamy opcje, nie odpoczynek. Lekki program 27.04 oznacza mało zwiedzania, nie brak zmęczenia lotem.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
     '<section id="zmiany"><h2 class="stitle">Jak modyfikować plan</h2><div class="card more">'+
     '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. 30.04 odpuszczacie Nijō; 1.05 skracacie Dōtonbori; 2.05 pomijacie Nishiki, jeśli warsztat jest dłuższy; 4.05 ograniczacie sklepy; 5.05 Akihabara jest dodatkiem. Opuszczona atrakcja nie przechodzi automatycznie na jutro.</p></details>'+
     '<details><summary>Jak zdjęcia zmieniły program?</summary><p>1.05 dodaliśmy Osakę z Sushiro Esaka, muzeum życia codziennego i Dōtonbori zamiast Nary. 2.05 KOTO i Kinugasa zastępują wcześniejsze warsztaty. Nijō przenosimy na opcjonalne popołudnie 30.04 zamiast Kiyomizu. Nishiki zostaje 2.05, jeśli jest energia. Hotele i zarezerwowane shinkanseny bez zmian. <a href="atrakcje.html#guide-tips">Identyfikacja zdjęć i źródła →</a></p></details>'+
@@ -496,18 +498,21 @@ function decyzjePage(){
     '<details><summary>Jak reagować na pogodę?</summary><p>20 i 24.04 sprawdźcie sytuację przed terminami hoteli miejskich. 1-2.05 porównajcie prognozę dla Hakone z kosztem ewentualnej zmiany. 5.05 sprawdźcie ostrzeżenia, a rano 6 i 7.05 kursowanie transportu. Przy silnym wietrze statek nie zastępuje automatycznie kolejki.</p></details>'+
     '<details><summary>Co z budżetem?</summary><p>Hotele są zarezerwowane w JPY, lecz w potwierdzeniach nie były jeszcze opłacone. Koszt w złotych zależy od płatności i kursu; podatki miejscowe mogą być dodatkowe. Loty: suma e-biletów {{bilety.suma}}, w budżecie zostaje {{bilety.budzet}} do uzgodnienia z kartą. Nie przeliczamy niepotwierdzonych dopłat jako faktów.</p></details>'+
     '</div></section>'+
-    `<section id="hotel-mail"><h2 class="stitle">Uzupełnienie do wysłanego maila Hanaori</h2><p class="lead-p">Wysłana wiadomość pytała o stary shuttle do Odawary i dodatkową prywatną kąpiel. Potwierdzenie pokoju rozstrzyga drugą sprawę; do ustalenia zostaje dojazd. Poniższy tekst nie został wysłany.</p><details class="card"><summary>Otwórz gotowy tekst po angielsku</summary><pre style="white-space:pre-wrap;font:0.875rem/1.6 var(--sans)">Dear Hanaori team,
+    `<section id="hotel-mail"><h2 class="stitle">Hanaori: propozycja odpowiedzi do hotelu</h2><p class="lead-p">Hotel przedstawił opcje, ale kąpiel termalna i transfer nie są zarezerwowane. Wanna w pokoju nie ma wody termalnej. Poniższy tekst jest propozycją wiadomości, nie został wysłany.</p><details class="card"><summary>Otwórz tekst po angielsku</summary><pre style="white-space:pre-wrap;font:0.875rem/1.6 var(--sans)">Dear Hanaori team,
 
-Thank you for your help. A small correction to our earlier message: our Booking.com confirmation is for a Japanese-Western Deluxe Room with Open-air Bath, so we do not need an additional private-bath reservation.
+Thank you very much for your kind and detailed reply. We understand that the open-air bath in our Deluxe room does not use hot-spring water.
 
-We have also seen your notice that the shuttle now runs to Gora, not Odawara. For Friday 7 May 2027, we would like to reach Odawara Station around 10:30, ahead of our international flight from Narita at {{lot.nrt.odlot}}.
+Could you please confirm availability for a private family hot-spring bath for four guests on 6 May 2027 at 17:00, for 40 minutes? You previously quoted JPY 3,000 in total. Please confirm the current price and cancellation conditions.
 
-Could you please advise which morning bus from Togendai would be suitable, and whether you can help arrange a taxi for four people with four cabin bags if needed? Please let us know the approximate fare and when we should confirm the transport closer to our stay.
+We would also be grateful for your assistance with a taxi or van departing Hanaori at 09:00 on 7 May, aiming to reach Odawara Station by {{odawara.przyj}}. We are four guests with four cabin-size backpacks. Our international flight departs Narita at {{lot.nrt.odlot}}. Please confirm the vehicle capacity, total fare, booking procedure and cancellation deadline, including any fee for requesting a particular vehicle type.
 
-Thank you very much.
-[imię i nazwisko]</pre></details></section>`+
+We would appreciate confirmation of these details before proceeding with the additional bookings.
+
+Thank you for your time and assistance.
+Kind regards,
+[imię i nazwisko]</pre></details><p class="note">Orientacyjnie: transfer {{hanaori.taxi}} + ewentualne {{hanaori.van}} za typ auta, kąpiel {{hanaori.bath}}. Razem do około 16 tys. JPY (około 384 zł przy planistycznym kursie 2,40 zł/100 JPY), w ramach rezerwy na transport i dodatki, nie jako opłacone usługi. Cena transferu nie jest gwarantowana.</p></section>`+
     '<section id="zdjecia"><h2 class="stitle">Zdjęcia: autorzy i licencje</h2><p class="lead-p">Zdjęcia pochodzą z Wikimedia Commons. Część jest poglądowa i nie przedstawia dokładnie miejsca z naszej rezerwacji; podpis mówi o tym wprost.</p>'+creditsList()+'<p class="note">Pozostałe zdjęcia (meczet, dworzec w Tokio, hotele): Wikimedia Commons, licencje CC.</p></section>'+
-    '<section><h2 class="stitle">Źródła do ponownego sprawdzenia</h2><div class="linklist"><a href="https://ashinoko-hanaori.orixhotelsandresorts.com/news/10593/" target="_blank" rel="noopener">Hanaori: zmiana shuttle</a><a href="https://www.hakonenavi.jp/international/en/status_information" target="_blank" rel="noopener">Transport Hakone</a><a href="https://www.shibuya-scramble-square.com/sky/ticket/" target="_blank" rel="noopener">Shibuya Sky</a><a href="https://www.pokemon-cafe.jp/ja/cafe/news/" target="_blank" rel="noopener">Pokémon Café: NEWS</a><a href="https://www.etihad.com/en/manage/check-in" target="_blank" rel="noopener">Odprawa Etihad</a></div><p class="note">Stan sprawdzenia: 9.09.2026. Dane pokojów i terminów odwołania z potwierdzeń Booking; dokumenty i numery pozostają prywatne. <a href="loty.html">Historia wyboru lotów</a>.</p></section>'+footer('');
+    '<section><h2 class="stitle">Źródła do ponownego sprawdzenia</h2><div class="linklist"><a href="https://ashinoko-hanaori.orixhotelsandresorts.com/news/10593/" target="_blank" rel="noopener">Hanaori: zmiana shuttle</a><a href="https://www.hakonenavi.jp/international/en/status_information" target="_blank" rel="noopener">Transport Hakone</a><a href="https://www.shibuya-scramble-square.com/sky/ticket/" target="_blank" rel="noopener">Shibuya Sky</a><a href="https://www.pokemon-cafe.jp/ja/cafe/news/" target="_blank" rel="noopener">Pokémon Café: NEWS</a><a href="https://www.etihad.com/en/manage/check-in" target="_blank" rel="noopener">Odprawa Etihad</a></div><p class="note">Audyt harmonogramu: 12.11.2026; oferta kąpieli i transferu z odpowiedzi hotelu z 26.09.2026, do ponownego potwierdzenia. Dane pokojów i terminów odwołania z potwierdzeń Booking; dokumenty i numery pozostają prywatne. <a href="loty.html">Historia wyboru lotów</a>.</p></section>'+footer('');
   return shell({title:'Kulisy planu · Japonia 2027',desc:'Co jeszcze zarezerwować, terminy odwołania hoteli i zasady spokojnej rodzinnej agendy.',prefix:'',active:'decyzje.html',inner,pillsIdx:null});
 }
 /* ---- pogoda ---- */
@@ -963,7 +968,7 @@ function niezbednikPage(){
       'W pociągach obowiązuje <b>cisza</b>, telefon na milczek, rozmowy szeptem.',
       '<b>Koszy na śmieci prawie nie ma</b> — noście małą torebkę na odpadki i wyrzucajcie w hotelu albo w konbini.',
       'Nie je się i nie pije w ruchu — zwykle staje się obok automatu albo sklepu.',
-      '<b>Onsen:</b> sprawdźcie regulamin publicznych łaźni, m.in. zasady tatuaży i kąpieli dzieci. Wasz pokój Hanaori Deluxe ma już prywatną kąpiel na świeżym powietrzu - dodatkowa rezerwacja nie jest potrzebna.'])}
+      '<b>Onsen:</b> sprawdźcie regulamin publicznych łaźni, m.in. zasady tatuaży i kąpieli dzieci. Hanaori Deluxe ma prywatną wannę na świeżym powietrzu, ale bez wody termalnej. Publiczny onsen jest rozdzielony płciowo; wspólny rodzinny onsen kashikiri wymaga osobnej rezerwacji (propozycja 6.05 o 17:00, 40 minut, {{hanaori.bath}} za czwórkę). Nie jest jeszcze zamówiony.'])}
     ${seg('🛍️ Tax-free i aplikacje',[
       '<b>Od 1.11.2026 obowiązuje nowy system zwrotu</b>, więc dotyczy waszego wyjazdu. W sklepie tax-free okazujecie paszport i płacicie kwotę brutto; zwrot następuje po potwierdzeniu wywozu przez urząd celny, zgodnie z procedurą sklepu/operatora.',
       'Zachowajcie towary i dokumenty do kontroli przed wywozem, także przed oddaniem bagażu rejestrowanego. Nie zakładajcie automatycznej wypłaty gotówki na lotnisku. <a href="https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00019.html" target="_blank" rel="noopener">Oficjalne zasady nowego systemu →</a>',

@@ -17,10 +17,12 @@ export const F = {
   'sumo.start':'18:00',
   // 4.05: Shibuya Sky
   'sky.start':'17:40', 'sky.slot':'17:40-17:59', 'sky.zachod':'18:30',
-  // 7.05: Hakone -> Narita
-  'odawara.przyj':'10:05', 'kodama.odj':'11:14', 'kodama.przyj':'11:40', 'nex0705.odj':'12:50', 'nex0705.przyj':'13:57',
+  // Oferta hotelu z 26.09.2026; usługi dodatkowe nadal niezarezerwowane.
+  'hanaori.bath':'3 000 JPY', 'hanaori.taxi':'12 000 JPY', 'hanaori.van':'1 000 JPY',
+  // 7.05: Hakone -> Narita (10:30 to cel z buforem, nie gwarantowany rozkład)
+  'odawara.przyj':'10:30', 'kodama.odj':'11:14', 'kodama.przyj':'11:40', 'nex0705.odj':'12:50', 'nex0705.przyj':'13:57',
 };
 // Wartości na tyle charakterystyczne, że ich ręczne wpisanie w źródłach zawsze jest błędem (powinien stać token).
 export const UNIKALNE = ['bilety.suma','bilety.budzet','n51.odj','n6.odj','n6.przyj','sk.cena','sk.razem','sk.razem.zl','sk.dorosly','sk.dziecko',
-  'nex2904.odj','koto.sesje','koto.cena','sky.slot','odawara.przyj','kodama.odj','kodama.przyj','nex0705.odj','nex0705.przyj',
+  'nex2904.odj','koto.sesje','koto.cena','sky.slot','kodama.odj','kodama.przyj','nex0705.odj','nex0705.przyj',
   'lot.waw.odlot','lot.auh.przylot','lot.auh.odlot'];
