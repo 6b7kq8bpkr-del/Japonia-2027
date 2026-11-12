@@ -3,6 +3,7 @@ import crypto from 'node:crypto';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {ZDJECIA} from './data/zdjecia.mjs';
+import {PYTANIA, PYTANIA_OGOLNE} from './data/pytania.mjs';
 import {DAYS, GEO, DAYRAIN, DAYCROWD, BOOKINGS, DEADLINES, HOTELS, fill} from './data/index.mjs';
 /* Każda strona HTML przechodzi przez fill(): tokeny {{klucz}} z szablonów zamieniają się na fakty z data/fakty.mjs. */
 const page = (file, html) => fs.writeFileSync(DIR + '/' + file, fill(html));
@@ -32,6 +33,8 @@ fs.copyFileSync(DIR + '/src/style.css', DIR + '/assets/style.css');
 
 /* ============================ APP JS ============================ */
 fs.copyFileSync(DIR + '/src/app.js', DIR + '/assets/app.js');
+fs.copyFileSync(DIR + '/src/pokaz.css', DIR + '/assets/pokaz.css');
+fs.copyFileSync(DIR + '/src/pokaz.js', DIR + '/assets/pokaz.js');
 
 /* ============================ DATA ============================ */
 const IMG = {
@@ -246,6 +249,7 @@ function indexPage(){
       <a class="line" href="hotele.html"><b>Hotele</b><span>Pokoje, posiłki i terminy odwołania. Hanaori Deluxe z prywatną wanną; rodzinny onsen osobno.</span></a>
       <a class="line" href="niezbednik.html"><b>Niezbędnik</b><span>Przejazdy, pieniądze, internet, zwyczaje, numery alarmowe.</span></a>
       <a class="line" href="pogoda.html"><b>Przed wyjazdem</b><span>Klimat na przełomie kwietnia i maja, plan pakowania na 7 kg, plany B na deszcz.</span></a>
+      <a class="line" href="pokaz.html"><b>Pokaz na duży ekran</b><span>Slajd na każdy dzień, pytania do znajomych i miejsce na ich uwagi. Na projektor albo telewizor.</span></a>
       <a class="line" href="druk.html"><b>Przewodnik do druku</b><span>Cały plan na kartkach — do wydruku albo offline na telefon.</span></a>
       <a class="line" href="koszty.html"><b>Budżet</b><span>Kalkulator kosztów i zweryfikowane taryfy kolejowe — ~43 tys. zł.</span></a>
       <a class="line" href="decyzje.html"><b>Kulisy planu</b><span>Co jeszcze załatwić, dlaczego taka trasa i jak zmienić dzień bez pośpiechu.</span></a>
@@ -516,6 +520,58 @@ Kind regards,
   return shell({title:'Kulisy planu · Japonia 2027',desc:'Co jeszcze zarezerwować, terminy odwołania hoteli i zasady spokojnej rodzinnej agendy.',prefix:'',active:'decyzje.html',inner,pillsIdx:null});
 }
 /* ---- pogoda ---- */
+/* ============ POKAZ NA PROJEKTOR: slajd na dzień, pytania do doradców i pole na uwagi ============ */
+function pokazPage(){
+  const CN={tokio:'Tokio',hakone:'Hakone',kioto:'Kioto',nara:'Nara (z Kioto)',osaka:'Osaka',abudhabi:'Abu Zabi'};
+  const TAG={lot:'lot',zarezerwowane:'zarezerwowane',rezerwacja:'do potwierdzenia',opcja:'opcja'};
+  const short=d=>{const [n,mon]=d.dd.split(' '); return n+'.'+(mon.startsWith('kw')?'04':'05');};
+  const tiles=DAYS.map((d,i)=>`<a class="day" href="#s${i+2}"><img src="${small(DAYIMG[d.date])}" alt="" loading="eager"><span><b>${short(d)} · ${CN[d.city]||d.city}</b>${d.title}</span></a>`).join('');
+  const daySlides=DAYS.map((d,i)=>{
+    const rows=d.tl.map(([time,title,,kind])=>`<li><span class="t">${time}</span><span class="n">${title}${TAG[kind]?`<span class="tag ${kind}">${TAG[kind]}</span>`:''}</span></li>`).join('');
+    const ask=(PYTANIA[d.date]||[]).map(q=>`<li>${q}</li>`).join('');
+    return `<section class="slide" id="s${i+2}">
+  <div><p class="kicker">Dzień ${i+1} z ${DAYS.length} · ${d.dow} ${d.dd} · ${CN[d.city]||d.city}</p><h1>${d.title}</h1></div>
+  <div class="cols">
+    <div class="col"><div class="photo"><img src="${DAYIMG[d.date]}" alt="" loading="lazy" decoding="async"></div>
+      <div class="facts"><div><span>Start</span><b>${d.brief.start}</b></div><div><span>Koniec</span><b>${d.brief.end}</b></div><div><span>Tempo</span><b>${LEVEL_LABEL[d.level]}</b></div></div>
+      <p class="cut"><b>Można odpuścić:</b> ${d.brief.cut}</p></div>
+    <div class="col"><div class="panel grow"><h2>Godzina po godzinie</h2><ol class="tl${d.tl.length>9?' dense':''}">${rows}</ol></div></div>
+    <div class="col"><div class="panel"><h2>Pytania do Was</h2><ol class="ask">${ask}</ol></div>
+      <div class="notes"><label for="n-${d.date}">Uwagi</label><textarea id="n-${d.date}" data-key="${d.date}" data-title="${esc(short(d)+' · '+d.title)}" placeholder="Co radzicie? Co zmienić, dodać, wyciąć?"></textarea></div></div>
+  </div>
+</section>`;}).join('\n');
+  const dots=['Plan',...DAYS.map(short),'Pytania','Uwagi'].map((t,i)=>`<a href="#s${i+1}">${t}</a>`).join('');
+  return `<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Pokaz planu · Japonia 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/pokaz.css?v=${BUILD_ID}"></head>
+<body>
+<section class="slide" id="s1">
+  <div><p class="kicker">Japonia 2027 · 27 kwietnia – 8 maja · dwoje dorosłych i dzieci w wieku 13 i 10 lat</p><h1>Nasz plan. Powiedzcie, co byście zmienili.</h1></div>
+  <p class="route">Warszawa<i>→</i>Abu Zabi (1 noc)<i>→</i>Kioto (4 noce, dzień w Narze)<i>→</i>Tokio (3 noce)<i>→</i>Hakone (1 noc w ryokanie)<i>→</i>Narita<i>→</i>Warszawa</p>
+  <div class="days">${tiles}<div class="day help"><b>Jak to działa</b><span style="padding:0;font-weight:500">Strzałki przełączają dni. Na każdym slajdzie są nasze pytania i pole na Wasze uwagi. Ostatni slajd zbiera wszystko do skopiowania.</span></div></div>
+</section>
+${daySlides}
+<section class="slide" id="s${DAYS.length+2}">
+  <div><p class="kicker">Na koniec</p><h1>Pytania o cały wyjazd</h1></div>
+  <div class="two">
+    <div class="panel"><ol class="ask asklist">${PYTANIA_OGOLNE.map(q=>`<li>${q}</li>`).join('')}</ol></div>
+    <div class="notes"><label for="n-ogolne">Uwagi</label><textarea id="n-ogolne" data-key="ogolne" data-title="Cały wyjazd" placeholder="Rady ogólne: jedzenie, pieniądze, bagaż, tłumy, rzeczy, o których nie pomyśleliśmy."></textarea></div>
+  </div>
+</section>
+<section class="slide sum" id="s${DAYS.length+3}">
+  <div><p class="kicker">Podsumowanie</p><h1>Zebrane uwagi</h1></div>
+  <div class="panel summary" id="summary"></div>
+  <div class="btns"><button type="button" id="copy">Kopiuj wszystko</button><button type="button" class="ghost" id="save">Pobierz jako plik</button><span id="msg" aria-live="polite" style="align-self:center;font-weight:600"></span></div>
+  <p class="cut">Uwagi są zapisane tylko w tej przeglądarce. Skopiuj je albo pobierz, zanim zamkniesz pokaz na cudzym komputerze.</p>
+</section>
+<nav class="bar" aria-label="Slajdy"><a class="exit" href="index.html">← Strona</a><button type="button" id="prev" aria-label="Poprzedni slajd">←</button><div class="dots">${dots}</div><button type="button" id="next" aria-label="Następny slajd">→</button><button type="button" id="full">Pełny ekran (F)</button></nav>
+<script src="assets/pokaz.js?v=${BUILD_ID}"></script>
+</body></html>`;
+}
+
 /* ============ PLAN DO DRUKU / PDF (wzorzec: PDF-y islandzkie) ============ */
 function drukPage(){
   const IL = {g:'Lekki', y:'Średni', r:'Intensywny'};
@@ -1042,6 +1098,7 @@ page('loty.html', lotyPage());
 page('koszty.html', kosztyPage());
 page('pogoda.html', pogodaPage());
 page('niezbednik.html', niezbednikPage());
+page('pokaz.html', pokazPage());
 /* ===== Rezerwacje poza stroną: private/rezerwacje.md -> samodzielny plik private/rezerwacje-offline.html.
    Plik nie trafia do repo ani na Vercel; zapisuje się go w telefonach dorosłych (AirDrop, Pliki). ===== */
 {
@@ -1065,7 +1122,7 @@ page('atrakcje.html', ATR);
    potem serwujemy z cache i w tle odświeżamy (stale-while-revalidate).
    Mapy (Leaflet/OSM) i pogoda wymagają sieci — bez niej po prostu się nie pokażą. */
 const PRECACHE = [
-  './','index.html','decyzje.html','atrakcje.html','hotele.html','loty.html','koszty.html','pogoda.html','niezbednik.html','druk.html',
+  './','index.html','decyzje.html','atrakcje.html','hotele.html','loty.html','koszty.html','pogoda.html','niezbednik.html','druk.html','pokaz.html','assets/pokaz.css','assets/pokaz.js',
   'assets/style.css','assets/app.js','assets/icon.svg',
   ...DAYS.map(d=>`days/${d.date}.html`),
   ...[...new Set(Object.values(DAYIMG))].flatMap(p=>[...new Set([p,small(p)])]).map(p=>p.replace(/^\//,'')),

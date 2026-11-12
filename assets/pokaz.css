@@ -1,0 +1,75 @@
+/* Pokaz na projektor: jeden slajd = jeden ekran 16:9. Wszystkie wymiary liczone od wysokości ekranu,
+   więc układ wygląda tak samo na laptopie, telewizorze i ekranie 120 cali.
+   Projektor spłaszcza kontrast: tekst jest ciemny na jasnym tle, bez cienkich szarości. */
+:root{--paper:#f6f3ec;--panel:#ffffff;--ink:#0f1a33;--muted:#3f4a5f;--line:#c9cfdb;--ai:#1e3f8a;--ok:#12613f;--warn:#8a5300;--hanko:#b80f2a;
+  --serif:"Shippori Mincho",Georgia,serif;--sans:"IBM Plex Sans",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);font-family:var(--sans);overflow:hidden}
+body{font-size:min(2.45vh,1.38vw);line-height:1.4}
+.slide{position:fixed;inset:0;display:none;padding:3.2vh 3.2vw 7.5vh;flex-direction:column;gap:2vh}
+.slide.on{display:flex}
+.kicker{font-size:.95em;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ai);margin:0}
+h1{font-family:var(--serif);font-weight:700;font-size:2.7em;line-height:1.08;margin:.15em 0 0;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:700;font-size:1.35em;margin:0 0 .5em}
+p{margin:0}
+.cols{flex:1;min-height:0;display:grid;grid-template-columns:34fr 38fr 28fr;gap:2vw}
+.col{min-height:0;min-width:0;display:flex;flex-direction:column;gap:1.4vh}
+.photo{flex:1;min-height:0;border-radius:1vh;overflow:hidden;background:#d9dde6}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:.8vw}
+.facts div{background:var(--panel);border:1px solid var(--line);border-radius:.8vh;padding:.7em .8em;min-width:0}
+.facts span{display:block;font-size:.72em;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.facts b{display:block;font-size:1em;line-height:1.25;overflow-wrap:anywhere}
+.focus{font-size:1.05em;font-weight:600}
+.cut{font-size:.92em;color:var(--muted)}
+.cut b{color:var(--ink)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:1vh;padding:1.2em 1.3em;min-height:0;overflow:auto}
+.panel.grow{flex:1}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:.5em}
+.tl li{display:grid;grid-template-columns:4.6em 1fr;gap:.9em;align-items:baseline}
+.tl .t{font-weight:700;color:var(--ai);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tl .n{font-weight:600;line-height:1.25}
+.tl.dense{gap:.32em;font-size:.93em}
+.tag{display:inline-block;margin-left:.5em;padding:.05em .5em;border-radius:.3em;font-size:.72em;font-weight:700;letter-spacing:.02em;white-space:nowrap;vertical-align:.12em;border:1px solid currentColor}
+.tag.lot,.tag.zarezerwowane{color:var(--ok)}
+.tag.rezerwacja{color:var(--warn)}
+.tag.opcja{color:var(--muted)}
+.ask{margin:0;padding-left:1.15em;display:grid;gap:.55em;font-size:1em;font-weight:500}
+.notes{flex:1;min-height:6em;display:flex;flex-direction:column;gap:.5em}
+.notes label{font-size:.78em;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.notes textarea{flex:1;min-height:0;width:100%;resize:none;font:inherit;font-size:1em;line-height:1.35;color:var(--ink);background:var(--panel);border:2px solid var(--line);border-radius:.8vh;padding:.7em .8em}
+.notes textarea:focus{outline:none;border-color:var(--ai)}
+/* slajd tytułowy */
+.route{font-size:1.25em;font-weight:600;line-height:1.5}
+.route i{font-style:normal;color:var(--ai);padding:0 .35em}
+.days{flex:1;min-height:0;display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:1fr;gap:1.1vw}
+.day{position:relative;display:flex;flex-direction:column;min-height:0;min-width:0;border-radius:1vh;overflow:hidden;background:var(--panel);border:1px solid var(--line);color:inherit;text-decoration:none}
+.day img{flex:1;min-height:0;width:100%;object-fit:cover;display:block}
+.day span{padding:.5em .65em .6em;font-size:.86em;line-height:1.25;font-weight:600}
+.day span b{display:block;font-size:.84em;color:var(--ai);font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.day.help{background:var(--ink);color:#fff;border-color:var(--ink);padding:1em 1.1em;justify-content:center;gap:.5em;font-size:.95em;line-height:1.35}
+.day.help b{font-family:var(--serif);font-size:1.25em}
+/* slajdy końcowe */
+.two{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:2vw}
+.asklist{font-size:1.15em;gap:.8em}
+.summary{flex:1;min-height:0;overflow:auto;white-space:pre-wrap;font-size:1em;line-height:1.45}
+.btns{display:flex;gap:1vw;flex-wrap:wrap}
+button{font:inherit;font-weight:600;cursor:pointer;border-radius:.6vh;border:2px solid var(--ai);background:var(--ai);color:#fff;padding:.55em 1.1em}
+button.ghost{background:transparent;color:var(--ai)}
+/* pasek nawigacji */
+.bar{position:fixed;left:0;right:0;bottom:0;height:6vh;display:flex;align-items:center;gap:1vw;padding:0 3.2vw;background:var(--ink);color:#fff;font-size:.82em}
+.bar .dots{display:flex;gap:.35vw;flex:1;justify-content:center;min-width:0}
+.bar .dots a{min-width:2.4em;padding:.25em .4em;text-align:center;border-radius:.35em;color:#fff;text-decoration:none;font-weight:600;font-variant-numeric:tabular-nums;border:1px solid rgba(255,255,255,.35)}
+.bar .dots a.on{background:#fff;color:var(--ink);border-color:#fff}
+.bar button{padding:.3em .9em;border-color:#fff;background:transparent}
+.bar .hint{opacity:.85;white-space:nowrap}
+.bar a.exit{color:#fff;font-weight:600;white-space:nowrap}
+@media(max-aspect-ratio:1/1){
+  /* telefon w pionie: pokaz jest projektowany na ekran poziomy, tu tylko czytelna lista */
+  html,body{overflow:auto;height:auto}
+  body{font-size:16px}
+  .slide{position:static;display:flex;padding:20px 16px 28px;border-bottom:1px solid var(--line)}
+  .cols,.two{display:flex;flex-direction:column;gap:16px}.photo{height:200px;flex:none}
+  .days{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}.facts{grid-template-columns:1fr}
+  .notes textarea{min-height:120px}.bar{display:none}h1{font-size:1.8em}
+}

@@ -28,3 +28,8 @@ Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie
 - Zdjęcia z Wikimedia Commons leżą w `assets/img/p/` w dwóch rozmiarach (`nazwa.webp` 1800 px i `nazwa-s.webp` 760 px). Autor i licencja każdego są w `data/zdjecia.mjs` i wyświetlają się w Kulisach; nowe zdjęcie zawsze dodawaj razem z atrybucją.
 - Galeria dnia (`DAYPHOTOS`), zdjęcia kart atrakcji (`CARDIMG`) i zdjęcie przewodnie dnia (`DAYIMG`) są w `build.mjs`.
 - Wszystkie wymiary w `src/style.css` są w `rem`, a `rem` rośnie z szerokością ekranu (laptop ok. 118%, Full HD 144%, 4K do 275%). Nowe style pisz w `rem`, nie w `px`.
+
+## Pokaz na duży ekran
+- `pokaz.html` to tryb prezentacji na projektor lub telewizor: slajd tytułowy, slajd na każdy dzień (zdjęcie, godziny, pytania, pole na uwagi), pytania ogólne i slajd zbierający uwagi. Strzałki przełączają slajdy, `F` włącza pełny ekran.
+- Pytania do doradców są w `data/pytania.mjs`; szablon w `pokazPage()` w `build.mjs`; style i skrypt w `src/pokaz.css` i `src/pokaz.js`. Wymiary liczone są od wysokości ekranu, więc slajd zawsze mieści się na jednym ekranie.
+- Uwagi zapisują się tylko w przeglądarce, w której trwa pokaz; ostatni slajd pozwala je skopiować albo pobrać jako plik.
