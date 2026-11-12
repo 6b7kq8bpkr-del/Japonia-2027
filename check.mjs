@@ -21,7 +21,13 @@ for(const f of files){
   if(f.startsWith('days/')){ const d=f.slice(5,15), want=`<span>${d.slice(8,10)}.${d.slice(5,7)}</span>`; if(!html.includes(want)) errs.push(`${f}: pigułka dnia nie pokazuje ${d.slice(8,10)}.${d.slice(5,7)}`); }
 }
 const src=readFileSync(join(DIR,'build.mjs'),'utf8');
-const {DAYS}=await import('./data/dni.mjs'); const {HOTELS}=await import('./data/hotele.mjs');
+const {DAYS,HOTELS,BOOKINGS,DEADLINES,F}=await import('./data/index.mjs'); const {UNIKALNE}=await import('./data/fakty.mjs');
+// Słownik faktów: żaden token nie może zostać w wyniku, każdy fakt musi być użyty, a wartości unikalne nie mogą być wpisane ręcznie.
+const sources=['data/dni.mjs','data/sprawy.mjs','data/hotele.mjs','data/atrakcje.html','build.mjs'].map(f=>[f,readFileSync(join(DIR,f),'utf8')]);
+for(const f of files) if(/\{\{|\}\}/.test(strip(readFileSync(join(DIR,f),'utf8')))) errs.push(`${f}: niepodstawiony token {{…}}`);
+const allSrc=sources.map(x=>x[1]).join('\n');
+for(const k of Object.keys(F)) if(!allSrc.includes('{{'+k+'}}')&&!allSrc.includes('{{'+k+'|h}}')) errs.push(`fakty: ${k} nie jest nigdzie użyty`);
+for(const k of UNIKALNE) for(const [f,txt] of sources) if(txt.includes(F[k])) errs.push(`${f}: wartość „${F[k]}” wpisana ręcznie, użyj {{${k}}}`);
 const hotelIds=new Set(HOTELS.map(h=>h.id));
 const dows=['niedziela','poniedziałek','wtorek','środa','czwartek','piątek','sobota'];
 let previousDate=null;
@@ -44,7 +50,6 @@ for(const d of DAYS){
     if(kind&&!['lot','zarezerwowane','rezerwacja','opcja','bufor'].includes(kind)) errs.push(`${d.date}: nieznany status ${kind}`);
   }
 }
-const {BOOKINGS,DEADLINES}=await import('./data/sprawy.mjs');
 if(new Set(BOOKINGS.map(x=>x.id)).size!==BOOKINGS.length) errs.push('Checklista: niestabilne/powtórzone identyfikatory');
 if(DEADLINES.some(x=>!Number.isFinite(Date.parse(x.date)))) errs.push('Terminy: błędna data');
 const calc=JSON.parse(src.match(/const CALC = (\{[^}]*\})/)[1].replace(/(\w+):/g,'"$1":'));

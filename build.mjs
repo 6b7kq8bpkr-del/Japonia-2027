@@ -2,9 +2,9 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {BOOKINGS, DEADLINES} from './data/sprawy.mjs';
-import {DAYS, GEO, DAYRAIN, DAYCROWD} from './data/dni.mjs';
-import {HOTELS} from './data/hotele.mjs';
+import {DAYS, GEO, DAYRAIN, DAYCROWD, BOOKINGS, DEADLINES, HOTELS, fill} from './data/index.mjs';
+/* Każda strona HTML przechodzi przez fill(): tokeny {{klucz}} z szablonów zamieniają się na fakty z data/fakty.mjs. */
+const page = (file, html) => fs.writeFileSync(DIR + '/' + file, fill(html));
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 fs.mkdirSync(DIR + '/days', { recursive: true });
 fs.mkdirSync(DIR + '/assets', { recursive: true });
@@ -188,7 +188,7 @@ function dayPage(d,i){
     (d.pc?'<details class="card option-detail"><summary>'+d.pc.q+'</summary>'+d.pc.opts.map(o=>'<p><b>'+o[0]+'</b><br>Za: '+o[1]+'.<br>Przeciw: '+o[2]+'.</p>').join('')+'</details>':'')+'</section>'+
     mapSec+
     '<section id="nocleg"><h2 class="stitle">Gdzie śpimy</h2>'+
-    (H?'<div class="card"><b>'+H.name+'</b><p>'+H.stay+'</p><p class="note">'+H.cancel+'</p><div class="linklist"><a href="../hotele.html#'+H.id+'">Pokój i rezerwacja</a><a href="'+gmapsQ(H.mapsq||H.name)+'" target="_blank" rel="noopener">Dojazd w Google Maps ↗</a></div></div>':'<div class="card">'+(d.date==='2027-04-28'?'Noc w samolocie do Japonii.':'Noc w podróży powrotnej; lądowanie WAW 8 maja o 06:50.')+'</div>')+'</section>'+
+    (H?'<div class="card"><b>'+H.name+'</b><p>'+H.stay+'</p><p class="note">'+H.cancel+'</p><div class="linklist"><a href="../hotele.html#'+H.id+'">Pokój i rezerwacja</a><a href="'+gmapsQ(H.mapsq||H.name)+'" target="_blank" rel="noopener">Dojazd w Google Maps ↗</a></div></div>':'<div class="card">'+(d.date==='2027-04-28'?'Noc w samolocie do Japonii.':'Noc w podróży powrotnej; lądowanie WAW 8 maja o {{lot.waw.przylot}}.')+'</div>')+'</section>'+
     '<section><h2 class="stitle">Przydatne na miejscu</h2><div class="card"><ul class="tips">'+d.tips.map(t=>'<li>'+t+'</li>').join('')+'</ul><div class="linklist" style="margin-top:16px">'+d.links.map(l=>'<a href="../atrakcje.html#'+l.id+'">'+l.label+'</a>').join('')+'</div></div></section>'+
     (metadata?'<details class="more detail-catalog"><summary>Godziny i ceny miejsc z katalogu</summary>'+metadata+'</details>':'')+
     '<nav class="daynav" aria-label="Sąsiednie dni"><a id="navPrev" href="'+(prev?prev.date+'.html':'../index.html#dni')+'"><div class="dir">← Poprzedni</div><div class="ttl">'+(prev?prev.dd:'Agenda')+'</div></a><a class="home" href="../index.html#dni" aria-label="Wszystkie dni">☰</a><a class="nx" id="navNext" href="'+(next?next.date+'.html':'../index.html#powrot')+'"><div class="dir">'+(next?'Następny →':'Powrót →')+'</div><div class="ttl">'+(next?next.dd:'8 maja')+'</div></a></nav>'+footer(prefix);
@@ -232,7 +232,7 @@ function indexPage(){
     <div class="hero-inner">
       <p class="eyebrow">Przewodnik rodzinny · 2+2 · 11 dni programu + powrót · Narita → Kioto → Tokio → Hakone</p>
       <h1>Japonia 2027</h1>
-      <p class="lead">27 kwietnia - 8 maja 2027. Noc w Abu Zabi, cztery noce w Kioto z dniem w Osace, trzy w Tokio i prywatna kąpiel w Hakone. KOTO, sklep Kinugasa, Pokémony i czas na odpoczynek. Powrót do Warszawy 8 maja o 06:50.</p>
+      <p class="lead">27 kwietnia - 8 maja 2027. Noc w Abu Zabi, cztery noce w Kioto z dniem w Osace, trzy w Tokio i prywatna kąpiel w Hakone. KOTO, sklep Kinugasa, Pokémony i czas na odpoczynek. Powrót do Warszawy 8 maja o {{lot.waw.przylot}}.</p>
       <div class="chips"><span class="chip hanko">Bilety kupione</span><span class="chip">noc w Abu Zabi gratis</span><span class="chip">8 nocy w Japonii</span><span class="chip">Dzień Dziecka w Tokio</span><span class="chip">ryokan nad jeziorem</span></div>
     </div>
     <div class="scrollcue" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
@@ -252,7 +252,7 @@ function indexPage(){
   <section id="dni">
     <h2 class="stitle">Dzień po dniu</h2>
     <p class="lead-p">Każdy dzień zaczyna się krótkim podsumowaniem: po co jedziemy, co chronimy i co można odpuścić. Dalej są godziny, mapa, nocleg i plan B. W Golden Week rezerwacje wymagają wyprzedzenia; oba duże przejazdy kolejowe wypadają w tym okresie.</p>
-    <ol class="tt">${cards}</ol><div class="return-note" id="powrot"><b>8 maja · sobota · 06:50</b><span>Lądowanie w Warszawie. Spokojny powrót do domu i weekend na odpoczynek.</span></div>
+    <ol class="tt">${cards}</ol><div class="return-note" id="powrot"><b>8 maja · sobota · {{lot.waw.przylot}}</b><span>Lądowanie w Warszawie. Spokojny powrót do domu i weekend na odpoczynek.</span></div>
     <p class="note" style="margin-top:12px">Znacznik przy wierszu to obciążenie dnia: <b style="color:var(--success)">●</b> lekki · <b style="color:var(--warn)">●</b> średni · <b style="color:var(--hanko)">●</b> intensywny. Zaplecze planu: <a href="decyzje.html">Kulisy</a>.</p>
   </section>
 
@@ -286,7 +286,7 @@ function kosztyPage(){
     <div class="hero-inner">
     <p class="eyebrow">Bilety lotnicze i budżet</p>
     <h1>Bilety i koszty</h1>
-    <p class="lead">Loty i hotele są zarezerwowane. Poniżej oddzielamy kwoty z dokumentów od szacunków: e-bilety 13 643,36 zł, hotele w Japonii 500 443 JPY przed dodatkowymi podatkami. Budżet w złotych pozostaje orientacyjny.</p>
+    <p class="lead">Loty i hotele są zarezerwowane. Poniżej oddzielamy kwoty z dokumentów od szacunków: e-bilety {{bilety.suma}}, hotele w Japonii 500 443 JPY przed dodatkowymi podatkami. Budżet w złotych pozostaje orientacyjny.</p>
   </div>
   </header>
 
@@ -294,7 +294,7 @@ function kosztyPage(){
     <h2 class="stitle">Bilety lotnicze</h2>
     <div class="pflag">✈️ <span><b>Etihad ${TICKET.label}</b>. Rezerwa w kalkulatorze: ${plz(TICKET.family)} za rodzinę do uzgodnienia z kartą (z hotelem 4★ w Abu Zabi w pakiecie), bez bagażu rejestrowanego. Szczegóły i tło rynkowe na zakładce <a href="loty.html">Loty</a>.</span></div>
     <div class="card"><ul class="tips">
-      <li>E-bilety sumują się do 13 643,36 zł. Kalkulator ostrożnie przyjmuje 14 400 zł; różnica 756,64 zł wymaga uzgodnienia z obciążeniem karty. Pole jest edytowalne.</li>
+      <li>E-bilety sumują się do {{bilety.suma}}. Kalkulator ostrożnie przyjmuje {{bilety.budzet}}; różnica 756,64 zł wymaga uzgodnienia z obciążeniem karty. Pole jest edytowalne.</li>
       <li>Historia cen, porównanie linii i wybór terminu zostały na zakładce Loty jako archiwum — pokazują, dlaczego wybór padł na Etihad ze stopoverem.</li>
     </ul>
     <a class="gmap" href="loty.html">✈️ Zobacz ceny, trendy i strategię zakupu → </a></div>
@@ -304,11 +304,11 @@ function kosztyPage(){
     <h2 class="stitle">Transport w Japonii - podstawa budżetu</h2>
     <p class="lead-p">Kontrola 9.09.2026. Przeliczenie planistyczne: 100 JPY = 2,40 zł. Taryfy na konkretny pociąg i dzień w 2027 trzeba potwierdzić; Golden Week może oznaczać dopłatę sezonową. Liczymy trzy bilety dorosłe i jeden dziecięcy.</p>
     ${seg('Przejazdy między miastami',[
-      '<b>Narita → Tokio → Kioto</b> (29.04): NEX obecnie 3 140 JPY/dorosły w jedną stronę; shinkansen zarezerwowany w SmartEX: 50 290 JPY za rodzinę (14 370 JPY dorosły, 7 180 JPY dziecko). NEX kupuje się osobno w JR East.',
+      '<b>Narita → Tokio → Kioto</b> (29.04): NEX obecnie 3 140 JPY/dorosły w jedną stronę; shinkansen zarezerwowany w SmartEX: {{sk.cena}} za rodzinę ({{sk.dorosly}} dorosły, {{sk.dziecko}} dziecko). NEX kupuje się osobno w JR East.',
       
       
-      '<b>Kioto → Tokio</b> (3.05): shinkansen zarezerwowany w SmartEX, 50 290 JPY za rodzinę. Ostateczny pociąg i cztery miejsca potwierdzi mail z 3.04.', '<b>Odawara → Shinagawa → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
-      '<b>Kolej międzymiastowa: około 3,2 tys. zł za rodzinę</b>, z czego 100 580 JPY (około 2 414 zł) to dwa zarezerwowane shinkanseny; do tego Hakone, Osaka, komunikacja miejska i taksówki. Na kolej i metro dnia w Osace przyjmujemy rezerwę 8-12 tys. JPY za rodzinę (192-288 zł przy kursie planistycznym), nie potwierdzoną taryfę. Jest częścią puli transportu 5000 zł, nie dopłatą do niej.', '<b>Do sprawdzenia przed zakupem:</b> N’EX TOKYO Round Trip Ticket ważny 14 dni: obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko, czyli 18 200 JPY (około 437 zł) za oba przejazdy rodziny. Daty 29.04 i 7.05 mieszczą się w ważności. Sprawdźcie uprawnienia i zarezerwujcie konkretne pociągi.',
+      '<b>Kioto → Tokio</b> (3.05): shinkansen zarezerwowany w SmartEX, {{sk.cena}} za rodzinę. Ostateczny pociąg i cztery miejsca potwierdzi mail z 3.04.', '<b>Odawara → Shinagawa → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
+      '<b>Kolej międzymiastowa: około 3,2 tys. zł za rodzinę</b>, z czego {{sk.razem}} (około {{sk.razem.zl}}) to dwa zarezerwowane shinkanseny; do tego Hakone, Osaka, komunikacja miejska i taksówki. Na kolej i metro dnia w Osace przyjmujemy rezerwę 8-12 tys. JPY za rodzinę (192-288 zł przy kursie planistycznym), nie potwierdzoną taryfę. Jest częścią puli transportu 5000 zł, nie dopłatą do niej.', '<b>Do sprawdzenia przed zakupem:</b> N’EX TOKYO Round Trip Ticket ważny 14 dni: obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko, czyli 18 200 JPY (około 437 zł) za oba przejazdy rodziny. Daty 29.04 i 7.05 mieszczą się w ważności. Sprawdźcie uprawnienia i zarezerwujcie konkretne pociągi.',
       'Standardowy JR Pass nie jest tu domyślnym zakupem. Porównajcie pełny koszt z biletami punktowymi; uprawnienie do Nozomi wymaga dodatkowych warunków/opłaty'])}
   </section>
 
@@ -320,11 +320,11 @@ function kosztyPage(){
       <table>
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
-          <tr><td class="cat">✈️ Loty<span class="hint">E-bilety: 13 643,36 zł. Wpisane 14 400 zł to ostrożna rezerwa do uzgodnienia z kartą, nie potwierdzone rozliczenie dopłat. Bez bagażu rejestrowanego; ewentualną dopłatę wyceńcie w Manage Booking.</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" aria-label="Koszt lotów za rodzinę, zł" value="${TICKET.total}" min="0" step="100"></td></tr>
+          <tr><td class="cat">✈️ Loty<span class="hint">E-bilety: {{bilety.suma}}. Wpisane {{bilety.budzet}} to ostrożna rezerwa do uzgodnienia z kartą, nie potwierdzone rozliczenie dopłat. Bez bagażu rejestrowanego; ewentualną dopłatę wyceńcie w Manage Booking.</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" aria-label="Koszt lotów za rodzinę, zł" value="${TICKET.total}" min="0" step="100"></td></tr>
           <tr><td class="cat">🏨 Noclegi<span class="hint">Trzy rezerwacje: łącznie <b>500 443 JPY</b>; w potwierdzeniach z 8.09 zapłacono 0 JPY. Średnia poniżej daje około 12 tys. zł, zależnie od kursu i podatków. Abu Zabi z vouchera stopover.</span></td><td class="num"><input type="number" id="nights" aria-label="Liczba nocy w Japonii" class="sm" value="${CALC.nights}" min="0"><span class="x">×</span><input type="number" id="nightRate" aria-label="Średni koszt noclegu rodzinnego, zł" class="sm" value="${CALC.nightRate}" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca, kurs planistyczny 2,40 zł / 100 JPY. Dwa shinkanseny zarezerwowane; w puli także Hakone, dzień w Osace, metro, taksówki w Kioto oraz transfery w Abu Zabi. 5 000 zł jest budżetem z zapasem, nie sumą opłaconych biletów.</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" aria-label="Budżet transportu, zł" value="${CALC.transport}" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" aria-label="Liczba dni wyżywienia" class="sm" value="${CALC.days}" min="0"><span class="x">×</span><input type="number" id="foodRate" aria-label="Wyżywienie rodziny na dzień, zł" class="sm" value="${CALC.foodRate}" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
-          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">Pula obejmuje KOTO (obecnie 11 600 JPY za rodzinę, około 278 zł przy kursie planistycznym), rezerwę na niepotwierdzony warsztat Kinugasa, muzeum w Osace, świątynie, Café, taras i opcjonalne sumo. Cena warsztatu nie jest znana, nie wpisujemy 0 zł. Pula 3300 zł pozostaje szacunkiem, nie sumą ofert. Posiłku z pokazu nie liczcie drugi raz.</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" aria-label="Budżet atrakcji, zł" value="${CALC.attractions}" min="0" step="100"></td></tr>
+          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">Pula obejmuje KOTO (obecnie {{koto.cena}} za rodzinę, około 278 zł przy kursie planistycznym), rezerwę na niepotwierdzony warsztat Kinugasa, muzeum w Osace, świątynie, Café, taras i opcjonalne sumo. Cena warsztatu nie jest znana, nie wpisujemy 0 zł. Pula 3300 zł pozostaje szacunkiem, nie sumą ofert. Posiłku z pokazu nie liczcie drugi raz.</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" aria-label="Budżet atrakcji, zł" value="${CALC.attractions}" min="0" step="100"></td></tr>
           <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane; streetwear dla dzieci (4.05) liczcie osobno — koszulka ~150–300 zł, bluza ~500–1 000 zł</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" aria-label="Rezerwa i dodatkowe wydatki, zł" value="${CALC.extras}" min="0" step="100"></td></tr>
         </tbody>
         <tfoot><tr class="tot"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr></tfoot>
@@ -470,13 +470,13 @@ function decyzjePage(){
     '<details><summary>Dlaczego 4 noce Kioto, 3 Tokio i 1 Hakone?</summary><p>Trzy bazy pozwalają dodać Osakę jako jednodniową wycieczkę bez przepakowywania. Dalszych miast nie dokładamy. Hakone jest na końcu, dlatego zabezpieczamy poranny wyjazd na lot.</p></details>'+
     '<details><summary>Co naprawdę oznacza odwrócona trasa w Golden Week?</summary><p>Kioto 29.04-3.05 nadal wypada w popularnym okresie, a nie poza świętami. Przeniesienie do Tokio 3.05 ogranicza pobyt w Kioto podczas kolejnych świąt, lecz nie gwarantuje pustych atrakcji. Potrzebne są miejscówki i realne bufory.</p></details>'+
     '<details><summary>Jak reagować na pogodę?</summary><p>20 i 24.04 sprawdźcie sytuację przed terminami hoteli miejskich. 1-2.05 porównajcie prognozę dla Hakone z kosztem ewentualnej zmiany. 5.05 sprawdźcie ostrzeżenia, a rano 6 i 7.05 kursowanie transportu. Przy silnym wietrze statek nie zastępuje automatycznie kolejki.</p></details>'+
-    '<details><summary>Co z budżetem?</summary><p>Hotele są zarezerwowane w JPY, lecz w potwierdzeniach nie były jeszcze opłacone. Koszt w złotych zależy od płatności i kursu; podatki miejscowe mogą być dodatkowe. Loty: suma e-biletów 13 643,36 zł, w budżecie zostaje 14 400 zł do uzgodnienia z kartą. Nie przeliczamy niepotwierdzonych dopłat jako faktów.</p></details>'+
+    '<details><summary>Co z budżetem?</summary><p>Hotele są zarezerwowane w JPY, lecz w potwierdzeniach nie były jeszcze opłacone. Koszt w złotych zależy od płatności i kursu; podatki miejscowe mogą być dodatkowe. Loty: suma e-biletów {{bilety.suma}}, w budżecie zostaje {{bilety.budzet}} do uzgodnienia z kartą. Nie przeliczamy niepotwierdzonych dopłat jako faktów.</p></details>'+
     '</div></section>'+
     `<section id="hotel-mail"><h2 class="stitle">Uzupełnienie do wysłanego maila Hanaori</h2><p class="lead-p">Wysłana wiadomość pytała o stary shuttle do Odawary i dodatkową prywatną kąpiel. Potwierdzenie pokoju rozstrzyga drugą sprawę; do ustalenia zostaje dojazd. Poniższy tekst nie został wysłany.</p><details class="card"><summary>Otwórz gotowy tekst po angielsku</summary><pre style="white-space:pre-wrap;font:14px/1.6 var(--sans)">Dear Hanaori team,
 
 Thank you for your help. A small correction to our earlier message: our Booking.com confirmation is for a Japanese-Western Deluxe Room with Open-air Bath, so we do not need an additional private-bath reservation.
 
-We have also seen your notice that the shuttle now runs to Gora, not Odawara. For Friday 7 May 2027, we would like to reach Odawara Station around 10:30, ahead of our international flight from Narita at 18:00.
+We have also seen your notice that the shuttle now runs to Gora, not Odawara. For Friday 7 May 2027, we would like to reach Odawara Station around 10:30, ahead of our international flight from Narita at {{lot.nrt.odlot}}.
 
 Could you please advise which morning bus from Togendai would be suitable, and whether you can help arrange a taxi for four people with four cabin bags if needed? Please let us know the approximate fare and when we should confirm the transport closer to our stay.
 
@@ -555,7 +555,7 @@ function drukPage(){
     <table class="agenda">${DEADLINES.map(x=>`<tr><td>${x.label}</td><td><b>${x.title}</b><span class="dsc">${x.text}</span></td></tr>`).join('')}</table>
     <h3>Transport i pieniądze</h3>
     <p class="note">Shinkanseny: SmartEX. NEX: JR East. Romancecar: Odakyu. Terminy, warunki zmiany i miejscówki sprawdzajcie w każdym systemie osobno. Na przylocie rezerwacja kolei powinna pozwalać na opóźnienie lotu i formalności.</p>
-    <p class="note">E-bilety razem 13 643,36 zł; w budżecie 14 400 zł do uzgodnienia z kartą. Trzy hotele: 500 443 JPY, w potwierdzeniach zapłacono 0 JPY; podatki dodatkowo. Koszt w złotych zależy od kursu płatności. Aktualne podstawy szacunków: japonia-2027.vercel.app/koszty.html.</p>
+    <p class="note">E-bilety razem {{bilety.suma}}; w budżecie {{bilety.budzet}} do uzgodnienia z kartą. Trzy hotele: 500 443 JPY, w potwierdzeniach zapłacono 0 JPY; podatki dodatkowo. Koszt w złotych zależy od kursu płatności. Aktualne podstawy szacunków: japonia-2027.vercel.app/koszty.html.</p>
     <h3>Praktyka</h3>
     <ul class="plist">
       <li><b>Gotówka:</b> bankomaty 7-Eleven i Japan Post przyjmują karty zagraniczne. Napiwków się nie daje.</li>
@@ -688,7 +688,7 @@ function lotyPage(){
     <div class="hero-inner">
     <p class="eyebrow">Bilety · godziny · bagaż</p>
     <h1>Loty</h1>
-    <p class="lead"><b>Etihad jest kupiony.</b> Wylot 27.04, noc w Abu Zabi, Narita 29.04; powrót z Japonii 7.05 i lądowanie w Warszawie 8.05. E-bilety: 13 643,36 zł. Kwota budżetowa 14 400 zł wymaga uzgodnienia z kartą.</p>
+    <p class="lead"><b>Etihad jest kupiony.</b> Wylot 27.04, noc w Abu Zabi, Narita 29.04; powrót z Japonii 7.05 i lądowanie w Warszawie 8.05. E-bilety: {{bilety.suma}}. Kwota budżetowa {{bilety.budzet}} wymaga uzgodnienia z kartą.</p>
     </div>
   </header>
 
@@ -701,8 +701,8 @@ function lotyPage(){
       <div class="scenrow"><span>Bagaż rejestrowany — świadomie pomijamy (w cenie podręczne 7 kg/os.)</span><b>0 zł</b></div>
       <div class="scentot"><span>Rezerwa budżetowa do rozliczenia</span><b>~${plz(TICKET.total)}</b></div>
       <ul class="tips" style="margin-top:14px">
-        <li>WAW 11:50 → AUH 19:35 (27.04) · nocleg · AUH 21:25 → Narita 12:45 (29.04) · powrót Narita 18:00 (7.05) → WAW 6:50 <b>w sobotę 8.05</b>.</li>
-      <li><b>Kwota do uzgodnienia:</b> cztery e-bilety sumują się do <b>13 643,36 zł</b>, a obciążenie przyjęte w budżecie to 14 400 zł. Przyczyna różnicy 756,64 zł nie jest potwierdzona. Sprawdźcie transakcje na karcie i dokumenty dopłat; nie przypisujemy tej kwoty do domniemanej opłaty.</li>
+        <li>WAW {{lot.waw.odlot}} → AUH {{lot.auh.przylot}} (27.04) · nocleg · AUH {{lot.auh.odlot}} → Narita {{lot.nrt.przylot}} (29.04) · powrót Narita {{lot.nrt.odlot}} (7.05) → WAW {{lot.waw.przylot|h}} <b>w sobotę 8.05</b>.</li>
+      <li><b>Kwota do uzgodnienia:</b> cztery e-bilety sumują się do <b>{{bilety.suma}}</b>, a obciążenie przyjęte w budżecie to {{bilety.budzet}}. Przyczyna różnicy 756,64 zł nie jest potwierdzona. Sprawdźcie transakcje na karcie i dokumenty dopłat; nie przypisujemy tej kwoty do domniemanej opłaty.</li>
         <li>Miejsca obok siebie: 8.09 Etihad dodał bezpłatną notatkę do rezerwacji (rodzina razem, 10-latek przy rodzicu, 13-latek blisko reszty, wszystkie odcinki) — numer sprawy w mailu od Etihada. Płatnych miejsc nie kupiono; konkretny przydział przy odprawie, zależnie od dostępności.</li>
         <li><b>Bez bagażu rejestrowanego w obie strony</b> (decyzja 8.09) — cztery podręczne po 7 kg to cały bagaż wyjazdu. 5.05 zważcie każdy bagaż. Jeśli przekroczy limit, sprawdźcie cenę i termin zakupu bagażu rejestrowanego w Manage Booking. Nie zakładamy stałej dopłaty ani dostępności tej samej ceny na lotnisku.</li>
         <li>Termin przesunięty 7.09 z 3–14 maja na 27.04–7.05 (wycieczka klasowa dziecka 10.05); w Google ta sama cena biletu, kwota ze stopoverem do potwierdzenia w kasie.</li>
@@ -963,7 +963,7 @@ function niezbednikPage(){
   return shell({title:'Niezbędnik — numery, pieniądze, transport · Japonia 2027',desc:'Numery alarmowe, ambasada, pieniądze, karty IC, internet, gniazdka i zwyczaje — praktyczny niezbędnik na wyjazd do Japonii.',prefix:'',active:'niezbednik.html',inner,pillsIdx:null});
 }
 
-const ATR_BODY = fs.readFileSync(DIR + '/data/atrakcje.html','utf8');
+const ATR_BODY = fill(fs.readFileSync(DIR + '/data/atrakcje.html','utf8'));
 
 function atrakcjePage(){
   let body = ATR_BODY;
@@ -1002,16 +1002,16 @@ function atrakcjePage(){
 }
 
 /* ============================ WRITE ============================ */
-DAYS.forEach((d,i)=>fs.writeFileSync(`${DIR}/days/${d.date}.html`, dayPage(d,i)));
+DAYS.forEach((d,i)=>page(`days/${d.date}.html`, dayPage(d,i)));
 const ATR = atrakcjePage(); // read old before overwriting index (index doesn't touch atrakcje)
-fs.writeFileSync(DIR + '/index.html', indexPage());
-fs.writeFileSync(DIR + '/hotele.html', hotelePage());
-fs.writeFileSync(DIR + '/decyzje.html', decyzjePage());
-fs.writeFileSync(DIR + '/druk.html', drukPage());
-fs.writeFileSync(DIR + '/loty.html', lotyPage());
-fs.writeFileSync(DIR + '/koszty.html', kosztyPage());
-fs.writeFileSync(DIR + '/pogoda.html', pogodaPage());
-fs.writeFileSync(DIR + '/niezbednik.html', niezbednikPage());
+page('index.html', indexPage());
+page('hotele.html', hotelePage());
+page('decyzje.html', decyzjePage());
+page('druk.html', drukPage());
+page('loty.html', lotyPage());
+page('koszty.html', kosztyPage());
+page('pogoda.html', pogodaPage());
+page('niezbednik.html', niezbednikPage());
 /* ===== Rezerwacje poza stroną: private/rezerwacje.md -> samodzielny plik private/rezerwacje-offline.html.
    Plik nie trafia do repo ani na Vercel; zapisuje się go w telefonach dorosłych (AirDrop, Pliki). ===== */
 {
@@ -1027,7 +1027,7 @@ fs.writeFileSync(DIR + '/niezbednik.html', niezbednikPage());
   fs.rmSync(DIR + '/rezerwacje.html', {force:true});
 }
 
-fs.writeFileSync(DIR + '/atrakcje.html', ATR);
+page('atrakcje.html', ATR);
 
 /* ---- OFFLINE: service worker + manifest + ikona ----
    Cel: plan ma działać w Japonii bez zasięgu i bez roamingu.
