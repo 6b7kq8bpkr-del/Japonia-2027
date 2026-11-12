@@ -505,3 +505,20 @@ body{font-size:1.0625rem}
 .dayphotos img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:var(--radius-lg);background:var(--wash)}
 .dayphotos figcaption{font-size:.875rem;color:var(--muted);margin-top:.375rem}
 .credits{font-size:.875rem;color:var(--muted);columns:2 20rem;padding-left:1.1rem}.credits li{margin-bottom:.3rem;break-inside:avoid}
+
+/* Pilnowanie terminów: odliczanie przy terminach i sprawach, karta z najbliższym terminem */
+em.due{display:block;margin-top:.25rem;font-style:normal;font-family:var(--sans);font-size:.75rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted)}
+em.due.soon{color:#835316}
+em.due.late{color:var(--hanko)}
+em.due.ok{color:var(--success)}
+.deadlines li.past{opacity:.55}
+.watch{margin:1rem 0;padding:1.25rem 1.375rem;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.watch .eyebrow{margin:0;color:var(--ai)}
+.watch h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.3rem,3.4vw,1.6rem);line-height:1.2;margin:.375rem 0 0}
+.watch h2 a{color:inherit;text-decoration:none}
+.watch-when{margin:.25rem 0 0;font-size:1rem;color:var(--muted)}
+.watch-when b{color:var(--ai);font-size:1.15rem}
+.watch .today-steps a{display:block;background:var(--wash);border:1px solid var(--line);border-radius:var(--radius);padding:.625rem .75rem;min-width:0;color:inherit;text-decoration:none}
+.watch .today-steps a.late{background:var(--wash-red)}
+.watch .today-steps i{display:block;font-style:normal;font-size:.8438rem;color:var(--muted);margin-top:.125rem}
+.watch-links{margin:.875rem 0 0;font-size:.9375rem;font-weight:600}

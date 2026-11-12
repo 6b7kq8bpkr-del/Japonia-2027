@@ -25,7 +25,9 @@ const CALC = {nights:8, nightRate:1504, transport:5000, days:11, foodRate:500, a
 /* Numer wydania = skrót treści źródeł. Te same źródła dają identyczny build, więc w repo zmieniają się tylko strony, których treść się zmieniła. */
 const SOURCES = ['build.mjs', ...['data','src'].flatMap(d => fs.existsSync(DIR+'/'+d) ? fs.readdirSync(DIR+'/'+d).sort().map(f => d+'/'+f) : [])];
 const BUILD_ID = SOURCES.reduce((h,f) => h.update(fs.readFileSync(DIR+'/'+f)), crypto.createHash('sha1')).digest('hex').slice(0,7);
-const TICKET = {family:14400, bag:0, total:14400, label:'27.04-7.05 ze stopoverem tam; powrót do WAW 8.05 - kupione 8.09.2026'};
+const TICKET = {family:13643, bag:0, total:13643, label:'27.04-7.05 ze stopoverem tam; powrót do WAW 8.05 - kupione 8.09.2026'};
+/* Budżet w tysiącach złotych liczony z tych samych wartości co kalkulator. */
+const BUDGET_K = Math.round((TICKET.total + CALC.nights*CALC.nightRate + CALC.transport + CALC.days*CALC.foodRate + CALC.attractions + CALC.extras)/1000);
 // własny formatter — Node w tym środowisku ma okrojone ICU i ignoruje locale pl-PL
 const plz  = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';
 /* Style i skrypty są zwykłymi plikami w src/ (bez szablonów, więc bez podwajania ukośników). */
@@ -225,10 +227,10 @@ function dayPage(d,i){
 }
 
 function deadlineList(prefix=''){
-  return '<ol class="deadlines">'+DEADLINES.map(d=>'<li><time datetime="'+d.date+'">'+d.label+'</time><div><a href="'+prefix+d.href+'"><b>'+d.title+'</b></a><p>'+d.text+'</p></div></li>').join('')+'</ol>';
+  return '<ol class="deadlines">'+DEADLINES.map(d=>'<li data-date="'+d.date+'"><time datetime="'+d.date+'">'+d.label+'<em class="due" data-due="'+d.date+'"></em></time><div><a href="'+prefix+d.href+'"><b>'+d.title+'</b></a><p>'+d.text+'</p></div></li>').join('')+'</ol>';
 }
 function readiness(){
-  return '<div class="readiness"><b>Loty i cztery pobyty hotelowe potwierdzone</b><p>Do domknięcia: miejsca w pociągach, bilety na atrakcje i dojazd z Hakone. Potwierdzenia hoteli z 8.09 wskazują płatność na później.</p><a href="decyzje.html#do-zalatwienia">Sprawdź listę do załatwienia →</a> · <a href="#terminy">Terminy i pogoda</a></div>';
+  return '<div class="readiness"><b>Loty kupione ({{bilety.suma}}) i cztery pobyty hotelowe potwierdzone</b><p>Do domknięcia: miejsca w pociągach, bilety na atrakcje i dojazd z Hakone. Potwierdzenia hoteli z 8.09 wskazują płatność na później.</p><a href="decyzje.html#do-zalatwienia">Sprawdź listę do załatwienia →</a> · <a href="#terminy">Terminy i pogoda</a></div>';
 }
 /* ---- index ---- */
 function indexPage(){
@@ -251,11 +253,13 @@ function indexPage(){
       <a class="line" href="pogoda.html"><b>Przed wyjazdem</b><span>Klimat na przełomie kwietnia i maja, plan pakowania na 7 kg, plany B na deszcz.</span></a>
       <a class="line" href="pokaz.html"><b>Pokaz na duży ekran</b><span>Slajd na każdy dzień, pytania do znajomych i miejsce na ich uwagi. Na projektor albo telewizor.</span></a>
       <a class="line" href="druk.html"><b>Przewodnik do druku</b><span>Cały plan na kartkach — do wydruku albo offline na telefon.</span></a>
-      <a class="line" href="koszty.html"><b>Budżet</b><span>Kalkulator kosztów i zweryfikowane taryfy kolejowe — ~43 tys. zł.</span></a>
+      <a class="line" href="koszty.html"><b>Budżet</b><span>Kalkulator kosztów i zweryfikowane taryfy kolejowe — ~${BUDGET_K} tys. zł.</span></a>
       <a class="line" href="decyzje.html"><b>Kulisy planu</b><span>Co jeszcze załatwić, dlaczego taka trasa i jak zmienić dzień bez pośpiechu.</span></a>
   </div>`;
   const inner = `
   <section id="dzis" class="today" hidden aria-live="polite"></section>
+  <section id="pilnuj" class="watch" hidden></section>
+  <script type="application/json" id="terminy-data">${JSON.stringify({terminy:DEADLINES.map(d=>({d:d.date,l:d.label,t:d.title,h:d.href})),sprawy:BOOKINGS.filter(b=>b.due&&!/^✅/.test(b.when)).map(b=>({id:b.id,w:b.what,due:b.due,from:b.from||null}))}).replace(/</g,'\\u003c')}</script>
   <header class="hero home">
     <div class="hbg"><div class="hbg-img" style="background-image:url('${IMG.fuji}')"></div></div>
     <div class="hgrad"></div>
@@ -274,7 +278,7 @@ function indexPage(){
     <div class="stt"><b>11</b><span>dni programu</span></div>
     <div class="stt"><b>3</b><span>bazy w Japonii</span></div>
     <div class="stt"><b>8</b><span>nocy w Japonii</span></div>
-    <div class="stt"><b>~43<small>tys zł</small></b><span>budżet 2+2</span></div>
+    <div class="stt"><b>~${BUDGET_K}<small>tys zł</small></b><span>budżet 2+2</span></div>
   </section>
 
   ${readiness()}
@@ -298,7 +302,7 @@ function indexPage(){
     </div>
   </section>
 
-  <section id="terminy"><h2 class="stitle">Najważniejsze terminy</h2><p class="lead-p">Terminy hoteli z potwierdzeń Booking sprawdzonych 9.09.2026. Po zmianie rezerwacji sprawdźcie je ponownie. Daty poniżej nie uruchamiają automatycznych powiadomień.</p>${deadlineList()}</section>
+  <section id="terminy"><h2 class="stitle">Najważniejsze terminy</h2><p class="lead-p">Strona odlicza dni do każdego terminu, a najbliższy pokazuje na górze. Żeby telefon przypomniał o nich sam, <a href="terminy.ics">dodajcie terminy do kalendarza</a> (plik z przypomnieniem dzień wcześniej). Terminy hoteli pochodzą z potwierdzeń Booking sprawdzonych 9.09.2026.</p>${deadlineList()}</section>
   <section>
     <h2 class="stitle">Przewodnik</h2>
     ${quick}
@@ -322,9 +326,9 @@ function kosztyPage(){
 
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
-    <div class="pflag">✈️ <span><b>Etihad ${TICKET.label}</b>. Rezerwa w kalkulatorze: ${plz(TICKET.family)} za rodzinę do uzgodnienia z kartą (z hotelem 4★ w Abu Zabi w pakiecie), bez bagażu rejestrowanego. Szczegóły i tło rynkowe na zakładce <a href="loty.html">Loty</a>.</span></div>
+    <div class="pflag">✈️ <span><b>Etihad ${TICKET.label}</b>. Bilety są kupione, koszt jest znany: {{bilety.suma}} za rodzinę (z hotelem 4★ w Abu Zabi w pakiecie), bez bagażu rejestrowanego. Szczegóły na zakładce <a href="loty.html">Loty</a>.</span></div>
     <div class="card"><ul class="tips">
-      <li>E-bilety sumują się do {{bilety.suma}}. Kalkulator ostrożnie przyjmuje {{bilety.budzet}}; różnica 756,64 zł wymaga uzgodnienia z obciążeniem karty. Pole jest edytowalne.</li>
+      <li>Cztery e-bilety kosztowały razem {{bilety.suma}}. W kalkulatorze kwota jest zaokrąglona do złotówki.</li>
       <li>Historia cen, porównanie linii i wybór terminu zostały na zakładce Loty jako archiwum — pokazują, dlaczego wybór padł na Etihad ze stopoverem.</li>
     </ul>
     <a class="gmap" href="loty.html">✈️ Zobacz ceny, trendy i strategię zakupu → </a></div>
@@ -350,7 +354,7 @@ function kosztyPage(){
       <table>
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
         <tbody>
-          <tr><td class="cat">✈️ Loty<span class="hint">E-bilety: {{bilety.suma}}. Wpisane {{bilety.budzet}} to ostrożna rezerwa do uzgodnienia z kartą, nie potwierdzone rozliczenie dopłat. Bez bagażu rejestrowanego; ewentualną dopłatę wyceńcie w Manage Booking.</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" aria-label="Koszt lotów za rodzinę, zł" value="${TICKET.total}" min="0" step="100"></td></tr>
+          <tr><td class="cat">✈️ Loty<span class="hint">Kupione: cztery e-bilety razem {{bilety.suma}}. Bez bagażu rejestrowanego; ewentualną dopłatę wyceńcie w Manage Booking.</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" aria-label="Koszt lotów za rodzinę, zł" value="${TICKET.total}" min="0" step="100"></td></tr>
           <tr><td class="cat">🏨 Noclegi<span class="hint">Trzy rezerwacje: łącznie <b>500 443 JPY</b>; w potwierdzeniach z 8.09 zapłacono 0 JPY. Średnia poniżej daje około 12 tys. zł, zależnie od kursu i podatków. Abu Zabi z vouchera stopover.</span></td><td class="num"><input type="number" id="nights" aria-label="Liczba nocy w Japonii" class="sm" value="${CALC.nights}" min="0"><span class="x">×</span><input type="number" id="nightRate" aria-label="Średni koszt noclegu rodzinnego, zł" class="sm" value="${CALC.nightRate}" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca, kurs planistyczny 2,40 zł / 100 JPY. Dwa shinkanseny zarezerwowane; w puli także Hakone, dzień w Narze, metro, taksówki w Kioto oraz transfery w Abu Zabi. 5 000 zł jest budżetem z zapasem, nie sumą opłaconych biletów.</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" aria-label="Budżet transportu, zł" value="${CALC.transport}" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" aria-label="Liczba dni wyżywienia" class="sm" value="${CALC.days}" min="0"><span class="x">×</span><input type="number" id="foodRate" aria-label="Wyżywienie rodziny na dzień, zł" class="sm" value="${CALC.foodRate}" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
@@ -486,10 +490,10 @@ function hotelePage(){
 /* ---- decyzje / dlaczego ---- */
 function decyzjePage(){
   const rows=DAYS.map((d,i)=>'<tr><td><a href="days/'+d.date+'.html">'+d.dd+'</a></td><td>'+d.brief.focus+'</td><td><span class="ipill '+d.level+'">'+LEVEL_LABEL[d.level]+'</span></td></tr>').join('');
-  const checklist=BOOKINGS.filter(b=>!/^✅/.test(b.when)).map(b=>'<li><label><input type="checkbox" data-ck="'+b.id+'"><span class="ckwhen">'+b.when+'</span><span class="ckwhat"><b>'+b.what+'</b><i>'+b.note+'</i></span></label></li>').join('');
+  const checklist=BOOKINGS.filter(b=>!/^✅/.test(b.when)).sort((a,b)=>(a.due||'9999').localeCompare(b.due||'9999')).map(b=>'<li><label><input type="checkbox" data-ck="'+b.id+'"><span class="ckwhen">'+b.when+(b.due?'<em class="due" data-due="'+b.due+'"'+(b.from?' data-from="'+b.from+'"':'')+'></em>':'')+'</span><span class="ckwhat"><b>'+b.what+'</b><i>'+b.note+'</i></span></label></li>').join('');
   const inner='<header class="hero kb"><div class="hbg"><div class="hbg-img" style="background:'+heroBg('kioto',IMG.fushimi)+'"></div></div><div class="hero-inner"><p class="eyebrow">Rezerwacje i logika podróży</p><h1>Kulisy planu</h1><p class="lead">Co jest potwierdzone, czego jeszcze dopilnować i jak zachować spokojne tempo.</p></div></header>'+
     '<nav class="section-nav" aria-label="Skróty"><a href="#do-zalatwienia">Do załatwienia</a><a href="#terminy">Terminy</a><a href="#rytm">Rytm</a><a href="#zmiany">Jak zmieniać</a></nav>'+
-    '<section id="do-zalatwienia"><h2 class="stitle">Do załatwienia</h2><p class="lead-p">Zaznaczenia to Wasza osobista lista na tym urządzeniu. Nie zmieniają statusu rezerwacji, nie synchronizują się z telefonem i nie wysyłają powiadomień.</p><div class="card"><div class="ckhead"><b id="ckcount">0</b><span id="cknext"></span></div><div class="ckbar"><div id="ckfill"></div></div><ul class="cklist">'+checklist+'</ul><button class="reset" type="button" id="ckreset">Wyczyść zaznaczenia</button></div></section>'+
+    '<section id="do-zalatwienia"><h2 class="stitle">Do załatwienia</h2><p class="lead-p">Sprawy są ułożone według terminu, a przy każdej strona odlicza dni i oznacza te, które można już załatwić albo które są po terminie. Zaznaczenia zapisują się tylko na tym urządzeniu. Przypomnienia w telefonie daje plik kalendarza: <a href="terminy.ics">dodaj terminy do kalendarza</a>.</p><div class="card"><div class="ckhead"><b id="ckcount">0</b><span id="cknext"></span></div><div class="ckbar"><div id="ckfill"></div></div><ul class="cklist">'+checklist+'</ul><button class="reset" type="button" id="ckreset">Wyczyść zaznaczenia</button></div></section>'+
     '<section><h2 class="stitle">Potwierdzone elementy</h2><div class="card"><p class="note" style="margin-top:0">Numery rezerwacji trzymamy poza stroną: w potwierdzeniach i w osobnym pliku zapisanym w telefonach dorosłych.</p><ul class="tips">'+BOOKINGS.filter(b=>/^✅/.test(b.when)).map(b=>'<li><b>'+b.what+'</b>: '+b.note+'</li>').join('')+'</ul></div></section>'+
     '<section id="terminy"><h2 class="stitle">Terminy i pogoda</h2>'+deadlineList()+'<p class="note">Prognoza 7 dni wcześniej jest wskazówką, nie gwarancją. Ostrzeżenia pogodowe, status transportu i zasady anulowania są osobnymi rzeczami. Termin bezpłatnego odwołania Hanaori mija przed wyjazdem do Hakone.</p></section>'+
     '<section id="rytm"><h2 class="stitle">Rytm rodziny 2+2</h2><p class="lead-p">Najbardziej wymagające podróże to 29.04 i 7.05. Intensywny jest także długi spacer przez Harajuku i Shibuyę 4.05; Nara 1.05 kończy się wczesnym popołudniem. Chronimy przerwy i wolne popołudnie 5.05; przy zmęczeniu skracamy opcje, nie odpoczynek. Lekki program 27.04 oznacza mało zwiedzania, nie brak zmęczenia lotem.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
@@ -500,7 +504,7 @@ function decyzjePage(){
     '<details><summary>Dlaczego 4 noce Kioto, 3 Tokio i 1 Hakone?</summary><p>Trzy bazy pozwalają dodać Narę jako jednodniową wycieczkę bez przepakowywania. Dalszych miast nie dokładamy. Hakone jest na końcu, dlatego zabezpieczamy poranny wyjazd na lot.</p></details>'+
     '<details><summary>Co naprawdę oznacza odwrócona trasa w Golden Week?</summary><p>Kioto 29.04-3.05 nadal wypada w popularnym okresie, a nie poza świętami. Przeniesienie do Tokio 3.05 ogranicza pobyt w Kioto podczas kolejnych świąt, lecz nie gwarantuje pustych atrakcji. Potrzebne są miejscówki i realne bufory.</p></details>'+
     '<details><summary>Jak reagować na pogodę?</summary><p>20 i 24.04 sprawdźcie sytuację przed terminami hoteli miejskich. 1-2.05 porównajcie prognozę dla Hakone z kosztem ewentualnej zmiany. 5.05 sprawdźcie ostrzeżenia, a rano 6 i 7.05 kursowanie transportu. Przy silnym wietrze statek nie zastępuje automatycznie kolejki.</p></details>'+
-    '<details><summary>Co z budżetem?</summary><p>Hotele są zarezerwowane w JPY, lecz w potwierdzeniach nie były jeszcze opłacone. Koszt w złotych zależy od płatności i kursu; podatki miejscowe mogą być dodatkowe. Loty: suma e-biletów {{bilety.suma}}, w budżecie zostaje {{bilety.budzet}} do uzgodnienia z kartą. Nie przeliczamy niepotwierdzonych dopłat jako faktów.</p></details>'+
+    '<details><summary>Co z budżetem?</summary><p>Hotele są zarezerwowane w JPY, lecz w potwierdzeniach nie były jeszcze opłacone. Koszt w złotych zależy od płatności i kursu; podatki miejscowe mogą być dodatkowe. Loty są kupione, a ich koszt jest znany: {{bilety.suma}} za cztery e-bilety.</p></details>'+
     '</div></section>'+
     `<section id="hotel-mail"><h2 class="stitle">Hanaori: propozycja odpowiedzi do hotelu</h2><p class="lead-p">Hotel przedstawił opcje, ale kąpiel termalna i transfer nie są zarezerwowane. Wanna w pokoju nie ma wody termalnej. Poniższy tekst jest propozycją wiadomości, nie został wysłany.</p><details class="card"><summary>Otwórz tekst po angielsku</summary><pre style="white-space:pre-wrap;font:0.875rem/1.6 var(--sans)">Dear Hanaori team,
 
@@ -617,7 +621,7 @@ function drukPage(){
     </div>
     <div class="cfacts">
       <div><b>11</b>dni programu + powrót</div><div><b>8</b>nocy w Japonii</div>
-      <div><b>3</b>bazy w Japonii</div><div><b>~43<i>tys. zł</i></b>budżet 2+2</div>
+      <div><b>3</b>bazy w Japonii</div><div><b>~${BUDGET_K}<i>tys. zł</i></b>budżet 2+2</div>
     </div>
     <h3 class="toch">Spis treści</h3>
     <ol class="toc">${toc}</ol>
@@ -641,7 +645,7 @@ function drukPage(){
     <table class="agenda">${DEADLINES.map(x=>`<tr><td>${x.label}</td><td><b>${x.title}</b><span class="dsc">${x.text}</span></td></tr>`).join('')}</table>
     <h3>Transport i pieniądze</h3>
     <p class="note">Shinkanseny: SmartEX. NEX: JR East. Romancecar: Odakyu. Terminy, warunki zmiany i miejscówki sprawdzajcie w każdym systemie osobno. Na przylocie rezerwacja kolei powinna pozwalać na opóźnienie lotu i formalności.</p>
-    <p class="note">E-bilety razem {{bilety.suma}}; w budżecie {{bilety.budzet}} do uzgodnienia z kartą. Trzy hotele: 500 443 JPY, w potwierdzeniach zapłacono 0 JPY; podatki dodatkowo. Koszt w złotych zależy od kursu płatności. Aktualne podstawy szacunków: japonia-2027.vercel.app/koszty.html.</p>
+    <p class="note">Loty kupione: cztery e-bilety razem {{bilety.suma}}. Trzy hotele: 500 443 JPY, w potwierdzeniach zapłacono 0 JPY; podatki dodatkowo. Koszt w złotych zależy od kursu płatności. Aktualne podstawy szacunków: japonia-2027.vercel.app/koszty.html.</p>
     <h3>Praktyka</h3>
     <ul class="plist">
       <li><b>Gotówka:</b> bankomaty 7-Eleven i Japan Post przyjmują karty zagraniczne. Napiwków się nie daje.</li>
@@ -774,7 +778,7 @@ function lotyPage(){
     <div class="hero-inner">
     <p class="eyebrow">Bilety · godziny · bagaż</p>
     <h1>Loty</h1>
-    <p class="lead"><b>Etihad jest kupiony.</b> Wylot 27.04, noc w Abu Zabi, Narita 29.04; powrót z Japonii 7.05 i lądowanie w Warszawie 8.05. E-bilety: {{bilety.suma}}. Kwota budżetowa {{bilety.budzet}} wymaga uzgodnienia z kartą.</p>
+    <p class="lead"><b>Etihad jest kupiony.</b> Wylot 27.04, noc w Abu Zabi, Narita 29.04; powrót z Japonii 7.05 i lądowanie w Warszawie 8.05. Koszt czterech e-biletów: {{bilety.suma}}.</p>
     </div>
   </header>
 
@@ -782,13 +786,13 @@ function lotyPage(){
     <h2 class="stitle">Wybrany bilet</h2>
     <p class="lead-p">Rozstrzygnięcie zapadło na etihad.com — finalna wycena przewoźnika, której Google nie umiał policzyć (kombinacja stopover + powrót z Narity wycenia się tam absurdalnie).</p>
     <div class="card">
-      <div class="scenrow"><span><b>Etihad, ${TICKET.label}</b> · Economy Basic · 3 dorosłych + 1 dziecko</span><b>${plz(TICKET.family)}</b></div>
+      <div class="scenrow"><span><b>Etihad, ${TICKET.label}</b> · Economy Basic · 3 dorosłych + 1 dziecko</span><b>{{bilety.suma}}</b></div>
       <div class="scenrow"><span>Nocleg stopover: Grand Millennium Al Wahda, voucher otrzymany</span><b>0 zł</b></div>
       <div class="scenrow"><span>Bagaż rejestrowany — świadomie pomijamy (w cenie podręczne 7 kg/os.)</span><b>0 zł</b></div>
-      <div class="scentot"><span>Rezerwa budżetowa do rozliczenia</span><b>~${plz(TICKET.total)}</b></div>
+      <div class="scentot"><span>Razem za loty</span><b>{{bilety.suma}}</b></div>
       <ul class="tips" style="margin-top:0.875rem">
         <li>WAW {{lot.waw.odlot}} → AUH {{lot.auh.przylot}} (27.04) · nocleg · AUH {{lot.auh.odlot}} → Narita {{lot.nrt.przylot}} (29.04) · powrót Narita {{lot.nrt.odlot}} (7.05) → WAW {{lot.waw.przylot|h}} <b>w sobotę 8.05</b>.</li>
-      <li><b>Kwota do uzgodnienia:</b> cztery e-bilety sumują się do <b>{{bilety.suma}}</b>, a obciążenie przyjęte w budżecie to {{bilety.budzet}}. Przyczyna różnicy 756,64 zł nie jest potwierdzona. Sprawdźcie transakcje na karcie i dokumenty dopłat; nie przypisujemy tej kwoty do domniemanej opłaty.</li>
+      <li><b>Koszt znany:</b> cztery e-bilety razem <b>{{bilety.suma}}</b>, z noclegiem w Abu Zabi w pakiecie.</li>
         <li>Miejsca obok siebie: 8.09 Etihad dodał bezpłatną notatkę do rezerwacji (rodzina razem, 10-latek przy rodzicu, 13-latek blisko reszty, wszystkie odcinki) — numer sprawy w mailu od Etihada. Płatnych miejsc nie kupiono; konkretny przydział przy odprawie, zależnie od dostępności.</li>
         <li><b>Bez bagażu rejestrowanego w obie strony</b> (decyzja 8.09) — cztery podręczne po 7 kg to cały bagaż wyjazdu. 5.05 zważcie każdy bagaż. Jeśli przekroczy limit, sprawdźcie cenę i termin zakupu bagażu rejestrowanego w Manage Booking. Nie zakładamy stałej dopłaty ani dostępności tej samej ceny na lotnisku.</li>
         <li>Termin przesunięty 7.09 z 3–14 maja na 27.04–7.05 (wycieczka klasowa dziecka 10.05); w Google ta sama cena biletu, kwota ze stopoverem do potwierdzenia w kasie.</li>
@@ -799,7 +803,7 @@ function lotyPage(){
   <section>
     <h2 class="stitle">Kupione — co jeszcze domknąć</h2>
     <div class="card"><ul class="tips">
-      <li><b>Kupione 8.09.2026.</b> Bilety i voucher są potwierdzone. Do uzgodnienia zostaje pełne rozliczenie kwoty na karcie, nie ponowny wybór przewoźnika.</li>
+      <li><b>Kupione 8.09.2026.</b> Bilety i voucher są potwierdzone. Koszt jest znany: {{bilety.suma}}.</li>
       <li><b>Do domknięcia w „Manage booking”:</b> dane paszportowe całej czwórki. Miejsca obok siebie zgłoszone bezpłatnie 8.09 (numer sprawy w mailu od Etihada); bagażu rejestrowanego świadomie nie kupujemy — decyzja wraca 5.05 wieczorem przy pakowaniu.</li>
       <li><b>Zmiany/anulowanie:</b> sprawdźcie warunki wystawionej taryfy przed zmianą. Ubezpieczenie nie gwarantuje zwrotu przy dowolnej rezygnacji; zakres, wyłączenia i termin zakupu ochrony kosztów rezygnacji trzeba sprawdzić teraz.</li>
     </ul></div>
@@ -1115,6 +1119,22 @@ page('pokaz.html', pokazPage());
 }
 
 page('atrakcje.html', ATR);
+
+/* ===== Kalendarz terminów: terminy.ics z przypomnieniem dzień wcześniej. Stałe DTSTAMP i UID, żeby build był deterministyczny. ===== */
+{
+  const escI = s => String(s).replace(/<[^>]+>/g,'').replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');
+  const fold = l => { const out=[]; let s=l; while(Buffer.byteLength(s,'utf8')>73){ let n=73; while(Buffer.byteLength(s.slice(0,n),'utf8')>73) n--; out.push(s.slice(0,n)); s=' '+s.slice(n); } out.push(s); return out.join('\r\n'); };
+  const ymd = iso => iso.replace(/-/g,''), next = iso => { const d=new Date(iso+'T00:00:00Z'); d.setUTCDate(d.getUTCDate()+1); return d.toISOString().slice(0,10).replace(/-/g,''); };
+  const ev = DEADLINES.map((d,i) => {
+    const when = d.utc ? ['DTSTART:'+d.utc.replace(/[-:]/g,''), 'DURATION:PT30M'] : ['DTSTART;VALUE=DATE:'+ymd(d.date), 'DTEND;VALUE=DATE:'+next(d.date)];
+    const alarm = d.utc ? ['BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+escI(d.title),'TRIGGER:-P1D','END:VALARM','BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+escI(d.title),'TRIGGER:-PT2H','END:VALARM']
+                        : ['BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+escI(d.title),'TRIGGER:-PT15H','END:VALARM'];
+    return ['BEGIN:VEVENT','UID:'+d.date+'-'+i+'@japonia-2027','DTSTAMP:20261112T000000Z',...when,'SUMMARY:'+escI('Japonia 2027: '+d.title),'DESCRIPTION:'+escI(fill(d.text)+' ('+d.label+')'),'URL:https://japonia-2027.vercel.app/'+d.href,...alarm,'END:VEVENT'];
+  }).flat();
+  fs.writeFileSync(DIR + '/terminy.ics', ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Japonia 2027//Terminy//PL','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:Japonia 2027: terminy',...ev,'END:VCALENDAR'].map(fold).join('\r\n')+'\r\n');
+}
+
+
 
 /* ---- OFFLINE: service worker + manifest + ikona ----
    Cel: plan ma działać w Japonii bez zasięgu i bez roamingu.

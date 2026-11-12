@@ -2,7 +2,7 @@
 export const HOTELS = [
  {id:'auh',name:'Grand Millennium Al Wahda',stay:'Abu Zabi · 27-28.04 · 1 noc, dwa pokoje',
  desc:'Hotel z pakietu stopover. Dwa pokoje Standard po dwie osoby, bez śniadania. Każdy rodzic z jednym dzieckiem. Godzinę wymeldowania 28.04 potwierdźcie na recepcji; plan zakłada wyjazd na lotnisko o 17:30.',
- price:'Nocleg w pakiecie; rozliczenie całości lotu i stopoveru do uzgodnienia',near:'Hazza Bin Zayed Street, Al Wahda Complex',
+ price:'Nocleg w pakiecie z biletami lotniczymi',near:'Hazza Bin Zayed Street, Al Wahda Complex',
  cancel:'Rezerwacja bezzwrotna według vouchera. Numery i warunki w prywatnym potwierdzeniu.',
  mapsq:'Grand Millennium Al Wahda, Abu Dhabi',site:'https://www.millenniumhotels.com/en/abu-dhabi/grand-millennium-al-wahda/'},
  {id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 29.04-3.05 · 4 noce',

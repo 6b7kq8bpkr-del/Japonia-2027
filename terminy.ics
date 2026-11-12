@@ -1,0 +1,217 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Japonia 2027//Terminy//PL
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Japonia 2027: terminy
+BEGIN:VEVENT
+UID:2027-03-01-0@japonia-2027
+DTSTAMP:20261112T000000Z
+DTSTART;VALUE=DATE:20270301
+DTEND;VALUE=DATE:20270302
+SUMMARY:Japonia 2027: Pokémon Café: zacząć śledzić komunikaty o spr
+ zedaży
+DESCRIPTION:Termin sprzedaży stolików na maj nie jest jeszcze znany\; 1
+  marca to początek sprawdzania komunikatów operatora\, nie data otwarc
+ ia sprzedaży. Ostatnio cały miesiąc trafiał do sprzedaży pierwszego
+  dnia poprzedniego miesiąca. (od 1 marca)
+URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Pokémon Café: zacząć śledzić komunikaty o sprzedaży
+TRIGGER:-PT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-03-29-1@japonia-2027
+DTSTAMP:20261112T000000Z
+DTSTART;VALUE=DATE:20270329
+DTEND;VALUE=DATE:20270330
+SUMMARY:Japonia 2027: Mail z miejscami w shinkansenie 29.04
+DESCRIPTION:Po 8:00 JST (1:00 w Polsce) SmartEX przysyła ostateczny nume
+ r pociągu Shinagawa-Kioto i cztery miejsca. Sprawdźcie\, czy są obok 
+ siebie. (29 marca)
+URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mail z miejscami w shinkansenie 29.04
+TRIGGER:-PT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-03-31-2@japonia-2027
+DTSTAMP:20261112T000000Z
+DTSTART;VALUE=DATE:20270331
+DTEND;VALUE=DATE:20270401
+SUMMARY:Japonia 2027: Herbata KOTO i pokaz sumo zarezerwowane
+DESCRIPTION:Termin planistyczny: do końca marca kupcie sesję KOTO na 2.
+ 05 i bilety na sumo 3.05\, zanim Golden Week się wyprzeda. (do 31 marca
+ )
+URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Herbata KOTO i pokaz sumo zarezerwowane
+TRIGGER:-PT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-03-3@japonia-2027
+DTSTAMP:20261112T000000Z
+DTSTART;VALUE=DATE:20270403
+DTEND;VALUE=DATE:20270404
+SUMMARY:Japonia 2027: Mail z miejscami w shinkansenie 3.05
+DESCRIPTION:Ostateczny numer pociągu Kioto-Tokio i miejsca\, po 8:00 JST
+  (1:00 w Polsce). (3 kwietnia)
+URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mail z miejscami w shinkansenie 3.05
+TRIGGER:-PT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-06-4@japonia-2027
+DTSTAMP:20261112T000000Z
+DTSTART;VALUE=DATE:20270406
+DTEND;VALUE=DATE:20270407
+SUMMARY:Japonia 2027: Sprzedaż miejsc na Romancecar do Hakone
+DESCRIPTION:Odakyu otwiera sprzedaż na 6.05 o 10:00 JST. Celem jest kurs
+  Metro Hakone z Omotesandō\; jeśli go nie ma\, od razu Romancecar z Sh
+ injuku o 10:00. (6 kwietnia\, 3:00 PL)
+URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sprzedaż miejsc na Romancecar do Hakone
+TRIGGER:-PT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-07-5@japonia-2027
+DTSTAMP:20261112T000000Z
+DTSTART;VALUE=DATE:20270407
+DTEND;VALUE=DATE:20270408
+SUMMARY:Japonia 2027: Sprzedaż shinkansena Odawara-Shinagawa
+DESCRIPTION:SmartEX otwiera sprzedaż na 7.05 o 10:00 JST. Tego samego dn
+ ia kupcie Narita Express w JR East. (7 kwietnia\, 3:00 PL)
+URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sprzedaż shinkansena Odawara-Shinagawa
+TRIGGER:-PT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-19-6@japonia-2027
+DTSTAMP:20261112T000000Z
+DTSTART:20270419T150000Z
+DURATION:PT30M
+SUMMARY:Japonia 2027: Shibuya Sky
+DESCRIPTION:Planowany start sprzedaży na 4.05 według obecnej reguły. S
+ loty o zachodzie słońca znikają najszybciej. *Potwierdźcie regułę 
+ w 2027. (19 kwietnia\, 17:00 PL*)
+URL:https://japonia-2027.vercel.app/atrakcje.html#shibuya-sky
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Shibuya Sky
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Shibuya Sky
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-20-7@japonia-2027
+DTSTAMP:20261112T000000Z
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:Japonia 2027: Tydzień do wylotu: Visit Japan Web i prognoza
+DESCRIPTION:Zgłoszenia Visit Japan Web dla całej rodziny\, dokumenty of
+ fline w telefonach i przegląd pogody przed jutrzejszym terminem anulowa
+ nia Kioto. (20 kwietnia)
+URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Tydzień do wylotu: Visit Japan Web i prognoza
+TRIGGER:-PT15H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-21-8@japonia-2027
+DTSTAMP:20261112T000000Z
+DTSTART:20270421T145900Z
+DURATION:PT30M
+SUMMARY:Japonia 2027: Ostatni bezpłatny termin: Kioto
+DESCRIPTION:16:59 w Polsce. Decyzję podejmijcie dzień wcześniej. (21 k
+ wietnia\, 23:59 JST)
+URL:https://japonia-2027.vercel.app/hotele.html#kioto
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Ostatni bezpłatny termin: Kioto
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Ostatni bezpłatny termin: Kioto
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-25-9@japonia-2027
+DTSTAMP:20261112T000000Z
+DTSTART:20270425T145900Z
+DURATION:PT30M
+SUMMARY:Japonia 2027: Ostatni bezpłatny termin: Tokio
+DESCRIPTION:16:59 w Polsce. Sprawdźcie plan i prognozę 24.04. (25 kwiet
+ nia\, 23:59 JST)
+URL:https://japonia-2027.vercel.app/hotele.html#tokio1
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Ostatni bezpłatny termin: Tokio
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Ostatni bezpłatny termin: Tokio
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-05-02-10@japonia-2027
+DTSTAMP:20261112T000000Z
+DTSTART:20270502T145900Z
+DURATION:PT30M
+SUMMARY:Japonia 2027: Ostatni bezpłatny termin: Hanaori
+DESCRIPTION:Będziecie w Kioto: obowiązuje lokalny czas Japonii. Wcześn
+ iej sprawdźcie ryzyko pogody w Hakone. (2 maja\, 23:59 JST)
+URL:https://japonia-2027.vercel.app/hotele.html#hakone
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Ostatni bezpłatny termin: Hanaori
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Ostatni bezpłatny termin: Hanaori
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-05-05-11@japonia-2027
+DTSTAMP:20261112T000000Z
+DTSTART;VALUE=DATE:20270505
+DTEND;VALUE=DATE:20270506
+SUMMARY:Japonia 2027: Pogoda i transport w Hakone
+DESCRIPTION:Ostrzeżenia oraz kursowanie dróg i kolei. Termin bezpłatne
+ go anulowania minął 2.05 o 23:59 JST. Teraz zmiana noclegu może koszt
+ ować pełną cenę\; dostosowujcie przede wszystkim trasę dojazdu i at
+ rakcje. (5 maja\; potem rano 6 i 7 maja)
+URL:https://japonia-2027.vercel.app/days/2027-05-06.html#warunki
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Pogoda i transport w Hakone
+TRIGGER:-PT15H
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -258,3 +258,53 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
     });
   }
 })();
+
+/* ---- pilnowanie terminów: odliczanie dni przy każdym terminie i sprawie, karta z najbliższym terminem na stronie głównej.
+   Podgląd na inny dzień: ?teraz=2027-04-05T08:00:00Z ---- */
+(function(){
+  var q=/[?&]teraz=([^&#]+)/.exec(location.search), now=q?new Date(decodeURIComponent(q[1])):new Date();
+  if(isNaN(now)) return;
+  function day(iso){ var p=iso.split('-'); return Date.UTC(+p[0],+p[1]-1,+p[2])/86400000; }
+  var today=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/86400000);
+  function left(iso){ return day(iso)-today; }
+  function words(n){ return n===0?'dziś':(n===1?'jutro':(n>1?'za '+n+' dni':(n===-1?'wczoraj':Math.abs(n)+' dni temu'))); }
+  function pl(iso){ var p=iso.split('-'); return (+p[2])+'.'+p[1]; }
+  var done={}; try{ done=JSON.parse(localStorage.getItem('jp2027.checklist.v2'))||{}; }catch(e){}
+  function paint(el){
+    var due=el.getAttribute('data-due'), from=el.getAttribute('data-from'), n=left(due);
+    var li=el.closest('li'), box=li&&li.querySelector('input[data-ck]'), isDone=box&&box.checked, cls='', txt;
+    if(isDone){ txt='załatwione'; cls='ok'; }
+    else if(n<0){ if(box){ txt='po terminie ('+words(n)+')'; cls='late'; } else { txt='minął'; cls='past'; } }
+    else if(from&&left(from)>0){ txt='od '+pl(from)+' ('+words(left(from))+')'; }
+    else if(from){ txt='można już załatwić, termin '+words(n); cls=n<=14?'soon':'ok'; }
+    else { txt=(box?'termin ':'')+words(n); cls=n<=14?'soon':''; }
+    el.textContent=txt; el.className='due'+(cls?' '+cls:'');
+    if(li&&!box) li.classList.toggle('past',n<0);
+  }
+  var marks=[].slice.call(document.querySelectorAll('em.due[data-due]'));
+  marks.forEach(paint);
+  document.addEventListener('change',function(e){ if(e.target&&e.target.matches&&e.target.matches('input[data-ck]')) marks.forEach(paint); });
+
+  var box=document.getElementById('pilnuj'), src=document.getElementById('terminy-data');
+  if(!box||!src) return;
+  var data={terminy:[],sprawy:[]}; try{ data=JSON.parse(src.textContent); }catch(e){}
+  var coming=data.terminy.filter(function(t){ return left(t.d)>=0; }).sort(function(a,b){ return day(a.d)-day(b.d); });
+  var late=data.sprawy.filter(function(s){ return !done[s.id]&&left(s.due)<0; });
+  var open=data.sprawy.filter(function(s){ return !done[s.id]&&left(s.due)>=0&&(!s.from||left(s.from)<=0); }).sort(function(a,b){ return day(a.due)-day(b.due); });
+  if(!coming.length&&!late.length&&!open.length) return;
+  function el(tag,cls,text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+  box.appendChild(el('p','eyebrow','Pilnujemy terminów'));
+  if(coming.length){
+    var first=coming[0], h=el('h2'), a=el('a',null,first.t); a.href=first.h; h.appendChild(a); box.appendChild(h);
+    var p=el('p','watch-when'); p.appendChild(el('b',null,words(left(first.d)))); p.appendChild(document.createTextNode(' · '+first.l)); box.appendChild(p);
+  }
+  var g=el('div','today-steps');
+  function row(label,title,when,href,cls){ var r=el('a',cls||null); r.href=href; r.appendChild(el('span',null,label)); r.appendChild(el('b',null,title)); r.appendChild(el('i',null,when)); g.appendChild(r); }
+  late.slice(0,2).forEach(function(s){ row('Po terminie',s.w,'termin minął '+words(left(s.due)),'decyzje.html#do-zalatwienia','late'); });
+  open.slice(0,late.length?1:2).forEach(function(s){ row('Do załatwienia teraz',s.w,'termin '+pl(s.due)+' · '+words(left(s.due)),'decyzje.html#do-zalatwienia'); });
+  coming.slice(1,3).forEach(function(t){ row('Potem',t.t,t.l+' · '+words(left(t.d)),t.h); });
+  if(g.children.length) box.appendChild(g);
+  var l=el('p','watch-links'), a1=el('a',null,'Wszystkie sprawy →'); a1.href='decyzje.html#do-zalatwienia'; var a2=el('a',null,'Dodaj terminy do kalendarza'); a2.href='terminy.ics';
+  l.appendChild(a1); l.appendChild(document.createTextNode(' · ')); l.appendChild(a2); box.appendChild(l);
+  box.hidden=false;
+})();

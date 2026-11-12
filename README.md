@@ -33,3 +33,8 @@ Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie
 - `pokaz.html` to tryb prezentacji na projektor lub telewizor: slajd tytułowy, slajd na każdy dzień (zdjęcie, godziny, pytania, pole na uwagi), pytania ogólne i slajd zbierający uwagi. Strzałki przełączają slajdy, `F` włącza pełny ekran.
 - Pytania do doradców są w `data/pytania.mjs`; szablon w `pokazPage()` w `build.mjs`; style i skrypt w `src/pokaz.css` i `src/pokaz.js`. Wymiary liczone są od wysokości ekranu, więc slajd zawsze mieści się na jednym ekranie.
 - Uwagi zapisują się tylko w przeglądarce, w której trwa pokaz; ostatni slajd pozwala je skopiować albo pobrać jako plik.
+
+## Terminy
+- Każda otwarta sprawa w `data/sprawy.mjs` ma `due` (ostatni dzień) i opcjonalnie `from` (od kiedy da się ją załatwić). Strona odlicza dni, oznacza sprawy po terminie i pokazuje najbliższy termin w karcie na stronie głównej. Podgląd innego dnia: `?teraz=2027-04-05T08:00:00Z`.
+- Z `DEADLINES` build tworzy `terminy.ics`: plik kalendarza z przypomnieniem dzień wcześniej (terminy z godziną mają też przypomnienie 2 godziny przed).
+- Loty są kupione; koszt (`bilety.suma` w `data/fakty.mjs`) jest też podstawą kalkulatora (`TICKET` w `build.mjs`).

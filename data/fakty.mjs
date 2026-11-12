@@ -5,7 +5,7 @@ export const F = {
   // Loty Etihad (z e-biletów)
   'lot.waw.odlot':'11:50', 'lot.auh.przylot':'19:35', 'lot.auh.odlot':'21:25',
   'lot.nrt.przylot':'12:45', 'lot.nrt.odlot':'18:00', 'lot.waw.przylot':'06:50',
-  'bilety.suma':'13 643,36 zł', 'bilety.budzet':'14 400 zł',
+  'bilety.suma':'13 643,36 zł',
   // Shinkanseny zarezerwowane w SmartEX
   'n51.odj':'16:55', 'n51.przyj':'19:00', 'n6.odj':'10:01', 'n6.przyj':'12:15',
   'sk.cena':'50 290 JPY', 'sk.razem':'100 580 JPY', 'sk.razem.zl':'2 414 zł', 'sk.dorosly':'14 370 JPY', 'sk.dziecko':'7 180 JPY',
@@ -25,6 +25,6 @@ export const F = {
   'odawara.przyj':'10:30', 'kodama.odj':'11:14', 'kodama.przyj':'11:40', 'nex0705.odj':'12:50', 'nex0705.przyj':'13:57',
 };
 // Wartości na tyle charakterystyczne, że ich ręczne wpisanie w źródłach zawsze jest błędem (powinien stać token).
-export const UNIKALNE = ['bilety.suma','bilety.budzet','n51.odj','n6.odj','n6.przyj','sk.cena','sk.razem','sk.razem.zl','sk.dorosly','sk.dziecko',
+export const UNIKALNE = ['bilety.suma','n51.odj','n6.odj','n6.przyj','sk.cena','sk.razem','sk.razem.zl','sk.dorosly','sk.dziecko',
   'nex2904.odj','koto.sesje','koto.cena','sky.slot','kodama.odj','kodama.przyj','nex0705.odj','nex0705.przyj',
   'lot.waw.odlot','lot.auh.przylot','lot.auh.odlot'];
