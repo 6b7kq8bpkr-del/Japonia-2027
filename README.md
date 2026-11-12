@@ -6,28 +6,20 @@ Publicznie dostępny, nieindeksowany serwis (noindex nie jest ochroną dostępu)
 → Narita → Warszawa (lądowanie 8.05 rano). Nara pozostaje wariantem zamiast Osaki. Warsztat w Kinugasa wymaga potwierdzenia; identyfikacja sklepu na podstawie pinezki ze zdjęcia jest prawdopodobna, nie ostateczna.
 
 ## Jak to działa
-- **Jedno źródło prawdy: `build.mjs`.** Wszystkie dane (dni, hotele, atrakcje, checklista, kwoty)
-  i szablony są w tym pliku. `assets/style.css` i `assets/app.js` też są z niego generowane —
-  nie edytuj wygenerowanych plików.
-- `node build.mjs` generuje `index.html`, `days/*.html`, podstrony, `sw.js`, manifest.
-- `node check.mjs` po buildzie sprawdza: chronologię godzin w każdym dniu, właściwy miesiąc
-  w pigułkach dni, brak `undefined`, brak numerów rezerwacji w publicznym HTML, istnienie
-  lokalnych linków i kotwic, zgodność budżetu w nagłówku z wartościami kalkulatora.
-- Każdy dzień ma `brief` (start, koniec, cel, priorytet, opcje i kontrola), `level`,
-  opcjonalne `stay` oraz statusy pozycji osi czasu. Podsumowania i tabela tempa korzystają
-  z tych samych danych. `DEADLINES` zasila stronę główną, Kulisy i druk.
-- Walidator sprawdza też ciągłość dat, dni tygodnia, godziny powrotu następnego dnia,
-  kompletność podsumowań, powiązania z hotelami, liczbę nocy oraz unikalność identyfikatorów.
-- Checklista v2 używa stabilnych identyfikatorów. Zapis jest lokalny na urządzeniu,
-  nie potwierdza rezerwacji i nie wysyła przypomnień. Nie przenoś starych zaznaczeń
-  według aktualnego indeksu listy.
-- Kwoty z dokumentów, szacunki w PLN i status opłacenia muszą pozostać rozróżnione.
-  Zmiana terminu wymaga także aktualizacji danych mapy i warunków anulowania.
+- **Gdzie co leży**
+  - `data/fakty.mjs` — słownik faktów: każda godzina i kwota, która pojawia się w kilku miejscach, jest zdefiniowana tylko tutaj. W tekstach wpisuje się `{{klucz}}` (`{{klucz|h}}` pokazuje 9:45 zamiast 09:45).
+  - `data/dni.mjs` — agenda dzień po dniu, punkty mapy, plan na deszcz. `data/sprawy.mjs` — lista spraw i terminy. `data/hotele.mjs` — hotele. `data/atrakcje.html` — karty atrakcji (miejsca z planu i zwinięta sekcja „Poza planem”).
+  - `src/style.css`, `src/app.js` — style i skrypty jako zwykłe pliki.
+  - `build.mjs` — szablony stron. Nie edytuj wygenerowanych plików (`*.html`, `days/`, `assets/style.css`, `assets/app.js`, `sw.js`).
+- `node build.mjs` generuje serwis. Te same źródła dają identyczny wynik; numer wydania w stopce to skrót treści źródeł.
+- `node check.mjs` sprawdza: chronologię godzin, dni tygodnia i ciągłość dat, statusy kroków, linki i kotwice, budżet, brak numerów rezerwacji w publicznym HTML, a dla słownika faktów: brak niepodstawionych tokenów, użycie każdego faktu, brak wartości wpisanych ręcznie obok tokenu oraz zgodność trybu „dziś” z godzinami lotów.
+- **Tryb „dziś”**: między 27.04 a 8.05.2027 strona główna pokazuje bieżący dzień i najbliższy krok, a oś czasu dnia zaznacza „teraz”. Podgląd: dopisz do adresu `?teraz=2027-04-30T02:00:00Z`.
+- Checklista używa stabilnych identyfikatorów (`id`). Zmiana treści pozycji = nowy `id` z sufiksem `-vN`. Zapis jest lokalny na urządzeniu.
 - Service worker: HTML/CSS/JS network-first (cache tylko offline), obrazy cache-first.
-  Długo otwarta karta dostaje komunikat „Dostępna nowa wersja”; stopka pokazuje numer wydania.
-- Numery rezerwacji trzymamy w `private/rezerwacje.md` (poza git i poza Vercel).
+- **Rezerwacje są poza stroną.** `private/rezerwacje.md` (poza git i poza Vercel) to źródło; build tworzy z niego `private/rezerwacje-offline.html`, samodzielny plik do zapisania w telefonach dorosłych.
 
 ## Wdrożenie
 ```bash
-node build.mjs && node check.mjs && npx vercel build --prod && npx vercel deploy --prebuilt --prod
+./deploy.sh
 ```
+Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie.

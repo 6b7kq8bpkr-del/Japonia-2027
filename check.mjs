@@ -25,6 +25,11 @@ const {DAYS,HOTELS,BOOKINGS,DEADLINES,F}=await import('./data/index.mjs'); const
 // Słownik faktów: żaden token nie może zostać w wyniku, każdy fakt musi być użyty, a wartości unikalne nie mogą być wpisane ręcznie.
 const sources=['data/dni.mjs','data/sprawy.mjs','data/hotele.mjs','data/atrakcje.html','build.mjs'].map(f=>[f,readFileSync(join(DIR,f),'utf8')]);
 for(const f of files) if(/\{\{|\}\}/.test(strip(readFileSync(join(DIR,f),'utf8')))) errs.push(`${f}: niepodstawiony token {{…}}`);
+// Tryb „dziś” w src/app.js ma chwile lotów wpisane w UTC; muszą odpowiadać godzinom z fakty.mjs (ZEA +4, Japonia +9, Polska +2).
+{ const app=readFileSync(join(DIR,'src/app.js'),'utf8'), hm=k=>F[k].split(':').map(Number);
+  const want=[['lot.auh.przylot',`Date.UTC(2027,3,27,${hm('lot.auh.przylot')[0]-4},${hm('lot.auh.przylot')[1]})`],['lot.auh.odlot',`Date.UTC(2027,3,28,${hm('lot.auh.odlot')[0]-4},${hm('lot.auh.odlot')[1]})`],
+    ['lot.nrt.odlot',`Date.UTC(2027,4,7,${hm('lot.nrt.odlot')[0]-9},${hm('lot.nrt.odlot')[1]})`],['lot.waw.przylot',`Date.UTC(2027,4,8,${hm('lot.waw.przylot')[0]-2},${hm('lot.waw.przylot')[1]})`]];
+  for(const [k,code] of want) if(!app.includes(code)) errs.push(`src/app.js: tryb „dziś” nie zgadza się z faktem ${k} (oczekiwane ${code})`); }
 const allSrc=sources.map(x=>x[1]).join('\n');
 for(const k of Object.keys(F)) if(!allSrc.includes('{{'+k+'}}')&&!allSrc.includes('{{'+k+'|h}}')) errs.push(`fakty: ${k} nie jest nigdzie użyty`);
 for(const k of UNIKALNE) for(const [f,txt] of sources) if(txt.includes(F[k])) errs.push(`${f}: wartość „${F[k]}” wpisana ręcznie, użyj {{${k}}}`);
