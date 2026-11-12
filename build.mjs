@@ -9,80 +9,6 @@ const DIR = path.dirname(fileURLToPath(import.meta.url));
 fs.mkdirSync(DIR + '/days', { recursive: true });
 fs.mkdirSync(DIR + '/assets', { recursive: true });
 
-/* ===================== CENY LOTÓW — JEDYNE ŹRÓDŁO PRAWDY =====================
-   ŚLEDZIMY DWA SCENARIUSZE POWROTU:
-     rt = ROUND-TRIP (WYBRANY od 4.09.2026): WAW↔Tokio z krótką przesiadką w Abu Zabi;
-          przylot 4.05, powrót 14.05 z Narity. 12 dni, 3 zameldowania, 10 nocy w Japonii.
-     oj = OPEN-JAW (odrzucony 4.09 — zdrożał do ~5,5 tys./os., 7.09 już ~7,9 tys.): doba w Abu Zabi z darmowym
-          hotelem + powrót z lotniska Kansai. Wraca do gry, gdy różnica spadnie <2 tys. zł.
-   Wpisy sprzed 2.09.2026 mają tylko `rt`.
-   Aktualizowane automatycznie przez zadanie `japonia-cena-lotu` (co dwa dni).
-   Ręcznie: dopisz nowy obiekt NA KOŃCU tablicy CHECKS i uruchom `node build.mjs`.
-   Ceny: zł za 1 DOROSŁEGO. UWAGA — od 2026-09-02 plan używa trasy OPEN-JAW:
-   (historyczna notatka o cezurze open-jaw z 2.09 — patrz wyżej; od 4.09 wybrany jest rt)
-   To INNY produkt niż śledzony wcześniej round-trip WAW↔NRT, więc w historii jest cezura —
-   wcześniejsze wpisy dotyczą starej trasy i służą już tylko jako tło. */
-const OPENJAW_FROM = '2026-09-02';
-const AIRLINES = {
-  etihad:   {name:'Etihad',        via:'Abu Zabi', dur:'17 h 55 min', stops:1, hotel:true, col:'#c8402c', star:true, q:40, qpos:'#10 na świecie',
-             note:'Trasa z planu (round-trip, przesiadka ~2 h w Abu Zabi); opcjonalny stopover z hotelem śledzimy osobno'},
-  emirates: {name:'Emirates',      via:'Dubaj',    dur:'19 h 25 min', stops:1, col:'#1b3a6b', q:60, qpos:'#8 na świecie',
-             note:'Solidna alternatywa, ale bez darmowego stopoveru'},
-  finnair:  {name:'Finnair / JAL', via:'Helsinki', dur:'17 h 5 min',  stops:1, col:'#2f6d4f', q:20, qpos:'#7 wśród hybrydowych',
-             note:'Najkrótsza przesiadka i najniższa emisja wśród przesiadkowych'},
-  lot:      {name:'LOT',           via:'bezpośredni', dur:'12 h 40 min', stops:0, col:'#b98a34', q:0, qpos:'#25 na świecie',
-             note:'Najszybszy, bez przesiadki — dopłata za wygodę ok. 1 000 zł/os.'},
-  qatar:    {name:'Qatar Airways', via:'Doha',     dur:'20 h',        stops:1, col:'#6b4b8a', q:100, qpos:'#1 na świecie',
-             note:'Bywa mocno przeceniany w Travel Festival (grudzień)'},
-  turkish:  {name:'Turkish',       via:'Stambuł',  dur:'15 h 50 min', stops:1, col:'#7a8087', q:80, qpos:'#7 na świecie',
-             note:'Rzadko konkurencyjny cenowo na tej trasie'},
-};
-/* SYSTEM SCORINGOWY (ranking wg wag, na loty.html) — trzy kryteria: cena / czas / jakość,
-   każde 0–100 pkt, wynik = średnia ważona. Kwoty służą WYŁĄCZNIE do ustalenia DOMYŚLNYCH WAG
-   (nie doliczamy złotówek do ceny biletu!) — reguła użytkownika: 8 h w drodze ≡ 800 zł na
-   bilecie, czyli 100 zł za godzinę. Ten sam pomysł stosujemy do jakości: pełna rozpiętość
-   rankingu jakości (0–100 pkt) traktujemy jako wartą 750 zł. Wagi wychodzą z tego,
-   jak szeroko rozstrzelone jest każde kryterium w danym zestawieniu (rozpiętość razy stawka),
-   a użytkownik może je i tak przesunąć suwakami na stronie. */
-const PLN_PER_HOUR = 100, QUALITY_PLN = 750;
-const hrsOf = s => {const m=String(s).match(/(\d+)\s*h(?:\s*(\d+))?/); return m ? (+m[1] + (+(m[2]||0))/60) : 0;};
-/* Wygoda = czas w drodze, ale doceniamy brak przesiadek i osobno — mocniej — darmowy nocleg
-   w ramach stopoveru Etihad (na stronie wyceniany gdzie indziej na ~600–900 zł, tu środek 750 zł).
-   Jednostka to "godziny w drodze", żeby całość dało się przeliczyć na wagę tą samą stawką co czas.
-   UWAGA: premia za stopover jest WARUNKOWA — liczy się tylko wtedy, gdy nocleg faktycznie jest
-   bezpłatny (program Etihad jest formalnie potwierdzony do stycznia 2027, na maj 2027 trzeba go
-   potwierdzić przy zakupie). Dlatego rozbijamy wygodę na `cfBase` + `bonus`, a przełącznik na
-   stronie decyduje, czy bonus wchodzi do rankingu. */
-const STOP_PENALTY_H = 1.5, STOPOVER_BONUS_H = 750/PLN_PER_HOUR;
-const comfortBase  = A => -hrsOf(A.dur) - (A.stops||0)*STOP_PENALTY_H;
-const comfortBonus = A => A.hotel ? STOPOVER_BONUS_H : 0;
-/* Data ostatniej KONTROLI cen — zadanie aktualizuje ją przy każdym uruchomieniu, także wtedy,
-   gdy ceny się nie zmieniły i nie dopisujemy nic do CHECKS. Dzięki temu widać różnicę między
-   „sprawdzone, bez zmian" a „dawno nie sprawdzane". */
-const LAST_CHECKED = '2026-09-07';
-const CHECKS = [
-  {date:'2026-07-29', rt:{etihad:4225, emirates:4257, finnair:4723, lot:5249, qatar:5219, turkish:6938}},
-  {date:'2026-07-31', rt:{etihad:4255, emirates:4261, finnair:4726, lot:5227, qatar:5219, turkish:6945}},
-  {date:'2026-08-04', rt:{etihad:3961, emirates:5024, finnair:4721, lot:4872, turkish:8152}},
-  {date:'2026-08-06', rt:{etihad:3959, emirates:5025, finnair:4722, qatar:4718, lot:4872, turkish:8154}},
-  {date:'2026-08-10', rt:{etihad:4066, emirates:4252, finnair:4719, qatar:4716, lot:4668, turkish:8154}},
-  {date:'2026-08-14', rt:{etihad:3705, emirates:4251, finnair:4719, qatar:4730, lot:4668, turkish:8145}},
-  {date:'2026-08-16', rt:{etihad:4021, emirates:4254, finnair:4721, qatar:4731, lot:4669, turkish:8145}},
-  {date:'2026-08-18', rt:{etihad:4067, emirates:4254, finnair:4721, qatar:4734, lot:4819, turkish:8150}},
-  {date:'2026-08-31', rt:{etihad:4241, emirates:4259, finnair:5122, qatar:4727, lot:4861, turkish:6945}},
-  {date:'2026-09-01', rt:{etihad:3914, emirates:4258, finnair:4582, qatar:4727, lot:5061, turkish:8162}},
-  {date:'2026-09-02', oj:{etihad:5033}, rt:{etihad:3733, emirates:4148, lot:4417, turkish:8584}},
-  {date:'2026-09-04', oj:{etihad:5459}, rt:{etihad:3453, emirates:4148, lot:5271, turkish:8588}},
-  {date:'2026-09-06', rt:{etihad:4012, emirates:4147, lot:4417, turkish:8543}},
-  {date:'2026-09-07', oj:{etihad:7874}, rt:{etihad:3449, emirates:4147, lot:5468, qatar:4655, turkish:8586}},   // najtańszy wariant dnia: 3–14; open-jaw wystrzelił do 7 874
-];
-/* Siatka dat z Google Flights — cena 12-dniowej podróży wg DNIA WYLOTU (1 dorosły) */
-const DATEGRID = {src:'2026-07-26', days:[[1,4400],[2,4420],[3,3910],[4,4260],[5,4150],[6,4150],[7,4260],
-  [8,4260],[9,4150],[10,4260],[11,4050],[12,3940],[13,4150],[14,4260],[15,4260],[16,4150]]};
-/* Porównanie realnych wariantów terminu (ceny Etihad, sprawdzone na żywo) */
-/* Lista rzeczy do zarezerwowania, w kolejności terminów. Renderowana jako checklista
-   na decyzje.html; stan trzymany w localStorage (klucz jp2027.checklist). */
-
 /* Dni zamknięcia atrakcji (0=nd … 6=sb). Sprawdzane przy budowie względem dnia tygodnia każdego dnia planu. */
 const CLOSED = {
   ota:{days:[1],note:'poniedziałki + kilka dni na przełomie miesiąca (zmiana wystawy)'},
@@ -92,95 +18,14 @@ const CLOSED = {
   nishiki:{days:[],note:'część stoisk zamknięta w środy i niedziele'},
 };
 
-const PERIODS = [
-  {label:'27.04–7.05', sub:'KUPIONY 8.09.2026 · 11 dni, powrót przed wycieczką klasową 10.05', price:3600, best:true,
-   pros:['Kupiony; kwota końcowa do uzgodnienia z kartą. 3 600 zł/os. poniżej to wcześniejsza średnia budżetowa','Kioto 29.04-3.05 i Tokio 3-6.05: oba etapy zahaczają o Golden Week','Ryokan w czwartek tuż po Golden Week — łatwiej o pokój i ciszej niż w święta'],
-   cons:['Cały pobyt w Golden Week — miejscówki na shinkansen i rezerwacje obowiązkowe','Przylot 29.04 w Dzień Shōwa','Bez Osaki']},
-  {label:'26.04–7.05', sub:'o dzień dłużej', price:3449,
-   pros:['Ta sama cena biletu','Wraca wypad do Osaki (2.05)'],
-   cons:['+~1 800 zł (noc w Kiocie w Golden Week + wyżywienie)','Dzień urlopu więcej']},
-  {label:'3–14 maja', sub:'poprzedni plan', price:3449,
-   pros:['Kioto po Golden Week — bez tłumów'],
-   cons:['Termin obejmuje 10.05 — dzień wycieczki klasowej dziecka']},
-];
-
-/* WYBRANY BILET (etihad.com, 7.09.2026): 3–14.05 ze stopoverem tam, Economy Basic.
-   13 600 zł za 4 os. (3 dorosłych + dziecko) — wycena z 7.09.2026,
-   hotel 4★ w Abu Zabi (Grand Millennium Al Wahda) w pakiecie. Bagaż: kabinowe w cenie,
-   bez bagażu rejestrowanego — decyzja z 8.09: próbujemy zmieścić się w podręcznych.
-   FLIGHT (niżej) zostaje jako odniesienie
-   rynkowe z Google (round-trip) dla wykresu trendu. */
+/* Koszty: jedno źródło wartości kalkulatora (CALC) i kupionego biletu (TICKET). */
 const CALC = {nights:8, nightRate:1504, transport:5000, days:11, foodRate:500, attractions:3300, extras:3000};
 /* Numer wydania = skrót treści źródeł. Te same źródła dają identyczny build, więc w repo zmieniają się tylko strony, których treść się zmieniła. */
 const SOURCES = ['build.mjs', ...['data','src'].flatMap(d => fs.existsSync(DIR+'/'+d) ? fs.readdirSync(DIR+'/'+d).sort().map(f => d+'/'+f) : [])];
 const BUILD_ID = SOURCES.reduce((h,f) => h.update(fs.readFileSync(DIR+'/'+f)), crypto.createHash('sha1')).digest('hex').slice(0,7);
 const TICKET = {family:14400, bag:0, total:14400, label:'27.04-7.05 ze stopoverem tam; powrót do WAW 8.05 - kupione 8.09.2026'};
-const FLIGHT = {airline:'Etihad'};
-/* Od 4.09.2026 wybrany scenariusz = ROUND-TRIP (open-jaw zdrożał — 7.09.2026 już ~7,9 tys./os.). */
-FLIGHT.history = CHECKS.filter(c=>(c.rt||{}).etihad!=null).map(c=>[c.date, c.rt.etihad]);
-/* Porównanie dwóch scenariuszy powrotu — liczone z ostatniego odczytu, który ma oba.
-   Do ceny biletu dokładamy RÓŻNICE NA ZIEMI, bo same bilety są nieporównywalne:
-   open-jaw jedzie z Kioto ekspresem na Kansai, round-trip musi wrócić do Tokio i na Naritę. */
-const SCEN = (() => {
-  const last = [...CHECKS].reverse().find(c => c.oj && c.rt) || {};
-  const oj = last.oj && last.oj.etihad, rt = last.rt && last.rt.etihad;
-  if (!oj || !rt) return null;
-  const fam = v => Math.round(v*3.8/100)*100;
-  return {
-    date: last.date,
-    oj: {adult:oj, family:fam(oj), ground:320,  groundLabel:'ekspres Haruka z Kioto na KIX'},
-    rt: {adult:rt, family:fam(rt), ground:1340, groundLabel:'shinkansen Kioto→Tokio + Narita Express'},
-  };
-})();
-if (SCEN) { SCEN.oj.total = SCEN.oj.family + SCEN.oj.ground; SCEN.rt.total = SCEN.rt.family + SCEN.rt.ground;
-            SCEN.diff = SCEN.oj.total - SCEN.rt.total; }
-FLIGHT.adult   = FLIGHT.history[FLIGHT.history.length-1][1];
-FLIGHT.checked = FLIGHT.history[FLIGHT.history.length-1][0];
-FLIGHT.prev    = FLIGHT.history.length > 1 ? FLIGHT.history[FLIGHT.history.length-2][1] : null;
-// rodzina 2+2 = 3 taryfy dorosłe + 1 dziecięca (młodsze <11 lat, ~20% taniej)
-FLIGHT.family  = Math.round((FLIGHT.adult*3 + FLIGHT.adult*0.8)/100)*100;
-FLIGHT.band    = FLIGHT.adult <= 3500 ? 'okazja' : (FLIGHT.adult < 4600 ? 'typowa' : 'górka');
 // własny formatter — Node w tym środowisku ma okrojone ICU i ignoruje locale pl-PL
 const plz  = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';
-const dpl  = iso => {const [y,m,d]=iso.split('-');return `${+d}.${m}.${y}`;};
-/* wykres trendu — rysuje się sam z tablicy CHECKS, rośnie z każdym odczytem */
-const priceChart = () => {
-  const px = c => c.rt || {};   // wykres pokazuje serię round-trip — jedyną ciągłą w czasie
-  const keys = Object.keys(AIRLINES).filter(k => CHECKS.some(c => px(c)[k] != null));
-  const all  = CHECKS.flatMap(c => Object.values(px(c)));
-  const lo = Math.floor((Math.min(...all) - 250)/500)*500;
-  const hi = Math.ceil ((Math.max(...all) + 250)/500)*500;
-  const W=760,H=300,L=62,R=16,T=14,B=50, single = CHECKS.length===1;
-  const x = i => single ? (L+(W-L-R)/2) : L + i*(W-L-R)/(CHECKS.length-1);
-  const y = v => T + (hi-v)*(H-T-B)/(hi-lo);
-  const ticks = [0,1,2,3,4].map(i => lo + i*(hi-lo)/4);
-  const grid = ticks.map(v=>`<line x1="${L}" y1="${y(v).toFixed(1)}" x2="${W-R}" y2="${y(v).toFixed(1)}" stroke="rgba(28,37,48,.10)" stroke-width="1"/>`+
-    `<text x="${L-10}" y="${(y(v)+4).toFixed(1)}" text-anchor="end" font-size="11" fill="#6a7078">${plz(v).replace(' zł','')}</text>`).join('');
-  const xlab = CHECKS.map((c,i)=>`<text x="${x(i).toFixed(1)}" y="${H-B+22}" text-anchor="middle" font-size="11" fill="#6a7078">${dpl(c.date).slice(0,5)}</text>`).join('');
-  const lines = keys.map(k=>{
-    const pts = CHECKS.map((c,i)=> px(c)[k]!=null ? [x(i), y(px(c)[k])] : null).filter(Boolean);
-    if(!pts.length) return '';
-    const path = pts.map(p=>`${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
-    const dots = pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4.5" fill="#fffdf8" stroke="${AIRLINES[k].col}" stroke-width="2.5"/>`).join('');
-    return (pts.length>1?`<polyline points="${path}" fill="none" stroke="${AIRLINES[k].col}" stroke-width="${AIRLINES[k].star?3.2:2}" stroke-linejoin="round" stroke-linecap="round"${AIRLINES[k].star?'':' stroke-dasharray="5 4" opacity=".8"'}/>`:'')+dots;
-  }).join('');
-  const legend = keys.map(k=>`<span class="lgd"><i style="background:${AIRLINES[k].col}"></i>${AIRLINES[k].name}${AIRLINES[k].star?' ★':''}</span>`).join('');
-  return `<div class="chartwrap"><svg viewBox="0 0 ${W} ${H}" width="100%" height="auto" role="img" aria-label="Wykres cen lotów w czasie">
-    ${grid}${xlab}${lines}
-  </svg></div><div class="lgds">${legend}</div>
-  <p class="note" style="margin-top:8px">Archiwum rynku: ceny za 1 dorosłego, zwykły round-trip WAW↔Tokio wg Google (nasz bilet to inna taryfa — stopover, wyceniany tylko u przewoźnika). Linia ciągła = Etihad.</p>`;
-};
-const trend = () => {
-  if(FLIGHT.prev==null) return '';
-  const d = FLIGHT.adult - FLIGHT.prev;
-  if(d===0) return ' <b style="color:var(--muted)">→ bez zmian</b>';
-  return d<0 ? ` <b style="color:var(--success)">▼ ${plz(Math.abs(d))} taniej</b>`
-             : ` <b style="color:var(--shu)">▲ ${plz(d)} drożej</b>`;
-};
-
-/* ============================ SHARED CSS ============================ */
-const WAVE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='24' viewBox='0 0 48 24'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1'%3E%3Cpath d='M0 24a24 24 0 0148 0'/%3E%3Cpath d='M0 24a17 17 0 0148 0'/%3E%3Cpath d='M0 24a10 10 0 0148 0'/%3E%3C/g%3E%3C/svg%3E";
-
 /* Style i skrypty są zwykłymi plikami w src/ (bez szablonów, więc bez podwajania ukośników). */
 fs.copyFileSync(DIR + '/src/style.css', DIR + '/assets/style.css');
 
@@ -835,76 +680,15 @@ ${inner}
 }
 
 function lotyPage(){
-  const seg = (t,items)=>`<div class="card" style="margin-bottom:14px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">${t}</h3><ul class="tips">${items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
-  const last = k => {for(let i=CHECKS.length-1;i>=0;i--){const p=CHECKS[i].rt||{}; if(p[k]!=null) return {v:p[k],d:CHECKS[i].date,i};}return null;};
-  const before = (k,idx) => {for(let i=idx-1;i>=0;i--){const p=CHECKS[i].rt||{}; if(p[k]!=null) return p[k];}return null;};
-
-  const rows = Object.keys(AIRLINES).map(k=>({k,A:AIRLINES[k],L:last(k)})).filter(r=>r.L)
-    .sort((a,b)=>a.L.v-b.L.v).map((r,i)=>{
-      const pv = before(r.k, r.L.i), d = pv==null?null:r.L.v-pv;
-      const chg = d==null ? '<span style="color:var(--muted)">—</span>'
-        : d===0 ? '<span style="color:var(--muted)">bez zmian</span>'
-        : d<0 ? `<span style="color:var(--success)">▼ ${plz(Math.abs(d))}</span>`
-              : `<span style="color:var(--shu)">▲ ${plz(d)}</span>`;
-      const stale = r.L.d!==CHECKS[CHECKS.length-1].date ? ` <span class="note">(odczyt ${dpl(r.L.d).slice(0,5)})</span>` : '';
-      return `<div class="arow${i===0?' top':''}">
-        <div class="an"><i style="background:${r.A.col}"></i>${r.A.name}${r.A.star?' ★':''}${i===0?' <span class="rezerwuj">najtaniej</span>':''}</div>
-        <div class="ap">${plz(r.L.v)}</div>
-        <div class="am">${r.A.via==='bezpośredni'?'lot bezpośredni':'przez '+r.A.via} · ${r.A.dur} · ${r.A.note}${stale}</div>
-        <div class="ad">${chg}</div>
-      </div>`;}).join('');
-
-  // dane dla kalkulatora wag (cena / wygoda / jakość) — czytane przez app.js
-  const scoreData = Object.keys(AIRLINES).map(k=>{const L=last(k); return L?{k,name:AIRLINES[k].name,col:AIRLINES[k].col,
-    star:!!AIRLINES[k].star,q:AIRLINES[k].q,qpos:AIRLINES[k].qpos,price:L.v,via:AIRLINES[k].via,dur:AIRLINES[k].dur,
-    stops:AIRLINES[k].stops||0,hotel:!!AIRLINES[k].hotel,
-    cfBase:comfortBase(AIRLINES[k]),bonus:comfortBonus(AIRLINES[k])}:null;}).filter(Boolean);
-
-  // domyślne wagi: rozpiętość każdego kryterium w dzisiejszym zestawieniu, przeliczona na złotówki
-  // (kwoty tylko po to, żeby porównać jabłka z jabłkami — nic nie dolicza się do ceny biletu)
-  const scPrices = scoreData.map(a=>a.price), scComfort = scoreData.map(a=>a.cfBase+a.bonus), scQual = scoreData.map(a=>a.q);
-  const eqPrice   = Math.max(...scPrices) - Math.min(...scPrices);
-  const eqComfort = (Math.max(...scComfort) - Math.min(...scComfort)) * PLN_PER_HOUR;
-  const eqQual    = (Math.max(...scQual) - Math.min(...scQual)) / 100 * QUALITY_PLN;
-  const eqSum     = (eqPrice + eqComfort + eqQual) || 1;
-  const wPrice0 = Math.round(eqPrice/eqSum*100), wComfort0 = Math.round(eqComfort/eqSum*100);
-  const wQual0  = 100 - wPrice0 - wComfort0;
-
-  const gmin = Math.min(...DATEGRID.days.map(d=>d[1])), gmax = Math.max(...DATEGRID.days.map(d=>d[1])), base = gmin-300;
-  const bars = DATEGRID.days.map(([d,v])=>`<div class="${v===gmin?'lowest':(d===3?'plan':'')}" style="height:${Math.round((v-base)/(gmax-base)*100)}%" title="${d}.05 — ${plz(v)}"></div>`).join('');
-  const labs = DATEGRID.days.map(([d])=>`<span>${d%2===1?d:''}</span>`).join('');
-
-  const cards = PERIODS.map(P=>{
-    const diff = P.price - PERIODS[0].price;
-    return `<div class="pcard${P.best?' win':''}">${P.best?'<span class="badge">rekomendacja</span>':''}
-      <div class="ph">${P.label}</div><div class="psub">${P.sub}</div>
-      <div class="pp">${P.price?plz(P.price)+'<span style="font-size:13px;font-weight:600;color:var(--muted)">'+(P.fam?' za 4 os.':'/os.')+'</span>':'<span style="font-size:15px;color:var(--muted)">cena zbliżona do wybranego</span>'}</div>
-      <div class="pdiff" style="color:${diff===0?'var(--success)':'var(--shu)'}">${P.price==null?'&nbsp;':(diff===0?'punkt odniesienia':(diff>0?'+ ':'− ')+plz(Math.abs(diff))+(P.fam?'':'/os.'))}</div>
-      <ul>${P.pros.map(t=>`<li class="yes">${t}</li>`).join('')}${P.cons.map(t=>`<li class="no">${t}</li>`).join('')}</ul>
-    </div>`;}).join('');
-
   const inner = `
   <header class="hero kb">
     <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(200,64,44,.42)),url('${IMG.tokyostation}') center/cover"></div></div>
     <div class="hero-inner">
-    <p class="eyebrow">Ceny · trendy · rekomendacje</p>
+    <p class="eyebrow">Bilety · godziny · bagaż</p>
     <h1>Loty</h1>
-    <p class="lead"><b>Etihad jest kupiony.</b> Wylot 27.04, noc w Abu Zabi, Narita 29.04; powrót z Japonii 7.05 i lądowanie w Warszawie 8.05. E-bilety: 13 643,36 zł. Kwota budżetowa 14 400 zł wymaga uzgodnienia z kartą. Porównania niżej są archiwalne.</p>
+    <p class="lead"><b>Etihad jest kupiony.</b> Wylot 27.04, noc w Abu Zabi, Narita 29.04; powrót z Japonii 7.05 i lądowanie w Warszawie 8.05. E-bilety: 13 643,36 zł. Kwota budżetowa 14 400 zł wymaga uzgodnienia z kartą.</p>
     </div>
   </header>
-
-  <section>
-    <h2 class="stitle">Archiwum cen - kluczowe linie</h2>
-    <p class="lead-p">Historyczne odczyty za jednego dorosłego, dla wcześniejszych wariantów round-trip (m.in. 3-14 maja), a nie aktualna wycena kupionej trasy ze stopoverem. Ostatnia zapisana kontrola: <b>${dpl(LAST_CHECKED)}</b>${LAST_CHECKED!==FLIGHT.checked?` · ostatnia zmiana: ${dpl(FLIGHT.checked)}`:''}. To tło rynkowe (zwykły round-trip wg Google) — nasz wybrany wariant ze stopoverem jest opisany wyżej. Ranking wg wag niżej zostaje jako ciekawostka porównawcza.</p>
-    <div class="alist">${rows}</div>
-    <div class="dnote" style="margin-top:14px">Wasz nocleg stopover ma już voucher: Grand Millennium Al Wahda, dwa pokoje, 27-28.04, bez śniadania. Archiwalny ranking ocenia stopover warunkowo; nie potwierdza dostępności hotelu w innych ofertach ani bieżących cen.</div>
-  </section>
-
-  <section>
-    <h2 class="stitle">Trend cen</h2>
-    ${priceChart()}
-    ${FLIGHT.history.length>1?`<div class="card" style="margin-top:16px"><h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 10px">Historia odczytów - Etihad, wcześniejsze warianty</h3><div class="wxwrap"><table><thead><tr><th>Data</th><th style="text-align:right">Cena / dorosły</th><th style="text-align:right">Zmiana</th><th style="text-align:right">Rodzina 2+2</th></tr></thead><tbody>${FLIGHT.history.slice().reverse().map((h,i,arr)=>{const p=arr[i+1];const d=p?h[1]-p[1]:null;const c=d==null?'—':(d===0?'→ 0':(d<0?`▼ ${plz(Math.abs(d))}`:`▲ ${plz(d)}`));const col=d==null||d===0?'var(--muted)':(d<0?'var(--success)':'var(--shu)');return `<tr><td>${dpl(h[0])}</td><td class="num">${plz(h[1])}</td><td class="num" style="color:${col};font-weight:700">${c}</td><td class="num" style="color:var(--muted)">${plz(Math.round(h[1]*3.8/100)*100)}</td></tr>`;}).join('')}</tbody></table></div></div>`:''}
-  </section>
 
   <section>
     <h2 class="stitle">Wybrany bilet</h2>
@@ -929,62 +713,19 @@ function lotyPage(){
     <div class="card"><ul class="tips">
       <li><b>Kupione 8.09.2026.</b> Bilety i voucher są potwierdzone. Do uzgodnienia zostaje pełne rozliczenie kwoty na karcie, nie ponowny wybór przewoźnika.</li>
       <li><b>Do domknięcia w „Manage booking”:</b> dane paszportowe całej czwórki. Miejsca obok siebie zgłoszone bezpłatnie 8.09 (numer sprawy w mailu od Etihada); bagażu rejestrowanego świadomie nie kupujemy — decyzja wraca 5.05 wieczorem przy pakowaniu.</li>
-      <li><b>Monitoring cen wyłączony 8.09</b> — wykres niżej zostaje jako archiwum rynku; „Bilety lotnicze” są odhaczone na <a href="decyzje.html">checkliście</a>.</li>
       <li><b>Zmiany/anulowanie:</b> sprawdźcie warunki wystawionej taryfy przed zmianą. Ubezpieczenie nie gwarantuje zwrotu przy dowolnej rezygnacji; zakres, wyłączenia i termin zakupu ochrony kosztów rezygnacji trzeba sprawdzić teraz.</li>
     </ul></div>
   </section>
 
   <section>
-    <h2 class="stitle">Ranking wg Twoich wag</h2>
-    <p class="lead-p">Trzy kryteria — cena, wygoda podróży i jakość linii — każde punktowane 0–100, wynik to ich średnia ważona. Przesuń suwaki i zobacz, która linia wygrywa przy Twoich priorytetach. Bilety są kupione, więc ranking jest archiwum — pokazuje, dlaczego przy tych wagach wygrywał Etihad.</p>
-    <div class="card" style="margin-bottom:20px">
-      <p style="margin:0 0 10px;font-size:14px"><b>Wygoda</b> to nie tylko czas w drodze — dokładamy do niej dwie rzeczy, które realnie robią różnicę z dziećmi: <b>brak przesiadki</b> (premia równa ${STOP_PENALTY_H} h oszczędzonego czasu) oraz <b>darmowy nocleg w ramach stopoveru</b> (premia warta ${plz(750)}, bo to nie strata czasu, a dodatkowy dzień wyjazdu).</p>
-      <label class="wchk"><input type="checkbox" id="wstopover" checked>
-        <span>🕌 <b>Nocleg w Abu Zabi jest bezpłatny</b> — premia za stopover liczy się tylko wtedy.
-        Program Etihad jest formalnie potwierdzony do stycznia 2027; na maj 2027 trzeba go potwierdzić przy zakupie biletu.
-        <i>Odznacz, żeby zobaczyć ranking bez tego założenia.</i></span></label>
-      <p style="margin:0 0 14px;font-size:14px">Domyślne wagi <b>nie są ustawione z ręki</b> — wynikają z tego, jak szeroko rozstrzelone jest dziś każde kryterium, przeliczone na złotówki: cena wprost, wygoda wg Twojej reguły <b>8 h w drodze ≡ ${plz(8*PLN_PER_HOUR)} na bilecie</b> (czyli ${plz(PLN_PER_HOUR)}/h), jakość tak, że jej pełna rozpiętość (0–100 pkt w rankingu AirlineRatings) warta jest ${plz(QUALITY_PLN)}. Możesz je dowolnie przesunąć.</p>
-      <div class="wgrow">
-        <label for="wprice">💰 Cena <b id="wlab_p">${wPrice0}%</b></label>
-        <input type="range" id="wprice" aria-label="Waga ceny" min="0" max="100" step="5" value="${wPrice0}">
-      </div>
-      <div class="wgrow">
-        <label for="wtime">🛋️ Wygoda podróży <b id="wlab_t">${wComfort0}%</b></label>
-        <input type="range" id="wtime" aria-label="Waga wygody" min="0" max="100" step="5" value="${wComfort0}">
-      </div>
-      <div class="wgrow">
-        <label for="wqual">⭐ Jakość linii <b id="wlab_q">${wQual0}%</b></label>
-        <input type="range" id="wqual" aria-label="Waga jakości" min="0" max="100" step="5" value="${wQual0}">
-      </div>
-      <div id="scorelist" class="scorelist" style="margin-top:6px"></div>
-      <p class="note" style="margin-top:12px">Punkty ceny: najtańsza linia = 100, najdroższa = 0. Punkty wygody: najlepsza kombinacja czasu, przesiadek i stopoveru = 100, najsłabsza = 0 (czas liczony od wylotu do lądowania). Punkty jakości: pozycja w rankingu <i>AirlineRatings „World's Best Airlines 2026"</i>. Premia za darmowy nocleg wchodzi do wygody tylko przy zaznaczonym przełączniku powyżej — bez niej Etihad i Emirates idą praktycznie łeb w łeb.</p>
-    </div>
-    <script id="scoredata" type="application/json">${JSON.stringify(scoreData)}</script>
-  </section>
-
-  <section>
-    <h2 class="stitle">Który termin pobytu</h2>
-    <p class="lead-p">Trzy warianty; ceny za dorosłego, „rodzina" to 3,8 taryfy (3 dorosłych + dziecko). Od 4.09 wybrany, 8.09 kupiony: <b>round-trip do Narity ze stopoverem tam</b> — bilet w progu okazji przeważył nad wygodą open-jaw z Kansai.</p>
-    <div class="pcards">${cards}</div>
-    <div class="card" style="margin-top:16px">
-      <h3 style="font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 4px">Cena wg dnia wylotu</h3>
-      <p class="note" style="margin:0 0 10px">12-dniowa podróż, za 1 dorosłego (odczyt ${dpl(DATEGRID.src)}). <span style="color:var(--success);font-weight:700">■</span> najtańszy dzień w całym oknie — i to właśnie 3 maja.</p>
-      <div class="gridbars">${bars}</div>
-      <div class="gridlabs">${labs}</div>
-      <p class="note" style="margin-top:8px">Maj 2027 · najtaniej <b>${plz(gmin)}</b> (3.05), najdrożej <b>${plz(gmax)}</b> (2.05). Wyloty 1–2 maja są droższe przez ogon Golden Week.</p>
-    </div>
-    <div class="dnote" style="margin-top:14px">🏁 <b>Termin przesunięty na 27.04–7.05</b> (dziecko 10.05 jedzie na wycieczkę klasową). W Google identyczna cena co 3–14 (3 449 zł/os.); wycena stopoveru z 7.09: 13 600 zł za 4 osoby; przy zakupie 8.09 wyszło 3 600 zł/os. (14 400 zł). To zapis wcześniejszego porównania, nie bieżąca oferta ani rozliczenie transakcji. Warianty miały różne trasy i warunki; kwotę kupionego biletu należy brać z dokumentów oraz obciążenia karty.</div>
-  </section>
-
-  <section>
     <h2 class="stitle">Dalej</h2>
     <div class="quick">
-      <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet całości</div><div class="qd">Kalkulator kosztów, zweryfikowane taryfy kolejowe, budżet ~42 tys.</div></a>
+      <a class="qcard" href="koszty.html"><div class="qi">💴</div><div class="qh">Budżet całości</div><div class="qd">Kalkulator kosztów i zweryfikowane taryfy kolejowe.</div></a>
       <a class="qcard" href="hotele.html"><div class="qi">🏨</div><div class="qh">Noclegi</div><div class="qd">3 bazy: cztery noce w Kiocie, trzy w Tokio, ryokan w Hakone.</div></a>
     </div>
   </section>
   ${footer('')}`;
-  return shell({title:'Loty — ceny, trendy i kiedy kupić · Japonia 2027',desc:'Ceny lotów WAW→Tokio na maj 2027: porównanie linii, trendy cen i rekomendacja terminu zakupu.',prefix:'',active:'loty.html',inner,pillsIdx:null});
+  return shell({title:'Loty · Japonia 2027',desc:'Kupione bilety Etihad: godziny lotów, stopover w Abu Zabi i bagaż.',prefix:'',active:'loty.html',inner,pillsIdx:null});
 }
 
 function pogodaPage(){

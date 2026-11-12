@@ -148,53 +148,6 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   draw();
 })();
 
-/* ---- ranking wg wag: cena / wygoda / jakość (3 kryteria, suwaki normalizowane do 100%) ---- */
-(function(){
-  var host=document.getElementById('scorelist'), src=document.getElementById('scoredata');
-  var slP=document.getElementById('wprice'), slT=document.getElementById('wtime'), slQ=document.getElementById('wqual');
-  if(!host||!src||!slP||!slT||!slQ) return;
-  var D=JSON.parse(src.textContent||'[]'); if(!D.length) return;
-  var chk=document.getElementById('wstopover');
-  function rng(f){var v=D.map(f); return {min:Math.min.apply(null,v), max:Math.max.apply(null,v)};}
-  var P=rng(function(a){return a.price;}), Q=rng(function(a){return a.q;});
-  function plz(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';}
-  function pts(v,r,inv){return r.max===r.min?100:((inv?(r.max-v):(v-r.min))/(r.max-r.min)*100);}
-  // premia za stopover liczy się tylko, gdy nocleg faktycznie jest bezpłatny
-  function bonusOn(){return !chk || chk.checked;}
-  function cfOf(a){return a.cfBase + (bonusOn()?a.bonus:0);}
-  function comfortLabel(a){
-    var t=[a.dur];
-    t.push(a.stops?(a.stops===1?'1 przesiadka':a.stops+' przesiadki'):'bez przesiadek');
-    if(a.bonus>0) t.push(bonusOn()?'nocleg gratis':'nocleg płatny');
-    return t.join(' · ');
-  }
-  function draw(){
-    var wp=+slP.value, wt=+slT.value, wq=+slQ.value, sum=(wp+wt+wq)||1;
-    document.getElementById('wlab_p').textContent=Math.round(wp/sum*100)+'%';
-    document.getElementById('wlab_t').textContent=Math.round(wt/sum*100)+'%';
-    document.getElementById('wlab_q').textContent=Math.round(wq/sum*100)+'%';
-    var C=rng(cfOf);
-    var rows=D.map(function(a){
-      var pp=pts(a.price,P,true), cp=pts(cfOf(a),C,false), qp=pts(a.q,Q,false);
-      return {a:a, pp:pp, cp:cp, qp:qp, sc:(wp*pp+wt*cp+wq*qp)/sum};
-    }).sort(function(x,y){return y.sc-x.sc;});
-    var best=rows[0].sc;
-    host.innerHTML=rows.map(function(r,i){
-      var a=r.a, fam=Math.round((a.price*3+a.price*0.8)/100)*100;
-      return '<div class="scrow'+(i===0?' win':'')+'">'+
-        '<div class="scpos">'+(i+1)+'</div>'+
-        '<div class="scmain"><div class="scname"><i style="background:'+a.col+'"></i>'+a.name+(a.star?' ★':'')+(i===0?' <span class="rezerwuj">wygrywa</span>':'')+'</div>'+
-        '<div class="scmeta">'+comfortLabel(a)+' · jakość '+a.qpos+'</div></div>'+
-        '<div class="scprice">'+plz(a.price)+'<span>rodzina ~'+plz(fam)+'</span></div>'+
-        '<div class="scbarwrap"><div class="scbar" style="width:'+(best>0?(r.sc/best*100):0).toFixed(1)+'%;background:'+a.col+'"></div><b>'+r.sc.toFixed(0)+'</b></div>'+
-      '</div>';
-    }).join('');
-  }
-  [slP,slT,slQ].forEach(function(s){s.addEventListener('input',draw);});
-  if(chk) chk.addEventListener('change',draw);
-  draw();
-})();
-
 /* ---- pogoda na żywo (Open-Meteo) — wzorzec z planu Madery ---- */
 (function(){
   var host=document.getElementById('livewx');
