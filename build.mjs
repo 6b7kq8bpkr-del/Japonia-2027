@@ -968,7 +968,7 @@ function niezbednikPage(){
       'W pociągach obowiązuje <b>cisza</b>, telefon na milczek, rozmowy szeptem.',
       '<b>Koszy na śmieci prawie nie ma</b> — noście małą torebkę na odpadki i wyrzucajcie w hotelu albo w konbini.',
       'Nie je się i nie pije w ruchu — zwykle staje się obok automatu albo sklepu.',
-      '<b>Onsen:</b> sprawdźcie regulamin publicznych łaźni, m.in. zasady tatuaży i kąpieli dzieci. Hanaori Deluxe ma prywatną wannę na świeżym powietrzu, ale bez wody termalnej. Publiczny onsen jest rozdzielony płciowo; wspólny rodzinny onsen kashikiri wymaga osobnej rezerwacji (propozycja 6.05 o 17:00, 40 minut, {{hanaori.bath}} za czwórkę). Nie jest jeszcze zamówiony.'])}
+      '<b>Kąpiele:</b> na dziś wybieramy wyłącznie prywatne, bez publicznych łaźni z dziećmi. Hanaori Deluxe ma prywatną wannę na świeżym powietrzu, ale bez wody termalnej. Bez dostępnego kashikiri zostaje wanna przy pokoju. Wspólny rodzinny onsen kashikiri wymaga osobnej rezerwacji (propozycja 6.05 o 17:00, 40 minut, {{hanaori.bath}} za czwórkę). Nie jest jeszcze zamówiony.'])}
     ${seg('🛍️ Tax-free i aplikacje',[
       '<b>Od 1.11.2026 obowiązuje nowy system zwrotu</b>, więc dotyczy waszego wyjazdu. W sklepie tax-free okazujecie paszport i płacicie kwotę brutto; zwrot następuje po potwierdzeniu wywozu przez urząd celny, zgodnie z procedurą sklepu/operatora.',
       'Zachowajcie towary i dokumenty do kontroli przed wywozem, także przed oddaniem bagażu rejestrowanego. Nie zakładajcie automatycznej wypłaty gotówki na lotnisku. <a href="https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00019.html" target="_blank" rel="noopener">Oficjalne zasady nowego systemu →</a>',
