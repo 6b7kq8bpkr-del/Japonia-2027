@@ -85,7 +85,7 @@ const BOOKINGS = [
   {id:'tea-koto-v2',when:'Luty-marzec 2027',what:'Zarezerwować KOTO 2.05 na 11:45',note:'Jedna ceremonia, około 45 min, bez dodatkowej kaligrafii i bez całodniowego kimona. Na 2.05 Marcel ma jeszcze 12 lat: obecny cennik KOTO 2 × 3300 + 2 × 2500 = 11 600 JPY; potwierdźcie cenę i dostępność na 2027. Wspólne sesje zaczynają się o 11:45, 13:00, 14:15, 15:30 i 16:45; sesji o 10:30 nie ma. Celujemy w pierwszą.'},
   {id:'osaka-v1',when:'Styczeń 2027 i ponownie przed wyjazdem',what:'Sprawdzić muzeum w Osace i Sushiro Esaka na 1.05',note:'Muzeum zapowiedziało zamknięcie do 5.01.2027 włącznie; potwierdźcie ponowne otwarcie i kalendarz maja. Sushiro Esaka: godziny, kolejka i ewentualna rezerwacja. Zamek zastępuje muzeum, nie dochodzi do niego.'},
   {id:'sumo',when:'Luty-marzec 2027',what:'Zdecydować i ewentualnie zarezerwować sumo',note:'3.05 cel: sesja 18:00 w Asakusie. Dopóki nie ma biletu, to opcja. Sprawdźcie cenę całej rodziny, menu, warunki anulowania i zakres udziału publiczności.'},
-  {id:'rail-v2',when:'29.03 i 3.04 maile; 6.04 i 7.04 zakupy',what:'Domknąć kolej: potwierdzenia miejsc, Odawara-Tokio, NEX, Romancecar',note:'Dwa długie przejazdy są już zarezerwowane w SmartEX (patrz: potwierdzone elementy). Zostało: (1) 29.03 i 3.04 po 8:00 JST (1:00 w Polsce) sprawdzić maile z ostatecznym numerem pociągu i czterema miejscami obok siebie; (2) Odawara-Tokio na 7.05: standardowa sprzedaż od 7.04 o 10:00 JST (03:00 w Polsce); (3) NEX osobno w JR East; (4) Romancecar na 6.05 osobno w Odakyu od 6.04; (5) ustalić w SmartEX sposób wejścia na peron dla całej czwórki: kod QR albo odbiór biletów w automacie.'},
+  {id:'rail-v3',when:'29.03 i 3.04 maile; 6.04 i 7.04 zakupy',what:'Domknąć kolej: potwierdzenia miejsc, Odawara-Shinagawa, NEX, Romancecar',note:'Dwa długie przejazdy są już zarezerwowane w SmartEX (patrz: potwierdzone elementy). Zostało: (1) 29.03 i 3.04 po 8:00 JST (1:00 w Polsce) sprawdzić maile z ostatecznym numerem pociągu i czterema miejscami obok siebie; (2) Odawara-Shinagawa na 7.05: standardowa sprzedaż od 7.04 o 10:00 JST (03:00 w Polsce); (3) NEX osobno w JR East, w obie strony do i z Shinagawy; (4) Romancecar na 6.05 osobno w Odakyu od 6.04; (5) ustalić w SmartEX sposób wejścia na peron dla całej czwórki: kod QR albo odbiór biletów w automacie. 29.04 wsiadacie na Shinagawie: przy kodzie QR zmieńcie wcześniej odcinek na Shinagawa-Kioto (bezpłatnie).'},
   {id:'insurance',when:'Teraz / przed wyjazdem',what:'Sprawdzić paszporty, warunki wjazdu i ubezpieczenie',note:'Sprawdźcie dokumenty wszystkich osób dla Japonii i ZEA. Polisa powinna odpowiadać trasie i planowanym aktywnościom; ochrony kosztów rezygnacji nie odkładajcie do kwietnia bez sprawdzenia terminu zakupu.'},
   {id:'sky-v2',when:'19.04.2027 około 17:00 PL',what:'Shibuya Sky na 4.05',note:'Według obecnej zasady sprzedaż od 0:00 JST dwa tygodnie przed wejściem. Sloty są 20-minutowe; celem jest 17:40-17:59 (zachód słońca 18:30). Online kupcie trzy bilety dorosłe: taryfa dorosła obowiązuje od 12 lat, obecnie 3 400 JPY po 15:00. Bilet dla dziecka poniżej 12 lat (1 200 JPY) jest według strony Shibuya Sky sprzedawany tylko w kasie na 14. piętrze w dniu wizyty. Przy biletach kupionych z zagranicy miejcie przy wejściu paszporty. Potwierdźcie te zasady w kwietniu 2027.'},
   {id:'cafe-v2',when:'Od 1.03.2027 sprawdzaj NEWS',what:'Sprawdzić otwarcie rezerwacji Pokémon Café',note:'W 2026 operator zmieniał okna sprzedaży i ogłaszał je w NEWS. Dawna reguła 31 dni o 18:00 nie jest pewnym terminem dla maja 2027. Przy braku stolika zostaje Pokémon Center TOKYO DX i zwykły lunch.'},
@@ -103,7 +103,7 @@ const BOOKINGS = [
 ];
 const DEADLINES = [
   {date:'2027-03-01',label:'Od 1 marca',title:'Pokémon Café i warsztaty',text:'Sprawdzajcie komunikaty o sprzedaży na maj. Potwierdźcie godziny herbaty i furoshiki.',href:'decyzje.html#do-zalatwienia'},
-  {date:'2027-03-29',label:'29.03 / 3.04 / 6.04 / 7.04',title:'Pociągi dla całej rodziny',text:'Shinkanseny 29.04 i 3.05 są zarezerwowane: 29.03 i 3.04 przyjdą maile z ostatecznym pociągiem i miejscami. 6.04 Romancecar, 7.04 Odawara-Tokio. SmartEX, JR East i Odakyu to różne systemy.',href:'decyzje.html#do-zalatwienia'},
+  {date:'2027-03-29',label:'29.03 / 3.04 / 6.04 / 7.04',title:'Pociągi dla całej rodziny',text:'Shinkanseny 29.04 i 3.05 są zarezerwowane: 29.03 i 3.04 przyjdą maile z ostatecznym pociągiem i miejscami. 6.04 Romancecar, 7.04 Odawara-Shinagawa. SmartEX, JR East i Odakyu to różne systemy.',href:'decyzje.html#do-zalatwienia'},
   {date:'2027-04-19',label:'19 kwietnia, 17:00 PL*',title:'Shibuya Sky',text:'Planowany start sprzedaży na 4.05 według obecnej reguły. *Potwierdźcie w 2027.',href:'atrakcje.html#shibuya-sky'},
   {date:'2027-04-21',label:'21 kwietnia, 23:59 JST',title:'Ostatni bezpłatny termin: Kioto',text:'16:59 w Polsce. Decyzję podejmijcie dzień wcześniej.',href:'hotele.html#kioto'},
   {date:'2027-04-25',label:'25 kwietnia, 23:59 JST',title:'Ostatni bezpłatny termin: Tokio',text:'16:59 w Polsce. Sprawdźcie plan i prognozę 24.04.',href:'hotele.html#tokio1'},
@@ -1051,7 +1051,7 @@ const JPROUTE = [0,3,1,2,1,3,4,3,0].map(i=>JPSTOPS[i].slice(0,2));
 const GEO = {
   '2027-04-27':[[52.1657,20.9671,'Lotnisko Chopina (wylot 11:50)'],[24.4330,54.6511,'Lotnisko Abu Zabi (19:35)'],[24.4539,54.3773,'Al Wahda - okolica hotelu; dokładny adres w karcie noclegu']],
   '2027-04-28':[[24.4128,54.4750,'Wielki Meczet Szejka Zajida'],[24.5333,54.3981,'Luwr Abu Zabi - opcja zamiast pałacu'],[24.4539,54.3773,'Al Wahda - odpoczynek w hotelu'],[24.4330,54.6511,'Lotnisko (wylot 21:25)']],
-  '2027-04-29':[[35.772,140.393,'Narita (przylot 12:45)'],[35.681,139.767,'Tokyo Station (NEX → shinkansen)'],[34.9858,135.7588,'Kyoto Station - hotel po stronie południowej']],
+  '2027-04-29':[[35.772,140.393,'Narita (przylot 12:45)'],[35.6285,139.7388,'Shinagawa (NEX → shinkansen)'],[34.9858,135.7588,'Kyoto Station - hotel po stronie południowej']],
   '2027-04-30':[[34.9671,135.7727,'Fushimi Inari - krótka pętla'],[34.9858,135.7588,'Kyoto Station - ramen i odpoczynek w hotelu'],[35.0142,135.7482,'Nijō - Ninomaru, opcjonalnie po sjeście'],[35.0030,135.7780,'Gion - wieczorny spacer']],
   '2027-05-01':[[34.9858,135.7588,'Kyoto Station - wyjazd i powrót'],[34.7335,135.5002,'Shin-Osaka - przesiadka na metro'],[34.7580,135.4970,'Esaka - okolica Sushiro; wejście z linku restauracji'],[34.7108,135.5102,'Osaka Museum of Housing and Living'],[34.6687,135.5013,'Dōtonbori - krótki spacer i kolacja']],
   '2027-05-02':[[35.032420,135.720016,'Pinezka ze zdjęcia - prawdopodobnie Kyo-komono Kinugasa'],[35.0394,135.7312,'KOTO - okolica herbaciarni przy Kinkaku-ji; adres w rezerwacji'],[35.0050,135.7649,'Nishiki Market - opcja po herbacie'],[34.9858,135.7588,'Kyoto Station - hotel, pranie i pakowanie']],
@@ -1059,7 +1059,7 @@ const GEO = {
   '2027-05-04':[[35.6764,139.6993,'Meiji Jingū'],[35.6702,139.7026,'Harajuku'],[35.6688,139.7068,'Cat Street - wybierzcie dwa sklepy'],[35.6619,139.6987,'Shibuya PARCO / Nintendo - opcja'],[35.6595,139.7005,'Shibuya Sky - po zdobyciu biletu']],
   '2027-05-05':[[35.6745,139.7395,'Hie-jinja - krótki spacer, opcja'],[35.6817,139.7740,'Pokémon Center TOKYO DX; Café tylko z rezerwacją'],[35.7022,139.7741,'Akihabara - opcja na 60-90 minut']],
   '2027-05-06':[[35.6896,139.7006,'Shinjuku (Romancecar)'],[35.2332,139.1036,'Hakone-Yumoto - przesiadka'],[35.2503,139.0503,'Gōra'],[35.2445,139.0197,'Ōwakudani - jeśli kolejka działa'],[35.2337,139.0155,'Tōgendai - Hanaori w pobliżu, nocleg']],
-  '2027-05-07':[[35.2337,139.0155,'Tōgendai - wyjazd około 09:00'],[35.2564,139.1553,'Odawara - cel około 10:30'],[35.681,139.767,'Tokyo Station - przesiadka na NEX'],[35.772,140.393,'Narita - cel przed 14:30, wylot 18:00']],
+  '2027-05-07':[[35.2337,139.0155,'Tōgendai - wyjazd około 09:00'],[35.2564,139.1553,'Odawara - cel około 10:30'],[35.6285,139.7388,'Shinagawa - przesiadka na NEX'],[35.772,140.393,'Narita - cel przed 14:30, wylot 18:00']],
 };
 const A = (id,label)=>({id,label}); // attraction link helper
 
@@ -1100,12 +1100,12 @@ const DAYS = [
 {date:'2027-04-29',dow:'czwartek',dd:'29 kwietnia',city:'kioto',title:'Narita → Kioto. Tylko podróż i odpoczynek',level:'r',stay:'kioto',
  lead:'Po nocnym locie czeka jeszcze przejazd do Kioto. Dzisiejszym planem jest sprawne dotarcie do hotelu, kolacja i sen.',
  chips:['Przylot 12:45','Golden Week','Bez wieczornego zwiedzania'],
- brief:{start:'12:45 przylot',end:'około 20:00 w hotelu',focus:'Dotrzeć do Kioto bez pośpiechu na przesiadkach.',must:'Lot, zarezerwowany shinkansen Nozomi 51 o 16:48 i nocleg w Kioto.',cut:'Wszystkie atrakcje po przyjeździe.',check:'NEX kupcie na realną godzinę po kontroli granicznej, z przyjazdem na Tokyo Station najpóźniej około 16:15. Jeśli grozi spóźnienie, zmieńcie rezerwację w SmartEX przed 16:48; po odjeździe pociągu zmiana w aplikacji nie jest już możliwa.'},
+ brief:{start:'12:45 przylot',end:'około 20:00 w hotelu',focus:'Dotrzeć do Kioto bez pośpiechu na przesiadkach.',must:'Lot, zarezerwowany shinkansen Nozomi 51 (z Shinagawy o 16:55) i nocleg w Kioto.',cut:'Wszystkie atrakcje po przyjeździe.',check:'NEX kupcie na realną godzinę po kontroli granicznej, z przyjazdem na Shinagawę najpóźniej o 16:25. Jeśli grozi spóźnienie, zmieńcie rezerwację w SmartEX przed 16:48; po odjeździe pociągu zmiana w aplikacji nie jest już możliwa.'},
  tl:[
   ['12:45','Lądowanie na Naricie','Visit Japan Web przygotujcie przed wylotem, a kody każdej osoby zapiszcie offline. Kontrola graniczna może potrwać dłużej niż zwykle.','lot'],
-  ['14:20','Narita Express do Tokyo Station','Według obecnego rozkładu z Terminalu 1 odjeżdżają pociągi 14:20 (Tokyo Station 15:15) i 14:45 (15:45). Ostatni, który jeszcze daje przesiadkę, to 15:14 (16:14). Wybierzcie pociąg po przejściu formalności; rozkład na 2027 potwierdźcie przy zakupie.','rezerwacja'],
-  ['15:15','Tokyo Station: przesiadka i jedzenie','Zostawcie co najmniej 30-45 minut na dojście, toalety, bilety i ekiben.','bufor'],
-  ['16:48','Shinkansen Nozomi 51 do Kioto','Zarezerwowany 18.09.2026 w SmartEX: Tokyo 16:48, Kioto 19:00, 3 taryfy dorosłe i 1 dziecięca, wagon zwykły. Numer pociągu i miejsca są wstępne; ostateczne przyjdą mailem 29.03 po 8:00 JST (1:00 w Polsce). Przy opóźnionym locie zmieńcie rezerwację w SmartEX przed odjazdem; w Golden Week wolnych miejsc w kolejnych pociągach może nie być.','zarezerwowane'],
+  ['14:20','Narita Express do Shinagawy','Wysiadacie na Shinagawie, jedną stację za Tokyo Station: przesiadka na shinkansen trwa tam około 8 minut zamiast 15. Według obecnego rozkładu z Terminalu 1 odjeżdżają pociągi 14:20 (Shinagawa 15:25) i 14:45 (15:53). Ostatni, który jeszcze daje przesiadkę, to 15:14 (16:25). Wybierzcie pociąg po przejściu formalności; rozkład na 2027 potwierdźcie przy zakupie.','rezerwacja'],
+  ['15:25','Shinagawa: przesiadka i jedzenie','Zostawcie co najmniej 30 minut na dojście, toalety, bilety i ekiben. Perony shinkansena są na tym samym dworcu, za osobną bramką.','bufor'],
+  ['16:55','Shinkansen Nozomi 51 do Kioto','Wsiadacie na Shinagawie o 16:55. Rezerwacja jest z Tokio i tak może zostać, jeśli wchodzicie kartą IC: SmartEX dopuszcza wtedy bramkę na Shinagawie. Przy kodzie QR zmieńcie wcześniej w SmartEX odcinek na Shinagawa-Kioto (bezpłatnie, w tej samej cenie) i pobierzcie nowy kod. Zarezerwowany 18.09.2026 w SmartEX: Tokyo 16:48, Kioto 19:00, 3 taryfy dorosłe i 1 dziecięca, wagon zwykły. Numer pociągu i miejsca są wstępne; ostateczne przyjdą mailem 29.03 po 8:00 JST (1:00 w Polsce). Przy opóźnionym locie zmieńcie rezerwację w SmartEX przed odjazdem; w Golden Week wolnych miejsc w kolejnych pociągach może nie być.','zarezerwowane'],
   ['19:30','MIMARU Kyoto Station','Pociąg jest w Kioto planowo o 19:00; hotel stoi kilka minut od wyjścia Hachijō. Przy dużym opóźnieniu uprzedźcie recepcję.'],
   ['20:00','Kolacja przy dworcu i sen','Prosty posiłek; bez szukania popularnej restauracji z kolejką.'],
  ],
@@ -1210,9 +1210,9 @@ const DAYS = [
  tips:['Aktualne okno sprzedaży i zasady dziecięcego biletu sprawdźcie na oficjalnej stronie Shibuya Sky przed zakupem.','Zakupy tax-free w 2027 działają w nowym systemie zwrotu. Zachowujcie dokumenty i towary do kontroli wywozu; szczegóły w Niezbędniku.'],
  links:[A('meiji','Meiji Jingū'),A('streetwear','Streetwear'),A('shibuya-sky','Shibuya Sky')],more:[]},
 
-{date:'2027-05-05',dow:'środa',dd:'5 maja',city:'tokio',title:'Pokémony i wolne popołudnie',level:'g',stay:'tokio1',
- lead:'Jeden Pokémon Center, Café jeśli zdobędziecie stolik, a później czas bez obowiązkowego zwiedzania. To dzień na złapanie oddechu i przygotowanie do Hakone.',
- chips:['Dzień Dziecka','Jedna wizyta Pokémon','Wolne popołudnie'],
+{date:'2027-05-05',dow:'środa',dd:'5 maja',city:'tokio',title:'Urodziny Marcela, Pokémony i wolne popołudnie',level:'g',stay:'tokio1',
+ lead:'Marcel kończy dziś 13 lat. Jeden Pokémon Center, Café jeśli zdobędziecie stolik, a później czas bez obowiązkowego zwiedzania. To dzień na złapanie oddechu i przygotowanie do Hakone.',
+ chips:['13. urodziny Marcela','Dzień Dziecka','Wolne popołudnie'],
  brief:{start:'09:30 lub później',end:'około 19:30',focus:'Pokémon Center TOKYO DX i odpoczynek.',must:'Café tylko z potwierdzoną rezerwacją. Wieczorem pakowanie i sprawdzenie bagażu.',cut:'Hie-jinja i Akihabara. Bez Café zostaje sklep oraz zwykły lunch.',check:'12:30 jest przykładem slotu, nie rezerwacją. Cały dzień dopasujcie do zdobytej godziny.'},
  tl:[
   ['09:30','Śniadanie i Hie-jinja dla chętnych','Krótki spacer do chramu; czas dojścia sprawdźcie z hotelu. Przy zmęczeniu śniadanie trwa dłużej.','opcja'],
@@ -1221,7 +1221,7 @@ const DAYS = [
   ['12:30','Pokémon Café albo zwykły lunch','Café wyłącznie po potwierdzeniu slotu. Przy rezerwacji bądźcie 15 minut wcześniej; bez niej nie czekajcie godzinami na zwolniony stolik.','opcja'],
   ['14:30','Wolne popołudnie','Domyślnie hotel i odpoczynek. Akihabara może zastąpić część wolnego czasu: 60-90 minut, tylko jeśli wszyscy mają ochotę.','bufor'],
   ['17:00','Pranie, pakowanie i ważenie','Zacznijcie wcześnie, żeby starczyło czasu na suszenie. Limit sprawdźcie dla każdego bagażu. Gdy potrzebny jest dodatkowy, wyceńcie go dziś w Manage Booking.'],
-  ['18:30','Kolacja blisko hotelu','Potem dokończenie pakowania i spokojny wieczór.'],
+  ['18:30','Kolacja urodzinowa Marcela','Miejsce wybiera solenizant, najlepiej blisko hotelu. Potem dokończenie pakowania i spokojny wieczór.'],
  ],
  facts:[['Niewiele w wariancie podstawowym','Chodzenie'],['Metro','Transport']],
  tips:['Brak stolika w Café nie psuje dnia: sklep pozostaje główną atrakcją.','Nie zakładajcie konkretnej dopłaty za bagaż. Cena i termin zakupu wynikają z Waszej rezerwacji w Etihad.'],
@@ -1251,15 +1251,15 @@ const DAYS = [
 {date:'2027-05-07',dow:'piątek',dd:'7 maja',city:'hakone',title:'Z Hakone na lotnisko z zapasem',level:'r',
  lead:'To dzień podróży. Śniadanie, wczesny wyjazd z gór i lot z Narity o 18:00. Lunch i sklepy na dworcu tylko z rzeczywistego zapasu czasu.',
  chips:['Wyjazd około 09:00','Narita około 14:00','Powrót 8.05 rano'],
- brief:{start:'08:00 śniadanie',end:'8.05 o 06:50 w WAW',focus:'Dotrzeć na Naritę co najmniej trzy godziny przed lotem.',must:'Wyjazd z Tōgendai około 09:00; lot NRT 18:00.',cut:'Sklepy na Tokyo Station. Przy opóźnieniu lunch kupcie na wynos.',check:'Rozkład i połączenia potwierdźcie 6.05. Jeśli do 09:15 autobus nie odjeżdża, wdrażajcie wcześniej ustalony z recepcją wariant taksówką.'},
+ brief:{start:'08:00 śniadanie',end:'8.05 o 06:50 w WAW',focus:'Dotrzeć na Naritę co najmniej trzy godziny przed lotem.',must:'Wyjazd z Tōgendai około 09:00; lot NRT 18:00.',cut:'Sklepy na dworcu. Przy opóźnieniu lunch kupcie na wynos.',check:'Rozkład i połączenia potwierdźcie 6.05. Jeśli do 09:15 autobus nie odjeżdża, wdrażajcie wcześniej ustalony z recepcją wariant taksówką.'},
  tl:[
   ['08:00','Śniadanie i wymeldowanie','Bez porannej kąpieli. Wszystko spakowane przed wyjściem.'],
   ['08:45','Przystanek Tōgendai','Obecny rozkład w dni robocze: 8:40, 9:00, 9:20 i 9:35. Celem jest kurs o 9:00; rozkład na 2027 potwierdźcie z recepcją.','bufor'],
   ['09:00','Autobus linii T do Odawary','Według rozkładu 65 minut, przyjazd 10:05. Potwierdźcie kurs z recepcją dzień wcześniej. Hotelowy shuttle jeździ tylko do Gōry, a nie do Odawary.','rezerwacja'],
   ['10:05','Odawara: przejście na shinkansen','Przyjazd według rozkładu; do pociągu o 11:14 zostaje około godziny zapasu na korki w górach. Przy opóźnieniu sprawdźcie następne połączenie i zrezygnujcie z przystanku na zakupy.','bufor'],
-  ['11:14','Shinkansen Kodama do Tokyo Station','Obecny rozkład: Kodama 808, Odawara 11:14, Tokyo Station 11:48. Wcześniejszy odjeżdża o 10:45, późniejszy o 11:44. Konkretna godzina i miejsca po publikacji rozkładu.','rezerwacja'],
-  ['11:50','Tokyo Station: przesiadka i szybki lunch','Przejście do podziemnych peronów NEX może zająć 20-30 minut. Jedzenie na wynos; bez planowanej wizyty w Character Street.','bufor'],
-  ['13:03','Narita Express','Obecny rozkład: Tokyo Station 13:03, Terminal 1 o 13:57. Wcześniejszy 12:33 (na lotnisku 13:26), późniejszy 13:33 (14:31). Rozkład na 2027 potwierdźcie przy zakupie.','rezerwacja'],
+  ['11:14','Shinkansen Kodama do Shinagawy','Obecny rozkład: Kodama 808, Odawara 11:14, Shinagawa 11:40. Wcześniejszy odjeżdża o 10:45, późniejszy o 11:44. Konkretna godzina i miejsca po publikacji rozkładu.','rezerwacja'],
+  ['11:40','Shinagawa: przesiadka i szybki lunch','Przejście na peron NEX trwa około 8 minut, krócej niż na Tokyo Station. Jedzenie na wynos albo szybki posiłek na dworcu.','bufor'],
+  ['12:50','Narita Express','Obecny rozkład: Shinagawa 12:50, Terminal 1 o 13:57. Wcześniejszy 12:24 (na lotnisku 13:26), późniejszy 13:24 (14:31). Rozkład na 2027 potwierdźcie przy zakupie.','rezerwacja'],
   ['14:00','Narita: formalności przed lotem','Etihad odprawia w Terminalu 1. Sprawdźcie stanowiska i procedurę wywozu zakupów tax-free: towary pokazuje się celnikom przed oddaniem bagażu.','bufor'],
   ['15:00','Odprawa, kontrola i bramka','Odprawa online nie wyklucza sprawdzenia dokumentów przy stanowisku. Przestrzegajcie godzin z karty pokładowej.'],
   ['18:00','Narita → Abu Zabi → Warszawa','Godzina pierwszego lotu z e-biletu. W Abu Zabi pozostajecie w tranzycie, bez drugiego stopoveru hotelowego.','lot'],
@@ -1530,7 +1530,7 @@ function kosztyPage(){
       '<b>Narita → Tokio → Kioto</b> (29.04): NEX obecnie 3 140 JPY/dorosły w jedną stronę; shinkansen zarezerwowany w SmartEX: 50 290 JPY za rodzinę (14 370 JPY dorosły, 7 180 JPY dziecko). NEX kupuje się osobno w JR East.',
       
       
-      '<b>Kioto → Tokio</b> (3.05): shinkansen zarezerwowany w SmartEX, 50 290 JPY za rodzinę. Ostateczny pociąg i cztery miejsca potwierdzi mail z 3.04.', '<b>Odawara → Tokio → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
+      '<b>Kioto → Tokio</b> (3.05): shinkansen zarezerwowany w SmartEX, 50 290 JPY za rodzinę. Ostateczny pociąg i cztery miejsca potwierdzi mail z 3.04.', '<b>Odawara → Shinagawa → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
       '<b>Kolej międzymiastowa: około 3,2 tys. zł za rodzinę</b>, z czego 100 580 JPY (około 2 414 zł) to dwa zarezerwowane shinkanseny; do tego Hakone, Osaka, komunikacja miejska i taksówki. Na kolej i metro dnia w Osace przyjmujemy rezerwę 8-12 tys. JPY za rodzinę (192-288 zł przy kursie planistycznym), nie potwierdzoną taryfę. Jest częścią puli transportu 5000 zł, nie dopłatą do niej.', '<b>Do sprawdzenia przed zakupem:</b> N’EX TOKYO Round Trip Ticket ważny 14 dni: obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko, czyli 18 200 JPY (około 437 zł) za oba przejazdy rodziny. Daty 29.04 i 7.05 mieszczą się w ważności. Sprawdźcie uprawnienia i zarezerwujcie konkretne pociągi.',
       'Standardowy JR Pass nie jest tu domyślnym zakupem. Porównajcie pełny koszt z biletami punktowymi; uprawnienie do Nozomi wymaga dodatkowych warunków/opłaty'])}
   </section>
