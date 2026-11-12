@@ -1,0 +1,240 @@
+
+(function(){
+  document.addEventListener('DOMContentLoaded',function(){
+    var button=document.getElementById('timelineToggle');
+    if(!button)return;
+    var items=Array.from(document.querySelectorAll('.tline details'));
+    function sync(){var all=items.length>0&&items.every(function(d){return d.open;});button.textContent=all?'Zwiń szczegóły':'Rozwiń szczegóły';button.setAttribute('aria-expanded',String(all));}
+    button.addEventListener('click',function(){var open=!items.every(function(d){return d.open;});items.forEach(function(d){d.open=open;});sync();});
+    items.forEach(function(d){d.addEventListener('toggle',sync);});
+  });
+})();
+document.addEventListener('keydown',function(e){
+  if(e.defaultPrevented||e.altKey||e.ctrlKey||e.metaKey||e.target.closest('input,textarea,select,button,summary,[contenteditable],#map')) return;
+  if(e.key==='ArrowRight'){var n=document.getElementById('navNext'); if(n&&n.href) location.href=n.href;}
+  if(e.key==='ArrowLeft'){var p=document.getElementById('navPrev'); if(p&&p.href) location.href=p.href;}
+});
+var bt=document.getElementById('totop');
+if(bt){addEventListener('scroll',function(){bt.classList.toggle('show',scrollY>500);});
+  bt.addEventListener('click',function(){scrollTo({top:0,behavior:'smooth'});});}
+var on=document.querySelector('.pills a.on'); if(on&&on.scrollIntoView) on.scrollIntoView({inline:'center',block:'nearest'});
+// scroll reveal (runs early so a later error can't leave sections hidden)
+(function(){
+  var secs=[].slice.call(document.querySelectorAll('main>section'));
+  if(!('IntersectionObserver' in window)){ secs.forEach(function(s){s.classList.add('in');}); return; }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{rootMargin:'0px 0px -6% 0px'});
+  secs.forEach(function(s){ if(s.querySelector('#map')){ s.classList.add('in'); return; } io.observe(s); });
+  // bezpiecznik: przy skoku scrolla (kotwica, przywrócona pozycja) obserwator potrafi nie zdążyć
+  setTimeout(function(){ secs.forEach(function(s){ s.classList.add('in'); }); }, 2500);
+})();
+// reading progress bar
+var pg=document.getElementById('progress');
+if(pg){var upd=function(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;
+  pg.style.width=(m>0?(h.scrollTop/m*100):0)+'%';};addEventListener('scroll',upd,{passive:true});upd();}
+// countdown to departure
+var cd=document.getElementById('cd');
+if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date())/86400000));cd.textContent=days;}
+// home hero: parallax bg + fading scroll cue
+(function(){
+  var hbg=document.querySelector('.hero.home .hbg'), cue=document.querySelector('.scrollcue');
+  if(!hbg&&!cue) return;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, raf=null;
+  function frame(){ var y=scrollY||pageYOffset||0;
+    if(hbg&&!reduce) hbg.style.transform='translate3d(0,'+(y*0.22)+'px,0)';
+    if(cue) cue.style.opacity=Math.max(0,1-y/240);
+    raf=null;
+  }
+  addEventListener('scroll',function(){ if(raf==null) raf=requestAnimationFrame(frame); },{passive:true});
+  frame();
+})();
+(function(){
+  var geoEl=document.getElementById('geo'); if(!geoEl) return;
+  var btn=document.getElementById('mapActivate'), mapDiv=document.getElementById('map');
+  if(!btn||!mapDiv) return;
+  var done=false;
+  function activate(){
+    if(done) return; done=true;
+    btn.style.display='none'; mapDiv.style.display='block';
+    ensureLeaflet(function(){ render(JSON.parse(geoEl.textContent)); });
+  }
+  btn.addEventListener('click',activate);
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ activate(); io.disconnect(); } });
+    },{rootMargin:'200px 0px'});
+    io.observe(btn.parentNode||mapDiv);
+  } else { activate(); }
+  function ensureLeaflet(cb){
+    if(window.L) return cb();
+    var c=document.createElement('link'); c.rel='stylesheet';
+    c.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css'; document.head.appendChild(c);
+    var s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+    s.onload=cb; s.onerror=function(){mapDiv.innerHTML='<p style="padding:16px">Nie udało się załadować mapy — użyj linku do Google Maps.</p>';};
+    document.head.appendChild(s);
+  }
+  function render(stops){
+    var map=L.map(mapDiv,{scrollWheelZoom:false});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(map);
+    var pts=[];
+    stops.forEach(function(s,i){ var ll=[s[0],s[1]]; pts.push(ll);
+      L.marker(ll,{icon:L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],html:'<div class="mk">'+(i+1)+'</div>'})})
+        .addTo(map).bindPopup((i+1)+'. '+s[2]);
+    });
+    var routeEl=document.getElementById('geo-route');
+    var linePts=routeEl?JSON.parse(routeEl.textContent):pts;
+    if(linePts.length>1) L.polyline(linePts,{color:'#c8402c',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
+    map.fitBounds(pts,{padding:[34,34]});
+    setTimeout(function(){map.invalidateSize();},80);
+  }
+})();
+
+/* ---- kopiowanie japońskiego adresu (do pokazania taksówkarzowi) ---- */
+(function(){
+  document.querySelectorAll('.jpcopy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.getAttribute('data-addr'), old=b.textContent;
+      function done(){b.textContent='Skopiowano';b.classList.add('ok');
+        setTimeout(function(){b.textContent=old;b.classList.remove('ok');},1600);}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){});}
+      else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();
+           try{document.execCommand('copy');done();}catch(e){} a.remove();}
+    });
+  });
+})();
+
+/* ---- checklista rezerwacji (stan w localStorage) ---- */
+(function(){
+  var list=document.querySelector('.cklist'); if(!list) return;
+  var KEY='jp2027.checklist.v2', boxes=[].slice.call(list.querySelectorAll('input[data-ck]'));
+  var saved={}; try{
+    var current=localStorage.getItem(KEY);
+    saved=JSON.parse(current)||{};
+    if(current===null){
+      var old=JSON.parse(localStorage.getItem('jp2027.checklist'))||{};
+      ['pass',null,'flight-total',null,'furoshiki','tea','sumo','rail','insurance','sky',null,'internet','vjw',null,'ic',null].forEach(function(id,i){if(id&&old[i])saved[id]=true;});
+      localStorage.setItem(KEY,JSON.stringify(saved));
+    }
+  }catch(e){}
+  function draw(){
+    var done=0;
+    boxes.forEach(function(b){
+      var li=b.closest('li');
+      if(b.checked){done++; li.classList.add('done');} else li.classList.remove('done');
+    });
+    var pct=boxes.length?Math.round(done/boxes.length*100):0;
+    document.getElementById('ckcount').textContent=done+' / '+boxes.length;
+    document.getElementById('ckfill').style.width=pct+'%';
+    var next=boxes.filter(function(b){return !b.checked;})[0];
+    document.getElementById('cknext').textContent = next
+      ? 'następne: '+next.closest('li').querySelector('.ckwhat b').textContent
+      : 'lista odhaczona - sprawdźcie potwierdzenia rezerwacji';
+  }
+  boxes.forEach(function(b,i){
+    b.checked=!!saved[b.dataset.ck];
+    b.addEventListener('change',function(){
+      saved[b.dataset.ck]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
+      draw();
+    });
+  });
+  var rb=document.getElementById('ckreset');
+  if(rb) rb.addEventListener('click',function(){
+    boxes.forEach(function(b,i){b.checked=false; saved[b.dataset.ck]=false;});
+    try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
+    draw();
+  });
+  draw();
+})();
+
+/* ---- ranking wg wag: cena / wygoda / jakość (3 kryteria, suwaki normalizowane do 100%) ---- */
+(function(){
+  var host=document.getElementById('scorelist'), src=document.getElementById('scoredata');
+  var slP=document.getElementById('wprice'), slT=document.getElementById('wtime'), slQ=document.getElementById('wqual');
+  if(!host||!src||!slP||!slT||!slQ) return;
+  var D=JSON.parse(src.textContent||'[]'); if(!D.length) return;
+  var chk=document.getElementById('wstopover');
+  function rng(f){var v=D.map(f); return {min:Math.min.apply(null,v), max:Math.max.apply(null,v)};}
+  var P=rng(function(a){return a.price;}), Q=rng(function(a){return a.q;});
+  function plz(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';}
+  function pts(v,r,inv){return r.max===r.min?100:((inv?(r.max-v):(v-r.min))/(r.max-r.min)*100);}
+  // premia za stopover liczy się tylko, gdy nocleg faktycznie jest bezpłatny
+  function bonusOn(){return !chk || chk.checked;}
+  function cfOf(a){return a.cfBase + (bonusOn()?a.bonus:0);}
+  function comfortLabel(a){
+    var t=[a.dur];
+    t.push(a.stops?(a.stops===1?'1 przesiadka':a.stops+' przesiadki'):'bez przesiadek');
+    if(a.bonus>0) t.push(bonusOn()?'nocleg gratis':'nocleg płatny');
+    return t.join(' · ');
+  }
+  function draw(){
+    var wp=+slP.value, wt=+slT.value, wq=+slQ.value, sum=(wp+wt+wq)||1;
+    document.getElementById('wlab_p').textContent=Math.round(wp/sum*100)+'%';
+    document.getElementById('wlab_t').textContent=Math.round(wt/sum*100)+'%';
+    document.getElementById('wlab_q').textContent=Math.round(wq/sum*100)+'%';
+    var C=rng(cfOf);
+    var rows=D.map(function(a){
+      var pp=pts(a.price,P,true), cp=pts(cfOf(a),C,false), qp=pts(a.q,Q,false);
+      return {a:a, pp:pp, cp:cp, qp:qp, sc:(wp*pp+wt*cp+wq*qp)/sum};
+    }).sort(function(x,y){return y.sc-x.sc;});
+    var best=rows[0].sc;
+    host.innerHTML=rows.map(function(r,i){
+      var a=r.a, fam=Math.round((a.price*3+a.price*0.8)/100)*100;
+      return '<div class="scrow'+(i===0?' win':'')+'">'+
+        '<div class="scpos">'+(i+1)+'</div>'+
+        '<div class="scmain"><div class="scname"><i style="background:'+a.col+'"></i>'+a.name+(a.star?' ★':'')+(i===0?' <span class="rezerwuj">wygrywa</span>':'')+'</div>'+
+        '<div class="scmeta">'+comfortLabel(a)+' · jakość '+a.qpos+'</div></div>'+
+        '<div class="scprice">'+plz(a.price)+'<span>rodzina ~'+plz(fam)+'</span></div>'+
+        '<div class="scbarwrap"><div class="scbar" style="width:'+(best>0?(r.sc/best*100):0).toFixed(1)+'%;background:'+a.col+'"></div><b>'+r.sc.toFixed(0)+'</b></div>'+
+      '</div>';
+    }).join('');
+  }
+  [slP,slT,slQ].forEach(function(s){s.addEventListener('input',draw);});
+  if(chk) chk.addEventListener('change',draw);
+  draw();
+})();
+
+/* ---- pogoda na żywo (Open-Meteo) — wzorzec z planu Madery ---- */
+(function(){
+  var host=document.getElementById('livewx');
+  if(!host) return;
+  var LOC=[
+    {n:'🕌 Abu Zabi',la:24.4539,lo:54.3773,tz:'Asia/Dubai'},
+    {n:'⛩️ Kioto',la:35.0116,lo:135.7681,tz:'Asia/Tokyo'},
+    {n:'Osaka',la:34.6937,lo:135.5023,tz:'Asia/Tokyo'},
+    {n:'🏙️ Tokio',la:35.6723,lo:139.7367,tz:'Asia/Tokyo'},
+    {n:'♨️ Hakone (jezioro Ashi)',la:35.2337,lo:139.0155,tz:'Asia/Tokyo'}
+  ];
+  function ico(c){return c===0?'☀️':c<=3?'⛅':(c===45||c===48)?'🌫️':(c>=51&&c<=57)?'🌦️':(c>=61&&c<=67)?'🌧️':(c>=71&&c<=77)?'🌨️':(c>=80&&c<=82)?'🌦️':(c>=85&&c<=86)?'🌨️':c>=95?'⛈️':'☁️';}
+  function lbl(c){return c===0?'Bezchmurnie':c<=3?'Częściowe zachmurzenie':(c===45||c===48)?'Mgła':(c>=51&&c<=57)?'Mżawka':(c>=61&&c<=67)?'Deszcz':(c>=71&&c<=77)?'Śnieg':(c>=80&&c<=82)?'Przelotny deszcz':(c>=85&&c<=86)?'Przelotny śnieg':c>=95?'Burza':'Zachmurzenie';}
+  Promise.all(LOC.map(function(l){
+    var u='https://api.open-meteo.com/v1/forecast?latitude='+l.la+'&longitude='+l.lo+
+      '&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone='+encodeURIComponent(l.tz)+'&forecast_days=4';
+    return fetch(u).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){return {l:l,d:d};});
+  })).then(function(res){
+    host.innerHTML=res.map(function(x){
+      var c=x.d.current,dd=x.d.daily;
+      var days=dd.time.map(function(t,i){
+        return '<div class="wxd"><span>'+(i===0?'dziś':new Date(t+'T12:00:00').toLocaleDateString('pl',{weekday:'short'}))+'</span>'+
+          '<em title="'+lbl(dd.weather_code[i])+'">'+ico(dd.weather_code[i])+'</em>'+
+          '<b>'+Math.round(dd.temperature_2m_max[i])+'° <i>'+Math.round(dd.temperature_2m_min[i])+'°</i></b></div>';
+      }).join('');
+      return '<article class="wxcard"><h3>'+x.l.n+'</h3><p class="wxnow">'+ico(c.weather_code)+' '+Math.round(c.temperature_2m)+'°C <span>'+lbl(c.weather_code)+'</span></p><div class="wxdays">'+days+'</div></article>';
+    }).join('');
+  }).catch(function(){
+    host.innerHTML='<p class="wxerr">Nie udało się pobrać pogody na żywo. Aktualne prognozy: <a href="https://www.jma.go.jp/bosai/forecast/" target="_blank" rel="noopener">JMA</a> (Japonia).</p>';
+  });
+})();
+/* prognoza na konkretny dzień planu (Open-Meteo), widoczna ~16 dni przed */
+(function(){var el=document.querySelector('.wxday');if(!el)return;
+  var la=el.getAttribute('data-la'),lo=el.getAttribute('data-lo'),dt=el.getAttribute('data-date');if(!la||!lo||!dt)return;
+  var diff=(new Date(dt+'T12:00:00')-new Date())/864e5;if(diff<-1||diff>15)return;
+  var u='https://api.open-meteo.com/v1/forecast?latitude='+la+'&longitude='+lo+'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&start_date='+dt+'&end_date='+dt;
+  function ico(c){return c===0?'☀️':c<=3?'⛅':(c===45||c===48)?'🌫️':(c>=51&&c<=57)?'🌦️':(c>=61&&c<=67)?'🌧️':(c>=71&&c<=77)?'🌨️':(c>=80&&c<=82)?'🌦️':c>=95?'⛈️':'☁️';}
+  function lbl(c){return c===0?'bezchmurnie':c<=3?'częściowe zachmurzenie':(c===45||c===48)?'mgła':(c>=51&&c<=57)?'mżawka':(c>=61&&c<=67)?'deszcz':(c>=80&&c<=82)?'przelotny deszcz':c>=95?'burza':'zachmurzenie';}
+  fetch(u).then(function(r){return r.json();}).then(function(j){var d=j.daily;if(!d||!d.time||!d.time.length)return;
+    var c=d.weather_code[0],p=d.precipitation_probability_max[0];
+    el.innerHTML='<b>🌤️ Prognoza na '+dt.slice(8)+'.'+dt.slice(5,7)+':</b> '+ico(c)+' '+lbl(c)+' · '+Math.round(d.temperature_2m_min[0])+'–'+Math.round(d.temperature_2m_max[0])+'°C · deszcz '+(p!=null?p+'%':'—')+(p>=50?' — <b>rozważcie plan „Jeśli pada”</b>':'');
+    el.style.display='';}).catch(function(){});
+})();

@@ -13,3 +13,8 @@ PROMPT-ULEPSZANIE.md
 private/
 check.mjs
 README.md
+
+# Źródła generatora — nie są częścią serwisu
+data/
+src/
+deploy.sh

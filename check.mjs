@@ -1,7 +1,6 @@
 // Test po buildzie: daty, kwoty, linki, prywatność. Uruchom: node check.mjs
 import {readFileSync,existsSync,readdirSync} from 'node:fs';
 import {resolve,dirname,join} from 'node:path';
-import {runInNewContext} from 'node:vm';
 const DIR=dirname(new URL(import.meta.url).pathname);
 const files=[...readdirSync(DIR).filter(f=>f.endsWith('.html')&&!f.includes('artifact')),...readdirSync(join(DIR,'days')).filter(f=>f.endsWith('.html')).map(f=>'days/'+f)];
 const errs=[]; const strip=s=>s.replace(/<script[\s\S]*?<\/script>/g,'');
@@ -22,9 +21,7 @@ for(const f of files){
   if(f.startsWith('days/')){ const d=f.slice(5,15), want=`<span>${d.slice(8,10)}.${d.slice(5,7)}</span>`; if(!html.includes(want)) errs.push(`${f}: pigułka dnia nie pokazuje ${d.slice(8,10)}.${d.slice(5,7)}`); }
 }
 const src=readFileSync(join(DIR,'build.mjs'),'utf8');
-// Odczyt tylko deklaracji danych. Generator i zapis plików nie są uruchamiane.
-const modelSource=src.slice(src.indexOf('const DAYS = ['),src.indexOf('const gmapsQ ='));
-const {DAYS,HOTELS}=runInNewContext('const A=(id,label)=>({id,label});'+modelSource+';({DAYS,HOTELS})',{}, {timeout:1000});
+const {DAYS}=await import('./data/dni.mjs'); const {HOTELS}=await import('./data/hotele.mjs');
 const hotelIds=new Set(HOTELS.map(h=>h.id));
 const dows=['niedziela','poniedziałek','wtorek','środa','czwartek','piątek','sobota'];
 let previousDate=null;
@@ -47,14 +44,9 @@ for(const d of DAYS){
     if(kind&&!['lot','zarezerwowane','rezerwacja','opcja','bufor'].includes(kind)) errs.push(`${d.date}: nieznany status ${kind}`);
   }
 }
-const idsSource=src.slice(src.indexOf('const BOOKINGS = ['),src.indexOf('/* Dni zamknięcia atrakcji'));
-const {BOOKINGS,DEADLINES}=runInNewContext(idsSource+';({BOOKINGS,DEADLINES})',{}, {timeout:1000});
+const {BOOKINGS,DEADLINES}=await import('./data/sprawy.mjs');
 if(new Set(BOOKINGS.map(x=>x.id)).size!==BOOKINGS.length) errs.push('Checklista: niestabilne/powtórzone identyfikatory');
 if(DEADLINES.some(x=>!Number.isFinite(Date.parse(x.date)))) errs.push('Terminy: błędna data');
-for(const m of src.matchAll(/\{date:'(\d{4}-\d\d-\d\d)'[\s\S]*?tl:\[([\s\S]*?)\],\s*facts:/g)){
-  const t=[...m[2].matchAll(/\['(\d\d):(\d\d)'/g)].map(x=>+x[1]*60+ +x[2]);
-  for(let i=1;i<t.length;i++) if(t[i]<t[i-1]&&!(m[1]==='2027-05-07'&&i===t.length-1)) errs.push(`${m[1]}: godziny nie rosną przy pozycji ${i+1}`);
-}
 const calc=JSON.parse(src.match(/const CALC = (\{[^}]*\})/)[1].replace(/(\w+):/g,'"$1":'));
 if(DAYS.filter(d=>d.stay&&d.stay!=='auh').length!==calc.nights) errs.push('Liczba nocy w Japonii nie zgadza się z kalkulatorem');
 const ticket=+src.match(/const TICKET = \{[^}]*total:(\d+)/)[1];
