@@ -971,8 +971,8 @@ function atrakcjePage(){
   // section headings -> stitle
   body = body.replace(/<h2 id="([^"]+)">([^<]+)<\/h2>/g,'<h2 id="$1" class="stitle" style="scroll-margin-top:80px">$2</h2>');
   const toc = `<nav class="toc" style="margin-bottom:18px">
-    <a href="#guide-tips">Wskazówki przewodników</a><a href="#abuzabi">🕌 Abu Zabi</a><a href="#kioto">⛩️ Kioto</a><a href="#nara">🦌 Nara</a><a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a>
-    <a href="#sumo-s">🥋 Sumo</a><a href="#praktyczne">🧳 Praktyczne</a><a href="#osaka">Osaka</a></nav>`;
+    <a href="#guide-tips">Wskazówki przewodników</a><a href="#abuzabi">🕌 Abu Zabi</a><a href="#kioto">⛩️ Kioto</a><a href="#osaka">Osaka</a><a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a>
+    <a href="#praktyczne">🧳 Praktyczne</a><a href="#poza-planem">Poza planem</a></nav>`;
   const inner=`
   <header class="hero kb">
     <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(138,43,35,.56),rgba(70,32,20,.42)),url('${IMG.sensoji}') center/cover"></div></div>
@@ -995,72 +995,6 @@ function atrakcjePage(){
   </section>
   ${body}
   <p class="note" style="margin-top:16px">Starsze karty: orientacyjne dane z lipca 2026. Nowe wskazówki przewodników sprawdzone 20.09.2026; nie jest to potwierdzenie cenników ani godzin na 2027. Przed rezerwacją sprawdźcie strony oficjalne.</p>
-  <h2 id="osaka" class="stitle" style="scroll-margin-top:80px">Osaka: wycieczka 1 maja</h2>
-  <p class="lead-p">Jedziemy z Kioto bez walizek i wracamy do tego samego hotelu. W programie Sushiro Esaka, muzeum życia codziennego i Dōtonbori. <a href="days/2027-05-01.html">Plan godzinowy i mapa →</a></p>
-  <p class="note" style="margin:-6px 0 14px">Zamek wyłącznie zamiast muzeum. Kuromon, akwarium, Shinsekai i rejs poniżej są katalogiem alternatyw, nie dodatkowymi obowiązkami.</p>
-  <div class="agrid">
-
-    <div class="acard" id="dotonbori">
-      <h3>Dōtonbori: spacer i wczesna kolacja</h3>
-      <div class="desc">1.05 około 16:30: kanał i kolorowe szyldy w rejonie Namby, potem jeden posiłek. Nie czekamy obowiązkowo do zmroku, żeby wrócić do Kioto około 20:00. Bez zakupowego maratonu; przy zmęczeniu pomijamy cały blok.</div>
-      <div class="meta"><span>🕒 planistycznie 60-90 minut razem z posiłkiem</span><span>💴 spacer bez biletu, kolacja w budżecie wyżywienia</span><span>📍 Namba / Ebisubashi</span></div>
-      <div class="links"><a href="https://www.google.com/maps/search/?api=1&query=Dotonbori+Osaka" target="_blank" rel="noopener">Google Maps →</a></div>
-    </div>
-
-    <div class="acard" id="housing-living">
-      <h3>Osaka Museum of Housing and Living</h3>
-      <div class="desc">W planie 1.05 około 13:30: spacer przez odtworzone ulice dawnej Osaki pod dachem, około 90 minut. Oficjalny komunikat określa zamknięcie od 1.09.2026 do 5.01.2027 włącznie. Z tego wynika planowana dostępność przed wyjazdem, ale ponowne otwarcie i majowy kalendarz trzeba potwierdzić. Jeśli muzeum będzie nieczynne, zastępuje je zamek.</div>
-      <div class="meta"><span>🕒 standardowo 10:00-17:00; ostatnie wejście 16:30, zwykle zamknięte we wtorki</span><span>💴 aktualne bilety sprawdźcie po ponownym otwarciu</span><span>📍 Tenjimbashisuji Rokuchome, wyjście 3</span></div>
-      <p class="note">Stan komunikatu sprawdzony 20.09.2026. Wystawy specjalne i atrakcje dodatkowe mogą mieć inne terminy.</p>
-      <div class="links"><a href="https://www.osaka-angenet.jp/konjyakukan/" target="_blank" rel="noopener">Komunikat muzeum →</a><a href="https://osaka-info.jp/en/spot/osaka-museum-housing-living/" target="_blank" rel="noopener">Oficjalna informacja turystyczna →</a><a href="https://www.google.com/maps/search/?api=1&query=Osaka+Museum+of+Housing+and+Living" target="_blank" rel="noopener">Google Maps →</a></div>
-    </div>
-
-    <div class="acard" id="sushiro-esaka">
-      <h3>Sushiro Esaka: restauracja ze zdjęcia</h3>
-      <div class="desc">W planie lunch 1.05 około 11:15. Dokładnie ten lokal z Waszego zdjęcia, w mieście Suita na północ od centrum Osaki. Jedziemy najpierw do Esaki przez Shin-Osaka, potem na południe do muzeum i Namby. To jeden zaplanowany posiłek sushi, nie motyw każdego dnia. Godziny, kolejkę i dostępność stolika sprawdźcie przed wyjazdem z Kioto.</div>
-      <div class="meta"><span>📍 Enokicho 2-1, Crossing Esaka 3F, Suita</span></div>
-      <div class="links"><a href="https://www.akindo-sushiro.co.jp/shop/detail.php?id=216" target="_blank" rel="noopener">Sushiro Esaka oficjalnie →</a><a href="https://www.google.com/maps/search/?api=1&query=Sushiro+Esaka+Suita" target="_blank" rel="noopener">Google Maps →</a></div>
-    </div>
-
-    <div class="acard" id="kuromon">
-      <h3>🦐 Kuromon Ichiba</h3>
-      <div class="desc">„Kuchnia Osaki" — 580 m krytego targu: przegrzebki z grilla, tuńczyk, truskawki mochi, sok z melona. Śniadanie w stylu „po trochu ze wszystkiego".</div>
-      <div class="meta"><span>🕒 ~9:00–18:00 (rano najświeższe)</span><span>💴 przekąski 300–1 500 ¥</span><span>📍 metro Nippombashi, 5 min od Namby</span></div>
-      <div class="links"><a href="https://kuromon.com/en/" target="_blank" rel="noopener">strona targu →</a></div>
-    </div>
-
-    <div class="acard" id="osaka-castle">
-      <h3>🏯 Zamek w Osace</h3>
-      <div class="desc">Ikona miasta w parku pełnym fos i murów z gigantycznych głazów. W środku muzeum Toyotomiego Hideyoshiego i taras widokowy na 8. piętrze.</div>
-      <div class="meta"><span>🕒 godziny na wybrany dzień sprawdźcie u operatora</span><span>💴 wieża muzealna biletowana; cenę dla wieku dzieci sprawdźcie przed zakupem</span><span>📍 metro Tanimachi 4-chōme</span></div>
-      <p class="note">Opcja 1.05 zamiast muzeum życia codziennego. Po lunchu w Esace trzeba zmienić trasę dojazdu i dać więcej czasu na park. Przy takim wyborze skróćcie Dōtonbori. Ninomaru w Kioto jest osobną opcją 30.04, nie obowiązkiem.</p>
-      <div class="links"><a href="https://www.osakacastle.net/english/" target="_blank" rel="noopener">strona zamku →</a></div>
-    </div>
-
-    <div class="acard" id="kaiyukan">
-      <h3>🦈 Akwarium Kaiyukan</h3>
-      <div class="desc">Jedno z największych akwariów świata — zbiornik centralny na 5 400 ton z rekinem wielorybim; zwiedzanie spiralą w dół przez 8 pięter Pacyfiku.</div>
-      <div class="meta"><span>🕒 10:00–20:00</span><span>💴 dorosły ~2 700 ¥, 7–15 lat ~1 400 ¥ → 4 os. ≈ 8 200 ¥</span><span>📍 Osakako (Chūō Line), Tempozan</span></div>
-      <span class="rezerwuj">bilet z datą online = bez kolejki</span>
-      <div class="links"><a href="https://www.kaiyukan.com/language/eng/" target="_blank" rel="noopener">bilety →</a></div>
-    </div>
-
-    <div class="acard" id="shinsekai">
-      <h3>🗼 Shinsekai & Tsūtenkaku</h3>
-      <div class="desc">Retro-Osaka z lat 50.: neony, automaty, kushikatsu (panierowane szaszłyki — nie maczać dwa razy!). Wieża Tsūtenkaku z pomnikiem Billikena — pogłaskanie stóp daje szczęście.</div>
-      <div class="meta"><span>🕒 wieża 10:00–20:00</span><span>💴 wieża ~1 000 ¥ / dzieci 500 ¥</span><span>📍 metro Ebisuchō / Dōbutsuen-mae</span></div>
-      <div class="links"><a href="https://www.tsutenkaku.co.jp/" target="_blank" rel="noopener">Tsūtenkaku →</a></div>
-    </div>
-
-    <div class="acard" id="tombori">
-      <h3>🚤 Rejs kanałem Tombori</h3>
-      <div class="desc">20-minutowy rejs kanałem Dōtonbori między neonami — miasto z żabiej perspektywy, wieczorem najładniej. Start przy moście obok neonu Glico.</div>
-      <div class="meta"><span>🕒 ~11:00–21:00 co 30 min</span><span>💴 ~1 500 ¥ / dzieci ~900 ¥</span><span>📍 przystań Tazaemon-bashi</span></div>
-      <div class="links"><a href="https://www.ipponmatsu.co.jp/cruise/tombori.html" target="_blank" rel="noopener">Tombori River Cruise →</a></div>
-    </div>
-
-  </div>
-
   ${footer('')}`;
   return shell({title:'Atrakcje: godziny, ceny, rezerwacje · Japonia 2027',desc:'Katalog atrakcji wyjazdu do Japonii z godzinami, cenami i linkami do rezerwacji.',prefix:'',active:'atrakcje.html',inner,pillsIdx:null});
 }

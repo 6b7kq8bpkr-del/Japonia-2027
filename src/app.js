@@ -191,3 +191,15 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
     el.innerHTML='<b>🌤️ Prognoza na '+dt.slice(8)+'.'+dt.slice(5,7)+':</b> '+ico(c)+' '+lbl(c)+' · '+Math.round(d.temperature_2m_min[0])+'–'+Math.round(d.temperature_2m_max[0])+'°C · deszcz '+(p!=null?p+'%':'—')+(p>=50?' — <b>rozważcie plan „Jeśli pada”</b>':'');
     el.style.display='';}).catch(function(){});
 })();
+
+/* ---- kotwica wewnątrz zwiniętej sekcji: rozwiń ją i przewiń do celu ---- */
+(function(){
+  function reveal(){
+    var id=decodeURIComponent((location.hash||'').slice(1)); if(!id) return;
+    var el=document.getElementById(id); if(!el) return;
+    var d=el.closest('details'), opened=false;
+    while(d){ if(!d.open){ d.open=true; opened=true; } d=d.parentElement&&d.parentElement.closest('details'); }
+    if(opened) el.scrollIntoView();
+  }
+  addEventListener('hashchange',reveal); reveal();
+})();
