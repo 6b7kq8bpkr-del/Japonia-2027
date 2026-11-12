@@ -2,8 +2,8 @@
 
 Publicznie dostępny, nieindeksowany serwis (noindex nie jest ochroną dostępu) z przewodnikiem po rodzinnym wyjeździe do Japonii
 **27 kwietnia – 8 maja 2027** (2+2): Warszawa → Abu Zabi (stopover z hotelem w pakiecie)
-→ Kioto (4 noce, dzień w Osace 1.05; KOTO i Kinugasa 2.05) → Tokio (3 noce, Akasaka) → Hakone (ryokan nad jeziorem Ashi)
-→ Narita → Warszawa (lądowanie 8.05 rano). Nara pozostaje wariantem zamiast Osaki. Warsztat w Kinugasa wymaga potwierdzenia; identyfikacja sklepu na podstawie pinezki ze zdjęcia jest prawdopodobna, nie ostateczna.
+→ Kioto (4 noce, dzień w Narze 1.05; Kinugasa i KOTO 2.05) → Tokio (3 noce, Akasaka) → Hakone (ryokan nad jeziorem Ashi)
+→ Narita → Warszawa (lądowanie 8.05 rano). Osaka pozostaje wariantem zamiast Nary. Warsztat w Kinugasa wymaga potwierdzenia; identyfikacja sklepu na podstawie pinezki ze zdjęcia jest prawdopodobna, nie ostateczna.
 
 ## Jak to działa
 - **Gdzie co leży**

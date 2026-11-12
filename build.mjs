@@ -48,7 +48,7 @@ const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"
 // jedno zdjęcie przewodnie na dzień
 const DAYIMG = {
   '2027-04-27':IMG.abudhabi, '2027-04-28':IMG.mosque, '2027-04-29':IMG.shinkansen, '2027-04-30':IMG.fushimi,
-  '2027-05-01':IMG.dotonbori, '2027-05-02':IMG.tea, '2027-05-03':IMG.sensoji, '2027-05-04':IMG.shibuya,
+  '2027-05-01':IMG.deer, '2027-05-02':IMG.tea, '2027-05-03':IMG.sensoji, '2027-05-04':IMG.shibuya,
   '2027-05-05':IMG.pokemon, '2027-05-06':IMG.fuji, '2027-05-07':IMG.nex,
 };
 // galeria dnia: [klucz zdjęcia, podpis]. Podpis mówi wprost, gdy zdjęcie jest poglądowe.
@@ -56,7 +56,7 @@ const DAYPHOTOS = {
   '2027-04-27':[['abudhabi','Abu Zabi: nabrzeże Corniche']],
   '2027-04-29':[['nex','Narita Express'],['shinkansen','Shinkansen pod Fudżi'],['kyotostation','Hala dworca w Kioto']],
   '2027-04-30':[['fushimi','Fushimi Inari: tunel bram torii'],['nijo','Nijō: pałac Ninomaru'],['yasaka','Lampiony chramu Yasaka w Gion']],
-  '2027-05-01':[['sushi','Sushi z taśmy (zdjęcie poglądowe)'],['osakamuseum','Muzeum życia codziennego: dawna Osaka w miniaturze'],['dotonbori','Dōtonbori nocą - zdjęcie poglądowe; nasza wizyta za dnia'],['osakacastle','Zamek w Osace: opcja zamiast muzeum']],
+  '2027-05-01':[['deer','Jelenie w parku Nara'],['todaiji','Tōdai-ji: pawilon Wielkiego Buddy']],
   '2027-05-02':[['furoshiki','Furoshiki: chusty do pakowania (zdjęcie poglądowe)'],['tea','Ceremonia herbaty (zdjęcie poglądowe)'],['nishiki','Nishiki Market']],
   '2027-05-03':[['sensoji','Sensō-ji: brama Kaminarimon'],['sumo','Sumo: wejście zawodników na ring (zdjęcie z turnieju)']],
   '2027-05-04':[['meiji','Meiji Jingū: brama torii'],['harajuku','Harajuku: naleśnik z ulicy Takeshita'],['shibuya','Skrzyżowanie Shibuya o zmierzchu']],
@@ -89,7 +89,7 @@ const cardImg = (c,ph,alt,eager) => `<img class="dcimg" src="${ph}" alt="" width
 const JPSTOPS = [
   [35.772,140.393,'Narita - przylot 29.04 i odlot 7.05'],
   [34.9858,135.7588,'Kioto - 4 noce, 29.04-3.05'],
-  [34.6937,135.5023,'Osaka - wycieczka z Kioto 1.05, bez zmiany hotelu'],
+  [34.6851,135.8048,'Nara - wycieczka z Kioto 1.05, bez zmiany hotelu'],
   [35.681,139.767,'Tokio - 3 noce, 3-6.05'],
   [35.2337,139.0155,'Hakone - 1 noc, 6-7.05; potem przez Odawarę i Shinagawę na Naritę'],
   [35.6285,139.7388,'Shinagawa - przesiadki NEX/shinkansen 29.04 i 7.05'],
@@ -102,7 +102,7 @@ const JPROUTE = [0,5,1,2,1,3,4,6,5,0].map(i=>JPSTOPS[i].slice(0,2));
 const gmapsQ = name => 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);
 // day date -> hotel id (check-in days)
 const DAYHOTEL = Object.fromEntries(DAYS.filter(d=>d.stay).map(d=>[d.date,d.stay]));
-const WXGEO = {'2027-04-29':[34.9858,135.7588],'2027-05-01':[34.6937,135.5023],'2027-05-03':[35.7148,139.7967],'2027-05-06':[35.2455,139.0195]}; // prognoza tam, gdzie spędzamy dzień/noc
+const WXGEO = {'2027-04-29':[34.9858,135.7588],'2027-05-01':[34.6851,135.8048],'2027-05-03':[35.7148,139.7967],'2027-05-06':[35.2455,139.0195]}; // prognoza tam, gdzie spędzamy dzień/noc
 const DAYINT = Object.fromEntries(DAYS.map(d=>[d.date,[d.level,d.brief.focus]]));
 const DAYFLEX = Object.fromEntries(DAYS.map(d=>[d.date,[d.brief.must,d.brief.cut]]));
 const LEVEL_LABEL = {g:'Lekki', y:'Średni', r:'Intensywny'};
@@ -258,7 +258,7 @@ function indexPage(){
     <div class="hero-inner">
       <p class="eyebrow">Przewodnik rodzinny · 2+2 · 11 dni programu + powrót · Narita → Kioto → Tokio → Hakone</p>
       <h1>Japonia 2027</h1>
-      <p class="lead">27 kwietnia - 8 maja 2027. Noc w Abu Zabi, cztery noce w Kioto z dniem w Osace, trzy w Tokio i prywatna kąpiel w Hakone. KOTO, sklep Kinugasa, Pokémony i czas na odpoczynek. Powrót do Warszawy 8 maja o {{lot.waw.przylot}}.</p>
+      <p class="lead">27 kwietnia - 8 maja 2027. Noc w Abu Zabi, cztery noce w Kioto z dniem w Narze, trzy w Tokio i prywatna kąpiel w Hakone. KOTO, sklep Kinugasa, Pokémony i czas na odpoczynek. Powrót do Warszawy 8 maja o {{lot.waw.przylot}}.</p>
       <div class="chips"><span class="chip hanko">Bilety kupione</span><span class="chip">noc w Abu Zabi gratis</span><span class="chip">8 nocy w Japonii</span><span class="chip">Dzień Dziecka w Tokio</span><span class="chip">ryokan nad jeziorem</span></div>
     </div>
     <div class="scrollcue" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
@@ -284,12 +284,12 @@ function indexPage(){
 
   <section id="trasa">
     <h2 class="stitle">Nasza trasa po Japonii</h2>
-    <p class="lead-p">Cała podróż na jednej mapie: z Narity shinkansenem do Kioto (cztery noce), 1.05 wycieczka do Osaki i powrót do tej samej bazy, potem Tokio (trzy noce), Hakone i lotnisko. 2.05 w Kioto: KOTO oraz sklep Kinugasa. Nara i Arashiyama pozostają alternatywami, nie dodatkowymi dniami. Abu Zabi jest poza tą mapą.</p>
+    <p class="lead-p">Cała podróż na jednej mapie: z Narity shinkansenem do Kioto (cztery noce), 1.05 wycieczka do Nary i powrót do tej samej bazy, potem Tokio (trzy noce), Hakone i lotnisko. 2.05 w Kioto: KOTO oraz sklep Kinugasa. Osaka i Arashiyama pozostają alternatywami, nie dodatkowymi dniami. Abu Zabi jest poza tą mapą.</p>
     <div class="card">
       <div class="maphold"><button class="mapbtn" id="mapActivate">🗺️ Aktywuj mapę</button><div id="map" class="map"></div></div>
       <ol class="maplegend">${JPSTOPS.map(s=>`<li>${s[2]}</li>`).join('')}</ol>
       <a class="gmap" href="https://www.google.com/maps/dir/Narita+Airport/Kyoto,+Japan/Tokyo,+Japan/Hakone,+Kanagawa/Narita+Airport" target="_blank" rel="noopener">📍 Otwórz trasę w Google Maps ↗</a>
-      <p class="note" style="margin-top:0.375rem">Linia jest schematem, nie przebiegiem torów. Osaka to wypad z Kioto bez zmiany hotelu; po Hakone wracacie przez Odawarę i Shinagawę na Naritę. Dokładne wejścia do hoteli otwierajcie z ich kart.</p>
+      <p class="note" style="margin-top:0.375rem">Linia jest schematem, nie przebiegiem torów. Nara to wypad z Kioto bez zmiany hotelu; po Hakone wracacie przez Odawarę i Shinagawę na Naritę. Dokładne wejścia do hoteli otwierajcie z ich kart.</p>
       <script type="application/json" id="geo">${JSON.stringify(JPSTOPS)}</script><script type="application/json" id="geo-route">${JSON.stringify(JPROUTE)}</script>
     </div>
   </section>
@@ -334,7 +334,7 @@ function kosztyPage(){
       
       
       '<b>Kioto → Tokio</b> (3.05): shinkansen zarezerwowany w SmartEX, {{sk.cena}} za rodzinę. Ostateczny pociąg i cztery miejsca potwierdzi mail z 3.04.', '<b>Odawara → Shinagawa → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
-      '<b>Kolej międzymiastowa: około 3,2 tys. zł za rodzinę</b>, z czego {{sk.razem}} (około {{sk.razem.zl}}) to dwa zarezerwowane shinkanseny; do tego Hakone, Osaka, komunikacja miejska i taksówki. Na kolej i metro dnia w Osace przyjmujemy rezerwę 8-12 tys. JPY za rodzinę (192-288 zł przy kursie planistycznym), nie potwierdzoną taryfę. Jest częścią puli transportu 5000 zł, nie dopłatą do niej.', '<b>Do sprawdzenia przed zakupem:</b> N’EX TOKYO Round Trip Ticket ważny 14 dni: obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko, czyli 18 200 JPY (około 437 zł) za oba przejazdy rodziny. Daty 29.04 i 7.05 mieszczą się w ważności. Sprawdźcie uprawnienia i zarezerwujcie konkretne pociągi.',
+      '<b>Kolej międzymiastowa: około 3,2 tys. zł za rodzinę</b>, z czego {{sk.razem}} (około {{sk.razem.zl}}) to dwa zarezerwowane shinkanseny; do tego Hakone, Nara, komunikacja miejska i taksówki. Przejazd do Nary i z powrotem to zwykła kolej Kintetsu, płatna kartą IC. Jest częścią puli transportu 5000 zł, nie dopłatą do niej.', '<b>Do sprawdzenia przed zakupem:</b> N’EX TOKYO Round Trip Ticket ważny 14 dni: obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko, czyli 18 200 JPY (około 437 zł) za oba przejazdy rodziny. Daty 29.04 i 7.05 mieszczą się w ważności. Sprawdźcie uprawnienia i zarezerwujcie konkretne pociągi.',
       'Standardowy JR Pass nie jest tu domyślnym zakupem. Porównajcie pełny koszt z biletami punktowymi; uprawnienie do Nozomi wymaga dodatkowych warunków/opłaty'])}
   </section>
 
@@ -348,9 +348,9 @@ function kosztyPage(){
         <tbody>
           <tr><td class="cat">✈️ Loty<span class="hint">E-bilety: {{bilety.suma}}. Wpisane {{bilety.budzet}} to ostrożna rezerwa do uzgodnienia z kartą, nie potwierdzone rozliczenie dopłat. Bez bagażu rejestrowanego; ewentualną dopłatę wyceńcie w Manage Booking.</span></td><td class="num">—</td><td class="num"><input type="number" id="flights" aria-label="Koszt lotów za rodzinę, zł" value="${TICKET.total}" min="0" step="100"></td></tr>
           <tr><td class="cat">🏨 Noclegi<span class="hint">Trzy rezerwacje: łącznie <b>500 443 JPY</b>; w potwierdzeniach z 8.09 zapłacono 0 JPY. Średnia poniżej daje około 12 tys. zł, zależnie od kursu i podatków. Abu Zabi z vouchera stopover.</span></td><td class="num"><input type="number" id="nights" aria-label="Liczba nocy w Japonii" class="sm" value="${CALC.nights}" min="0"><span class="x">×</span><input type="number" id="nightRate" aria-label="Średni koszt noclegu rodzinnego, zł" class="sm" value="${CALC.nightRate}" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
-          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca, kurs planistyczny 2,40 zł / 100 JPY. Dwa shinkanseny zarezerwowane; w puli także Hakone, dzień w Osace, metro, taksówki w Kioto oraz transfery w Abu Zabi. 5 000 zł jest budżetem z zapasem, nie sumą opłaconych biletów.</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" aria-label="Budżet transportu, zł" value="${CALC.transport}" min="0" step="100"></td></tr>
+          <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca, kurs planistyczny 2,40 zł / 100 JPY. Dwa shinkanseny zarezerwowane; w puli także Hakone, dzień w Narze, metro, taksówki w Kioto oraz transfery w Abu Zabi. 5 000 zł jest budżetem z zapasem, nie sumą opłaconych biletów.</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" aria-label="Budżet transportu, zł" value="${CALC.transport}" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" aria-label="Liczba dni wyżywienia" class="sm" value="${CALC.days}" min="0"><span class="x">×</span><input type="number" id="foodRate" aria-label="Wyżywienie rodziny na dzień, zł" class="sm" value="${CALC.foodRate}" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
-          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">Pula obejmuje KOTO (obecnie {{koto.cena}} za rodzinę, około 278 zł przy kursie planistycznym), rezerwę na niepotwierdzony warsztat Kinugasa, muzeum w Osace, świątynie, Café, taras i opcjonalne sumo. Cena warsztatu nie jest znana, nie wpisujemy 0 zł. Pula 3300 zł pozostaje szacunkiem, nie sumą ofert. Posiłku z pokazu nie liczcie drugi raz.</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" aria-label="Budżet atrakcji, zł" value="${CALC.attractions}" min="0" step="100"></td></tr>
+          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">Pula obejmuje KOTO (obecnie {{koto.cena}} za rodzinę, około 278 zł przy kursie planistycznym), rezerwę na niepotwierdzony warsztat Kinugasa, Tōdai-ji w Narze, świątynie, Café, taras i opcjonalne sumo. Cena warsztatu nie jest znana, nie wpisujemy 0 zł. Pula 3300 zł pozostaje szacunkiem, nie sumą ofert. Posiłku z pokazu nie liczcie drugi raz.</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" aria-label="Budżet atrakcji, zł" value="${CALC.attractions}" min="0" step="100"></td></tr>
           <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane; streetwear dla dzieci (4.05) liczcie osobno — koszulka ~150–300 zł, bluza ~500–1 000 zł</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" aria-label="Rezerwa i dodatkowe wydatki, zł" value="${CALC.extras}" min="0" step="100"></td></tr>
         </tbody>
         <tfoot><tr class="tot"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr></tfoot>
@@ -488,12 +488,12 @@ function decyzjePage(){
     '<section id="do-zalatwienia"><h2 class="stitle">Do załatwienia</h2><p class="lead-p">Zaznaczenia to Wasza osobista lista na tym urządzeniu. Nie zmieniają statusu rezerwacji, nie synchronizują się z telefonem i nie wysyłają powiadomień.</p><div class="card"><div class="ckhead"><b id="ckcount">0</b><span id="cknext"></span></div><div class="ckbar"><div id="ckfill"></div></div><ul class="cklist">'+checklist+'</ul><button class="reset" type="button" id="ckreset">Wyczyść zaznaczenia</button></div></section>'+
     '<section><h2 class="stitle">Potwierdzone elementy</h2><div class="card"><p class="note" style="margin-top:0">Numery rezerwacji trzymamy poza stroną: w potwierdzeniach i w osobnym pliku zapisanym w telefonach dorosłych.</p><ul class="tips">'+BOOKINGS.filter(b=>/^✅/.test(b.when)).map(b=>'<li><b>'+b.what+'</b>: '+b.note+'</li>').join('')+'</ul></div></section>'+
     '<section id="terminy"><h2 class="stitle">Terminy i pogoda</h2>'+deadlineList()+'<p class="note">Prognoza 7 dni wcześniej jest wskazówką, nie gwarancją. Ostrzeżenia pogodowe, status transportu i zasady anulowania są osobnymi rzeczami. Termin bezpłatnego odwołania Hanaori mija przed wyjazdem do Hakone.</p></section>'+
-    '<section id="rytm"><h2 class="stitle">Rytm rodziny 2+2</h2><p class="lead-p">Najbardziej wymagające podróże to 29.04 i 7.05. Intensywne są także pełny dzień Osaki 1.05 i długi spacer przez Harajuku i Shibuyę 4.05. Chronimy przerwy i wolne popołudnie 5.05; przy zmęczeniu skracamy opcje, nie odpoczynek. Lekki program 27.04 oznacza mało zwiedzania, nie brak zmęczenia lotem.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
+    '<section id="rytm"><h2 class="stitle">Rytm rodziny 2+2</h2><p class="lead-p">Najbardziej wymagające podróże to 29.04 i 7.05. Intensywny jest także długi spacer przez Harajuku i Shibuyę 4.05; Nara 1.05 kończy się wczesnym popołudniem. Chronimy przerwy i wolne popołudnie 5.05; przy zmęczeniu skracamy opcje, nie odpoczynek. Lekki program 27.04 oznacza mało zwiedzania, nie brak zmęczenia lotem.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
     '<section id="zmiany"><h2 class="stitle">Jak modyfikować plan</h2><div class="card more">'+
-    '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. 30.04 odpuszczacie Nijō; 1.05 skracacie Dōtonbori; 2.05 pomijacie Nishiki, jeśli warsztat jest dłuższy; 4.05 ograniczacie sklepy; 5.05 Akihabara jest dodatkiem. Opuszczona atrakcja nie przechodzi automatycznie na jutro.</p></details>'+
-    '<details><summary>Jak zdjęcia zmieniły program?</summary><p>1.05 dodaliśmy Osakę z Sushiro Esaka, muzeum życia codziennego i Dōtonbori zamiast Nary. 2.05 KOTO i Kinugasa zastępują wcześniejsze warsztaty. Nijō przenosimy na opcjonalne popołudnie 30.04 zamiast Kiyomizu. Nishiki zostaje 2.05, jeśli jest energia. Hotele i zarezerwowane shinkanseny bez zmian. <a href="atrakcje.html#guide-tips">Identyfikacja zdjęć i źródła →</a></p></details>'+
-    '<details><summary>Czy zachować też Narę i Arashiyamę?</summary><p>Nie dokładamy ich do trzech pełnych dni w Kioto. Nara może zastąpić cały dzień Osaki; Arashiyama wymaga rezygnacji z bloku KOTO i Kinugasa. Wariant Nary zachowaliśmy w katalogu. Zamek w Osace może zastąpić muzeum, ale nie dołączamy obu do jednego dnia.</p></details>'+
-    '<details><summary>Dlaczego 4 noce Kioto, 3 Tokio i 1 Hakone?</summary><p>Trzy bazy pozwalają dodać Osakę jako jednodniową wycieczkę bez przepakowywania. Dalszych miast nie dokładamy. Hakone jest na końcu, dlatego zabezpieczamy poranny wyjazd na lot.</p></details>'+
+    '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. 30.04 odpuszczacie Nijō; 1.05 pomijacie Kasuga Taisha; 2.05 pomijacie Nishiki, jeśli warsztat jest dłuższy; 4.05 ograniczacie sklepy; 5.05 Akihabara jest dodatkiem. Opuszczona atrakcja nie przechodzi automatycznie na jutro.</p></details>'+
+    '<details><summary>Jak zdjęcia zmieniły program?</summary><p>1.05 jedziemy do Nary; Osaka z Sushiro Esaka ze zdjęcia została wariantem. 2.05 KOTO i Kinugasa zastępują wcześniejsze warsztaty. Nijō przenosimy na opcjonalne popołudnie 30.04 zamiast Kiyomizu. Nishiki zostaje 2.05, jeśli jest energia. Hotele i zarezerwowane shinkanseny bez zmian. <a href="atrakcje.html#guide-tips">Identyfikacja zdjęć i źródła →</a></p></details>'+
+    '<details><summary>Czy zachować też Osakę i Arashiyamę?</summary><p>Nie dokładamy ich do trzech pełnych dni w Kioto. Osaka może zastąpić cały dzień Nary; Arashiyama wymaga rezygnacji z bloku KOTO i Kinugasa. Wariant Osaki zachowaliśmy w katalogu.</p></details>'+
+    '<details><summary>Dlaczego 4 noce Kioto, 3 Tokio i 1 Hakone?</summary><p>Trzy bazy pozwalają dodać Narę jako jednodniową wycieczkę bez przepakowywania. Dalszych miast nie dokładamy. Hakone jest na końcu, dlatego zabezpieczamy poranny wyjazd na lot.</p></details>'+
     '<details><summary>Co naprawdę oznacza odwrócona trasa w Golden Week?</summary><p>Kioto 29.04-3.05 nadal wypada w popularnym okresie, a nie poza świętami. Przeniesienie do Tokio 3.05 ogranicza pobyt w Kioto podczas kolejnych świąt, lecz nie gwarantuje pustych atrakcji. Potrzebne są miejscówki i realne bufory.</p></details>'+
     '<details><summary>Jak reagować na pogodę?</summary><p>20 i 24.04 sprawdźcie sytuację przed terminami hoteli miejskich. 1-2.05 porównajcie prognozę dla Hakone z kosztem ewentualnej zmiany. 5.05 sprawdźcie ostrzeżenia, a rano 6 i 7.05 kursowanie transportu. Przy silnym wietrze statek nie zastępuje automatycznie kolejki.</p></details>'+
     '<details><summary>Co z budżetem?</summary><p>Hotele są zarezerwowane w JPY, lecz w potwierdzeniach nie były jeszcze opłacone. Koszt w złotych zależy od płatności i kursu; podatki miejscowe mogą być dodatkowe. Loty: suma e-biletów {{bilety.suma}}, w budżecie zostaje {{bilety.budzet}} do uzgodnienia z kartą. Nie przeliczamy niepotwierdzonych dopłat jako faktów.</p></details>'+
@@ -556,7 +556,7 @@ function drukPage(){
       <p class="keyb">Plan podróży</p>
       <h1>Japonia 2027</h1>
       <p class="csub">27 kwietnia – 8 maja 2027 · rodzina 2+2 (dzieci 10 i 13 lat)</p>
-      <p class="csub2">Abu Zabi · Kioto · Osaka · Tokio · Hakone</p>
+      <p class="csub2">Abu Zabi · Kioto · Nara · Tokio · Hakone</p>
       <div class="rule"></div>
     </div>
     <div class="cfacts">
@@ -763,7 +763,7 @@ function lotyPage(){
 function pogodaPage(){
   const rows=[
     ['🕌 Abu Zabi (28.04)','35–40°C','~26°C','upał! zwiedzanie rano, w południe klimatyzacja (Luwr), dużo wody'],
-    ['⛩️ Kioto / Osaka (29.04-3.05)','~24°C','~13°C','wartości orientacyjne dla regionu; sprawdźcie osobną prognozę na dzień w Osace'],
+    ['⛩️ Kioto / Nara (29.04-3.05)','~24°C','~13°C','wartości orientacyjne dla regionu; sprawdźcie osobną prognozę na dzień w Narze'],
     ['🏙️ Tokio (3–6.05)','~22°C','~13°C','przyjemnie, słonecznie; sporadyczny przelotny deszcz'],
     ['♨️ Hakone (6.05, góry)','~18°C','~9°C','chłodniej i wilgotniej — weź ciepłą warstwę; Fudżi najlepiej widać rano'],
   ].map(r=>`<tr><td class="cat">${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td></tr>`).join('');
@@ -1004,7 +1004,7 @@ function atrakcjePage(){
   // section headings -> stitle
   body = body.replace(/<h2 id="([^"]+)">([^<]+)<\/h2>/g,'<h2 id="$1" class="stitle" style="scroll-margin-top:5rem">$2</h2>');
   const toc = `<nav class="toc" style="margin-bottom:1.125rem">
-    <a href="#guide-tips">Wskazówki przewodników</a><a href="#abuzabi">🕌 Abu Zabi</a><a href="#kioto">⛩️ Kioto</a><a href="#osaka">Osaka</a><a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a>
+    <a href="#guide-tips">Wskazówki przewodników</a><a href="#abuzabi">🕌 Abu Zabi</a><a href="#kioto">⛩️ Kioto</a><a href="#nara">🦌 Nara</a><a href="#tokio">🏙️ Tokio</a><a href="#hakone">♨️ Hakone</a>
     <a href="#praktyczne">🧳 Praktyczne</a><a href="#poza-planem">Poza planem</a></nav>`;
   const inner=`
   <header class="hero kb">
@@ -1019,10 +1019,9 @@ function atrakcjePage(){
   <section id="guide-tips"><h2 class="stitle">Wskazówki przewodników w naszym planie</h2>
     <div class="card"><ul class="tips">
       <li><a href="days/2027-04-30.html">30.04: Fushimi, ramen, sjesta i Gion</a>. Ninomaru przeniesione na opcjonalne popołudnie zamiast Kiyomizu, nie jako kolejny zabytek.</li>
-      <li><a href="days/2027-05-01.html">1.05: dzień w Osace</a>. <a href="#sushiro-esaka">Sushiro Esaka ze zdjęcia</a>, muzeum życia codziennego i Dōtonbori. <a href="#nara-variant">Nara zostaje alternatywą</a>.</li>
+      <li><a href="days/2027-05-01.html">1.05: dzień w Narze</a>. Jelenie, Tōdai-ji i pasaż przy stacji. <a href="#osaka-variant">Osaka z Sushiro Esaka zostaje alternatywą</a>.</li>
       <li><a href="days/2027-05-02.html">2.05: KOTO, Kinugasa i opcjonalne Nishiki</a>. Herbaciarnia ze zdjęcia zastępuje MAIKOYA. Sklep przy Ryōan-ji wskazany pinezką najprawdopodobniej to Kinugasa; warsztat pakowania wymaga uzgodnienia. Nie dokładamy kaligrafii.</li>
       <li>Wachlarze obejrzycie już w <a href="#kinugasa">Kinugasa</a>. <a href="#sensu">Miyawaki Baisenan</a> i <a href="#kura">Kura Sushi</a> to adresy zapasowe, bez obowiązkowych kolejnych zakupów i sushi.</li>
-      <li><a href="#housing-living">Muzeum w Osace</a> jest wyborem domyślnym. <a href="#osaka-castle">Zamek</a> może je zastąpić, ale nie dopisujemy obu.</li>
       <li><a href="pogoda.html#kwitnienie">Kwitnienie i ogrody Tokio</a>: przegląd publikacji zimą, decyzja o konkretnym spacerze 48-72 godziny wcześniej. Bez obietnicy majowej sakury.</li>
     </ul><p class="note">Weryfikacja nowych wskazówek: 20.09.2026. Linki do źródeł są przy miejscach. Godziny na Golden Week 2027 i dostępność sesji wymagają ponownego sprawdzenia; niczego tu nie zarezerwowano.</p></div>
   </section>
