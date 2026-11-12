@@ -210,7 +210,7 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
 (function(){
   var q=/[?&]teraz=([^&#]+)/.exec(location.search), fixed=q?new Date(decodeURIComponent(q[1])):null;
   if(fixed&&isNaN(fixed)) return;
-  var START=Date.UTC(2027,3,26,22,0), LAND_AUH=Date.UTC(2027,3,27,15,35), DEP_AUH=Date.UTC(2027,3,28,17,25),
+  var START=Date.UTC(2027,3,26,22,0), LAND_AUH=Date.UTC(2027,3,27,15,25), DEP_AUH=Date.UTC(2027,3,28,17,25),
       DEP_NRT=Date.UTC(2027,4,7,9,0), HOME=Date.UTC(2027,4,8,4,50);
   var box=document.getElementById('dzis'), src=document.getElementById('agenda'), tl=document.querySelector('.tline[data-date]');
   if(!(box&&src)&&!tl) return;

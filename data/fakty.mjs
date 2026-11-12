@@ -3,7 +3,7 @@
 // Zmiana rezerwacji albo rozkładu = zmiana jednej linii w tym pliku. Test (check.mjs) nie przepuści tych wartości wpisanych ręcznie.
 export const F = {
   // Loty Etihad (z e-biletów)
-  'lot.waw.odlot':'11:50', 'lot.auh.przylot':'19:35', 'lot.auh.odlot':'21:25',
+  'lot.waw.odlot':'11:50', 'lot.auh.przylot':'19:25', 'lot.auh.odlot':'21:25',
   'lot.nrt.przylot':'12:45', 'lot.nrt.odlot':'18:00', 'lot.waw.przylot':'06:50',
   'bilety.suma':'13 643,36 zł',
   // Shinkanseny zarezerwowane w SmartEX
