@@ -269,5 +269,230 @@ export const ZDJECIA = {
   "autor": "Takashi Hososhima",
   "licencja": "CC BY-SA 2.0",
   "strona": "https://commons.wikimedia.org/wiki/File:Lanterns_(12657676455).jpg"
+ },
+ "kiyomizu": {
+  "src": "/assets/img/p/kiyomizu.webp",
+  "w": 1800,
+  "h": 1107,
+  "tytul": "Kiyomizu-dera, Kyoto, November 2016 -01",
+  "autor": "Martin Falbisoner",
+  "licencja": "CC BY-SA 4.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-01.jpg"
+ },
+ "sensu": {
+  "src": "/assets/img/p/sensu.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Uchiwa (6115956796)",
+  "autor": "niconico0",
+  "licencja": "CC BY 2.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Uchiwa_(6115956796).jpg"
+ },
+ "kaiten": {
+  "src": "/assets/img/p/kaiten.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Kaitenzushi plates protected with a plastic cover due to covid-19",
+  "autor": "Syced",
+  "licencja": "CC0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Kaitenzushi_plates_protected_with_a_plastic_cover_due_to_covid-19.jpg"
+ },
+ "kasuga": {
+  "src": "/assets/img/p/kasuga.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Stone lanterns in Kasuga-taisha-1",
+  "autor": "Immanuelle",
+  "licencja": "CC BY 4.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Stone_lanterns_in_Kasuga-taisha-1.jpg"
+ },
+ "mochi": {
+  "src": "/assets/img/p/mochi.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Mochi pounding ceremony (mochitsuki)",
+  "autor": "JoshBerglund19",
+  "licencja": "CC BY 2.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Mochi_pounding_ceremony_(mochitsuki).jpg"
+ },
+ "parco": {
+  "src": "/assets/img/p/parco.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Shibuya Parco Hulic Building",
+  "autor": "稲妻ノ歯鯨",
+  "licencja": "CC BY-SA 4.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Shibuya_Parco_Hulic_Building.jpg"
+ },
+ "yamato": {
+  "src": "/assets/img/p/yamato.webp",
+  "w": 1800,
+  "h": 1356,
+  "tytul": "Yamato delivery electrick truck, Hino",
+  "autor": "Syced",
+  "licencja": "CC0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Yamato_delivery_electrick_truck,_Hino.jpg"
+ },
+ "monkeys": {
+  "src": "/assets/img/p/monkeys.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Macaca fuscata Iwatayama",
+  "autor": "Leyo",
+  "licencja": "CC BY-SA 2.5 ch",
+  "strona": "https://commons.wikimedia.org/wiki/File:Macaca_fuscata_Iwatayama.jpg"
+ },
+ "maiko": {
+  "src": "/assets/img/p/maiko.webp",
+  "w": 1800,
+  "h": 1326,
+  "tytul": "Dancing geisha, Gion, Kyoto - August 30, 2007",
+  "autor": "Joi (Joi Ito)",
+  "licencja": "CC BY 2.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Dancing_geisha,_Gion,_Kyoto_-_August_30,_2007.jpg"
+ },
+ "railwaymuseum": {
+  "src": "/assets/img/p/railwaymuseum.webp",
+  "w": 1800,
+  "h": 1197,
+  "tytul": "Kyoto Railway Museum, enkei",
+  "autor": "Saigen Jiro",
+  "licencja": "CC0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Kyoto_Railway_Museum,_enkei.jpg"
+ },
+ "kaiyukan": {
+  "src": "/assets/img/p/kaiyukan.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Kaiyukan Manta and Whale shark",
+  "autor": "SR EXR",
+  "licencja": "CC0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Kaiyukan_Manta_and_Whale_shark.JPG"
+ },
+ "shinsekai": {
+  "src": "/assets/img/p/shinsekai.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Shinsekai and Tsutenkaku Tower",
+  "autor": "Sakai Yayoi",
+  "licencja": "CC0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Shinsekai_and_Tsutenkaku_Tower.jpg"
+ },
+ "ukiyoe": {
+  "src": "/assets/img/p/ukiyoe.webp",
+  "w": 1800,
+  "h": 1232,
+  "tytul": "Great Wave off Kanagawa2",
+  "autor": "After Katsushika Hokusai",
+  "licencja": "Public domain",
+  "strona": "https://commons.wikimedia.org/wiki/File:Great_Wave_off_Kanagawa2.jpg"
+ },
+ "tsukiji": {
+  "src": "/assets/img/p/tsukiji.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Tsukiji Outer Market 2",
+  "autor": "Aw1805",
+  "licencja": "CC BY-SA 3.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Tsukiji_Outer_Market_2.jpg"
+ },
+ "teamlab": {
+  "src": "/assets/img/p/teamlab.webp",
+  "w": 1800,
+  "h": 1012,
+  "tytul": "Photos at teamlab planets tokyo",
+  "autor": "Sasa0403",
+  "licencja": "CC BY-SA 4.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Photos_at_teamlab_planets_tokyo.jpg"
+ },
+ "openair": {
+  "src": "/assets/img/p/openair.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Hakone Open-air Museum 20211202-5",
+  "autor": "Suicasmo",
+  "licencja": "CC BY-SA 4.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Hakone_Open-air_Museum_20211202-5.jpg"
+ },
+ "taiko": {
+  "src": "/assets/img/p/taiko.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Japanese Taiko Drummers Perform at Bon Odori Festival Celebration (9853459)",
+  "autor": "U.S. Army USACE-JD by Sheandra Sterling",
+  "licencja": "Public domain",
+  "strona": "https://commons.wikimedia.org/wiki/File:Japanese_Taiko_Drummers_Perform_at_Bon_Odori_Festival_Celebration_(9853459).jpg"
+ },
+ "louvre": {
+  "src": "/assets/img/p/louvre.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Louvre Abu Dhabi 01",
+  "autor": "Davide Mauro",
+  "licencja": "CC BY-SA 4.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Louvre_Abu_Dhabi_01.jpg"
+ },
+ "mosquealley": {
+  "src": "/assets/img/p/mosquealley.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Sheikh Zayed Grand Mosque @ Abu Dhabi (15856602738)",
+  "autor": "Guilhem Vellut from Annecy, France",
+  "licencja": "CC BY 2.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Sheikh_Zayed_Grand_Mosque_@_Abu_Dhabi_(15856602738).jpg"
+ },
+ "ramen": {
+  "src": "/assets/img/p/ramen.webp",
+  "w": 1800,
+  "h": 1200,
+  "tytul": "Shoyu Ramen",
+  "autor": "Guilhem Vellut",
+  "licencja": "CC BY 2.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Shoyu_Ramen.jpg"
+ },
+ "narita": {
+  "src": "/assets/img/p/narita.webp",
+  "w": 1800,
+  "h": 1200,
+  "tytul": "Departure lobby of Tokyo-Narita Airport Terminal 2",
+  "autor": "Nanashinodensyaku",
+  "licencja": "CC BY-SA 4.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Departure_lobby_of_Tokyo-Narita_Airport_Terminal_2.JPG"
+ },
+ "ninja": {
+  "src": "/assets/img/p/ninja.webp",
+  "w": 1800,
+  "h": 1195,
+  "tytul": "Ninja ladies in Kyushu (5025643858)",
+  "autor": "Jordi Sanchez",
+  "licencja": "CC BY-SA 2.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Ninja_ladies_in_Kyushu_(5025643858).jpg"
+ },
+ "kokugikan": {
+  "src": "/assets/img/p/kokugikan.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "Inside the Ryogoku Kokugikan at the 2014 January Sumo Tournament",
+  "autor": "Gregg Tavares",
+  "licencja": "CC BY 2.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Inside_the_Ryogoku_Kokugikan_at_the_2014_January_Sumo_Tournament.jpg"
+ },
+ "chanko": {
+  "src": "/assets/img/p/chanko.webp",
+  "w": 1800,
+  "h": 1200,
+  "tytul": "Chankonabe",
+  "autor": "George N",
+  "licencja": "CC BY 2.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:Chankonabe.jpg"
+ },
+ "arcade": {
+  "src": "/assets/img/p/arcade.webp",
+  "w": 1800,
+  "h": 1350,
+  "tytul": "UFO Catcher Arcade Game, Shinjuku (53416842023)",
+  "autor": "Stephen Kelly from San Francisco, CA, USA",
+  "licencja": "CC BY 2.0",
+  "strona": "https://commons.wikimedia.org/wiki/File:UFO_Catcher_Arcade_Game,_Shinjuku_(53416842023).jpg"
  }
 };

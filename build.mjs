@@ -59,13 +59,14 @@ const DAYIMG = {
 // galeria dnia: [klucz zdjęcia, podpis]. Podpis mówi wprost, gdy zdjęcie jest poglądowe.
 const DAYPHOTOS = {
   '2027-04-27':[['abudhabi','Abu Zabi: nabrzeże Corniche']],
+  '2027-04-28':[['mosquealley','Aleja palmowa przed Wielkim Meczetem'],['louvre','Wejście do Luwru Abu Zabi']],
   '2027-04-29':[['nex','Narita Express'],['shinkansen','Shinkansen pod Fudżi'],['kyotostation','Hala dworca w Kioto']],
-  '2027-04-30':[['fushimi','Fushimi Inari: tunel bram torii'],['yasaka','Lampiony chramu Yasaka w Gion']],
-  '2027-05-01':[['deer','Jelenie w parku Nara'],['todaiji','Tōdai-ji: pawilon Wielkiego Buddy']],
+  '2027-04-30':[['fushimi','Fushimi Inari: tunel bram torii'],['kiyomizu','Kiyomizu-dera: drewniany taras nad zboczem (zdjęcie jesienne)'],['yasaka','Lampiony chramu Yasaka w Gion']],
+  '2027-05-01':[['deer','Jelenie w parku Nara'],['todaiji','Tōdai-ji: pawilon Wielkiego Buddy'],['mochi','Ubijanie mochi (zdjęcie poglądowe)']],
   '2027-05-02':[['kinkakuji','Kinkaku-ji: Złoty Pawilon'],['tea','Ceremonia herbaty (zdjęcie poglądowe)'],['furoshiki','Furoshiki: chusty ze sklepu Kinugasa (zdjęcie poglądowe)'],['nishiki','Nishiki Market']],
   '2027-05-03':[['sensoji','Sensō-ji: brama Kaminarimon'],['sumo','Sumo: wejście zawodników na ring (zdjęcie z turnieju)']],
   '2027-05-04':[['meiji','Meiji Jingū: brama torii'],['harajuku','Harajuku: naleśnik z ulicy Takeshita'],['shibuya','Skrzyżowanie Shibuya o zmierzchu']],
-  '2027-05-05':[['pokemon','Pokémon Center (zdjęcie z innego sklepu w Tokio)'],['akihabara','Akihabara wieczorem']],
+  '2027-05-05':[['pokemon','Pokémon Center (zdjęcie z innego sklepu w Tokio)'],['teamlab','teamLab Planets: wariant bez Café'],['akihabara','Akihabara wieczorem']],
   '2027-05-06':[['romancecar','Romancecar do Hakone'],['hakonetozan','Kolej górska Hakone Tozan'],['owakudani','Ōwakudani i kolej linowa'],['ashi','Torii chramu Hakone nad jeziorem Ashi']],
   '2027-05-07':[['fuji','Jezioro Ashi i Fudżi'],['nex','Narita Express na lotnisko']],
 };
@@ -73,7 +74,9 @@ const photo = (k,cap,sizes) => { const z=ZDJECIA[k]; return '<figure><img src="'
 // zdjęcie w karcie atrakcji: id karty -> klucz zdjęcia
 const CARDIMG = {fushimi:'fushimi',nijo:'nijo','tea-koto':'tea',kinugasa:'furoshiki',nishiki:'nishiki',gion:'yasaka','sushiro-esaka':'sushi','housing-living':'osakamuseum',dotonbori:'dotonbori','osaka-castle':'osakacastle',
   'sumo-show':'sumo',sensoji:'sensoji',meiji:'meiji','shibuya-sky':'shibuya',pokemon:'pokemon',akihabara:'akihabara',streetwear:'harajuku','hakone-pass':'romancecar',owakudani:'owakudani',ashi:'ashi',nex:'nex',smartex:'shinkansen',
-  kinkakuji:'kinkakuji',arashiyama:'bamboo','nara-park':'deer',todaiji:'todaiji',stopover:'abudhabi'};
+  kinkakuji:'kinkakuji',arashiyama:'bamboo','nara-park':'deer',todaiji:'todaiji',stopover:'abudhabi',
+  mosque:'mosquealley',louvread:'louvre',kiyomizu:'kiyomizu','ramen-koji':'ramen',sensu:'sensu',kura:'kaiten',furoshiki:'furoshiki',kasuga:'kasuga',mochi:'mochi','pokemon-shibuya':'parco',vjw:'narita',takkyubin:'yamato',
+  monkeys:'monkeys',culture:'maiko',ninja:'ninja',railway:'railwaymuseum',kaiyukan:'kaiyukan',shinsekai:'shinsekai',tombori:'dotonbori',ota:'ukiyoe',tsukiji:'tsukiji',teamlab:'teamlab',openair:'openair',sumo:'kokugikan',chanko:'chanko',round1:'arcade',taiko:'taiko'};
 const creditsList = () => '<ol class="credits">'+Object.values(ZDJECIA).map(z=>'<li><a href="'+z.strona+'" target="_blank" rel="noopener">'+esc(z.tytul)+'</a>, fot. '+esc(z.autor)+', '+z.licencja+'</li>').join('')+'</ol>';
 const CITY = {
   tokio:{c1:'20,32,64',c2:'14,39,67',photo:IMG.shibuya},
@@ -338,7 +341,7 @@ function kosztyPage(){
     <h2 class="stitle">Transport w Japonii - podstawa budżetu</h2>
     <p class="lead-p">Kontrola 9.09.2026. Przeliczenie planistyczne: 100 JPY = 2,40 zł. Taryfy na konkretny pociąg i dzień w 2027 trzeba potwierdzić; Golden Week może oznaczać dopłatę sezonową. Liczymy trzy bilety dorosłe i jeden dziecięcy.</p>
     ${seg('Przejazdy między miastami',[
-      '<b>Narita → Tokio → Kioto</b> (29.04): NEX obecnie 3 140 JPY/dorosły w jedną stronę; shinkansen zarezerwowany w SmartEX: {{sk.cena}} za rodzinę ({{sk.dorosly}} dorosły, {{sk.dziecko}} dziecko). NEX kupuje się osobno w JR East.',
+      '<b>Narita → Tokio → Kioto</b> (29.04): NEX do Shinagawy; cena w jedną stronę zależy od stacji docelowej (do Tokyo Station obecnie 3 140 JPY/dorosły, do Shinagawy sprawdźcie przy zakupie); shinkansen zarezerwowany w SmartEX: {{sk.cena}} za rodzinę ({{sk.dorosly}} dorosły, {{sk.dziecko}} dziecko). NEX kupuje się osobno w JR East.',
       
       
       '<b>Kioto → Tokio</b> (3.05): shinkansen zarezerwowany w SmartEX, {{sk.cena}} za rodzinę. Ostateczny pociąg i cztery miejsca potwierdzi mail z 3.04.', '<b>Odawara → Shinagawa → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
@@ -550,7 +553,7 @@ function pokazPage(){
 <title>Pokaz planu · Japonia 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="assets/pokaz.css?v=${BUILD_ID}"></head>
+<link rel="stylesheet" href="assets/pokaz.css"></head>
 <body>
 <section class="slide" id="s1">
   <div><p class="kicker">Japonia 2027 · 27 kwietnia – 8 maja · dwoje dorosłych i dzieci w wieku 13 i 10 lat</p><h1>Nasz plan. Powiedzcie, co byście zmienili.</h1></div>
@@ -572,7 +575,7 @@ ${daySlides}
   <p class="cut">Uwagi są zapisane tylko w tej przeglądarce. Skopiuj je albo pobierz, zanim zamkniesz pokaz na cudzym komputerze.</p>
 </section>
 <nav class="bar" aria-label="Slajdy"><a class="exit" href="index.html">← Strona</a><button type="button" id="prev" aria-label="Poprzedni slajd">←</button><div class="dots">${dots}</div><button type="button" id="next" aria-label="Następny slajd">→</button><button type="button" id="full">Pełny ekran (F)</button></nav>
-<script src="assets/pokaz.js?v=${BUILD_ID}"></script>
+<script src="assets/pokaz.js"></script>
 </body></html>`;
 }
 
@@ -1057,7 +1060,16 @@ const ATR_BODY = fill(fs.readFileSync(DIR + '/data/atrakcje.html','utf8'));
 
 function atrakcjePage(){
   let body = ATR_BODY;
-  for (const [id,k] of Object.entries(CARDIMG)) { const z=ZDJECIA[k], tag='<div class="acard" id="'+id+'">'; if(!body.includes(tag)) throw new Error('Brak karty '+id); body = body.replace(tag, '<div class="acard has-img" id="'+id+'"><img class="acimg" src="'+small(z.src)+'" srcset="'+small(z.src)+' 760w, '+z.src+' '+z.w+'w" sizes="(max-width:680px) 100vw, 50vw" width="'+z.w+'" height="'+z.h+'" alt="" loading="lazy" decoding="async">'); }
+  // Każda karta musi mieć zdjęcie: tytuł ląduje na zdjęciu, na ciemnym gradiencie.
+  const cardIds = [...body.matchAll(/<div class="acard" id="([^"]+)">/g)].map(m=>m[1]);
+  const bezZdjecia = cardIds.filter(id => !CARDIMG[id]);
+  if (bezZdjecia.length) throw new Error('Karty bez zdjęcia (uzupełnij CARDIMG): '+bezZdjecia.join(', '));
+  for (const [id,k] of Object.entries(CARDIMG)) {
+    const z=ZDJECIA[k]; if(!z) throw new Error('Brak zdjęcia '+k+' dla karty '+id);
+    const re=new RegExp('<div class="acard" id="'+id+'">\\s*<h3>([\\s\\S]*?)</h3>');
+    if(!re.test(body)) throw new Error('Brak karty '+id);
+    body = body.replace(re, (m,title) => '<div class="acard has-img" id="'+id+'"><div class="achead"><img src="'+small(z.src)+'" srcset="'+small(z.src)+' 760w, '+z.src+' '+z.w+'w" sizes="(max-width:680px) 100vw, 50vw" width="'+z.w+'" height="'+z.h+'" alt="" loading="lazy" decoding="async"><h3>'+title+'</h3></div>');
+  }
   // map old classes to new ones
   body = body.split('class="grid"').join('class="agrid"');
   body = body.split('class="acard"').join('class="acard"'); // same
@@ -1160,8 +1172,11 @@ const PRECACHE = ${JSON.stringify(PRECACHE)};
 self.addEventListener('install', function(e){
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then(function(c){
-    // pojedyncze błędy nie mogą wywrócić instalacji
-    return Promise.all(PRECACHE.map(function(u){return c.add(u).catch(function(){});}));
+    // Pojedynczy błąd nie może wywrócić instalacji ani zostawić dziury: gdy pliku nie da się pobrać,
+    // przenosimy jego poprzednią kopię ze starej pamięci, zanim zostanie ona usunięta przy aktywacji.
+    return Promise.all(PRECACHE.map(function(u){return c.add(u).catch(function(){
+      return caches.match(u,{ignoreSearch:true}).then(function(old){ if(old) return c.put(u,old); });
+    });}));
   }));
 });
 self.addEventListener('activate', function(e){
@@ -1176,11 +1191,11 @@ self.addEventListener('fetch', function(e){
   var url = new URL(req.url);
   if(url.origin !== location.origin) return;           // mapy, pogoda, Google — tylko z sieci
   var isDoc  = req.mode==='navigate' || req.destination==='document' || /\\.html$|\\/$/.test(url.pathname);
-  var isCode = /assets\\/(style\\.css|app\\.js)$/.test(url.pathname);
+  var isCode = /assets\\/(style\\.css|app\\.js|pokaz\\.css|pokaz\\.js)$/.test(url.pathname);
   if(isDoc || isCode){
     // NETWORK FIRST: strona i kod zawsze świeże; cache tylko gdy nie ma sieci
     e.respondWith(fetch(req).then(function(res){ return store(req,res); }).catch(function(){
-      return caches.match(req).then(function(hit){ return hit || caches.match('index.html'); });
+      return caches.match(req,{ignoreSearch:true}).then(function(hit){ return hit || caches.match('index.html'); });
     }));
     return;
   }

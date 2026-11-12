@@ -467,7 +467,7 @@ footer a{font-weight:600;text-decoration:none}
 .today-link{display:inline-block;margin-top:0.875rem;font-weight:600}
 .tline li.is-past{opacity:.55}
 .tline li.is-now .bd::before{background:var(--ai);border-color:var(--ai)}
-.event-tag.now{background:var(--ai);color:#fff}
+.event-tag.now{background:var(--ai);color:var(--panel)}
 
 /* ===== Czytelność na laptopie i telewizorze: większy tekst, większe zdjęcia ===== */
 body{font-size:1.0625rem}
@@ -499,7 +499,11 @@ body{font-size:1.0625rem}
 }
 /* Zdjęcia w kartach atrakcji i galeria dnia */
 .acard.has-img{padding-top:0;overflow:hidden}
-.acimg{display:block;height:auto;width:calc(100% + 2.25rem);max-width:none;margin:0 -1.125rem .875rem;aspect-ratio:16/9;object-fit:cover;background:var(--wash)}
+.achead{position:relative;margin:0 -1.125rem .75rem;background:var(--wash)}
+.achead img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover}
+.achead::after{content:"";position:absolute;inset:40% 0 0 0;background:linear-gradient(to top,rgba(8,14,32,.92),rgba(8,14,32,.55) 45%,rgba(8,14,32,0));pointer-events:none}
+.achead h3{position:absolute;z-index:1;left:1.125rem;right:1.125rem;bottom:.875rem;margin:0;color:#fff;font-size:1.5rem;line-height:1.15;text-shadow:0 1px 3px rgba(0,0,0,.55);text-wrap:balance}
+@media(max-width:680px){.achead h3{font-size:1.3rem}}
 .dayphotos{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.75rem}
 .dayphotos figure{margin:0}
 .dayphotos img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:var(--radius-lg);background:var(--wash)}
@@ -509,6 +513,7 @@ body{font-size:1.0625rem}
 /* Pilnowanie terminów: odliczanie przy terminach i sprawach, karta z najbliższym terminem */
 em.due{display:block;margin-top:.25rem;font-style:normal;font-family:var(--sans);font-size:.75rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted)}
 em.due.soon{color:#835316}
+@media(prefers-color-scheme:dark){em.due.soon{color:var(--warn)}}
 em.due.late{color:var(--hanko)}
 em.due.ok{color:var(--success)}
 .deadlines li.past{opacity:.55}
@@ -522,3 +527,13 @@ em.due.ok{color:var(--success)}
 .watch .today-steps a.late{background:var(--wash-red)}
 .watch .today-steps i{display:block;font-style:normal;font-size:.8438rem;color:var(--muted);margin-top:.125rem}
 .watch-links{margin:.875rem 0 0;font-size:.9375rem;font-weight:600}
+
+/* Panel terminów na telefonie: nagłówek, jedna pozycja i odnośniki, żeby nie zajmował całego ekranu */
+@media(max-width:640px){
+  .watch{padding:.875rem 1rem;margin:.75rem 0}
+  .watch h2{font-size:1.15rem}
+  .watch-when{font-size:.9375rem}.watch-when b{font-size:1rem}
+  .watch .today-steps{margin-top:.625rem}
+  .watch .today-steps a:nth-child(n+2){display:none}
+  .watch-links{margin-top:.625rem;font-size:.875rem}
+}
