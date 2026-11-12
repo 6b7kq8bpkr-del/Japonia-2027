@@ -203,3 +203,58 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   }
   addEventListener('hashchange',reveal); reveal();
 })();
+
+/* ---- tryb „dziś”: w trakcie podróży strona główna pokazuje bieżący dzień i najbliższy krok,
+   a oś czasu dnia zaznacza, gdzie jesteśmy. Podgląd: dopisz do adresu ?teraz=2027-04-30T02:00:00Z ---- */
+(function(){
+  var q=/[?&]teraz=([^&#]+)/.exec(location.search), now=q?new Date(decodeURIComponent(q[1])):new Date();
+  if(isNaN(now)) return;
+  var T=now.getTime();
+  var START=Date.UTC(2027,3,26,22,0), LAND_AUH=Date.UTC(2027,3,27,15,35), DEP_AUH=Date.UTC(2027,3,28,17,25),
+      DEP_NRT=Date.UTC(2027,4,7,9,0), HOME=Date.UTC(2027,4,8,4,50);
+  if(T<START||T>HOME) return;
+  // czas miejsca, w którym jest rodzina: Polska, potem ZEA, potem Japonia
+  var off=T<LAND_AUH?2:(T<DEP_AUH?4:9), L=new Date(T+off*3600000).toISOString(), ds=L.slice(0,10), hm=L.slice(11,16);
+  var inFlightHome=T>=DEP_NRT;
+  function pick(steps){
+    var cur=-1,next=-1;
+    for(var i=0;i<steps.length;i++){ var t=steps[i][0]; if(!/^\d\d:\d\d$/.test(t)) continue;
+      if(t<=hm) cur=i; else if(next<0) next=i; }
+    return {cur:cur,next:next};
+  }
+  function el(tag,cls,text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+  var box=document.getElementById('dzis'), src=document.getElementById('agenda');
+  if(box&&src){
+    var days=[]; try{ days=JSON.parse(src.textContent); }catch(e){}
+    var day=null; days.forEach(function(d){ if(d.d===ds) day=d; });
+    if(inFlightHome){
+      box.appendChild(el('p','eyebrow','W drodze do domu'));
+      box.appendChild(el('h2',null,'Lądowanie w Warszawie w sobotę 8 maja o 06:50'));
+      box.hidden=false;
+    } else if(day){
+      var p=pick(day.s);
+      box.appendChild(el('p','eyebrow','Dziś · '+day.dd+' · '+hm+' czasu miejscowego'));
+      var h=el('h2'), a=el('a',null,day.t); a.href='days/'+day.d+'.html'; h.appendChild(a); box.appendChild(h);
+      var g=el('div','today-steps');
+      function row(label,i){ if(i<0) return; var r=el('div'); r.appendChild(el('span',null,label)); r.appendChild(el('b',null,day.s[i][0]+' · '+day.s[i][1])); g.appendChild(r); }
+      row('Teraz',p.cur); row('Następnie',p.next);
+      if(g.children.length) box.appendChild(g);
+      var l=el('a','today-link','Otwórz dzisiejszy plan →'); l.href='days/'+day.d+'.html#plan'; box.appendChild(l);
+      box.hidden=false;
+    }
+  }
+  var tl=document.querySelector('.tline[data-date]');
+  if(tl&&!inFlightHome&&tl.getAttribute('data-date')===ds){
+    var lis=[].slice.call(tl.children), steps=lis.map(function(li){ var tm=li.querySelector('.tm'); return [tm?tm.textContent.trim():'','']; });
+    var pp=pick(steps);
+    lis.forEach(function(li,i){
+      if(i<pp.cur) li.classList.add('is-past');
+      if(i===pp.cur||i===pp.next){
+        li.classList.add(i===pp.cur?'is-now':'is-next');
+        var hd=li.querySelector('summary')||li.querySelector('.bd');
+        var tag=el('span','event-tag now',i===pp.cur?'teraz':'następnie'); hd.appendChild(tag);
+        var d=li.querySelector('details'); if(d) d.open=true;
+      }
+    });
+  }
+})();
