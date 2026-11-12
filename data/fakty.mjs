@@ -11,10 +11,12 @@ export const F = {
   'sk.cena':'50 290 JPY', 'sk.razem':'100 580 JPY', 'sk.razem.zl':'2 414 zł', 'sk.dorosly':'14 370 JPY', 'sk.dziecko':'7 180 JPY',
   // 29.04: Narita -> Shinagawa
   'nex2904.odj':'14:20',
-  // 2.05: Kinugasa i herbata KOTO
-  'kinugasa.start':'09:45', 'koto.start':'11:45', 'koto.sesje':'11:45, 13:00, 14:15, 15:30 i 16:45', 'koto.cena':'11 600 JPY',
+  // 2.05: Złoty Pawilon i herbata KOTO
+  'kinkakuji.start':'09:30', 'koto.start':'11:45', 'koto.sesje':'11:45, 13:00, 14:15, 15:30 i 16:45', 'koto.cena':'11 600 JPY',
   // 3.05: pokaz sumo
   'sumo.start':'18:00',
+  // 6.05: bezpośredni Romancecar z linii Chiyoda (obecny rozkład dni roboczych, do potwierdzenia na 2027)
+  'metrohakone.odj':'10:18', 'metrohakone.przyj':'11:48',
   // 4.05: Shibuya Sky
   'sky.start':'17:40', 'sky.slot':'17:40-17:59', 'sky.zachod':'18:30',
   // Oferta hotelu z 26.09.2026; usługi dodatkowe nadal niezarezerwowane.

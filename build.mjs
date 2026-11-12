@@ -48,20 +48,20 @@ const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"
 // jedno zdjęcie przewodnie na dzień
 const DAYIMG = {
   '2027-04-27':IMG.abudhabi, '2027-04-28':IMG.mosque, '2027-04-29':IMG.shinkansen, '2027-04-30':IMG.fushimi,
-  '2027-05-01':IMG.deer, '2027-05-02':IMG.tea, '2027-05-03':IMG.sensoji, '2027-05-04':IMG.shibuya,
+  '2027-05-01':IMG.deer, '2027-05-02':IMG.kinkakuji, '2027-05-03':IMG.sensoji, '2027-05-04':IMG.shibuya,
   '2027-05-05':IMG.pokemon, '2027-05-06':IMG.fuji, '2027-05-07':IMG.nex,
 };
 // galeria dnia: [klucz zdjęcia, podpis]. Podpis mówi wprost, gdy zdjęcie jest poglądowe.
 const DAYPHOTOS = {
   '2027-04-27':[['abudhabi','Abu Zabi: nabrzeże Corniche']],
   '2027-04-29':[['nex','Narita Express'],['shinkansen','Shinkansen pod Fudżi'],['kyotostation','Hala dworca w Kioto']],
-  '2027-04-30':[['fushimi','Fushimi Inari: tunel bram torii'],['nijo','Nijō: pałac Ninomaru'],['yasaka','Lampiony chramu Yasaka w Gion']],
+  '2027-04-30':[['fushimi','Fushimi Inari: tunel bram torii'],['yasaka','Lampiony chramu Yasaka w Gion']],
   '2027-05-01':[['deer','Jelenie w parku Nara'],['todaiji','Tōdai-ji: pawilon Wielkiego Buddy']],
-  '2027-05-02':[['furoshiki','Furoshiki: chusty do pakowania (zdjęcie poglądowe)'],['tea','Ceremonia herbaty (zdjęcie poglądowe)'],['nishiki','Nishiki Market']],
+  '2027-05-02':[['kinkakuji','Kinkaku-ji: Złoty Pawilon'],['tea','Ceremonia herbaty (zdjęcie poglądowe)'],['furoshiki','Furoshiki: chusty ze sklepu Kinugasa (zdjęcie poglądowe)'],['nishiki','Nishiki Market']],
   '2027-05-03':[['sensoji','Sensō-ji: brama Kaminarimon'],['sumo','Sumo: wejście zawodników na ring (zdjęcie z turnieju)']],
   '2027-05-04':[['meiji','Meiji Jingū: brama torii'],['harajuku','Harajuku: naleśnik z ulicy Takeshita'],['shibuya','Skrzyżowanie Shibuya o zmierzchu']],
   '2027-05-05':[['pokemon','Pokémon Center (zdjęcie z innego sklepu w Tokio)'],['akihabara','Akihabara wieczorem']],
-  '2027-05-06':[['romancecar','Romancecar z Shinjuku'],['hakonetozan','Kolej górska Hakone Tozan'],['owakudani','Ōwakudani i kolej linowa'],['ashi','Torii chramu Hakone nad jeziorem Ashi']],
+  '2027-05-06':[['romancecar','Romancecar do Hakone'],['hakonetozan','Kolej górska Hakone Tozan'],['owakudani','Ōwakudani i kolej linowa'],['ashi','Torii chramu Hakone nad jeziorem Ashi']],
   '2027-05-07':[['fuji','Jezioro Ashi i Fudżi'],['nex','Narita Express na lotnisko']],
 };
 const photo = (k,cap,sizes) => { const z=ZDJECIA[k]; return '<figure><img src="'+small(z.src)+'" srcset="'+small(z.src)+' 760w, '+z.src+' '+z.w+'w" sizes="'+sizes+'" width="'+z.w+'" height="'+z.h+'" alt="'+esc(cap)+'" loading="lazy" decoding="async"><figcaption>'+cap+'</figcaption></figure>'; };
@@ -258,7 +258,7 @@ function indexPage(){
     <div class="hero-inner">
       <p class="eyebrow">Przewodnik rodzinny · 2+2 · 11 dni programu + powrót · Narita → Kioto → Tokio → Hakone</p>
       <h1>Japonia 2027</h1>
-      <p class="lead">27 kwietnia - 8 maja 2027. Noc w Abu Zabi, cztery noce w Kioto z dniem w Narze, trzy w Tokio i prywatna kąpiel w Hakone. KOTO, sklep Kinugasa, Pokémony i czas na odpoczynek. Powrót do Warszawy 8 maja o {{lot.waw.przylot}}.</p>
+      <p class="lead">27 kwietnia - 8 maja 2027. Noc w Abu Zabi, cztery noce w Kioto z dniem w Narze, trzy w Tokio i prywatna kąpiel w Hakone. Jelenie w Narze, Złoty Pawilon, herbata KOTO i czas na odpoczynek. Powrót do Warszawy 8 maja o {{lot.waw.przylot}}.</p>
       <div class="chips"><span class="chip hanko">Bilety kupione</span><span class="chip">noc w Abu Zabi gratis</span><span class="chip">8 nocy w Japonii</span><span class="chip">Dzień Dziecka w Tokio</span><span class="chip">ryokan nad jeziorem</span></div>
     </div>
     <div class="scrollcue" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
@@ -284,7 +284,7 @@ function indexPage(){
 
   <section id="trasa">
     <h2 class="stitle">Nasza trasa po Japonii</h2>
-    <p class="lead-p">Cała podróż na jednej mapie: z Narity shinkansenem do Kioto (cztery noce), 1.05 wycieczka do Nary i powrót do tej samej bazy, potem Tokio (trzy noce), Hakone i lotnisko. 2.05 w Kioto: KOTO oraz sklep Kinugasa. Osaka i Arashiyama pozostają alternatywami, nie dodatkowymi dniami. Abu Zabi jest poza tą mapą.</p>
+    <p class="lead-p">Cała podróż na jednej mapie: z Narity shinkansenem do Kioto (cztery noce), 1.05 wycieczka do Nary i powrót do tej samej bazy, potem Tokio (trzy noce), Hakone i lotnisko. 2.05 w Kioto: Złoty Pawilon i herbata KOTO. Osaka i Arashiyama pozostają alternatywami, nie dodatkowymi dniami. Abu Zabi jest poza tą mapą.</p>
     <div class="card">
       <div class="maphold"><button class="mapbtn" id="mapActivate">🗺️ Aktywuj mapę</button><div id="map" class="map"></div></div>
       <ol class="maplegend">${JPSTOPS.map(s=>`<li>${s[2]}</li>`).join('')}</ol>
@@ -490,9 +490,9 @@ function decyzjePage(){
     '<section id="terminy"><h2 class="stitle">Terminy i pogoda</h2>'+deadlineList()+'<p class="note">Prognoza 7 dni wcześniej jest wskazówką, nie gwarancją. Ostrzeżenia pogodowe, status transportu i zasady anulowania są osobnymi rzeczami. Termin bezpłatnego odwołania Hanaori mija przed wyjazdem do Hakone.</p></section>'+
     '<section id="rytm"><h2 class="stitle">Rytm rodziny 2+2</h2><p class="lead-p">Najbardziej wymagające podróże to 29.04 i 7.05. Intensywny jest także długi spacer przez Harajuku i Shibuyę 4.05; Nara 1.05 kończy się wczesnym popołudniem. Chronimy przerwy i wolne popołudnie 5.05; przy zmęczeniu skracamy opcje, nie odpoczynek. Lekki program 27.04 oznacza mało zwiedzania, nie brak zmęczenia lotem.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
     '<section id="zmiany"><h2 class="stitle">Jak modyfikować plan</h2><div class="card more">'+
-    '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. 30.04 odpuszczacie Nijō; 1.05 pomijacie Kasuga Taisha; 2.05 pomijacie Nishiki, jeśli warsztat jest dłuższy; 4.05 ograniczacie sklepy; 5.05 Akihabara jest dodatkiem. Opuszczona atrakcja nie przechodzi automatycznie na jutro.</p></details>'+
-    '<details><summary>Jak zdjęcia zmieniły program?</summary><p>1.05 jedziemy do Nary; Osaka z Sushiro Esaka ze zdjęcia została wariantem. 2.05 KOTO i Kinugasa zastępują wcześniejsze warsztaty. Nijō przenosimy na opcjonalne popołudnie 30.04 zamiast Kiyomizu. Nishiki zostaje 2.05, jeśli jest energia. Hotele i zarezerwowane shinkanseny bez zmian. <a href="atrakcje.html#guide-tips">Identyfikacja zdjęć i źródła →</a></p></details>'+
-    '<details><summary>Czy zachować też Osakę i Arashiyamę?</summary><p>Nie dokładamy ich do trzech pełnych dni w Kioto. Osaka może zastąpić cały dzień Nary; Arashiyama wymaga rezygnacji z bloku KOTO i Kinugasa. Wariant Osaki zachowaliśmy w katalogu.</p></details>'+
+    '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. 30.04 odpuszczacie Kiyomizu; 1.05 pomijacie Kasuga Taisha; 2.05 po herbacie wracacie prosto do hotelu; 4.05 pomijacie Meiji i ograniczacie sklepy; 5.05 Akihabara jest dodatkiem. Opuszczona atrakcja nie przechodzi automatycznie na jutro.</p></details>'+
+    '<details><summary>Jak zdjęcia zmieniły program?</summary><p>1.05 jedziemy do Nary; Osaka z Sushiro Esaka ze zdjęcia została wariantem. 2.05 herbata w KOTO ze zdjęcia łączy się ze Złotym Pawilonem, który stoi tuż obok; sklep Kinugasa i Nishiki są opcją na popołudnie. 30.04 po sjeście jest opcjonalne Kiyomizu z zejściem do Gion. Hotele i zarezerwowane shinkanseny bez zmian. <a href="atrakcje.html#guide-tips">Identyfikacja zdjęć i źródła →</a></p></details>'+
+    '<details><summary>Czy zachować też Osakę i Arashiyamę?</summary><p>Nie dokładamy ich do trzech pełnych dni w Kioto. Osaka może zastąpić cały dzień Nary; Arashiyama wymaga rezygnacji z poranka przy Złotym Pawilonie i KOTO. Wariant Osaki zachowaliśmy w katalogu.</p></details>'+
     '<details><summary>Dlaczego 4 noce Kioto, 3 Tokio i 1 Hakone?</summary><p>Trzy bazy pozwalają dodać Narę jako jednodniową wycieczkę bez przepakowywania. Dalszych miast nie dokładamy. Hakone jest na końcu, dlatego zabezpieczamy poranny wyjazd na lot.</p></details>'+
     '<details><summary>Co naprawdę oznacza odwrócona trasa w Golden Week?</summary><p>Kioto 29.04-3.05 nadal wypada w popularnym okresie, a nie poza świętami. Przeniesienie do Tokio 3.05 ogranicza pobyt w Kioto podczas kolejnych świąt, lecz nie gwarantuje pustych atrakcji. Potrzebne są miejscówki i realne bufory.</p></details>'+
     '<details><summary>Jak reagować na pogodę?</summary><p>20 i 24.04 sprawdźcie sytuację przed terminami hoteli miejskich. 1-2.05 porównajcie prognozę dla Hakone z kosztem ewentualnej zmiany. 5.05 sprawdźcie ostrzeżenia, a rano 6 i 7.05 kursowanie transportu. Przy silnym wietrze statek nie zastępuje automatycznie kolejki.</p></details>'+
@@ -1018,10 +1018,10 @@ function atrakcjePage(){
   ${toc}
   <section id="guide-tips"><h2 class="stitle">Wskazówki przewodników w naszym planie</h2>
     <div class="card"><ul class="tips">
-      <li><a href="days/2027-04-30.html">30.04: Fushimi, ramen, sjesta i Gion</a>. Ninomaru przeniesione na opcjonalne popołudnie zamiast Kiyomizu, nie jako kolejny zabytek.</li>
+      <li><a href="days/2027-04-30.html">30.04: Fushimi, ramen, sjesta i Gion</a>. Po sjeście opcjonalne <a href="#kiyomizu">Kiyomizu</a> i zejście pieszo do Gion; <a href="#nijo">Ninomaru</a> jest zamiennikiem pod dachem.</li>
       <li><a href="days/2027-05-01.html">1.05: dzień w Narze</a>. Jelenie, Tōdai-ji i pasaż przy stacji. <a href="#osaka-variant">Osaka z Sushiro Esaka zostaje alternatywą</a>.</li>
-      <li><a href="days/2027-05-02.html">2.05: KOTO, Kinugasa i opcjonalne Nishiki</a>. Herbaciarnia ze zdjęcia zastępuje MAIKOYA. Sklep przy Ryōan-ji wskazany pinezką najprawdopodobniej to Kinugasa; warsztat pakowania wymaga uzgodnienia. Nie dokładamy kaligrafii.</li>
-      <li>Wachlarze obejrzycie już w <a href="#kinugasa">Kinugasa</a>. <a href="#sensu">Miyawaki Baisenan</a> i <a href="#kura">Kura Sushi</a> to adresy zapasowe, bez obowiązkowych kolejnych zakupów i sushi.</li>
+      <li><a href="days/2027-05-02.html">2.05: Złoty Pawilon i KOTO</a>. Herbaciarnia ze zdjęcia stoi tuż przy <a href="#kinkakuji">Kinkaku-ji</a>. Sklep przy Ryōan-ji wskazany pinezką to najprawdopodobniej Kinugasa; jest opcją na popołudnie, a warsztat pakowania wymaga uzgodnienia.</li>
+      <li>Wachlarze można obejrzeć w <a href="#kinugasa">Kinugasa</a>. <a href="#sensu">Miyawaki Baisenan</a> i <a href="#kura">Kura Sushi</a> to adresy zapasowe, bez obowiązkowych kolejnych zakupów i sushi.</li>
       <li><a href="pogoda.html#kwitnienie">Kwitnienie i ogrody Tokio</a>: przegląd publikacji zimą, decyzja o konkretnym spacerze 48-72 godziny wcześniej. Bez obietnicy majowej sakury.</li>
     </ul><p class="note">Weryfikacja nowych wskazówek: 20.09.2026. Linki do źródeł są przy miejscach. Godziny na Golden Week 2027 i dostępność sesji wymagają ponownego sprawdzenia; niczego tu nie zarezerwowano.</p></div>
   </section>
