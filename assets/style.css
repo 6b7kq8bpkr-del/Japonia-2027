@@ -565,3 +565,20 @@ em.due.ok{color:var(--success)}
 .dps{margin:.5rem 0 .875rem;font-size:.8438rem;color:var(--muted)}
 .dpdec b{font-size:1.05rem}
 @media(max-width:640px){.dpprice{grid-template-columns:1fr}}
+
+/* Wybór układu: Telefon / Komputer w górnym pasku */
+.uklad{display:flex;align-items:center;gap:0;margin-left:.75rem;flex:0 0 auto}
+.uklad button{font:inherit;font-size:.75rem;font-weight:600;line-height:1;padding:.4rem .6rem;border:1px solid rgba(255,255,255,.45);background:transparent;color:rgba(255,255,255,.85);cursor:pointer}
+.uklad button:first-child{border-radius:.35rem 0 0 .35rem}.uklad button:last-child{border-radius:0 .35rem .35rem 0;border-left:0}
+.uklad button.on{background:#fff;color:var(--ai-deep)}
+.uklad button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media(max-width:700px){.uklad{order:1;margin-left:auto;align-self:center}.tabs{order:2}.uklad button{padding:.45rem .6rem}}
+html.w-ramce .totop{right:.75rem}
+/* podgląd telefonu na komputerze */
+html.uklad-tel body{overflow:hidden}
+.ramka-tel{position:fixed;inset:0;z-index:9999;background:#10172a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:12px}
+.ramka-tel iframe{width:390px;height:min(844px,calc(100vh - 80px));border:10px solid #000;border-radius:36px;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.ramka-wyjdz{font:600 14px/1 var(--sans);padding:10px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.5);background:transparent;color:#fff;cursor:pointer}
+/* górny pasek z przełącznikiem: na węższych ekranach komputerowych chowamy daty przy logo i zagęszczamy zakładki */
+@media(min-width:701px){.brand .bcode{display:none}.uklad{margin-left:.5rem}}
+@media(min-width:701px) and (max-width:1180px){.tabs a{padding-left:.5rem;padding-right:.5rem;font-size:.8rem}.topbar .navrow{gap:.75rem}.brand .bj{display:none}}

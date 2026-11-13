@@ -331,3 +331,29 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   l.appendChild(a1); l.appendChild(document.createTextNode(' · ')); l.appendChild(a2); box.appendChild(l);
   box.hidden=false;
 })();
+
+/* ---- wybór układu strony: Telefon / Komputer ----
+   Domyślnie układ wynika z ekranu. Wybór zapisuje się w tej przeglądarce (klucz jp.uklad). */
+(function(){
+  var d=document.documentElement, waski=Math.min(screen.width,screen.height)<700, ramka=d.classList.contains('w-ramce');
+  var pref=null; try{ pref=localStorage.getItem('jp.uklad'); }catch(e){}
+  var biezacy=ramka?'tel':(pref||(waski?'tel':'pc'));
+  [].forEach.call(document.querySelectorAll('.uklad button'),function(b){
+    var on=b.getAttribute('data-u')===biezacy; b.classList.toggle('on',on); b.setAttribute('aria-pressed',on?'true':'false');
+    b.addEventListener('click',function(){
+      var u=b.getAttribute('data-u'), domyslny=waski?'tel':'pc';
+      try{ if(u===domyslny) localStorage.removeItem('jp.uklad'); else localStorage.setItem('jp.uklad',u); }catch(e){}
+      // w ramce przeładowujemy całe okno, żeby zamknąć podgląd telefonu
+      var w=ramka?window.top:window, url=w.location.href.replace(/([?&])uklad=ramka&?/,'$1').replace(/[?&]$/,'');
+      w.location.href=url;
+    });
+  });
+  if(!d.classList.contains('uklad-tel')) return;
+  // podgląd telefonu na komputerze: ta sama strona w ramce szerokości telefonu
+  var src=location.href.split('#'), q=src[0]+(src[0].indexOf('?')<0?'?':'&')+'uklad=ramka'+(src[1]?'#'+src[1]:'');
+  var tlo=document.createElement('div'); tlo.className='ramka-tel';
+  var f=document.createElement('iframe'); f.src=q; f.title='Strona w układzie telefonu';
+  var x=document.createElement('button'); x.type='button'; x.className='ramka-wyjdz'; x.textContent='Wróć do układu komputera';
+  x.addEventListener('click',function(){ try{ localStorage.removeItem('jp.uklad'); }catch(e){} location.reload(); });
+  tlo.appendChild(x); tlo.appendChild(f); document.body.appendChild(tlo);
+})();

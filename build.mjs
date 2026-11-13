@@ -122,7 +122,7 @@ const TIMING_NOTE = 'Wszystkie godziny są miejscowe. Loty według e-biletów; p
 const TABS = [['index.html','Agenda'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['niezbednik.html','Niezbędnik'],['pogoda.html','Przed wyjazdem'],['koszty.html','Koszty'],['decyzje.html','Kulisy'],['druga-para.html','Druga para']];
 function nav(active,prefix){
   const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on" aria-current="page"':'')}>${l}</a>`).join('');
-  return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html"><span class="bj" aria-hidden="true">日本</span>Japonia 2027<span class="bcode">27.04–08.05</span></a><nav class="tabs">${t}</nav></div></div>`;
+  return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html"><span class="bj" aria-hidden="true">日本</span>Japonia 2027<span class="bcode">27.04–08.05</span></a><nav class="tabs">${t}</nav><div class="uklad" role="group" aria-label="Układ strony"><button type="button" data-u="tel" aria-pressed="false">Telefon</button><button type="button" data-u="pc" aria-pressed="false">Komputer</button></div></div></div>`;
 }
 function pills(curIdx){
   const items = DAYS.map((d,i)=>{
@@ -137,6 +137,12 @@ function shell({title,desc,prefix,active,inner,pillsIdx}){
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* wybór układu: „Komputer” na telefonie poszerza widok, „Telefon” na komputerze pokazuje stronę w ramce telefonu */
+(function(){var d=document.documentElement,u=null;try{u=localStorage.getItem('jp.uklad');}catch(e){}
+if(/[?&]uklad=ramka/.test(location.search)){d.classList.add('w-ramce');return;}
+var waski=Math.min(screen.width,screen.height)<700;
+if(u==='pc'&&waski){document.querySelector('meta[name=viewport]').setAttribute('content','width=1280');d.classList.add('uklad-pc');}
+if(u==='tel'&&!waski){d.classList.add('uklad-tel');}})();</script>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="${desc}">
 <title>${title}</title>
