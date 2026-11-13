@@ -1,6 +1,6 @@
 // Druga para: dwoje dorosłych i syn (12 lat w czasie wyjazdu), te same daty i ten sam układ podróży co my.
-// CENY uzupełnia codziennie rano zadanie „japonia-druga-para-loty”: dopisuje JEDEN wpis na końcu tablicy.
-// Kwoty w zł za trzy osoby, z podatkami i opłatami, według Google Flights (Etihad, w obie strony).
+// CENY: archiwum odczytów Google Flights sprzed zakupu (monitoring zakończony 13.11.2026, zadanie wyłączone).
+// Kwoty drugiej rodziny nie są publikowane na stronie; potwierdzenia i rozliczenia są w zahasłowanej zakładce.
 export const DP_SZUKAJ = 'https://www.google.com/travel/flights/search?tfs=CBwQAhonEgoyMDI3LTA0LTI3MgJFWWoMCAISCC9tLzA4MW1fcgcIARIDTlJUGicSCjIwMjctMDUtMDcyAkVZagcIARIDTlJUcgwIAhIIL20vMDgxbV9AAUABQAFIAXABggELCP___________wGYAQE&tfu=EgYIABAAGAA&hl=pl&gl=pl&curr=PLN';
 export const DP_STOPOVER = 'https://www.etihad.com/en-pl/abu-dhabi/stopover';
 // Bilety kupione: monitoring cen zakończony, zadanie wyłączone. Godziny lotów uzupełnić z ich e-biletów.
@@ -11,12 +11,12 @@ export const CENY = [
 ];
 
 export const DP_KOLEJ = {date:'2026-11-13', perTripJPY:43110, totalJPY:86220, rate:0.024, paid:true};
-// Koszty poza lotami: szacunki na trzy osoby. Źródło opisuje, skąd jest liczba; „szacunek” znaczy, że nic nie jest zarezerwowane.
+// Koszty poza lotami na trzy osoby (dane robocze, poza stroną publiczną). Hotele według potwierdzeń Booking, reszta to szacunki.
 export const DP_KOSZTY = [
   {category:'hotels', co:'Abu Zabi: nocleg w pakiecie stopover', zl:0, zrodlo:'Nocleg w pakiecie z biletem. Na miejscu opłata hotelowa 15 AED za pokój za noc; przy jednym pokoju dla trzech osób to około 17 zł.'},
-  {category:'hotels', co:'Kioto: 4 noce, 29.04-3.05', zl:5845, zrodlo:'Oferta Booking sprawdzona 13.11.2026 dla 2 dorosłych i dziecka 12 lat: apartament rodzinny 40 m², bez posiłków. Cena członkowska/Genius do potwierdzenia po zalogowaniu; możliwe podatki dodatkowe. Anulowanie przed 22.04, bez płatności do 20.04. Nie zarezerwowano.'},
-  {category:'hotels', co:'Tokio: 3 noce, 3-6.05', zl:4210, zrodlo:'Oferta Booking sprawdzona 13.11.2026: apartament japoński 40 m², bez posiłków, dla trzech osób. Cena członkowska/Genius do potwierdzenia po zalogowaniu; możliwe podatki dodatkowe. Anulowanie przed 26.04, bez płatności do 24.04. Nie zarezerwowano.'},
-  {category:'hotels', co:'Hakone: 1 noc z kolacją i śniadaniem, 6-7.05', zl:3417, zrodlo:'Oferta Booking sprawdzona 13.11.2026 dla trzech osób: Japanese-Western Deluxe 47 m² z prywatną wanną, śniadaniem i kolacją. Cena członkowska/Genius do potwierdzenia po zalogowaniu; możliwe podatki dodatkowe. Anulowanie przed 3.05, bez płatności do 1.05. Nie zarezerwowano; osobny onsen kashikiri wymaga uzgodnienia.'},
+  {category:'hotels', co:'Kioto: 4 noce, 29.04-3.05', zl:Math.round(234951*DP_KOLEJ.rate), zrodlo:'Zarezerwowane (Booking): 234 951 JPY. Bezpłatne anulowanie do 21.04.2027 23:59 JST; płatność odroczona 19.04.2027.'},
+  {category:'hotels', co:'Tokio: 3 noce, 3-6.05', zl:Math.round(169200*DP_KOLEJ.rate), zrodlo:'Zarezerwowane (Booking): 169 200 JPY. Bezpłatne anulowanie do 25.04.2027 23:59 JST; płatność odroczona 23.04.2027.'},
+  {category:'hotels', co:'Hakone: 1 noc z kolacją i śniadaniem, 6-7.05', zl:Math.round(136890*DP_KOLEJ.rate), zrodlo:'Zarezerwowane (Booking): 136 890 JPY + 450 JPY podatku na miejscu. Bezpłatne anulowanie do 2.05.2027 23:59 JST; płatność odroczona 30.04.2027. Kashikiri osobno.'},
   {category:'transport', co:'Shinkansen Shinagawa-Kioto i Kioto-Tokio', zl:DP_KOLEJ.totalJPY*DP_KOLEJ.rate, zrodlo:'Kupione i opłacone 13.11.2026. Trzy taryfy dorosłe po 14 370 JPY w każdą stronę, razem 86 220 JPY po kursie 2,40 zł za 100 JPY. Syn płaci jak dorosły.'},
   {category:'transport', co:'Pozostała kolej, metro, Hakone, taksówki', zl:2200, zrodlo:'Szacunek: Narita Express w obie strony, Hakone Free Pass i Romancecar, Nara, metro i karty IC dla trzech dorosłych taryf.'},
   {category:'food', co:'Jedzenie, 11 dni', zl:4125, zrodlo:'Ta sama stawka co u nas: 125 zł na osobę dziennie.'},

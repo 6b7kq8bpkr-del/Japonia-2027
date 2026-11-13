@@ -1,5 +1,5 @@
 // Test po buildzie: daty, kwoty, linki, prywatność. Uruchom: node check.mjs
-import {readFileSync,existsSync,readdirSync} from 'node:fs';
+import {readFileSync,existsSync,readdirSync,statSync} from 'node:fs';
 import {resolve,dirname,join} from 'node:path';
 const DIR=dirname(new URL(import.meta.url).pathname);
 const files=[...readdirSync(DIR).filter(f=>f.endsWith('.html')&&!f.includes('artifact')&&!/ 2\.html$/.test(f)),...readdirSync(join(DIR,'days')).filter(f=>f.endsWith('.html')&&!/ 2\.html$/.test(f)).map(f=>'days/'+f)];
@@ -75,6 +75,23 @@ const money=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')+'�
 for(const f of ['index.html','druga-para.html','druk.html']) {
  const html=readFileSync(join(DIR,f),'utf8');
  if(/Łączny budżet|budżet siedmiu osób|data-our-budget|group-our-total/.test(html)) errs.push(`${f}: publiczne porównanie budżetów`);
+}
+// Prywatność: nazwiska gości i numery rezerwacji z private/reservations.json nie mogą trafić do plików publicznych.
+// Plik prywatny jest poza git i Vercel; bez niego test się pomija. Komunikat nie pokazuje samej wartości.
+{
+  const privPath=join(DIR,'private','reservations.json');
+  if(existsSync(privPath)){
+    const priv=JSON.parse(readFileSync(privPath,'utf8')), PUBLIC_NAMES=new Set(['Urban','Marcel','Martyna','Joanna','Marcin','Tomasz','Adult','Adults','Child','Children','Dorosły','Dorośli','Dziecko','Dzieci']);
+    const secrets=[];
+    for(const g of priv.groups||[]) for(const it of g.items||[]) for(const [k,v] of Object.entries(it.details||{})){
+      if(/Goście/.test(k)) for(const w of String(v).match(/\p{Lu}[\p{Ll}\p{Lu}]{2,}/gu)||[]) if(!PUBLIC_NAMES.has(w)) secrets.push([k,w]);
+      if(/Numer|ID|Potwierdzenie/.test(k)) for(const w of String(v).match(/[A-Za-z0-9-]*\d{4,}[A-Za-z0-9-]*/g)||[]) if(w.length>=6) secrets.push([k,w]); // krótsze numery dają fałszywe trafienia (daty, współrzędne)
+    }
+    const pub=[]; const walk=d=>{for(const f of readdirSync(d)){ if(/^(private|node_modules|data|src|\.git|\.vercel)$/.test(f)||/ 2\./.test(f)) continue; const q=join(d,f); if(statSync(q).isDirectory()) walk(q); else if(/\.(html|ics|js|webmanifest|json|css)$/.test(f)) pub.push(q);}};
+    walk(DIR);
+    const texts=pub.map(f=>[f,readFileSync(f,'utf8')]);
+    for(const [k,w] of secrets) for(const [f,t] of texts) if(t.includes(w)) errs.push(`${f.slice(DIR.length+1)}: wartość z pola „${k}” z prywatnych rezerwacji w pliku publicznym`);
+  }
 }
 if(errs.length){console.error(`CHECK: ${errs.length} problem(ów)`);errs.forEach(e=>console.error(' - '+e));process.exit(1);}
 console.log(`CHECK OK: ${files.length} stron, budżet ~${k} tys. zł (${sum} zł)`);

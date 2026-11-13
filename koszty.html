@@ -40,7 +40,6 @@ if(u==='tel'&&!waski){d.classList.add('uklad-tel');}})();</script>
   </header>
 
 
-  <div class="budzet-panel" id="budzet-nasza">
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
     <div class="pflag">✈️ <span><b>Etihad 27.04-7.05 ze stopoverem tam; powrót do WAW 8.05 - kupione 8.09.2026</b>. Bilety są kupione, koszt jest znany: 13 643,36 zł za rodzinę (z hotelem 4★ w Abu Zabi w pakiecie), bez bagażu rejestrowanego. Szczegóły na zakładce <a href="loty.html">Loty</a>.</span></div>
@@ -89,9 +88,8 @@ if(u==='tel'&&!waski){d.classList.add('uklad-tel');}})();</script>
       <button class="reset" id="resetBtn" type="button">↺ Przywróć wartości domyślne</button>
     </div>
   </section>
-  </div>
   <p><a href="rezerwacje.html">Prywatne potwierdzenia i rozliczenia obu rodzin →</a></p>
-  <footer>Przewodnik rodzinny · Japonia 27 kwietnia – 8 maja 2027 · strona nieindeksowana · wydanie 1faf14b<br>
+  <footer>Przewodnik rodzinny · Japonia 27 kwietnia – 8 maja 2027 · strona nieindeksowana · wydanie daba8ba<br>
   Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br>
   <a href="decyzje.html#zdjecia">Zdjęcia: Wikimedia Commons, autorzy i licencje</a> · mapy: © OpenStreetMap · <a href="index.html">Strona główna</a> · <a href="druk.html">Drukuj / zapisz jako PDF</a></footer>
   <script>
@@ -129,9 +127,6 @@ if(u==='tel'&&!waski){d.classList.add('uklad-tel');}})();</script>
       var total=num("flights")+hotel+num("transport")+food+num("attractions")+num("extras");
       var amounts={flights:num("flights"),hotels:hotel,transport:num("transport"),food:food,attractions:num("attractions"),extras:num("extras")};
       document.querySelectorAll("[data-our-budget]").forEach(function(cell){cell.textContent=fmt(amounts[cell.dataset.ourBudget]);});
-      if(document.getElementById("group-our-total")) document.getElementById("group-our-total").textContent=fmt(total);
-      if(document.getElementById("group-total")) document.getElementById("group-total").textContent=fmt(total+37656.56);
-      if(document.getElementById("group-scenario")) document.getElementById("group-scenario").textContent=ids.some(function(id){return Math.abs(num(id)-D[id])>0.001;})?"Scenariusz z kalkulatora naszej rodziny; budżet drugiej rodziny bez zmian.":"Budżet bazowy z 13.11.2026.";
       document.getElementById("total").textContent=fmt(total);
       document.getElementById("perPerson").textContent=fmt(total/4);
       document.getElementById("perDay").textContent=fmt(total/(num("days")||1));

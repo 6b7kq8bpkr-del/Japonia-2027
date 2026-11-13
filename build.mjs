@@ -4,7 +4,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {ZDJECIA} from './data/zdjecia.mjs';
 import {PYTANIA, PYTANIA_OGOLNE} from './data/pytania.mjs';
-import {CENY, DP_KOSZTY, DP_DECYZJE, DP_SZUKAJ, DP_STOPOVER, DP_KUPIONE, DP_KOLEJ, DP_TOTALS} from './data/druga-para.mjs';
+import {CENY, DP_DECYZJE, DP_KUPIONE} from './data/druga-para.mjs';
 import {DAYS, GEO, DAYRAIN, DAYCROWD, BOOKINGS, DEADLINES, HOTELS, fill} from './data/index.mjs';
 /* Każda strona HTML przechodzi przez fill(): tokeny {{klucz}} z szablonów zamieniają się na fakty z data/fakty.mjs. */
 const page = (file, html) => fs.writeFileSync(DIR + '/' + file, fill(html));
@@ -31,24 +31,7 @@ const TICKET = {family:13643.36, bag:0, total:13643.36, label:'27.04-7.05 ze sto
 const BUDGET_K = Math.round((TICKET.total + CALC.nights*CALC.nightRate + CALC.transport + CALC.days*CALC.foodRate + CALC.attractions + CALC.extras)/1000);
 // własny formatter — Node w tym środowisku ma okrojone ICU i ignoruje locale pl-PL
 const plz  = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';
-const OUR_TOTALS = {flights:TICKET.total, hotels:CALC.nights*CALC.nightRate, transport:CALC.transport, food:CALC.days*CALC.foodRate, attractions:CALC.attractions, extras:CALC.extras};
-const sumBudget = values => Math.round(Object.values(values).reduce((sum,n)=>sum+n,0)*100)/100;
-const GROUP_TOTAL = sumBudget(OUR_TOTALS)+sumBudget(DP_TOTALS);
 const GROUP_RULE = 'Wspólne przejazdy, KOTO, sumo i kolacja urodzinowa. Zakupy, część spacerów i zwykłe lunche mogą odbywać się w układzie 4+3. Każda podgrupa ma dorosłego, internet, swoje bilety i ustalony punkt zbiórki.';
-const BUDGET_NOTE = 'Stan budżetu: 13.11.2026. Loty i dwa długie shinkanseny obu rodzin są kupione. Hotele naszej czwórki: 500 443 JPY, około 12 011 zł po kursie 0,024 zł/JPY; zarezerwowane, płatność według potwierdzeń. Hotele drugiej rodziny: oferty Booking/Genius za 13 472 zł, sprawdzone dla 2 dorosłych i dziecka 12 lat; cena do potwierdzenia po zalogowaniu, pokoje nie są zarezerwowane. Podatki miejscowe mogą być dodatkowe. Pozostałe kategorie to pule planistyczne; kwoty kolejowe w PLN nie są rozliczeniem bankowym.';
-function dpCostsCard(){
-  const last=CENY[CENY.length-1], sum=DP_KOSZTY.reduce((s,k)=>s+k.zl,0), total=(DP_KUPIONE?DP_KUPIONE.total:last.total)+sum;
-  const rows=DP_KOSZTY.map(k=>`<tr><td><b>${k.co}</b><span class="hint">${k.zrodlo}</span></td><td class="num">${plz(k.zl)}</td></tr>`).join('');
-  return `<div class="card"><div style="overflow-x:auto"><table class="rhythm booking-budget"><tbody>
-      <tr><td><b>Loty Etihad</b><span class="hint">${DP_KUPIONE?'Kupione: 11 002,80 zł za loty i 237,48 zł opłaty za stopover, z noclegiem w Abu Zabi.':'Ostatni odczyt z monitora, bez dopłat za bagaż rejestrowany.'}</span></td><td class="num">${DP_KUPIONE?DP_KUPIONE.zl:plz(last.total)}</td></tr>
-      ${rows}
-      <tr class="tot"><td>Razem, szacunkowo</td><td class="num">~${plz(total)}</td></tr></tbody></table></div>
-    <p class="note">Kurs planistyczny 2,40 zł za 100 JPY. Ceny atrakcji według cenników z listopada 2026.</p></div>`;
-}
-function budgetTable(){
-  const labels={flights:'Loty i stopover - kupione',hotels:'Hotele w Japonii',transport:'Cały transport, w tym kupione shinkanseny',food:'Wyżywienie - pula',attractions:'Atrakcje, w tym sumo - pula',extras:'Ubezpieczenie, internet, pamiątki i rezerwa'};
-  return `<table class="rhythm booking-budget"><thead><tr><th>Kategoria</th><th>Nasza czwórka</th><th>Joanna, Marcin i Tomasz</th></tr></thead><tbody>${Object.entries(labels).map(([key,label])=>`<tr><td>${label}</td><td data-our-budget="${key}">${plz(OUR_TOTALS[key])}</td><td>${plz(DP_TOTALS[key])}</td></tr>`).join('')}<tr class="tot"><td>Cały wyjazd - budżet</td><td id="group-our-total">${plz(sumBudget(OUR_TOTALS))}</td><td>${plz(sumBudget(DP_TOTALS))}</td></tr></tbody></table>`;
-}
 function groupBookings(){
   return `<section id="dwie-rodziny"><h2 class="stitle">Podróżujemy razem</h2><p class="lead-p">Siedem osób, wspólny plan i przestrzeń na własne tempo.</p><div class="card"><p>${GROUP_RULE}</p><p>Loty, oba długie shinkanseny oraz hotele w Kioto, Tokio i Hakone są zarezerwowane dla obu rodzin. Rezerwacje kolejowe są osobne; wspólny wagon zależy od dostępności.</p><p>Do domknięcia pozostają atrakcje, krótsze przejazdy i transfer dla siedmiu osób. Szczegółowe potwierdzenia i rozliczenia są w <a href="rezerwacje.html">prywatnej zakładce rezerwacji</a>.</p></div></section>`;
 }
@@ -375,7 +358,6 @@ function kosztyPage(){
   </header>
 
 
-  <div class="budzet-panel" id="budzet-nasza">
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
     <div class="pflag">✈️ <span><b>Etihad ${TICKET.label}</b>. Bilety są kupione, koszt jest znany: {{bilety.suma}} za rodzinę (z hotelem 4★ w Abu Zabi w pakiecie), bez bagażu rejestrowanego. Szczegóły na zakładce <a href="loty.html">Loty</a>.</span></div>
@@ -430,7 +412,6 @@ function kosztyPage(){
       <button class="reset" id="resetBtn" type="button">↺ Przywróć wartości domyślne</button>
     </div>
   </section>
-  </div>
   <p><a href="rezerwacje.html">Prywatne potwierdzenia i rozliczenia obu rodzin →</a></p>
   ${footer('')}
   <script>
@@ -468,9 +449,6 @@ function kosztyPage(){
       var total=num("flights")+hotel+num("transport")+food+num("attractions")+num("extras");
       var amounts={flights:num("flights"),hotels:hotel,transport:num("transport"),food:food,attractions:num("attractions"),extras:num("extras")};
       document.querySelectorAll("[data-our-budget]").forEach(function(cell){cell.textContent=fmt(amounts[cell.dataset.ourBudget]);});
-      if(document.getElementById("group-our-total")) document.getElementById("group-our-total").textContent=fmt(total);
-      if(document.getElementById("group-total")) document.getElementById("group-total").textContent=fmt(total+${sumBudget(DP_TOTALS)});
-      if(document.getElementById("group-scenario")) document.getElementById("group-scenario").textContent=ids.some(function(id){return Math.abs(num(id)-D[id])>0.001;})?"Scenariusz z kalkulatora naszej rodziny; budżet drugiej rodziny bez zmian.":"Budżet bazowy z 13.11.2026.";
       document.getElementById("total").textContent=fmt(total);
       document.getElementById("perPerson").textContent=fmt(total/4);
       document.getElementById("perDay").textContent=fmt(total/(num("days")||1));
@@ -562,7 +540,7 @@ function decyzjePage(){
     '<section id="terminy"><h2 class="stitle">Terminy i pogoda</h2>'+deadlineList()+'<p class="note">Prognoza 7 dni wcześniej jest wskazówką, nie gwarancją. Ostrzeżenia pogodowe, status transportu i zasady anulowania są osobnymi rzeczami. Termin bezpłatnego odwołania Hanaori mija przed wyjazdem do Hakone.</p></section>'+
     '<section id="rytm"><h2 class="stitle">Rytm grupy: dwie rodziny, troje dzieci</h2><p class="lead-p">Najbardziej wymagające podróże to 29.04 i 7.05. Intensywny jest także długi spacer przez Harajuku i Shibuyę 4.05; Nara 1.05 kończy się wczesnym popołudniem. Chronimy przerwy i wolne popołudnie 5.05; przy zmęczeniu skracamy opcje, nie odpoczynek. Lekki program 27.04 oznacza mało zwiedzania, nie brak zmęczenia lotem.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
     '<section id="zmiany"><h2 class="stitle">Jak modyfikować plan</h2><div class="card more">'+
-    '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. 30.04 odpuszczacie Kiyomizu; 1.05 pomijacie Kasuga Taisha; 2.05 po herbacie wracacie prosto do hotelu; 4.05 pomijacie Meiji i ograniczacie sklepy; 5.05 Akihabara jest dodatkiem. Opuszczona atrakcja nie przechodzi automatycznie na jutro.</p></details>'+
+    '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. 30.04 odpuszczacie Kiyomizu; 1.05 pomijacie Kasuga Taisha; 2.05 po herbacie wracacie prosto do hotelu; 4.05 pomijacie Meiji, a w sklepach nie czekacie w kolejkach; 5.05 Akihabara jest dodatkiem. Opuszczona atrakcja nie przechodzi automatycznie na jutro.</p></details>'+
     '<details><summary>Jak zdjęcia zmieniły program?</summary><p>1.05 jedziemy do Nary; Osaka z Sushiro Esaka ze zdjęcia została wariantem. 2.05 herbata w KOTO ze zdjęcia łączy się ze Złotym Pawilonem, który stoi tuż obok; sklep Kinugasa i Nishiki są opcją na popołudnie. 30.04 po sjeście jest opcjonalne Kiyomizu z zejściem do Gion. Hotele i zarezerwowane shinkanseny bez zmian. <a href="atrakcje.html#guide-tips">Identyfikacja zdjęć i źródła →</a></p></details>'+
     '<details><summary>Czy zachować też Osakę i Arashiyamę?</summary><p>Nie dokładamy ich do trzech pełnych dni w Kioto. Osaka może zastąpić cały dzień Nary; Arashiyama wymaga rezygnacji z poranka przy Złotym Pawilonie i KOTO. Wariant Osaki zachowaliśmy w katalogu.</p></details>'+
     '<details><summary>Dlaczego 4 noce Kioto, 3 Tokio i 1 Hakone?</summary><p>Trzy bazy pozwalają dodać Narę jako jednodniową wycieczkę bez przepakowywania. Dalszych miast nie dokładamy. Hakone jest na końcu, dlatego zabezpieczamy poranny wyjazd na lot.</p></details>'+
@@ -634,8 +612,6 @@ function drugaParaPage(){
   const CN={tokio:'Tokio',hakone:'Hakone',kioto:'Kioto',nara:'Nara',osaka:'Osaka',abudhabi:'Abu Zabi'};
   const cal=DAYS.map((d,i)=>{const [n,mon]=d.dd.split(' '), dd=n+'.'+(mon.startsWith('kw')?'04':'05');
     return `<a class="dpday" href="days/${d.date}.html"><img src="${small(DAYIMG[d.date])}" alt="" loading="lazy" decoding="async"><span class="dpd"><b>${dd}</b> ${d.dow.slice(0,3)} · ${CN[d.city]||d.city}</span><span class="dpt">${d.title}</span>${flights[d.date]?`<span class="dpf">${flights[d.date]}</span>`:''}<span class="dps">${stays[d.date]?'Planowany nocleg: '+sleep[stays[d.date]]:(d.date==='2027-04-28'?'Noc w samolocie':'Noc w samolocie, powrót 8.05')}</span></a>`;}).join('');
-  const sum=DP_KOSZTY.reduce((s,k)=>s+k.zl,0), total=(DP_KUPIONE?DP_KUPIONE.total:last.total)+sum;
-  const rows=DP_KOSZTY.map(k=>`<tr><td><b>${k.co}</b><span class="hint">${k.zrodlo}</span></td><td class="num">${plz(k.zl)}</td></tr>`).join('');
   const dec=[...DP_DECYZJE].sort((a,b)=>a.due.localeCompare(b.due)).map(d=>d.done?`<li class="past"><time>załatwione</time><div><b>✓ ${d.co}</b><p>${d.opis}</p></div></li>`:`<li><time datetime="${d.due}">do ${dpl(d.due)}<em class="due" data-due="${d.due}"></em></time><div><b>${d.co}</b><p>${d.opis}</p></div></li>`).join('');
   const inner=`
   <header class="hero kb"><div class="hbg"><div class="hbg-img" style="background:${heroBg('kioto',IMG.fushimi)}"></div></div>
@@ -1160,7 +1136,7 @@ function niezbednikPage(){
       'W pociągach obowiązuje <b>cisza</b>, telefon na milczek, rozmowy szeptem.',
       '<b>Koszy na śmieci prawie nie ma</b> — noście małą torebkę na odpadki i wyrzucajcie w hotelu albo w konbini.',
       'Nie je się i nie pije w ruchu — zwykle staje się obok automatu albo sklepu.',
-      '<b>Kąpiele:</b> na dziś wybieramy wyłącznie prywatne, bez publicznych łaźni z dziećmi. Hanaori Deluxe ma prywatną wannę na świeżym powietrzu, ale bez wody termalnej. Bez dostępnego kashikiri zostaje wanna przy pokoju. Wspólny rodzinny onsen kashikiri wymaga osobnej rezerwacji (propozycja 6.05 o 17:00, 40 minut, {{hanaori.bath}} za czwórkę). Nie jest jeszcze zamówiony.'])}
+      '<b>Kąpiele:</b> na dziś wybieramy wyłącznie prywatne, bez publicznych łaźni z dziećmi. Hanaori Deluxe ma prywatną wannę na świeżym powietrzu, ale bez wody termalnej. Bez dostępnego kashikiri zostaje wanna przy pokoju. Wspólny rodzinny onsen kashikiri wymaga osobnej rezerwacji (propozycja 6.05 około 16:30: dwie łaźnie naraz, po jednej na rodzinę, 40 minut, {{hanaori.bath}} za łaźnię). Nie jest jeszcze zamówiony.'])}
     ${seg('🛍️ Tax-free i aplikacje',[
       '<b>Od 1.11.2026 obowiązuje nowy system zwrotu</b>, więc dotyczy waszego wyjazdu. W sklepie tax-free okazujecie paszport i płacicie kwotę brutto; zwrot następuje po potwierdzeniu wywozu przez urząd celny, zgodnie z procedurą sklepu/operatora.',
       'Zachowajcie towary i dokumenty do kontroli przed wywozem, także przed oddaniem bagażu rejestrowanego. Nie zakładajcie automatycznej wypłaty gotówki na lotnisku. <a href="https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00019.html" target="_blank" rel="noopener">Oficjalne zasady nowego systemu →</a>',
@@ -1354,4 +1330,4 @@ fs.writeFileSync(DIR + '/assets/icon.svg',
 console.log('OK · day pages:', DAYS.length, '· timeline items:', DAYS.reduce((a,d)=>a+d.tl.length,0),
   '· pc:', DAYS.filter(d=>d.pc).length);
 
-page('rezerwacje.html', shell({title:'Rezerwacje prywatne · Japonia 2027',desc:'Prywatne potwierdzenia podróży dla obu rodzin.',prefix:'',active:'rezerwacje.html',inner:`<main class="wrap"><section class="section"><p class="eyebrow">Tylko dla uczestników</p><h1>Rezerwacje prywatne</h1><p>Hotele, pociągi, numery potwierdzeń oraz terminy płatności i anulowania.</p><form method="post" action="/api/rezerwacje" style="max-width:28rem;margin:2rem 0"><label for="reservation-password">Hasło dostępu</label><input id="reservation-password" type="password" name="password" required maxlength="256" autocomplete="current-password" style="display:block;width:100%;box-sizing:border-box;padding:.8rem;margin:.5rem 0 1rem;font:inherit"><button type="submit" style="background:#1b3a6b;color:white;padding:.8rem 1.2rem;border:0;border-radius:.3rem;font:inherit;cursor:pointer">Otwórz rezerwacje</button></form><p>Potrzebujesz połączenia z internetem. Hasło możesz zapisać w swoim menedżerze haseł. Dane rezerwacji nie są dostępne offline.</p><p><a href="index.html">Wróć do agendy</a></p></section></main>`}));
+page('rezerwacje.html', shell({title:'Rezerwacje prywatne · Japonia 2027',desc:'Prywatne potwierdzenia podróży dla obu rodzin.',prefix:'',active:'rezerwacje.html',inner:`<div class="wrap"><section class="section"><p class="eyebrow">Tylko dla uczestników</p><h1>Rezerwacje prywatne</h1><p>Hotele, pociągi, numery potwierdzeń oraz terminy płatności i anulowania.</p><form method="post" action="/api/rezerwacje" style="max-width:28rem;margin:2rem 0"><label for="reservation-password">Hasło dostępu</label><input id="reservation-password" type="password" name="password" required maxlength="256" autocomplete="current-password" style="display:block;width:100%;box-sizing:border-box;padding:.8rem;margin:.5rem 0 1rem;font:inherit"><button type="submit" style="background:#1b3a6b;color:white;padding:.8rem 1.2rem;border:0;border-radius:.3rem;font:inherit;cursor:pointer">Otwórz rezerwacje</button></form><p>Potrzebujesz połączenia z internetem. Hasło możesz zapisać w swoim menedżerze haseł. Dane rezerwacji nie są dostępne offline.</p><p><a href="index.html">Wróć do agendy</a></p></section></div>`}));
