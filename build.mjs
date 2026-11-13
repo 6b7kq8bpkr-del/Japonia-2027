@@ -326,10 +326,13 @@ function indexPage(){
 
   <section id="siodemka"><h2 class="stitle">Jak podróżujemy w siódemkę</h2><div class="card"><ul class="tips">
       <li><b>Dwie rodziny, loty i shinkanseny kupione.</b> Loty i oba długie przejazdy kolejowe są kupione dla obu rodzin. Pociągi drugiej rodziny są osobnymi rezerwacjami na naszym koncie SmartEX. Pokoje w Japonii dla Joanny, Marcina i Tomasza wymagają jeszcze potwierdzenia. Wspólne bilety na atrakcje kupuje jedna osoba.</li>
-      <li><b>Taksówka zabiera cztery osoby.</b> Siedem osób to dwa samochody albo jeden większy. Tam, gdzie się da, jedziemy metrem, pociągiem albo autobusem.</li>
+      <li><b>Taksówka zabiera cztery osoby.</b> Siedem osób to dwa samochody: minivany i duże auta z aplikacji mieszczą najwyżej sześć. Jedno auto dla wszystkich to tylko dziewięcioosobowy van zamówiony wcześniej. Tam, gdzie się da, jedziemy metrem, pociągiem albo autobusem.</li>
       <li><b>Stolik dla siedmiu trzeba zarezerwować.</b> Zwłaszcza w Gion 30.04, w Shibui 4.05 i na urodziny Marcela 5.05. Małe bary posadzą nas osobno.</li>
       <li><b>Wspólne sesje kupujemy razem:</b> herbata KOTO, pokaz sumo, Shibuya Sky, Romancecar i miejsca w shinkansenach w tym samym wagonie.</li>
       <li><b>Punkt zbiórki zawsze przed wejściem w tłum.</b> Fushimi Inari, Asakusa i Shibuya w Golden Week łatwo nas rozdzielą; każda rodzina ma własny internet w telefonie i wspólny czat.</li>
+      <li><b>Kto się zgubi, zostaje w miejscu.</b> Każde dziecko ma w kieszeni kartkę z nazwą i adresem hotelu po japońsku oraz numerem telefonu rodzica. Przy zbiórce czekamy 10 minut, potem dzwonimy.</li>
+      <li><b>Koszty wspólne dzielimy na osoby.</b> Van, taksówki i wspólne bilety dzielimy według liczby osób: 4 do 3. Rozliczamy się raz, po powrocie.</li>
+      <li><b>Każda rodzina ma swoje terminy.</b> Rezerwacje hoteli drugiej rodziny mają własne terminy bezpłatnego anulowania; sprawdzajcie je w jej potwierdzeniach, nie w naszych.</li>
       <li><b>Rozdzielamy się, gdy zainteresowania się różnią.</b> Popołudnie 2.05, zakupy w Harajuku 4.05 i Kiyomizu po sjeście 30.04 to naturalne momenty na dwa tempa.</li>
     </ul></div></section>
   <section id="terminy"><h2 class="stitle">Najważniejsze terminy</h2><p class="lead-p">Strona odlicza dni do każdego terminu, a najbliższy pokazuje na górze. Żeby telefon przypomniał o nich sam, <a href="terminy.ics">dodajcie terminy do kalendarza</a> (plik z przypomnieniem dzień wcześniej). Terminy hoteli pochodzą z potwierdzeń Booking sprawdzonych 9.09.2026.</p>${deadlineList()}</section>
