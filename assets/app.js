@@ -357,3 +357,17 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   x.addEventListener('click',function(){ try{ localStorage.removeItem('jp.uklad'); }catch(e){} location.reload(); });
   tlo.appendChild(x); tlo.appendChild(f); document.body.appendChild(tlo);
 })();
+
+/* ---- Koszty: przełącznik budżetu rodziny (bez JS widać wszystkie panele) ---- */
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.budzet-tabs a[data-panel]')); if(!tabs.length) return;
+  var panels=tabs.map(function(t){ return document.getElementById(t.getAttribute('data-panel')); });
+  function show(id){
+    if(!document.getElementById(id)) id=tabs[0].getAttribute('data-panel');
+    tabs.forEach(function(t,i){ var on=t.getAttribute('data-panel')===id; t.classList.toggle('on',on); t.setAttribute('aria-current',on?'true':'false'); panels[i].hidden=!on; });
+    try{ localStorage.setItem('jp.budzet',id); }catch(e){}
+  }
+  tabs.forEach(function(t){ t.addEventListener('click',function(e){ e.preventDefault(); var id=t.getAttribute('data-panel'); show(id); history.replaceState(null,'','#'+id); }); });
+  var h=(location.hash||'').slice(1), saved=null; try{ saved=localStorage.getItem('jp.budzet'); }catch(e){}
+  show(/^budzet-/.test(h)?h:(saved||tabs[0].getAttribute('data-panel')));
+})();

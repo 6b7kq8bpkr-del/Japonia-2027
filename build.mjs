@@ -36,6 +36,15 @@ const sumBudget = values => Math.round(Object.values(values).reduce((sum,n)=>sum
 const GROUP_TOTAL = sumBudget(OUR_TOTALS)+sumBudget(DP_TOTALS);
 const GROUP_RULE = 'Wspólne przejazdy, KOTO, sumo i kolacja urodzinowa. Zakupy, część spacerów i zwykłe lunche mogą odbywać się w układzie 4+3. Każda podgrupa ma dorosłego, internet, swoje bilety i ustalony punkt zbiórki.';
 const BUDGET_NOTE = 'Stan budżetu: 13.11.2026. Loty i dwa długie shinkanseny obu rodzin są kupione. Hotele naszej czwórki: 500 443 JPY, około 12 011 zł po kursie 0,024 zł/JPY; zarezerwowane, płatność według potwierdzeń. Hotele drugiej rodziny: oferty Booking/Genius za 13 472 zł, sprawdzone dla 2 dorosłych i dziecka 12 lat; cena do potwierdzenia po zalogowaniu, pokoje nie są zarezerwowane. Podatki miejscowe mogą być dodatkowe. Pozostałe kategorie to pule planistyczne; kwoty kolejowe w PLN nie są rozliczeniem bankowym.';
+function dpCostsCard(){
+  const last=CENY[CENY.length-1], sum=DP_KOSZTY.reduce((s,k)=>s+k.zl,0), total=(DP_KUPIONE?DP_KUPIONE.total:last.total)+sum;
+  const rows=DP_KOSZTY.map(k=>`<tr><td><b>${k.co}</b><span class="hint">${k.zrodlo}</span></td><td class="num">${plz(k.zl)}</td></tr>`).join('');
+  return `<div class="card"><div style="overflow-x:auto"><table class="rhythm booking-budget"><tbody>
+      <tr><td><b>Loty Etihad</b><span class="hint">${DP_KUPIONE?'Kupione: 11 002,80 zł za loty i 237,48 zł opłaty za stopover, z noclegiem w Abu Zabi.':'Ostatni odczyt z monitora, bez dopłat za bagaż rejestrowany.'}</span></td><td class="num">${DP_KUPIONE?DP_KUPIONE.zl:plz(last.total)}</td></tr>
+      ${rows}
+      <tr class="tot"><td>Razem, szacunkowo</td><td class="num">~${plz(total)}</td></tr></tbody></table></div>
+    <p class="note">Kurs planistyczny 2,40 zł za 100 JPY. Ceny atrakcji według cenników z listopada 2026.</p></div>`;
+}
 function budgetTable(){
   const labels={flights:'Loty i stopover - kupione',hotels:'Hotele w Japonii',transport:'Cały transport, w tym kupione shinkanseny',food:'Wyżywienie - pula',attractions:'Atrakcje, w tym sumo - pula',extras:'Ubezpieczenie, internet, pamiątki i rezerwa'};
   return `<table class="rhythm booking-budget"><thead><tr><th>Kategoria</th><th>Nasza czwórka</th><th>Joanna, Marcin i Tomasz</th></tr></thead><tbody>${Object.entries(labels).map(([key,label])=>`<tr><td>${label}</td><td data-our-budget="${key}">${plz(OUR_TOTALS[key])}</td><td>${plz(DP_TOTALS[key])}</td></tr>`).join('')}<tr class="tot"><td>Cały wyjazd - budżet</td><td id="group-our-total">${plz(sumBudget(OUR_TOTALS))}</td><td>${plz(sumBudget(DP_TOTALS))}</td></tr></tbody></table>`;
@@ -357,7 +366,8 @@ function kosztyPage(){
   </div>
   </header>
 
-  ${groupBookings()}
+  <nav class="budzet-tabs" aria-label="Budżet rodziny"><a href="#budzet-nasza" data-panel="budzet-nasza">Nasza czwórka</a><a href="#budzet-druga" data-panel="budzet-druga">Joanna, Marcin i Tomasz</a><a href="#budzet-razem" data-panel="budzet-razem">Razem, 7 osób</a></nav>
+  <div class="budzet-panel" id="budzet-nasza">
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
     <div class="pflag">✈️ <span><b>Etihad ${TICKET.label}</b>. Bilety są kupione, koszt jest znany: {{bilety.suma}} za rodzinę (z hotelem 4★ w Abu Zabi w pakiecie), bez bagażu rejestrowanego. Szczegóły na zakładce <a href="loty.html">Loty</a>.</span></div>
@@ -412,6 +422,14 @@ function kosztyPage(){
       <button class="reset" id="resetBtn" type="button">↺ Przywróć wartości domyślne</button>
     </div>
   </section>
+  </div>
+  <div class="budzet-panel" id="budzet-druga">
+  <section><h2 class="stitle">Budżet: Joanna, Marcin i Tomasz</h2><p class="lead-p">Trzy osoby, w kolei trzy taryfy dorosłe. Loty i dwa shinkanseny są kupione; pozostałe pozycje to szacunki, nie rezerwacje. Szczegóły decyzji drugiej rodziny są w zakładce <a href="druga-para.html">Druga rodzina</a>.</p>
+  ${dpCostsCard()}</section>
+  </div>
+  <div class="budzet-panel" id="budzet-razem">
+  ${groupBookings()}
+  </div>
   ${footer('')}
   <script>
   (function(){
@@ -548,6 +566,27 @@ function decyzjePage(){
     '<details><summary>Jak reagować na pogodę?</summary><p>20 i 24.04 sprawdźcie sytuację przed terminami hoteli miejskich. 1-2.05 porównajcie prognozę dla Hakone z kosztem ewentualnej zmiany. 5.05 sprawdźcie ostrzeżenia, a rano 6 i 7.05 kursowanie transportu. Przy silnym wietrze statek nie zastępuje automatycznie kolejki.</p></details>'+
     '<details><summary>Co z budżetem?</summary><p>Hotele są zarezerwowane w JPY, lecz w potwierdzeniach nie były jeszcze opłacone. Koszt w złotych zależy od płatności i kursu; podatki miejscowe mogą być dodatkowe. Loty są kupione, a ich koszt jest znany: {{bilety.suma}} za cztery e-bilety.</p></details>'+
     '</div></section>'+
+    `<section id="koto-mail"><h2 class="stitle">KOTO: zapytanie o plan prywatny NO4 dla 7 osób</h2><p class="lead-p">Do wysłania na reservation@teaceremony-kyoto.com. KOTO ma plan prywatny NO4 dla grup od siedmiu osób i przy większych grupach poleca właśnie go; pytamy, czy obejmuje czworo dorosłych i troje dzieci. Tekst jest propozycją, nie został wysłany.</p><details class="card" open><summary>Otwórz tekst po angielsku</summary><pre style="white-space:pre-wrap;font:inherit;margin:0.75rem 0 0">Subject: Private tea ceremony (Plan NO4) for 7 guests on Sunday, 2 May 2027
+
+Dear Tea Ceremony KOTO team,
+
+We are a group of seven travelling together: four adults and three children, who will be 10, 12 and 12 years old on the day.
+
+We would like to book your private tea ceremony, Plan NO4 (tea ceremony for over 7 adults), on Sunday, 2 May 2027, ideally starting at 11:45. 13:00 would also work for us.
+
+Could you please let us know:
+1. Whether Plan NO4 is available for our group of 4 adults and 3 children.
+2. The price per adult and per child.
+3. Whether 2 May 2027 at 11:45 (or 13:00) is available.
+4. How to book: through asoview or by email, and how to pay.
+5. Your cancellation policy.
+
+The ceremony will be in English for us. We do not need kimono.
+
+Thank you very much in advance.
+
+Best regards,
+[imię i nazwisko]</pre></details></section>`+
     `<section id="hotel-mail"><h2 class="stitle">Hanaori: propozycja odpowiedzi do hotelu</h2><p class="lead-p">Hotel przedstawił opcje, ale kąpiel termalna i transfer nie są zarezerwowane. Wanna w pokoju nie ma wody termalnej. Poniższy tekst jest propozycją wiadomości, nie został wysłany.</p><details class="card"><summary>Otwórz tekst po angielsku</summary><pre style="white-space:pre-wrap;font:0.875rem/1.6 var(--sans)">Dear Hanaori team,
 
 Thank you very much for your kind and detailed reply. We understand that the open-air bath in our Deluxe room does not use hot-spring water.

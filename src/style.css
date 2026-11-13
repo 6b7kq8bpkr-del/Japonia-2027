@@ -598,3 +598,9 @@ html.uklad-tel body{overflow:hidden}
   #dwie-rodziny .booking-budget td:nth-child(3)::before{content:'Druga rodzina'}
   #dwie-rodziny .booking-budget td:not(:first-child)::before{display:block;font-size:.75rem;color:var(--muted);margin-bottom:.25rem}
 }
+
+/* Koszty: przełącznik budżetu rodziny */
+.budzet-tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.5rem 0 .5rem}
+.budzet-tabs a{padding:.6rem 1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ai);font-weight:600;text-decoration:none}
+.budzet-tabs a.on{background:var(--ai);border-color:var(--ai);color:var(--panel)}
+.budzet-panel[hidden]{display:none}
