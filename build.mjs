@@ -268,10 +268,10 @@ function indexPage(){
     <div class="hbg"><div class="hbg-img" style="background-image:url('${IMG.fuji}')"></div></div>
     <div class="hgrad"></div>
     <div class="hero-inner">
-      <p class="eyebrow">Przewodnik rodzinny · 2+2 · 11 dni programu + powrót · Narita → Kioto → Tokio → Hakone</p>
+      <p class="eyebrow">Przewodnik dwóch rodzin · 7 osób · 11 dni programu + powrót · Narita → Kioto → Tokio → Hakone</p>
       <h1>Japonia 2027</h1>
       <p class="lead">27 kwietnia - 8 maja 2027. Noc w Abu Zabi, cztery noce w Kioto z dniem w Narze, trzy w Tokio i prywatna kąpiel w Hakone. Jelenie w Narze, Złoty Pawilon, herbata KOTO i czas na odpoczynek. Powrót do Warszawy 8 maja o {{lot.waw.przylot}}.</p>
-      <div class="chips"><span class="chip hanko">Bilety kupione</span><span class="chip">noc w Abu Zabi gratis</span><span class="chip">8 nocy w Japonii</span><span class="chip">Dzień Dziecka w Tokio</span><span class="chip">ryokan nad jeziorem</span></div>
+      <div class="chips"><span class="chip hanko">Bilety kupione dla 7 osób</span><span class="chip">noc w Abu Zabi gratis</span><span class="chip">8 nocy w Japonii</span><span class="chip">Dzień Dziecka w Tokio</span><span class="chip">ryokan nad jeziorem</span></div>
     </div>
     <div class="scrollcue" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
   </header>
@@ -306,6 +306,14 @@ function indexPage(){
     </div>
   </section>
 
+  <section id="siodemka"><h2 class="stitle">Jak podróżujemy w siódemkę</h2><div class="card"><ul class="tips">
+      <li><b>Dwie rodziny, dwie rezerwacje.</b> Te same loty, pociągi i hotele, ale każda rodzina ma własne bilety, pokoje i płaci za siebie. Wspólne bilety na atrakcje kupuje jedna osoba.</li>
+      <li><b>Taksówka zabiera cztery osoby.</b> Siedem osób to dwa samochody albo jeden większy. Tam, gdzie się da, jedziemy metrem, pociągiem albo autobusem.</li>
+      <li><b>Stolik dla siedmiu trzeba zarezerwować.</b> Zwłaszcza w Gion 30.04, w Shibui 4.05 i na urodziny Marcela 5.05. Małe bary posadzą nas osobno.</li>
+      <li><b>Wspólne sesje kupujemy razem:</b> herbata KOTO, pokaz sumo, Shibuya Sky, Romancecar i miejsca w shinkansenach w tym samym wagonie.</li>
+      <li><b>Punkt zbiórki zawsze przed wejściem w tłum.</b> Fushimi Inari, Asakusa i Shibuya w Golden Week łatwo nas rozdzielą; każda rodzina ma własny internet w telefonie i wspólny czat.</li>
+      <li><b>Rozdzielamy się, gdy zainteresowania się różnią.</b> Popołudnie 2.05, zakupy w Harajuku 4.05 i Kiyomizu po sjeście 30.04 to naturalne momenty na dwa tempa.</li>
+    </ul></div></section>
   <section id="terminy"><h2 class="stitle">Najważniejsze terminy</h2><p class="lead-p">Strona odlicza dni do każdego terminu, a najbliższy pokazuje na górze. Żeby telefon przypomniał o nich sam, <a href="terminy.ics">dodajcie terminy do kalendarza</a> (plik z przypomnieniem dzień wcześniej). Terminy hoteli pochodzą z potwierdzeń Booking sprawdzonych 9.09.2026.</p>${deadlineList()}</section>
   <section>
     <h2 class="stitle">Przewodnik</h2>
@@ -500,7 +508,7 @@ function decyzjePage(){
     '<section id="do-zalatwienia"><h2 class="stitle">Do załatwienia</h2><p class="lead-p">Sprawy są ułożone według terminu, a przy każdej strona odlicza dni i oznacza te, które można już załatwić albo które są po terminie. Zaznaczenia zapisują się tylko na tym urządzeniu. Przypomnienia w telefonie daje plik kalendarza: <a href="terminy.ics">dodaj terminy do kalendarza</a>.</p><div class="card"><div class="ckhead"><b id="ckcount">0</b><span id="cknext"></span></div><div class="ckbar"><div id="ckfill"></div></div><ul class="cklist">'+checklist+'</ul><button class="reset" type="button" id="ckreset">Wyczyść zaznaczenia</button></div></section>'+
     '<section><h2 class="stitle">Potwierdzone elementy</h2><div class="card"><p class="note" style="margin-top:0">Numery rezerwacji trzymamy poza stroną: w potwierdzeniach i w osobnym pliku zapisanym w telefonach dorosłych.</p><ul class="tips">'+BOOKINGS.filter(b=>/^✅/.test(b.when)).map(b=>'<li><b>'+b.what+'</b>: '+b.note+'</li>').join('')+'</ul></div></section>'+
     '<section id="terminy"><h2 class="stitle">Terminy i pogoda</h2>'+deadlineList()+'<p class="note">Prognoza 7 dni wcześniej jest wskazówką, nie gwarancją. Ostrzeżenia pogodowe, status transportu i zasady anulowania są osobnymi rzeczami. Termin bezpłatnego odwołania Hanaori mija przed wyjazdem do Hakone.</p></section>'+
-    '<section id="rytm"><h2 class="stitle">Rytm rodziny 2+2</h2><p class="lead-p">Najbardziej wymagające podróże to 29.04 i 7.05. Intensywny jest także długi spacer przez Harajuku i Shibuyę 4.05; Nara 1.05 kończy się wczesnym popołudniem. Chronimy przerwy i wolne popołudnie 5.05; przy zmęczeniu skracamy opcje, nie odpoczynek. Lekki program 27.04 oznacza mało zwiedzania, nie brak zmęczenia lotem.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
+    '<section id="rytm"><h2 class="stitle">Rytm grupy: dwie rodziny, troje dzieci</h2><p class="lead-p">Najbardziej wymagające podróże to 29.04 i 7.05. Intensywny jest także długi spacer przez Harajuku i Shibuyę 4.05; Nara 1.05 kończy się wczesnym popołudniem. Chronimy przerwy i wolne popołudnie 5.05; przy zmęczeniu skracamy opcje, nie odpoczynek. Lekki program 27.04 oznacza mało zwiedzania, nie brak zmęczenia lotem.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
     '<section id="zmiany"><h2 class="stitle">Jak modyfikować plan</h2><div class="card more">'+
     '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. 30.04 odpuszczacie Kiyomizu; 1.05 pomijacie Kasuga Taisha; 2.05 po herbacie wracacie prosto do hotelu; 4.05 pomijacie Meiji i ograniczacie sklepy; 5.05 Akihabara jest dodatkiem. Opuszczona atrakcja nie przechodzi automatycznie na jutro.</p></details>'+
     '<details><summary>Jak zdjęcia zmieniły program?</summary><p>1.05 jedziemy do Nary; Osaka z Sushiro Esaka ze zdjęcia została wariantem. 2.05 herbata w KOTO ze zdjęcia łączy się ze Złotym Pawilonem, który stoi tuż obok; sklep Kinugasa i Nishiki są opcją na popołudnie. 30.04 po sjeście jest opcjonalne Kiyomizu z zejściem do Gion. Hotele i zarezerwowane shinkanseny bez zmian. <a href="atrakcje.html#guide-tips">Identyfikacja zdjęć i źródła →</a></p></details>'+
@@ -608,7 +616,7 @@ function pokazPage(){
 <link rel="stylesheet" href="assets/pokaz.css"></head>
 <body>
 <section class="slide" id="s1">
-  <div><p class="kicker">Japonia 2027 · 27 kwietnia – 8 maja · dwoje dorosłych i dzieci w wieku 13 i 10 lat</p><h1>Nasz plan. Powiedzcie, co byście zmienili.</h1></div>
+  <div><p class="kicker">Japonia 2027 · 27 kwietnia – 8 maja · dwie rodziny, siedem osób: czworo dorosłych i troje dzieci</p><h1>Nasz plan. Powiedzcie, co byście zmienili.</h1></div>
   <p class="route">Warszawa<i>→</i>Abu Zabi (1 noc)<i>→</i>Kioto (4 noce, dzień w Narze)<i>→</i>Tokio (3 noce)<i>→</i>Hakone (1 noc w ryokanie)<i>→</i>Narita<i>→</i>Warszawa</p>
   <div class="days">${tiles}<div class="day help"><b>Jak to działa</b><span style="padding:0;font-weight:500">Strzałki przełączają dni. Na każdym slajdzie są nasze pytania i pole na Wasze uwagi. Ostatni slajd zbiera wszystko do skopiowania.</span></div></div>
 </section>
