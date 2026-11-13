@@ -524,7 +524,7 @@ function hotelePage(){
     <p class="lead">Pięciogwiazdkowy początek w Abu Zabi, rodzinne apartamenty w Kiocie i Tokio, a na finał jezioro, góry i prywatna kąpiel w Hanaori. Każda baza ma własny charakter i daje nam czas na bycie razem.</p>
   </div>
   </header>
-  <nav class="section-nav" aria-label="Hotele"><a href="#auh">Abu Zabi</a><a href="#kioto">Kioto</a><a href="#tokio1">Tokio</a><a href="#hakone">Finał w Hakone</a></nav><p class="note">Hotele w Japonii są zarezerwowane dla obu rodzin. Szczegóły stopoveru Bednarków wymagają potwierdzenia z ich vouchera.</p>
+  <nav class="section-nav" aria-label="Hotele"><a href="#auh">Abu Zabi</a><a href="#kioto">Kioto</a><a href="#tokio1">Tokio</a><a href="#hakone">Finał w Hakone</a></nav><p class="note">Hotele w Japonii są zarezerwowane dla obu rodzin. Szczegóły stopoveru drugiej rodziny wymagają potwierdzenia z ich vouchera.</p>
   <section>
     <div class="hlist">${cards}</div>
   </section>
