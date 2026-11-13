@@ -2,7 +2,7 @@
 import {readFileSync,existsSync,readdirSync} from 'node:fs';
 import {resolve,dirname,join} from 'node:path';
 const DIR=dirname(new URL(import.meta.url).pathname);
-const files=[...readdirSync(DIR).filter(f=>f.endsWith('.html')&&!f.includes('artifact')),...readdirSync(join(DIR,'days')).filter(f=>f.endsWith('.html')).map(f=>'days/'+f)];
+const files=[...readdirSync(DIR).filter(f=>f.endsWith('.html')&&!f.includes('artifact')&&!/ 2\.html$/.test(f)),...readdirSync(join(DIR,'days')).filter(f=>f.endsWith('.html')&&!/ 2\.html$/.test(f)).map(f=>'days/'+f)];
 const errs=[]; const strip=s=>s.replace(/<script[\s\S]*?<\/script>/g,'');
 const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 for(const f of files){

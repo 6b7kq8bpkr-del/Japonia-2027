@@ -4,6 +4,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {ZDJECIA} from './data/zdjecia.mjs';
 import {PYTANIA, PYTANIA_OGOLNE} from './data/pytania.mjs';
+import {CENY, DP_KOSZTY, DP_DECYZJE, DP_SZUKAJ, DP_STOPOVER} from './data/druga-para.mjs';
 import {DAYS, GEO, DAYRAIN, DAYCROWD, BOOKINGS, DEADLINES, HOTELS, fill} from './data/index.mjs';
 /* Każda strona HTML przechodzi przez fill(): tokeny {{klucz}} z szablonów zamieniają się na fakty z data/fakty.mjs. */
 const page = (file, html) => fs.writeFileSync(DIR + '/' + file, fill(html));
@@ -118,7 +119,7 @@ const ITEM_LABEL = {lot:'Lot z biletu',zarezerwowane:'Zarezerwowane',rezerwacja:
 const TIMING_NOTE = 'Wszystkie godziny są miejscowe. Loty według e-biletów; pozostałe godziny to plan do dopasowania do rozkładów i rezerwacji. „Do potwierdzenia” nie oznacza kupionego biletu. „Zarezerwowane” oznacza przyjętą rezerwację; numer pociągu i miejsca mogą być jeszcze wstępne.';
 
 /* ============================ TEMPLATES ============================ */
-const TABS = [['index.html','Agenda'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['niezbednik.html','Niezbędnik'],['pogoda.html','Przed wyjazdem'],['koszty.html','Koszty'],['decyzje.html','Kulisy']];
+const TABS = [['index.html','Agenda'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['niezbednik.html','Niezbędnik'],['pogoda.html','Przed wyjazdem'],['koszty.html','Koszty'],['decyzje.html','Kulisy'],['druga-para.html','Druga para']];
 function nav(active,prefix){
   const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on" aria-current="page"':'')}>${l}</a>`).join('');
   return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html"><span class="bj" aria-hidden="true">日本</span>Japonia 2027<span class="bcode">27.04–08.05</span></a><nav class="tabs">${t}</nav></div></div>`;
@@ -527,6 +528,57 @@ Kind regards,
   return shell({title:'Kulisy planu · Japonia 2027',desc:'Co jeszcze zarezerwować, terminy odwołania hoteli i zasady spokojnej rodzinnej agendy.',prefix:'',active:'decyzje.html',inner,pillsIdx:null});
 }
 /* ---- pogoda ---- */
+/* ============ DRUGA PARA: monitor cen Etihad, ten sam kalendarz, koszty i decyzje ============ */
+function drugaParaPage(){
+  const last=CENY[CENY.length-1], prev=CENY.length>1?CENY[CENY.length-2]:null, min=CENY.reduce((m,c)=>c.total<m.total?c:m,CENY[0]);
+  const diff=prev?last.total-prev.total:0;
+  const trend=!prev?'pierwszy odczyt':(diff===0?'bez zmian od wczoraj':(diff<0?'▼ '+plz(-diff)+' taniej niż poprzednio':'▲ '+plz(diff)+' drożej niż poprzednio'));
+  const dpl=iso=>{const [y,m,d]=iso.split('-'); return (+d)+'.'+m+'.'+y;};
+  // wykres
+  const W=760,H=220,L=64,R=18,T=16,B=36, vals=CENY.map(c=>c.total), lo=Math.min(...vals), hi=Math.max(...vals), span=Math.max(hi-lo,600);
+  const y=v=>T+(H-T-B)*(1-(v-(lo-span*0.15))/(span*1.3)), x=i=>CENY.length===1?L+(W-L-R)/2:L+i*(W-L-R)/(CENY.length-1);
+  const pts=CENY.map((c,i)=>[x(i),y(c.total)]);
+  const ticks=[lo-span*0.1,(lo+hi)/2,hi+span*0.1].map(v=>Math.round(v/100)*100);
+  const chart=`<svg class="dpchart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Cena trzech biletów w kolejnych dniach">
+    ${ticks.map(t=>`<line x1="${L}" x2="${W-R}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}" class="g"/><text x="${L-8}" y="${(y(t)+4).toFixed(1)}" text-anchor="end">${plz(t).replace(' zł','')}</text>`).join('')}
+    ${pts.length>1?`<polyline points="${pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}" class="l"/>`:''}
+    ${pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${i===pts.length-1?6:4}" class="${i===pts.length-1?'d last':'d'}"/>`).join('')}
+    ${[0,CENY.length-1].filter((v,i,a)=>a.indexOf(v)===i).map(i=>`<text x="${x(i).toFixed(1)}" y="${H-10}" text-anchor="middle">${dpl(CENY[i].date).slice(0,-5)}</text>`).join('')}
+  </svg>`;
+  const hist=[...CENY].reverse().slice(0,14).map(c=>`<tr><td>${dpl(c.date)}</td><td class="num">${plz(c.total)}</td><td class="num">${plz(Math.round(c.total/3))}</td><td>${c.note||''}</td></tr>`).join('');
+  // kalendarz: te same dni co nasz plan
+  const sleep={auh:'Abu Zabi, Grand Millennium Al Wahda (stopover)',kioto:'Kioto, MIMARU Kyoto Station',tokio1:'Tokio, MIMARU Tokyo Akasaka',hakone:'Hakone, Hanaori nad jeziorem Ashi'};
+  const flights={'2027-04-27':'✈ WAW {{lot.waw.odlot}} → Abu Zabi {{lot.auh.przylot}}','2027-04-28':'✈ Abu Zabi {{lot.auh.odlot}} → Narita (przylot 29.04 {{lot.nrt.przylot}})','2027-05-07':'✈ Narita {{lot.nrt.odlot}} → Abu Zabi → Warszawa 8.05 {{lot.waw.przylot}}'};
+  const stays={}; let cur=null; DAYS.forEach(d=>{ if(d.stay) cur=d.stay; stays[d.date]=d.date==='2027-04-28'||d.date==='2027-05-07'?null:cur; });
+  const CN={tokio:'Tokio',hakone:'Hakone',kioto:'Kioto',nara:'Nara',osaka:'Osaka',abudhabi:'Abu Zabi'};
+  const cal=DAYS.map((d,i)=>{const [n,mon]=d.dd.split(' '), dd=n+'.'+(mon.startsWith('kw')?'04':'05');
+    return `<a class="dpday" href="days/${d.date}.html"><img src="${small(DAYIMG[d.date])}" alt="" loading="lazy" decoding="async"><span class="dpd"><b>${dd}</b> ${d.dow.slice(0,3)} · ${CN[d.city]||d.city}</span><span class="dpt">${d.title}</span>${flights[d.date]?`<span class="dpf">${flights[d.date]}</span>`:''}<span class="dps">${stays[d.date]?'Nocleg: '+sleep[stays[d.date]]:(d.date==='2027-04-28'?'Noc w samolocie':'Noc w samolocie, powrót 8.05')}</span></a>`;}).join('');
+  const sum=DP_KOSZTY.reduce((s,k)=>s+k.zl,0), total=last.total+sum;
+  const rows=DP_KOSZTY.map(k=>`<tr><td><b>${k.co}</b><span class="hint">${k.zrodlo}</span></td><td class="num">${plz(k.zl)}</td></tr>`).join('');
+  const dec=[...DP_DECYZJE].sort((a,b)=>a.due.localeCompare(b.due)).map(d=>`<li><time datetime="${d.due}">do ${dpl(d.due)}<em class="due" data-due="${d.due}"></em></time><div><b>${d.co}</b><p>${d.opis}</p></div></li>`).join('');
+  const inner=`
+  <header class="hero kb"><div class="hbg"><div class="hbg-img" style="background:${heroBg('kioto',IMG.fushimi)}"></div></div>
+    <div class="hero-inner"><p class="eyebrow">Dwoje dorosłych i syn · 12 lat w czasie wyjazdu · te same daty</p><h1>Druga para: ceny i decyzje</h1>
+    <p class="lead">Loty Etihad na nasze daty sprawdzamy codziennie rano. Niżej ten sam kalendarz co nasz, szacunek pozostałych kosztów dla trzech osób i decyzje, które trzeba podjąć, żeby pojechać razem.</p></div></header>
+  <section id="loty"><h2 class="stitle">Loty Etihad: cena dziś</h2>
+    <div class="dpprice"><div class="dpbig"><span>Trzy bilety w obie strony</span><b>${plz(last.total)}</b><i>${plz(Math.round(last.total/3))} za osobę · ${trend}</i></div>
+      <div class="dpmeta"><div><span>Ostatnia kontrola</span><b>${dpl(last.date)}</b></div><div><span>Najniżej dotąd</span><b>${plz(min.total)}</b><i>${dpl(min.date)}</i></div><div><span>Odczytów</span><b>${CENY.length}</b></div></div></div>
+    <div class="card">${chart}<p class="note">Cena z Google Flights dla trzech dorosłych, Etihad, wylot 27.04 i powrót 7.05, z podatkami i opłatami. Syn w dniu wylotu ma 12 lat, a Etihad stosuje taryfę dziecięcą tylko do 11 lat, więc wszystkie trzy bilety są dorosłe. Google wycenia wariant z dwugodzinną przesiadką w Abu Zabi; nasz układ z nocą w hotelu rezerwuje się na etihad.com jako stopover i trzeba go wycenić tam.</p>
+      <div class="linklist"><a href="${DP_SZUKAJ}" target="_blank" rel="noopener">To wyszukiwanie w Google Flights ↗</a><a href="${DP_STOPOVER}" target="_blank" rel="noopener">Stopover na etihad.com ↗</a></div></div>
+    <details class="more card dphist"><summary>Historia odczytów</summary><div style="overflow-x:auto"><table class="calc"><thead><tr><th>Dzień</th><th class="num">3 osoby</th><th class="num">Za osobę</th><th>Uwagi</th></tr></thead><tbody>${hist}</tbody></table></div></details>
+  </section>
+  <section id="kalendarz"><h2 class="stitle">Ten sam kalendarz co nasz</h2><p class="lead-p">Te same loty, noclegi i dni. Kliknij dzień, żeby zobaczyć nasz plan godzinowy.</p><div class="dpcal">${cal}</div></section>
+  <section id="koszty"><h2 class="stitle">Pozostałe koszty dla trzech osób</h2><p class="lead-p">Szacunki z naszych rezerwacji i cenników. Nic z tego nie jest zarezerwowane dla Was.</p>
+    <div class="card"><div style="overflow-x:auto"><table class="calc"><tbody>
+      <tr><td><b>Loty Etihad</b><span class="hint">Ostatni odczyt z monitora, bez dopłat za bagaż rejestrowany.</span></td><td class="num">${plz(last.total)}</td></tr>
+      ${rows}
+      <tr class="tot"><td>Razem, szacunkowo</td><td class="num">~${plz(Math.round(total/100)*100)}</td></tr></tbody></table></div>
+    <p class="note">Kurs planistyczny 2,40 zł za 100 JPY. Ceny atrakcji według cenników z listopada 2026.</p></div></section>
+  <section id="decyzje"><h2 class="stitle">Decyzje do podjęcia</h2><p class="lead-p">W kolejności terminów. Strona odlicza, ile zostało czasu.</p><ol class="deadlines dpdec">${dec}</ol></section>
+  ${footer('')}`;
+  return shell({title:'Druga para · Japonia 2027',desc:'Monitor cen lotów Etihad dla drugiej pary, ten sam kalendarz wyjazdu, koszty i decyzje.',prefix:'',active:'druga-para.html',inner,pillsIdx:null});
+}
+
 /* ============ POKAZ NA PROJEKTOR: slajd na dzień, pytania do doradców i pole na uwagi ============ */
 function pokazPage(){
   const CN={tokio:'Tokio',hakone:'Hakone',kioto:'Kioto',nara:'Nara (z Kioto)',osaka:'Osaka',abudhabi:'Abu Zabi'};
@@ -1115,6 +1167,7 @@ page('koszty.html', kosztyPage());
 page('pogoda.html', pogodaPage());
 page('niezbednik.html', niezbednikPage());
 page('pokaz.html', pokazPage());
+page('druga-para.html', drugaParaPage());
 /* ===== Rezerwacje poza stroną: private/rezerwacje.md -> samodzielny plik private/rezerwacje-offline.html.
    Plik nie trafia do repo ani na Vercel; zapisuje się go w telefonach dorosłych (AirDrop, Pliki). ===== */
 {
@@ -1154,7 +1207,7 @@ page('atrakcje.html', ATR);
    potem serwujemy z cache i w tle odświeżamy (stale-while-revalidate).
    Mapy (Leaflet/OSM) i pogoda wymagają sieci — bez niej po prostu się nie pokażą. */
 const PRECACHE = [
-  './','index.html','decyzje.html','atrakcje.html','hotele.html','loty.html','koszty.html','pogoda.html','niezbednik.html','druk.html','pokaz.html','assets/pokaz.css','assets/pokaz.js',
+  './','index.html','decyzje.html','atrakcje.html','hotele.html','loty.html','koszty.html','pogoda.html','niezbednik.html','druk.html','pokaz.html','druga-para.html','assets/pokaz.css','assets/pokaz.js',
   'assets/style.css','assets/app.js','assets/icon.svg',
   ...DAYS.map(d=>`days/${d.date}.html`),
   ...[...new Set(Object.values(DAYIMG))].flatMap(p=>[...new Set([p,small(p)])]).map(p=>p.replace(/^\//,'')),

@@ -38,3 +38,7 @@ Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie
 - Każda otwarta sprawa w `data/sprawy.mjs` ma `due` (ostatni dzień) i opcjonalnie `from` (od kiedy da się ją załatwić). Strona odlicza dni, oznacza sprawy po terminie i pokazuje najbliższy termin w karcie na stronie głównej. Podgląd innego dnia: `?teraz=2027-04-05T08:00:00Z`.
 - Z `DEADLINES` build tworzy `terminy.ics`: plik kalendarza z przypomnieniem dzień wcześniej (terminy z godziną mają też przypomnienie 2 godziny przed).
 - Loty są kupione; koszt (`bilety.suma` w `data/fakty.mjs`) jest też podstawą kalkulatora (`TICKET` w `build.mjs`).
+
+## Druga para
+- `druga-para.html` (zakładka „Druga para”): monitor cen Etihad dla trzech dorosłych taryf na nasze daty, ten sam kalendarz, szacunek kosztów i decyzje. Dane w `data/druga-para.mjs`.
+- Tablicę `CENY` uzupełnia codziennie o 7:30 zadanie „japonia-druga-para-loty” (Scheduled): jeden wpis dziennie z Google Flights, potem build, check, commit i wdrożenie. Zadanie działa, gdy aplikacja Claude jest otwarta; uśpiony Mac przesuwa odczyt.
