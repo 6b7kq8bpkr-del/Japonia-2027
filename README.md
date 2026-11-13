@@ -1,7 +1,7 @@
 # Japonia 2027 — przewodnik rodzinny z agendą
 
 Publicznie dostępny, nieindeksowany serwis (noindex nie jest ochroną dostępu) z przewodnikiem po rodzinnym wyjeździe do Japonii
-**27 kwietnia – 8 maja 2027** (2+2): Warszawa → Abu Zabi (stopover z hotelem w pakiecie)
+**27 kwietnia – 8 maja 2027** (dwie rodziny, 4+3): Warszawa → Abu Zabi (stopover z hotelem w pakiecie)
 → Kioto (4 noce, dzień w Narze 1.05; Kinugasa i KOTO 2.05) → Tokio (3 noce, Akasaka) → Hakone (ryokan nad jeziorem Ashi)
 → Narita → Warszawa (lądowanie 8.05 rano). Osaka pozostaje wariantem zamiast Nary. Warsztat w Kinugasa wymaga potwierdzenia; identyfikacja sklepu na podstawie pinezki ze zdjęcia jest prawdopodobna, nie ostateczna.
 
@@ -44,3 +44,5 @@ Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie
 - `data/druga-para.mjs`: koszt lotów, `DP_KOLEJ` (opłacone JPY i kurs planistyczny), pozostałe szacunki i decyzje. Monitor lotów zakończony po zakupie.
 - Zestawienie obu rodzin na stronie kosztów nie zastępuje kalkulatora naszej rodziny 2+2. Opłacona kolej jest już zawarta w budżetach; PLN pozostaje szacunkiem, nie rozliczeniem bankowym.
 - Nazwiska i numery nowych rezerwacji tylko w `private/rezerwacje.md`, poza git i Vercel.
+
+- Audyt grupy 13.11.2026: wspólny budżet kategorii (`OUR_TOTALS`, `DP_TOTALS`) zasila stronę i druk. Kalkulator zmienia kolumnę naszej rodziny, druk zachowuje budżet bazowy. Oferty hoteli drugiej rodziny są warunkowe (Booking/Genius), nie są potwierdzeniami.

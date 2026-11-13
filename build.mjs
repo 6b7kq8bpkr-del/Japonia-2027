@@ -4,7 +4,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {ZDJECIA} from './data/zdjecia.mjs';
 import {PYTANIA, PYTANIA_OGOLNE} from './data/pytania.mjs';
-import {CENY, DP_KOSZTY, DP_DECYZJE, DP_SZUKAJ, DP_STOPOVER, DP_KUPIONE, DP_KOLEJ} from './data/druga-para.mjs';
+import {CENY, DP_KOSZTY, DP_DECYZJE, DP_SZUKAJ, DP_STOPOVER, DP_KUPIONE, DP_KOLEJ, DP_TOTALS} from './data/druga-para.mjs';
 import {DAYS, GEO, DAYRAIN, DAYCROWD, BOOKINGS, DEADLINES, HOTELS, fill} from './data/index.mjs';
 /* Każda strona HTML przechodzi przez fill(): tokeny {{klucz}} z szablonów zamieniają się na fakty z data/fakty.mjs. */
 const page = (file, html) => fs.writeFileSync(DIR + '/' + file, fill(html));
@@ -22,19 +22,26 @@ const CLOSED = {
 };
 
 /* Koszty: jedno źródło wartości kalkulatora (CALC) i kupionego biletu (TICKET). */
-const CALC = {nights:8, nightRate:1504, transport:5000, days:11, foodRate:500, attractions:3300, extras:3000};
+const CALC = {nights:8, nightRate:1501.33, transport:5000, days:11, foodRate:500, attractions:3300, extras:3000};
 /* Numer wydania = skrót treści źródeł. Te same źródła dają identyczny build, więc w repo zmieniają się tylko strony, których treść się zmieniła. */
 const SOURCES = ['build.mjs', ...['data','src'].flatMap(d => fs.existsSync(DIR+'/'+d) ? fs.readdirSync(DIR+'/'+d).sort().map(f => d+'/'+f) : [])];
 const BUILD_ID = SOURCES.reduce((h,f) => h.update(fs.readFileSync(DIR+'/'+f)), crypto.createHash('sha1')).digest('hex').slice(0,7);
-const TICKET = {family:13643, bag:0, total:13643, label:'27.04-7.05 ze stopoverem tam; powrót do WAW 8.05 - kupione 8.09.2026'};
+const TICKET = {family:13643.36, bag:0, total:13643.36, label:'27.04-7.05 ze stopoverem tam; powrót do WAW 8.05 - kupione 8.09.2026'};
 /* Budżet w tysiącach złotych liczony z tych samych wartości co kalkulator. */
 const BUDGET_K = Math.round((TICKET.total + CALC.nights*CALC.nightRate + CALC.transport + CALC.days*CALC.foodRate + CALC.attractions + CALC.extras)/1000);
 // własny formatter — Node w tym środowisku ma okrojone ICU i ignoruje locale pl-PL
 const plz  = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';
+const OUR_TOTALS = {flights:TICKET.total, hotels:CALC.nights*CALC.nightRate, transport:CALC.transport, food:CALC.days*CALC.foodRate, attractions:CALC.attractions, extras:CALC.extras};
+const sumBudget = values => Math.round(Object.values(values).reduce((sum,n)=>sum+n,0)*100)/100;
+const GROUP_TOTAL = sumBudget(OUR_TOTALS)+sumBudget(DP_TOTALS);
+const GROUP_RULE = 'Wspólne przejazdy, KOTO, sumo i kolacja urodzinowa. Zakupy, część spacerów i zwykłe lunche mogą odbywać się w układzie 4+3. Każda podgrupa ma dorosłego, internet, swoje bilety i ustalony punkt zbiórki.';
+const BUDGET_NOTE = 'Stan budżetu: 13.11.2026. Loty i dwa długie shinkanseny obu rodzin są kupione. Hotele naszej czwórki: 500 443 JPY, około 12 011 zł po kursie 0,024 zł/JPY; zarezerwowane, płatność według potwierdzeń. Hotele drugiej rodziny: oferty Booking/Genius za 13 472 zł, sprawdzone dla 2 dorosłych i dziecka 12 lat; cena do potwierdzenia po zalogowaniu, pokoje nie są zarezerwowane. Podatki miejscowe mogą być dodatkowe. Pozostałe kategorie to pule planistyczne; kwoty kolejowe w PLN nie są rozliczeniem bankowym.';
+function budgetTable(){
+  const labels={flights:'Loty i stopover - kupione',hotels:'Hotele w Japonii',transport:'Cały transport, w tym kupione shinkanseny',food:'Wyżywienie - pula',attractions:'Atrakcje, w tym sumo - pula',extras:'Ubezpieczenie, internet, pamiątki i rezerwa'};
+  return `<table class="rhythm booking-budget"><thead><tr><th>Kategoria</th><th>Nasza czwórka</th><th>Joanna, Marcin i Tomasz</th></tr></thead><tbody>${Object.entries(labels).map(([key,label])=>`<tr><td>${label}</td><td data-our-budget="${key}">${plz(OUR_TOTALS[key])}</td><td>${plz(DP_TOTALS[key])}</td></tr>`).join('')}<tr class="tot"><td>Cały wyjazd - budżet</td><td id="group-our-total">${plz(sumBudget(OUR_TOTALS))}</td><td>${plz(sumBudget(DP_TOTALS))}</td></tr></tbody></table>`;
+}
 function groupBookings(){
-  const ours=TICKET.total+CALC.nights*CALC.nightRate+CALC.transport+CALC.days*CALC.foodRate+CALC.attractions+CALC.extras;
-  const theirs=DP_KUPIONE.total+DP_KOSZTY.reduce((sum,k)=>sum+k.zl,0);
-  return `<section id="dwie-rodziny"><h2 class="stitle">Dwie rodziny: rezerwacje i budżet</h2><p class="lead-p">Siedem osób: nasza rodzina 2+2 oraz Joanna, Marcin i Tomasz (12 lat). Na kolej: łącznie 6 taryf dorosłych i 1 dziecięca.</p><div class="card" style="overflow-x:auto"><table class="rhythm booking-budget"><thead><tr><th>Pozycja</th><th>Nasza czwórka</th><th>Joanna, Marcin i Tomasz</th></tr></thead><tbody><tr><td>Loty - kupione</td><td>{{bilety.suma}}</td><td>${DP_KUPIONE.zl}</td></tr><tr><td>Dwa shinkanseny - opłacone</td><td>{{sk.razem}}</td><td>${DP_KOLEJ.totalJPY.toLocaleString('en-US').replaceAll(',',' ')} JPY</td></tr><tr><td>Hotele w Japonii</td><td>Zarezerwowane; płatność według potwierdzeń</td><td>Do rezerwacji, ceny szacunkowe</td></tr><tr><td>Cały wyjazd - budżet</td><td>~${plz(ours)}</td><td>~${plz(theirs)}</td></tr></tbody></table><p><b>Łączny budżet siedmiu osób: ~${plz(ours+theirs)}.</b> To suma dwóch budżetów, nie suma zapłaconych rachunków. Kolej drugiej rodziny jest już w jej budżecie - nie doliczamy jej ponownie. Kurs planistyczny: 2,40 zł/100 JPY; rozliczenie karty może być inne.</p><p>Wspólne przejazdy: 29.04 Nozomi 51, Shinagawa {{n51.odj}} → Kioto {{n51.przyj}}; 3.05 Nozomi 6, Kioto {{n6.odj}} → Tokio {{n6.przyj}}. Miejsca i ostateczny rozkład zostaną potwierdzone 29.03 i 3.04. Dwie rodziny nie mają jeszcze gwarancji sąsiednich miejsc.</p><p>NEX, Romancecar, Odawara-Shinagawa, pokoje drugiej rodziny oraz wspólne atrakcje wymagają osobnego domknięcia. Transfery zamawiamy na 7 osób z bagażem; prywatne kąpiele uzgadniamy osobno dla każdej rodziny.</p></div></section>`;
+  return `<section id="dwie-rodziny"><h2 class="stitle">Dwie rodziny: rezerwacje i budżet</h2><p class="lead-p">Siedem osób: czworo dorosłych i troje dzieci. Na kolej: łącznie 6 taryf dorosłych i 1 dziecięca.</p><div class="card" style="overflow-x:auto">${budgetTable()}<p><b>Łączny budżet siedmiu osób: <span id="group-total">${plz(GROUP_TOTAL)}</span>.</b> <span id="group-scenario">Budżet bazowy z 13.11.2026.</span> Zestawienie obejmuje cały wyjazd, nie tylko zapłacone rachunki.</p><p>${BUDGET_NOTE}</p><p>Shinkanseny: nasza czwórka {{sk.razem}}, druga rodzina 86 220 JPY. Obie kwoty są już zawarte w kategorii transportu. Nie doliczajcie ponownie wspólnych przejazdów ani kolacji opłaconych w pakiecie sumo i Hanaori; wyżywienie pozostaje ogólną pulą z zapasem. Kashikiri i podatki pokrywa rezerwa do czasu potwierdzenia wyceny.</p><p>Transfer dla siedmiu osób wymaga nowej wyceny. Jedną fakturę za wspólnego vana rozliczamy między rodziny; nie przypisujemy jej w całości obu rodzinom. Budżety transportu pozostają pulami, nie potwierdzonymi ofertami.</p><p>Wspólne przejazdy: 29.04 Nozomi 51, Shinagawa {{n51.odj}} → Kioto {{n51.przyj}}; 3.05 Nozomi 6, Kioto {{n6.odj}} → Tokio {{n6.przyj}}. Miejsca i ostateczny rozkład zostaną potwierdzone 29.03 i 3.04. Priorytetem jest ten sam pociąg, wspólny wagon w miarę dostępności.</p><p><b>Jak podróżujemy:</b> ${GROUP_RULE}</p><p>NEX, Romancecar, Odawara-Shinagawa, pokoje drugiej rodziny oraz atrakcje wymagają osobnego domknięcia. Stopover drugiej rodziny: hotel, liczba pokoi i późne wymeldowanie do potwierdzenia z vouchera.</p></div></section>`;
 }
 /* Style i skrypty są zwykłymi plikami w src/ (bez szablonów, więc bez podwajania ukośników). */
 fs.copyFileSync(DIR + '/src/style.css', DIR + '/assets/style.css');
@@ -245,7 +252,7 @@ function deadlineList(prefix=''){
   return '<ol class="deadlines">'+DEADLINES.map(d=>'<li data-date="'+d.date+'"><time datetime="'+d.date+'">'+d.label+'<em class="due" data-due="'+d.date+'"></em></time><div><a href="'+prefix+d.href+'"><b>'+d.title+'</b></a><p>'+d.text+'</p></div></li>').join('')+'</ol>';
 }
 function readiness(){
-  return '<div class="readiness"><b>Loty kupione ({{bilety.suma}}) i cztery pobyty hotelowe potwierdzone</b><p>Do domknięcia: miejsca w pociągach, bilety na atrakcje i dojazd z Hakone. Potwierdzenia hoteli z 8.09 wskazują płatność na później.</p><a href="decyzje.html#do-zalatwienia">Sprawdź listę do załatwienia →</a> · <a href="#terminy">Terminy i pogoda</a></div>';
+  return '<div class="readiness"><b>Loty i dwa shinkanseny kupione dla obu rodzin; noclegi potwierdzone dla naszej czwórki</b><p>Do domknięcia: hotele i voucher stopover drugiej rodziny, miejsca w pociągach, bilety na atrakcje oraz dojazd z Hakone dla siedmiu osób. Potwierdzenia hoteli z 8.09 wskazują płatność na później.</p><a href="decyzje.html#do-zalatwienia">Sprawdź listę do załatwienia →</a> · <a href="#terminy">Terminy i pogoda</a></div>';
 }
 /* ---- index ---- */
 function indexPage(){
@@ -352,7 +359,7 @@ function kosztyPage(){
     <h2 class="stitle">Bilety lotnicze</h2>
     <div class="pflag">✈️ <span><b>Etihad ${TICKET.label}</b>. Bilety są kupione, koszt jest znany: {{bilety.suma}} za rodzinę (z hotelem 4★ w Abu Zabi w pakiecie), bez bagażu rejestrowanego. Szczegóły na zakładce <a href="loty.html">Loty</a>.</span></div>
     <div class="card"><ul class="tips">
-      <li>Cztery e-bilety kosztowały razem {{bilety.suma}}. W kalkulatorze kwota jest zaokrąglona do złotówki.</li>
+      <li>Cztery e-bilety kosztowały razem {{bilety.suma}}. Kalkulator uwzględnia dokładną kwotę biletu; sumy wyświetlamy w pełnych złotych.</li>
       <li>Historia cen, porównanie linii i wybór terminu zostały na zakładce Loty jako archiwum — pokazują, dlaczego wybór padł na Etihad ze stopoverem.</li>
     </ul>
     <a class="gmap" href="loty.html">✈️ Zobacz ceny, trendy i strategię zakupu → </a></div>
@@ -373,7 +380,7 @@ function kosztyPage(){
   <p class="note">Źródła taryf: <a href="https://www.jreast.co.jp/en/multi/nex/tickets/" target="_blank" rel="noopener">JR East NEX</a>, <a href="https://www.jreast.co.jp/en/multi/pass/nex.html" target="_blank" rel="noopener">bilet NEX tam i z powrotem</a>, <a href="https://smart-ex.jp/en/product/plan/service/" target="_blank" rel="noopener">SmartEX i dopłaty sezonowe</a>, <a href="https://www.hakonenavi.jp/international/en/discount_passes/free_pass" target="_blank" rel="noopener">Hakone Freepass</a>.</p>
   <section>
     <h2 class="stitle">Kalkulator kosztów</h2>
-    <p class="lead-p">Szacunek dla <b>2+2</b> na cały wyjazd. W japońskiej kolei liczymy trzy taryfy dorosłe i jedną dziecięcą (10 lat); zaokrąglenia zależą od biletu. Linie lotnicze i atrakcje mają własne progi wieku. Wszystkie pola możesz edytować — suma liczy się na bieżąco, a zmiany zapisują się w przeglądarce.</p>
+    <p class="lead-p">Szacunek dla <b>2+2</b> na cały wyjazd. W japońskiej kolei liczymy trzy taryfy dorosłe i jedną dziecięcą (10 lat); zaokrąglenia zależą od biletu. Linie lotnicze i atrakcje mają własne progi wieku. Wszystkie pola możesz edytować - suma i kolumna naszej rodziny w zestawieniu obu rodzin aktualizują się razem. Zmiany zapisują się w przeglądarce. Własne zapisane wartości mogą różnić się od nowego budżetu bazowego; przycisk przywracania na dole wczyta aktualne kwoty. Wydruk pokazuje budżet bazowy, nie prywatne zmiany kalkulatora.</p>
     <div class="card calc">
       <table>
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
@@ -382,7 +389,7 @@ function kosztyPage(){
           <tr><td class="cat">🏨 Noclegi<span class="hint">Trzy rezerwacje: łącznie <b>500 443 JPY</b>; w potwierdzeniach z 8.09 zapłacono 0 JPY. Średnia poniżej daje około 12 tys. zł, zależnie od kursu i podatków. Abu Zabi z vouchera stopover.</span></td><td class="num"><input type="number" id="nights" aria-label="Liczba nocy w Japonii" class="sm" value="${CALC.nights}" min="0"><span class="x">×</span><input type="number" id="nightRate" aria-label="Średni koszt noclegu rodzinnego, zł" class="sm" value="${CALC.nightRate}" min="0" step="10"></td><td class="num" id="hotelAmt">—</td></tr>
           <tr><td class="cat">🚄 Transport w Japonii<span class="hint">3 taryfy dorosłe + 1 dziecięca, kurs planistyczny 2,40 zł / 100 JPY. Dwa shinkanseny zarezerwowane; w puli także Hakone, dzień w Narze, metro, taksówki w Kioto oraz transfery w Abu Zabi. 5 000 zł jest budżetem z zapasem, nie sumą opłaconych biletów.</span></td><td class="num">—</td><td class="num"><input type="number" id="transport" aria-label="Budżet transportu, zł" value="${CALC.transport}" min="0" step="100"></td></tr>
           <tr><td class="cat">🍜 Wyżywienie<span class="hint">dni × stawka na rodzinę (pierwszy dzień w samolocie liczymy symbolicznie)</span></td><td class="num"><input type="number" id="days" aria-label="Liczba dni wyżywienia" class="sm" value="${CALC.days}" min="0"><span class="x">×</span><input type="number" id="foodRate" aria-label="Wyżywienie rodziny na dzień, zł" class="sm" value="${CALC.foodRate}" min="0" step="10"></td><td class="num" id="foodAmt">—</td></tr>
-          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">Pula obejmuje KOTO (obecnie {{koto.cena}} za rodzinę, około 278 zł przy kursie planistycznym), rezerwę na niepotwierdzony warsztat Kinugasa, Tōdai-ji w Narze, świątynie, Café, taras i opcjonalne sumo. Cena warsztatu nie jest znana, nie wpisujemy 0 zł. Pula 3300 zł pozostaje szacunkiem, nie sumą ofert. Posiłku z pokazu nie liczcie drugi raz.</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" aria-label="Budżet atrakcji, zł" value="${CALC.attractions}" min="0" step="100"></td></tr>
+          <tr><td class="cat">🎟️ Atrakcje i warsztaty<span class="hint">Pula obejmuje KOTO (obecnie {{koto.cena}} za rodzinę, około 278 zł przy kursie planistycznym), rezerwę na niepotwierdzony warsztat Kinugasa, Tōdai-ji w Narze, świątynie, Café, taras i sumo w programie podstawowym. Cena warsztatu nie jest znana, nie wpisujemy 0 zł. Pula 3300 zł pozostaje szacunkiem, nie sumą ofert. Posiłku z pokazu nie liczcie drugi raz.</span></td><td class="num">—</td><td class="num"><input type="number" id="attractions" aria-label="Budżet atrakcji, zł" value="${CALC.attractions}" min="0" step="100"></td></tr>
           <tr><td class="cat">🎁 Pamiątki + rezerwa<span class="hint">bufor na nieprzewidziane; streetwear dla dzieci (4.05) liczcie osobno — koszulka ~150–300 zł, bluza ~500–1 000 zł</span></td><td class="num">—</td><td class="num"><input type="number" id="extras" aria-label="Rezerwa i dodatkowe wydatki, zł" value="${CALC.extras}" min="0" step="100"></td></tr>
         </tbody>
         <tfoot><tr class="tot"><td class="cat">Suma całkowita</td><td></td><td class="num big" id="total">—</td></tr></tfoot>
@@ -415,6 +422,9 @@ function kosztyPage(){
     var priceRefreshed=false;
     try{
       var s=JSON.parse(localStorage.getItem(KEY))||{};
+      // Aktualizujemy wyłącznie pełny, niezmieniony zestaw poprzednich wartości domyślnych.
+      var legacy={flights:13643,nights:8,nightRate:1504,transport:5000,days:11,foodRate:500,attractions:3300,extras:3000};
+      if(Number(s._fd)===legacy.flights && ids.every(function(id){return Number(s[id])===legacy[id];})) s={};
       // Brak dawnego domyślnego kosztu nie jest zgodą na nadpisanie własnej kwoty.
       var untouched = s.flights==null || (s._fd!=null && Number(s.flights)===Number(s._fd));
       ids.forEach(function(id){
@@ -433,6 +443,11 @@ function kosztyPage(){
       document.getElementById("hotelAmt").textContent=fmt(hotel);
       document.getElementById("foodAmt").textContent=fmt(food);
       var total=num("flights")+hotel+num("transport")+food+num("attractions")+num("extras");
+      var amounts={flights:num("flights"),hotels:hotel,transport:num("transport"),food:food,attractions:num("attractions"),extras:num("extras")};
+      document.querySelectorAll("[data-our-budget]").forEach(function(cell){cell.textContent=fmt(amounts[cell.dataset.ourBudget]);});
+      document.getElementById("group-our-total").textContent=fmt(total);
+      document.getElementById("group-total").textContent=fmt(total+${sumBudget(DP_TOTALS)});
+      document.getElementById("group-scenario").textContent=ids.some(function(id){return Math.abs(num(id)-D[id])>0.001;})?"Scenariusz z kalkulatora naszej rodziny; budżet drugiej rodziny bez zmian.":"Budżet bazowy z 13.11.2026.";
       document.getElementById("total").textContent=fmt(total);
       document.getElementById("perPerson").textContent=fmt(total/4);
       document.getElementById("perDay").textContent=fmt(total/(num("days")||1));
@@ -593,7 +608,7 @@ function drugaParaPage(){
     <div class="card"><div style="overflow-x:auto"><table class="rhythm booking-budget"><tbody>
       <tr><td><b>Loty Etihad</b><span class="hint">${DP_KUPIONE?'Kupione: 11 002,80 zł za loty i 237,48 zł opłaty za stopover, z noclegiem w Abu Zabi.':'Ostatni odczyt z monitora, bez dopłat za bagaż rejestrowany.'}</span></td><td class="num">${DP_KUPIONE?DP_KUPIONE.zl:plz(last.total)}</td></tr>
       ${rows}
-      <tr class="tot"><td>Razem, szacunkowo</td><td class="num">~${plz(Math.round(total/100)*100)}</td></tr></tbody></table></div>
+      <tr class="tot"><td>Razem, szacunkowo</td><td class="num">~${plz(total)}</td></tr></tbody></table></div>
     <p class="note">Kurs planistyczny 2,40 zł za 100 JPY. Ceny atrakcji według cenników z listopada 2026.</p></div></section>
   <section id="decyzje"><h2 class="stitle">Decyzje do podjęcia</h2><p class="lead-p">W kolejności terminów. Strona odlicza, ile zostało czasu.</p><ol class="deadlines dpdec">${dec}</ol></section>
   ${footer('')}`;
@@ -675,7 +690,7 @@ function drukPage(){
       <table class="agenda">${rows}</table>
       <div class="facts">${facts}</div>
       ${fx?`<div class="flex"><p><b>Chronimy:</b> ${fx[0]}</p><p><b>✂️ Można odpuścić:</b> ${fx[1]}</p></div>`:''}
-      ${H?`<p class="blk"><b>🏨 Nocleg:</b> ${H.name} - ${H.near}<br>${H.cancel}</p>`:''}
+      ${H?`<p class="blk"><b>🏨 Baza:</b> ${H.name} - ${H.near}<br><b>Nasza czwórka:</b> ${H.cancel}<br>Druga rodzina: pokój i warunki jej rezerwacji do potwierdzenia.</p>`:''}
       ${d.tips&&d.tips.length?`<div class="blk"><b>Wskazówki</b><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`:''}
       ${DAYRAIN[d.date]?`<div class="blk"><b>☔ Jeśli pada</b><p>${DAYRAIN[d.date]}</p></div>`:''}
       <div class="pfoot">Japonia 27 kwietnia – 8 maja 2027 · Dzień ${i+1} — ${d.dd}</div>
@@ -691,13 +706,13 @@ function drukPage(){
     <div class="ctitle">
       <p class="keyb">Plan podróży</p>
       <h1>Japonia 2027</h1>
-      <p class="csub">27 kwietnia – 8 maja 2027 · rodzina 2+2 (dzieci 10 i 13 lat)</p>
-      <p class="csub2">Abu Zabi · Kioto · Nara · Tokio · Hakone</p>
+      <p class="csub">27 kwietnia - 8 maja 2027 · dwie rodziny, 7 osób</p>
+      <p class="csub2">Czworo dorosłych · Martyna (10 lat), Marcel (13 lat od 5.05), Tomasz (12 lat)<br>Abu Zabi · Kioto · Nara · Tokio · Hakone</p>
       <div class="rule"></div>
     </div>
     <div class="cfacts">
       <div><b>11</b>dni programu + powrót</div><div><b>8</b>nocy w Japonii</div>
-      <div><b>3</b>bazy w Japonii</div><div><b>~${BUDGET_K}<i>tys. zł</i></b>budżet 2+2</div>
+      <div><b>3</b>bazy w Japonii</div><div><b>~${Math.round(GROUP_TOTAL/1000)}<i>tys. zł</i></b>budżet siedmiu osób</div>
     </div>
     <h3 class="toch">Spis treści</h3>
     <ol class="toc">${toc}</ol>
@@ -706,18 +721,32 @@ function drukPage(){
     <div class="pfoot">Japonia 27 kwietnia – 8 maja 2027 · Plan podróży</div>
   </section>
 
+  <section class="pg group-budget" id="dwie-rodziny">
+    <div class="dhead"><div class="dnum">Dwie rodziny</div><div class="dwhen">Budżet bazowy · 13.11.2026</div></div>
+    <h2>Rezerwacje i koszty siedmiu osób</h2>
+    <p class="lead">${GROUP_RULE}</p>
+    ${budgetTable()}
+    <p><b>Łącznie: ${plz(GROUP_TOTAL)}.</b> Kwoty w PLN są orientacyjne.</p>
+    <p class="note">${BUDGET_NOTE}</p>
+    <p class="note">Dwa shinkanseny są już w transporcie: nasza czwórka {{sk.razem}}, druga rodzina 86 220 JPY. Rezerwacje są osobne; wspólny wagon nie jest gwarantowany. W kolei 6 taryf dorosłych i 1 dziecięca; każdy ma własną kartę IC.</p>
+    <p class="note">Suma bazowa jest wspólna ze stroną. Własne zmiany kalkulatora zapisane w przeglądarce nie przechodzą do wydruku. Transfery dla siedmiu osób wymagają wyceny, a ich koszt dzielimy między rodziny. Kashikiri i podatki są do potwierdzenia, pokrywa je rezerwa; posiłków z sumo i Hanaori nie doliczamy drugi raz.</p>
+    <h3>Oferty drugiej rodziny - jeszcze nie rezerwacje</h3>
+    <p class="note">Booking, odczyt 13.11.2026: Kioto 5 845 zł / 4 noce, Tokio 4 210 zł / 3 noce, Hanaori Deluxe z prywatną wanną i dwoma posiłkami 3 417 zł / noc. Warunki członkowskie/Genius i podatki do potwierdzenia po zalogowaniu. Anulowanie według ofert: Kioto przed 22.04, Tokio przed 26.04, Hanaori przed 3.05. Ostateczne terminy przepisujemy z nowych potwierdzeń. Stopover w Abu Zabi: potwierdzić hotel, pokój dla trójki i późne wymeldowanie.</p>
+    <div class="pfoot">Dwie rodziny · cztery osoby + trzy osoby · budżet, nie zestawienie płatności</div>
+  </section>
   ${days}
 
   <section class="pg">
     <div class="dhead"><div class="dnum">Aneks</div><div class="dwhen">Noclegi, terminy i praktyka</div></div>
     <h2>Informacje praktyczne</h2>
 
-    <h3>Noclegi</h3>
+    <h3>Noclegi naszej czwórki - potwierdzone</h3>
+    <p class="note">Kwoty i terminy poniżej dotyczą wyłącznie naszej rezerwacji 2+2. Oferty drugiej rodziny są w zestawieniu budżetu na początku planu.</p>
     <table class="agenda">${hotels}</table>
     
 
     <h3>Terminy i rezerwacje</h3>
-    <p class="note">Loty oraz noclegi są potwierdzone. Warsztaty, sumo, Café i taras nie są jeszcze rezerwacjami. Daty sprzedaży wymagają ponownej kontroli w 2027.</p>
+    <p class="note">Loty i dwa długie shinkanseny są kupione dla obu rodzin. Hotele w Japonii potwierdzone tylko dla naszej czwórki. KOTO, sumo, Café i taras wymagają rezerwacji. Dla Café potrzebne dwie rezerwacje 4+3, dwa adresy e-mail i ten sam slot; sąsiedztwo nie jest gwarantowane. Daty sprzedaży wymagają ponownej kontroli w 2027.</p>
     <table class="agenda">${DEADLINES.map(x=>`<tr><td>${x.label}</td><td><b>${x.title}</b><span class="dsc">${x.text}</span></td></tr>`).join('')}</table>
     <h3>Transport i pieniądze</h3>
     <p class="note">Shinkanseny: SmartEX. NEX: JR East. Romancecar: Odakyu. Terminy, warunki zmiany i miejscówki sprawdzajcie w każdym systemie osobno. Na przylocie rezerwacja kolei powinna pozwalać na opóźnienie lotu i formalności.</p>
@@ -725,11 +754,11 @@ function drukPage(){
     <h3>Praktyka</h3>
     <ul class="plist">
       <li><b>Gotówka:</b> bankomaty 7-Eleven i Japan Post przyjmują karty zagraniczne. Napiwków się nie daje.</li>
-      <li><b>Internet:</b> minimum dwa telefony z niezależnym internetem, gdy rozdzielacie się na warsztaty. Pakiet na Japonię nie musi działać w ZEA.</li>
+      <li><b>Internet:</b> minimum po jednym telefonie z niezależnym internetem w każdej podgrupie oraz bilety offline u dorosłych. Pakiet na Japonię nie musi działać w ZEA.</li>
       <li><b>Prąd:</b> 100 V, gniazdka typu A (dwa płaskie bolce) — potrzebny adapter.</li>
       <li><b>Alarmowe:</b> 110 policja · 119 pogotowie i straż. Woda z kranu jest zdatna do picia.</li>
       <li><b>Zwyczaje:</b> buty zdejmujemy w ryokanie i świątyniach; w pociągach cisza; koszy na śmieci prawie nie ma.</li>
-      <li><b>Pranie:</b> pralnie samoobsługowe w obu MIMARU. Główne pranie 2.05 po 16:15 w Kiocie, po powrocie z warsztatu; dogrywka 5.05 wieczorem w Tokio. Opłaty i dostępność maszyn potwierdźcie na miejscu. W Hakone prania nie ma.</li>
+      <li><b>Pranie:</b> pralnie samoobsługowe w obu MIMARU. Główne pranie 2.05 po powrocie do Kioto od 15:45; dogrywka 5.05 od 15:00, przed pakowaniem i kolacją. Dwie rodziny uzgadniają kolejność; nie zakładamy dwóch wolnych pralek. Opłaty i dostępność maszyn potwierdźcie na miejscu. W Hakone prania nie ma.</li>
       <li><b>Bagaż:</b> tylko podręczny — 7 kg i 56×36×23 cm na osobę, <b>razem z wagą walizki</b> (miękka 1,2–1,5 kg, twarda 2,4–3,0 kg). Pakujemy na 5 dni: 4 T-shirty, 1 spodnie zapasowe, 5 kompletów bielizny i skarpet, kurtka przeciwdeszczowa, klapki. Najcięższe rzeczy na sobie. Bez bagażu rejestrowanego w obie strony — zakupy muszą zmieścić się w limicie; ewentualną dopłatę i termin zakupu sprawdźcie w Manage Booking po ważeniu 5.05. Nie zakładamy stałej ceny.</li>
       <li><b>Tax-free w 2027:</b> nowy system zwrotu po potwierdzeniu wywozu. Płaćcie zgodnie z zasadami sklepu, zachowajcie dokumenty i dostęp do towarów przed nadaniem bagażu. Nie zakładajcie automatycznego zwrotu gotówki na lotnisku.</li>
     </ul>
@@ -793,6 +822,10 @@ h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:22px 0 8px}
 .dnum span{color:var(--muted);font-weight:600}
 .dwhen{font-size:12px;color:var(--muted)}
 .lead{color:var(--muted);font-size:14px;margin:0 0 16px;max-width:62ch}
+.booking-budget{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+.booking-budget th,.booking-budget td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.booking-budget th:first-child{width:44%}.booking-budget th{font-size:11px;color:var(--muted)}
+.booking-budget .tot{font-weight:700;border-top:2px solid var(--ink)}
 .agenda{width:100%;border-collapse:collapse;font-size:13px}
 .agenda td{padding:7px 0;border-bottom:1px solid #ececec;vertical-align:top}
 .agenda td.t{width:62px;font-weight:800;color:var(--ai);white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -826,7 +859,7 @@ h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:22px 0 8px}
   h1{font-size:34pt}h2{font-size:18pt}h3{font-size:13pt;margin:16px 0 6px}
   .cfacts b{font-size:19pt}
   .agenda{font-size:9.5pt}
-  .agenda tr,.toc li,.facts span,.flex p{page-break-inside:avoid;break-inside:avoid}
+  .booking-budget tr,.agenda tr,.toc li,.facts span,.flex p{page-break-inside:avoid;break-inside:avoid}
   .day h2,.dhead{page-break-after:avoid;break-after:avoid}
   .pfoot{position:static;margin-top:8mm}
   .pg{padding-bottom:14mm}
@@ -1003,7 +1036,7 @@ function pogodaPage(){
       <tbody>
         <tr><td class="dcol">29.04, czwartek, wieczór</td><td>MIMARU Kyoto Station</td><td>Nie pranie, tylko ratunek: strój z Abu Zabi po dniu w 40°C przepierzcie ręcznie i powieście. Reszta czeka.</td></tr>
         <tr><td class="dcol"><b>2.05, niedziela, po 16:15</b></td><td><b>MIMARU Kyoto Station</b></td><td><b>Główne pranie wyjazdu.</b> Po powrocie z warsztatu. Dostępność maszyn, detergent i cenę sprawdźcie na miejscu. Zarezerwujcie około 2-3 godzin z suszeniem; kolacja blisko hotelu.</td></tr>
-        <tr><td class="dcol">5.05, środa, 21:00</td><td>MIMARU Tokyo Akasaka</td><td>Dogrywka przy pakowaniu, jeśli chcecie wrócić w czystych rzeczach. Detergent kupujecie na recepcji.</td></tr>
+        <tr><td class="dcol">5.05, środa, 15:00</td><td>MIMARU Tokyo Akasaka</td><td>Dogrywka podczas odpoczynku, z zapasem na suszenie przed pakowaniem i kolacją urodzinową. Dwie rodziny uzgadniają dostęp do pralek. Detergent kupujecie na recepcji.</td></tr>
       </tbody>
     </table></div></div>
     <div class="card" style="margin-top:1rem"><ul class="tips">

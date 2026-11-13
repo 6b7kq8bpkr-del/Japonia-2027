@@ -13,15 +13,15 @@ export const CENY = [
 export const DP_KOLEJ = {date:'2026-11-13', perTripJPY:43110, totalJPY:86220, rate:0.024, paid:true};
 // Koszty poza lotami: szacunki na trzy osoby. Źródło opisuje, skąd jest liczba; „szacunek” znaczy, że nic nie jest zarezerwowane.
 export const DP_KOSZTY = [
-  {co:'Abu Zabi: nocleg w pakiecie stopover', zl:0, zrodlo:'Nocleg w pakiecie z biletem. Na miejscu opłata hotelowa 15 AED za pokój za noc; przy jednym pokoju dla trzech osób to około 17 zł.'},
-  {co:'Kioto: 4 noce, 29.04-3.05', zl:5000, zrodlo:'Szacunek z naszej rezerwacji MIMARU Kyoto Station (apartament z kuchnią, 5 266 zł za 2+2). Cena i dostępność dla trzech osób do sprawdzenia.'},
-  {co:'Tokio: 3 noce, 3-6.05', zl:3300, zrodlo:'Szacunek z naszej rezerwacji MIMARU Tokyo Akasaka (3 413 zł za 2+2).'},
-  {co:'Hakone: 1 noc z kolacją i śniadaniem, 6-7.05', zl:2600, zrodlo:'Szacunek z naszej rezerwacji Hanaori (3 354 zł za 2+2 z wyżywieniem), przeliczony na trzy osoby.'},
-  {co:'Shinkansen Shinagawa-Kioto i Kioto-Tokio', zl:DP_KOLEJ.totalJPY*DP_KOLEJ.rate, zrodlo:'Kupione i opłacone 13.11.2026. Trzy taryfy dorosłe po 14 370 JPY w każdą stronę, razem 86 220 JPY po kursie 2,40 zł za 100 JPY. Syn płaci jak dorosły.'},
-  {co:'Pozostała kolej, metro, Hakone, taksówki', zl:2200, zrodlo:'Szacunek: Narita Express w obie strony, Hakone Free Pass i Romancecar, Nara, metro i karty IC dla trzech dorosłych taryf.'},
-  {co:'Jedzenie, 11 dni', zl:4125, zrodlo:'Ta sama stawka co u nas: 125 zł na osobę dziennie.'},
-  {co:'Atrakcje', zl:2300, zrodlo:'Herbata KOTO 9 100 JPY (syn ma jeszcze bilet dziecięcy 6-12 lat), sumo z kolacją 48 000 JPY (od 12 lat cena dorosła), Shibuya Sky około 10 200 JPY, świątynie i bilety drobne.'},
-  {co:'Ubezpieczenie, internet, pamiątki, rezerwa', zl:2250, zrodlo:'Proporcjonalnie do naszej rezerwy 3 000 zł na cztery osoby.'},
+  {category:'hotels', co:'Abu Zabi: nocleg w pakiecie stopover', zl:0, zrodlo:'Nocleg w pakiecie z biletem. Na miejscu opłata hotelowa 15 AED za pokój za noc; przy jednym pokoju dla trzech osób to około 17 zł.'},
+  {category:'hotels', co:'Kioto: 4 noce, 29.04-3.05', zl:5845, zrodlo:'Oferta Booking sprawdzona 13.11.2026 dla 2 dorosłych i dziecka 12 lat: apartament rodzinny 40 m², bez posiłków. Cena członkowska/Genius do potwierdzenia po zalogowaniu; możliwe podatki dodatkowe. Anulowanie przed 22.04, bez płatności do 20.04. Nie zarezerwowano.'},
+  {category:'hotels', co:'Tokio: 3 noce, 3-6.05', zl:4210, zrodlo:'Oferta Booking sprawdzona 13.11.2026: apartament japoński 40 m², bez posiłków, dla trzech osób. Cena członkowska/Genius do potwierdzenia po zalogowaniu; możliwe podatki dodatkowe. Anulowanie przed 26.04, bez płatności do 24.04. Nie zarezerwowano.'},
+  {category:'hotels', co:'Hakone: 1 noc z kolacją i śniadaniem, 6-7.05', zl:3417, zrodlo:'Oferta Booking sprawdzona 13.11.2026 dla trzech osób: Japanese-Western Deluxe 47 m² z prywatną wanną, śniadaniem i kolacją. Cena członkowska/Genius do potwierdzenia po zalogowaniu; możliwe podatki dodatkowe. Anulowanie przed 3.05, bez płatności do 1.05. Nie zarezerwowano; osobny onsen kashikiri wymaga uzgodnienia.'},
+  {category:'transport', co:'Shinkansen Shinagawa-Kioto i Kioto-Tokio', zl:DP_KOLEJ.totalJPY*DP_KOLEJ.rate, zrodlo:'Kupione i opłacone 13.11.2026. Trzy taryfy dorosłe po 14 370 JPY w każdą stronę, razem 86 220 JPY po kursie 2,40 zł za 100 JPY. Syn płaci jak dorosły.'},
+  {category:'transport', co:'Pozostała kolej, metro, Hakone, taksówki', zl:2200, zrodlo:'Szacunek: Narita Express w obie strony, Hakone Free Pass i Romancecar, Nara, metro i karty IC dla trzech dorosłych taryf.'},
+  {category:'food', co:'Jedzenie, 11 dni', zl:4125, zrodlo:'Ta sama stawka co u nas: 125 zł na osobę dziennie.'},
+  {category:'attractions', co:'Atrakcje', zl:2300, zrodlo:'Herbata KOTO 9 100 JPY (syn ma jeszcze bilet dziecięcy 6-12 lat), sumo z kolacją 48 000 JPY (od 12 lat cena dorosła), Shibuya Sky około 10 200 JPY, świątynie i bilety drobne.'},
+  {category:'extras', co:'Ubezpieczenie, internet, pamiątki, rezerwa', zl:2250, zrodlo:'Proporcjonalnie do naszej rezerwy 3 000 zł na cztery osoby.'},
 ];
 
 // Decyzje do podjęcia, w kolejności. due = do kiedy decyzja ma sens (strona odlicza dni).
@@ -29,8 +29,14 @@ export const DP_DECYZJE = [
   {done:true, due:'2026-11-13', co:'Jedziemy razem: Joanna, Marcin i Tomasz', opis:'Druga rodzina dołączyła do wspólnego planu. Tomasz (12 lat podczas podróży) ma taryfę dorosłą w pociągach. Razem: czworo dorosłych i troje dzieci, siedem osób.'},
   {due:'2026-11-30', co:'Hotele w Japonii: zarezerwować z bezpłatnym anulowaniem', opis:'To Golden Week i nasze hotele mogą się wyprzedać. Wybierzcie ofertę z bezpłatnym anulowaniem i sprawdźcie termin w nowym potwierdzeniu; warunki naszej rezerwacji nie przechodzą na drugą rodzinę. Te same hotele: MIMARU Kyoto Station, MIMARU Tokyo Akasaka, Hakone Ashinoko Hanaori.'},
   {done:true, due:'2027-01-25', co:'Loty Etihad kupione 13.11.2026', opis:'Taryfa Economy Basic z nocą w Abu Zabi (stopover), trzy bilety dorosłe: 11 002,80 zł za loty i 237,48 zł opłaty za rezerwację stopoveru, razem 11 240,28 zł. Godziny wszystkich odcinków są takie same jak nasze. W taryfie Basic tylko bagaż podręczny 7 kg na osobę.'},
-  {due:'2027-01-25', co:'Pokój w Abu Zabi dla trzech osób', opis:'Przy rezerwacji stopoveru sprawdźcie, czy pokój Standard w Grand Millennium Al Wahda mieści trzy osoby, czy potrzebne są dwa pokoje.'},
+  {due:'2027-01-25', co:'Pokój w Abu Zabi dla trzech osób', opis:'Potwierdźcie voucher: właściwy hotel, liczbę pokoi, łóżka dla trzech osób oraz późne wymeldowanie 28.04. Sam zakup lotów ze stopoverem nie potwierdza tych szczegółów.'},
   {done:true, due:'2026-11-13', co:'Shinkanseny kupione: oba przejazdy dla trzech osób', opis:'SmartEX: 29.04 Nozomi 51 z Shinagawy o 16:55 do Kioto i 3.05 Nozomi 6 z Kioto o 10:01 do Tokio. Opłacono 86 220 JPY za oba odcinki, po trzy taryfy dorosłe. Miejsca i ostateczne pociągi zostaną potwierdzone 29.03 i 3.04; wtedy sprawdźcie możliwość miejsc blisko naszej czwórki.'},
-  {due:'2027-03-31', co:'Atrakcje wspólne: herbata KOTO, sumo, Shibuya Sky', opis:'Rezerwujemy razem, żeby siedem osób trafiło na tę samą sesję. Sesja wspólna KOTO ma kilkanaście miejsc, pokaz sumo około 76.'},
+  {due:'2027-03-31', co:'Atrakcje wspólne: herbata KOTO, sumo, Shibuya Sky', opis:'Rezerwujemy razem, żeby siedem osób trafiło na tę samą sesję. KOTO według FAQ zwykle mieści 10 osób w podstawowej sali; dostępność siedmiu miejsc trzeba potwierdzić. Sumo pozostaje w programie podstawowym; nie opieramy się na historycznej liczbie miejsc.'},
   {due:'2027-01-31', co:'Paszporty i ubezpieczenie', opis:'Emiraty wymagają paszportu ważnego co najmniej 6 miesięcy od wjazdu. Paszport dziecięcy ważny jest krócej niż dorosły, więc sprawdźcie datę ważności syna. Ubezpieczenie z ochroną kosztów rezygnacji warto kupić zaraz po biletach.'},
 ];
+
+// Jedno zestawienie kategorii dla strony, kalkulatora porównawczego i druku.
+export const DP_TOTALS = DP_KOSZTY.reduce((totals, item) => {
+  totals[item.category] = (totals[item.category] || 0) + item.zl;
+  return totals;
+}, {flights:DP_KUPIONE.total});

@@ -11,6 +11,8 @@ export const F = {
   'sk.cena':'50 290 JPY', 'sk.razem':'100 580 JPY', 'sk.razem.zl':'2 414 zł', 'sk.dorosly':'14 370 JPY', 'sk.dziecko':'7 180 JPY',
   // 29.04: Narita -> Shinagawa
   'nex2904.odj':'14:20',
+  // 1.05: wcześniejszy lunch dla siedmiu osób w Narze
+  'nara.lunch':'12:15',
   // 2.05: Złoty Pawilon i herbata KOTO
   'kinkakuji.start':'09:30', 'koto.start':'11:45', 'koto.sesje':'11:45, 13:00, 14:15, 15:30 i 16:45', 'koto.cena':'11 600 JPY',
   // 3.05: pokaz sumo
