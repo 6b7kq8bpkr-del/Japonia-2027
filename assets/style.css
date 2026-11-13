@@ -604,3 +604,18 @@ html.uklad-tel body{overflow:hidden}
 .budzet-tabs a{padding:.6rem 1rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ai);font-weight:600;text-decoration:none}
 .budzet-tabs a.on{background:var(--ai);border-color:var(--ai);color:var(--panel)}
 .budzet-panel[hidden]{display:none}
+
+/* Hotele jako część programu, bez eksponowania rozliczeń. */
+.hotel-highlights{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.hotel-feature{min-width:0;border-bottom:1px solid var(--line);padding-bottom:1rem}
+.hotel-feature img{width:100%;height:19rem;object-fit:cover;border-radius:var(--radius-lg)}
+.hotel-feature>div{padding:1.1rem .1rem}.hotel-feature h3,.hotel-story-title{font:500 1.6rem/1.15 var(--serif);margin:.5rem 0 1rem}.hotel-feature p{max-width:60ch}
+.hotel-perks{display:flex;flex-wrap:wrap;gap:.5rem 1rem;list-style:none;padding:0;margin:1rem 0;color:var(--ai);font-weight:600;font-size:.85rem}
+.hotel-perks li{border-bottom:2px solid var(--kin);padding-bottom:.35rem}.hotel-moment{border-left:3px solid var(--kin);padding:.3rem 1rem}
+.hcard.hotel-special{display:grid;grid-template-columns:1fr 1fr;gap:2rem;padding:1.5rem;margin:1rem 0 2rem}.hcard.hotel-special .hphoto{grid-column:1;grid-row:1;width:100%}.hcard.hotel-special .hmain{grid-column:2}.hcard.hotel-special .hphoto img{width:100%;height:24rem;object-fit:cover}.hotel-practical{margin:1rem 0}.hotel-practical summary{cursor:pointer;font-weight:600}.hotel-practical .desc{margin-top:1rem}.hcard .hphoto .note{font-size:.72rem;text-align:left}
+@media(max-width:760px){.hotel-highlights{grid-template-columns:1fr;gap:1rem}.hotel-feature img{height:15rem}.hcard.hotel-special{grid-template-columns:1fr;gap:1rem;padding:1rem}.hcard.hotel-special .hmain{grid-column:1;grid-row:2}.hcard.hotel-special .hphoto img{height:16rem}}
+@media print{.hotel-highlights{display:block}.hotel-feature{break-inside:avoid}.hotel-feature img{height:10rem}}
+/* Dodatkowa zakładka nie rozszerza dokumentu poza ekran. */
+.topbar .navrow{max-width:100%;box-sizing:border-box}
+.topbar .brand{flex-shrink:0}.topbar .tabs{min-width:0;overflow-x:auto;flex-shrink:1}.topbar .tabs a{flex-shrink:0}
+@media(min-width:701px){.topbar .navrow{max-width:76rem}.topbar .tabs{flex:1 1 auto}.topbar .uklad{margin-left:0}}

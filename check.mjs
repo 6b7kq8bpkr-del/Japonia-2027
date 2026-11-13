@@ -14,6 +14,7 @@ for(const f of files){
   for(const m of body.matchAll(/(?:href|src)="([^"]+)"/g)){
     if(/^(https?:|data:|mailto:|tel:|\/\/)/.test(m[1])) continue;
     const [path,anchor]=m[1].split('#'),h=path.split('?')[0];
+    if(h==='/api/rezerwacje') continue; // Dynamic authenticated endpoint tested separately.
     const t=!h?join(DIR,f):h.startsWith('/')?join(DIR,h):resolve(join(DIR,dirname(f)),h);
     if(!existsSync(t)) errs.push(`${f}: brak pliku ${h}`);
     else if(anchor&&t.endsWith('.html')&&!new RegExp(`id="${esc(anchor)}"`).test(readFileSync(t,'utf8'))) errs.push(`${f}: brak kotwicy #${anchor} w ${h||f}`);
@@ -61,11 +62,8 @@ const calc=JSON.parse(src.match(/const CALC = (\{[^}]*\})/)[1].replace(/(\w+):/g
 if(DAYS.filter(d=>d.stay&&d.stay!=='auh').length!==calc.nights) errs.push('Liczba nocy w Japonii nie zgadza się z kalkulatorem');
 const ticket=+src.match(/const TICKET = \{[^}]*total:(\d+(?:\.\d+)?)/)[1];
 const sum=ticket+calc.nights*calc.nightRate+calc.transport+calc.days*calc.foodRate+calc.attractions+calc.extras, k=Math.round(sum/1000);
-if(!readFileSync(join(DIR,'index.html'),'utf8').includes(`<b>~${k}<small>tys zł</small></b>`)) errs.push(`index: budżet w nagłówku ≠ ~${k} tys. (suma ${sum} zł)`);
 const {DP_TOTALS}=await import('./data/druga-para.mjs');
 const groupSum=sum+Object.values(DP_TOTALS).reduce((total,n)=>total+n,0);
-if(!readFileSync(join(DIR,'druk.html'),'utf8').includes(`<b>~${Math.round(groupSum/1000)}<i>tys. zł</i></b>`)) errs.push('druk: niezgodny budżet grupy');
-if(!readFileSync(join(DIR,'index.html'),'utf8').includes(`~${k} tys. zł`)) errs.push(`index: lista „Budżet” ≠ ~${k} tys.`);
 // Kategorie obu rodzin muszą dawać te same sumy w zestawieniu i wydruku.
 const {DP_KOSZTY,DP_KUPIONE,DP_KOLEJ}=await import('./data/druga-para.mjs');
 const categories=['flights','hotels','transport','food','attractions','extras'];
@@ -74,9 +72,9 @@ const second=DP_KUPIONE.total+DP_KOSZTY.reduce((n,item)=>n+item.zl,0);
 if(Math.abs(second-Object.values(DP_TOTALS).reduce((n,v)=>n+v,0))>0.01) errs.push('Budżet drugiej rodziny: błędna suma kategorii');
 if(DP_KOSZTY.filter(item=>item.co.startsWith('Shinkansen')).length!==1 || DP_KOLEJ.totalJPY!==2*DP_KOLEJ.perTripJPY) errs.push('Shinkanseny drugiej rodziny: zdublowanie lub niezgodne odcinki');
 const money=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';
-for(const f of ['koszty.html','druga-para.html','druk.html']){
+for(const f of ['index.html','druga-para.html','druk.html']) {
  const html=readFileSync(join(DIR,f),'utf8');
- for(const value of [sum,second,groupSum]) if(!html.includes(money(value))) errs.push(`${f}: niezgodna suma rodziny/grupy`);
+ if(/Łączny budżet|budżet siedmiu osób|data-our-budget|group-our-total/.test(html)) errs.push(`${f}: publiczne porównanie budżetów`);
 }
 if(errs.length){console.error(`CHECK: ${errs.length} problem(ów)`);errs.forEach(e=>console.error(' - '+e));process.exit(1);}
 console.log(`CHECK OK: ${files.length} stron, budżet ~${k} tys. zł (${sum} zł)`);

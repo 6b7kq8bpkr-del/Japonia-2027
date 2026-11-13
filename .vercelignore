@@ -21,3 +21,5 @@ deploy.sh
 
 # Duplikaty tworzone przez Findera/iCloud (np. "index 2.html") — nie publikować
 * 2.*
+
+test-private.cjs

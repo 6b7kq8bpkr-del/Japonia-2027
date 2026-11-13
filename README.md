@@ -46,3 +46,6 @@ Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie
 - Nazwiska i numery nowych rezerwacji tylko w `private/rezerwacje.md`, poza git i Vercel.
 
 - Audyt grupy 13.11.2026: wspólny budżet kategorii (`OUR_TOTALS`, `DP_TOTALS`) zasila stronę i druk. Kalkulator zmienia kolumnę naszej rodziny, druk zachowuje budżet bazowy. Oferty hoteli drugiej rodziny są warunkowe (Booking/Genius), nie są potwierdzeniami.
+
+## Prywatna zakładka rezerwacji
+`rezerwacje.html` to publiczny formularz bez danych. POST `/api/rezerwacje` sprawdza hasło po stronie serwera (scrypt); zwraca dane wyłącznie przy poprawnym haśle. Brak sesji: każde otwarcie wymaga hasła, które można zachować w menedżerze haseł. GET nigdy nie udostępnia danych; odpowiedzi mają no-store i restrykcyjne CSP. Dane i hash hasła są w zmiennych Vercel `RESERVATIONS_DATA` i `RESERVATIONS_PASSWORD_HASH`. Lokalne źródło: `private/reservations.json`, hasło: `private/dostep-rezerwacje.txt` - oba poza git i wdrożeniem. Nie publikować PIN-ów ani danych karty. `private/rezerwacje.md` pozostaje historyczną notatką; aktualne potwierdzenia obu rodzin w JSON. `node test-private.cjs` sprawdza autoryzację i wycieki.

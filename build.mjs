@@ -50,7 +50,7 @@ function budgetTable(){
   return `<table class="rhythm booking-budget"><thead><tr><th>Kategoria</th><th>Nasza czwórka</th><th>Joanna, Marcin i Tomasz</th></tr></thead><tbody>${Object.entries(labels).map(([key,label])=>`<tr><td>${label}</td><td data-our-budget="${key}">${plz(OUR_TOTALS[key])}</td><td>${plz(DP_TOTALS[key])}</td></tr>`).join('')}<tr class="tot"><td>Cały wyjazd - budżet</td><td id="group-our-total">${plz(sumBudget(OUR_TOTALS))}</td><td>${plz(sumBudget(DP_TOTALS))}</td></tr></tbody></table>`;
 }
 function groupBookings(){
-  return `<section id="dwie-rodziny"><h2 class="stitle">Dwie rodziny: rezerwacje i budżet</h2><p class="lead-p">Siedem osób: czworo dorosłych i troje dzieci. Na kolej: łącznie 6 taryf dorosłych i 1 dziecięca.</p><div class="card" style="overflow-x:auto">${budgetTable()}<p><b>Łączny budżet siedmiu osób: <span id="group-total">${plz(GROUP_TOTAL)}</span>.</b> <span id="group-scenario">Budżet bazowy z 13.11.2026.</span> Zestawienie obejmuje cały wyjazd, nie tylko zapłacone rachunki.</p><p>${BUDGET_NOTE}</p><p>Shinkanseny: nasza czwórka {{sk.razem}}, druga rodzina 86 220 JPY. Obie kwoty są już zawarte w kategorii transportu. Nie doliczajcie ponownie wspólnych przejazdów ani kolacji opłaconych w pakiecie sumo i Hanaori; wyżywienie pozostaje ogólną pulą z zapasem. Kashikiri i podatki pokrywa rezerwa do czasu potwierdzenia wyceny.</p><p>Transfer dla siedmiu osób wymaga nowej wyceny. Jedną fakturę za wspólnego vana rozliczamy między rodziny; nie przypisujemy jej w całości obu rodzinom. Budżety transportu pozostają pulami, nie potwierdzonymi ofertami.</p><p>Wspólne przejazdy: 29.04 Nozomi 51, Shinagawa {{n51.odj}} → Kioto {{n51.przyj}}; 3.05 Nozomi 6, Kioto {{n6.odj}} → Tokio {{n6.przyj}}. Miejsca i ostateczny rozkład zostaną potwierdzone 29.03 i 3.04. Priorytetem jest ten sam pociąg, wspólny wagon w miarę dostępności.</p><p><b>Jak podróżujemy:</b> ${GROUP_RULE}</p><p>NEX, Romancecar, Odawara-Shinagawa, pokoje drugiej rodziny oraz atrakcje wymagają osobnego domknięcia. Stopover drugiej rodziny: hotel, liczba pokoi i późne wymeldowanie do potwierdzenia z vouchera.</p></div></section>`;
+  return `<section id="dwie-rodziny"><h2 class="stitle">Podróżujemy razem</h2><p class="lead-p">Siedem osób, wspólny plan i przestrzeń na własne tempo.</p><div class="card"><p>${GROUP_RULE}</p><p>Loty, oba długie shinkanseny oraz hotele w Kioto, Tokio i Hakone są zarezerwowane dla obu rodzin. Rezerwacje kolejowe są osobne; wspólny wagon zależy od dostępności.</p><p>Do domknięcia pozostają atrakcje, krótsze przejazdy i transfer dla siedmiu osób. Szczegółowe potwierdzenia i rozliczenia są w <a href="rezerwacje.html">prywatnej zakładce rezerwacji</a>.</p></div></section>`;
 }
 /* Style i skrypty są zwykłymi plikami w src/ (bez szablonów, więc bez podwajania ukośników). */
 fs.copyFileSync(DIR + '/src/style.css', DIR + '/assets/style.css');
@@ -140,7 +140,7 @@ const ITEM_LABEL = {lot:'Lot z biletu',zarezerwowane:'Zarezerwowane',rezerwacja:
 const TIMING_NOTE = 'Wszystkie godziny są miejscowe. Loty według e-biletów; pozostałe godziny to plan do dopasowania do rozkładów i rezerwacji. „Do potwierdzenia” nie oznacza kupionego biletu. „Zarezerwowane” oznacza przyjętą rezerwację; numer pociągu i miejsca mogą być jeszcze wstępne.';
 
 /* ============================ TEMPLATES ============================ */
-const TABS = [['index.html','Agenda'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['niezbednik.html','Niezbędnik'],['pogoda.html','Przed wyjazdem'],['koszty.html','Koszty'],['decyzje.html','Kulisy'],['druga-para.html','Druga rodzina']];
+const TABS = [['index.html','Agenda'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['niezbednik.html','Niezbędnik'],['pogoda.html','Przed wyjazdem'],['koszty.html','Koszty'],['decyzje.html','Kulisy'],['druga-para.html','Druga rodzina'],['rezerwacje.html','Rezerwacje 🔒']];
 function nav(active,prefix){
   const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on" aria-current="page"':'')}>${l}</a>`).join('');
   return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html"><span class="bj" aria-hidden="true">日本</span>Japonia 2027<span class="bcode">27.04–08.05</span></a><nav class="tabs">${t}</nav><div class="uklad" role="group" aria-label="Układ strony"><button type="button" data-u="tel" aria-pressed="false">Telefon</button><button type="button" data-u="pc" aria-pressed="false">Komputer</button></div></div></div>`;
@@ -261,8 +261,15 @@ function deadlineList(prefix=''){
   return '<ol class="deadlines">'+DEADLINES.map(d=>'<li data-date="'+d.date+'"><time datetime="'+d.date+'">'+d.label+'<em class="due" data-due="'+d.date+'"></em></time><div><a href="'+prefix+d.href+'"><b>'+d.title+'</b></a><p>'+d.text+'</p></div></li>').join('')+'</ol>';
 }
 function readiness(){
-  return '<div class="readiness"><b>Loty i dwa shinkanseny kupione dla obu rodzin; noclegi potwierdzone dla naszej czwórki</b><p>Do domknięcia: hotele i voucher stopover drugiej rodziny, miejsca w pociągach, bilety na atrakcje oraz dojazd z Hakone dla siedmiu osób. Potwierdzenia hoteli z 8.09 wskazują płatność na później.</p><a href="decyzje.html#do-zalatwienia">Sprawdź listę do załatwienia →</a> · <a href="#terminy">Terminy i pogoda</a></div>';
+  return '<div class="readiness"><b>Loty i dwa shinkanseny kupione dla obu rodzin; noclegi potwierdzone dla obu rodzin</b><p>Do domknięcia: voucher stopover drugiej rodziny, miejsca w pociągach, bilety na atrakcje oraz dojazd z Hakone dla siedmiu osób. Potwierdzenia hoteli z 8.09 wskazują płatność na później.</p><a href="decyzje.html#do-zalatwienia">Sprawdź listę do załatwienia →</a> · <a href="#terminy">Terminy i pogoda</a></div>';
 }
+const HOTEL_STORY = {
+ auh:{title:'Pierwszy wieczór w pięciogwiazdkowym Abu Zabi',text:'Grand Millennium Al Wahda daje nam wygodny początek podróży: hotelowy basen na dachu, restauracje i połączenie z Al Wahda Mall. Po locie odpoczynek, a następnego dnia czas na miasto.',perks:['Basen na dachu','5 gwiazdek','Al Wahda Mall tuż obok'],img:'auh-hotel.jpg',caption:'Zdjęcie promocyjne hotelu: przykładowe wnętrze, nie potwierdzenie standardu naszych pokoi.',moment:'Wieczorem spokojna kolacja i sen. Basen najlepiej rozważyć następnego dnia, zależnie od planu i godzin otwarcia.'},
+ kioto:{title:'Własny apartament w sercu podróży',text:'Cztery noce w MIMARU Kyoto Station oznaczają mniej pakowania i wygodną bazę przy dworcu. Kuchnia pozwala zjeść śniadanie we własnym tempie, a rodzinny układ pokoju daje miejsce na odpoczynek po Kiocie i Narze.',perks:['Rodzinny apartament','Własna kuchnia','Przy dworcu Kyoto'],img:'kioto.webp',caption:'MIMARU Kyoto Station - zdjęcie obiektu.',moment:'Wracamy na przerwę bez poczucia, że trzeba wykorzystać każdą godzinę na zwiedzanie.'},
+ tokio1:{title:'Odrobina japońskiego domu w Tokio',text:'W MIMARU Tokyo Akasaka mamy apartament z łóżkami i futonami oraz własną kuchnią. To miejsce na spokojne poranki, oddech między dzielnicami i przygotowanie urodzinowego wieczoru Marcela.',perks:['Łóżka i futony','Własna kuchnia','Baza w Akasace'],img:'tokio1.webp',caption:'MIMARU Tokyo Akasaka - zdjęcie obiektu.',moment:'Po powrocie z miasta zostawiamy czas na odpoczynek. Nie każdy wieczór musi kończyć się kolejną atrakcją.'},
+ hakone:{title:'Finał nad jeziorem, z prywatną kąpielą',text:'Hanaori to nasz wieczór wśród gór: lobby i taras z widokiem na jezioro Ashi, pokój Deluxe z prywatną wanną na świeżym powietrzu oraz kolacja i śniadanie w bufecie. Warto dotrzeć wcześniej i nacieszyć się samym hotelem.',perks:['Taras nad jeziorem','Prywatna wanna','Kolacja i śniadanie'],img:'hanaori-terrace.jpg',caption:'Lobby i taras Hanaori - oficjalne zdjęcie hotelu. Widok nie dotyczy konkretnego pokoju.',moment:'Chronimy popołudnie od około 15:00: meldunek, taras, kąpiel i kolacja. Wanna przy pokoju nie ma wody termalnej; prywatny onsen jest osobną opcją do rezerwacji.'}
+};
+function hotelHighlights(){return `<section id="hotelowe-chwile"><p class="eyebrow">Dwa wyjątkowe przystanki</p><h2 class="stitle">Tak zaczynamy. Tak odpoczywamy na koniec.</h2><div class="hotel-highlights">${['auh','hakone'].map(id=>{const h=HOTEL_STORY[id];return `<article class="hotel-feature"><a href="hotele.html#${id}"><img src="assets/img/hotels/${h.img}" alt="${id==='auh'?'Przykładowe wnętrze Grand Millennium Al Wahda':'Lobby Hanaori z widokiem na jezioro Ashi'}" width="1280" height="568" loading="lazy"></a><div><p class="eyebrow">${id==='auh'?'27 kwietnia · Abu Zabi':'6 maja · Hakone'}</p><h3>${h.title}</h3><p>${h.text}</p><ul class="hotel-perks">${h.perks.map(x=>`<li>${x}</li>`).join('')}</ul><a href="hotele.html#${id}">Poznaj hotel →</a><p class="note">${h.caption}</p></div></article>`;}).join('')}</div></section>`;}
 /* ---- index ---- */
 function indexPage(){
   const intLbl={g:'Lekki',y:'Średni',r:'Intensywny'};
@@ -284,7 +291,7 @@ function indexPage(){
       <a class="line" href="pogoda.html"><b>Przed wyjazdem</b><span>Klimat na przełomie kwietnia i maja, plan pakowania na 7 kg, plany B na deszcz.</span></a>
       <a class="line" href="pokaz.html"><b>Pokaz na duży ekran</b><span>Slajd na każdy dzień, pytania do znajomych i miejsce na ich uwagi. Na projektor albo telewizor.</span></a>
       <a class="line" href="druk.html"><b>Przewodnik do druku</b><span>Cały plan na kartkach — do wydruku albo offline na telefon.</span></a>
-      <a class="line" href="koszty.html"><b>Budżet</b><span>Kalkulator kosztów i zweryfikowane taryfy kolejowe — ~${BUDGET_K} tys. zł.</span></a>
+      <a class="line" href="rezerwacje.html"><b>Rezerwacje prywatne</b><span>Potwierdzenia i rozliczenia dostępne po podaniu hasła.</span></a>
       <a class="line" href="decyzje.html"><b>Kulisy planu</b><span>Co jeszcze załatwić, dlaczego taka trasa i jak zmienić dzień bez pośpiechu.</span></a>
   </div>`;
   const inner = `
@@ -309,11 +316,11 @@ function indexPage(){
     <div class="stt"><b>11</b><span>dni programu</span></div>
     <div class="stt"><b>3</b><span>bazy w Japonii</span></div>
     <div class="stt"><b>8</b><span>nocy w Japonii</span></div>
-    <div class="stt"><b>~${BUDGET_K}<small>tys zł</small></b><span>budżet 2+2</span></div>
+    <div class="stt"><b>7</b><span>osób we wspólnej podróży</span></div>
   </section>
 
   ${readiness()}
-  <nav class="section-nav" aria-label="Skróty agendy"><a href="#dni">Dni</a><a href="#trasa">Mapa Japonii</a><a href="#terminy">Terminy</a><a href="druk.html">Druk / PDF</a></nav>
+  <nav class="section-nav" aria-label="Skróty agendy"><a href="#dni">Dni</a><a href="#trasa">Mapa Japonii</a><a href="#hotelowe-chwile">Hotele</a><a href="#terminy">Terminy</a><a href="druk.html">Druk / PDF</a></nav>
   <section id="dni">
     <h2 class="stitle">Dzień po dniu</h2>
     <p class="lead-p">Każdy dzień zaczyna się krótkim podsumowaniem: po co jedziemy, co chronimy i co można odpuścić. Dalej są godziny, mapa, nocleg i plan B. W Golden Week rezerwacje wymagają wyprzedzenia; oba duże przejazdy kolejowe wypadają w tym okresie.</p>
@@ -321,6 +328,7 @@ function indexPage(){
     <p class="note" style="margin-top:0.75rem">Znacznik przy wierszu to obciążenie dnia: <b style="color:var(--success)">●</b> lekki · <b style="color:var(--warn)">●</b> średni · <b style="color:var(--hanko)">●</b> intensywny. Zaplecze planu: <a href="decyzje.html">Kulisy</a>.</p>
   </section>
 
+  ${hotelHighlights()}
   <section id="trasa">
     <h2 class="stitle">Nasza trasa po Japonii</h2>
     <p class="lead-p">Cała podróż na jednej mapie: z Narity shinkansenem do Kioto (cztery noce), 1.05 wycieczka do Nary i powrót do tej samej bazy, potem Tokio (trzy noce), Hakone i lotnisko. 2.05 w Kioto: Złoty Pawilon i herbata KOTO. Osaka i Arashiyama pozostają alternatywami, nie dodatkowymi dniami. Abu Zabi jest poza tą mapą.</p>
@@ -361,12 +369,12 @@ function kosztyPage(){
     <div class="hbg"><div class="hbg-img" style="background:linear-gradient(135deg,#122740,#2f6d4f)"></div></div>
     <div class="hero-inner">
     <p class="eyebrow">Bilety lotnicze i budżet</p>
-    <h1>Bilety i koszty</h1>
-    <p class="lead">Loty i długie shinkanseny są kupione dla obu rodzin. Hotele w Japonii są potwierdzone tylko dla naszej czwórki. Poniżej oddzielamy kwoty z dokumentów od szacunków: e-bilety {{bilety.suma}}, hotele w Japonii 500 443 JPY przed dodatkowymi podatkami. Budżet w złotych pozostaje orientacyjny.</p>
+    <h1>Planowanie wydatków</h1>
+    <p class="lead">Loty i długie shinkanseny są kupione dla obu rodzin. Hotele w Japonii są potwierdzone dla obu rodzin. Poniżej oddzielamy kwoty z dokumentów od szacunków: e-bilety {{bilety.suma}}, hotele w Japonii 500 443 JPY przed dodatkowymi podatkami. Budżet w złotych pozostaje orientacyjny.</p>
   </div>
   </header>
 
-  <nav class="budzet-tabs" aria-label="Budżet rodziny"><a href="#budzet-nasza" data-panel="budzet-nasza">Nasza czwórka</a><a href="#budzet-druga" data-panel="budzet-druga">Joanna, Marcin i Tomasz</a><a href="#budzet-razem" data-panel="budzet-razem">Razem, 7 osób</a></nav>
+
   <div class="budzet-panel" id="budzet-nasza">
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
@@ -423,13 +431,7 @@ function kosztyPage(){
     </div>
   </section>
   </div>
-  <div class="budzet-panel" id="budzet-druga">
-  <section><h2 class="stitle">Budżet: Joanna, Marcin i Tomasz</h2><p class="lead-p">Trzy osoby, w kolei trzy taryfy dorosłe. Loty i dwa shinkanseny są kupione; pozostałe pozycje to szacunki, nie rezerwacje. Szczegóły decyzji drugiej rodziny są w zakładce <a href="druga-para.html">Druga rodzina</a>.</p>
-  ${dpCostsCard()}</section>
-  </div>
-  <div class="budzet-panel" id="budzet-razem">
-  ${groupBookings()}
-  </div>
+  <p><a href="rezerwacje.html">Prywatne potwierdzenia i rozliczenia obu rodzin →</a></p>
   ${footer('')}
   <script>
   (function(){
@@ -466,9 +468,9 @@ function kosztyPage(){
       var total=num("flights")+hotel+num("transport")+food+num("attractions")+num("extras");
       var amounts={flights:num("flights"),hotels:hotel,transport:num("transport"),food:food,attractions:num("attractions"),extras:num("extras")};
       document.querySelectorAll("[data-our-budget]").forEach(function(cell){cell.textContent=fmt(amounts[cell.dataset.ourBudget]);});
-      document.getElementById("group-our-total").textContent=fmt(total);
-      document.getElementById("group-total").textContent=fmt(total+${sumBudget(DP_TOTALS)});
-      document.getElementById("group-scenario").textContent=ids.some(function(id){return Math.abs(num(id)-D[id])>0.001;})?"Scenariusz z kalkulatora naszej rodziny; budżet drugiej rodziny bez zmian.":"Budżet bazowy z 13.11.2026.";
+      if(document.getElementById("group-our-total")) document.getElementById("group-our-total").textContent=fmt(total);
+      if(document.getElementById("group-total")) document.getElementById("group-total").textContent=fmt(total+${sumBudget(DP_TOTALS)});
+      if(document.getElementById("group-scenario")) document.getElementById("group-scenario").textContent=ids.some(function(id){return Math.abs(num(id)-D[id])>0.001;})?"Scenariusz z kalkulatora naszej rodziny; budżet drugiej rodziny bez zmian.":"Budżet bazowy z 13.11.2026.";
       document.getElementById("total").textContent=fmt(total);
       document.getElementById("perPerson").textContent=fmt(total/4);
       document.getElementById("perDay").textContent=fmt(total/(num("days")||1));
@@ -494,18 +496,18 @@ function kosztyPage(){
 /* ---- hotele ---- */
 function hotelePage(){
   const cards = HOTELS.map(H=>`
-    <div class="hcard" id="${H.id}">
+    <div class="hcard ${['auh','hakone'].includes(H.id)?'hotel-special':''}" id="${H.id}">
       <div class="hmain">
         <div class="hstay">${H.stay}</div>
         <h3>${H.name}</h3>
-        <p class="desc">${H.desc}</p>
-        <div class="meta"><span>💴 <b>${H.price}</b></span><span>📍 ${H.near}</span></div><p class="booking-deadline"><b>Anulowanie:</b> ${H.cancel}</p>
+        <h4 class="hotel-story-title">${HOTEL_STORY[H.id].title}</h4><p class="desc">${HOTEL_STORY[H.id].text}</p><ul class="hotel-perks">${HOTEL_STORY[H.id].perks.map(x=>`<li>${x}</li>`).join('')}</ul><p class="hotel-moment">${HOTEL_STORY[H.id].moment}</p><details class="hotel-practical"><summary>Pokój, meldunek i ważne ustalenia</summary><p class="desc">${H.desc}</p></details>
+        <div class="meta"><span>📍 ${H.near}</span></div><p class="booking-deadline"><b>Anulowanie:</b> ${H.cancel}</p>
         ${H.jp?`<div class="jpaddr"><span lang="ja">${H.jp}</span><button type="button" class="jpcopy" data-addr="${H.jp}" title="Skopiuj adres">Kopiuj</button></div>`:''}
         <div class="links"><a href="${gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a>${H.book?`<a href="${H.book}" target="_blank" rel="noopener">Rezerwacja na Booking →</a>`:''}</div>
       </div>
       <a class="hphoto" href="${gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">
-        <img src="assets/img/hotels/${H.img||H.id+'.webp'}" alt="${H.name}" loading="lazy">
-        <span class="plab">📍 Zobacz w Google Maps →</span>
+        <img src="assets/img/hotels/${HOTEL_STORY[H.id].img}" alt="${H.name}" loading="lazy">
+        <span class="plab">📍 Zobacz w Google Maps →</span><span class="note">${HOTEL_STORY[H.id].caption}</span>
       </a>
     </div>`).join('');
   const HOTELGEO=[
@@ -515,13 +517,14 @@ function hotelePage(){
   ];
   const inner=`
   <header class="hero kb">
-    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(18,39,64,.40)),url('${IMG.tokyostation}') center/cover"></div></div>
+    <div class="hbg"><div class="hbg-img" style="background:linear-gradient(120deg,rgba(27,58,107,.58),rgba(18,39,64,.40)),url('/assets/img/hotels/hanaori-terrace.jpg') center/cover"></div></div>
     <div class="hero-inner">
     <p class="eyebrow">Noclegi · 8 nocy w Japonii + noc w Abu Zabi · 4 obiekty · chronologicznie</p>
-    <h1>Hotele</h1>
-    <p class="lead">Potwierdzone pokoje dotyczą naszej rodziny 2+2. Druga rodzina (Joanna, Marcin i Tomasz) potrzebuje osobnych rezerwacji; ceny, dostępność i terminy anulowania sprawdzamy niezależnie. Trzy bazy: aparthotele MIMARU z kuchnią i wspólnymi pralniami samoobsługowymi oraz ryokan nad jeziorem Ashi na jedną górską noc. Cztery pierwsze noce w jednym apartamencie w Kiocie, potem trzy w Tokio.</p>
+    <h1>Miejsca, do których chce się wracać</h1>
+    <p class="lead">Pięciogwiazdkowy początek w Abu Zabi, rodzinne apartamenty w Kiocie i Tokio, a na finał jezioro, góry i prywatna kąpiel w Hanaori. Każda baza ma własny charakter i daje nam czas na bycie razem.</p>
   </div>
   </header>
+  <nav class="section-nav" aria-label="Hotele"><a href="#auh">Abu Zabi</a><a href="#kioto">Kioto</a><a href="#tokio1">Tokio</a><a href="#hakone">Finał w Hakone</a></nav><p class="note">Hotele w Japonii są zarezerwowane dla obu rodzin. Szczegóły stopoveru Bednarków wymagają potwierdzenia z ich vouchera.</p>
   <section>
     <div class="hlist">${cards}</div>
   </section>
@@ -538,11 +541,12 @@ function hotelePage(){
     <div class="card"><ul class="tips">
       <li><b>Rezerwacje są potwierdzone.</b> Przy ewentualnej zmianie najpierw sprawdźcie dostępność nowego pokoju dla czterech osób i oba terminy anulowania. Pobyt w Kiocie wypada podczas Golden Week.</li>
       <li>Ryokan w Hakone: Hanaori nad jeziorem Ashi, pokój Deluxe dla 4 osób z prywatną wanną bez wody termalnej, kolacją i śniadaniem. Rodzinny onsen jest osobną, niezarezerwowaną opcją. Bezpłatne anulowanie tylko do 2.05.2027, 23:59 JST.</li>
-      <li>Potwierdzenia trzech hoteli z 8.09 podają łącznie <b>500 443 JPY i zapłacono 0 JPY</b>. Około 12 tys. zł to przeliczenie planistyczne, nie ostateczny rachunek. Podatki miejscowe i kurs płatności mogą zmienić koszt. <b>Terminy bezpłatnego anulowania są różne</b> i widoczne przy każdym hotelu.</li>
+      <li>Numery potwierdzeń, płatności i rozliczenia: <a href="rezerwacje.html">zakładka prywatna</a>. Terminy anulowania sprawdzajcie dla własnej rodziny.</li>
       
       <li>Adresy dla taksówkarza najlepiej pokazywać z Google Maps po japońsku — kliknięcie zdjęcia hotelu otwiera właściwe miejsce od razu.</li>
     </ul></div>
   </section>
+  <p class="note">Opisy udogodnień sprawdzone 13.11.2026 na oficjalnych stronach <a href="https://www.millenniumhotels.com/en/abu-dhabi/grand-millennium-al-wahda/">Grand Millennium</a> i <a href="https://ashinoko-hanaori.orixhotelsandresorts.com/contents/lobby/">Hanaori</a>. Zdjęcia obu obiektów: materiały promocyjne hoteli. Spa i dodatkowe usługi nie są automatycznie objęte rezerwacją.</p>
   ${footer('')}`;
   return shell({title:'Hotele · Japonia 2027',desc:'Noclegi wyjazdu do Japonii: aparthotele rodzinne i ryokan, z linkami do Google Maps.',prefix:'',active:'hotele.html',inner,pillsIdx:null});
 }
@@ -636,22 +640,11 @@ function drugaParaPage(){
   const inner=`
   <header class="hero kb"><div class="hbg"><div class="hbg-img" style="background:${heroBg('kioto',IMG.fushimi)}"></div></div>
     <div class="hero-inner"><p class="eyebrow">Dwoje dorosłych i syn · 12 lat w czasie wyjazdu · te same daty</p><h1>Joanna, Marcin i Tomasz</h1>
-    <p class="lead">${DP_KUPIONE?'Bilety Etihad są kupione, więc codzienne sprawdzanie cen zakończyliśmy. Niżej':'Loty Etihad na nasze daty sprawdzamy codziennie rano. Niżej'} ten sam kalendarz co nasz, koszty dla trzech osób i pozostałe rezerwacje do domknięcia. Loty oraz oba długie przejazdy kolejowe są już kupione.</p></div></header>
-  <section id="loty"><h2 class="stitle">${DP_KUPIONE?'Loty Etihad: kupione':'Loty Etihad: cena dziś'}</h2>${DP_KUPIONE?`<div class="dayflag"><b>Kupione ${dpl(DP_KUPIONE.date)} za ${DP_KUPIONE.zl}</b> (trzy bilety dorosłe z nocą w Abu Zabi). Monitoring cen zakończony; wykres poniżej to archiwum odczytów. ${DP_KUPIONE.godziny?DP_KUPIONE.godziny:'Godziny lotów porównamy z naszymi po otrzymaniu e-biletów.'}</div>`:''}
-    <div class="dpprice"><div class="dpbig"><span>${DP_KUPIONE?'Ostatni odczyt przed zakupem':'Trzy bilety w obie strony'}</span><b>${plz(last.total)}</b><i>${plz(Math.round(last.total/3))} za osobę · ${trend}</i></div>
-      <div class="dpmeta"><div><span>Ostatnia kontrola</span><b>${dpl(last.date)}</b></div><div><span>Najniżej dotąd</span><b>${plz(min.total)}</b><i>${dpl(min.date)}</i></div><div><span>Odczytów</span><b>${CENY.length}</b></div></div></div>
-    <div class="card">${chart}<p class="note">Cena z Google Flights dla trzech dorosłych, Etihad, wylot 27.04 i powrót 7.05, z podatkami i opłatami. Syn w dniu wylotu ma 12 lat, a Etihad stosuje taryfę dziecięcą tylko do 11 lat, więc wszystkie trzy bilety są dorosłe. Google wycenia wariant z dwugodzinną przesiadką w Abu Zabi; nasz układ z nocą w hotelu rezerwuje się na etihad.com jako stopover i trzeba go wycenić tam.</p>
-      <div class="linklist"><a href="${DP_SZUKAJ}" target="_blank" rel="noopener">To wyszukiwanie w Google Flights ↗</a><a href="${DP_STOPOVER}" target="_blank" rel="noopener">Stopover na etihad.com ↗</a></div></div>
-    <details class="more card dphist"><summary>Historia odczytów</summary><div style="overflow-x:auto"><table class="rhythm booking-budget"><thead><tr><th>Dzień</th><th class="num">3 osoby</th><th class="num">Za osobę</th><th>Uwagi</th></tr></thead><tbody>${hist}</tbody></table></div></details>
-  </section>
+    <p class="lead">${DP_KUPIONE?'Bilety Etihad są kupione, więc codzienne sprawdzanie cen zakończyliśmy. Niżej':'Loty Etihad na nasze daty sprawdzamy codziennie rano. Niżej'} ten sam kalendarz co nasz, informacje praktyczne i pozostałe rezerwacje do domknięcia. Loty oraz oba długie przejazdy kolejowe są już kupione.</p></div></header>
+  <section id="loty"><h2 class="stitle">Loty i przejazdy potwierdzone</h2><p>Spotykamy się na tej samej trasie. Potwierdzenia są w prywatnej zakładce rezerwacji.</p></section>
   ${groupBookings()}
-  <section id="kalendarz"><h2 class="stitle">Ten sam kalendarz co nasz</h2><p class="lead-p">Wspólne loty, pociągi i program dla siedmiu osób. Hotele poniżej to proponowane bazy drugiej rodziny, jeszcze bez potwierdzenia jej pokoi. Kliknij dzień, żeby zobaczyć plan godzinowy.</p><div class="dpcal">${cal}</div></section>
-  <section id="koszty"><h2 class="stitle">Pozostałe koszty dla trzech osób</h2><p class="lead-p">Loty i dwa shinkanseny są kupione. Pozostałe pozycje to budżet, nie potwierdzenie rezerwacji. Wartość kolei w PLN jest przeliczeniem planistycznym; rzeczywiste obciążenie w złotych sprawdźcie w banku.</p>
-    <div class="card"><div style="overflow-x:auto"><table class="rhythm booking-budget"><tbody>
-      <tr><td><b>Loty Etihad</b><span class="hint">${DP_KUPIONE?'Kupione: 11 002,80 zł za loty i 237,48 zł opłaty za stopover, z noclegiem w Abu Zabi.':'Ostatni odczyt z monitora, bez dopłat za bagaż rejestrowany.'}</span></td><td class="num">${DP_KUPIONE?DP_KUPIONE.zl:plz(last.total)}</td></tr>
-      ${rows}
-      <tr class="tot"><td>Razem, szacunkowo</td><td class="num">~${plz(total)}</td></tr></tbody></table></div>
-    <p class="note">Kurs planistyczny 2,40 zł za 100 JPY. Ceny atrakcji według cenników z listopada 2026.</p></div></section>
+  <section id="kalendarz"><h2 class="stitle">Ten sam kalendarz co nasz</h2><p class="lead-p">Wspólne loty, pociągi i program dla siedmiu osób. Hotele w Kioto, Tokio i Hakone są już zarezerwowane dla obu rodzin. Kliknij dzień, żeby zobaczyć plan godzinowy.</p><div class="dpcal">${cal}</div></section>
+  <section id="koszty"><h2 class="stitle">Potwierdzenia podróży</h2><p><a href="rezerwacje.html">Otwórz prywatne rezerwacje i rozliczenia</a>.</p></section>
   <section id="decyzje"><h2 class="stitle">Decyzje do podjęcia</h2><p class="lead-p">W kolejności terminów. Strona odlicza, ile zostało czasu.</p><ol class="deadlines dpdec">${dec}</ol></section>
   ${footer('')}`;
   return shell({title:'Druga rodzina · Japonia 2027',desc:'Kupione loty i pociągi drugiej rodziny, wspólna agenda i pozostałe koszty.',prefix:'',active:'druga-para.html',inner,pillsIdx:null});
@@ -739,7 +732,7 @@ function drukPage(){
     </section>`;
   }).join('');
 
-  const hotels = HOTELS.map(H=>`<tr><td><b>${H.name}</b><span class="dsc">${H.stay}</span><span class="dsc">${H.cancel}</span></td><td>${H.price}</td></tr>`).join('');
+  const hotels = HOTELS.map(H=>`<tr><td><b>${H.name}</b><span class="dsc">${H.stay}</span><span class="dsc">${H.cancel}</span></td><td><b>${HOTEL_STORY[H.id].title}</b><p>${HOTEL_STORY[H.id].text}</p></td></tr>`).join('');
 
   const inner = `<div class="sheet">
 
@@ -754,28 +747,16 @@ function drukPage(){
     </div>
     <div class="cfacts">
       <div><b>11</b>dni programu + powrót</div><div><b>8</b>nocy w Japonii</div>
-      <div><b>3</b>bazy w Japonii</div><div><b>~${Math.round(GROUP_TOTAL/1000)}<i>tys. zł</i></b>budżet siedmiu osób</div>
+      <div><b>3</b>bazy w Japonii</div><div><b>7</b>osób we wspólnej podróży</div>
     </div>
     <h3 class="toch">Spis treści</h3>
     <ol class="toc">${toc}</ol>
     <p class="cnote">Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.
-    Wersja online zawiera mapy tras, zdjęcia i kalkulator kosztów: <b>japonia-2027.vercel.app</b></p>
+    Wersja online zawiera mapy tras, zdjęcia i aktualne informacje: <b>japonia-2027.vercel.app</b></p>
     <div class="pfoot">Japonia 27 kwietnia – 8 maja 2027 · Plan podróży</div>
   </section>
 
-  <section class="pg group-budget" id="dwie-rodziny">
-    <div class="dhead"><div class="dnum">Dwie rodziny</div><div class="dwhen">Budżet bazowy · 13.11.2026</div></div>
-    <h2>Rezerwacje i koszty siedmiu osób</h2>
-    <p class="lead">${GROUP_RULE}</p>
-    ${budgetTable()}
-    <p><b>Łącznie: ${plz(GROUP_TOTAL)}.</b> Kwoty w PLN są orientacyjne.</p>
-    <p class="note">${BUDGET_NOTE}</p>
-    <p class="note">Dwa shinkanseny są już w transporcie: nasza czwórka {{sk.razem}}, druga rodzina 86 220 JPY. Rezerwacje są osobne; wspólny wagon nie jest gwarantowany. W kolei 6 taryf dorosłych i 1 dziecięca; każdy ma własną kartę IC.</p>
-    <p class="note">Suma bazowa jest wspólna ze stroną. Własne zmiany kalkulatora zapisane w przeglądarce nie przechodzą do wydruku. Transfery dla siedmiu osób wymagają wyceny, a ich koszt dzielimy między rodziny. Kashikiri i podatki są do potwierdzenia, pokrywa je rezerwa; posiłków z sumo i Hanaori nie doliczamy drugi raz.</p>
-    <h3>Oferty drugiej rodziny - jeszcze nie rezerwacje</h3>
-    <p class="note">Booking, odczyt 13.11.2026: Kioto 5 845 zł / 4 noce, Tokio 4 210 zł / 3 noce, Hanaori Deluxe z prywatną wanną i dwoma posiłkami 3 417 zł / noc. Warunki członkowskie/Genius i podatki do potwierdzenia po zalogowaniu. Anulowanie według ofert: Kioto przed 22.04, Tokio przed 26.04, Hanaori przed 3.05. Ostateczne terminy przepisujemy z nowych potwierdzeń. Stopover w Abu Zabi: potwierdzić hotel, pokój dla trójki i późne wymeldowanie.</p>
-    <div class="pfoot">Dwie rodziny · cztery osoby + trzy osoby · budżet, nie zestawienie płatności</div>
-  </section>
+  <section class="pg" id="dwie-rodziny"><h2>Podróżujemy razem</h2><p>${GROUP_RULE}</p><p>Loty, dwa długie shinkanseny i hotele w Japonii są zarezerwowane dla obu rodzin. Miejsca w pociągach będą potwierdzone bliżej podróży. Pozostałe przejazdy i atrakcje wymagają rezerwacji.</p><p>Potwierdzenia, terminy płatności i rozliczenia: prywatna zakładka na stronie, dostępna po podaniu hasła.</p></section>
   ${days}
 
   <section class="pg">
@@ -783,16 +764,16 @@ function drukPage(){
     <h2>Informacje praktyczne</h2>
 
     <h3>Noclegi naszej czwórki - potwierdzone</h3>
-    <p class="note">Kwoty i terminy poniżej dotyczą wyłącznie naszej rezerwacji 2+2. Oferty drugiej rodziny są w zestawieniu budżetu na początku planu.</p>
+    <p class="note">Te same bazy dla obu rodzin. Terminy anulowania należy sprawdzać we własnym potwierdzeniu; rozliczenia są dostępne prywatnie.</p>
     <table class="agenda">${hotels}</table>
     
 
     <h3>Terminy i rezerwacje</h3>
-    <p class="note">Loty i dwa długie shinkanseny są kupione dla obu rodzin. Hotele w Japonii potwierdzone tylko dla naszej czwórki. KOTO, sumo, Café i taras wymagają rezerwacji. Dla Café potrzebne dwie rezerwacje 4+3, dwa adresy e-mail i ten sam slot; sąsiedztwo nie jest gwarantowane. Daty sprzedaży wymagają ponownej kontroli w 2027.</p>
+    <p class="note">Loty i dwa długie shinkanseny są kupione dla obu rodzin. Hotele w Japonii potwierdzone dla obu rodzin. KOTO, sumo, Café i taras wymagają rezerwacji. Dla Café potrzebne dwie rezerwacje 4+3, dwa adresy e-mail i ten sam slot; sąsiedztwo nie jest gwarantowane. Daty sprzedaży wymagają ponownej kontroli w 2027.</p>
     <table class="agenda">${DEADLINES.map(x=>`<tr><td>${x.label}</td><td><b>${x.title}</b><span class="dsc">${x.text}</span></td></tr>`).join('')}</table>
     <h3>Transport i pieniądze</h3>
     <p class="note">Shinkanseny: SmartEX. NEX: JR East. Romancecar: Odakyu. Terminy, warunki zmiany i miejscówki sprawdzajcie w każdym systemie osobno. Na przylocie rezerwacja kolei powinna pozwalać na opóźnienie lotu i formalności.</p>
-    <p class="note">Loty kupione: cztery e-bilety razem {{bilety.suma}}. Trzy hotele: 500 443 JPY, w potwierdzeniach zapłacono 0 JPY; podatki dodatkowo. Koszt w złotych zależy od kursu płatności. Aktualne podstawy szacunków: japonia-2027.vercel.app/koszty.html.</p>
+    <p class="note">Rozliczenia i szczegóły płatności znajdują się w prywatnej zakładce rezerwacji.</p>
     <h3>Praktyka</h3>
     <ul class="plist">
       <li><b>Gotówka:</b> bankomaty 7-Eleven i Japan Post przyjmują karty zagraniczne. Napiwków się nie daje.</li>
@@ -1338,6 +1319,7 @@ self.addEventListener('fetch', function(e){
   var req = e.request;
   if(req.method!=='GET') return;
   var url = new URL(req.url);
+  if(url.pathname.startsWith('/api/')) return;
   if(url.origin !== location.origin) return;           // mapy, pogoda, Google — tylko z sieci
   var isDoc  = req.mode==='navigate' || req.destination==='document' || /\\.html$|\\/$/.test(url.pathname);
   var isCode = /assets\\/(style\\.css|app\\.js|pokaz\\.css|pokaz\\.js)$/.test(url.pathname);
@@ -1371,3 +1353,5 @@ fs.writeFileSync(DIR + '/assets/icon.svg',
 
 console.log('OK · day pages:', DAYS.length, '· timeline items:', DAYS.reduce((a,d)=>a+d.tl.length,0),
   '· pc:', DAYS.filter(d=>d.pc).length);
+
+page('rezerwacje.html', shell({title:'Rezerwacje prywatne · Japonia 2027',desc:'Prywatne potwierdzenia podróży dla obu rodzin.',prefix:'',active:'rezerwacje.html',inner:`<main class="wrap"><section class="section"><p class="eyebrow">Tylko dla uczestników</p><h1>Rezerwacje prywatne</h1><p>Hotele, pociągi, numery potwierdzeń oraz terminy płatności i anulowania.</p><form method="post" action="/api/rezerwacje" style="max-width:28rem;margin:2rem 0"><label for="reservation-password">Hasło dostępu</label><input id="reservation-password" type="password" name="password" required maxlength="256" autocomplete="current-password" style="display:block;width:100%;box-sizing:border-box;padding:.8rem;margin:.5rem 0 1rem;font:inherit"><button type="submit" style="background:#1b3a6b;color:white;padding:.8rem 1.2rem;border:0;border-radius:.3rem;font:inherit;cursor:pointer">Otwórz rezerwacje</button></form><p>Potrzebujesz połączenia z internetem. Hasło możesz zapisać w swoim menedżerze haseł. Dane rezerwacji nie są dostępne offline.</p><p><a href="index.html">Wróć do agendy</a></p></section></main>`}));
