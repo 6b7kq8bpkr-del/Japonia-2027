@@ -582,3 +582,19 @@ html.uklad-tel body{overflow:hidden}
 /* górny pasek z przełącznikiem: na węższych ekranach komputerowych chowamy daty przy logo i zagęszczamy zakładki */
 @media(min-width:701px){.brand .bcode{display:none}.uklad{margin-left:.5rem}}
 @media(min-width:701px) and (max-width:1180px){.tabs a{padding-left:.5rem;padding-right:.5rem;font-size:.8rem}.topbar .navrow{gap:.75rem}.brand .bj{display:none}}
+
+/* Static booking budgets retain all amounts on small screens. */
+.booking-budget .num{text-align:right;white-space:nowrap}
+.booking-budget .hint{display:block;font-size:.8125rem;color:var(--muted);font-weight:400}
+.booking-budget .tot td{border-top:2px solid var(--ink);font-weight:600}
+#dwie-rodziny .booking-budget{min-width:34rem}
+@media(max-width:640px){
+  #dwie-rodziny .booking-budget{min-width:0}
+  #dwie-rodziny .booking-budget thead{display:none}
+  #dwie-rodziny .booking-budget tr{display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1rem;padding:.875rem 0;border-bottom:1px solid var(--line)}
+  #dwie-rodziny .booking-budget td{display:block;border:0;padding:0;min-width:0}
+  #dwie-rodziny .booking-budget td:first-child{grid-column:1/-1;font-weight:600}
+  #dwie-rodziny .booking-budget td:nth-child(2)::before{content:'Nasza czwórka'}
+  #dwie-rodziny .booking-budget td:nth-child(3)::before{content:'Druga rodzina'}
+  #dwie-rodziny .booking-budget td:not(:first-child)::before{display:block;font-size:.75rem;color:var(--muted);margin-bottom:.25rem}
+}

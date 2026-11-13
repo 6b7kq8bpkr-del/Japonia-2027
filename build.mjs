@@ -4,7 +4,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {ZDJECIA} from './data/zdjecia.mjs';
 import {PYTANIA, PYTANIA_OGOLNE} from './data/pytania.mjs';
-import {CENY, DP_KOSZTY, DP_DECYZJE, DP_SZUKAJ, DP_STOPOVER, DP_KUPIONE} from './data/druga-para.mjs';
+import {CENY, DP_KOSZTY, DP_DECYZJE, DP_SZUKAJ, DP_STOPOVER, DP_KUPIONE, DP_KOLEJ} from './data/druga-para.mjs';
 import {DAYS, GEO, DAYRAIN, DAYCROWD, BOOKINGS, DEADLINES, HOTELS, fill} from './data/index.mjs';
 /* Każda strona HTML przechodzi przez fill(): tokeny {{klucz}} z szablonów zamieniają się na fakty z data/fakty.mjs. */
 const page = (file, html) => fs.writeFileSync(DIR + '/' + file, fill(html));
@@ -31,6 +31,11 @@ const TICKET = {family:13643, bag:0, total:13643, label:'27.04-7.05 ze stopovere
 const BUDGET_K = Math.round((TICKET.total + CALC.nights*CALC.nightRate + CALC.transport + CALC.days*CALC.foodRate + CALC.attractions + CALC.extras)/1000);
 // własny formatter — Node w tym środowisku ma okrojone ICU i ignoruje locale pl-PL
 const plz  = n => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';
+function groupBookings(){
+  const ours=TICKET.total+CALC.nights*CALC.nightRate+CALC.transport+CALC.days*CALC.foodRate+CALC.attractions+CALC.extras;
+  const theirs=DP_KUPIONE.total+DP_KOSZTY.reduce((sum,k)=>sum+k.zl,0);
+  return `<section id="dwie-rodziny"><h2 class="stitle">Dwie rodziny: rezerwacje i budżet</h2><p class="lead-p">Siedem osób: nasza rodzina 2+2 oraz Joanna, Marcin i Tomasz (12 lat). Na kolej: łącznie 6 taryf dorosłych i 1 dziecięca.</p><div class="card" style="overflow-x:auto"><table class="rhythm booking-budget"><thead><tr><th>Pozycja</th><th>Nasza czwórka</th><th>Joanna, Marcin i Tomasz</th></tr></thead><tbody><tr><td>Loty - kupione</td><td>{{bilety.suma}}</td><td>${DP_KUPIONE.zl}</td></tr><tr><td>Dwa shinkanseny - opłacone</td><td>{{sk.razem}}</td><td>${DP_KOLEJ.totalJPY.toLocaleString('en-US').replaceAll(',',' ')} JPY</td></tr><tr><td>Hotele w Japonii</td><td>Zarezerwowane; płatność według potwierdzeń</td><td>Do rezerwacji, ceny szacunkowe</td></tr><tr><td>Cały wyjazd - budżet</td><td>~${plz(ours)}</td><td>~${plz(theirs)}</td></tr></tbody></table><p><b>Łączny budżet siedmiu osób: ~${plz(ours+theirs)}.</b> To suma dwóch budżetów, nie suma zapłaconych rachunków. Kolej drugiej rodziny jest już w jej budżecie - nie doliczamy jej ponownie. Kurs planistyczny: 2,40 zł/100 JPY; rozliczenie karty może być inne.</p><p>Wspólne przejazdy: 29.04 Nozomi 51, Shinagawa {{n51.odj}} → Kioto {{n51.przyj}}; 3.05 Nozomi 6, Kioto {{n6.odj}} → Tokio {{n6.przyj}}. Miejsca i ostateczny rozkład zostaną potwierdzone 29.03 i 3.04. Dwie rodziny nie mają jeszcze gwarancji sąsiednich miejsc.</p><p>NEX, Romancecar, Odawara-Shinagawa, pokoje drugiej rodziny oraz wspólne atrakcje wymagają osobnego domknięcia. Transfery zamawiamy na 7 osób z bagażem; prywatne kąpiele uzgadniamy osobno dla każdej rodziny.</p></div></section>`;
+}
 /* Style i skrypty są zwykłymi plikami w src/ (bez szablonów, więc bez podwajania ukośników). */
 fs.copyFileSync(DIR + '/src/style.css', DIR + '/assets/style.css');
 
@@ -119,7 +124,7 @@ const ITEM_LABEL = {lot:'Lot z biletu',zarezerwowane:'Zarezerwowane',rezerwacja:
 const TIMING_NOTE = 'Wszystkie godziny są miejscowe. Loty według e-biletów; pozostałe godziny to plan do dopasowania do rozkładów i rezerwacji. „Do potwierdzenia” nie oznacza kupionego biletu. „Zarezerwowane” oznacza przyjętą rezerwację; numer pociągu i miejsca mogą być jeszcze wstępne.';
 
 /* ============================ TEMPLATES ============================ */
-const TABS = [['index.html','Agenda'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['niezbednik.html','Niezbędnik'],['pogoda.html','Przed wyjazdem'],['koszty.html','Koszty'],['decyzje.html','Kulisy'],['druga-para.html','Druga para']];
+const TABS = [['index.html','Agenda'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['niezbednik.html','Niezbędnik'],['pogoda.html','Przed wyjazdem'],['koszty.html','Koszty'],['decyzje.html','Kulisy'],['druga-para.html','Druga rodzina']];
 function nav(active,prefix){
   const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on" aria-current="page"':'')}>${l}</a>`).join('');
   return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html"><span class="bj" aria-hidden="true">日本</span>Japonia 2027<span class="bcode">27.04–08.05</span></a><nav class="tabs">${t}</nav><div class="uklad" role="group" aria-label="Układ strony"><button type="button" data-u="tel" aria-pressed="false">Telefon</button><button type="button" data-u="pc" aria-pressed="false">Komputer</button></div></div></div>`;
@@ -313,7 +318,7 @@ function indexPage(){
   </section>
 
   <section id="siodemka"><h2 class="stitle">Jak podróżujemy w siódemkę</h2><div class="card"><ul class="tips">
-      <li><b>Dwie rodziny, dwie rezerwacje.</b> Te same loty, pociągi i hotele, ale każda rodzina ma własne bilety, pokoje i płaci za siebie. Wspólne bilety na atrakcje kupuje jedna osoba.</li>
+      <li><b>Dwie rodziny, loty i shinkanseny kupione.</b> Loty i oba długie przejazdy kolejowe są kupione dla obu rodzin. Pociągi drugiej rodziny są osobnymi rezerwacjami na naszym koncie SmartEX. Pokoje w Japonii dla Joanny, Marcina i Tomasza wymagają jeszcze potwierdzenia. Wspólne bilety na atrakcje kupuje jedna osoba.</li>
       <li><b>Taksówka zabiera cztery osoby.</b> Siedem osób to dwa samochody albo jeden większy. Tam, gdzie się da, jedziemy metrem, pociągiem albo autobusem.</li>
       <li><b>Stolik dla siedmiu trzeba zarezerwować.</b> Zwłaszcza w Gion 30.04, w Shibui 4.05 i na urodziny Marcela 5.05. Małe bary posadzą nas osobno.</li>
       <li><b>Wspólne sesje kupujemy razem:</b> herbata KOTO, pokaz sumo, Shibuya Sky, Romancecar i miejsca w shinkansenach w tym samym wagonie.</li>
@@ -338,10 +343,11 @@ function kosztyPage(){
     <div class="hero-inner">
     <p class="eyebrow">Bilety lotnicze i budżet</p>
     <h1>Bilety i koszty</h1>
-    <p class="lead">Loty i hotele są zarezerwowane. Poniżej oddzielamy kwoty z dokumentów od szacunków: e-bilety {{bilety.suma}}, hotele w Japonii 500 443 JPY przed dodatkowymi podatkami. Budżet w złotych pozostaje orientacyjny.</p>
+    <p class="lead">Loty i długie shinkanseny są kupione dla obu rodzin. Hotele w Japonii są potwierdzone tylko dla naszej czwórki. Poniżej oddzielamy kwoty z dokumentów od szacunków: e-bilety {{bilety.suma}}, hotele w Japonii 500 443 JPY przed dodatkowymi podatkami. Budżet w złotych pozostaje orientacyjny.</p>
   </div>
   </header>
 
+  ${groupBookings()}
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
     <div class="pflag">✈️ <span><b>Etihad ${TICKET.label}</b>. Bilety są kupione, koszt jest znany: {{bilety.suma}} za rodzinę (z hotelem 4★ w Abu Zabi w pakiecie), bez bagażu rejestrowanego. Szczegóły na zakładce <a href="loty.html">Loty</a>.</span></div>
@@ -359,7 +365,7 @@ function kosztyPage(){
       '<b>Narita → Tokio → Kioto</b> (29.04): NEX do Shinagawy; cena w jedną stronę zależy od stacji docelowej (do Tokyo Station obecnie 3 140 JPY/dorosły, do Shinagawy sprawdźcie przy zakupie); shinkansen zarezerwowany w SmartEX: {{sk.cena}} za rodzinę ({{sk.dorosly}} dorosły, {{sk.dziecko}} dziecko). NEX kupuje się osobno w JR East.',
       
       
-      '<b>Kioto → Tokio</b> (3.05): shinkansen zarezerwowany w SmartEX, {{sk.cena}} za rodzinę. Ostateczny pociąg i cztery miejsca potwierdzi mail z 3.04.', '<b>Odawara → Shinagawa → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
+      '<b>Kioto → Tokio</b> (3.05): shinkansen zarezerwowany w SmartEX, {{sk.cena}} za rodzinę. Ostateczny pociąg i siedem miejsc w dwóch rezerwacjach potwierdzą maile z 3.04.', '<b>Odawara → Shinagawa → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
       '<b>Kolej międzymiastowa: około 3,2 tys. zł za rodzinę</b>, z czego {{sk.razem}} (około {{sk.razem.zl}}) to dwa zarezerwowane shinkanseny; do tego Hakone, Nara, komunikacja miejska i taksówki. Przejazd do Nary i z powrotem to zwykła kolej Kintetsu, płatna kartą IC. Jest częścią puli transportu 5000 zł, nie dopłatą do niej.', '<b>Do sprawdzenia przed zakupem:</b> N’EX TOKYO Round Trip Ticket ważny 14 dni: obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko, czyli 18 200 JPY (około 437 zł) za oba przejazdy rodziny. Daty 29.04 i 7.05 mieszczą się w ważności. Sprawdźcie uprawnienia i zarezerwujcie konkretne pociągi.',
       'Standardowy JR Pass nie jest tu domyślnym zakupem. Porównajcie pełny koszt z biletami punktowymi; uprawnienie do Nozomi wymaga dodatkowych warunków/opłaty'])}
   </section>
@@ -477,7 +483,7 @@ function hotelePage(){
     <div class="hero-inner">
     <p class="eyebrow">Noclegi · 8 nocy w Japonii + noc w Abu Zabi · 4 obiekty · chronologicznie</p>
     <h1>Hotele</h1>
-    <p class="lead">Trzy bazy pod rodzinę 2+2: aparthotele MIMARU z kuchnią i wspólnymi pralniami samoobsługowymi oraz ryokan nad jeziorem Ashi na jedną górską noc. Cztery pierwsze noce w jednym apartamencie w Kiocie, potem trzy w Tokio.</p>
+    <p class="lead">Potwierdzone pokoje dotyczą naszej rodziny 2+2. Druga rodzina (Joanna, Marcin i Tomasz) potrzebuje osobnych rezerwacji; ceny, dostępność i terminy anulowania sprawdzamy niezależnie. Trzy bazy: aparthotele MIMARU z kuchnią i wspólnymi pralniami samoobsługowymi oraz ryokan nad jeziorem Ashi na jedną górską noc. Cztery pierwsze noce w jednym apartamencie w Kiocie, potem trzy w Tokio.</p>
   </div>
   </header>
   <section>
@@ -566,31 +572,32 @@ function drugaParaPage(){
   const stays={}; let cur=null; DAYS.forEach(d=>{ if(d.stay) cur=d.stay; stays[d.date]=d.date==='2027-04-28'||d.date==='2027-05-07'?null:cur; });
   const CN={tokio:'Tokio',hakone:'Hakone',kioto:'Kioto',nara:'Nara',osaka:'Osaka',abudhabi:'Abu Zabi'};
   const cal=DAYS.map((d,i)=>{const [n,mon]=d.dd.split(' '), dd=n+'.'+(mon.startsWith('kw')?'04':'05');
-    return `<a class="dpday" href="days/${d.date}.html"><img src="${small(DAYIMG[d.date])}" alt="" loading="lazy" decoding="async"><span class="dpd"><b>${dd}</b> ${d.dow.slice(0,3)} · ${CN[d.city]||d.city}</span><span class="dpt">${d.title}</span>${flights[d.date]?`<span class="dpf">${flights[d.date]}</span>`:''}<span class="dps">${stays[d.date]?'Nocleg: '+sleep[stays[d.date]]:(d.date==='2027-04-28'?'Noc w samolocie':'Noc w samolocie, powrót 8.05')}</span></a>`;}).join('');
+    return `<a class="dpday" href="days/${d.date}.html"><img src="${small(DAYIMG[d.date])}" alt="" loading="lazy" decoding="async"><span class="dpd"><b>${dd}</b> ${d.dow.slice(0,3)} · ${CN[d.city]||d.city}</span><span class="dpt">${d.title}</span>${flights[d.date]?`<span class="dpf">${flights[d.date]}</span>`:''}<span class="dps">${stays[d.date]?'Planowany nocleg: '+sleep[stays[d.date]]:(d.date==='2027-04-28'?'Noc w samolocie':'Noc w samolocie, powrót 8.05')}</span></a>`;}).join('');
   const sum=DP_KOSZTY.reduce((s,k)=>s+k.zl,0), total=(DP_KUPIONE?DP_KUPIONE.total:last.total)+sum;
   const rows=DP_KOSZTY.map(k=>`<tr><td><b>${k.co}</b><span class="hint">${k.zrodlo}</span></td><td class="num">${plz(k.zl)}</td></tr>`).join('');
   const dec=[...DP_DECYZJE].sort((a,b)=>a.due.localeCompare(b.due)).map(d=>d.done?`<li class="past"><time>załatwione</time><div><b>✓ ${d.co}</b><p>${d.opis}</p></div></li>`:`<li><time datetime="${d.due}">do ${dpl(d.due)}<em class="due" data-due="${d.due}"></em></time><div><b>${d.co}</b><p>${d.opis}</p></div></li>`).join('');
   const inner=`
   <header class="hero kb"><div class="hbg"><div class="hbg-img" style="background:${heroBg('kioto',IMG.fushimi)}"></div></div>
-    <div class="hero-inner"><p class="eyebrow">Dwoje dorosłych i syn · 12 lat w czasie wyjazdu · te same daty</p><h1>Druga para: ceny i decyzje</h1>
-    <p class="lead">${DP_KUPIONE?'Bilety Etihad są kupione, więc codzienne sprawdzanie cen zakończyliśmy. Niżej':'Loty Etihad na nasze daty sprawdzamy codziennie rano. Niżej'} ten sam kalendarz co nasz, szacunek pozostałych kosztów dla trzech osób i decyzje, które trzeba podjąć, żeby pojechać razem.</p></div></header>
+    <div class="hero-inner"><p class="eyebrow">Dwoje dorosłych i syn · 12 lat w czasie wyjazdu · te same daty</p><h1>Joanna, Marcin i Tomasz</h1>
+    <p class="lead">${DP_KUPIONE?'Bilety Etihad są kupione, więc codzienne sprawdzanie cen zakończyliśmy. Niżej':'Loty Etihad na nasze daty sprawdzamy codziennie rano. Niżej'} ten sam kalendarz co nasz, koszty dla trzech osób i pozostałe rezerwacje do domknięcia. Loty oraz oba długie przejazdy kolejowe są już kupione.</p></div></header>
   <section id="loty"><h2 class="stitle">${DP_KUPIONE?'Loty Etihad: kupione':'Loty Etihad: cena dziś'}</h2>${DP_KUPIONE?`<div class="dayflag"><b>Kupione ${dpl(DP_KUPIONE.date)} za ${DP_KUPIONE.zl}</b> (trzy bilety dorosłe z nocą w Abu Zabi). Monitoring cen zakończony; wykres poniżej to archiwum odczytów. ${DP_KUPIONE.godziny?DP_KUPIONE.godziny:'Godziny lotów porównamy z naszymi po otrzymaniu e-biletów.'}</div>`:''}
     <div class="dpprice"><div class="dpbig"><span>${DP_KUPIONE?'Ostatni odczyt przed zakupem':'Trzy bilety w obie strony'}</span><b>${plz(last.total)}</b><i>${plz(Math.round(last.total/3))} za osobę · ${trend}</i></div>
       <div class="dpmeta"><div><span>Ostatnia kontrola</span><b>${dpl(last.date)}</b></div><div><span>Najniżej dotąd</span><b>${plz(min.total)}</b><i>${dpl(min.date)}</i></div><div><span>Odczytów</span><b>${CENY.length}</b></div></div></div>
     <div class="card">${chart}<p class="note">Cena z Google Flights dla trzech dorosłych, Etihad, wylot 27.04 i powrót 7.05, z podatkami i opłatami. Syn w dniu wylotu ma 12 lat, a Etihad stosuje taryfę dziecięcą tylko do 11 lat, więc wszystkie trzy bilety są dorosłe. Google wycenia wariant z dwugodzinną przesiadką w Abu Zabi; nasz układ z nocą w hotelu rezerwuje się na etihad.com jako stopover i trzeba go wycenić tam.</p>
       <div class="linklist"><a href="${DP_SZUKAJ}" target="_blank" rel="noopener">To wyszukiwanie w Google Flights ↗</a><a href="${DP_STOPOVER}" target="_blank" rel="noopener">Stopover na etihad.com ↗</a></div></div>
-    <details class="more card dphist"><summary>Historia odczytów</summary><div style="overflow-x:auto"><table class="calc"><thead><tr><th>Dzień</th><th class="num">3 osoby</th><th class="num">Za osobę</th><th>Uwagi</th></tr></thead><tbody>${hist}</tbody></table></div></details>
+    <details class="more card dphist"><summary>Historia odczytów</summary><div style="overflow-x:auto"><table class="rhythm booking-budget"><thead><tr><th>Dzień</th><th class="num">3 osoby</th><th class="num">Za osobę</th><th>Uwagi</th></tr></thead><tbody>${hist}</tbody></table></div></details>
   </section>
-  <section id="kalendarz"><h2 class="stitle">Ten sam kalendarz co nasz</h2><p class="lead-p">Te same loty, noclegi i dni. Kliknij dzień, żeby zobaczyć nasz plan godzinowy.</p><div class="dpcal">${cal}</div></section>
-  <section id="koszty"><h2 class="stitle">Pozostałe koszty dla trzech osób</h2><p class="lead-p">Szacunki z naszych rezerwacji i cenników. Nic z tego nie jest zarezerwowane dla Was.</p>
-    <div class="card"><div style="overflow-x:auto"><table class="calc"><tbody>
+  ${groupBookings()}
+  <section id="kalendarz"><h2 class="stitle">Ten sam kalendarz co nasz</h2><p class="lead-p">Wspólne loty, pociągi i program dla siedmiu osób. Hotele poniżej to proponowane bazy drugiej rodziny, jeszcze bez potwierdzenia jej pokoi. Kliknij dzień, żeby zobaczyć plan godzinowy.</p><div class="dpcal">${cal}</div></section>
+  <section id="koszty"><h2 class="stitle">Pozostałe koszty dla trzech osób</h2><p class="lead-p">Loty i dwa shinkanseny są kupione. Pozostałe pozycje to budżet, nie potwierdzenie rezerwacji. Wartość kolei w PLN jest przeliczeniem planistycznym; rzeczywiste obciążenie w złotych sprawdźcie w banku.</p>
+    <div class="card"><div style="overflow-x:auto"><table class="rhythm booking-budget"><tbody>
       <tr><td><b>Loty Etihad</b><span class="hint">${DP_KUPIONE?'Kupione: 11 002,80 zł za loty i 237,48 zł opłaty za stopover, z noclegiem w Abu Zabi.':'Ostatni odczyt z monitora, bez dopłat za bagaż rejestrowany.'}</span></td><td class="num">${DP_KUPIONE?DP_KUPIONE.zl:plz(last.total)}</td></tr>
       ${rows}
       <tr class="tot"><td>Razem, szacunkowo</td><td class="num">~${plz(Math.round(total/100)*100)}</td></tr></tbody></table></div>
     <p class="note">Kurs planistyczny 2,40 zł za 100 JPY. Ceny atrakcji według cenników z listopada 2026.</p></div></section>
   <section id="decyzje"><h2 class="stitle">Decyzje do podjęcia</h2><p class="lead-p">W kolejności terminów. Strona odlicza, ile zostało czasu.</p><ol class="deadlines dpdec">${dec}</ol></section>
   ${footer('')}`;
-  return shell({title:'Druga para · Japonia 2027',desc:'Monitor cen lotów Etihad dla drugiej pary, ten sam kalendarz wyjazdu, koszty i decyzje.',prefix:'',active:'druga-para.html',inner,pillsIdx:null});
+  return shell({title:'Druga rodzina · Japonia 2027',desc:'Kupione loty i pociągi drugiej rodziny, wspólna agenda i pozostałe koszty.',prefix:'',active:'druga-para.html',inner,pillsIdx:null});
 }
 
 /* ============ POKAZ NA PROJEKTOR: slajd na dzień, pytania do doradców i pole na uwagi ============ */

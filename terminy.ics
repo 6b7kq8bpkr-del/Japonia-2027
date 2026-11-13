@@ -29,8 +29,8 @@ DTSTART;VALUE=DATE:20270329
 DTEND;VALUE=DATE:20270330
 SUMMARY:Japonia 2027: Mail z miejscami w shinkansenie 29.04
 DESCRIPTION:Po 8:00 JST (1:00 w Polsce) SmartEX przysyła ostateczny nume
- r pociągu Shinagawa-Kioto i cztery miejsca. Sprawdźcie\, czy są obok 
- siebie. (29 marca)
+ r pociągu Shinagawa-Kioto i siedem miejsc w dwóch rezerwacjach. Sprawd
+ źcie\, czy rodziny mogą siedzieć blisko siebie. (29 marca)
 URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
 BEGIN:VALARM
 ACTION:DISPLAY

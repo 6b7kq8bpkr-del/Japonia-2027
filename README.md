@@ -39,6 +39,8 @@ Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie
 - Z `DEADLINES` build tworzy `terminy.ics`: plik kalendarza z przypomnieniem dzień wcześniej (terminy z godziną mają też przypomnienie 2 godziny przed).
 - Loty są kupione; koszt (`bilety.suma` w `data/fakty.mjs`) jest też podstawą kalkulatora (`TICKET` w `build.mjs`).
 
-## Druga para
-- `druga-para.html` (zakładka „Druga para”): monitor cen Etihad dla trzech dorosłych taryf na nasze daty, ten sam kalendarz, szacunek kosztów i decyzje. Dane w `data/druga-para.mjs`.
-- Tablicę `CENY` uzupełnia codziennie o 7:30 zadanie „japonia-druga-para-loty” (Scheduled): jeden wpis dziennie z Google Flights, potem build, check, commit i wdrożenie. Zadanie działa, gdy aplikacja Claude jest otwarta; uśpiony Mac przesuwa odczyt.
+## Druga rodzina
+- `druga-para.html` (zakładka „Druga rodzina”): Joanna, Marcin i Tomasz, wspólna agenda dla 7 osób. Loty i dwa shinkanseny kupione; pokoje drugiej rodziny w Japonii wymagają potwierdzenia.
+- `data/druga-para.mjs`: koszt lotów, `DP_KOLEJ` (opłacone JPY i kurs planistyczny), pozostałe szacunki i decyzje. Monitor lotów zakończony po zakupie.
+- Zestawienie obu rodzin na stronie kosztów nie zastępuje kalkulatora naszej rodziny 2+2. Opłacona kolej jest już zawarta w budżetach; PLN pozostaje szacunkiem, nie rozliczeniem bankowym.
+- Nazwiska i numery nowych rezerwacji tylko w `private/rezerwacje.md`, poza git i Vercel.
