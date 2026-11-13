@@ -272,7 +272,7 @@ function indexPage(){
       <a class="line" href="hotele.html"><b>Hotele</b><span>Pokoje, posiłki i terminy odwołania. Hanaori Deluxe z prywatną wanną; rodzinny onsen osobno.</span></a>
       <a class="line" href="niezbednik.html"><b>Niezbędnik</b><span>Przejazdy, pieniądze, internet, zwyczaje, numery alarmowe.</span></a>
       <a class="line" href="pogoda.html"><b>Przed wyjazdem</b><span>Klimat na przełomie kwietnia i maja, plan pakowania na 7 kg, plany B na deszcz.</span></a>
-      <a class="line" href="pokaz.html"><b>Pokaz na duży ekran</b><span>Slajd na każdy dzień, pytania do znajomych i miejsce na ich uwagi. Na projektor albo telewizor.</span></a>
+      <a class="line" href="pokaz.html"><b>Pokaz na duży ekran</b><span>Slajd na każdy dzień w dwóch trybach: szczegółowy przegląd agendy we własnym gronie albo pytania do znajomych z miejscem na uwagi. Na projektor albo telewizor.</span></a>
       <a class="line" href="druk.html"><b>Przewodnik do druku</b><span>Cały plan na kartkach — do wydruku albo offline na telefon.</span></a>
       <a class="line" href="rezerwacje.html"><b>Rezerwacje prywatne</b><span>Potwierdzenia i rozliczenia dostępne po podaniu hasła.</span></a>
       <a class="line" href="decyzje.html"><b>Kulisy planu</b><span>Co jeszcze załatwić, dlaczego taka trasa i jak zmienić dzień bez pośpiechu.</span></a>
@@ -629,51 +629,77 @@ function drugaParaPage(){
 /* ============ POKAZ NA PROJEKTOR: slajd na dzień, pytania do doradców i pole na uwagi ============ */
 function pokazPage(){
   const CN={tokio:'Tokio',hakone:'Hakone',kioto:'Kioto',nara:'Nara (z Kioto)',osaka:'Osaka',abudhabi:'Abu Zabi'};
-  const TAG={lot:'lot',zarezerwowane:'zarezerwowane',rezerwacja:'do potwierdzenia',opcja:'opcja'};
+  const TAG={lot:'lot',zarezerwowane:'zarezerwowane',rezerwacja:'do potwierdzenia',opcja:'opcja',bufor:'zapas'};
   const short=d=>{const [n,mon]=d.dd.split(' '); return n+'.'+(mon.startsWith('kw')?'04':'05');};
+  const dm=s=>s?String(+s.slice(8,10))+'.'+s.slice(5,7):'';
+  const tag=k=>TAG[k]?`<span class="tag ${k}">${TAG[k]}</span>`:'';
+  const hotelName=id=>(HOTELS.find(h=>h.id===id)||{}).name;
   const tiles=DAYS.map((d,i)=>`<a class="day" href="#s${i+2}"><img src="${small(DAYIMG[d.date])}" alt="" loading="eager"><span><b>${short(d)} · ${CN[d.city]||d.city}</b>${d.title}</span></a>`).join('');
   const daySlides=DAYS.map((d,i)=>{
-    const rows=d.tl.map(([time,title,,kind])=>`<li><span class="t">${time}</span><span class="n">${title}${TAG[kind]?`<span class="tag ${kind}">${TAG[kind]}</span>`:''}</span></li>`).join('');
+    const rows=d.tl.map(([time,title,,kind])=>`<li><span class="t">${time}</span><span class="n">${title}${tag(kind)}</span></li>`).join('');
+    const picks=d.tl.map(([time,title,,kind],k)=>`<li><button type="button" class="pick${k?'':' on'}" data-i="${k}" aria-pressed="${k?'false':'true'}"><span class="t">${time}</span><span class="n">${title}${tag(kind)}</span></button></li>`).join('');
+    const steps=d.tl.map(([time,title,desc,kind],k)=>`<article class="step${k?'':' on'}" data-i="${k}"><p class="stime">${time} · punkt ${k+1} z ${d.tl.length}${tag(kind)}</p><h2>${title}</h2><div class="sdesc">${desc||'<p class="cut">Bez dodatkowego opisu.</p>'}</div></article>`).join('');
+    const stay=d.stay?hotelName(d.stay):null;
+    const think=[['Ramy dnia','Start: '+d.brief.start+'. Koniec: '+d.brief.end+'.'],['Chronimy',d.brief.must],['Można odpuścić',d.brief.cut],['Sprawdźcie',d.brief.check],['Gdy pada',DAYRAIN[d.date]],['Tłumy i zmęczenie',DAYCROWD[d.date]]].filter(x=>x[1]).map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
     const ask=(PYTANIA[d.date]||[]).map(q=>`<li>${q}</li>`).join('');
-    return `<section class="slide" id="s${i+2}">
-  <div><p class="kicker">Dzień ${i+1} z ${DAYS.length} · ${d.dow} ${d.dd} · ${CN[d.city]||d.city}</p><h1>${d.title}</h1></div>
-  <div class="cols">
+    const title=esc(short(d)+' · '+d.title);
+    return `<section class="slide dayslide" id="s${i+2}">
+  <div><p class="kicker">Dzień ${i+1} z ${DAYS.length} · ${d.dow} ${d.dd} · ${CN[d.city]||d.city} · ${LEVEL_LABEL[d.level]}${stay?' · nocleg: '+stay:''}</p><h1>${d.title}</h1><p class="focus v-my">${d.brief.focus}</p></div>
+  <div class="cols v-my">
+    <div class="col"><div class="panel grow fit"><h2>Godzina po godzinie <small>↑ ↓</small></h2><ol class="tl picks">${picks}</ol></div></div>
+    <div class="col"><div class="panel grow detail fit">${steps}</div>
+      <div class="notes"><label for="m-${d.date}">Nasze notatki</label><textarea id="m-${d.date}" data-key="${d.date}" data-title="${title}" placeholder="Co zmieniamy, co sprawdzić, kto się tym zajmie?"></textarea></div></div>
+    <div class="col"><div class="panel grow think fit"><h2>Do przemyślenia</h2><dl>${think}</dl></div></div>
+  </div>
+  <div class="cols v-zn">
     <div class="col"><div class="photo"><img src="${DAYIMG[d.date]}" alt="" loading="lazy" decoding="async"></div>
       <div class="facts"><div><span>Start</span><b>${d.brief.start}</b></div><div><span>Koniec</span><b>${d.brief.end}</b></div><div><span>Tempo</span><b>${LEVEL_LABEL[d.level]}</b></div></div>
       <p class="cut"><b>Można odpuścić:</b> ${d.brief.cut}</p></div>
     <div class="col"><div class="panel grow"><h2>Godzina po godzinie</h2><ol class="tl${d.tl.length>9?' dense':''}">${rows}</ol></div></div>
     <div class="col"><div class="panel"><h2>Pytania do Was</h2><ol class="ask">${ask}</ol></div>
-      <div class="notes"><label for="n-${d.date}">Uwagi</label><textarea id="n-${d.date}" data-key="${d.date}" data-title="${esc(short(d)+' · '+d.title)}" placeholder="Co radzicie? Co zmienić, dodać, wyciąć?"></textarea></div></div>
+      <div class="notes"><label for="n-${d.date}">Uwagi</label><textarea id="n-${d.date}" data-key="${d.date}" data-title="${title}" placeholder="Co radzicie? Co zmienić, dodać, wyciąć?"></textarea></div></div>
   </div>
 </section>`;}).join('\n');
-  const dots=['Plan',...DAYS.map(short),'Pytania','Uwagi'].map((t,i)=>`<a href="#s${i+1}">${t}</a>`).join('');
+  const open=BOOKINGS.filter(b=>!/^✅/.test(b.when)).sort((a,b)=>(a.due||'9999').localeCompare(b.due||'9999'));
+  const openList=open.map(b=>`<li><time>${b.due?'do '+dm(b.due):'bez terminu'}</time><div><b>${b.what}</b><span>${b.when}</span></div></li>`).join('');
+  const nS=DAYS.length;
+  const dots=[['Plan',''],...DAYS.map(d=>[short(d),'']),['Sprawy','only-my'],['Pytania','only-zn'],['Notatki','']].map(([t,c],i)=>`<a href="#s${i+1}"${c?` class="${c}"`:''}>${t}</a>`).join('');
   return `<!doctype html>
 <html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
 <title>Pokaz planu · Japonia 2027</title>
+<script>(function(){var t=null;try{t=localStorage.getItem('jp2027.tryb');}catch(e){} var q=(location.search.match(/[?&]tryb=(my|zn)/)||[])[1]; if((q||t)==='zn') document.documentElement.classList.add('tryb-zn');})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/pokaz.css"></head>
 <body>
 <section class="slide" id="s1">
-  <div><p class="kicker">Japonia 2027 · 27 kwietnia – 8 maja · dwie rodziny, siedem osób: czworo dorosłych i troje dzieci</p><h1>Nasz plan. Powiedzcie, co byście zmienili.</h1></div>
-  <p class="route">Warszawa<i>→</i>Abu Zabi (1 noc)<i>→</i>Kioto (4 noce, dzień w Narze)<i>→</i>Tokio (3 noce)<i>→</i>Hakone (1 noc w ryokanie)<i>→</i>Narita<i>→</i>Warszawa</p>
-  <div class="days">${tiles}<div class="day help"><b>Jak to działa</b><span style="padding:0;font-weight:500">Strzałki przełączają dni. Na każdym slajdzie są nasze pytania i pole na Wasze uwagi. Ostatni slajd zbiera wszystko do skopiowania.</span></div></div>
+  <div><p class="kicker">Japonia 2027 · 27 kwietnia – 8 maja · dwie rodziny, siedem osób: czworo dorosłych i troje dzieci</p><h1><span class="v-my">Nasz plan dzień po dniu. Przejrzyjmy go spokojnie.</span><span class="v-zn">Nasz plan. Powiedzcie, co byście zmienili.</span></h1></div>
+  <div class="modebar"><p class="route">Warszawa<i>→</i>Abu Zabi (1 noc)<i>→</i>Kioto (4 noce, dzień w Narze)<i>→</i>Tokio (3 noce)<i>→</i>Hakone (1 noc w ryokanie)<i>→</i>Narita<i>→</i>Warszawa</p>
+    <div class="modes" role="group" aria-label="Tryb pokazu"><button type="button" data-tryb="my">Przegląd planu</button><button type="button" data-tryb="zn">Ze znajomymi</button></div></div>
+  <div class="days">${tiles}<div class="day help"><b>Jak to działa</b><span class="v-my" style="padding:0;font-weight:500">← → zmieniają dzień, ↑ ↓ przechodzą po godzinach dnia. Środek pokazuje pełny opis punktu, prawa kolumna to, co warto przemyśleć, i Wasze notatki. T zmienia tryb.</span><span class="v-zn" style="padding:0;font-weight:500">Strzałki przełączają dni. Na każdym slajdzie są nasze pytania i pole na Wasze uwagi. Ostatni slajd zbiera wszystko do skopiowania.</span></div></div>
 </section>
 ${daySlides}
-<section class="slide" id="s${DAYS.length+2}">
+<section class="slide only-my" id="s${nS+2}">
+  <div><p class="kicker">Po przeglądzie dni</p><h1>Otwarte sprawy, według terminów</h1></div>
+  <div class="two wide">
+    <div class="panel fit"><ol class="openlist">${openList}</ol></div>
+    <div class="notes"><label for="m-sprawy">Kto czym się zajmuje</label><textarea id="m-sprawy" data-key="sprawy" data-title="Otwarte sprawy" placeholder="Przy każdej sprawie: kto się nią zajmuje i do kiedy."></textarea></div>
+  </div>
+</section>
+<section class="slide only-zn" id="s${nS+3}">
   <div><p class="kicker">Na koniec</p><h1>Pytania o cały wyjazd</h1></div>
   <div class="two">
     <div class="panel"><ol class="ask asklist">${PYTANIA_OGOLNE.map(q=>`<li>${q}</li>`).join('')}</ol></div>
     <div class="notes"><label for="n-ogolne">Uwagi</label><textarea id="n-ogolne" data-key="ogolne" data-title="Cały wyjazd" placeholder="Rady ogólne: jedzenie, pieniądze, bagaż, tłumy, rzeczy, o których nie pomyśleliśmy."></textarea></div>
   </div>
 </section>
-<section class="slide sum" id="s${DAYS.length+3}">
-  <div><p class="kicker">Podsumowanie</p><h1>Zebrane uwagi</h1></div>
+<section class="slide sum" id="s${nS+4}">
+  <div><p class="kicker">Podsumowanie</p><h1>Zebrane notatki</h1></div>
   <div class="panel summary" id="summary"></div>
   <div class="btns"><button type="button" id="copy">Kopiuj wszystko</button><button type="button" class="ghost" id="save">Pobierz jako plik</button><span id="msg" aria-live="polite" style="align-self:center;font-weight:600"></span></div>
-  <p class="cut">Uwagi są zapisane tylko w tej przeglądarce. Skopiuj je albo pobierz, zanim zamkniesz pokaz na cudzym komputerze.</p>
+  <p class="cut">Notatki są zapisane tylko w tej przeglądarce. Skopiuj je albo pobierz, zanim zamkniesz pokaz na cudzym komputerze.</p>
 </section>
-<nav class="bar" aria-label="Slajdy"><a class="exit" href="index.html">← Strona</a><button type="button" id="prev" aria-label="Poprzedni slajd">←</button><div class="dots">${dots}</div><button type="button" id="next" aria-label="Następny slajd">→</button><button type="button" id="full">Pełny ekran (F)</button></nav>
+<nav class="bar" aria-label="Slajdy"><a class="exit" href="index.html">← Strona</a><button type="button" id="tryb" title="Zmień tryb (T)"><span class="v-my">Tryb: przegląd</span><span class="v-zn">Tryb: znajomi</span></button><button type="button" id="prev" aria-label="Poprzedni slajd">←</button><div class="dots">${dots}</div><button type="button" id="next" aria-label="Następny slajd">→</button><button type="button" id="full">Pełny ekran (F)</button></nav>
 <script src="assets/pokaz.js"></script>
 </body></html>`;
 }

@@ -56,6 +56,49 @@ p{margin:0}
 .btns{display:flex;gap:1vw;flex-wrap:wrap}
 button{font:inherit;font-weight:600;cursor:pointer;border-radius:.6vh;border:2px solid var(--ai);background:var(--ai);color:#fff;padding:.55em 1.1em}
 button.ghost{background:transparent;color:var(--ai)}
+/* tryby: przegląd planu (domyślny) i ze znajomymi */
+html:not(.tryb-zn) .v-zn,html.tryb-zn .v-my{display:none!important}
+html:not(.tryb-zn) .dots a.only-zn,html.tryb-zn .dots a.only-my{display:none}
+html:not(.tryb-zn) .slide.only-zn,html.tryb-zn .slide.only-my{display:none!important}
+.modebar{display:flex;align-items:center;justify-content:space-between;gap:2vw;flex-wrap:wrap}
+.modes{display:flex;gap:.6vw}
+.modes button{background:transparent;color:var(--ai)}
+.modes button[aria-pressed="true"]{background:var(--ai);color:#fff}
+/* przegląd: lista godzin, szczegół punktu, do przemyślenia */
+.cols.v-my{grid-template-columns:30fr 42fr 28fr}
+.panel h2 small{font-family:var(--sans);font-size:.55em;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-left:.4em}
+.picks{gap:.15em}
+.picks li{display:block}
+.pick{all:unset;box-sizing:border-box;display:grid;grid-template-columns:4.6em 1fr;gap:.9em;align-items:baseline;width:100%;padding:.32em .5em;border-radius:.5vh;cursor:pointer}
+.pick:hover{background:#eef1f7}
+.pick:focus-visible{outline:3px solid var(--ai);outline-offset:1px}
+.pick.on{background:var(--ai);color:#fff}
+.pick.on .t{color:#fff}
+.pick.on .tag{color:#fff}
+.tl.dense .pick{padding:.22em .5em}
+html:not(.tryb-zn) .dayslide h1{font-size:2.05em}
+.dayslide .focus.v-my{margin-top:.35em;font-size:1.05em;font-weight:600;color:var(--muted)}
+.panel.fit{overflow:hidden}
+.detail{display:flex;flex-direction:column}
+.step{display:none}
+.step.on{display:block}
+.stime{font-weight:700;color:var(--ai);font-variant-numeric:tabular-nums;margin-bottom:.3em}
+.step h2{font-size:1.5em;margin-bottom:.45em;text-wrap:balance}
+.sdesc{font-size:1.08em;line-height:1.5}
+.sdesc p{margin:0 0 .5em}
+.sdesc a{color:var(--ai)}
+.think{font-size:.9em}
+.think dl{margin:0;display:grid;gap:.6em}
+.think dt{font-size:.78em;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ai)}
+.think dd{margin:.1em 0 0;line-height:1.35}
+.v-my .notes{flex:0 0 22%;min-height:5em}
+/* otwarte sprawy */
+.two.wide{grid-template-columns:62fr 38fr}
+.openlist{list-style:none;margin:0;padding:0;columns:2;column-gap:2vw}
+.openlist li{break-inside:avoid;display:grid;grid-template-columns:4.6em 1fr;gap:.7em;padding:.35em 0;border-bottom:1px solid var(--line)}
+.openlist time{font-weight:700;color:var(--ai);font-variant-numeric:tabular-nums;white-space:nowrap}
+.openlist b{display:block;line-height:1.25}
+.openlist span{display:block;font-size:.85em;color:var(--muted)}
 /* pasek nawigacji */
 .bar{position:fixed;left:0;right:0;bottom:0;height:6vh;display:flex;align-items:center;gap:1vw;padding:0 3.2vw;background:var(--ink);color:#fff;font-size:.82em}
 .bar .dots{display:flex;gap:.35vw;flex:1;justify-content:center;min-width:0}
@@ -69,7 +112,7 @@ button.ghost{background:transparent;color:var(--ai)}
   html,body{overflow:auto;height:auto}
   body{font-size:16px}
   .slide{position:static;display:flex;padding:20px 16px 28px;border-bottom:1px solid var(--line)}
-  .cols,.two{display:flex;flex-direction:column;gap:16px}.photo{height:200px;flex:none}
+  .cols,.two{display:flex;flex-direction:column;gap:16px}.photo{height:200px;flex:none}.openlist{columns:1}.think{font-size:1em}
   .days{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}.facts{grid-template-columns:1fr}
-  .notes textarea{min-height:120px}.bar{display:none}h1{font-size:1.8em}
+  .notes textarea{min-height:120px}.bar{display:none}.panel.fit{overflow:visible}h1{font-size:1.8em}
 }
