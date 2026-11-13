@@ -4,7 +4,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {ZDJECIA} from './data/zdjecia.mjs';
 import {PYTANIA, PYTANIA_OGOLNE} from './data/pytania.mjs';
-import {CENY, DP_KOSZTY, DP_DECYZJE, DP_SZUKAJ, DP_STOPOVER} from './data/druga-para.mjs';
+import {CENY, DP_KOSZTY, DP_DECYZJE, DP_SZUKAJ, DP_STOPOVER, DP_KUPIONE} from './data/druga-para.mjs';
 import {DAYS, GEO, DAYRAIN, DAYCROWD, BOOKINGS, DEADLINES, HOTELS, fill} from './data/index.mjs';
 /* Każda strona HTML przechodzi przez fill(): tokeny {{klucz}} z szablonów zamieniają się na fakty z data/fakty.mjs. */
 const page = (file, html) => fs.writeFileSync(DIR + '/' + file, fill(html));
@@ -555,13 +555,13 @@ function drugaParaPage(){
     return `<a class="dpday" href="days/${d.date}.html"><img src="${small(DAYIMG[d.date])}" alt="" loading="lazy" decoding="async"><span class="dpd"><b>${dd}</b> ${d.dow.slice(0,3)} · ${CN[d.city]||d.city}</span><span class="dpt">${d.title}</span>${flights[d.date]?`<span class="dpf">${flights[d.date]}</span>`:''}<span class="dps">${stays[d.date]?'Nocleg: '+sleep[stays[d.date]]:(d.date==='2027-04-28'?'Noc w samolocie':'Noc w samolocie, powrót 8.05')}</span></a>`;}).join('');
   const sum=DP_KOSZTY.reduce((s,k)=>s+k.zl,0), total=last.total+sum;
   const rows=DP_KOSZTY.map(k=>`<tr><td><b>${k.co}</b><span class="hint">${k.zrodlo}</span></td><td class="num">${plz(k.zl)}</td></tr>`).join('');
-  const dec=[...DP_DECYZJE].sort((a,b)=>a.due.localeCompare(b.due)).map(d=>`<li><time datetime="${d.due}">do ${dpl(d.due)}<em class="due" data-due="${d.due}"></em></time><div><b>${d.co}</b><p>${d.opis}</p></div></li>`).join('');
+  const dec=[...DP_DECYZJE].sort((a,b)=>a.due.localeCompare(b.due)).map(d=>d.done?`<li class="past"><time>załatwione</time><div><b>✓ ${d.co}</b><p>${d.opis}</p></div></li>`:`<li><time datetime="${d.due}">do ${dpl(d.due)}<em class="due" data-due="${d.due}"></em></time><div><b>${d.co}</b><p>${d.opis}</p></div></li>`).join('');
   const inner=`
   <header class="hero kb"><div class="hbg"><div class="hbg-img" style="background:${heroBg('kioto',IMG.fushimi)}"></div></div>
     <div class="hero-inner"><p class="eyebrow">Dwoje dorosłych i syn · 12 lat w czasie wyjazdu · te same daty</p><h1>Druga para: ceny i decyzje</h1>
-    <p class="lead">Loty Etihad na nasze daty sprawdzamy codziennie rano. Niżej ten sam kalendarz co nasz, szacunek pozostałych kosztów dla trzech osób i decyzje, które trzeba podjąć, żeby pojechać razem.</p></div></header>
-  <section id="loty"><h2 class="stitle">Loty Etihad: cena dziś</h2>
-    <div class="dpprice"><div class="dpbig"><span>Trzy bilety w obie strony</span><b>${plz(last.total)}</b><i>${plz(Math.round(last.total/3))} za osobę · ${trend}</i></div>
+    <p class="lead">${DP_KUPIONE?'Bilety Etihad są kupione, więc codzienne sprawdzanie cen zakończyliśmy. Niżej':'Loty Etihad na nasze daty sprawdzamy codziennie rano. Niżej'} ten sam kalendarz co nasz, szacunek pozostałych kosztów dla trzech osób i decyzje, które trzeba podjąć, żeby pojechać razem.</p></div></header>
+  <section id="loty"><h2 class="stitle">${DP_KUPIONE?'Loty Etihad: kupione':'Loty Etihad: cena dziś'}</h2>${DP_KUPIONE?`<div class="dayflag"><b>Kupione ${dpl(DP_KUPIONE.date)}.</b> Monitoring cen zakończony; wykres poniżej to archiwum odczytów. ${DP_KUPIONE.godziny?DP_KUPIONE.godziny:'Godziny lotów porównamy z naszymi po otrzymaniu e-biletów.'}</div>`:''}
+    <div class="dpprice"><div class="dpbig"><span>${DP_KUPIONE?'Ostatni odczyt przed zakupem':'Trzy bilety w obie strony'}</span><b>${plz(last.total)}</b><i>${plz(Math.round(last.total/3))} za osobę · ${trend}</i></div>
       <div class="dpmeta"><div><span>Ostatnia kontrola</span><b>${dpl(last.date)}</b></div><div><span>Najniżej dotąd</span><b>${plz(min.total)}</b><i>${dpl(min.date)}</i></div><div><span>Odczytów</span><b>${CENY.length}</b></div></div></div>
     <div class="card">${chart}<p class="note">Cena z Google Flights dla trzech dorosłych, Etihad, wylot 27.04 i powrót 7.05, z podatkami i opłatami. Syn w dniu wylotu ma 12 lat, a Etihad stosuje taryfę dziecięcą tylko do 11 lat, więc wszystkie trzy bilety są dorosłe. Google wycenia wariant z dwugodzinną przesiadką w Abu Zabi; nasz układ z nocą w hotelu rezerwuje się na etihad.com jako stopover i trzeba go wycenić tam.</p>
       <div class="linklist"><a href="${DP_SZUKAJ}" target="_blank" rel="noopener">To wyszukiwanie w Google Flights ↗</a><a href="${DP_STOPOVER}" target="_blank" rel="noopener">Stopover na etihad.com ↗</a></div></div>
@@ -570,7 +570,7 @@ function drugaParaPage(){
   <section id="kalendarz"><h2 class="stitle">Ten sam kalendarz co nasz</h2><p class="lead-p">Te same loty, noclegi i dni. Kliknij dzień, żeby zobaczyć nasz plan godzinowy.</p><div class="dpcal">${cal}</div></section>
   <section id="koszty"><h2 class="stitle">Pozostałe koszty dla trzech osób</h2><p class="lead-p">Szacunki z naszych rezerwacji i cenników. Nic z tego nie jest zarezerwowane dla Was.</p>
     <div class="card"><div style="overflow-x:auto"><table class="calc"><tbody>
-      <tr><td><b>Loty Etihad</b><span class="hint">Ostatni odczyt z monitora, bez dopłat za bagaż rejestrowany.</span></td><td class="num">${plz(last.total)}</td></tr>
+      <tr><td><b>Loty Etihad</b><span class="hint">${DP_KUPIONE?'Kupione; w tabeli ostatni odczyt przed zakupem, do podmiany na kwotę z e-biletów.':'Ostatni odczyt z monitora, bez dopłat za bagaż rejestrowany.'}</span></td><td class="num">${plz(last.total)}</td></tr>
       ${rows}
       <tr class="tot"><td>Razem, szacunkowo</td><td class="num">~${plz(Math.round(total/100)*100)}</td></tr></tbody></table></div>
     <p class="note">Kurs planistyczny 2,40 zł za 100 JPY. Ceny atrakcji według cenników z listopada 2026.</p></div></section>
