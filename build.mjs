@@ -1175,6 +1175,31 @@ function niezbednikPage(){
       '<i lang="ja">Kore o kudasai</i> (これをください) — „poproszę to" (wskazując palcem — działa zawsze).'])}
   </section>
 
+  <section id="przed-wyjazdem-czytanie">
+    <h2 class="stitle">Do poczytania, posłuchania i obejrzenia przed wyjazdem</h2>
+    <p class="lead-p">Wybór z listopada 2026. Poziom języka w podcastach i filmach oceniony po prowadzących, bez odsłuchu wszystkich odcinków.</p>
+    ${seg('📚 Książki',[
+      '<b>Poznaj Japonię. Twój przewodnik po Kraju Kwitnącej Wiśni</b> (Wojciech i Katarzyna Grabowscy, Wydawnictwo Yuki, 400 stron): wierzenia, ceremonia herbaty, samurajowie, manga, kuchnia i porady praktyczne. Najlepsza jako jedna książka dla rodziny; ocena 8,9/10 z 68 ocen w Lubimyczytac, cena około 89 zł.',
+      '<b>Banzai. Japonia dla dociekliwych</b> (Zofia Fabjanowska-Micyk, Dwie Siostry): ilustrowana książka o codzienności i zwyczajach. Dla Martyny, Marcela i Tomasza.',
+      '<b>Japoński wachlarz</b> (Joanna Bator): eseje antropolożki o obyczajach. Dobre przed Kioto i ceremonią herbaty.',
+      '<b>Bezsenność w Tokio</b> (Marcin Bruczkowski): lekka opowieść Polaka mieszkającego w Tokio; realia sprzed lat.',
+      '<b>Sushi i cała reszta</b> (Michael Booth): rodzina z dziećmi je przez całą Japonię. Podpowiada, czego spróbować.',
+      '<b>Tatami kontra krzesła</b> (Rafał Tomański) i <b>Dzienniki japońskie</b> (Piotr Milewski): dla chętnych na więcej o społeczeństwie i reportaż z podróży.'])}
+    ${seg('🎧 Podcasty po angielsku (Apple Podcasts)',[
+      '<a href="https://podcasts.apple.com/pl/podcast/japan-and-the-world/id1710416040" target="_blank" rel="noopener"><b>Japan and the World</b></a> — brytyjski angielski, jeden prowadzący (historyk Christopher Harding), spokojny styl radiowy. Historia i kultura.',
+      '<a href="https://podcasts.apple.com/pl/podcast/abroad-in-japan/id1338558972" target="_blank" rel="noopener"><b>Abroad in Japan</b></a> — brytyjski angielski, podróże i życie codzienne. Szybka, żartobliwa rozmowa, więc trudniejszy.',
+      '<a href="https://podcasts.apple.com/pl/podcast/uncanny-japan/id1176549358" target="_blank" rel="noopener"><b>Uncanny Japan</b></a> — amerykański angielski, wolno i wyraźnie, krótkie odcinki o wierzeniach, duchach i świątyniach.',
+      '<a href="https://podcasts.apple.com/pl/podcast/japan-experts-effortless-planning-for-meaningful-travel/id1525719412" target="_blank" rel="noopener"><b>Japan Experts</b></a> — licencjonowana japońska przewodniczka o planowaniu podróży.',
+      '<a href="https://podcasts.apple.com/pl/podcast/lost-without-japan/id1583155978" target="_blank" rel="noopener"><b>Lost Without Japan</b></a> — praktyczne porady dla turystów. <a href="https://podcasts.apple.com/pl/podcast/japan-eats/id994563121" target="_blank" rel="noopener"><b>Japan Eats!</b></a> — japońskie jedzenie.'])}
+    ${seg('▶️ Kanały na YouTube',[
+      '<a href="https://www.youtube.com/@japanguide" target="_blank" rel="noopener"><b>Japan Guide</b></a> — spokojne przewodniki po miejscach i planowaniu od redakcji japan-guide.com. Najbardziej praktyczny pod naszą trasę: Kioto, Nara, Tokio, Hakone.',
+      '<a href="https://www.youtube.com/@LifeWhereImFrom" target="_blank" rel="noopener"><b>Life Where I&#39;m From</b></a> — codzienne życie w Japonii, często oczami dzieci. Dobry do oglądania razem z dziećmi.',
+      '<a href="https://www.youtube.com/@AbroadinJapan" target="_blank" rel="noopener"><b>Abroad in Japan</b></a> — Brytyjczyk Chris Broad, podróże po całym kraju z humorem; brytyjski angielski.',
+      '<a href="https://www.youtube.com/@cakeswithfaces" target="_blank" rel="noopener"><b>Cakes with Faces</b></a> — brytyjska autorka, pomysły na miejsca i praktyczne porady przed pierwszym wyjazdem.',
+      '<a href="https://www.youtube.com/@PaolofromTOKYO" target="_blank" rel="noopener"><b>Paolo fromTOKYO</b></a> — Tokio od środka: jedzenie, dzielnice i „dzień z życia” ludzi różnych zawodów.',
+      '<a href="https://www.youtube.com/@NHKWORLDJAPAN" target="_blank" rel="noopener"><b>NHK WORLD-JAPAN</b></a> — programy japońskiej telewizji publicznej po angielsku o kulturze, jedzeniu i regionach.'])}
+  </section>
+
   <section>
     <h2 class="stitle">Dalej</h2>
     <div class="quick">
