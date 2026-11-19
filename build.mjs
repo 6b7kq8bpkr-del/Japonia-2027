@@ -2,6 +2,8 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {TRIP} from './data/statusy.mjs';
+import {calendar} from './lib/calendar.mjs';
 import {ZDJECIA} from './data/zdjecia.mjs';
 import {PYTANIA, PYTANIA_OGOLNE} from './data/pytania.mjs';
 import {CENY, DP_DECYZJE, DP_KUPIONE} from './data/druga-para.mjs';
@@ -24,7 +26,7 @@ const CLOSED = {
 /* Koszty: jedno źródło wartości kalkulatora (CALC) i kupionego biletu (TICKET). */
 const CALC = {nights:8, nightRate:1501.33, transport:5000, days:11, foodRate:500, attractions:3300, extras:3000};
 /* Numer wydania = skrót treści źródeł. Te same źródła dają identyczny build, więc w repo zmieniają się tylko strony, których treść się zmieniła. */
-const SOURCES = ['build.mjs', ...['data','src'].flatMap(d => fs.existsSync(DIR+'/'+d) ? fs.readdirSync(DIR+'/'+d).sort().map(f => d+'/'+f) : [])];
+const SOURCES = ['build.mjs', 'lib/trip-state.json', 'lib/calendar.mjs', ...['data','src'].flatMap(d => fs.existsSync(DIR+'/'+d) ? fs.readdirSync(DIR+'/'+d).sort().map(f => d+'/'+f) : [])];
 const BUILD_ID = SOURCES.reduce((h,f) => h.update(fs.readFileSync(DIR+'/'+f)), crypto.createHash('sha1')).digest('hex').slice(0,7);
 const TICKET = {family:13643.36, bag:0, total:13643.36, label:'27.04-7.05 ze stopoverem tam; powrót do WAW 8.05 - kupione 8.09.2026'};
 /* Budżet w tysiącach złotych liczony z tych samych wartości co kalkulator. */
@@ -112,6 +114,7 @@ const JPROUTE = [0,5,1,2,1,3,4,6,5,0].map(i=>JPSTOPS[i].slice(0,2));
 
 /* ============================ HOTELS ============================ */
 
+const hotelStatus = id => `<p class="note booking-status">${esc(TRIP.hotels[id]?.text || '')} Stan zestawienia: ${TRIP.reviewed}; nie jest odświeżany automatycznie.</p>`;
 const gmapsQ = name => 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name);
 // day date -> hotel id (check-in days)
 const DAYHOTEL = Object.fromEntries(DAYS.filter(d=>d.stay).map(d=>[d.date,d.stay]));
@@ -125,8 +128,9 @@ const TIMING_NOTE = 'Wszystkie godziny są miejscowe. Loty według e-biletów; p
 /* ============================ TEMPLATES ============================ */
 const TABS = [['index.html','Agenda'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['niezbednik.html','Niezbędnik'],['pogoda.html','Przed wyjazdem'],['koszty.html','Koszty'],['decyzje.html','Kulisy'],['druga-para.html','Druga rodzina'],['rezerwacje.html','Rezerwacje 🔒']];
 function nav(active,prefix){
-  const t = TABS.map(([h,l])=>`<a href="${prefix}${h}"${(h===active?' class="on" aria-current="page"':'')}>${l}</a>`).join('');
-  return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html"><span class="bj" aria-hidden="true">日本</span>Japonia 2027<span class="bcode">27.04–08.05</span></a><nav class="tabs">${t}</nav><div class="uklad" role="group" aria-label="Układ strony"><button type="button" data-u="tel" aria-pressed="false">Telefon</button><button type="button" data-u="pc" aria-pressed="false">Komputer</button></div></div></div>`;
+  const link = (h,l) => `<a href="${prefix}${h}"${h===active?' class="on" aria-current="page"':''}>${l}</a>`;
+  const more = [...TABS.filter(([h])=>!['index.html','rezerwacje.html'].includes(h)),['loty.html','Loty'],['druk.html','Druk / PDF'],['pokaz.html','Prezentacja']];
+  return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html"><span class="bj" aria-hidden="true">日本</span>Japonia 2027<span class="bcode">27.04-08.05</span></a><nav class="tabs primary-nav" aria-label="Nawigacja główna">${link('index.html','Agenda')}${link('index.html#trasa','Mapa')}${link('rezerwacje.html','Rezerwacje')}<details class="nav-more"><summary${more.some(([h])=>h===active)?' class="on"':''}>Więcej</summary><div class="nav-menu">${more.map(([h,l])=>link(h,l)).join('')}</div></details></nav><div class="uklad" role="group" aria-label="Układ strony"><button type="button" data-u="tel" aria-pressed="false">Telefon</button><button type="button" data-u="pc" aria-pressed="false">Komputer</button></div></div></div>`;
 }
 function pills(curIdx){
   const items = DAYS.map((d,i)=>{
@@ -233,7 +237,7 @@ function dayPage(d,i){
     (d.pc?'<details class="card option-detail"><summary>'+d.pc.q+'</summary>'+d.pc.opts.map(o=>'<p><b>'+o[0]+'</b><br>Za: '+o[1]+'.<br>Przeciw: '+o[2]+'.</p>').join('')+'</details>':'')+'</section>'+
     mapSec+
     '<section id="nocleg"><h2 class="stitle">Gdzie śpimy</h2>'+
-    (H?'<div class="card"><b>'+H.name+'</b><p>'+H.stay+'</p><p class="note">'+H.cancel+'</p><div class="linklist"><a href="../hotele.html#'+H.id+'">Pokój i rezerwacja</a><a href="'+gmapsQ(H.mapsq||H.name)+'" target="_blank" rel="noopener">Dojazd w Google Maps ↗</a></div></div>':'<div class="card">'+(d.date==='2027-04-28'?'Noc w samolocie do Japonii.':'Noc w podróży powrotnej; lądowanie WAW 8 maja o {{lot.waw.przylot}}.')+'</div>')+'</section>'+
+    (H?'<div class="card"><b>'+H.name+'</b><p>'+H.stay+'</p><p class="note">'+H.cancel+'</p>'+hotelStatus(H.id)+'<div class="linklist"><a href="../hotele.html#'+H.id+'">Pokój i rezerwacja</a><a href="'+gmapsQ(H.mapsq||H.name)+'" target="_blank" rel="noopener">Dojazd w Google Maps ↗</a></div></div>':'<div class="card">'+(d.date==='2027-04-28'?'Noc w samolocie do Japonii.':'Noc w podróży powrotnej; lądowanie WAW 8 maja o {{lot.waw.przylot}}.')+'</div>')+'</section>'+
     '<section><h2 class="stitle">Przydatne na miejscu</h2><div class="card"><ul class="tips">'+d.tips.map(t=>'<li>'+t+'</li>').join('')+'</ul><div class="linklist" style="margin-top:1rem">'+d.links.map(l=>'<a href="../atrakcje.html#'+l.id+'">'+l.label+'</a>').join('')+'</div></div></section>'+
     (metadata?'<details class="more detail-catalog"><summary>Godziny i ceny miejsc z katalogu</summary>'+metadata+'</details>':'')+
     '<nav class="daynav" aria-label="Sąsiednie dni"><a id="navPrev" href="'+(prev?prev.date+'.html':'../index.html#dni')+'"><div class="dir">← Poprzedni</div><div class="ttl">'+(prev?prev.dd:'Agenda')+'</div></a><a class="home" href="../index.html#dni" aria-label="Wszystkie dni">☰</a><a class="nx" id="navNext" href="'+(next?next.date+'.html':'../index.html#powrot')+'"><div class="dir">'+(next?'Następny →':'Powrót →')+'</div><div class="ttl">'+(next?next.dd:'8 maja')+'</div></a></nav>'+footer(prefix);
@@ -244,7 +248,7 @@ function deadlineList(prefix=''){
   return '<ol class="deadlines">'+DEADLINES.map(d=>'<li data-date="'+d.date+'"><time datetime="'+d.date+'">'+d.label+'<em class="due" data-due="'+d.date+'"></em></time><div><a href="'+prefix+d.href+'"><b>'+d.title+'</b></a><p>'+d.text+'</p></div></li>').join('')+'</ol>';
 }
 function readiness(){
-  return '<div class="readiness"><b>Loty i dwa shinkanseny kupione dla obu rodzin; noclegi potwierdzone dla obu rodzin</b><p>Do domknięcia: voucher stopover drugiej rodziny, miejsca w pociągach, bilety na atrakcje oraz dojazd z Hakone dla siedmiu osób. Potwierdzenia hoteli z 8.09 wskazują płatność na później.</p><a href="decyzje.html#do-zalatwienia">Sprawdź listę do załatwienia →</a> · <a href="#terminy">Terminy i pogoda</a></div>';
+  return '<div class="readiness"><b>Loty i dwa shinkanseny kupione dla obu rodzin; noclegi w Japonii potwierdzone dla obu rodzin</b><p>Do domknięcia: voucher stopover drugiej rodziny, miejsca w pociągach, bilety na atrakcje oraz dojazd z Hakone dla siedmiu osób. Potwierdzenia hoteli z 8.09 wskazują płatność na później.</p><a href="decyzje.html#do-zalatwienia">Sprawdź listę do załatwienia →</a> · <a href="#terminy">Terminy i pogoda</a></div>';
 }
 const HOTEL_STORY = {
  auh:{title:'Pierwszy wieczór w pięciogwiazdkowym Abu Zabi',text:'Grand Millennium Al Wahda daje nam wygodny początek podróży: hotelowy basen na dachu, restauracje i połączenie z Al Wahda Mall. Po locie odpoczynek, a następnego dnia czas na miasto.',perks:['Basen na dachu','5 gwiazdek','Al Wahda Mall tuż obok'],img:'auh-hotel.jpg',caption:'Zdjęcie promocyjne hotelu: przykładowe wnętrze, nie potwierdzenie standardu naszych pokoi.',moment:'Wieczorem spokojna kolacja i sen. Basen najlepiej rozważyć następnego dnia, zależnie od planu i godzin otwarcia.'},
@@ -263,7 +267,7 @@ function indexPage(){
     <span class="tt-n">${String(i+1).padStart(2,'0')}</span>
     <span class="tt-date"><b>${dnum}.${mm}</b><i>${DOW3[d.dow]||d.dow}</i></span>
     <span class="tt-city" style="--c:rgb(${CITY[d.city].c1})">${CITYNAME[d.city]||d.city}</span>
-    <span class="tt-title">${d.title}<small>${d.brief.start} · ${intLbl[it[0]]}${d.level==='r'?' (podróż)':''}</small></span>
+    <span class="tt-title">${d.title}<small>${d.brief.start} · ${intLbl[it[0]]}${['2027-04-29','2027-05-07'].includes(d.date)?' (podróż)':''}</small></span>
     ${it?`<span class="tt-int ${it[0]}" title="${intLbl[it[0]]} dzień" aria-label="${intLbl[it[0]]} dzień"></span>`:'<span></span>'}
     <img class="tt-img" src="${small(DAYIMG[d.date])}" alt="" width="88" height="56" loading="${i<3?'eager':'lazy'}" decoding="async">
   </a></li>`;}).join('');
@@ -279,7 +283,6 @@ function indexPage(){
   </div>`;
   const inner = `
   <section id="dzis" class="today" hidden aria-live="polite"></section>
-  <section id="pilnuj" class="watch" hidden></section>
   <script type="application/json" id="terminy-data">${JSON.stringify({terminy:DEADLINES.map(d=>({d:d.date,l:d.label,t:d.title,h:d.href})),sprawy:BOOKINGS.filter(b=>b.due&&!/^✅/.test(b.when)).map(b=>({id:b.id,w:b.what,due:b.due,from:b.from||null}))}).replace(/</g,'\\u003c')}</script>
   <header class="hero home">
     <div class="hbg"><div class="hbg-img" style="background-image:url('${IMG.fuji}')"></div></div>
@@ -288,10 +291,11 @@ function indexPage(){
       <p class="eyebrow">Przewodnik dwóch rodzin · 7 osób · 11 dni programu + powrót · Narita → Kioto → Tokio → Hakone</p>
       <h1>Japonia 2027</h1>
       <p class="lead">27 kwietnia - 8 maja 2027. Noc w Abu Zabi, cztery noce w Kioto z dniem w Narze, trzy w Tokio i prywatna kąpiel w Hakone. Jelenie w Narze, Złoty Pawilon, herbata KOTO i czas na odpoczynek. Powrót do Warszawy 8 maja o {{lot.waw.przylot}}.</p>
-      <div class="chips"><span class="chip hanko">Bilety kupione dla 7 osób</span><span class="chip">noc w Abu Zabi gratis</span><span class="chip">8 nocy w Japonii</span><span class="chip">Dzień Dziecka w Tokio</span><span class="chip">ryokan nad jeziorem</span></div>
+      <div class="chips"><span class="chip hanko">Bilety kupione dla 7 osób</span><span class="chip">stopover: voucher drugiej rodziny w toku</span><span class="chip">8 nocy w Japonii</span><span class="chip">Dzień Dziecka w Tokio</span><span class="chip">ryokan nad jeziorem</span></div>
     </div>
     <div class="scrollcue" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
   </header>
+  <section id="pilnuj" class="watch" hidden></section>
   <script type="application/json" id="agenda">${JSON.stringify(DAYS.map(d=>({d:d.date,t:d.title,dd:d.dow+' '+d.dd,s:d.tl.map(([time,title])=>[time,title])}))).replace(/</g,'\\u003c')}</script>
 
   <section class="statband" aria-label="Podróż w liczbach">
@@ -325,7 +329,7 @@ function indexPage(){
   </section>
 
   <section id="siodemka"><h2 class="stitle">Jak podróżujemy w siódemkę</h2><div class="card"><ul class="tips">
-      <li><b>Dwie rodziny, loty i shinkanseny kupione.</b> Loty i oba długie przejazdy kolejowe są kupione dla obu rodzin. Pociągi drugiej rodziny są osobnymi rezerwacjami na naszym koncie SmartEX. Pokoje w Japonii dla Joanny, Marcina i Tomasza wymagają jeszcze potwierdzenia. Wspólne bilety na atrakcje kupuje jedna osoba.</li>
+      <li><b>Dwie rodziny, loty i shinkanseny kupione.</b> Loty i oba długie przejazdy kolejowe są kupione dla obu rodzin. Pociągi drugiej rodziny są osobnymi rezerwacjami na naszym koncie SmartEX. Hotele w Japonii są potwierdzone dla obu rodzin; voucher stopover drugiej rodziny pozostaje do otrzymania. Wspólne bilety na atrakcje kupuje jedna osoba.</li>
       <li><b>Taksówka zabiera cztery osoby.</b> Siedem osób to dwa samochody: minivany i duże auta z aplikacji mieszczą najwyżej sześć. Jedno auto dla wszystkich to tylko dziewięcioosobowy van zamówiony wcześniej. Tam, gdzie się da, jedziemy metrem, pociągiem albo autobusem.</li>
       <li><b>Stolik dla siedmiu trzeba zarezerwować.</b> Zwłaszcza w Gion 30.04, w Shibui 4.05 i na urodziny Marcela 5.05. Małe bary posadzą nas osobno.</li>
       <li><b>Wspólne sesje kupujemy razem:</b> herbata KOTO, pokaz sumo, Shibuya Sky, Romancecar i miejsca w shinkansenach w tym samym wagonie.</li>
@@ -335,7 +339,7 @@ function indexPage(){
       <li><b>Każda rodzina ma swoje terminy.</b> Rezerwacje hoteli drugiej rodziny mają własne terminy bezpłatnego anulowania; sprawdzajcie je w jej potwierdzeniach, nie w naszych.</li>
       <li><b>Rozdzielamy się, gdy zainteresowania się różnią.</b> Popołudnie 2.05, zakupy w Harajuku 4.05 i Kiyomizu po sjeście 30.04 to naturalne momenty na dwa tempa.</li>
     </ul></div></section>
-  <section id="terminy"><h2 class="stitle">Najważniejsze terminy</h2><p class="lead-p">Strona odlicza dni do każdego terminu, a najbliższy pokazuje na górze. Żeby telefon przypomniał o nich sam, <a href="terminy.ics">dodajcie terminy do kalendarza</a> (plik z przypomnieniem dzień wcześniej). Terminy hoteli pochodzą z potwierdzeń Booking sprawdzonych 9.09.2026.</p>${deadlineList()}</section>
+  <section id="terminy"><h2 class="stitle">Najważniejsze terminy</h2><p class="lead-p">Strona odlicza dni do każdego terminu, a najbliższy pokazuje pod zdjęciem głównym. Żeby telefon przypomniał o nich sam, <a href="terminy.ics">dodajcie terminy do kalendarza</a> (osobne płatności, godziny sprzedaży i przypomnienia tydzień przed anulowaniem). Stan zestawienia: ${TRIP.reviewed}. Importujcie do osobnego kalendarza „Japonia 2027” i włączcie powiadomienia. Jeśli macie starszy import, zastąpcie go nowym w tym osobnym kalendarzu, żeby nie zdublować terminów. Plik nie synchronizuje się automatycznie; nie usuwa się innych kalendarzy.</p>${deadlineList()}</section>
   <section>
     <h2 class="stitle">Przewodnik</h2>
     ${quick}
@@ -360,12 +364,12 @@ function kosztyPage(){
 
   <section>
     <h2 class="stitle">Bilety lotnicze</h2>
-    <div class="pflag">✈️ <span><b>Etihad ${TICKET.label}</b>. Bilety są kupione, koszt jest znany: {{bilety.suma}} za rodzinę (z hotelem 4★ w Abu Zabi w pakiecie), bez bagażu rejestrowanego. Szczegóły na zakładce <a href="loty.html">Loty</a>.</span></div>
+    <div class="pflag">✈️ <span><b>Etihad ${TICKET.label}</b>. Bilety są kupione, koszt jest znany: {{bilety.suma}} za rodzinę (z noclegiem w Grand Millennium Al Wahda 5★ w pakiecie), bez bagażu rejestrowanego. Szczegóły na zakładce <a href="loty.html">Loty</a>.</span></div>
     <div class="card"><ul class="tips">
       <li>Cztery e-bilety kosztowały razem {{bilety.suma}}. Kalkulator uwzględnia dokładną kwotę biletu; sumy wyświetlamy w pełnych złotych.</li>
-      <li>Historia cen, porównanie linii i wybór terminu zostały na zakładce Loty jako archiwum — pokazują, dlaczego wybór padł na Etihad ze stopoverem.</li>
+      <li>Zakładka Loty pokazuje kupione połączenia, stopover i zasady bagażu. Monitoring cen jest zakończony.</li>
     </ul>
-    <a class="gmap" href="loty.html">✈️ Zobacz ceny, trendy i strategię zakupu → </a></div>
+    <a class="gmap" href="loty.html">✈️ Zobacz kupione loty i bagaż → </a></div>
   </section>
 
   <section>
@@ -373,8 +377,8 @@ function kosztyPage(){
     <p class="lead-p">Kontrola 9.09.2026. Przeliczenie planistyczne: 100 JPY = 2,40 zł. Taryfy na konkretny pociąg i dzień w 2027 trzeba potwierdzić; Golden Week może oznaczać dopłatę sezonową. Liczymy trzy bilety dorosłe i jeden dziecięcy.</p>
     ${seg('Przejazdy między miastami',[
       '<b>Narita → Tokio → Kioto</b> (29.04): NEX do Shinagawy; cena w jedną stronę zależy od stacji docelowej (do Tokyo Station obecnie 3 140 JPY/dorosły, do Shinagawy sprawdźcie przy zakupie); shinkansen zarezerwowany w SmartEX: {{sk.cena}} za rodzinę ({{sk.dorosly}} dorosły, {{sk.dziecko}} dziecko). NEX kupuje się osobno w JR East.',
-      
-      
+
+
       '<b>Kioto → Tokio</b> (3.05): shinkansen zarezerwowany w SmartEX, {{sk.cena}} za rodzinę. Ostateczny pociąg i siedem miejsc w dwóch rezerwacjach potwierdzą maile z 3.04.', '<b>Odawara → Shinagawa → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
       '<b>Kolej międzymiastowa: około 3,2 tys. zł za rodzinę</b>, z czego {{sk.razem}} (około {{sk.razem.zl}}) to dwa zarezerwowane shinkanseny; do tego Hakone, Nara, komunikacja miejska i taksówki. Przejazd do Nary i z powrotem to zwykła kolej Kintetsu, płatna kartą IC. Jest częścią puli transportu 5000 zł, nie dopłatą do niej.', '<b>Do sprawdzenia przed zakupem:</b> N’EX TOKYO Round Trip Ticket ważny 14 dni: obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko, czyli 18 200 JPY (około 437 zł) za oba przejazdy rodziny. Daty 29.04 i 7.05 mieszczą się w ważności. Sprawdźcie uprawnienia i zarezerwujcie konkretne pociągi.',
       'Standardowy JR Pass nie jest tu domyślnym zakupem. Porównajcie pełny koszt z biletami punktowymi; uprawnienie do Nozomi wymaga dodatkowych warunków/opłaty'])}
@@ -383,7 +387,7 @@ function kosztyPage(){
   <p class="note">Źródła taryf: <a href="https://www.jreast.co.jp/en/multi/nex/tickets/" target="_blank" rel="noopener">JR East NEX</a>, <a href="https://www.jreast.co.jp/en/multi/pass/nex.html" target="_blank" rel="noopener">bilet NEX tam i z powrotem</a>, <a href="https://smart-ex.jp/en/product/plan/service/" target="_blank" rel="noopener">SmartEX i dopłaty sezonowe</a>, <a href="https://www.hakonenavi.jp/international/en/discount_passes/free_pass" target="_blank" rel="noopener">Hakone Freepass</a>.</p>
   <section>
     <h2 class="stitle">Kalkulator kosztów</h2>
-    <p class="lead-p">Szacunek dla <b>2+2</b> na cały wyjazd. W japońskiej kolei liczymy trzy taryfy dorosłe i jedną dziecięcą (10 lat); zaokrąglenia zależą od biletu. Linie lotnicze i atrakcje mają własne progi wieku. Wszystkie pola możesz edytować - suma i kolumna naszej rodziny w zestawieniu obu rodzin aktualizują się razem. Zmiany zapisują się w przeglądarce. Własne zapisane wartości mogą różnić się od nowego budżetu bazowego; przycisk przywracania na dole wczyta aktualne kwoty. Wydruk pokazuje budżet bazowy, nie prywatne zmiany kalkulatora.</p>
+    <p class="lead-p">Szacunek dla <b>2+2</b> na cały wyjazd. W japońskiej kolei liczymy trzy taryfy dorosłe i jedną dziecięcą (10 lat); zaokrąglenia zależą od biletu. Linie lotnicze i atrakcje mają własne progi wieku. Wszystkie pola możesz edytować - suma naszej rodziny aktualizuje się na bieżąco. Zmiany zapisują się w przeglądarce. Własne zapisane wartości mogą różnić się od nowego budżetu bazowego; przycisk przywracania na dole wczyta aktualne kwoty. Wspólny wydruk nie pokazuje porównania kosztów rodzin.</p>
     <div class="card calc">
       <table>
         <thead><tr><th>Kategoria</th><th style="text-align:right">Ilość / stawka</th><th style="text-align:right">Kwota (zł)</th></tr></thead>
@@ -479,7 +483,7 @@ function hotelePage(){
         <div class="hstay">${H.stay}</div>
         <h3>${H.name}</h3>
         <h4 class="hotel-story-title">${HOTEL_STORY[H.id].title}</h4><p class="desc">${HOTEL_STORY[H.id].text}</p><ul class="hotel-perks">${HOTEL_STORY[H.id].perks.map(x=>`<li>${x}</li>`).join('')}</ul><p class="hotel-moment">${HOTEL_STORY[H.id].moment}</p><details class="hotel-practical"><summary>Pokój, meldunek i ważne ustalenia</summary><p class="desc">${H.desc}</p></details>
-        <div class="meta"><span>📍 ${H.near}</span></div><p class="booking-deadline"><b>Anulowanie:</b> ${H.cancel}</p>
+        <div class="meta"><span>📍 ${H.near}</span></div><p class="booking-deadline"><b>Anulowanie:</b> ${H.cancel}</p>${hotelStatus(H.id)}
         ${H.jp?`<div class="jpaddr"><span lang="ja">${H.jp}</span><button type="button" class="jpcopy" data-addr="${H.jp}" title="Skopiuj adres">Kopiuj</button></div>`:''}
         <div class="links"><a href="${gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a>${H.book?`<a href="${H.book}" target="_blank" rel="noopener">Rezerwacja na Booking →</a>`:''}</div>
       </div>
@@ -520,7 +524,7 @@ function hotelePage(){
       <li><b>Rezerwacje są potwierdzone.</b> Przy ewentualnej zmianie najpierw sprawdźcie dostępność nowego pokoju dla czterech osób i oba terminy anulowania. Pobyt w Kiocie wypada podczas Golden Week.</li>
       <li>Ryokan w Hakone: Hanaori nad jeziorem Ashi, pokój Deluxe dla 4 osób z prywatną wanną bez wody termalnej, kolacją i śniadaniem. Rodzinny onsen jest osobną, niezarezerwowaną opcją. Bezpłatne anulowanie tylko do 2.05.2027, 23:59 JST.</li>
       <li>Numery potwierdzeń, płatności i rozliczenia: <a href="rezerwacje.html">zakładka prywatna</a>. Terminy anulowania sprawdzajcie dla własnej rodziny.</li>
-      
+
       <li>Adresy dla taksówkarza najlepiej pokazywać z Google Maps po japońsku — kliknięcie zdjęcia hotelu otwiera właściwe miejsce od razu.</li>
     </ul></div>
   </section>
@@ -538,7 +542,7 @@ function decyzjePage(){
     '<section id="do-zalatwienia"><h2 class="stitle">Do załatwienia</h2><p class="lead-p">Sprawy są ułożone według terminu, a przy każdej strona odlicza dni i oznacza te, które można już załatwić albo które są po terminie. Zaznaczenia zapisują się tylko na tym urządzeniu. Przypomnienia w telefonie daje plik kalendarza: <a href="terminy.ics">dodaj terminy do kalendarza</a>.</p><div class="card"><div class="ckhead"><b id="ckcount">0</b><span id="cknext"></span></div><div class="ckbar"><div id="ckfill"></div></div><ul class="cklist">'+checklist+'</ul><button class="reset" type="button" id="ckreset">Wyczyść zaznaczenia</button></div></section>'+
     '<section><h2 class="stitle">Potwierdzone elementy</h2><div class="card"><p class="note" style="margin-top:0">Numery rezerwacji trzymamy poza stroną: w potwierdzeniach i w osobnym pliku zapisanym w telefonach dorosłych.</p><ul class="tips">'+BOOKINGS.filter(b=>/^✅/.test(b.when)).map(b=>'<li><b>'+b.what+'</b>: '+b.note+'</li>').join('')+'</ul></div></section>'+
     '<section id="terminy"><h2 class="stitle">Terminy i pogoda</h2>'+deadlineList()+'<p class="note">Prognoza 7 dni wcześniej jest wskazówką, nie gwarancją. Ostrzeżenia pogodowe, status transportu i zasady anulowania są osobnymi rzeczami. Termin bezpłatnego odwołania Hanaori mija przed wyjazdem do Hakone.</p></section>'+
-    '<section id="rytm"><h2 class="stitle">Rytm grupy: dwie rodziny, troje dzieci</h2><p class="lead-p">Najbardziej wymagające podróże to 29.04 i 7.05. Intensywny jest także długi spacer przez Harajuku i Shibuyę 4.05; Nara 1.05 kończy się wczesnym popołudniem. Chronimy przerwy i wolne popołudnie 5.05; przy zmęczeniu skracamy opcje, nie odpoczynek. Lekki program 27.04 oznacza mało zwiedzania, nie brak zmęczenia lotem.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
+    '<section id="rytm"><h2 class="stitle">Rytm grupy: dwie rodziny, troje dzieci</h2><p class="lead-p">Najbardziej wymagające podróże to 29.04 i 7.05. Intensywny jest także długi spacer przez Harajuku i Shibuyę 4.05; Nara 1.05 kończy się powrotem do hotelu około 16:15. Zmiana bazy i sumo 3.05 to także intensywny dzień - chronimy godzinę przerwy po meldunku. Chronimy przerwy i wolne popołudnie 5.05; przy zmęczeniu skracamy opcje, nie odpoczynek. Lekki program 27.04 oznacza mało zwiedzania, nie brak zmęczenia lotem.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
     '<section id="zmiany"><h2 class="stitle">Jak modyfikować plan</h2><div class="card more">'+
     '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. 30.04 odpuszczacie Kiyomizu; 1.05 pomijacie Kasuga Taisha; 2.05 po herbacie wracacie prosto do hotelu; 4.05 pomijacie Meiji, a w sklepach nie czekacie w kolejkach; 5.05 Akihabara jest dodatkiem. Opuszczona atrakcja nie przechodzi automatycznie na jutro.</p></details>'+
     '<details><summary>Jak zdjęcia zmieniły program?</summary><p>1.05 jedziemy do Nary; Osaka z Sushiro Esaka ze zdjęcia została wariantem. 2.05 herbata w KOTO ze zdjęcia łączy się ze Złotym Pawilonem, który stoi tuż obok; sklep Kinugasa i Nishiki są opcją na popołudnie. 30.04 po sjeście jest opcjonalne Kiyomizu z zejściem do Gion. Hotele i zarezerwowane shinkanseny bez zmian. <a href="atrakcje.html#guide-tips">Identyfikacja zdjęć i źródła →</a></p></details>'+
@@ -723,11 +727,11 @@ function drukPage(){
         <div class="dwhen">${d.dow} · ${d.dd} 2027${it?` · <b class="ti-${it[0]}">${IL[it[0]]}</b>`:''}</div>
       </div>
       <h2>${d.title}</h2>
-      <p class="lead">${d.lead}</p><p class="note"><b>${d.brief.start} · ${d.brief.end}</b><br>${TIMING_NOTE}</p><p class="blk"><b>Ważne:</b> ${d.brief.check}</p>
+      <p class="lead">${d.lead}</p><p class="note"><b>${d.brief.start} · ${d.brief.end}</b></p><p class="blk"><b>Ważne:</b> ${d.brief.check}</p>
       <table class="agenda">${rows}</table>
       <div class="facts">${facts}</div>
       ${fx?`<div class="flex"><p><b>Chronimy:</b> ${fx[0]}</p><p><b>✂️ Można odpuścić:</b> ${fx[1]}</p></div>`:''}
-      ${H?`<p class="blk"><b>🏨 Baza:</b> ${H.name} - ${H.near}<br><b>Nasza czwórka:</b> ${H.cancel}<br>Druga rodzina: pokój i warunki jej rezerwacji do potwierdzenia.</p>`:''}
+      ${H?`<p class="blk"><b>🏨 Baza:</b> ${H.name}<br>${esc(TRIP.hotels[H.id]?.text || 'Sprawdź aktualne potwierdzenie noclegu.')}</p>`:''}
       ${d.tips&&d.tips.length?`<div class="blk"><b>Wskazówki</b><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`:''}
       ${DAYRAIN[d.date]?`<div class="blk"><b>☔ Jeśli pada</b><p>${DAYRAIN[d.date]}</p></div>`:''}
       <div class="pfoot">Japonia 27 kwietnia – 8 maja 2027 · Dzień ${i+1} — ${d.dd}</div>
@@ -758,21 +762,22 @@ function drukPage(){
     <div class="pfoot">Japonia 27 kwietnia – 8 maja 2027 · Plan podróży</div>
   </section>
 
-  <section class="pg" id="dwie-rodziny"><h2>Podróżujemy razem</h2><p>${GROUP_RULE}</p><p>Loty, dwa długie shinkanseny i hotele w Japonii są zarezerwowane dla obu rodzin. Miejsca w pociągach będą potwierdzone bliżej podróży. Pozostałe przejazdy i atrakcje wymagają rezerwacji.</p><p>Potwierdzenia, terminy płatności i rozliczenia: prywatna zakładka na stronie, dostępna po podaniu hasła.</p></section>
+  <section class="pg" id="dwie-rodziny"><h2>Podróżujemy razem</h2><p>${GROUP_RULE}</p><p>${TIMING_NOTE}</p><p>Loty, dwa długie shinkanseny i hotele w Japonii są zarezerwowane dla obu rodzin. Miejsca w pociągach będą potwierdzone bliżej podróży. Pozostałe przejazdy i atrakcje wymagają rezerwacji.</p><p>Potwierdzenia, terminy płatności i rozliczenia: prywatna zakładka na stronie, dostępna po podaniu hasła.</p></section>
   ${days}
+  <section class="pg deadlines-print"><h2>Terminy i przypomnienia</h2><p>Stan ${TRIP.reviewed}. Godziny w opisach wskazują strefę czasową. Osobne płatności i anulowania obu rodzin; kwoty i numery pozostają w zakładce prywatnej.</p><p><a href="https://japonia-2027.vercel.app/terminy.ics">Pobierz kalendarz</a>. Anulowanie hoteli i przegląd shinkansenów mają alarm tydzień wcześniej. Sam wydruk nie wysyła przypomnień.</p><table class="agenda"><thead><tr><th>Termin</th><th>Co zrobić</th></tr></thead><tbody>${DEADLINES.map(d=>`<tr><td>${d.label}</td><td><b>${d.title}</b><span class="dsc">${d.text}</span></td></tr>`).join('')}</tbody></table></section>
 
   <section class="pg">
     <div class="dhead"><div class="dnum">Aneks</div><div class="dwhen">Noclegi, terminy i praktyka</div></div>
     <h2>Informacje praktyczne</h2>
 
-    <h3>Noclegi naszej czwórki - potwierdzone</h3>
+    <h3>Noclegi obu rodzin w Japonii - potwierdzone</h3>
     <p class="note">Te same bazy dla obu rodzin. Terminy anulowania należy sprawdzać we własnym potwierdzeniu; rozliczenia są dostępne prywatnie.</p>
     <table class="agenda">${hotels}</table>
-    
+
 
     <h3>Terminy i rezerwacje</h3>
     <p class="note">Loty i dwa długie shinkanseny są kupione dla obu rodzin. Hotele w Japonii potwierdzone dla obu rodzin. KOTO, sumo, Café i taras wymagają rezerwacji. Dla Café potrzebne dwie rezerwacje 4+3, dwa adresy e-mail i ten sam slot; sąsiedztwo nie jest gwarantowane. Daty sprzedaży wymagają ponownej kontroli w 2027.</p>
-    <table class="agenda">${DEADLINES.map(x=>`<tr><td>${x.label}</td><td><b>${x.title}</b><span class="dsc">${x.text}</span></td></tr>`).join('')}</table>
+    <p class="note">Wszystkie daty są w poprzedniej sekcji „Terminy i przypomnienia”.</p>
     <h3>Transport i pieniądze</h3>
     <p class="note">Shinkanseny: SmartEX. NEX: JR East. Romancecar: Odakyu. Terminy, warunki zmiany i miejscówki sprawdzajcie w każdym systemie osobno. Na przylocie rezerwacja kolei powinna pozwalać na opóźnienie lotu i formalności.</p>
     <p class="note">Rozliczenia i szczegóły płatności znajdują się w prywatnej zakładce rezerwacji.</p>
@@ -783,8 +788,8 @@ function drukPage(){
       <li><b>Prąd:</b> 100 V, gniazdka typu A (dwa płaskie bolce) — potrzebny adapter.</li>
       <li><b>Alarmowe:</b> 110 policja · 119 pogotowie i straż. Woda z kranu jest zdatna do picia.</li>
       <li><b>Zwyczaje:</b> buty zdejmujemy w ryokanie i świątyniach; w pociągach cisza; koszy na śmieci prawie nie ma.</li>
-      <li><b>Pranie:</b> pralnie samoobsługowe w obu MIMARU. Główne pranie 2.05 po powrocie do Kioto od 15:45; dogrywka 5.05 od 15:00, przed pakowaniem i kolacją. Dwie rodziny uzgadniają kolejność; nie zakładamy dwóch wolnych pralek. Opłaty i dostępność maszyn potwierdźcie na miejscu. W Hakone prania nie ma.</li>
-      <li><b>Bagaż:</b> tylko podręczny — 7 kg i 56×36×23 cm na osobę, <b>razem z wagą walizki</b> (miękka 1,2–1,5 kg, twarda 2,4–3,0 kg). Pakujemy na 5 dni: 4 T-shirty, 1 spodnie zapasowe, 5 kompletów bielizny i skarpet, kurtka przeciwdeszczowa, klapki. Najcięższe rzeczy na sobie. Bez bagażu rejestrowanego w obie strony — zakupy muszą zmieścić się w limicie; ewentualną dopłatę i termin zakupu sprawdźcie w Manage Booking po ważeniu 5.05. Nie zakładamy stałej ceny.</li>
+      <li><b>Pranie:</b> pralnie samoobsługowe w obu MIMARU. Jeśli wybieracie wariant z praniem: 2.05 po powrocie do Kioto od 15:45; opcjonalnie 5.05 od 15:00, przed pakowaniem i kolacją. Dwie rodziny uzgadniają kolejność; nie zakładamy dwóch wolnych pralek. Opłaty i dostępność maszyn potwierdźcie na miejscu. W Hakone prania nie ma.</li>
+      <li><b>Bagaż:</b> tylko podręczny — 7 kg i 56×36×23 cm na osobę, <b>razem z wagą plecaka</b>. Jedna para butów na nogach, bez laptopa i ręcznika. Z praniem: 4 koszulki i 5 kompletów bielizny. Bez prania: 5-6 koszulek w plecaku plus jedna na sobie, bielizna na każdy dzień. Sprawdźcie wagę własnego zestawu; każda rodzina wybiera wariant osobno. Bez bagażu rejestrowanego w obie strony — zakupy muszą zmieścić się w limicie; ewentualną dopłatę i termin zakupu sprawdźcie w Manage Booking po ważeniu 5.05. Nie zakładamy stałej ceny.</li>
       <li><b>Tax-free w 2027:</b> nowy system zwrotu po potwierdzeniu wywozu. Płaćcie zgodnie z zasadami sklepu, zachowajcie dokumenty i dostęp do towarów przed nadaniem bagażu. Nie zakładajcie automatycznego zwrotu gotówki na lotnisku.</li>
     </ul>
     <div class="pfoot">Japonia 27 kwietnia – 8 maja 2027 · Aneks praktyczny</div>
@@ -884,10 +889,25 @@ h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:22px 0 8px}
   h1{font-size:34pt}h2{font-size:18pt}h3{font-size:13pt;margin:16px 0 6px}
   .cfacts b{font-size:19pt}
   .agenda{font-size:9.5pt}
+  .agenda td{padding:5px 0}
+  .dsc{font-size:9pt;line-height:1.35}
+  .blk{margin-top:9px;font-size:9pt}
+  .lead{margin-bottom:10px}
+  .deadlines-print th{text-align:left}
+  .deadlines-print td:first-child{width:23%;padding-right:12px}
+  .deadlines-print thead{display:table-header-group}
   .booking-budget tr,.agenda tr,.toc li,.facts span,.flex p{page-break-inside:avoid;break-inside:avoid}
   .day h2,.dhead{page-break-after:avoid;break-after:avoid}
-  .pfoot{position:static;margin-top:8mm}
-  .pg{padding-bottom:14mm}
+  .day{line-height:1.28}
+  .day .dhead{margin-bottom:8px}
+  .day .dsc{line-height:1.28}
+  .day .facts{margin-top:8px}
+  .day .facts span{padding:5px 8px}
+  .day .flex{margin-top:8px}
+  .day .flex p{padding:5px 8px}
+  .day .pfoot{margin-top:4px}
+  .pfoot{position:static;margin-top:3mm;break-before:avoid;page-break-before:avoid}
+  .pg{padding-bottom:0}
   a{color:inherit;text-decoration:none}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
@@ -928,8 +948,8 @@ function lotyPage(){
         <li>WAW {{lot.waw.odlot}} → AUH {{lot.auh.przylot}} (27.04) · nocleg · AUH {{lot.auh.odlot}} → Narita {{lot.nrt.przylot}} (29.04) · powrót Narita {{lot.nrt.odlot}} (7.05) → WAW {{lot.waw.przylot|h}} <b>w sobotę 8.05</b>.</li>
       <li><b>Koszt znany:</b> cztery e-bilety razem <b>{{bilety.suma}}</b>, z noclegiem w Abu Zabi w pakiecie.</li>
         <li>Miejsca obok siebie: 8.09 Etihad dodał bezpłatną notatkę do rezerwacji (rodzina razem, 10-latek przy rodzicu, 13-latek blisko reszty, wszystkie odcinki) — numer sprawy w mailu od Etihada. Płatnych miejsc nie kupiono; konkretny przydział przy odprawie, zależnie od dostępności.</li>
-        <li><b>Bez bagażu rejestrowanego w obie strony</b> (decyzja 8.09) — cztery podręczne po 7 kg to cały bagaż wyjazdu. 5.05 zważcie każdy bagaż. Jeśli przekroczy limit, sprawdźcie cenę i termin zakupu bagażu rejestrowanego w Manage Booking. Nie zakładamy stałej dopłaty ani dostępności tej samej ceny na lotnisku.</li>
-        <li>Termin przesunięty 7.09 z 3–14 maja na 27.04–7.05 (wycieczka klasowa dziecka 10.05); w Google ta sama cena biletu, kwota ze stopoverem do potwierdzenia w kasie.</li>
+        <li><b>Bez bagażu rejestrowanego w obie strony</b> (decyzja 8.09) — nasza rodzina ma cztery bagaże podręczne po 7 kg; druga rodzina trzy, każdy z własnym limitem. 5.05 zważcie każdy bagaż. Jeśli przekroczy limit, sprawdźcie cenę i termin zakupu bagażu rejestrowanego w Manage Booking. Nie zakładamy stałej dopłaty ani dostępności tej samej ceny na lotnisku.</li>
+        <li>Termin przesunięty 7.09 z 3–14 maja na 27.04–7.05 (wycieczka klasowa dziecka 10.05); w Google ta sama cena biletu, ostateczna kwota kupionych biletów jest podana powyżej.</li>
       </ul>
     </div>
   </section>
@@ -989,9 +1009,9 @@ function pogodaPage(){
   </section>
   <section>
     <h2 class="stitle">Ile wolno zabrać</h2>
-    <p class="lead-p">Lecimy Etihadem w taryfie Economy Basic: jedna sztuka podręczna na osobę, <b>7 kg i 56×36×23 cm</b>, bez bagażu rejestrowanego w cenie. Cztery małe walizki jadą z nami przez cały wyjazd — dlatego kurier na lotnisko wypadł z planu.</p>
+    <p class="lead-p">Lecimy Etihadem w taryfie Economy Basic: jedna sztuka podręczna na osobę, <b>7 kg i 56×36×23 cm</b>, bez bagażu rejestrowanego w cenie. Podróżujemy z plecakami kabinowymi: cztery w naszej rodzinie i trzy w drugiej. Każdy ma osobny limit; nie traktujemy 49 kg jako wspólnego limitu do podziału.</p>
     <div class="card"><ul class="tips">
-      <li><b>Waga jest limitem, nie objętość.</b> 7 kg waży się przy odprawie. Źródła różnią się co do tego, czy w ekonomii Etihadu dochodzi jeszcze mała sztuka osobista — przy locie bez bagażu rejestrowanego to realna różnica, więc potwierdźcie w „Manage booking”.</li>
+      <li><b>Obowiązuje masa i rozmiar.</b> Zważcie spakowany plecak i zmierzcie go po wypełnieniu. Aktualne <a href="https://www.etihad.com/en/help/faq/baggage" target="_blank" rel="noopener">FAQ Etihad</a> wskazuje jedną sztukę w Economy: 7 kg, 56×36×23 cm. Nie zakładamy drugiego dużego plecaka gratis. Limit z biletu sprawdźcie ponownie przed wylotem; odprawa online nie wyklucza kontroli.</li>
       <li><b>Zakupy muszą mieścić się w limicie każdego pasażera.</b> Tabele wag są przykładem, nie wynikiem ważenia waszych walizek. Zapas jednej osoby nie zwiększa automatycznie limitu drugiej. <b>Plan B:</b> 5.05 przed kolacją zważcie każdy bagaż i w razie potrzeby wyceńcie bagaż rejestrowany w Manage Booking. Sprawdźcie warunki trasy z przesiadką; dopłata i termin zakupu nie są tutaj potwierdzone.</li>
       <li><b>Kurier niepotrzebny.</b> Takkyūbin (~2 000–2 800 ¥/szt.) opłaca się przy dużych walizkach — przy podręcznych taniej i prościej wziąć je ze sobą. Jedyny odcinek, gdzie warto rozważyć dowóz, to pętla w Hakone: bagaż zostawiacie przy dworcu Yumoto, czeka w ryokanie.</li>
     </ul></div>
@@ -999,7 +1019,7 @@ function pogodaPage(){
 
   <section>
     <h2 class="stitle">Plan pakowania — 7 kg na osobę</h2>
-    <p class="lead-p">Cztery podręczne to cały bagaż wyjazdu. <b>Limit 7 kg obejmuje samą walizkę</b>, a to jest różnica, która decyduje o wszystkim: twarda kabinówka waży 2,4–3,0 kg i zjada 40% przydziału, miękka torba albo plecak 1,2–1,5 kg. Wybierzcie miękkie — zostaje wtedy ~5,5 kg na rzeczy. Drugi trik: <b>najcięższe ubrania i buty macie na sobie</b> w dniu lotu, bo to się nie liczy.</p>
+    <p class="lead-p">Listy poniżej to wariant z jednym praniem, na osobę. <b>Limit 7 kg obejmuje plecak i jego zawartość.</b> Zważcie własny model; przy masie plecaka 1,5 kg zostaje 5,5 kg na rzeczy. Zakładamy jedną parę wygodnych butów na nogach, bez laptopa i ręcznika. Nie dokładamy drugiej pary do plecaka.</p>
     <div class="card" style="padding:0;overflow:hidden"><div style="overflow-x:auto"><table class="rhythm">
       <thead><tr><th>Dorosły — do bagażu</th><th>Ile</th><th>Waga</th></tr></thead>
       <tbody>
@@ -1010,21 +1030,21 @@ function pogodaPage(){
         <tr><td class="dcol">Bielizna</td><td>5</td><td>250 g</td></tr>
         <tr><td class="dcol">Skarpety <small>(bez dziur — buty zdejmuje się kilka razy dziennie)</small></td><td>5</td><td>250 g</td></tr>
         <tr><td class="dcol">Koszulka do spania <small>(w ryokanie jest yukata)</small></td><td>1</td><td>200 g</td></tr>
-        <tr><td class="dcol">Buty wsuwane lub klapki</td><td>1 para</td><td>350 g</td></tr>
+
         <tr><td class="dcol">Kurtka przeciwdeszczowa, składana</td><td>1</td><td>250 g</td></tr>
         <tr><td class="dcol">Parasol składany</td><td>1</td><td>250 g</td></tr>
         <tr><td class="dcol">Kosmetyczka <small>(wszystko do 100 ml — reszta jest w hotelu)</small></td><td>—</td><td>400 g</td></tr>
         <tr><td class="dcol">Apteczka podręczna</td><td>—</td><td>200 g</td></tr>
         <tr><td class="dcol">Ładowarka, kable, powerbank, adapter typu A</td><td>—</td><td>540 g</td></tr>
         <tr><td class="dcol">Płócienna torba na zakupy + worek na brudne</td><td>2</td><td>150 g</td></tr>
-        <tr><td class="dcol"><b>Razem w bagażu</b></td><td></td><td><b>~4,2 kg</b></td></tr>
-        <tr><td class="dcol"><b>Z miękką walizką 1,5 kg</b></td><td></td><td><b>~5,7 kg — zapas 1,3 kg</b></td></tr>
+        <tr><td class="dcol"><b>Razem w bagażu</b></td><td></td><td><b>~3,9 kg</b></td></tr>
+        <tr><td class="dcol"><b>Z plecakiem 1,5 kg</b></td><td></td><td><b>~5,4 kg - zapas 1,6 kg</b></td></tr>
       </tbody>
     </table></div></div>
-    <p class="note" style="margin-top:0.625rem">Na sobie w dniu lotu: buty do chodzenia, długie spodnie, T-shirt i bluza. To ~2 kg, których nikt nie waży.</p>
+    <p class="note" style="margin-top:0.625rem">Na sobie w dniu lotu: buty do chodzenia, długie spodnie, T-shirt i bluza. Masę z tabel traktujcie orientacyjnie; rozmiary ubrań i sprzętu robią różnicę.</p>
 
     <div class="card" style="padding:0;overflow:hidden;margin-top:1rem"><div style="overflow-x:auto"><table class="rhythm">
-      <thead><tr><th>Dziecko (10 i 13 lat) — do bagażu</th><th>Ile</th><th>Waga</th></tr></thead>
+      <thead><tr><th>Dzieci 10, 12 i 12/13 lat - na osobę</th><th>Ile</th><th>Waga</th></tr></thead>
       <tbody>
         <tr><td class="dcol">T-shirty</td><td>4</td><td>400 g</td></tr>
         <tr><td class="dcol">Bluza</td><td>1</td><td>350 g</td></tr>
@@ -1033,39 +1053,39 @@ function pogodaPage(){
         <tr><td class="dcol">Bielizna</td><td>5</td><td>175 g</td></tr>
         <tr><td class="dcol">Skarpety</td><td>5</td><td>175 g</td></tr>
         <tr><td class="dcol">Piżama</td><td>1</td><td>200 g</td></tr>
-        <tr><td class="dcol">Klapki</td><td>1 para</td><td>250 g</td></tr>
+
         <tr><td class="dcol">Kurtka przeciwdeszczowa</td><td>1</td><td>200 g</td></tr>
         <tr><td class="dcol">Kosmetyczka</td><td>—</td><td>150 g</td></tr>
         <tr><td class="dcol">Na lot: słuchawki, konsola albo tablet, książka</td><td>—</td><td>600 g</td></tr>
         <tr><td class="dcol">Butelka na wodę <small>(pusta przez kontrolę, potem z kranu)</small></td><td>1</td><td>100 g</td></tr>
         <tr><td class="dcol">Notes i długopisy <small>(pieczątki goshuin i bilety)</small></td><td>—</td><td>150 g</td></tr>
-        <tr><td class="dcol"><b>Razem w bagażu</b></td><td></td><td><b>~3,2 kg</b></td></tr>
-        <tr><td class="dcol"><b>Z walizką dziecięcą 1,2 kg</b></td><td></td><td><b>~4,4 kg — zapas 2,6 kg</b></td></tr>
+        <tr><td class="dcol"><b>Razem w bagażu</b></td><td></td><td><b>~3,0 kg</b></td></tr>
+        <tr><td class="dcol"><b>Z plecakiem 1,2 kg</b></td><td></td><td><b>~4,2 kg - zapas 2,8 kg</b></td></tr>
       </tbody>
     </table></div></div>
-    <p class="note" style="margin-top:0.625rem">Bagaże dzieci są najlżejsze i to jest zamierzone: ten zapas 2,6 kg na osobę to miejsce na streetwear z Cat Street i pluszaki z Nihombashi. Cała rodzina wyjeżdża z ~20 kg z 28 dostępnych.</p>
+    <p class="note" style="margin-top:0.625rem">Zapas zależy od rzeczywistej wagi plecaka i rzeczy. Zakupy w Tokio również muszą zmieścić się w osobnym limicie każdego pasażera. Marcel kończy 13 lat 5 maja; Tomasz ma 12 lat.</p>
 
     <h2 class="stitle" style="margin-top:2.125rem">Czego nie pakować</h2>
     <div class="card"><ul class="tips">
       <li><b>Ręczników, piżamy na Hakone i kosmetyków podstawowych.</b> Ryokan daje yukatę, ręczniki i wszystko do onsenu; MIMARU i hotel w Abu Zabi dają szampon i mydło.</li>
       <li><b>Dużego opakowania detergentu.</b> Sposób dozowania i ewentualny zakup środka do prania sprawdźcie w pralni lub recepcji.</li>
       <li><b>Nożyczek, scyzoryka, płynów powyżej 100 ml.</b> Lecimy bez bagażu rejestrowanego w obie strony, więc podręczny przechodzi przez kontrolę z całą zawartością.</li>
-      <li><b>Zapasowych butów „na wszelki wypadek”.</b> Jedna para na nogach plus wsuwane to komplet; para butów to 700–900 g, czyli 15% przydziału.</li>
+      <li><b>Zapasowych butów „na wszelki wypadek”.</b> Jedna sprawdzona para na nogach wystarczy do tej trasy. Lekkie klapki są opcją według własnych potrzeb, nie obowiązkowym dodatkiem.</li>
       <li>Weźcie za to <b>małą wagę bagażową</b> (~80 g). Przy limicie 7 kg i zakupach w Tokio to jedyny sposób, żeby nie zgadywać przed odprawą.</li>
     </ul></div>
 
-    <h2 class="stitle" style="margin-top:2.125rem">Pranie — gdzie i kiedy</h2>
-    <p class="lead-p">Pakujemy na pięć dni, więc jedno porządne pranie w połowie wyjazdu domyka garderobę do końca. Oba MIMARU mają <b>pralnie samoobsługowe</b>, nie pralki w pokojach.</p>
+    <h2 class="stitle" style="margin-top:2.125rem">Pranie opcjonalne - albo zapas na cały pobyt</h2>
+    <p class="lead-p"><b>Z praniem:</b> listy powyżej i jedno pranie 2.05; to opcja każdej rodziny. <b>Bez prania:</b> przy koszulce noszonej dwa dni weź 5-6 do plecaka plus tę na sobie, a bieliznę i skarpety na każdy dzień (około 11 kompletów w plecaku). Dorosłemu dochodzi orientacyjnie 0,75-0,9 kg do listy, czyli z plecakiem około 6,1-6,3 kg. Zważ gotowy zestaw i zostaw miejsce na zakupy. Oba MIMARU mają pralnie samoobsługowe, nie pralki w pokojach.</p>
     <div class="card" style="padding:0;overflow:hidden"><div style="overflow-x:auto"><table class="rhythm">
       <thead><tr><th>Kiedy</th><th>Gdzie</th><th>Co robimy</th></tr></thead>
       <tbody>
         <tr><td class="dcol">29.04, czwartek, wieczór</td><td>MIMARU Kyoto Station</td><td>Nie pranie, tylko ratunek: strój z Abu Zabi po dniu w 40°C przepierzcie ręcznie i powieście. Reszta czeka.</td></tr>
-        <tr><td class="dcol"><b>2.05, niedziela, po 16:15</b></td><td><b>MIMARU Kyoto Station</b></td><td><b>Główne pranie wyjazdu.</b> Po powrocie z warsztatu. Dostępność maszyn, detergent i cenę sprawdźcie na miejscu. Zarezerwujcie około 2-3 godzin z suszeniem; kolacja blisko hotelu.</td></tr>
+        <tr><td class="dcol"><b>2.05, niedziela, po 16:15</b></td><td><b>MIMARU Kyoto Station</b></td><td><b>Pranie tylko w wybranym wariancie.</b> Po popołudniowym powrocie do hotelu. Dostępność maszyn, detergent i cenę sprawdźcie na miejscu. Zarezerwujcie około 2-3 godzin z suszeniem; kolacja blisko hotelu.</td></tr>
         <tr><td class="dcol">5.05, środa, 15:00</td><td>MIMARU Tokyo Akasaka</td><td>Dogrywka podczas odpoczynku, z zapasem na suszenie przed pakowaniem i kolacją urodzinową. Dwie rodziny uzgadniają dostęp do pralek. Detergent kupujecie na recepcji.</td></tr>
       </tbody>
     </table></div></div>
     <div class="card" style="margin-top:1rem"><ul class="tips">
-      <li><b>Pierzcie po południu, nie wieczorem.</b> Pralnia w Kiocie robi się zatłoczona po 19:00, gdy wszyscy wracają ze zwiedzania. O 14:30 zwykle jest pusta.</li>
+      <li><b>Pierzcie po południu, nie wieczorem.</b> Maszyny mogą być zajęte o każdej porze. Sprawdźcie ich dostępność i nie odkładajcie prania na ostatnią chwilę.</li>
       <li><b>Suszarka jest wolniejsza niż pralka.</b> Pranie 30 minut, suszenie realnie 60–90 minut. Maszyny mogą być zajęte. Jeden rodzic może dopilnować prania, a drugi wyjść z dziećmi na krótki posiłek; nie planujcie na ten wieczór sztywnej rezerwacji.</li>
       <li><b>Nie ma prania w Hakone.</b> Ryokan to jedna noc i jedziemy stamtąd prosto na lotnisko, więc 5.05 w Tokio to ostatnia okazja.</li>
     </ul></div>
@@ -1073,9 +1093,9 @@ function pogodaPage(){
     <h2 class="stitle" style="margin-top:2.125rem">Pogoda w bagażu — od 40°C do 9°C</h2>
     <div class="card"><ul class="tips">
       <li><b>Rozpiętość jest ekstremalna:</b> Abu Zabi 28.04 potrafi mieć 40°C, a noc w Hakone 6.05 schodzi do 9°C. Dlatego warstwy, nie grube rzeczy.</li>
-      <li><b>Strój na meczet trzymajcie na wierzchu</b> — zakryte ramiona i nogi; kobiety dostają abaję na miejscu. To jedyny dzień, gdy to jest potrzebne.</li>
+      <li><b>Strój na meczet trzymajcie na wierzchu</b> — zakryte ramiona i nogi; kobiety zabierają także chustę; nie zakładamy bezpłatnego stroju na miejscu. To jedyny dzień, gdy to jest potrzebne.</li>
       <li>Lekka kurtka lub wiatrówka i składany parasol — w maju pada zwykle przelotnie, ~9 dni w miesiącu.</li>
-      <li>Buty łatwe do zdejmowania — świątynie, tatami, warsztat kaligrafii i ryokan wymagają tego kilka razy dziennie.</li>
+      <li>Buty łatwe do zdejmowania — świątynie, tatami, niektóre wnętrza i ryokan wymagają tego kilka razy dziennie.</li>
       <li>Krem z filtrem i nakrycie głowy: słońce o tej porze operuje mocno, zwłaszcza w Narze i na Fushimi.</li>
     </ul></div>
   </section>
@@ -1086,7 +1106,7 @@ function pogodaPage(){
       <li><b>Tokio:</b> Round1 (Ikebukuro), rodzinne karaoke (Big Echo / Karaoke Kan, przed 22:00), Pokémon Center — a Shibuya Sky przekładać: taras odkryty, w chmurach szkoda biletu.</li>
       <li><b>Hakone:</b> kolejka linowa staje przy wietrze (status: hakonenavi.jp) → Hakone Open-Air Museum (pawilon Picassa, rzeźby do wspinania) + rejs po Ashi, który pływa prawie zawsze.</li>
       <li><b>Kioto:</b> Kyoto Railway Museum (symulator shinkansena; <b>w środy zamknięte — w Kiocie jesteśmy czwartek–poniedziałek, więc otwarte</b>), teamLab Biovortex przy dworcu, kryte pasaże Nishiki/Teramachi, klasa ninja w muzeum.</li>
-      
+
     </ul></div>
   </section>
   ${footer('')}`;
@@ -1240,7 +1260,7 @@ function atrakcjePage(){
     <div class="hero-inner">
     <p class="eyebrow">Godziny · ceny · rezerwacje</p>
     <h1>Atrakcje</h1>
-    <p class="lead">Wszystkie miejsca z planu w jednym katalogu — z godzinami, orientacyjnymi cenami (¥100 ≈ 2,6 zł) i linkami do oficjalnych rezerwacji.</p>
+    <p class="lead">Wszystkie miejsca z planu w jednym katalogu — z godzinami, orientacyjnymi cenami (100 JPY = 2,40 zł - kurs planistyczny, nie kurs rozliczenia karty) i linkami do oficjalnych rezerwacji.</p>
   </div>
   </header>
   ${toc}
@@ -1289,26 +1309,13 @@ page('druga-para.html', drugaParaPage());
 
 page('atrakcje.html', ATR);
 
-/* ===== Kalendarz terminów: terminy.ics z przypomnieniem dzień wcześniej. Stałe DTSTAMP i UID, żeby build był deterministyczny. ===== */
-{
-  const escI = s => String(s).replace(/<[^>]+>/g,'').replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');
-  const fold = l => { const out=[]; let s=l; while(Buffer.byteLength(s,'utf8')>73){ let n=73; while(Buffer.byteLength(s.slice(0,n),'utf8')>73) n--; out.push(s.slice(0,n)); s=' '+s.slice(n); } out.push(s); return out.join('\r\n'); };
-  const ymd = iso => iso.replace(/-/g,''), next = iso => { const d=new Date(iso+'T00:00:00Z'); d.setUTCDate(d.getUTCDate()+1); return d.toISOString().slice(0,10).replace(/-/g,''); };
-  const ev = DEADLINES.map((d,i) => {
-    const when = d.utc ? ['DTSTART:'+d.utc.replace(/[-:]/g,''), 'DURATION:PT30M'] : ['DTSTART;VALUE=DATE:'+ymd(d.date), 'DTEND;VALUE=DATE:'+next(d.date)];
-    const alarm = d.utc ? ['BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+escI(d.title),'TRIGGER:-P1D','END:VALARM','BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+escI(d.title),'TRIGGER:-PT2H','END:VALARM']
-                        : ['BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+escI(d.title),'TRIGGER:-PT15H','END:VALARM'];
-    return ['BEGIN:VEVENT','UID:'+d.date+'-'+i+'@japonia-2027','DTSTAMP:20261112T000000Z',...when,'SUMMARY:'+escI('Japonia 2027: '+d.title),'DESCRIPTION:'+escI(fill(d.text)+' ('+d.label+')'),'URL:https://japonia-2027.vercel.app/'+d.href,...alarm,'END:VEVENT'];
-  }).flat();
-  fs.writeFileSync(DIR + '/terminy.ics', ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Japonia 2027//Terminy//PL','CALSCALE:GREGORIAN','METHOD:PUBLISH','X-WR-CALNAME:Japonia 2027: terminy',...ev,'END:VCALENDAR'].map(fold).join('\r\n')+'\r\n');
-}
-
-
+/* Kalendarz z jednoznacznymi terminami i stabilnymi identyfikatorami. */
+fs.writeFileSync(DIR + '/terminy.ics', calendar(DEADLINES));
 
 /* ---- OFFLINE: service worker + manifest + ikona ----
    Cel: plan ma działać w Japonii bez zasięgu i bez roamingu.
    Strategia: przy instalacji cache'ujemy CAŁY serwis (strony + style + zdjęcia),
-   potem serwujemy z cache i w tle odświeżamy (stale-while-revalidate).
+   HTML i kod pobieramy z sieci, po 5 sekundach korzystamy z kopii; obrazy z cache.
    Mapy (Leaflet/OSM) i pogoda wymagają sieci — bez niej po prostu się nie pokażą. */
 const PRECACHE = [
   './','index.html','decyzje.html','atrakcje.html','hotele.html','loty.html','koszty.html','pogoda.html','niezbednik.html','druk.html','pokaz.html','druga-para.html','assets/pokaz.css','assets/pokaz.js',
@@ -1352,9 +1359,15 @@ self.addEventListener('fetch', function(e){
   var isCode = /assets\\/(style\\.css|app\\.js|pokaz\\.css|pokaz\\.js)$/.test(url.pathname);
   if(isDoc || isCode){
     // NETWORK FIRST: strona i kod zawsze świeże; cache tylko gdy nie ma sieci
-    e.respondWith(fetch(req).then(function(res){ return store(req,res); }).catch(function(){
-      return caches.match(req,{ignoreSearch:true}).then(function(hit){ return hit || caches.match('index.html'); });
-    }));
+    e.respondWith((async function(){
+      var controller = new AbortController(), timer = setTimeout(function(){controller.abort();},5000);
+      try { return store(req, await fetch(req,{signal:controller.signal})); }
+      catch { var hit = await caches.match(req,{ignoreSearch:true});
+        if(hit) return hit;
+        if(isDoc) return (await caches.match('index.html')) || new Response('Brak zapisanej strony. Połącz się z internetem.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});
+        return new Response('',{status:503});
+      } finally { clearTimeout(timer); }
+    })());
     return;
   }
   // obrazy, ikony, manifest: CACHE FIRST z odświeżaniem w tle
@@ -1381,4 +1394,4 @@ fs.writeFileSync(DIR + '/assets/icon.svg',
 console.log('OK · day pages:', DAYS.length, '· timeline items:', DAYS.reduce((a,d)=>a+d.tl.length,0),
   '· pc:', DAYS.filter(d=>d.pc).length);
 
-page('rezerwacje.html', shell({title:'Rezerwacje prywatne · Japonia 2027',desc:'Prywatne potwierdzenia podróży dla obu rodzin.',prefix:'',active:'rezerwacje.html',inner:`<div class="wrap"><section class="section"><p class="eyebrow">Tylko dla uczestników</p><h1>Rezerwacje prywatne</h1><p>Hotele, pociągi, numery potwierdzeń oraz terminy płatności i anulowania.</p><form method="post" action="/api/rezerwacje" style="max-width:28rem;margin:2rem 0"><label for="reservation-password">Hasło dostępu</label><input id="reservation-password" type="password" name="password" required maxlength="256" autocomplete="current-password" style="display:block;width:100%;box-sizing:border-box;padding:.8rem;margin:.5rem 0 1rem;font:inherit"><button type="submit" style="background:#1b3a6b;color:white;padding:.8rem 1.2rem;border:0;border-radius:.3rem;font:inherit;cursor:pointer">Otwórz rezerwacje</button></form><p>Potrzebujesz połączenia z internetem. Hasło możesz zapisać w swoim menedżerze haseł. Dane rezerwacji nie są dostępne offline.</p><p><a href="index.html">Wróć do agendy</a></p></section></div>`}));
+page('rezerwacje.html', shell({title:'Rezerwacje prywatne · Japonia 2027',desc:'Prywatne potwierdzenia podróży dla obu rodzin.',prefix:'',active:'rezerwacje.html',inner:`<div class="wrap"><section class="section"><p class="eyebrow">Tylko dla uczestników</p><h1>Rezerwacje prywatne</h1><p>Hotele, pociągi, numery potwierdzeń oraz terminy płatności i anulowania.</p><form method="post" action="/api/rezerwacje" target="_top" style="max-width:28rem;margin:2rem 0"><label for="reservation-password">Hasło dostępu</label><input id="reservation-password" type="password" name="password" required maxlength="256" autocomplete="current-password" style="display:block;width:100%;box-sizing:border-box;padding:.8rem;margin:.5rem 0 1rem;font:inherit"><button type="submit" style="background:#1b3a6b;color:white;padding:.8rem 1.2rem;border:0;border-radius:.3rem;font:inherit;cursor:pointer">Otwórz rezerwacje</button></form><p>Potrzebujesz połączenia z internetem. Hasło możesz zapisać w swoim menedżerze haseł. Dane rezerwacji nie są dostępne offline.</p><p><a href="index.html">Wróć do agendy</a></p></section></div>`}));

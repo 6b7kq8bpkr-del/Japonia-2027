@@ -1,0 +1,16 @@
+{
+  "reviewed": "19.11.2026",
+  "source": "Zapisane potwierdzenia obu rodzin; statusy nie są odczytywane automatycznie od operatorów.",
+  "hotels": {
+    "auh": {"text": "Nasza rodzina: voucher otrzymany. Druga rodzina: oczekujemy na voucher, nazwę hotelu i potwierdzenie pokoi."},
+    "kioto": {"text": "Obie rodziny: osobne pokoje zarezerwowane. Rezerwacja nie oznacza opłacenia pobytu.", "cancelUtc": "2027-04-21T14:59:00Z", "secondPayment": "2027-04-19"},
+    "tokio1": {"text": "Obie rodziny: osobne pokoje zarezerwowane. Rezerwacja nie oznacza opłacenia pobytu.", "cancelUtc": "2027-04-25T14:59:00Z", "secondPayment": "2027-04-23"},
+    "hakone": {"text": "Obie rodziny: osobne pokoje zarezerwowane. Prywatny onsen kashikiri i transfer wymagają osobnego potwierdzenia.", "cancelUtc": "2027-05-02T14:59:00Z", "secondPayment": "2027-04-30"}
+  },
+  "kodama": {
+    "state": "waiting",
+    "label": "Sprawdź zakup w My Trips",
+    "note": "Wcześniejsza rezerwacja jest dostępna. Próba zakupu 18.11 doszła do autoryzacji bankowej, ale finalizacja nie jest potwierdzona. Najpierw sprawdź My Trips dla obu rodzin; kup tylko brakujące bilety. Pociąg i miejsca są ostatecznie potwierdzane miesiąc przed przejazdem.",
+    "when": "Teraz: My Trips i ewentualny zakup. 7.04: potwierdzenie pociągu i miejsc."
+  }
+}

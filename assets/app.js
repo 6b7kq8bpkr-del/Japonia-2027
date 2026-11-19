@@ -155,7 +155,7 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   var LOC=[
     {n:'🕌 Abu Zabi',la:24.4539,lo:54.3773,tz:'Asia/Dubai'},
     {n:'⛩️ Kioto',la:35.0116,lo:135.7681,tz:'Asia/Tokyo'},
-    {n:'Osaka',la:34.6937,lo:135.5023,tz:'Asia/Tokyo'},
+    {n:'Nara',la:34.6851,lo:135.8048,tz:'Asia/Tokyo'},
     {n:'🏙️ Tokio',la:35.6723,lo:139.7367,tz:'Asia/Tokyo'},
     {n:'♨️ Hakone (jezioro Ashi)',la:35.2337,lo:139.0155,tz:'Asia/Tokyo'}
   ];
@@ -250,7 +250,7 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
         var g=el('div','today-steps');
         [['Teraz',p.cur],['Następnie',p.next]].forEach(function(x){ if(x[1]<0) return;
           var r=el('div'); r.appendChild(el('span',null,x[0])); r.appendChild(el('b',null,day.s[x[1]][0]+' · '+day.s[x[1]][1])); g.appendChild(r); });
-        if(g.children.length) box.appendChild(g);
+        if(g.children.length){ var details=el('details','watch-more'); details.appendChild(el('summary',null,'Pozostałe najbliższe sprawy')); details.appendChild(g); box.appendChild(details); }
         var l=el('a','today-link','Otwórz dzisiejszy plan →'); l.href='days/'+day.d+'.html#plan'; box.appendChild(l);
         box.hidden=false;
       }
@@ -326,7 +326,7 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   function row(label,title,when,href,cls){ var r=el('a',cls||null); r.href=href; r.appendChild(el('span',null,label)); r.appendChild(el('b',null,title)); r.appendChild(el('i',null,when)); g.appendChild(r); }
   late.slice(0,2).forEach(function(s){ row('Po terminie',s.w,'termin minął '+words(left(s.due)),'decyzje.html#do-zalatwienia','late'); });
   items.slice(1,4-Math.min(late.length,2)).forEach(function(x){ row(x.k,x.t,x.l+' · '+words(left(x.d)),x.h); });
-  if(g.children.length) box.appendChild(g);
+  if(g.children.length){ var details=el('details','watch-more'); details.appendChild(el('summary',null,'Pozostałe najbliższe sprawy')); details.appendChild(g); box.appendChild(details); }
   var l=el('p','watch-links'), a1=el('a',null,'Wszystkie sprawy →'); a1.href='decyzje.html#do-zalatwienia'; var a2=el('a',null,'Dodaj terminy do kalendarza'); a2.href='terminy.ics';
   l.appendChild(a1); l.appendChild(document.createTextNode(' · ')); l.appendChild(a2); box.appendChild(l);
   box.hidden=false;
@@ -358,3 +358,10 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   tlo.appendChild(x); tlo.appendChild(f); document.body.appendChild(tlo);
 })();
 
+
+/* Menu główne: natywne details zachowuje obsługę klawiatury. */
+(function(){
+ var menus=[].slice.call(document.querySelectorAll('.nav-more'));
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')menus.forEach(function(m){if(m.open){m.open=false;m.querySelector('summary').focus();}});});
+ document.addEventListener('click',function(e){menus.forEach(function(m){if(!m.contains(e.target))m.open=false;});});
+})();

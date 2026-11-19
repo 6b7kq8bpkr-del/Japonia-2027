@@ -23,3 +23,5 @@ deploy.sh
 * 2.*
 
 test-private.cjs
+
+test-calendar.mjs

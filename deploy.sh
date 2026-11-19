@@ -6,6 +6,8 @@ cd "$(dirname "$0")"
 export npm_config_cache="${TMPDIR:-/tmp}/npm-cache-japonia"
 node build.mjs
 node check.mjs
+node test-private.cjs
+node test-calendar.mjs
 npx --yes vercel build --prod
 npx --yes vercel deploy --prebuilt --prod
 if [ -n "$(git status --porcelain)" ]; then

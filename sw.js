@@ -1,5 +1,5 @@
-/* Service worker planu Japonia 2027 — wersja 640dede370 · HTML/CSS/JS network-first, obrazy cache-first */
-const CACHE = 'jp2027-640dede370';
+/* Service worker planu Japonia 2027 — wersja 85d78b1574 · HTML/CSS/JS network-first, obrazy cache-first */
+const CACHE = 'jp2027-85d78b1574';
 const PRECACHE = ["./","index.html","decyzje.html","atrakcje.html","hotele.html","loty.html","koszty.html","pogoda.html","niezbednik.html","druk.html","pokaz.html","druga-para.html","assets/pokaz.css","assets/pokaz.js","assets/style.css","assets/app.js","assets/icon.svg","days/2027-04-27.html","days/2027-04-28.html","days/2027-04-29.html","days/2027-04-30.html","days/2027-05-01.html","days/2027-05-02.html","days/2027-05-03.html","days/2027-05-04.html","days/2027-05-05.html","days/2027-05-06.html","days/2027-05-07.html","assets/img/p/abudhabi.webp","assets/img/p/abudhabi-s.webp","assets/img/mosque.webp","assets/img/p/shinkansen.webp","assets/img/p/shinkansen-s.webp","assets/img/p/fushimi.webp","assets/img/p/fushimi-s.webp","assets/img/p/deer.webp","assets/img/p/deer-s.webp","assets/img/p/kinkakuji.webp","assets/img/p/kinkakuji-s.webp","assets/img/p/sensoji.webp","assets/img/p/sensoji-s.webp","assets/img/p/shibuya.webp","assets/img/p/shibuya-s.webp","assets/img/p/pokemon.webp","assets/img/p/pokemon-s.webp","assets/img/p/fuji.webp","assets/img/p/fuji-s.webp","assets/img/p/nex.webp","assets/img/p/nex-s.webp","assets/img/hotels/auh.webp","assets/img/hotels/kioto.webp","assets/img/hotels/tokio1.webp","assets/img/hotels/hakone-ashi.webp"];
 self.addEventListener('install', function(e){
   self.skipWaiting();
@@ -27,9 +27,15 @@ self.addEventListener('fetch', function(e){
   var isCode = /assets\/(style\.css|app\.js|pokaz\.css|pokaz\.js)$/.test(url.pathname);
   if(isDoc || isCode){
     // NETWORK FIRST: strona i kod zawsze świeże; cache tylko gdy nie ma sieci
-    e.respondWith(fetch(req).then(function(res){ return store(req,res); }).catch(function(){
-      return caches.match(req,{ignoreSearch:true}).then(function(hit){ return hit || caches.match('index.html'); });
-    }));
+    e.respondWith((async function(){
+      var controller = new AbortController(), timer = setTimeout(function(){controller.abort();},5000);
+      try { return store(req, await fetch(req,{signal:controller.signal})); }
+      catch { var hit = await caches.match(req,{ignoreSearch:true});
+        if(hit) return hit;
+        if(isDoc) return (await caches.match('index.html')) || new Response('Brak zapisanej strony. Połącz się z internetem.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});
+        return new Response('',{status:503});
+      } finally { clearTimeout(timer); }
+    })());
     return;
   }
   // obrazy, ikony, manifest: CACHE FIRST z odświeżaniem w tle

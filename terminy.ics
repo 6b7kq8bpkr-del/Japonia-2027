@@ -5,110 +5,193 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Japonia 2027: terminy
 BEGIN:VEVENT
-UID:2027-03-01-0@japonia-2027
-DTSTAMP:20261112T000000Z
-DTSTART;VALUE=DATE:20270301
-DTEND;VALUE=DATE:20270302
-SUMMARY:Japonia 2027: Pokémon Café: zacząć śledzić komunikaty o spr
- zedaży
-DESCRIPTION:Termin sprzedaży stolików na maj nie jest jeszcze znany\; 1
-  marca to początek sprawdzania komunikatów operatora\, nie data otwarc
- ia sprzedaży. Ostatnio cały miesiąc trafiał do sprzedaży pierwszego
-  dnia poprzedniego miesiąca. (od 1 marca)
-URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+UID:kodama-purchase-check@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART;VALUE=DATE:20261126
+DTEND;VALUE=DATE:20261127
+SUMMARY:Japonia 2027: Kodama: sprawdzić My Trips przed zakupem
+DESCRIPTION:Wcześniejsza rezerwacja jest dostępna. Próba zakupu 18.11 do
+ szła do autoryzacji bankowej\, ale finalizacja nie jest potwierdzona. Naj
+ pierw sprawdź My Trips dla obu rodzin\; kup tylko brakujące bilety. Poci
+ ąg i miejsca są ostatecznie potwierdzane miesiąc przed przejazdem. (26.
+ 11.2026)
+URL:https://japonia-2027.vercel.app/rezerwacje.html
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Pokémon Café: zacząć śledzić komunikaty o sprzedaży
-TRIGGER:-PT15H
+DESCRIPTION:Kodama: sprawdzić My Trips przed zakupem
+TRIGGER:-P1D
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:2027-03-29-1@japonia-2027
-DTSTAMP:20261112T000000Z
-DTSTART;VALUE=DATE:20270329
-DTEND;VALUE=DATE:20270330
-SUMMARY:Japonia 2027: Mail z miejscami w shinkansenie 29.04
-DESCRIPTION:Po 8:00 JST (1:00 w Polsce) SmartEX przysyła ostateczny nume
- r pociągu Shinagawa-Kioto i siedem miejsc w dwóch rezerwacjach. Sprawd
- źcie\, czy rodziny mogą siedzieć blisko siebie. (29 marca)
+UID:koto-enquiry@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART;VALUE=DATE:20261127
+DTEND;VALUE=DATE:20261128
+SUMMARY:Japonia 2027: Wysłać zapytanie do KOTO dla 7 osób
+DESCRIPTION:Planistyczny termin kontaktu o 2.05.2027. Potwierdzić sesję\,
+  cenę całej grupy\, udział dzieci i anulowanie. To nie jest rezerwacja 
+ ani termin otwarcia sprzedaży. (27.11.2026)
 URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Mail z miejscami w shinkansenie 29.04
-TRIGGER:-PT15H
+DESCRIPTION:Wysłać zapytanie do KOTO dla 7 osób
+TRIGGER:-P1D
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:2027-03-31-2@japonia-2027
-DTSTAMP:20261112T000000Z
-DTSTART;VALUE=DATE:20270331
-DTEND;VALUE=DATE:20270401
-SUMMARY:Japonia 2027: Herbata KOTO i pokaz sumo zarezerwowane
-DESCRIPTION:Termin planistyczny: do końca marca kupcie sesję KOTO na 2.
- 05 i bilety na sumo 3.05\, zanim Golden Week się wyprzeda. (do 31 marca
+UID:our-payment-dates@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART;VALUE=DATE:20261215
+DTEND;VALUE=DATE:20261216
+SUMMARY:Japonia 2027: Sprawdzić daty płatności naszej rodziny
+DESCRIPTION:Sprawdźcie nasze trzy rezerwacje Booking i zapiszcie rzeczywis
+ te daty obciążenia. Nie kopiujemy terminów drugiej rodziny. (15.12.2026
  )
 URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
 BEGIN:VALARM
 ACTION:DISPLAY
+DESCRIPTION:Sprawdzić daty płatności naszej rodziny
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-03-01-0@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART;VALUE=DATE:20270301
+DTEND;VALUE=DATE:20270302
+SUMMARY:Japonia 2027: Pokémon Café: zacząć śledzić komunikaty o sprze
+ daży
+DESCRIPTION:Termin sprzedaży stolików na maj nie jest jeszcze znany\; 1 m
+ arca to początek sprawdzania komunikatów operatora\, nie data otwarcia s
+ przedaży. Ostatnio cały miesiąc trafiał do sprzedaży pierwszego dnia 
+ poprzedniego miesiąca. (od 1 marca)
+URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Pokémon Café: zacząć śledzić komunikaty o sprzedaży
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-03-29-1@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART:20270328T230000Z
+DURATION:PT15M
+SUMMARY:Japonia 2027: Mail z miejscami w shinkansenie 29.04
+DESCRIPTION:Po 8:00 JST (1:00 w Polsce) SmartEX przysyła ostateczny numer 
+ pociągu Shinagawa-Kioto i siedem miejsc w dwóch rezerwacjach. Sprawdźci
+ e\, czy rodziny mogą siedzieć blisko siebie. (29 marca\, 01:00 PL / 08:0
+ 0 JST)
+URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mail z miejscami w shinkansenie 29.04
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-03-31-2@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART;VALUE=DATE:20270331
+DTEND;VALUE=DATE:20270401
+SUMMARY:Japonia 2027: Herbata KOTO i pokaz sumo zarezerwowane
+DESCRIPTION:Termin planistyczny: do końca marca kupcie sesję KOTO na 2.05
+  i bilety na sumo 3.05\, zanim Golden Week się wyprzeda. (do 31 marca)
+URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+BEGIN:VALARM
+ACTION:DISPLAY
 DESCRIPTION:Herbata KOTO i pokaz sumo zarezerwowane
-TRIGGER:-PT15H
+TRIGGER:-P1D
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2027-04-03-3@japonia-2027
-DTSTAMP:20261112T000000Z
-DTSTART;VALUE=DATE:20270403
-DTEND;VALUE=DATE:20270404
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART:20270402T230000Z
+DURATION:PT15M
 SUMMARY:Japonia 2027: Mail z miejscami w shinkansenie 3.05
-DESCRIPTION:Ostateczny numer pociągu Kioto-Tokio i miejsca\, po 8:00 JST
-  (1:00 w Polsce). (3 kwietnia)
+DESCRIPTION:Ostateczny numer pociągu Kioto-Tokio i miejsca\, po 8:00 JST (
+ 1:00 w Polsce). (3 kwietnia\, 01:00 PL / 08:00 JST)
 URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Mail z miejscami w shinkansenie 3.05
-TRIGGER:-PT15H
+TRIGGER:-P1D
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2027-04-06-4@japonia-2027
-DTSTAMP:20261112T000000Z
-DTSTART;VALUE=DATE:20270406
-DTEND;VALUE=DATE:20270407
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART:20270406T010000Z
+DURATION:PT15M
 SUMMARY:Japonia 2027: Sprzedaż miejsc na Romancecar do Hakone
-DESCRIPTION:Odakyu otwiera sprzedaż na 6.05 o 10:00 JST. Celem jest kurs
-  Metro Hakone z Omotesandō\; jeśli go nie ma\, od razu Romancecar z Sh
- injuku o 10:00. (6 kwietnia\, 3:00 PL)
+DESCRIPTION:Odakyu otwiera sprzedaż na 6.05 o 10:00 JST. Celem jest kurs M
+ etro Hakone z Omotesandō\; jeśli go nie ma\, od razu Romancecar z Shinju
+ ku o 10:00. (6 kwietnia\, 3:00 PL)
 URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Sprzedaż miejsc na Romancecar do Hakone
-TRIGGER:-PT15H
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Sprzedaż miejsc na Romancecar do Hakone
+TRIGGER:-PT15M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2027-04-07-5@japonia-2027
-DTSTAMP:20261112T000000Z
-DTSTART;VALUE=DATE:20270407
-DTEND;VALUE=DATE:20270408
-SUMMARY:Japonia 2027: Sprzedaż shinkansena Odawara-Shinagawa
-DESCRIPTION:SmartEX otwiera sprzedaż na 7.05 o 10:00 JST. Tego samego dn
- ia kupcie Narita Express w JR East. (7 kwietnia\, 3:00 PL)
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART:20270407T010000Z
+DURATION:PT15M
+SUMMARY:Japonia 2027: NEX na powrót: sprzedaż\; Kodama: sprawdzenie miejs
+ c
+DESCRIPTION:NEX na 7.05: standardowe okno JR East od 10:00 JST (03:00 w Pol
+ sce). Wcześniejszy zakup Kodamy jest możliwy już teraz\; 7.04 sprawdźc
+ ie jej finalny pociąg i miejsca. Przed ponownym zakupem Kodamy sprawdźci
+ e My Trips dla obu rodzin. (7 kwietnia\, 3:00 PL)
 URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Sprzedaż shinkansena Odawara-Shinagawa
-TRIGGER:-PT15H
+DESCRIPTION:NEX na powrót: sprzedaż\; Kodama: sprawdzenie miejsc
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:NEX na powrót: sprzedaż\; Kodama: sprawdzenie miejsc
+TRIGGER:-PT15M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2027-04-19-6@japonia-2027
-DTSTAMP:20261112T000000Z
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
 DTSTART:20270419T150000Z
-DURATION:PT30M
+DURATION:PT15M
 SUMMARY:Japonia 2027: Shibuya Sky
-DESCRIPTION:Planowany start sprzedaży na 4.05 według obecnej reguły. S
- loty o zachodzie słońca znikają najszybciej. *Potwierdźcie regułę 
- w 2027. (19 kwietnia\, 17:00 PL*)
+DESCRIPTION:Planowany start sprzedaży na 4.05 według obecnej reguły. Slo
+ ty o zachodzie słońca znikają najszybciej. *Potwierdźcie regułę w 20
+ 27. (19 kwietnia\, 17:00 PL*)
 URL:https://japonia-2027.vercel.app/atrakcje.html#shibuya-sky
 BEGIN:VALARM
 ACTION:DISPLAY
@@ -118,54 +201,90 @@ END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Shibuya Sky
-TRIGGER:-PT2H
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:2027-04-20-7@japonia-2027
-DTSTAMP:20261112T000000Z
-DTSTART;VALUE=DATE:20270420
-DTEND;VALUE=DATE:20270421
-SUMMARY:Japonia 2027: Tydzień do wylotu: Visit Japan Web i prognoza
-DESCRIPTION:Zgłoszenia Visit Japan Web dla całej rodziny\, dokumenty of
- fline w telefonach i przegląd pogody przed jutrzejszym terminem anulowa
- nia Kioto. (20 kwietnia)
-URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Tydzień do wylotu: Visit Japan Web i prognoza
-TRIGGER:-PT15H
+TRIGGER:-PT15M
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2027-04-19-8@japonia-2027
-DTSTAMP:20261112T000000Z
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
 DTSTART;VALUE=DATE:20270419
 DTEND;VALUE=DATE:20270420
-SUMMARY:Japonia 2027: Druga rodzina: Booking pobiera płatności za hotel
- e
-DESCRIPTION:Kioto 19.04\, Tokio 23.04\, Hanaori 30.04\, za każdym razem 
- przed końcem bezpłatnego anulowania. Kwoty są w prywatnej zakładce r
- ezerwacji\; zostawcie na karcie zapas środków. (19\, 23 i 30 kwietnia)
-URL:https://japonia-2027.vercel.app/druga-para.html#decyzje
+SUMMARY:Japonia 2027: Druga rodzina: płatność za Kioto
+DESCRIPTION:Odroczona płatność Booking za MIMARU Kyoto Station. Kwota w 
+ prywatnych rezerwacjach. Zapewnijcie środki przed tą datą\; godzina obc
+ iążenia nie jest znana. (19 kwietnia)
+URL:https://japonia-2027.vercel.app/rezerwacje.html
 BEGIN:VALARM
 ACTION:DISPLAY
-DESCRIPTION:Druga rodzina: Booking pobiera płatności za hotele
-TRIGGER:-PT15H
+DESCRIPTION:Druga rodzina: płatność za Kioto
+TRIGGER:-P7D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Druga rodzina: płatność za Kioto
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2027-04-20-7@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:Japonia 2027: Tydzień do wylotu: Visit Japan Web i prognoza
+DESCRIPTION:Zgłoszenia Visit Japan Web dla całej rodziny\, dokumenty offl
+ ine w telefonach i przegląd pogody przed jutrzejszym terminem anulowania 
+ Kioto. (20 kwietnia)
+URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Tydzień do wylotu: Visit Japan Web i prognoza
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:transfer-and-onsen@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART;VALUE=DATE:20270420
+DTEND;VALUE=DATE:20270421
+SUMMARY:Japonia 2027: Hanaori: zamówić transfer\, opcjonalnie prywatny on
+ sen
+DESCRIPTION:Transfer 7.05 o 09:00 dla siedmiu osób z bagażami nadal do za
+ mówienia. Prywatne łaźnie 6.05 są opcją\, nie potwierdzoną rezerwacj
+ ą. Ustalcie cenę i warunki obu usług. (20.04.2027)
+URL:https://japonia-2027.vercel.app/decyzje.html#do-zalatwienia
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Hanaori: zamówić transfer\, opcjonalnie prywatny onsen
+TRIGGER:-P1D
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2027-04-21-9@japonia-2027
-DTSTAMP:20261112T000000Z
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
 DTSTART:20270421T145900Z
-DURATION:PT30M
+DURATION:PT15M
 SUMMARY:Japonia 2027: Ostatni bezpłatny termin: Kioto
-DESCRIPTION:16:59 w Polsce. Decyzję podejmijcie dzień wcześniej. (21 k
- wietnia\, 23:59 JST)
+DESCRIPTION:16:59 w Polsce. Decyzję podejmijcie dzień wcześniej. Dotyczy
+  osobnych rezerwacji obu rodzin. Przypomnienie tydzień wcześniej służy
+  przeglądowi planu\, nie automatycznemu anulowaniu. (21 kwietnia\, 23:59 
+ JST)
 URL:https://japonia-2027.vercel.app/hotele.html#kioto
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Ostatni bezpłatny termin: Kioto
+TRIGGER:-P7D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Ostatni bezpłatny termin: Kioto
 TRIGGER:-P1D
 END:VALARM
 BEGIN:VALARM
@@ -175,14 +294,62 @@ TRIGGER:-PT2H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:payment-tokyo-second@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART;VALUE=DATE:20270423
+DTEND;VALUE=DATE:20270424
+SUMMARY:Japonia 2027: Druga rodzina: płatność za Tokio
+DESCRIPTION:Odroczona płatność Booking. Kwota w prywatnych rezerwacjach\
+ ; zapewnijcie środki przed tą datą. Godzina obciążenia nie jest znana
+ . (23 kwietnia)
+URL:https://japonia-2027.vercel.app/rezerwacje.html
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Druga rodzina: płatność za Tokio
+TRIGGER:-P7D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Druga rodzina: płatność za Tokio
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:tokyo-weather-review@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART;VALUE=DATE:20270424
+DTEND;VALUE=DATE:20270425
+SUMMARY:Japonia 2027: Przegląd pogody przed terminem anulowania Tokio
+DESCRIPTION:Prognoza jest orientacyjna. Nie zmieniajcie hotelu wyłącznie 
+ z powodu pojedynczego deszczowego dnia. (24.04.2027)
+URL:https://japonia-2027.vercel.app/pogoda.html
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Przegląd pogody przed terminem anulowania Tokio
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:2027-04-25-10@japonia-2027
-DTSTAMP:20261112T000000Z
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
 DTSTART:20270425T145900Z
-DURATION:PT30M
+DURATION:PT15M
 SUMMARY:Japonia 2027: Ostatni bezpłatny termin: Tokio
-DESCRIPTION:16:59 w Polsce. Sprawdźcie plan i prognozę 24.04. (25 kwiet
- nia\, 23:59 JST)
+DESCRIPTION:16:59 w Polsce. Sprawdźcie plan i prognozę 24.04. Dotyczy oso
+ bnych rezerwacji obu rodzin. Przypomnienie tydzień wcześniej służy prz
+ eglądowi planu\, nie automatycznemu anulowaniu. (25 kwietnia\, 23:59 JST)
 URL:https://japonia-2027.vercel.app/hotele.html#tokio1
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Ostatni bezpłatny termin: Tokio
+TRIGGER:-P7D
+END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Ostatni bezpłatny termin: Tokio
@@ -195,14 +362,95 @@ TRIGGER:-PT2H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:nozomi51-cancel@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART:20270429T075500Z
+DURATION:PT15M
+SUMMARY:Japonia 2027: SmartEX: zmiana/anulowanie Shinagawa-Kioto
+DESCRIPTION:Przypomnienie tydzień przed obecnie planowanym odjazdem. Anulo
+ wanie nie jest bezpłatne. Dla standardowej taryfy SmartEX obecnie 320 JPY
+ /os. przed odjazdem i przed wejściem bramką/odbiorem biletu\; sprawdźci
+ e taryfę konkretnej rezerwacji. Po przydziale finalnego pociągu zweryfik
+ ujcie godzinę. To nie oznacza potwierdzenia zakupu brakującej Kodamy. ht
+ tps://www.smart-ex.jp/en/reservation/guide/cancel/ (2027-04-29 16:55 JST (
+ godzina wstępna))
+URL:https://japonia-2027.vercel.app/rezerwacje.html
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:SmartEX: zmiana/anulowanie Shinagawa-Kioto
+TRIGGER:-P7D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:SmartEX: zmiana/anulowanie Shinagawa-Kioto
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:SmartEX: zmiana/anulowanie Shinagawa-Kioto
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:payment-hanaori-second@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART;VALUE=DATE:20270430
+DTEND;VALUE=DATE:20270501
+SUMMARY:Japonia 2027: Druga rodzina: płatność za Hanaori
+DESCRIPTION:Odroczona płatność Booking. Kwota w prywatnych rezerwacjach\
+ ; zapewnijcie środki przed tą datą. Godzina obciążenia nie jest znana
+ . (30 kwietnia)
+URL:https://japonia-2027.vercel.app/rezerwacje.html
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Druga rodzina: płatność za Hanaori
+TRIGGER:-P7D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Druga rodzina: płatność za Hanaori
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:hakone-weather-review@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART;VALUE=DATE:20270501
+DTEND;VALUE=DATE:20270502
+SUMMARY:Japonia 2027: Przegląd pogody przed terminem anulowania Hanaori
+DESCRIPTION:Sprawdźcie ostrzeżenia i wariant dojazdu. Termin anulowania o
+ bu pokoi to 2.05 o 23:59 JST. (01.05.2027)
+URL:https://japonia-2027.vercel.app/pogoda.html
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Przegląd pogody przed terminem anulowania Hanaori
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:2027-05-02-11@japonia-2027
-DTSTAMP:20261112T000000Z
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
 DTSTART:20270502T145900Z
-DURATION:PT30M
+DURATION:PT15M
 SUMMARY:Japonia 2027: Ostatni bezpłatny termin: Hanaori
-DESCRIPTION:Będziecie w Kioto: obowiązuje lokalny czas Japonii. Wcześn
- iej sprawdźcie ryzyko pogody w Hakone. (2 maja\, 23:59 JST)
+DESCRIPTION:Będziecie w Kioto: obowiązuje lokalny czas Japonii. Wcześnie
+ j sprawdźcie ryzyko pogody w Hakone. Dotyczy osobnych rezerwacji obu rodz
+ in. Przypomnienie tydzień wcześniej służy przeglądowi planu\, nie aut
+ omatycznemu anulowaniu. (2 maja\, 23:59 JST)
 URL:https://japonia-2027.vercel.app/hotele.html#hakone
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Ostatni bezpłatny termin: Hanaori
+TRIGGER:-P7D
+END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Ostatni bezpłatny termin: Hanaori
@@ -211,24 +459,91 @@ END:VALARM
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Ostatni bezpłatny termin: Hanaori
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:nozomi6-cancel@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART:20270503T010100Z
+DURATION:PT15M
+SUMMARY:Japonia 2027: SmartEX: zmiana/anulowanie Kioto-Tokio
+DESCRIPTION:Przypomnienie tydzień przed obecnie planowanym odjazdem. Anulo
+ wanie nie jest bezpłatne. Dla standardowej taryfy SmartEX obecnie 320 JPY
+ /os. przed odjazdem i przed wejściem bramką/odbiorem biletu\; sprawdźci
+ e taryfę konkretnej rezerwacji. Po przydziale finalnego pociągu zweryfik
+ ujcie godzinę. To nie oznacza potwierdzenia zakupu brakującej Kodamy. ht
+ tps://www.smart-ex.jp/en/reservation/guide/cancel/ (2027-05-03 10:01 JST (
+ godzina wstępna))
+URL:https://japonia-2027.vercel.app/rezerwacje.html
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:SmartEX: zmiana/anulowanie Kioto-Tokio
+TRIGGER:-P7D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:SmartEX: zmiana/anulowanie Kioto-Tokio
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:SmartEX: zmiana/anulowanie Kioto-Tokio
 TRIGGER:-PT2H
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2027-05-05-12@japonia-2027
-DTSTAMP:20261112T000000Z
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
 DTSTART;VALUE=DATE:20270505
 DTEND;VALUE=DATE:20270506
 SUMMARY:Japonia 2027: Pogoda i transport w Hakone
-DESCRIPTION:Ostrzeżenia oraz kursowanie dróg i kolei. Termin bezpłatne
- go anulowania minął 2.05 o 23:59 JST. Teraz zmiana noclegu może koszt
- ować pełną cenę\; dostosowujcie przede wszystkim trasę dojazdu i at
- rakcje. (5 maja\; potem rano 6 i 7 maja)
+DESCRIPTION:Ostrzeżenia oraz kursowanie dróg i kolei. Termin bezpłatnego
+  anulowania minął 2.05 o 23:59 JST. Teraz zmiana noclegu może kosztowa
+ ć pełną cenę\; dostosowujcie przede wszystkim trasę dojazdu i atrakcj
+ e. (5 maja\; potem rano 6 i 7 maja)
 URL:https://japonia-2027.vercel.app/days/2027-05-06.html#warunki
 BEGIN:VALARM
 ACTION:DISPLAY
 DESCRIPTION:Pogoda i transport w Hakone
-TRIGGER:-PT15H
+TRIGGER:-P1D
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:kodama-cancel@japonia-2027
+DTSTAMP:20261119T120000Z
+LAST-MODIFIED:20261119T120000Z
+SEQUENCE:1
+DTSTART:20270507T021400Z
+DURATION:PT15M
+SUMMARY:Japonia 2027: SmartEX: zmiana/anulowanie Odawara-Shinagawa (jeśli 
+ kupione)
+DESCRIPTION:Przypomnienie tydzień przed obecnie planowanym odjazdem. Anulo
+ wanie nie jest bezpłatne. Dla standardowej taryfy SmartEX obecnie 320 JPY
+ /os. przed odjazdem i przed wejściem bramką/odbiorem biletu\; sprawdźci
+ e taryfę konkretnej rezerwacji. Po przydziale finalnego pociągu zweryfik
+ ujcie godzinę. To nie oznacza potwierdzenia zakupu brakującej Kodamy. ht
+ tps://www.smart-ex.jp/en/reservation/guide/cancel/ (2027-05-07 11:14 JST (
+ godzina wstępna))
+URL:https://japonia-2027.vercel.app/rezerwacje.html
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:SmartEX: zmiana/anulowanie Odawara-Shinagawa (jeśli kupione)
+TRIGGER:-P7D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:SmartEX: zmiana/anulowanie Odawara-Shinagawa (jeśli kupione)
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:SmartEX: zmiana/anulowanie Odawara-Shinagawa (jeśli kupione)
+TRIGGER:-PT2H
 END:VALARM
 END:VEVENT
 END:VCALENDAR

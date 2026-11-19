@@ -16,7 +16,7 @@ Publicznie dostępny, nieindeksowany serwis (noindex nie jest ochroną dostępu)
 - **Tryb „dziś”**: między 27.04 a 8.05.2027 strona główna pokazuje bieżący dzień i najbliższy krok, a oś czasu dnia zaznacza „teraz”. Podgląd: dopisz do adresu `?teraz=2027-04-30T02:00:00Z`.
 - Checklista używa stabilnych identyfikatorów (`id`). Zmiana treści pozycji = nowy `id` z sufiksem `-vN`. Zapis jest lokalny na urządzeniu.
 - Service worker: HTML/CSS/JS network-first (cache tylko offline), obrazy cache-first.
-- **Rezerwacje są poza stroną.** `private/rezerwacje.md` (poza git i poza Vercel) to źródło; build tworzy z niego `private/rezerwacje-offline.html`, samodzielny plik do zapisania w telefonach dorosłych.
+- **Rezerwacje są poza stroną.** `private/reservations.json` (poza git i Vercel) jest aktualnym źródłem potwierdzeń. Prywatny panel można wydrukować lub zapisać do PDF w telefonie dorosłego. `private/rezerwacje.md` i generowany z niego plik offline są historycznymi notatkami - nie źródłem obecnych statusów.
 
 ## Wdrożenie
 ```bash
@@ -36,16 +36,16 @@ Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie
 
 ## Terminy
 - Każda otwarta sprawa w `data/sprawy.mjs` ma `due` (ostatni dzień) i opcjonalnie `from` (od kiedy da się ją załatwić). Strona odlicza dni, oznacza sprawy po terminie i pokazuje najbliższy termin w karcie na stronie głównej. Podgląd innego dnia: `?teraz=2027-04-05T08:00:00Z`.
-- Z `DEADLINES` build tworzy `terminy.ics`: plik kalendarza z przypomnieniem dzień wcześniej (terminy z godziną mają też przypomnienie 2 godziny przed).
+- Z `DEADLINES` build tworzy `terminy.ics`: plik kalendarza z osobnymi zdarzeniami płatności i alarmami. Anulowania hoteli i przegląd kolei mają alarm tydzień wcześniej. Godziny UTC są interpretowane przez kalendarz w jego lokalnej strefie. `lib/calendar.mjs` generuje ICS; stabilne `id`/`uid` nie zależą od kolejności zdarzeń. `node test-calendar.mjs` sprawdza daty, alarmy i stabilność UID.
 - Loty są kupione; koszt (`bilety.suma` w `data/fakty.mjs`) jest też podstawą kalkulatora (`TICKET` w `build.mjs`).
 
 ## Druga rodzina
-- `druga-para.html` (zakładka „Druga rodzina”): Joanna, Marcin i Tomasz, wspólna agenda dla 7 osób. Loty i dwa shinkanseny kupione; pokoje drugiej rodziny w Japonii wymagają potwierdzenia.
+- `druga-para.html` (zakładka „Druga rodzina”): Joanna, Marcin i Tomasz, wspólna agenda dla 7 osób. Loty i dwa shinkanseny kupione; pokoje drugiej rodziny w Japonii są potwierdzone; oczekujemy na jej voucher stopover.
 - `data/druga-para.mjs`: koszt lotów, `DP_KOLEJ` (opłacone JPY i kurs planistyczny), pozostałe szacunki i decyzje. Monitor lotów zakończony po zakupie.
-- Zestawienie obu rodzin na stronie kosztów nie zastępuje kalkulatora naszej rodziny 2+2. Opłacona kolej jest już zawarta w budżetach; PLN pozostaje szacunkiem, nie rozliczeniem bankowym.
+- Publicznie nie porównujemy kosztów rodzin. Kalkulator dotyczy naszej rodziny 2+2; rozliczenia obu rodzin pozostają w panelu prywatnym. PLN jest szacunkiem, nie rozliczeniem bankowym.
 - Nazwiska i numery nowych rezerwacji tylko w `private/rezerwacje.md`, poza git i Vercel.
 
-- Audyt grupy 13.11.2026: wspólny budżet kategorii (`OUR_TOTALS`, `DP_TOTALS`) zasila stronę i druk. Kalkulator zmienia kolumnę naszej rodziny, druk zachowuje budżet bazowy. Oferty hoteli drugiej rodziny są warunkowe (Booking/Genius), nie są potwierdzeniami.
+- Statusy publiczne bez numerów rezerwacji: `lib/trip-state.json`, używany przez generator, wydruk i prywatną tabelę kolei. Zakup Kodamy po próbie 18.11 nie jest potwierdzony; przed ponownym zakupem sprawdź My Trips. Zmiana planu nie jest zakupem biletu.
 
 ## Prywatna zakładka rezerwacji
 `rezerwacje.html` to publiczny formularz bez danych. POST `/api/rezerwacje` sprawdza hasło po stronie serwera (scrypt); zwraca dane wyłącznie przy poprawnym haśle. Brak sesji: każde otwarcie wymaga hasła, które można zachować w menedżerze haseł. GET nigdy nie udostępnia danych; odpowiedzi mają no-store i restrykcyjne CSP. Dane i hash hasła są w zmiennych Vercel `RESERVATIONS_DATA` i `RESERVATIONS_PASSWORD_HASH`. Lokalne źródło: `private/reservations.json`, hasło: `private/dostep-rezerwacje.txt` - oba poza git i wdrożeniem. Nie publikować PIN-ów ani danych karty. `private/rezerwacje.md` pozostaje historyczną notatką; aktualne potwierdzenia obu rodzin w JSON. `node test-private.cjs` sprawdza autoryzację i wycieki.
