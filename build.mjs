@@ -906,6 +906,7 @@ h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:22px 0 8px}
   .day .flex{margin-top:8px}
   .day .flex p{padding:5px 8px}
   .day .pfoot{margin-top:4px}
+  .day .blk{break-inside:avoid;page-break-inside:avoid}
   .pfoot{position:static;margin-top:3mm;break-before:avoid;page-break-before:avoid}
   .pg{padding-bottom:0}
   a{color:inherit;text-decoration:none}
