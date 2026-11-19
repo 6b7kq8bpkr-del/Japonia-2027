@@ -17,7 +17,7 @@
     var base=parseFloat(getComputedStyle(el).fontSize), k=1;
     while(el.scrollHeight>el.clientHeight+1&&k>0.62){ k-=0.04; el.style.fontSize=(base*k)+'px'; }
   }
-  function fitSlide(slide){ [].forEach.call(slide.querySelectorAll('.fit'),fit); }
+  function fitSlide(slide){ [].forEach.call(slide.querySelectorAll('.fit:not(.think)'),fit); }
   addEventListener('resize',function(){ fitSlide(cur); });
 
   function show(target){
@@ -56,6 +56,7 @@
 
   function typing(e){ var t=e.target; return t&&(t.tagName==='TEXTAREA'||t.tagName==='INPUT'); }
   addEventListener('keydown',function(e){
+    if(document.getElementById('photo-viewer')?.open) return;
     if(typing(e)){ if(e.key==='Escape') e.target.blur(); return; }
     if(e.metaKey||e.ctrlKey||e.altKey) return;
     var review=!zn()&&cur.querySelector('.pick');
@@ -107,4 +108,16 @@
   });
   [].forEach.call(document.querySelectorAll('[data-tryb]'),function(b){ b.setAttribute('aria-pressed',String(b.getAttribute('data-tryb')===(zn()?'zn':'my'))); });
   fromHash();
+})();
+
+/* Powiększenie zdjęć: strzałki dotyczą galerii, Escape wraca do tego samego slajdu. */
+(function(){
+  var dialog=document.getElementById('photo-viewer'),src=document.getElementById('photo-data');if(!dialog||!src)return;
+  var data=JSON.parse(src.textContent),photos=[],index=0;
+  var img=document.getElementById('photo-large'),caption=document.getElementById('photo-caption'),credit=document.getElementById('photo-credit'),count=document.getElementById('photo-count'),prev=document.getElementById('photo-prev'),next=document.getElementById('photo-next');
+  function render(){var p=photos[index];img.src=p.src;img.alt=p.caption;caption.textContent=p.caption;credit.textContent='Fot. '+p.author+' · '+p.license;count.textContent=(index+1)+' / '+photos.length;prev.disabled=index===0;next.disabled=index===photos.length-1;}
+  document.querySelectorAll('[data-gallery]').forEach(function(button){button.addEventListener('click',function(){photos=data[button.dataset.gallery];index=0;render();dialog.showModal();});});
+  prev.addEventListener('click',function(){if(index>0){index--;render();}});next.addEventListener('click',function(){if(index<photos.length-1){index++;render();}});
+  document.getElementById('photo-close').addEventListener('click',function(){dialog.close();});
+  dialog.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();next.click();}else if(e.key==='ArrowLeft'){e.preventDefault();prev.click();}});
 })();

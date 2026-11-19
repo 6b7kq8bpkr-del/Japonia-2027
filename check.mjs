@@ -58,6 +58,11 @@ for(const d of DAYS){
 }
 if(new Set(BOOKINGS.map(x=>x.id)).size!==BOOKINGS.length) errs.push('Checklista: niestabilne/powtórzone identyfikatory');
 if(DEADLINES.some(x=>!Number.isFinite(Date.parse(x.date)))) errs.push('Terminy: błędna data');
+for(const d of DEADLINES) if(d.taskIds?.some(id=>!BOOKINGS.some(b=>b.id===id))) errs.push(`Termin ${d.id}: nieznane zadanie powiązane`);
+const compact=readFileSync(join(DIR,'druk-skrot.html'),'utf8');
+if((compact.match(/class="travel-day"/g)||[]).length!==DAYS.length) errs.push('Skrócony wydruk: brak dnia');
+for(const d of DAYS) if(!compact.includes(`days/${d.date}.html`)) errs.push(`Skrócony wydruk: brak odsyłacza dnia ${d.date}`);
+
 const calc=JSON.parse(src.match(/const CALC = (\{[^}]*\})/)[1].replace(/(\w+):/g,'"$1":'));
 if(DAYS.filter(d=>d.stay&&d.stay!=='auh').length!==calc.nights) errs.push('Liczba nocy w Japonii nie zgadza się z kalkulatorem');
 const ticket=+src.match(/const TICKET = \{[^}]*total:(\d+(?:\.\d+)?)/)[1];

@@ -244,8 +244,9 @@ function dayPage(d,i){
   return shell({title:'Dzień '+(i+1)+': '+d.title+' · Japonia 2027',desc:d.lead,prefix,active:'index.html',inner,pillsIdx:i});
 }
 
-function deadlineList(prefix=''){
-  return '<ol class="deadlines">'+DEADLINES.map(d=>'<li data-date="'+d.date+'"><time datetime="'+d.date+'">'+d.label+'<em class="due" data-due="'+d.date+'"></em></time><div><a href="'+prefix+d.href+'"><b>'+d.title+'</b></a><p>'+d.text+'</p></div></li>').join('')+'</ol>';
+function deadlineList(prefix='',compact=false){
+  const list = '<ol class="deadlines">'+DEADLINES.map(d=>'<li data-date="'+d.date+'"><time datetime="'+d.date+'">'+d.label+'<em class="due" data-due="'+d.date+'"></em></time><div><a href="'+prefix+d.href+'"><b>'+d.title+'</b></a><p>'+d.text+'</p></div></li>').join('')+'</ol>';
+  return compact ? '<div data-compact-deadlines>'+list+'<details class="deadline-rest" hidden><summary>Pozostałe terminy</summary><ol class="deadlines"></ol></details></div>' : list;
 }
 function readiness(){
   return '<div class="readiness"><b>Loty i dwa shinkanseny kupione dla obu rodzin; noclegi w Japonii potwierdzone dla obu rodzin</b><p>Do domknięcia: voucher stopover drugiej rodziny, miejsca w pociągach, bilety na atrakcje oraz dojazd z Hakone dla siedmiu osób. Potwierdzenia hoteli z 8.09 wskazują płatność na później.</p><a href="decyzje.html#do-zalatwienia">Sprawdź listę do załatwienia →</a> · <a href="#terminy">Terminy i pogoda</a></div>';
@@ -277,13 +278,14 @@ function indexPage(){
       <a class="line" href="niezbednik.html"><b>Niezbędnik</b><span>Przejazdy, pieniądze, internet, zwyczaje, numery alarmowe.</span></a>
       <a class="line" href="pogoda.html"><b>Przed wyjazdem</b><span>Klimat na przełomie kwietnia i maja, plan pakowania na 7 kg, plany B na deszcz.</span></a>
       <a class="line" href="pokaz.html"><b>Pokaz na duży ekran</b><span>Slajd na każdy dzień w dwóch trybach: szczegółowy przegląd agendy we własnym gronie albo pytania do znajomych z miejscem na uwagi. Na projektor albo telewizor.</span></a>
-      <a class="line" href="druk.html"><b>Przewodnik do druku</b><span>Cały plan na kartkach — do wydruku albo offline na telefon.</span></a>
+      <a class="line" href="druk-skrot.html"><b>Plan na drogę</b><span>Jeden dzień na jednej kartce: godziny, transport, hotel i plan B.</span></a>
+      <a class="line" href="druk.html"><b>Pełny przewodnik do druku</b><span>Cały plan na kartkach — do wydruku albo offline na telefon.</span></a>
       <a class="line" href="rezerwacje.html"><b>Rezerwacje prywatne</b><span>Potwierdzenia i rozliczenia dostępne po podaniu hasła.</span></a>
       <a class="line" href="decyzje.html"><b>Kulisy planu</b><span>Co jeszcze załatwić, dlaczego taka trasa i jak zmienić dzień bez pośpiechu.</span></a>
   </div>`;
   const inner = `
   <section id="dzis" class="today" hidden aria-live="polite"></section>
-  <script type="application/json" id="terminy-data">${JSON.stringify({terminy:DEADLINES.map(d=>({d:d.date,l:d.label,t:d.title,h:d.href})),sprawy:BOOKINGS.filter(b=>b.due&&!/^✅/.test(b.when)).map(b=>({id:b.id,w:b.what,due:b.due,from:b.from||null}))}).replace(/</g,'\\u003c')}</script>
+  <script type="application/json" id="terminy-data">${JSON.stringify({terminy:DEADLINES.map(d=>({d:d.date,l:d.label,t:d.title,h:d.href,taskIds:d.taskIds})),sprawy:BOOKINGS.filter(b=>b.due&&!/^✅/.test(b.when)).map(b=>({id:b.id,w:b.what,due:b.due,from:b.from||null}))}).replace(/</g,'\\u003c')}</script>
   <header class="hero home">
     <div class="hbg"><div class="hbg-img" style="background-image:url('${IMG.fuji}')"></div></div>
     <div class="hgrad"></div>
@@ -339,7 +341,7 @@ function indexPage(){
       <li><b>Każda rodzina ma swoje terminy.</b> Rezerwacje hoteli drugiej rodziny mają własne terminy bezpłatnego anulowania; sprawdzajcie je w jej potwierdzeniach, nie w naszych.</li>
       <li><b>Rozdzielamy się, gdy zainteresowania się różnią.</b> Popołudnie 2.05, zakupy w Harajuku 4.05 i Kiyomizu po sjeście 30.04 to naturalne momenty na dwa tempa.</li>
     </ul></div></section>
-  <section id="terminy"><h2 class="stitle">Najważniejsze terminy</h2><p class="lead-p">Strona odlicza dni do każdego terminu, a najbliższy pokazuje pod zdjęciem głównym. Żeby telefon przypomniał o nich sam, <a href="terminy.ics">dodajcie terminy do kalendarza</a> (osobne płatności, godziny sprzedaży i przypomnienia tydzień przed anulowaniem). Stan zestawienia: ${TRIP.reviewed}. Importujcie do osobnego kalendarza „Japonia 2027” i włączcie powiadomienia. Jeśli macie starszy import, zastąpcie go nowym w tym osobnym kalendarzu, żeby nie zdublować terminów. Plik nie synchronizuje się automatycznie; nie usuwa się innych kalendarzy.</p>${deadlineList()}</section>
+  <section id="terminy"><h2 class="stitle">Najważniejsze terminy</h2><p class="lead-p">Strona odlicza dni do każdego terminu, a najbliższy pokazuje pod zdjęciem głównym. Żeby telefon przypomniał o nich sam, <a href="terminy.ics">dodajcie terminy do kalendarza</a> (osobne płatności, godziny sprzedaży i przypomnienia tydzień przed anulowaniem). Stan zestawienia: ${TRIP.reviewed}. Importujcie do osobnego kalendarza „Japonia 2027” i włączcie powiadomienia. Jeśli macie starszy import, zastąpcie go nowym w tym osobnym kalendarzu, żeby nie zdublować terminów. Plik nie synchronizuje się automatycznie; nie usuwa się innych kalendarzy.</p>${deadlineList('',true)}</section>
   <section>
     <h2 class="stitle">Przewodnik</h2>
     ${quick}
@@ -485,7 +487,7 @@ function hotelePage(){
         <h4 class="hotel-story-title">${HOTEL_STORY[H.id].title}</h4><p class="desc">${HOTEL_STORY[H.id].text}</p><ul class="hotel-perks">${HOTEL_STORY[H.id].perks.map(x=>`<li>${x}</li>`).join('')}</ul><p class="hotel-moment">${HOTEL_STORY[H.id].moment}</p><details class="hotel-practical"><summary>Pokój, meldunek i ważne ustalenia</summary><p class="desc">${H.desc}</p></details>
         <div class="meta"><span>📍 ${H.near}</span></div><p class="booking-deadline"><b>Anulowanie:</b> ${H.cancel}</p>${hotelStatus(H.id)}
         ${H.jp?`<div class="jpaddr"><span lang="ja">${H.jp}</span><button type="button" class="jpcopy" data-addr="${H.jp}" title="Skopiuj adres">Kopiuj</button></div>`:''}
-        <div class="links"><a href="${gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a>${H.book?`<a href="${H.book}" target="_blank" rel="noopener">Rezerwacja na Booking →</a>`:''}</div>
+        <div class="links"><a href="${gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">Google Maps →</a><a href="${H.site}" target="_blank" rel="noopener">strona hotelu →</a><a href="rezerwacje.html">Moja rezerwacja (prywatne) →</a>${H.book?`<a href="${H.book}" target="_blank" rel="noopener">Zobacz hotel na Booking →</a>`:''}</div>
       </div>
       <a class="hphoto" href="${gmapsQ(H.mapsq||H.name)}" target="_blank" rel="noopener">
         <img src="assets/img/hotels/${HOTEL_STORY[H.id].img}" alt="${H.name}" loading="lazy">
@@ -639,6 +641,14 @@ function pokazPage(){
   const tag=k=>TAG[k]?`<span class="tag ${k}">${TAG[k]}</span>`:'';
   const hotelName=id=>(HOTELS.find(h=>h.id===id)||{}).name;
   const tiles=DAYS.map((d,i)=>`<a class="day" href="#s${i+2}"><img src="${small(DAYIMG[d.date])}" alt="" loading="eager"><span><b>${short(d)} · ${CN[d.city]||d.city}</b>${d.title}</span></a>`).join('');
+  const galleryData=Object.fromEntries(DAYS.map(d=>{
+    const primary=Object.keys(ZDJECIA).find(k=>ZDJECIA[k].src===DAYIMG[d.date]);
+    const photos=[...(DAYPHOTOS[d.date]||[])];
+    if(primary&&!photos.some(p=>p[0]===primary)) photos.unshift([primary,primary==='fuji'?'Jezioro Ashi i Fudżi':ZDJECIA[primary].tytul]);
+    else if(primary) photos.sort((a,b)=>(b[0]===primary)-(a[0]===primary));
+    return [d.date,photos.map(([key,caption])=>{const z=ZDJECIA[key];return {src:z.src,caption,author:z.autor,license:z.licencja,source:z.strona};})];
+  }));
+  function slidePhoto(d){const photos=galleryData[d.date],p=photos[0];return `<button type="button" class="photo photo-open" data-gallery="${d.date}" aria-label="Otwórz zdjęcia: ${esc(d.title)}"><img src="${p.src}" alt="${esc(p.caption)}" loading="lazy" decoding="async"><span>${esc(p.caption)}<b>Zobacz zdjęcia (${photos.length}) ↗</b></span></button>`;}
   const daySlides=DAYS.map((d,i)=>{
     const rows=d.tl.map(([time,title,,kind])=>`<li><span class="t">${time}</span><span class="n">${title}${tag(kind)}</span></li>`).join('');
     const picks=d.tl.map(([time,title,,kind],k)=>`<li><button type="button" class="pick${k?'':' on'}" data-i="${k}" aria-pressed="${k?'false':'true'}"><span class="t">${time}</span><span class="n">${title}${tag(kind)}</span></button></li>`).join('');
@@ -653,10 +663,10 @@ function pokazPage(){
     <div class="col"><div class="panel grow fit"><h2>Godzina po godzinie <small>↑ ↓</small></h2><ol class="tl picks">${picks}</ol></div></div>
     <div class="col"><div class="panel grow detail fit">${steps}</div>
       <div class="notes"><label for="m-${d.date}">Nasze notatki</label><textarea id="m-${d.date}" data-key="${d.date}" data-title="${title}" placeholder="Co zmieniamy, co sprawdzić, kto się tym zajmie?"></textarea></div></div>
-    <div class="col"><div class="panel grow think fit"><h2>Do przemyślenia</h2><dl>${think}</dl></div></div>
+    <div class="col">${slidePhoto(d)}<div class="panel grow think fit"><h2>Do przemyślenia</h2><dl>${think}</dl></div></div>
   </div>
   <div class="cols v-zn">
-    <div class="col"><div class="photo"><img src="${DAYIMG[d.date]}" alt="" loading="lazy" decoding="async"></div>
+    <div class="col">${slidePhoto(d)}
       <div class="facts"><div><span>Start</span><b>${d.brief.start}</b></div><div><span>Koniec</span><b>${d.brief.end}</b></div><div><span>Tempo</span><b>${LEVEL_LABEL[d.level]}</b></div></div>
       <p class="cut"><b>Można odpuścić:</b> ${d.brief.cut}</p></div>
     <div class="col"><div class="panel grow"><h2>Godzina po godzinie</h2><ol class="tl${d.tl.length>9?' dense':''}">${rows}</ol></div></div>
@@ -704,11 +714,33 @@ ${daySlides}
   <p class="cut">Notatki są zapisane tylko w tej przeglądarce. Skopiuj je albo pobierz, zanim zamkniesz pokaz na cudzym komputerze.</p>
 </section>
 <nav class="bar" aria-label="Slajdy"><a class="exit" href="index.html">← Strona</a><button type="button" id="tryb" title="Zmień tryb (T)"><span class="v-my">Tryb: przegląd</span><span class="v-zn">Tryb: znajomi</span></button><button type="button" id="prev" aria-label="Poprzedni slajd">←</button><div class="dots">${dots}</div><button type="button" id="next" aria-label="Następny slajd">→</button><button type="button" id="full">Pełny ekran (F)</button></nav>
+<dialog id="photo-viewer" aria-labelledby="photo-caption"><div class="photo-stage"><img id="photo-large" alt=""><div class="photo-bottom"><div><p id="photo-caption"></p><p id="photo-credit"></p></div><span id="photo-count" aria-live="polite"></span></div></div><div class="photo-controls"><button id="photo-prev" type="button" aria-label="Poprzednie zdjęcie">←</button><button id="photo-next" type="button" aria-label="Następne zdjęcie">→</button><a href="decyzje.html#zdjecia" target="_blank" rel="noopener">Autorzy i licencje</a><button id="photo-close" type="button">Wróć do planu (Esc)</button></div></dialog>
+<script type="application/json" id="photo-data">${JSON.stringify(galleryData).replace(/</g,'\\u003c')}</script>
 <script src="assets/pokaz.js"></script>
 </body></html>`;
 }
 
 /* ============ PLAN DO DRUKU / PDF (wzorzec: PDF-y islandzkie) ============ */
+/* Skrót bierze godziny, statusy, transport i nocleg z tej samej agendy. */
+function drukSkrotPage(){
+  const days=DAYS.map((d,i)=>{
+    const H=HOTELS.find(h=>h.id===d.stay);
+    const route='https://www.google.com/maps/dir/'+(GEO[d.date]||[]).map(p=>p[0]+','+p[1]).join('/');
+    const transport=d.facts.find(f=>f[1]==='Transport')?.[0]||'Według godzin poniżej';
+    return `<article class="travel-day" id="d${i+1}"><header><p class="eyebrow">Japonia 2027 · 7 osób · dzień ${i+1} z ${DAYS.length}</p><h1>${d.title}</h1><p class="date">${d.dow} · ${d.dd} 2027</p></header>
+    <p class="rhythm"><b>Start:</b> ${d.brief.start} · <b>Koniec:</b> ${d.brief.end} · <b>Tempo:</b> ${LEVEL_LABEL[d.level]}</p>
+    <p><b>Transport:</b> ${transport}</p>
+    <table><thead><tr><th>Godzina</th><th>Plan i status</th></tr></thead><tbody>${d.tl.map(([t,title,,kind])=>`<tr><td>${t}</td><td>${title}${kind?` <small>${ITEM_LABEL[kind]}</small>`:''}</td></tr>`).join('')}</tbody></table>
+    <div class="essentials"><p><b>Chronimy:</b> ${d.brief.must}</p><p><b>Można odpuścić:</b> ${d.brief.cut}</p><p><b>Sprawdź:</b> ${d.brief.check}</p><p><b>Plan B:</b> ${DAYRAIN[d.date]||'Spokojniejszy wariant dnia zgodnie z warunkami i samopoczuciem.'}</p></div>
+    <section class="sleep"><h2>${H?'Nocleg: '+H.name:'Noc w podróży'}</h2>${H?`<p>${H.jp?'<span lang="ja">'+H.jp+'</span> · ':''}${H.near}</p><p>${esc(TRIP.hotels[H.id]?.text||'Sprawdź potwierdzenie.')}</p><a href="${gmapsQ(H.mapsq||H.name)}">Hotel w Google Maps</a>`:`<p>${d.date==='2027-05-07'?'Lot przez Abu Zabi. Lądowanie w Warszawie 8 maja o {{lot.waw.przylot}}.':'Nocny lot do Japonii; przylot na Naritę 29 kwietnia o {{lot.nrt.przylot}}.'}</p>`}</section>
+    <footer><a href="https://japonia-2027.vercel.app/days/${d.date}.html">Pełny dzień: japonia-2027.vercel.app/days/${d.date}.html</a><br><a href="${route}">Punkty trasy w Google Maps</a> · <a href="https://japonia-2027.vercel.app/rezerwacje.html">Prywatne potwierdzenia</a><p>Godziny miejscowe. Rozkłady i atrakcje wymagają potwierdzenia. Zarezerwowane nie oznacza opłacone; miejsca mogą być wstępne. Wydanie ${BUILD_ID}.</p></footer></article>`;
+  }).join('');
+  return `<!doctype html><html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Plan na drogę · Japonia 2027</title><style>
+  *{box-sizing:border-box}body{margin:0;background:#f5f1e8;color:#1c2530;font:15px/1.4 system-ui,sans-serif}a{color:#1b3a6b}.toolbar{padding:1rem;display:flex;gap:1rem;flex-wrap:wrap;align-items:center;max-width:60rem;margin:auto}.toolbar button{background:#1b3a6b;color:white;border:0;border-radius:.25rem;padding:.7rem 1rem;font:inherit;cursor:pointer}.hint{max-width:52rem;margin:0 auto 1rem;padding:0 1rem;font-size:.9rem}.travel-day{background:white;max-width:52rem;margin:1rem auto;padding:2rem;border:1px solid #d8d5ce}.eyebrow{font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:#52627a;margin:0}h1{font:600 1.8rem/1.15 Georgia,serif;margin:.5rem 0}.date{font-weight:600;color:#1b3a6b;margin:0 0 1rem}.rhythm{border-top:2px solid #1b3a6b;padding-top:.6rem}p{margin:.5rem 0}table{border-collapse:collapse;width:100%;margin:.8rem 0}th{text-align:left;font-size:.8rem;text-transform:uppercase;color:#52627a}td,th{padding:.35rem 0;border-bottom:1px solid #e0e3e8;vertical-align:top}td:first-child{width:4.8rem;font-weight:650;color:#1b3a6b;font-variant-numeric:tabular-nums}small{font-size:.7rem;border:1px solid #a4adba;border-radius:.2rem;padding:.05rem .25rem;margin-left:.3rem;white-space:nowrap}.essentials{border-left:3px solid #b98a34;padding-left:.7rem}.sleep{margin-top:.7rem;padding-top:.5rem;border-top:1px solid #ccd1d9}h2{font-size:1rem;margin:0}footer{border-top:1px solid #ccd1d9;margin-top:.7rem;padding-top:.5rem;font-size:.75rem;color:#52627a;overflow-wrap:anywhere}@media(max-width:600px){.travel-day{padding:1rem;margin:.7rem}.toolbar{gap:.7rem}h1{font-size:1.5rem} }
+  @media print{@page{size:A4;margin:12mm 13mm}body{background:white;font-size:10pt;line-height:1.3}.toolbar,.hint{display:none}.travel-day{max-width:none;border:0;margin:0;padding:0;break-after:page}.travel-day:last-child{break-after:auto}h1{font-size:19pt}.eyebrow{font-size:8pt}.date{margin-bottom:8pt}p{margin:5pt 0}td,th{padding:4pt 0}small{font-size:7pt}h2{font-size:10pt}footer{font-size:7.5pt}tr,.sleep,.essentials{break-inside:avoid}a{text-decoration:none}*{print-color-adjust:exact;-webkit-print-color-adjust:exact} }
+  </style></head><body><nav class="toolbar"><b>Plan na drogę · 11 dni</b><a href="index.html">Agenda</a><a href="druk.html">Pełny przewodnik</a><button onclick="window.print()">Drukuj / zapisz PDF</button></nav><p class="hint">Jeden dzień na jednej kartce A4. W oknie drukowania wyłącz nagłówki i stopki przeglądarki, pozostaw skalę 100%. Pełne opisy oraz linki do biletów są na stronie każdego dnia. Ten skrót nie zastępuje potwierdzeń rezerwacji; zapisz je osobno w telefonie. Łącza działają w zapisanym PDF, mapy wymagają internetu.</p>${days}</body></html>`;
+}
+
 function drukPage(){
   const IL = {g:'Lekki', y:'Średni', r:'Intensywny'};
   const toc = DAYS.map((d,i)=>{
@@ -916,7 +948,8 @@ h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:22px 0 8px}
 </head>
 <body>
 <div class="topbar no-print">
-  <b>JAPONIA · 2027 — plan do druku</b>
+  <b>JAPONIA · 2027 - pełny przewodnik</b>
+  <a href="druk-skrot.html">Plan na drogę: 1 dzień = 1 kartka</a>
   <a href="index.html">← wróć do strony</a>
   <button class="btn" type="button" onclick="window.print()">🖨️ Drukuj / zapisz jako PDF</button>
 </div>
@@ -1287,6 +1320,7 @@ page('index.html', indexPage());
 page('hotele.html', hotelePage());
 page('decyzje.html', decyzjePage());
 page('druk.html', drukPage());
+page('druk-skrot.html', drukSkrotPage());
 page('loty.html', lotyPage());
 page('koszty.html', kosztyPage());
 page('pogoda.html', pogodaPage());
@@ -1319,11 +1353,12 @@ fs.writeFileSync(DIR + '/terminy.ics', calendar(DEADLINES));
    HTML i kod pobieramy z sieci, po 5 sekundach korzystamy z kopii; obrazy z cache.
    Mapy (Leaflet/OSM) i pogoda wymagają sieci — bez niej po prostu się nie pokażą. */
 const PRECACHE = [
-  './','index.html','decyzje.html','atrakcje.html','hotele.html','loty.html','koszty.html','pogoda.html','niezbednik.html','druk.html','pokaz.html','druga-para.html','assets/pokaz.css','assets/pokaz.js',
+  './','index.html','decyzje.html','atrakcje.html','hotele.html','loty.html','koszty.html','pogoda.html','niezbednik.html','druk.html','druk-skrot.html','pokaz.html','druga-para.html','assets/pokaz.css','assets/pokaz.js',
   'assets/style.css','assets/app.js','assets/icon.svg',
   ...DAYS.map(d=>`days/${d.date}.html`),
   ...[...new Set(Object.values(DAYIMG))].flatMap(p=>[...new Set([p,small(p)])]).map(p=>p.replace(/^\//,'')),
   ...HOTELS.map(h=>`assets/img/hotels/${h.img||h.id+'.webp'}`),
+  ...[...new Set(Object.values(DAYPHOTOS).flat().map(([k])=>ZDJECIA[k].src.replace(/^\//,'')))],
 ];
 /* Wersja cache = skrót TREŚCI wszystkich generowanych plików. Dzięki temu każda zmiana
    na stronie unieważnia cache, a brak zmian daje identyczny build (determinizm zachowany).

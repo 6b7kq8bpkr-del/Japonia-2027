@@ -635,3 +635,8 @@ html.uklad-tel body{overflow:hidden}
  .watch .today-steps a:nth-child(n+2){display:block}
 }
 @media print{.nav-more{display:none}}
+
+/* Główne zdjęcie zostaje widoczne razem z tytułem i datami na laptopie. */
+@media(min-width:720px){.hero.home .hbg{height:clamp(12rem,38vh,22rem)}.hero.home .hbg-img{background-position:center 24%}}
+.deadline-rest{margin-top:.6rem;border-top:1px solid var(--line);padding-top:.8rem}
+.deadline-rest>summary{cursor:pointer;font-weight:600;color:var(--ai);padding:.45rem 0}

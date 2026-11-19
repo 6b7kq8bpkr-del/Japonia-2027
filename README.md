@@ -49,3 +49,8 @@ Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie
 
 ## Prywatna zakładka rezerwacji
 `rezerwacje.html` to publiczny formularz bez danych. POST `/api/rezerwacje` sprawdza hasło po stronie serwera (scrypt); zwraca dane wyłącznie przy poprawnym haśle. Brak sesji: każde otwarcie wymaga hasła, które można zachować w menedżerze haseł. GET nigdy nie udostępnia danych; odpowiedzi mają no-store i restrykcyjne CSP. Dane i hash hasła są w zmiennych Vercel `RESERVATIONS_DATA` i `RESERVATIONS_PASSWORD_HASH`. Lokalne źródło: `private/reservations.json`, hasło: `private/dostep-rezerwacje.txt` - oba poza git i wdrożeniem. Nie publikować PIN-ów ani danych karty. `private/rezerwacje.md` pozostaje historyczną notatką; aktualne potwierdzenia obu rodzin w JSON. `node test-private.cjs` sprawdza autoryzację i wycieki.
+
+## Skrót i prezentacja
+- `druk-skrot.html`: 11 kart A4, po jednej na dzień, generowanych z tej samej agendy co pełny `druk.html`. Zawiera godziny, statusy, transport, nocleg i plan B. W druku wyłącz nagłówki przeglądarki.
+- Pokaz ma zdjęcia w obu trybach i powiększaną galerię każdego dnia. Strzałki w otwartej galerii zmieniają zdjęcia, Escape wraca do planu. Zdjęcia i podpisy pochodzą z `DAYPHOTOS` oraz licencjonowanych lokalnych plików `data/zdjecia.mjs`.
+- `taskIds` w terminach łączy wydarzenie z odpowiednimi zadaniami, zapobiegając powielaniu przypomnień. Identyfikatory zdarzeń ICS pozostają bez zmian. Lista na stronie głównej pokazuje trzy przyszłe terminy; reszta jest rozwijana. Bez JavaScript widoczna jest pełna lista.

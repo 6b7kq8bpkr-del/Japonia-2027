@@ -250,7 +250,7 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
         var g=el('div','today-steps');
         [['Teraz',p.cur],['Następnie',p.next]].forEach(function(x){ if(x[1]<0) return;
           var r=el('div'); r.appendChild(el('span',null,x[0])); r.appendChild(el('b',null,day.s[x[1]][0]+' · '+day.s[x[1]][1])); g.appendChild(r); });
-        if(g.children.length){ var details=el('details','watch-more'); details.appendChild(el('summary',null,'Pozostałe najbliższe sprawy')); details.appendChild(g); box.appendChild(details); }
+        if(g.children.length) box.appendChild(g);
         var l=el('a','today-link','Otwórz dzisiejszy plan →'); l.href='days/'+day.d+'.html#plan'; box.appendChild(l);
         box.hidden=false;
       }
@@ -299,6 +299,14 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
     el.textContent=txt; el.className='due'+(cls?' '+cls:'');
     if(li&&!box) li.classList.toggle('past',n<0);
   }
+  document.querySelectorAll('[data-compact-deadlines]').forEach(function(section){
+    var list=section.querySelector('.deadlines'), more=section.querySelector('.deadline-rest'), summary=more.querySelector('summary'), rest=more.querySelector('ol');
+    var rows=Array.from(list.children), upcoming=rows.filter(function(row){return left(row.getAttribute('data-date'))>=0;}).sort(function(a,b){return day(a.dataset.date)-day(b.dataset.date);}).slice(0,3);
+    rows.forEach(function(row){ if(upcoming.indexOf(row)<0) rest.appendChild(row); });
+    upcoming.forEach(function(row){list.appendChild(row);});
+    if(!upcoming.length){ var note=document.createElement('p');note.textContent='Wszystkie terminy z tego zestawienia już minęły.';section.insertBefore(note,list); }
+    more.hidden=!rest.children.length; summary.textContent='Pozostałe terminy ('+rest.children.length+')';
+  });
   var marks=[].slice.call(document.querySelectorAll('em.due[data-due]'));
   marks.forEach(paint);
   document.addEventListener('change',function(e){ if(e.target&&e.target.matches&&e.target.matches('input[data-ck]')) marks.forEach(paint); });
@@ -308,14 +316,14 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   var box=document.getElementById('pilnuj'), src=document.getElementById('terminy-data');
   if(!box||!src) return;
   var data={terminy:[],sprawy:[]}; try{ data=JSON.parse(src.textContent); }catch(e){}
-  var coming=data.terminy.filter(function(t){ return left(t.d)>=0; }).sort(function(a,b){ return day(a.d)-day(b.d); });
+  var coming=data.terminy.filter(function(t){ return left(t.d)>=0&&!t.taskIds?.every(function(id){return done[id];}); }).sort(function(a,b){ return day(a.d)-day(b.d); });
   var late=data.sprawy.filter(function(s){ return !done[s.id]&&left(s.due)<0; });
   var open=data.sprawy.filter(function(s){ return !done[s.id]&&left(s.due)>=0&&(!s.from||left(s.from)<=0); }).sort(function(a,b){ return day(a.due)-day(b.due); });
   if(!coming.length&&!late.length&&!open.length) return;
   function el(tag,cls,text){ var e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
   // nagłówkiem jest to, co wypada najwcześniej: sprawa do załatwienia albo termin z kalendarza
   var items=open.map(function(s){ return {t:s.w,d:s.due,l:'do załatwienia, termin '+pl(s.due),h:'decyzje.html#do-zalatwienia',k:'Do załatwienia'}; })
-    .concat(coming.map(function(t){ return {t:t.t,d:t.d,l:t.l,h:t.h,k:'Termin'}; }))
+    .concat(coming.filter(function(t){ return !t.taskIds?.length || !t.taskIds.every(function(id){return open.some(function(s){return s.id===id;})||late.some(function(s){return s.id===id;})||done[id];}); }).map(function(t){ return {t:t.t,d:t.d,l:t.l,h:t.h,k:'Termin'}; }))
     .sort(function(a,b){ return day(a.d)-day(b.d); });
   box.appendChild(el('p','eyebrow','Pilnujemy terminów'));
   if(items.length){

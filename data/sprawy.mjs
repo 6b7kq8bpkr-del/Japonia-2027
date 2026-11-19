@@ -219,6 +219,7 @@ export const DEADLINES = [
     "text": "Termin planistyczny: do końca marca kupcie sesję KOTO na 2.05 i bilety na sumo 3.05, zanim Golden Week się wyprzeda.",
     "href": "decyzje.html#do-zalatwienia",
     "id": "attractions-booking",
+    "taskIds": ["tea-koto-v4", "sumo-v3"],
     "uid": "2027-03-31-2@japonia-2027"
   },
   {
@@ -267,6 +268,7 @@ export const DEADLINES = [
     "text": "Planowany start sprzedaży na 4.05 według obecnej reguły. Sloty o zachodzie słońca znikają najszybciej. *Potwierdźcie regułę w 2027.",
     "href": "atrakcje.html#shibuya-sky",
     "id": "sky-sale",
+    "taskIds": ["sky-v5"],
     "uid": "2027-04-19-6@japonia-2027",
     "alarms": [
       "-P1D",
@@ -351,6 +353,7 @@ export const DEADLINES = [
   },
   {
     "id": "koto-enquiry",
+    "taskIds": ["koto-mail-v1"],
     "date": "2026-11-27",
     "label": "27.11.2026",
     "title": "Wysłać zapytanie do KOTO dla 7 osób",
@@ -359,6 +362,7 @@ export const DEADLINES = [
   },
   {
     "id": "kodama-purchase-check",
+    "taskIds": ["kodama-check-v1"],
     "date": "2026-11-26",
     "label": "26.11.2026",
     "title": "Kodama: sprawdzić My Trips przed zakupem",
@@ -367,6 +371,7 @@ export const DEADLINES = [
   },
   {
     "id": "our-payment-dates",
+    "taskIds": ["nasze-platnosci-v1"],
     "date": "2026-12-15",
     "label": "15.12.2026",
     "title": "Sprawdzić daty płatności naszej rodziny",
@@ -399,6 +404,7 @@ export const DEADLINES = [
   },
   {
     "id": "transfer-and-onsen",
+    "taskIds": ["hanaori-transfer-v5", "hanaori-bath-v5"],
     "date": "2027-04-20",
     "label": "20.04.2027",
     "title": "Hanaori: zamówić transfer, opcjonalnie prywatny onsen",
