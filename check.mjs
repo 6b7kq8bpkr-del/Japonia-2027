@@ -75,7 +75,7 @@ const categories=['flights','hotels','transport','food','attractions','extras'];
 if(categories.some(key=>!Number.isFinite(DP_TOTALS[key]))||DP_KOSZTY.some(item=>!categories.includes(item.category))) errs.push('Budżet drugiej rodziny: brak lub nieznana kategoria');
 const second=DP_KUPIONE.total+DP_KOSZTY.reduce((n,item)=>n+item.zl,0);
 if(Math.abs(second-Object.values(DP_TOTALS).reduce((n,v)=>n+v,0))>0.01) errs.push('Budżet drugiej rodziny: błędna suma kategorii');
-if(DP_KOSZTY.filter(item=>item.co.startsWith('Shinkansen')).length!==1 || DP_KOLEJ.totalJPY!==2*DP_KOLEJ.perTripJPY) errs.push('Shinkanseny drugiej rodziny: zdublowanie lub niezgodne odcinki');
+if(DP_KOSZTY.filter(item=>item.co.startsWith('Shinkansen')).length!==1 || (DP_KOLEJ.totalJPY!==2*DP_KOLEJ.perTripJPY || DP_KOLEJ.paidTotalJPY!==DP_KOLEJ.totalJPY+DP_KOLEJ.kodamaJPY)) errs.push('Shinkanseny drugiej rodziny: zdublowanie lub niezgodne odcinki');
 const money=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ')+' zł';
 for(const f of ['index.html','druga-para.html','druk.html']) {
  const html=readFileSync(join(DIR,f),'utf8');

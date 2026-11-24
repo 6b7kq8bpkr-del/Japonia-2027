@@ -9,11 +9,12 @@ export const BOOKINGS = [
     "note": "Na reservation@teaceremony-kyoto.com: plan NO4 (sesja prywatna dla grup od siedmiu osób) na 2.05.2027 o 11:45 albo 13:00, dla 4 dorosłych i 3 dzieci (10, 12 i 12 lat). Pytamy o dostępność, cenę dorosłych i dzieci, sposób rezerwacji i anulowanie. <a href=\"decyzje.html#koto-mail\">Gotowy tekst maila w Kulisach</a>."
   },
   {
-    "id": "kodama-check-v1",
+    "id": "kodama-done-v2",
+    "done": true,
     "from": "2026-11-19",
     "due": "2026-11-26",
-    "when": "Teraz, przed ponownym zakupem",
-    "what": "Sprawdzić zakup Kodamy 7.05 w My Trips dla obu rodzin",
+    "when": "✅ Kupione 24.11.2026",
+    "what": "Kodama 7.05 kupiona dla obu rodzin",
     "note": TRIP.kodama.note
   },
   {
@@ -84,8 +85,8 @@ export const BOOKINGS = [
     "from": "2027-03-29",
     "due": "2027-04-07",
     "when": "29.03 i 3.04 maile; 6.04 i 7.04 zakupy",
-    "what": "Domknąć kolej: potwierdzenia miejsc, Odawara-Shinagawa, NEX, Romancecar",
-    "note": "Dwa długie przejazdy są już zarezerwowane w SmartEX (patrz: potwierdzone elementy). Zostało: (1) 29.03 i 3.04 po 8:00 JST (1:00 w Polsce) sprawdzić maile z ostatecznym numerem pociągu i siedmioma miejscami w dwóch rezerwacjach (4+3); (2) Kodamę można rezerwować wcześniej: aktualny zakup najpierw sprawdźcie w My Trips. 7.04 sprawdźcie ostateczny pociąg i miejsca, nie odkładajcie samego zakupu do tej daty; (3) NEX osobno w JR East, w obie strony do i z Shinagawy; (4) Romancecar „Metro Hakone” z Omotesandō na 6.05 (obecnie {{metrohakone.odj}}): sprzedaż miejsc w Odakyu od 6.04; sprawdźcie, czy kurs jest w rozkładzie 2027, jak kupić bilet na odcinek metra i w jakim wariancie wziąć Hakone Free Pass. Jeśli to niemożliwe, od razu rezerwujcie Romancecar z Shinjuku o 10:00; (5) ustalić w SmartEX sposób wejścia na peron dla wszystkich siedmiu osób: kod QR albo odbiór biletów w automacie. Rezerwacja na 29.04 jest już zmieniona na odcinek Shinagawa-Kioto."
+    "what": "Domknąć kolej: potwierdzenia miejsc, NEX i Romancecar",
+    "note": "Dwa długie przejazdy są już zarezerwowane w SmartEX (patrz: potwierdzone elementy). Zostało: (1) 29.03 i 3.04 po 8:00 JST (1:00 w Polsce) sprawdzić maile z ostatecznym numerem pociągu i siedmioma miejscami w dwóch rezerwacjach (4+3); (2) Kodama jest kupiona dla obu rodzin; 7.04 po 08:00 JST (01:00 w Polsce) sprawdźcie ostateczny pociąg i miejsca; (3) NEX osobno w JR East, w obie strony do i z Shinagawy; (4) Romancecar „Metro Hakone” z Omotesandō na 6.05 (obecnie {{metrohakone.odj}}): sprzedaż miejsc w Odakyu od 6.04; sprawdźcie, czy kurs jest w rozkładzie 2027, jak kupić bilet na odcinek metra i w jakim wariancie wziąć Hakone Free Pass. Jeśli to niemożliwe, od razu rezerwujcie Romancecar z Shinjuku o 10:00; (5) ustalić w SmartEX sposób wejścia na peron dla wszystkich siedmiu osób: kod QR albo odbiór biletów w automacie. Rezerwacja na 29.04 jest już zmieniona na odcinek Shinagawa-Kioto."
   },
   {
     "id": "insurance",
@@ -250,7 +251,7 @@ export const DEADLINES = [
     "date": "2027-04-07",
     "label": "7 kwietnia, 3:00 PL",
     "title": "NEX na powrót: sprzedaż; Kodama: sprawdzenie miejsc",
-    "text": "NEX na 7.05: standardowe okno JR East od 10:00 JST (03:00 w Polsce). Wcześniejszy zakup Kodamy jest możliwy już teraz; 7.04 sprawdźcie jej finalny pociąg i miejsca. Przed ponownym zakupem Kodamy sprawdźcie My Trips dla obu rodzin.",
+    "text": "NEX na 7.05: standardowe okno JR East od 10:00 JST (03:00 w Polsce). Kodama jest kupiona dla obu rodzin; 7.04 po 08:00 JST (01:00 w Polsce) sprawdźcie jej finalny pociąg i miejsca. Nie kupujcie ponownie.",
     "href": "decyzje.html#do-zalatwienia",
     "id": "nex-return-sale",
     "uid": "2027-04-07-5@japonia-2027",
@@ -362,10 +363,10 @@ export const DEADLINES = [
   },
   {
     "id": "kodama-purchase-check",
-    "taskIds": ["kodama-check-v1"],
-    "date": "2026-11-26",
-    "label": "26.11.2026",
-    "title": "Kodama: sprawdzić My Trips przed zakupem",
+    "taskIds": ["kodama-done-v2"],
+    "date": "2027-04-07",
+    "label": "7.04.2027",
+    "title": "Kodama kupiona: sprawdzić finalny pociąg i miejsca",
     "text": TRIP.kodama.note,
     "href": "rezerwacje.html"
   },
@@ -432,7 +433,7 @@ export const DEADLINES = [
     "date": "2027-04-29",
     "label": "2027-04-29 {{n51.odj}} JST (godzina wstępna)",
     "title": "SmartEX: zmiana/anulowanie Shinagawa-Kioto",
-    "text": "Przypomnienie tydzień przed obecnie planowanym odjazdem. Anulowanie nie jest bezpłatne. Dla standardowej taryfy SmartEX obecnie 320 JPY/os. przed odjazdem i przed wejściem bramką/odbiorem biletu; sprawdźcie taryfę konkretnej rezerwacji. Po przydziale finalnego pociągu zweryfikujcie godzinę. To nie oznacza potwierdzenia zakupu brakującej Kodamy. https://www.smart-ex.jp/en/reservation/guide/cancel/",
+    "text": "Przypomnienie tydzień przed obecnie planowanym odjazdem. Anulowanie nie jest bezpłatne. Dla standardowej taryfy SmartEX obecnie 320 JPY/os. przed odjazdem i przed wejściem bramką/odbiorem biletu; sprawdźcie taryfę konkretnej rezerwacji. Po przydziale finalnego pociągu zweryfikujcie godzinę. Wszystkie trzy przejazdy SmartEX są kupione dla obu rodzin. https://www.smart-ex.jp/en/reservation/guide/cancel/",
     "href": "rezerwacje.html",
     "utc": "2027-04-29T07:55:00Z",
     "alarms": [
@@ -446,7 +447,7 @@ export const DEADLINES = [
     "date": "2027-05-03",
     "label": "2027-05-03 {{n6.odj}} JST (godzina wstępna)",
     "title": "SmartEX: zmiana/anulowanie Kioto-Tokio",
-    "text": "Przypomnienie tydzień przed obecnie planowanym odjazdem. Anulowanie nie jest bezpłatne. Dla standardowej taryfy SmartEX obecnie 320 JPY/os. przed odjazdem i przed wejściem bramką/odbiorem biletu; sprawdźcie taryfę konkretnej rezerwacji. Po przydziale finalnego pociągu zweryfikujcie godzinę. To nie oznacza potwierdzenia zakupu brakującej Kodamy. https://www.smart-ex.jp/en/reservation/guide/cancel/",
+    "text": "Przypomnienie tydzień przed obecnie planowanym odjazdem. Anulowanie nie jest bezpłatne. Dla standardowej taryfy SmartEX obecnie 320 JPY/os. przed odjazdem i przed wejściem bramką/odbiorem biletu; sprawdźcie taryfę konkretnej rezerwacji. Po przydziale finalnego pociągu zweryfikujcie godzinę. Wszystkie trzy przejazdy SmartEX są kupione dla obu rodzin. https://www.smart-ex.jp/en/reservation/guide/cancel/",
     "href": "rezerwacje.html",
     "utc": "2027-05-03T01:01:00Z",
     "alarms": [
@@ -459,8 +460,8 @@ export const DEADLINES = [
     "id": "kodama-cancel",
     "date": "2027-05-07",
     "label": "2027-05-07 {{kodama.odj}} JST (godzina wstępna)",
-    "title": "SmartEX: zmiana/anulowanie Odawara-Shinagawa (jeśli kupione)",
-    "text": "Przypomnienie tydzień przed obecnie planowanym odjazdem. Anulowanie nie jest bezpłatne. Dla standardowej taryfy SmartEX obecnie 320 JPY/os. przed odjazdem i przed wejściem bramką/odbiorem biletu; sprawdźcie taryfę konkretnej rezerwacji. Po przydziale finalnego pociągu zweryfikujcie godzinę. To nie oznacza potwierdzenia zakupu brakującej Kodamy. https://www.smart-ex.jp/en/reservation/guide/cancel/",
+    "title": "SmartEX: zmiana/anulowanie Odawara-Shinagawa",
+    "text": "Przypomnienie tydzień przed obecnie planowanym odjazdem. Anulowanie nie jest bezpłatne. Dla standardowej taryfy SmartEX obecnie 320 JPY/os. przed odjazdem i przed wejściem bramką/odbiorem biletu; sprawdźcie taryfę konkretnej rezerwacji. Po przydziale finalnego pociągu zweryfikujcie godzinę. Wszystkie trzy przejazdy SmartEX są kupione dla obu rodzin. https://www.smart-ex.jp/en/reservation/guide/cancel/",
     "href": "rezerwacje.html",
     "utc": "2027-05-07T02:14:00Z",
     "alarms": [
