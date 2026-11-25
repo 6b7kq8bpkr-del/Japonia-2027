@@ -133,3 +133,5 @@ html:not(.tryb-zn) .dayslide h1{font-size:2.05em}
 #photo-caption{font-size:1.2em;font-weight:600}#photo-credit{font-size:.72em;opacity:.85}#photo-count{white-space:nowrap;font-variant-numeric:tabular-nums}
 .photo-controls{display:flex;align-items:center;gap:.7em;padding:.6em 1.1em;border-top:1px solid #52627a}.photo-controls a{margin-right:auto;color:white;font-size:.8em}.photo-controls button{border-color:#fff;background:transparent}.photo-controls button:disabled{opacity:.4;cursor:default}
 @media(max-aspect-ratio:1/1){.v-my .photo-open,.photo-open{height:240px;flex:none}.photo-controls{flex-wrap:wrap}#photo-viewer{height:85vh}.photo-controls a{font-size:.7em}}
+
+.sdesc .spre{margin-top:.6em;font-size:.9em;opacity:.85}

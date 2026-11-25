@@ -56,6 +56,12 @@ for(const d of DAYS){
     if(kind&&!['lot','zarezerwowane','rezerwacja','opcja','bufor'].includes(kind)) errs.push(`${d.date}: nieznany status ${kind}`);
   }
 }
+// Dodatki do kroków (mapa, kartka dla taksówkarza) muszą wskazywać istniejący krok osi czasu.
+{ const {STEPX}=await import('./data/index.mjs');
+  for(const [date,o] of Object.entries(STEPX)){ const day=DAYS.find(d=>d.date===date);
+    if(!day){errs.push(`STEPX: nieznany dzień ${date}`);continue;}
+    for(const [time,x] of Object.entries(o)){ if(!day.tl.some(s=>s[0]===time)) errs.push(`STEPX ${date}: brak kroku o ${time}`);
+      if(x.taxi&&x.taxi.length!==3) errs.push(`STEPX ${date} ${time}: kartka taksówkowa wymaga trzech pól`); } } }
 if(new Set(BOOKINGS.map(x=>x.id)).size!==BOOKINGS.length) errs.push('Checklista: niestabilne/powtórzone identyfikatory');
 if(DEADLINES.some(x=>!Number.isFinite(Date.parse(x.date)))) errs.push('Terminy: błędna data');
 for(const d of DEADLINES) if(d.taskIds?.some(id=>!BOOKINGS.some(b=>b.id===id))) errs.push(`Termin ${d.id}: nieznane zadanie powiązane`);

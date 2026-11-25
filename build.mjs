@@ -7,7 +7,7 @@ import {calendar} from './lib/calendar.mjs';
 import {ZDJECIA} from './data/zdjecia.mjs';
 import {PYTANIA, PYTANIA_OGOLNE} from './data/pytania.mjs';
 import {CENY, DP_DECYZJE, DP_KUPIONE} from './data/druga-para.mjs';
-import {DAYS, GEO, DAYRAIN, DAYCROWD, BOOKINGS, DEADLINES, HOTELS, fill} from './data/index.mjs';
+import {DAYS, GEO, DAYRAIN, DAYCROWD, STEPX, BOOKINGS, DEADLINES, HOTELS, fill} from './data/index.mjs';
 /* Każda strona HTML przechodzi przez fill(): tokeny {{klucz}} z szablonów zamieniają się na fakty z data/fakty.mjs. */
 const page = (file, html) => fs.writeFileSync(DIR + '/' + file, fill(html));
 const DIR = path.dirname(fileURLToPath(import.meta.url));
@@ -217,8 +217,13 @@ function dayMeta(d){
 function dayPage(d,i){
   const prefix='../', prev=DAYS[i-1], next=DAYS[i+1], H=HOTELS.find(h=>h.id===d.stay);
   const metadata=dayMeta(d);
-  const tl=d.tl.map(([time,title,desc,kind])=>'<li class="'+(kind||'plan')+'"><div class="tm">'+time.replace('8.05 ','8.05<br>')+'</div><div class="bd">'+
-    (desc?'<details class="event"><summary><span class="h">'+title+'</span>'+(kind?'<span class="event-tag '+kind+'">'+ITEM_LABEL[kind]+'</span>':'')+'</summary><p class="d">'+desc+'</p></details>':'<p class="h">'+title+'</p>')+'</div></li>').join('');
+  // Krok: opis „na miejscu”, pod nim link do mapy i kartka dla taksówkarza (STEPX), na końcu zwijane „Przed wyjazdem”.
+  const stepExtra=(time,pre)=>{ const x=(STEPX[d.date]||{})[time]||{};
+    return (x.map?'<p class="steptools"><a href="'+gmapsQ(x.map)+'" target="_blank" rel="noopener">Pokaż na mapie ↗</a></p>':'')+
+      (x.taxi?'<div class="taxi"><p class="taxi-k">Pokaż kierowcy taksówki</p><p class="taxi-jp" lang="ja">'+x.taxi[0]+'<small>'+x.taxi[1]+'</small></p><p class="taxi-req" lang="ja">ここまでお願いします。</p><p class="taxi-pl">'+x.taxi[2]+'. Zdanie pod spodem znaczy: „Proszę nas tu zawieźć”.</p></div>':'')+
+      (pre?'<details class="pre"><summary>Przed wyjazdem</summary><p class="d">'+pre+'</p></details>':''); };
+  const tl=d.tl.map(([time,title,desc,kind,pre])=>'<li class="'+(kind||'plan')+'"><div class="tm">'+time.replace('8.05 ','8.05<br>')+'</div><div class="bd">'+
+    (desc?'<details class="event"><summary><span class="h">'+title+'</span>'+(kind?'<span class="event-tag '+kind+'">'+ITEM_LABEL[kind]+'</span>':'')+'</summary><p class="d">'+desc+'</p>'+stepExtra(time,pre)+'</details>':'<p class="h">'+title+'</p>')+'</div></li>').join('');
   const geo=GEO[d.date]||[];
   const gdir=geo.length?'https://www.google.com/maps/dir/'+geo.map(g=>g[0]+','+g[1]).join('/'):'#';
   const brief=d.brief;
@@ -229,13 +234,13 @@ function dayPage(d,i){
     '<nav class="section-nav" aria-label="Skróty tego dnia"><a href="#skrot">W minutę</a><a href="#plan">Godziny</a><a href="#mapa">Mapa</a><a href="#warunki">Plan B</a><a href="#nocleg">Nocleg</a></nav>'+
     '<section id="skrot" class="day-brief"><h2 class="stitle">Ten dzień w minutę</h2><div class="brief-stats"><div><span>Start</span><b>'+brief.start+'</b></div><div><span>Koniec</span><b>'+brief.end+'</b></div><div><span>Tempo podstawowe</span><b class="pace '+d.level+'">'+LEVEL_LABEL[d.level]+'</b></div></div>'+
     '<p class="brief-focus">'+brief.focus+'</p><dl class="brief-rules"><div><dt>Chronimy</dt><dd>'+brief.must+'</dd></div><div><dt>Można odpuścić</dt><dd>'+brief.cut+'</dd></div><div class="guard"><dt>Sprawdź</dt><dd>'+brief.check+'</dd></div></dl></section>'+
-    (DAYPHOTOS[d.date]?'<section id="kadry"><h2 class="stitle">W kadrze</h2><div class="dayphotos">'+DAYPHOTOS[d.date].map(([k,c])=>photo(k,c,'(max-width:640px) 100vw, 33vw')).join('')+'</div></section>':'')+
     '<section id="plan"><div class="section-heading"><h2 class="stitle">Godzina po godzinie</h2><button class="reset" type="button" id="timelineToggle" aria-expanded="false">Rozwiń szczegóły</button></div><p class="note timing-note">'+TIMING_NOTE+'</p><div class="card"><ul class="tline" data-date="'+d.date+'">'+tl+'</ul></div></section>'+
     '<section id="warunki"><h2 class="stitle">Gdy warunki się zmienią</h2><div class="dayflag rain"><b>Plan B:</b> '+(DAYRAIN[d.date]||brief.cut)+'</div>'+
     (DAYCROWD[d.date]?'<div class="dayflag"><b>Tłum i tempo:</b> '+DAYCROWD[d.date]+'</div>':'')+
     (weather?'<div class="dayflag wxday" data-date="'+d.date+'" data-la="'+weather[0]+'" data-lo="'+weather[1]+'" style="display:none"></div>':'')+
     (d.pc?'<details class="card option-detail"><summary>'+d.pc.q+'</summary>'+d.pc.opts.map(o=>'<p><b>'+o[0]+'</b><br>Za: '+o[1]+'.<br>Przeciw: '+o[2]+'.</p>').join('')+'</details>':'')+'</section>'+
     mapSec+
+    (DAYPHOTOS[d.date]?'<section id="kadry"><h2 class="stitle">W kadrze</h2><div class="dayphotos">'+DAYPHOTOS[d.date].map(([k,c])=>photo(k,c,'(max-width:640px) 100vw, 33vw')).join('')+'</div></section>':'')+
     '<section id="nocleg"><h2 class="stitle">Gdzie śpimy</h2>'+
     (H?'<div class="card"><b>'+H.name+'</b><p>'+H.stay+'</p><p class="note">'+H.cancel+'</p>'+hotelStatus(H.id)+'<div class="linklist"><a href="../hotele.html#'+H.id+'">Pokój i rezerwacja</a><a href="'+gmapsQ(H.mapsq||H.name)+'" target="_blank" rel="noopener">Dojazd w Google Maps ↗</a></div></div>':'<div class="card">'+(d.date==='2027-04-28'?'Noc w samolocie do Japonii.':'Noc w podróży powrotnej; lądowanie WAW 8 maja o {{lot.waw.przylot}}.')+'</div>')+'</section>'+
     '<section><h2 class="stitle">Przydatne na miejscu</h2><div class="card"><ul class="tips">'+d.tips.map(t=>'<li>'+t+'</li>').join('')+'</ul><div class="linklist" style="margin-top:1rem">'+d.links.map(l=>'<a href="../atrakcje.html#'+l.id+'">'+l.label+'</a>').join('')+'</div></div></section>'+
@@ -309,7 +314,7 @@ function indexPage(){
   </section>
 
   ${readiness()}
-  <nav class="section-nav" aria-label="Skróty agendy"><a href="#dni">Dni</a><a href="#trasa">Mapa Japonii</a><a href="#hotelowe-chwile">Hotele</a><a href="#terminy">Terminy</a><a href="druk.html">Druk / PDF</a></nav>
+  <nav class="section-nav" aria-label="Skróty agendy"><a href="#dni">Dni</a><a href="#trasa">Mapa Japonii</a><a href="#terminy">Terminy</a><a href="#hotelowe-chwile">Hotele</a><a href="druk.html">Druk / PDF</a></nav>
   <section id="dni">
     <h2 class="stitle">Dzień po dniu</h2>
     <p class="lead-p">Każdy dzień zaczyna się krótkim podsumowaniem: po co jedziemy, co chronimy i co można odpuścić. Dalej są godziny, mapa, nocleg i plan B. W Golden Week rezerwacje wymagają wyprzedzenia; oba duże przejazdy kolejowe wypadają w tym okresie.</p>
@@ -317,7 +322,6 @@ function indexPage(){
     <p class="note" style="margin-top:0.75rem">Znacznik przy wierszu to obciążenie dnia: <b style="color:var(--success)">●</b> lekki · <b style="color:var(--warn)">●</b> średni · <b style="color:var(--hanko)">●</b> intensywny. Zaplecze planu: <a href="decyzje.html">Kulisy</a>.</p>
   </section>
 
-  ${hotelHighlights()}
   <section id="trasa">
     <h2 class="stitle">Nasza trasa po Japonii</h2>
     <p class="lead-p">Cała podróż na jednej mapie: z Narity shinkansenem do Kioto (cztery noce), 1.05 wycieczka do Nary i powrót do tej samej bazy, potem Tokio (trzy noce), Hakone i lotnisko. 2.05 w Kioto: Złoty Pawilon i herbata KOTO. Osaka i Arashiyama pozostają alternatywami, nie dodatkowymi dniami. Abu Zabi jest poza tą mapą.</p>
@@ -342,6 +346,7 @@ function indexPage(){
       <li><b>Rozdzielamy się, gdy zainteresowania się różnią.</b> Popołudnie 2.05, zakupy w Harajuku 4.05 i Kiyomizu po sjeście 30.04 to naturalne momenty na dwa tempa.</li>
     </ul></div></section>
   <section id="terminy"><h2 class="stitle">Najważniejsze terminy</h2><p class="lead-p">Strona odlicza dni do każdego terminu, a najbliższy pokazuje pod zdjęciem głównym. Żeby telefon przypomniał o nich sam, <a href="terminy.ics">dodajcie terminy do kalendarza</a> (osobne płatności, godziny sprzedaży i przypomnienia tydzień przed anulowaniem). Stan zestawienia: ${TRIP.reviewed}. Importujcie do osobnego kalendarza „Japonia 2027” i włączcie powiadomienia. Jeśli macie starszy import, zastąpcie go nowym w tym osobnym kalendarzu, żeby nie zdublować terminów. Plik nie synchronizuje się automatycznie; nie usuwa się innych kalendarzy.</p>${deadlineList('',true)}</section>
+  ${hotelHighlights()}
   <section>
     <h2 class="stitle">Przewodnik</h2>
     ${quick}
@@ -652,7 +657,7 @@ function pokazPage(){
   const daySlides=DAYS.map((d,i)=>{
     const rows=d.tl.map(([time,title,,kind])=>`<li><span class="t">${time}</span><span class="n">${title}${tag(kind)}</span></li>`).join('');
     const picks=d.tl.map(([time,title,,kind],k)=>`<li><button type="button" class="pick${k?'':' on'}" data-i="${k}" aria-pressed="${k?'false':'true'}"><span class="t">${time}</span><span class="n">${title}${tag(kind)}</span></button></li>`).join('');
-    const steps=d.tl.map(([time,title,desc,kind],k)=>`<article class="step${k?'':' on'}" data-i="${k}"><p class="stime">${time} · punkt ${k+1} z ${d.tl.length}${tag(kind)}</p><h2>${title}</h2><div class="sdesc">${desc||'<p class="cut">Bez dodatkowego opisu.</p>'}</div></article>`).join('');
+    const steps=d.tl.map(([time,title,desc,kind,pre],k)=>`<article class="step${k?'':' on'}" data-i="${k}"><p class="stime">${time} · punkt ${k+1} z ${d.tl.length}${tag(kind)}</p><h2>${title}</h2><div class="sdesc">${desc||'<p class="cut">Bez dodatkowego opisu.</p>'}${pre?`<p class="spre"><b>Przed wyjazdem:</b> ${pre}</p>`:''}</div></article>`).join('');
     const stay=d.stay?hotelName(d.stay):null;
     const think=[['Ramy dnia','Start: '+d.brief.start+'. Koniec: '+d.brief.end+'.'],['Chronimy',d.brief.must],['Można odpuścić',d.brief.cut],['Sprawdźcie',d.brief.check],['Gdy pada',DAYRAIN[d.date]],['Tłumy i zmęczenie',DAYCROWD[d.date]]].filter(x=>x[1]).map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
     const ask=(PYTANIA[d.date]||[]).map(q=>`<li>${q}</li>`).join('');
@@ -751,7 +756,7 @@ function drukPage(){
   const days = DAYS.map((d,i)=>{
     const it = DAYINT[d.date], fx = DAYFLEX[d.date], hid = DAYHOTEL[d.date];
     const H = hid ? HOTELS.find(h=>h.id===hid) : null;
-    const rows = d.tl.map(([t,h,desc,kind])=>`<tr><td class="t">${t}</td><td><b>${h}</b>${kind?` <small>[${ITEM_LABEL[kind]}]</small>`:''}${desc?`<span class="dsc">${desc}</span>`:''}</td></tr>`).join('');
+    const rows = d.tl.map(([t,h,desc,kind,pre])=>`<tr><td class="t">${t}</td><td><b>${h}</b>${kind?` <small>[${ITEM_LABEL[kind]}]</small>`:''}${desc?`<span class="dsc">${desc}</span>`:''}${pre?`<span class="dsc"><b>Przed wyjazdem:</b> ${pre}</span>`:''}</td></tr>`).join('');
     const facts = d.facts.map(([v,k])=>`<span><b>${v}</b>${k}</span>`).join('');
     return `<section class="pg day">
       <div class="dhead">

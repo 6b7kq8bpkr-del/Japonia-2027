@@ -640,3 +640,35 @@ html.uklad-tel body{overflow:hidden}
 @media(min-width:720px){.hero.home .hbg{height:clamp(12rem,38vh,22rem)}.hero.home .hbg-img{background-position:center 24%}}
 .deadline-rest{margin-top:.6rem;border-top:1px solid var(--line);padding-top:.8rem}
 .deadline-rest>summary{cursor:pointer;font-weight:600;color:var(--ai);padding:.45rem 0}
+
+/* Krok osi czasu: link do mapy, kartka dla taksówkarza i zwijane „Przed wyjazdem”. */
+.steptools{margin:.625rem 0 0}
+.steptools a{display:inline-flex;align-items:center;min-height:2.75rem;padding:.5rem .875rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);color:var(--ai);font-size:.875rem;font-weight:600;text-decoration:none}
+.steptools a:hover{border-color:var(--ai)}
+.taxi{margin:.625rem 0 0;padding:.875rem 1rem;border:1px solid var(--line-strong);border-radius:var(--radius-lg);background:var(--panel);max-width:28rem;overflow-wrap:anywhere}
+.taxi p{margin:0}
+.taxi-k{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.taxi-jp{font-size:2rem;font-weight:700;line-height:1.25;margin-top:.375rem!important;color:var(--ink)}
+.taxi-jp small{display:block;font-size:1.125rem;font-weight:500;margin-top:.125rem}
+.taxi-req{font-size:1.125rem;margin-top:.5rem!important;color:var(--ink)}
+.taxi-pl{font-size:.875rem;color:var(--muted);margin-top:.5rem!important}
+.tline .event .pre{margin-top:.625rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--wash)}
+.tline .event .pre>summary{min-height:2.75rem;align-items:center;padding:.5rem 2.25rem .5rem .875rem;font-size:.875rem;font-weight:600;color:var(--ai)}
+.tline .event .pre>summary::after{content:"+";right:.875rem}
+.tline .event .pre[open]>summary::after{content:"−"}
+.tline .event .pre>.d{margin:0;padding:0 .875rem .875rem}
+@media print{.steptools{display:none}.tline .pre>summary::after{content:""}}
+/* Telefon: krótsza lista dni (miniatura obok tytułu zamiast zdjęcia na całą szerokość). */
+@media(max-width:640px){
+  .tt a{grid-template-columns:2.25rem minmax(0,1fr) 5rem;align-items:start}
+  .tt-img{grid-column:3;grid-row:1/4;width:5rem;height:4.25rem;aspect-ratio:auto;margin-top:0;align-self:center}
+  .tt-date{grid-column:2;grid-row:1}
+  .tt-int{grid-column:2;grid-row:1;justify-self:end;align-self:center;margin-top:0}
+  .tt-title{font-size:1.0625rem;overflow-wrap:anywhere}
+}
+/* Telefon: najmniejsze etykiety nie schodzą poniżej 12 px, a linki mają wysokość wygodną dla palca. */
+@media(max-width:700px){
+  .pills a span,.daynav .dir,.stt span,.calc th,.rezerwuj,.wxwrap th,.hcard .hstay,.rhythm th,.sos span,.wxd span,.stat .k,.pcard .badge,.scenc .tag,.brand .bcode,.eyebrow,.chip,.barlab,.hcard .plab,.tt-date i,.tt-city,.brief-stats span,.event-tag{font-size:.75rem}
+  .deadlines li>div>a,.hotel-feature>div>a,.gmap,.readiness a,.watch a{display:inline-flex;align-items:center;min-height:2.75rem}
+  .uklad button{min-height:2.75rem;padding:.45rem .75rem}
+}

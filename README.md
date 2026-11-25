@@ -8,7 +8,7 @@ Publicznie dostępny, nieindeksowany serwis (noindex nie jest ochroną dostępu)
 ## Jak to działa
 - **Gdzie co leży**
   - `data/fakty.mjs` — słownik faktów: każda godzina i kwota, która pojawia się w kilku miejscach, jest zdefiniowana tylko tutaj. W tekstach wpisuje się `{{klucz}}` (`{{klucz|h}}` pokazuje 9:45 zamiast 09:45).
-  - `data/dni.mjs` — agenda dzień po dniu, punkty mapy, plan na deszcz. `data/sprawy.mjs` — lista spraw i terminy. `data/hotele.mjs` — hotele. `data/atrakcje.html` — karty atrakcji (miejsca z planu i zwinięta sekcja „Poza planem”).
+  - `data/dni.mjs` — agenda dzień po dniu, punkty mapy, plan na deszcz. Krok osi czasu to `[godzina, tytuł, opis na miejscu, status, przed wyjazdem]`; piąty element (rezerwacje, terminy, ceny) zwija się na stronie dnia pod opisem i jest domyślnie otwarty tylko przed wylotem. `STEPX` dodaje do kroku link do mapy (`map`) i kartkę dla taksówkarza po japońsku (`taxi`). `data/sprawy.mjs` — lista spraw i terminy. `data/hotele.mjs` — hotele. `data/atrakcje.html` — karty atrakcji (miejsca z planu i zwinięta sekcja „Poza planem”).
   - `src/style.css`, `src/app.js` — style i skrypty jako zwykłe pliki.
   - `build.mjs` — szablony stron. Nie edytuj wygenerowanych plików (`*.html`, `days/`, `assets/style.css`, `assets/app.js`, `sw.js`).
 - `node build.mjs` generuje serwis. Te same źródła dają identyczny wynik; numer wydania w stopce to skrót treści źródeł.
@@ -45,7 +45,7 @@ Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie
 - Publicznie nie porównujemy kosztów rodzin. Kalkulator dotyczy naszej rodziny 2+2; rozliczenia obu rodzin pozostają w panelu prywatnym. PLN jest szacunkiem, nie rozliczeniem bankowym.
 - Nazwiska i numery nowych rezerwacji tylko w `private/rezerwacje.md`, poza git i Vercel.
 
-- Statusy publiczne bez numerów rezerwacji: `lib/trip-state.json`, używany przez generator, wydruk i prywatną tabelę kolei. Zakup Kodamy po próbie 18.11 nie jest potwierdzony; przed ponownym zakupem sprawdź My Trips. Zmiana planu nie jest zakupem biletu.
+- Statusy publiczne bez numerów rezerwacji: `lib/trip-state.json`, używany przez generator, wydruk i prywatną tabelę kolei. Kodama 7.05 jest kupiona dla obu rodzin (24.11.2026); nie kupować ponownie.
 
 ## Prywatna zakładka rezerwacji
 `rezerwacje.html` to publiczny formularz bez danych. POST `/api/rezerwacje` sprawdza hasło po stronie serwera (scrypt); zwraca dane wyłącznie przy poprawnym haśle. Brak sesji: każde otwarcie wymaga hasła, które można zachować w menedżerze haseł. GET nigdy nie udostępnia danych; odpowiedzi mają no-store i restrykcyjne CSP. Dane i hash hasła są w zmiennych Vercel `RESERVATIONS_DATA` i `RESERVATIONS_PASSWORD_HASH`. Lokalne źródło: `private/reservations.json`, hasło: `private/dostep-rezerwacje.txt` - oba poza git i wdrożeniem. Nie publikować PIN-ów ani danych karty. `private/rezerwacje.md` pozostaje historyczną notatką; aktualne potwierdzenia obu rodzin w JSON. `node test-private.cjs` sprawdza autoryzację i wycieki.

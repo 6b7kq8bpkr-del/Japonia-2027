@@ -86,7 +86,7 @@ export const BOOKINGS = [
     "due": "2027-04-07",
     "when": "29.03 i 3.04 maile; 6.04 i 7.04 zakupy",
     "what": "Domknąć kolej: potwierdzenia miejsc, NEX i Romancecar",
-    "note": "Dwa długie przejazdy są już zarezerwowane w SmartEX (patrz: potwierdzone elementy). Zostało: (1) 29.03 i 3.04 po 8:00 JST (1:00 w Polsce) sprawdzić maile z ostatecznym numerem pociągu i siedmioma miejscami w dwóch rezerwacjach (4+3); (2) Kodama jest kupiona dla obu rodzin; 7.04 po 08:00 JST (01:00 w Polsce) sprawdźcie ostateczny pociąg i miejsca; (3) NEX osobno w JR East, w obie strony do i z Shinagawy; (4) Romancecar „Metro Hakone” z Omotesandō na 6.05 (obecnie {{metrohakone.odj}}): sprzedaż miejsc w Odakyu od 6.04; sprawdźcie, czy kurs jest w rozkładzie 2027, jak kupić bilet na odcinek metra i w jakim wariancie wziąć Hakone Free Pass. Jeśli to niemożliwe, od razu rezerwujcie Romancecar z Shinjuku o 10:00; (5) ustalić w SmartEX sposób wejścia na peron dla wszystkich siedmiu osób: kod QR albo odbiór biletów w automacie. Rezerwacja na 29.04 jest już zmieniona na odcinek Shinagawa-Kioto."
+    "note": "Dwa długie przejazdy są już zarezerwowane w SmartEX (patrz: potwierdzone elementy). Zostało: (1) 29.03 i 3.04 po 8:00 JST (1:00 w Polsce) sprawdzić maile z ostatecznym numerem pociągu i siedmioma miejscami w dwóch rezerwacjach (4+3); (2) Kodama jest kupiona dla obu rodzin; 7.04 po 08:00 JST (01:00 w Polsce) sprawdźcie ostateczny pociąg i miejsca; (3) NEX osobno w JR East, w obie strony do i z Shinagawy; (4) Romancecar „Metro Hakone” z Omotesandō na 6.05 (obecnie {{metrohakone.odj}}): sprzedaż miejsc w Odakyu od 6.04; sprawdźcie, czy kurs jest w rozkładzie 2027, jak kupić bilet na odcinek metra i w jakim wariancie wziąć Hakone Free Pass, najlepiej cyfrowy, kupiony przed przyjazdem: bez tego nie zdążycie na kolej górską o 12:05. Jeśli to niemożliwe, od razu rezerwujcie Romancecar z Shinjuku o 10:00; (5) ustalić w SmartEX sposób wejścia na peron dla wszystkich siedmiu osób: kod QR albo odbiór biletów w automacie. Rezerwacja na 29.04 jest już zmieniona na odcinek Shinagawa-Kioto."
   },
   {
     "id": "insurance",
@@ -142,11 +142,11 @@ export const BOOKINGS = [
     "note": "20.04 przegląd przed terminem anulowania Kioto, 24.04 przed Tokio, 1-2.05 przed Hanaori. Prognoza tak wcześnie jest orientacyjna. 5.05 sprawdźcie ostrzeżenia dla Hakone; po 2.05 zmiana noclegu może kosztować pełną cenę. Drobne atrakcje dopasujcie 48-24 h wcześniej, transport i alerty ponownie rano."
   },
   {
-    "id": "ic-v2",
+    "id": "ic-v3",
     "due": "2027-04-26",
-    "when": "Przed wyjazdem / po przylocie",
+    "when": "Suica w telefonie przed wyjazdem; karty rano 30.04 w Kioto",
     "what": "Karty IC dla rodziny",
-    "note": "Dla siedmiu osób: sześć taryf dorosłych i jedna dziecięca w japońskiej kolei. Każdy ma własną kartę IC; Marcel i Tomasz mają karty dorosłe. Dla młodszego dziecka kupcie odpowiednią fizyczną kartę z dokumentem wieku; zagraniczny Android nie zawsze obsługuje mobilną Suicę."
+    "note": "Dla siedmiu osób: sześć taryf dorosłych i jedna dziecięca w japońskiej kolei. Każdy ma własną kartę IC; Marcel i Tomasz mają karty dorosłe. Na Naricie 29.04 kart nie kupujemy: między lądowaniem a pociągiem nie ma na to czasu, a NEX i shinkansen mają własne bilety. Karty ICOCA kupujemy rano 30.04 na dworcu w Kioto, przed pociągiem do Inari. Dorośli z iPhone’ami mogą wcześniej dodać Suicę do Portfela Apple; zagraniczny Android nie zawsze ją obsługuje. Dla młodszego dziecka potrzebna jest fizyczna karta dziecięca z kasy, z dokumentem wieku."
   },
   {
     "id": "bags-v2",

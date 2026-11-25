@@ -1,9 +1,12 @@
 
 (function(){
   document.addEventListener('DOMContentLoaded',function(){
+    // „Przed wyjazdem” jest rozwinięte do dnia wylotu; w podróży zostaje zwinięte pod opisem kroku.
+    var tq=/[?&]teraz=([^&#]+)/.exec(location.search), tnow=tq?new Date(decodeURIComponent(tq[1])):new Date();
+    if(tnow<new Date('2027-04-26T22:00:00Z')) Array.prototype.forEach.call(document.querySelectorAll('.tline .pre'),function(d){d.open=true;});
     var button=document.getElementById('timelineToggle');
     if(!button)return;
-    var items=Array.from(document.querySelectorAll('.tline details'));
+    var items=Array.from(document.querySelectorAll('.tline details.event'));
     function sync(){var all=items.length>0&&items.every(function(d){return d.open;});button.textContent=all?'Zwiń szczegóły':'Rozwiń szczegóły';button.setAttribute('aria-expanded',String(all));}
     button.addEventListener('click',function(){var open=!items.every(function(d){return d.open;});items.forEach(function(d){d.open=open;});sync();});
     items.forEach(function(d){d.addEventListener('toggle',sync);});
