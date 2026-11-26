@@ -3,12 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>/* wybór układu: „Komputer” na telefonie poszerza widok, „Telefon” na komputerze pokazuje stronę w ramce telefonu */
-(function(){var d=document.documentElement,u=null;try{u=localStorage.getItem('jp.uklad');}catch(e){}
-if(/[?&]uklad=ramka/.test(location.search)){d.classList.add('w-ramce');return;}
-var waski=Math.min(screen.width,screen.height)<700;
-if(u==='pc'&&waski){document.querySelector('meta[name=viewport]').setAttribute('content','width=1280');d.classList.add('uklad-pc');}
-if(u==='tel'&&!waski){d.classList.add('uklad-tel');}})();</script>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Katalog atrakcji wyjazdu do Japonii z godzinami, cenami i linkami do rezerwacji.">
 <title>Atrakcje: godziny, ceny, rezerwacje · Japonia 2027</title>
@@ -25,7 +19,7 @@ if(u==='tel'&&!waski){d.classList.add('uklad-tel');}})();</script>
 </head>
 <body>
 <div class="progress" id="progress"></div>
-<div class="topbar"><div class="navrow"><a class="brand" href="index.html"><span class="bj" aria-hidden="true">日本</span>Japonia 2027<span class="bcode">27.04-08.05</span></a><nav class="tabs primary-nav" aria-label="Nawigacja główna"><a href="index.html">Agenda</a><a href="index.html#trasa">Mapa</a><a href="rezerwacje.html">Rezerwacje</a><details class="nav-more"><summary class="on">Więcej</summary><div class="nav-menu"><a href="atrakcje.html" class="on" aria-current="page">Atrakcje</a><a href="hotele.html">Hotele</a><a href="niezbednik.html">Niezbędnik</a><a href="pogoda.html">Przed wyjazdem</a><a href="koszty.html">Koszty</a><a href="decyzje.html">Kulisy</a><a href="druga-para.html">Druga rodzina</a><a href="loty.html">Loty</a><a href="druk.html">Druk / PDF</a><a href="pokaz.html">Prezentacja</a></div></details></nav><div class="uklad" role="group" aria-label="Układ strony"><button type="button" data-u="tel" aria-pressed="false">Telefon</button><button type="button" data-u="pc" aria-pressed="false">Komputer</button></div></div></div>
+<div class="topbar"><div class="navrow"><a class="brand" href="index.html"><span class="bj" aria-hidden="true">日本</span>Japonia 2027<span class="bcode">27.04-08.05</span></a><nav class="tabs primary-nav" aria-label="Nawigacja główna"><a href="index.html">Agenda</a><a href="index.html#trasa">Mapa</a><a href="rezerwacje.html">Rezerwacje</a><details class="nav-more"><summary class="on">Więcej</summary><div class="nav-menu"><a href="atrakcje.html" class="on" aria-current="page">Atrakcje</a><a href="hotele.html">Hotele</a><a href="niezbednik.html">Niezbędnik</a><a href="pogoda.html">Przed wyjazdem</a><a href="koszty.html">Koszty</a><a href="decyzje.html">Przygotowania</a><a href="druga-para.html">Druga rodzina</a><a href="loty.html">Loty</a><a href="druk.html">Druk / PDF</a><a href="pokaz.html">Prezentacja</a></div></details></nav></div></div>
 
 <a class="skip-link" href="#tresc">Przejdź do treści</a>
 <main class="wrap" id="tresc">
@@ -433,8 +427,8 @@ if(u==='tel'&&!waski){d.classList.add('uklad-tel');}})();</script>
   </details></div>
 
   <p class="note" style="margin-top:1rem">Starsze karty: orientacyjne dane z lipca 2026. Nowe wskazówki przewodników sprawdzone 20.09.2026; nie jest to potwierdzenie cenników ani godzin na 2027. Przed rezerwacją sprawdźcie strony oficjalne.</p>
-  <footer>Przewodnik rodzinny · Japonia 27 kwietnia – 8 maja 2027 · strona nieindeksowana · wydanie 6421ef7<br>
-  Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br>
+  <footer>Przewodnik rodzinny · Japonia 27 kwietnia – 8 maja 2027 · strona nieindeksowana · wydanie 596adb0<br>
+  Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br><p class="offline-state" data-build="596adb0" role="status">Sprawdzam zapis planu offline…</p>
   <a href="decyzje.html#zdjecia">Zdjęcia: Wikimedia Commons, autorzy i licencje</a> · mapy: © OpenStreetMap · <a href="index.html">Strona główna</a> · <a href="druk.html">Drukuj / zapisz jako PDF</a></footer>
 </main>
 <button class="totop" id="totop" aria-label="Do góry">↑</button>

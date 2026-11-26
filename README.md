@@ -40,7 +40,7 @@ Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie
 - Loty są kupione; koszt (`bilety.suma` w `data/fakty.mjs`) jest też podstawą kalkulatora (`TICKET` w `build.mjs`).
 
 ## Druga rodzina
-- `druga-para.html` (zakładka „Druga rodzina”): Joanna, Marcin i Tomasz, wspólna agenda dla 7 osób. Loty i dwa shinkanseny kupione; pokoje drugiej rodziny w Japonii są potwierdzone; oczekujemy na jej voucher stopover.
+- `druga-para.html` (zakładka „Druga rodzina”): Joanna, Marcin i Tomasz, wspólna agenda dla 7 osób. Loty i trzy shinkanseny kupione; pokoje drugiej rodziny w Japonii są potwierdzone; oczekujemy na jej voucher stopover.
 - `data/druga-para.mjs`: koszt lotów, `DP_KOLEJ` (opłacone JPY i kurs planistyczny), pozostałe szacunki i decyzje. Monitor lotów zakończony po zakupie.
 - Publicznie nie porównujemy kosztów rodzin. Kalkulator dotyczy naszej rodziny 2+2; rozliczenia obu rodzin pozostają w panelu prywatnym. PLN jest szacunkiem, nie rozliczeniem bankowym.
 - Nazwiska i numery nowych rezerwacji tylko w `private/rezerwacje.md`, poza git i Vercel.
@@ -54,3 +54,9 @@ Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie
 - `druk-skrot.html`: 11 kart A4, po jednej na dzień, generowanych z tej samej agendy co pełny `druk.html`. Zawiera godziny, statusy, transport, nocleg i plan B. W druku wyłącz nagłówki przeglądarki.
 - Pokaz ma zdjęcia w obu trybach i powiększaną galerię każdego dnia. Strzałki w otwartej galerii zmieniają zdjęcia, Escape wraca do planu. Zdjęcia i podpisy pochodzą z `DAYPHOTOS` oraz licencjonowanych lokalnych plików `data/zdjecia.mjs`.
 - `taskIds` w terminach łączy wydarzenie z odpowiednimi zadaniami, zapobiegając powielaniu przypomnień. Identyfikatory zdarzeń ICS pozostają bez zmian. Lista na stronie głównej pokazuje trzy przyszłe terminy; reszta jest rozwijana. Bez JavaScript widoczna jest pełna lista.
+
+### Wspólne dane i sprawdzanie wydania
+- `lib/facts.cjs`: wspólne godziny; `lib/rail.cjs`: tabela kolei dla przygotowań i prywatnego panelu; `data/budget.cjs`: kwoty biletów i budżet.
+- `data/warianty.mjs`: warunkowy wariant Pokémon; status `pending` nie jest rezerwacją.
+- Weryfikacja: `node build.mjs`, `node check.mjs`, `node test-private.cjs`, `node test-calendar.mjs`, `node test-journey.cjs`. Testy pracują lokalnie na atrapach, nie wykonują zakupów ani operacji w produkcji.
+- Wydanie w stopce pozwala porównać wdrożenie. Status offline potwierdza zapis aktualnego planu na danym urządzeniu; prywatny panel nigdy nie jest cache’owany.

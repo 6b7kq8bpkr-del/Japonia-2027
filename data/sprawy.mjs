@@ -6,7 +6,7 @@ export const BOOKINGS = [
     "due": "2026-11-27",
     "when": "Teraz",
     "what": "Wysłać maila do KOTO o plan prywatny NO4 dla 7 osób",
-    "note": "Na reservation@teaceremony-kyoto.com: plan NO4 (sesja prywatna dla grup od siedmiu osób) na 2.05.2027 o 11:45 albo 13:00, dla 4 dorosłych i 3 dzieci (10, 12 i 12 lat). Pytamy o dostępność, cenę dorosłych i dzieci, sposób rezerwacji i anulowanie. <a href=\"decyzje.html#koto-mail\">Gotowy tekst maila w Kulisach</a>."
+    "note": "Na reservation@teaceremony-kyoto.com: plan NO4 (sesja prywatna dla grup od siedmiu osób) na 2.05.2027 o 11:45 albo 13:00, dla 4 dorosłych i 3 dzieci (10, 12 i 12 lat). Pytamy o dostępność, cenę dorosłych i dzieci, sposób rezerwacji i anulowanie. <a href=\"decyzje.html#koto-mail\">Gotowy tekst maila w przygotowaniach</a>."
   },
   {
     "id": "kodama-done-v2",
@@ -34,7 +34,7 @@ export const BOOKINGS = [
   {
     "id": "hanaori-transfer-v5",
     "due": "2027-04-20",
-    "when": "Uzgodnić do 5.05; potwierdzić 6.05 przed 16:00",
+    "when": "Uzgodnić do 20.04; potwierdzić 6.05 przed 16:00",
     "what": "Zamówić transfer Hanaori-Odawara na 7.05 o 09:00 dla 7 osób",
     "note": "Transfer nie jest zarezerwowany. Potrzebne dwa auta albo zamówiony wcześniej dziewięcioosobowy van dla siedmiu osób z bagażem (zwykły minivan mieści najwyżej sześć); szacunek hotelu dotyczył jednego auta. Hotel podał około {{hanaori.taxi}} i możliwe {{hanaori.van}} za wybór typu auta. Potrzebne siedem miejsc pasażerskich i przestrzeń na bagaże, cel Odawara {{odawara.przyj}}. Potwierdźcie cenę, dostępność i warunki anulowania; nie zakładajcie dostępności taxi dopiero po problemie z autobusem."
   },
@@ -86,7 +86,7 @@ export const BOOKINGS = [
     "due": "2027-04-07",
     "when": "29.03 i 3.04 maile; 6.04 i 7.04 zakupy",
     "what": "Domknąć kolej: potwierdzenia miejsc, NEX i Romancecar",
-    "note": "Dwa długie przejazdy są już zarezerwowane w SmartEX (patrz: potwierdzone elementy). Zostało: (1) 29.03 i 3.04 po 8:00 JST (1:00 w Polsce) sprawdzić maile z ostatecznym numerem pociągu i siedmioma miejscami w dwóch rezerwacjach (4+3); (2) Kodama jest kupiona dla obu rodzin; 7.04 po 08:00 JST (01:00 w Polsce) sprawdźcie ostateczny pociąg i miejsca; (3) NEX osobno w JR East, w obie strony do i z Shinagawy; (4) Romancecar „Metro Hakone” z Omotesandō na 6.05 (obecnie {{metrohakone.odj}}): sprzedaż miejsc w Odakyu od 6.04; sprawdźcie, czy kurs jest w rozkładzie 2027, jak kupić bilet na odcinek metra i w jakim wariancie wziąć Hakone Free Pass, najlepiej cyfrowy, kupiony przed przyjazdem: bez tego nie zdążycie na kolej górską o 12:05. Jeśli to niemożliwe, od razu rezerwujcie Romancecar z Shinjuku o 10:00; (5) ustalić w SmartEX sposób wejścia na peron dla wszystkich siedmiu osób: kod QR albo odbiór biletów w automacie. Rezerwacja na 29.04 jest już zmieniona na odcinek Shinagawa-Kioto."
+    "note": "Dwa długie przejazdy są już zarezerwowane w SmartEX (patrz: potwierdzone elementy). Zostało: (1) 29.03 i 3.04 po 8:00 JST (1:00 w Polsce) sprawdzić maile z ostatecznym numerem pociągu i siedmioma miejscami w dwóch rezerwacjach (4+3); (2) Kodama jest kupiona dla obu rodzin; 7.04 po 08:00 JST (01:00 w Polsce) sprawdźcie ostateczny pociąg i miejsca; (3) NEX TOKYO Round Trip Ticket w JR East: oba kierunki do i z Shinagawy w ciągu 14 dni, obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko. Sześć taryf dorosłych i jedna dziecięca: razem 33 800 JPY. Po zakupie tego biletu rezerwujcie miejsca na powrót, bez kupowania drugiego biletu; (4) Romancecar „Metro Hakone” z Omotesandō na 6.05 (obecnie {{metrohakone.odj}}): sprzedaż miejsc w Odakyu od 6.04; sprawdźcie, czy kurs jest w rozkładzie 2027, jak kupić bilet na odcinek metra i w jakim wariancie wziąć Hakone Free Pass, najlepiej cyfrowy, kupiony przed przyjazdem: bez tego nie zdążycie na kolej górską o 12:05. Jeśli to niemożliwe, od razu rezerwujcie Romancecar z Shinjuku o 10:00; (5) ustalić w SmartEX sposób wejścia na peron dla wszystkich siedmiu osób: kod QR albo odbiór biletów w automacie. Rezerwacja na 29.04 jest już zmieniona na odcinek Shinagawa-Kioto."
   },
   {
     "id": "insurance",
@@ -194,6 +194,7 @@ export const BOOKINGS = [
   }
 ];
 export const DEADLINES = [
+  {id:'hanaori-transfer-reconfirm',date:'2027-05-06',utc:'2027-05-06T07:00:00Z',label:'6.05 do 16:00 JST (9:00 w Polsce)',title:'Potwierdzić zamówiony transfer Hanaori-Odawara',text:'W recepcji potwierdźcie odbiór 7.05 o 09:00, siedem miejsc pasażerskich, bagaże i cenę. To ponowne potwierdzenie transferu zamówionego do 20.04.',href:'days/2027-05-06.html#nocleg',alarms:['-PT2H']},
   {
     "date": "2027-03-01",
     "label": "od 1 marca",
@@ -250,8 +251,8 @@ export const DEADLINES = [
   {
     "date": "2027-04-07",
     "label": "7 kwietnia, 3:00 PL",
-    "title": "NEX na powrót: sprzedaż; Kodama: sprawdzenie miejsc",
-    "text": "NEX na 7.05: standardowe okno JR East od 10:00 JST (03:00 w Polsce). Kodama jest kupiona dla obu rodzin; 7.04 po 08:00 JST (01:00 w Polsce) sprawdźcie jej finalny pociąg i miejsca. Nie kupujcie ponownie.",
+    "title": "NEX: sprawdzić miejsca na powrót; Kodama: potwierdzenie",
+    "text": "NEX na 7.05: standardowe okno JR East od 10:00 JST (03:00 w Polsce). Sprawdźcie rezerwację miejsc w ramach NEX TOKYO Round Trip Ticket; gdy bilet obejmuje oba kierunki, nie kupujcie powrotu ponownie. Kodama jest kupiona dla obu rodzin; 7.04 po 08:00 JST (01:00 w Polsce) sprawdźcie jej finalny pociąg i miejsca. Nie kupujcie ponownie.",
     "href": "decyzje.html#do-zalatwienia",
     "id": "nex-return-sale",
     "uid": "2027-04-07-5@japonia-2027",

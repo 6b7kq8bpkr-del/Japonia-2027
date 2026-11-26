@@ -1,3 +1,7 @@
+import {POKEMON} from './data/warianty.mjs';
+import budget from './data/budget.cjs';
+import rail from './lib/rail.cjs';
+const {CALC,TICKET,RATE,OUR_RAIL,OUR_HOTELS,total} = budget;
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 import path from 'node:path';
@@ -24,11 +28,9 @@ const CLOSED = {
 };
 
 /* Koszty: jedno źródło wartości kalkulatora (CALC) i kupionego biletu (TICKET). */
-const CALC = {nights:8, nightRate:1501.33, transport:5000, days:11, foodRate:500, attractions:3300, extras:3000};
 /* Numer wydania = skrót treści źródeł. Te same źródła dają identyczny build, więc w repo zmieniają się tylko strony, których treść się zmieniła. */
-const SOURCES = ['build.mjs', 'lib/trip-state.json', 'lib/calendar.mjs', ...['data','src'].flatMap(d => fs.existsSync(DIR+'/'+d) ? fs.readdirSync(DIR+'/'+d).sort().map(f => d+'/'+f) : [])];
+const SOURCES = ['build.mjs', 'lib/trip-state.json', 'lib/calendar.mjs', 'lib/facts.cjs', 'lib/rail.cjs', ...['data','src'].flatMap(d => fs.existsSync(DIR+'/'+d) ? fs.readdirSync(DIR+'/'+d).sort().map(f => d+'/'+f) : [])];
 const BUILD_ID = SOURCES.reduce((h,f) => h.update(fs.readFileSync(DIR+'/'+f)), crypto.createHash('sha1')).digest('hex').slice(0,7);
-const TICKET = {family:13643.36, bag:0, total:13643.36, label:'27.04-7.05 ze stopoverem tam; powrót do WAW 8.05 - kupione 8.09.2026'};
 /* Budżet w tysiącach złotych liczony z tych samych wartości co kalkulator. */
 const BUDGET_K = Math.round((TICKET.total + CALC.nights*CALC.nightRate + CALC.transport + CALC.days*CALC.foodRate + CALC.attractions + CALC.extras)/1000);
 // własny formatter — Node w tym środowisku ma okrojone ICU i ignoruje locale pl-PL
@@ -126,11 +128,11 @@ const ITEM_LABEL = {lot:'Lot z biletu',zarezerwowane:'Zarezerwowane',rezerwacja:
 const TIMING_NOTE = 'Wszystkie godziny są miejscowe. Loty według e-biletów; pozostałe godziny to plan do dopasowania do rozkładów i rezerwacji. „Do potwierdzenia” nie oznacza kupionego biletu. „Zarezerwowane” oznacza przyjętą rezerwację; numer pociągu i miejsca mogą być jeszcze wstępne.';
 
 /* ============================ TEMPLATES ============================ */
-const TABS = [['index.html','Agenda'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['niezbednik.html','Niezbędnik'],['pogoda.html','Przed wyjazdem'],['koszty.html','Koszty'],['decyzje.html','Kulisy'],['druga-para.html','Druga rodzina'],['rezerwacje.html','Rezerwacje 🔒']];
+const TABS = [['index.html','Agenda'],['atrakcje.html','Atrakcje'],['hotele.html','Hotele'],['niezbednik.html','Niezbędnik'],['pogoda.html','Przed wyjazdem'],['koszty.html','Koszty'],['decyzje.html','Przygotowania'],['druga-para.html','Druga rodzina'],['rezerwacje.html','Rezerwacje 🔒']];
 function nav(active,prefix){
   const link = (h,l) => `<a href="${prefix}${h}"${h===active?' class="on" aria-current="page"':''}>${l}</a>`;
   const more = [...TABS.filter(([h])=>!['index.html','rezerwacje.html'].includes(h)),['loty.html','Loty'],['druk.html','Druk / PDF'],['pokaz.html','Prezentacja']];
-  return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html"><span class="bj" aria-hidden="true">日本</span>Japonia 2027<span class="bcode">27.04-08.05</span></a><nav class="tabs primary-nav" aria-label="Nawigacja główna">${link('index.html','Agenda')}${link('index.html#trasa','Mapa')}${link('rezerwacje.html','Rezerwacje')}<details class="nav-more"><summary${more.some(([h])=>h===active)?' class="on"':''}>Więcej</summary><div class="nav-menu">${more.map(([h,l])=>link(h,l)).join('')}</div></details></nav><div class="uklad" role="group" aria-label="Układ strony"><button type="button" data-u="tel" aria-pressed="false">Telefon</button><button type="button" data-u="pc" aria-pressed="false">Komputer</button></div></div></div>`;
+  return `<div class="topbar"><div class="navrow"><a class="brand" href="${prefix}index.html"><span class="bj" aria-hidden="true">日本</span>Japonia 2027<span class="bcode">27.04-08.05</span></a><nav class="tabs primary-nav" aria-label="Nawigacja główna">${link('index.html','Agenda')}${link('index.html#trasa','Mapa')}${link('rezerwacje.html','Rezerwacje')}<details class="nav-more"><summary${more.some(([h])=>h===active)?' class="on"':''}>Więcej</summary><div class="nav-menu">${more.map(([h,l])=>link(h,l)).join('')}</div></details></nav></div></div>`;
 }
 function pills(curIdx){
   const items = DAYS.map((d,i)=>{
@@ -145,12 +147,6 @@ function shell({title,desc,prefix,active,inner,pillsIdx}){
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>/* wybór układu: „Komputer” na telefonie poszerza widok, „Telefon” na komputerze pokazuje stronę w ramce telefonu */
-(function(){var d=document.documentElement,u=null;try{u=localStorage.getItem('jp.uklad');}catch(e){}
-if(/[?&]uklad=ramka/.test(location.search)){d.classList.add('w-ramce');return;}
-var waski=Math.min(screen.width,screen.height)<700;
-if(u==='pc'&&waski){document.querySelector('meta[name=viewport]').setAttribute('content','width=1280');d.classList.add('uklad-pc');}
-if(u==='tel'&&!waski){d.classList.add('uklad-tel');}})();</script>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="${desc}">
 <title>${title}</title>
@@ -181,7 +177,7 @@ ${inner}
 }
 function footer(prefix){
   return `<footer>Przewodnik rodzinny · Japonia 27 kwietnia – 8 maja 2027 · strona nieindeksowana · wydanie ${BUILD_ID}<br>
-  Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br>
+  Godziny pociągów, ceny biletów, warunki pogodowe i dostępność atrakcji potwierdźcie przed wyjazdem.<br><p class="offline-state" data-build="${BUILD_ID}" role="status">Sprawdzam zapis planu offline…</p>
   <a href="${prefix}decyzje.html#zdjecia">Zdjęcia: Wikimedia Commons, autorzy i licencje</a> · mapy: © OpenStreetMap · <a href="${prefix}index.html">Strona główna</a> · <a href="${prefix}druk.html">Drukuj / zapisz jako PDF</a></footer>`;
 }
 
@@ -222,16 +218,19 @@ function dayPage(d,i){
     return (x.map?'<p class="steptools"><a href="'+gmapsQ(x.map)+'" target="_blank" rel="noopener">Pokaż na mapie ↗</a></p>':'')+
       (x.taxi?'<div class="taxi"><p class="taxi-k">Pokaż kierowcy taksówki</p><p class="taxi-jp" lang="ja">'+x.taxi[0]+'<small>'+x.taxi[1]+'</small></p><p class="taxi-req" lang="ja">ここまでお願いします。</p><p class="taxi-pl">'+x.taxi[2]+'. Zdanie pod spodem znaczy: „Proszę nas tu zawieźć”.</p></div>':'')+
       (pre?'<details class="pre"><summary>Przed wyjazdem</summary><p class="d">'+pre+'</p></details>':''); };
-  const tl=d.tl.map(([time,title,desc,kind,pre])=>'<li class="'+(kind||'plan')+'"><div class="tm">'+time.replace('8.05 ','8.05<br>')+'</div><div class="bd">'+
+  const tl=d.tl.map(([time,title,desc,kind,pre])=>'<li id="krok-'+time.replace(/[^0-9]/g,'')+'" class="'+(kind||'plan')+'"><div class="tm">'+time.replace('8.05 ','8.05<br>')+'</div><div class="bd">'+
     (desc?'<details class="event"><summary><span class="h">'+title+'</span>'+(kind?'<span class="event-tag '+kind+'">'+ITEM_LABEL[kind]+'</span>':'')+'</summary><p class="d">'+desc+'</p>'+stepExtra(time,pre)+'</details>':'<p class="h">'+title+'</p>')+'</div></li>').join('');
-  const geo=GEO[d.date]||[];
+  const fullGeo=GEO[d.date]||[];
+  const modes=d.date==='2027-05-06'?[{id:'local',label:'Na miejscu w Hakone',points:fullGeo.slice(1)},{id:'arrival',label:'Dojazd z Tokio',points:fullGeo}]:d.date==='2027-05-05'?POKEMON.maps:[];
+  const geo=modes.length?modes[0].points:fullGeo;
+  const mapModes=modes.length?'<div class="map-modes" role="group" aria-label="Widok mapy">'+modes.map((m,i)=>'<button type="button" data-map-mode="'+i+'" aria-pressed="'+(i===0)+'">'+m.label+'</button>').join('')+'</div><script type="application/json" id="geo-modes">'+JSON.stringify(modes)+'</script>':'';
   const gdir=geo.length?'https://www.google.com/maps/dir/'+geo.map(g=>g[0]+','+g[1]).join('/'):'#';
   const brief=d.brief;
-  const mapSec=geo.length?'<section id="mapa"><h2 class="stitle">Mapa dnia</h2><div class="card"><div class="maphold"><button class="mapbtn" id="mapActivate">Aktywuj mapę</button><div id="map" class="map"></div></div><ol class="maplegend">'+geo.map((g,i)=>'<li><span class="mn">'+(i+1)+'</span> '+g[2]+'</li>').join('')+'</ol><a class="gmap" href="'+gdir+'" target="_blank" rel="noopener">Otwórz punkty w Google Maps ↗</a><p class="note">Linia łączy punkty orientacyjnie. Google Maps może domyślnie wybrać samochód; ustawcie właściwy środek transportu i datę.</p><script type="application/json" id="geo">'+JSON.stringify(geo)+'</script></div></section>':'';
+  const mapSec=geo.length?'<section id="mapa"><h2 class="stitle">Mapa dnia</h2><div class="card">'+mapModes+'<div class="maphold"><button class="mapbtn" id="mapActivate">Aktywuj mapę</button><div id="map" class="map"></div></div><ol class="maplegend">'+geo.map((g,i)=>'<li><span class="mn">'+(i+1)+'</span> '+g[2]+'</li>').join('')+'</ol><a class="gmap" href="'+gdir+'" target="_blank" rel="noopener">Otwórz punkty w Google Maps ↗</a><p class="note">Linia łączy punkty orientacyjnie. Google Maps może domyślnie wybrać samochód; ustawcie właściwy środek transportu i datę.</p><script type="application/json" id="geo">'+JSON.stringify(geo)+'</script></div></section>':'';
   const weather=WXGEO[d.date]||geo[0];
   const inner = '<header class="hero kb day-hero"><div class="hbg"><div class="hbg-img" style="background:'+heroBg(d.city,DAYIMG[d.date])+'"></div></div><div class="hero-inner">'+
     '<p class="eyebrow">Dzień '+(i+1)+' z '+DAYS.length+' · '+d.dow+' · '+d.dd+'</p><h1>'+d.title+'</h1><p class="lead">'+d.lead+'</p></div></header>'+
-    '<nav class="section-nav" aria-label="Skróty tego dnia"><a href="#skrot">W minutę</a><a href="#plan">Godziny</a><a href="#mapa">Mapa</a><a href="#warunki">Plan B</a><a href="#nocleg">Nocleg</a></nav>'+
+    '<nav class="section-nav" aria-label="Skróty tego dnia"><a href="#skrot">W minutę</a><a href="#plan">Godziny</a><a href="#mapa">Mapa</a><a href="#warunki">Plan B</a><a href="#nocleg">Nocleg</a><a href="../rezerwacje.html">Bilety 🔒</a></nav>'+
     '<section id="skrot" class="day-brief"><h2 class="stitle">Ten dzień w minutę</h2><div class="brief-stats"><div><span>Start</span><b>'+brief.start+'</b></div><div><span>Koniec</span><b>'+brief.end+'</b></div><div><span>Tempo podstawowe</span><b class="pace '+d.level+'">'+LEVEL_LABEL[d.level]+'</b></div></div>'+
     '<p class="brief-focus">'+brief.focus+'</p><dl class="brief-rules"><div><dt>Chronimy</dt><dd>'+brief.must+'</dd></div><div><dt>Można odpuścić</dt><dd>'+brief.cut+'</dd></div><div class="guard"><dt>Sprawdź</dt><dd>'+brief.check+'</dd></div></dl></section>'+
     '<section id="plan"><div class="section-heading"><h2 class="stitle">Godzina po godzinie</h2><button class="reset" type="button" id="timelineToggle" aria-expanded="false">Rozwiń szczegóły</button></div><p class="note timing-note">'+TIMING_NOTE+'</p><div class="card"><ul class="tline" data-date="'+d.date+'">'+tl+'</ul></div></section>'+
@@ -240,10 +239,10 @@ function dayPage(d,i){
     (weather?'<div class="dayflag wxday" data-date="'+d.date+'" data-la="'+weather[0]+'" data-lo="'+weather[1]+'" style="display:none"></div>':'')+
     (d.pc?'<details class="card option-detail"><summary>'+d.pc.q+'</summary>'+d.pc.opts.map(o=>'<p><b>'+o[0]+'</b><br>Za: '+o[1]+'.<br>Przeciw: '+o[2]+'.</p>').join('')+'</details>':'')+'</section>'+
     mapSec+
-    (DAYPHOTOS[d.date]?'<section id="kadry"><h2 class="stitle">W kadrze</h2><div class="dayphotos">'+DAYPHOTOS[d.date].map(([k,c])=>photo(k,c,'(max-width:640px) 100vw, 33vw')).join('')+'</div></section>':'')+
     '<section id="nocleg"><h2 class="stitle">Gdzie śpimy</h2>'+
     (H?'<div class="card"><b>'+H.name+'</b><p>'+H.stay+'</p><p class="note">'+H.cancel+'</p>'+hotelStatus(H.id)+'<div class="linklist"><a href="../hotele.html#'+H.id+'">Pokój i rezerwacja</a><a href="'+gmapsQ(H.mapsq||H.name)+'" target="_blank" rel="noopener">Dojazd w Google Maps ↗</a></div></div>':'<div class="card">'+(d.date==='2027-04-28'?'Noc w samolocie do Japonii.':'Noc w podróży powrotnej; lądowanie WAW 8 maja o {{lot.waw.przylot}}.')+'</div>')+'</section>'+
     '<section><h2 class="stitle">Przydatne na miejscu</h2><div class="card"><ul class="tips">'+d.tips.map(t=>'<li>'+t+'</li>').join('')+'</ul><div class="linklist" style="margin-top:1rem">'+d.links.map(l=>'<a href="../atrakcje.html#'+l.id+'">'+l.label+'</a>').join('')+'</div></div></section>'+
+    (DAYPHOTOS[d.date]?'<section id="kadry"><h2 class="stitle">W kadrze</h2><div class="dayphotos">'+DAYPHOTOS[d.date].map(([k,c])=>photo(k,c,'(max-width:640px) 100vw, 33vw')).join('')+'</div></section>':'')+
     (metadata?'<details class="more detail-catalog"><summary>Godziny i ceny miejsc z katalogu</summary>'+metadata+'</details>':'')+
     '<nav class="daynav" aria-label="Sąsiednie dni"><a id="navPrev" href="'+(prev?prev.date+'.html':'../index.html#dni')+'"><div class="dir">← Poprzedni</div><div class="ttl">'+(prev?prev.dd:'Agenda')+'</div></a><a class="home" href="../index.html#dni" aria-label="Wszystkie dni">☰</a><a class="nx" id="navNext" href="'+(next?next.date+'.html':'../index.html#powrot')+'"><div class="dir">'+(next?'Następny →':'Powrót →')+'</div><div class="ttl">'+(next?next.dd:'8 maja')+'</div></a></nav>'+footer(prefix);
   return shell({title:'Dzień '+(i+1)+': '+d.title+' · Japonia 2027',desc:d.lead,prefix,active:'index.html',inner,pillsIdx:i});
@@ -253,8 +252,9 @@ function deadlineList(prefix='',compact=false){
   const list = '<ol class="deadlines">'+DEADLINES.map(d=>'<li data-date="'+d.date+'"><time datetime="'+d.date+'">'+d.label+'<em class="due" data-due="'+d.date+'"></em></time><div><a href="'+prefix+d.href+'"><b>'+d.title+'</b></a><p>'+d.text+'</p></div></li>').join('')+'</ol>';
   return compact ? '<div data-compact-deadlines>'+list+'<details class="deadline-rest" hidden><summary>Pozostałe terminy</summary><ol class="deadlines"></ol></details></div>' : list;
 }
+function railOverview(){return '<section id="kolej"><h2 class="stitle">Wszystkie przejazdy kolejowe</h2><p class="note">Stan potwierdzeń: '+TRIP.reviewed+'. Godziny podróży w Japonii, otwarcie sprzedaży w Polsce. Pociągi i miejsca na 2027 wymagają końcowego potwierdzenia.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Przejazdy kolejowe"><table class="rhythm"><thead><tr><th>Data</th><th>Trasa</th><th>Status</th><th>Następny krok</th></tr></thead><tbody>'+rail.railRows.map(([date,route,train,state,label,next])=>'<tr><td>'+date+'</td><td><b>'+route+'</b><br>'+train+'</td><td>'+label+'</td><td>'+next+'</td></tr>').join('')+'</tbody></table></div></section>';}
 function readiness(){
-  return '<div class="readiness"><b>Loty i dwa shinkanseny kupione dla obu rodzin; noclegi w Japonii potwierdzone dla obu rodzin</b><p>Do domknięcia: voucher stopover drugiej rodziny, miejsca w pociągach, bilety na atrakcje oraz dojazd z Hakone dla siedmiu osób. Potwierdzenia hoteli z 8.09 wskazują płatność na później.</p><a href="decyzje.html#do-zalatwienia">Sprawdź listę do załatwienia →</a> · <a href="#terminy">Terminy i pogoda</a></div>';
+  return '<div class="readiness"><b>Loty i trzy shinkanseny kupione dla obu rodzin; noclegi w Japonii potwierdzone dla obu rodzin</b><p>Do domknięcia: voucher stopover drugiej rodziny, miejsca w pociągach, bilety na atrakcje oraz dojazd z Hakone dla siedmiu osób. Potwierdzenia hoteli z 8.09 wskazują płatność na później.</p><a href="decyzje.html#do-zalatwienia">Sprawdź listę do załatwienia →</a> · <a href="#terminy">Terminy i pogoda</a></div>';
 }
 const HOTEL_STORY = {
  auh:{title:'Pierwszy wieczór w pięciogwiazdkowym Abu Zabi',text:'Grand Millennium Al Wahda daje nam wygodny początek podróży: hotelowy basen na dachu, restauracje i połączenie z Al Wahda Mall. Po locie odpoczynek, a następnego dnia czas na miasto.',perks:['Basen na dachu','5 gwiazdek','Al Wahda Mall tuż obok'],img:'auh-hotel.jpg',caption:'Zdjęcie promocyjne hotelu: przykładowe wnętrze, nie potwierdzenie standardu naszych pokoi.',moment:'Wieczorem spokojna kolacja i sen. Basen najlepiej rozważyć następnego dnia, zależnie od planu i godzin otwarcia.'},
@@ -286,7 +286,7 @@ function indexPage(){
       <a class="line" href="druk-skrot.html"><b>Plan na drogę</b><span>Jeden dzień na jednej kartce: godziny, transport, hotel i plan B.</span></a>
       <a class="line" href="druk.html"><b>Pełny przewodnik do druku</b><span>Cały plan na kartkach — do wydruku albo offline na telefon.</span></a>
       <a class="line" href="rezerwacje.html"><b>Rezerwacje prywatne</b><span>Potwierdzenia i rozliczenia dostępne po podaniu hasła.</span></a>
-      <a class="line" href="decyzje.html"><b>Kulisy planu</b><span>Co jeszcze załatwić, dlaczego taka trasa i jak zmienić dzień bez pośpiechu.</span></a>
+      <a class="line" href="decyzje.html"><b>Przygotowania i decyzje</b><span>Co jeszcze załatwić, dlaczego taka trasa i jak zmienić dzień bez pośpiechu.</span></a>
   </div>`;
   const inner = `
   <section id="dzis" class="today" hidden aria-live="polite"></section>
@@ -303,7 +303,7 @@ function indexPage(){
     <div class="scrollcue" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></div>
   </header>
   <section id="pilnuj" class="watch" hidden></section>
-  <script type="application/json" id="agenda">${JSON.stringify(DAYS.map(d=>({d:d.date,t:d.title,dd:d.dow+' '+d.dd,s:d.tl.map(([time,title])=>[time,title])}))).replace(/</g,'\\u003c')}</script>
+  <script type="application/json" id="agenda">${JSON.stringify(DAYS.map(d=>({d:d.date,t:d.title,dd:d.dow+' '+d.dd,hotel:d.stay,transport:d.tl.filter(x=>/pociąg|Shinkansen|Nozomi|Kodama|Romancecar|Narita Express|transfer|lotnisko/i.test(x[1])).map(x=>[x[0],x[1]]),s:d.tl.map(([time,title])=>[time,title])}))).replace(/</g,'\\u003c')}</script>
 
   <section class="statband" aria-label="Podróż w liczbach">
     <div class="stt hl"><b id="cd">—</b><span>dni do wylotu</span></div>
@@ -319,7 +319,7 @@ function indexPage(){
     <h2 class="stitle">Dzień po dniu</h2>
     <p class="lead-p">Każdy dzień zaczyna się krótkim podsumowaniem: po co jedziemy, co chronimy i co można odpuścić. Dalej są godziny, mapa, nocleg i plan B. W Golden Week rezerwacje wymagają wyprzedzenia; oba duże przejazdy kolejowe wypadają w tym okresie.</p>
     <ol class="tt">${cards}</ol><div class="return-note" id="powrot"><b>8 maja · sobota · {{lot.waw.przylot}}</b><span>Lądowanie w Warszawie. Spokojny powrót do domu i weekend na odpoczynek.</span></div>
-    <p class="note" style="margin-top:0.75rem">Znacznik przy wierszu to obciążenie dnia: <b style="color:var(--success)">●</b> lekki · <b style="color:var(--warn)">●</b> średni · <b style="color:var(--hanko)">●</b> intensywny. Zaplecze planu: <a href="decyzje.html">Kulisy</a>.</p>
+    <p class="note" style="margin-top:0.75rem">Znacznik przy wierszu to obciążenie dnia: <b style="color:var(--success)">●</b> lekki · <b style="color:var(--warn)">●</b> średni · <b style="color:var(--hanko)">●</b> intensywny. Zaplecze planu: <a href="decyzje.html">Przygotowania</a>.</p>
   </section>
 
   <section id="trasa">
@@ -383,10 +383,10 @@ function kosztyPage(){
     <h2 class="stitle">Transport w Japonii - podstawa budżetu</h2>
     <p class="lead-p">Kontrola 9.09.2026. Przeliczenie planistyczne: 100 JPY = 2,40 zł. Taryfy na konkretny pociąg i dzień w 2027 trzeba potwierdzić; Golden Week może oznaczać dopłatę sezonową. Liczymy trzy bilety dorosłe i jeden dziecięcy.</p>
     ${seg('Przejazdy między miastami',[
-      '<b>Narita → Tokio → Kioto</b> (29.04): NEX do Shinagawy; cena w jedną stronę zależy od stacji docelowej (do Tokyo Station obecnie 3 140 JPY/dorosły, do Shinagawy sprawdźcie przy zakupie); shinkansen zarezerwowany w SmartEX: {{sk.cena}} za rodzinę ({{sk.dorosly}} dorosły, {{sk.dziecko}} dziecko). NEX kupuje się osobno w JR East.',
+      '<b>Narita → Tokio → Kioto</b> (29.04): NEX do Shinagawy. NEX TOKYO Round Trip Ticket na oba przejazdy w ciągu 14 dni: obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko, nasza rodzina 18 200 JPY; warunki dla zagranicznych posiadaczy paszportów i taryfę 2027 potwierdźcie przed zakupem; shinkansen zarezerwowany w SmartEX: {{sk.cena}} za rodzinę ({{sk.dorosly}} dorosły, {{sk.dziecko}} dziecko). NEX kupuje się osobno w JR East.',
 
 
-      '<b>Kioto → Tokio</b> (3.05): shinkansen zarezerwowany w SmartEX, {{sk.cena}} za rodzinę. Ostateczny pociąg i siedem miejsc w dwóch rezerwacjach potwierdzą maile z 3.04.', '<b>Odawara → Shinagawa → Narita</b> (7.05): shinkansen planistycznie 3,5-4 tys. JPY/dorosły; NEX jak wyżej.',
+      '<b>Kioto → Tokio</b> (3.05): shinkansen zarezerwowany w SmartEX, {{sk.cena}} za rodzinę. Ostateczny pociąg i siedem miejsc w dwóch rezerwacjach potwierdzą maile z 3.04.', '<b>Odawara → Shinagawa → Narita</b> (7.05): Kodama kupiona: 12 000 JPY za naszą rodzinę. NEX osobno, najlepiej jako powrót w ramach biletu tam i z powrotem.',
       '<b>Kolej międzymiastowa: około 3,2 tys. zł za rodzinę</b>, z czego {{sk.razem}} (około {{sk.razem.zl}}) to dwa zarezerwowane shinkanseny; do tego Hakone, Nara, komunikacja miejska i taksówki. Przejazd do Nary i z powrotem to zwykła kolej Kintetsu, płatna kartą IC. Jest częścią puli transportu 5000 zł, nie dopłatą do niej.', '<b>Do sprawdzenia przed zakupem:</b> N’EX TOKYO Round Trip Ticket ważny 14 dni: obecnie 5 200 JPY/dorosły i 2 600 JPY/dziecko, czyli 18 200 JPY (około 437 zł) za oba przejazdy rodziny. Daty 29.04 i 7.05 mieszczą się w ważności. Sprawdźcie uprawnienia i zarezerwujcie konkretne pociągi.',
       'Standardowy JR Pass nie jest tu domyślnym zakupem. Porównajcie pełny koszt z biletami punktowymi; uprawnienie do Nozomi wymaga dodatkowych warunków/opłaty'])}
   </section>
@@ -394,6 +394,7 @@ function kosztyPage(){
   <p class="note">Źródła taryf: <a href="https://www.jreast.co.jp/en/multi/nex/tickets/" target="_blank" rel="noopener">JR East NEX</a>, <a href="https://www.jreast.co.jp/en/multi/pass/nex.html" target="_blank" rel="noopener">bilet NEX tam i z powrotem</a>, <a href="https://smart-ex.jp/en/product/plan/service/" target="_blank" rel="noopener">SmartEX i dopłaty sezonowe</a>, <a href="https://www.hakonenavi.jp/international/en/discount_passes/free_pass" target="_blank" rel="noopener">Hakone Freepass</a>.</p>
   <section>
     <h2 class="stitle">Kalkulator kosztów</h2>
+    <div class="money-states"><p><b>Opłacone</b><span>Loty ${plz(TICKET.total)} oraz trzy pociągi ${total(OUR_RAIL).toLocaleString('pl-PL')} JPY (około ${plz(total(OUR_RAIL)*RATE)}).</span></p><p><b>Zarezerwowane, do zapłaty</b><span>Noclegi ${total(OUR_HOTELS).toLocaleString('pl-PL')} JPY, osobno podatki lokalne. Terminy i pobrania sprawdź w prywatnych rezerwacjach.</span></p><p><b>Szacunki</b><span>Pozostały transport, jedzenie, atrakcje i rezerwa. Nie są opłacone. PLN zależy od kursu karty; nie sumuj ponownie pociągów z całym budżetem transportu.</span></p></div>
     <p class="lead-p">Szacunek dla <b>2+2</b> na cały wyjazd. W japońskiej kolei liczymy trzy taryfy dorosłe i jedną dziecięcą (10 lat); zaokrąglenia zależą od biletu. Linie lotnicze i atrakcje mają własne progi wieku. Wszystkie pola możesz edytować - suma naszej rodziny aktualizuje się na bieżąco. Zmiany zapisują się w przeglądarce. Własne zapisane wartości mogą różnić się od nowego budżetu bazowego; przycisk przywracania na dole wczyta aktualne kwoty. Wspólny wydruk nie pokazuje porównania kosztów rodzin.</p>
     <div class="card calc">
       <table>
@@ -543,13 +544,13 @@ function hotelePage(){
 /* ---- decyzje / dlaczego ---- */
 function decyzjePage(){
   const rows=DAYS.map((d,i)=>'<tr><td><a href="days/'+d.date+'.html">'+d.dd+'</a></td><td>'+d.brief.focus+'</td><td><span class="ipill '+d.level+'">'+LEVEL_LABEL[d.level]+'</span></td></tr>').join('');
-  const checklist=BOOKINGS.filter(b=>!/^✅/.test(b.when)).sort((a,b)=>(a.due||'9999').localeCompare(b.due||'9999')).map(b=>'<li><label><input type="checkbox" data-ck="'+b.id+'"><span class="ckwhen">'+b.when+(b.due?'<em class="due" data-due="'+b.due+'"'+(b.from?' data-from="'+b.from+'"':'')+'></em>':'')+'</span><span class="ckwhat"><b>'+b.what+'</b><i>'+b.note+'</i></span></label></li>').join('');
-  const inner='<header class="hero kb"><div class="hbg"><div class="hbg-img" style="background:'+heroBg('kioto',IMG.fushimi)+'"></div></div><div class="hero-inner"><p class="eyebrow">Rezerwacje i logika podróży</p><h1>Kulisy planu</h1><p class="lead">Co jest potwierdzone, czego jeszcze dopilnować i jak zachować spokojne tempo.</p></div></header>'+
+  const checklist=BOOKINGS.filter(b=>!/^✅/.test(b.when)).sort((a,b)=>(a.due||'9999').localeCompare(b.due||'9999')).map(b=>'<li><label><input type="checkbox" data-ck="'+b.id+'"><span class="ckwhen">'+b.when+(b.due?'<em class="due" data-due="'+b.due+'"'+(b.from?' data-from="'+b.from+'"':'')+'></em>':'')+'</span><span class="ckwhat"><b>'+b.what+'</b><i>'+b.note+'</i><small class="task-owner">Odpowiada: '+b.owner+' (ustalcie osobę w grupie)</small></span></label></li>').join('');
+  const inner='<header class="hero kb"><div class="hbg"><div class="hbg-img" style="background:'+heroBg('kioto',IMG.fushimi)+'"></div></div><div class="hero-inner"><p class="eyebrow">Rezerwacje i logika podróży</p><h1>Przygotowania i decyzje</h1><p class="lead">Co jest potwierdzone, czego jeszcze dopilnować i jak zachować spokojne tempo.</p></div></header>'+
     '<nav class="section-nav" aria-label="Skróty"><a href="#do-zalatwienia">Do załatwienia</a><a href="#terminy">Terminy</a><a href="#rytm">Rytm</a><a href="#zmiany">Jak zmieniać</a></nav>'+
     '<section id="do-zalatwienia"><h2 class="stitle">Do załatwienia</h2><p class="lead-p">Sprawy są ułożone według terminu, a przy każdej strona odlicza dni i oznacza te, które można już załatwić albo które są po terminie. Zaznaczenia zapisują się tylko na tym urządzeniu. Przypomnienia w telefonie daje plik kalendarza: <a href="terminy.ics">dodaj terminy do kalendarza</a>.</p><div class="card"><div class="ckhead"><b id="ckcount">0</b><span id="cknext"></span></div><div class="ckbar"><div id="ckfill"></div></div><ul class="cklist">'+checklist+'</ul><button class="reset" type="button" id="ckreset">Wyczyść zaznaczenia</button></div></section>'+
     '<section><h2 class="stitle">Potwierdzone elementy</h2><div class="card"><p class="note" style="margin-top:0">Numery rezerwacji trzymamy poza stroną: w potwierdzeniach i w osobnym pliku zapisanym w telefonach dorosłych.</p><ul class="tips">'+BOOKINGS.filter(b=>/^✅/.test(b.when)).map(b=>'<li><b>'+b.what+'</b>: '+b.note+'</li>').join('')+'</ul></div></section>'+
     '<section id="terminy"><h2 class="stitle">Terminy i pogoda</h2>'+deadlineList()+'<p class="note">Prognoza 7 dni wcześniej jest wskazówką, nie gwarancją. Ostrzeżenia pogodowe, status transportu i zasady anulowania są osobnymi rzeczami. Termin bezpłatnego odwołania Hanaori mija przed wyjazdem do Hakone.</p></section>'+
-    '<section id="rytm"><h2 class="stitle">Rytm grupy: dwie rodziny, troje dzieci</h2><p class="lead-p">Najbardziej wymagające podróże to 29.04 i 7.05. Intensywny jest także długi spacer przez Harajuku i Shibuyę 4.05; Nara 1.05 kończy się powrotem do hotelu około 16:15. Zmiana bazy i sumo 3.05 to także intensywny dzień - chronimy godzinę przerwy po meldunku. Chronimy przerwy i wolne popołudnie 5.05; przy zmęczeniu skracamy opcje, nie odpoczynek. Lekki program 27.04 oznacza mało zwiedzania, nie brak zmęczenia lotem.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
+    railOverview()+'<section id="rytm"><h2 class="stitle">Rytm grupy: dwie rodziny, troje dzieci</h2><p class="lead-p">Najbardziej wymagające podróże to 29.04 i 7.05. Intensywny jest także długi spacer przez Harajuku i Shibuyę 4.05; Nara 1.05 kończy się powrotem do hotelu około 15:30. Zmiana bazy i sumo 3.05 to także intensywny dzień - chronimy godzinę przerwy po meldunku. Chronimy przerwy i wolne popołudnie 5.05; przy zmęczeniu skracamy opcje, nie odpoczynek. Lekki program 27.04 oznacza mało zwiedzania, nie brak zmęczenia lotem.</p><div class="card" style="overflow-x:auto"><table class="rhythm"><thead><tr><th>Dzień</th><th>Cel</th><th>Tempo</th></tr></thead><tbody>'+rows+'</tbody></table></div></section>'+
     '<section id="zmiany"><h2 class="stitle">Jak modyfikować plan</h2><div class="card more">'+
     '<details open><summary>Co chronimy przy zmęczeniu?</summary><p>Loty, dojazdy na rezerwacje i odpoczynek. 30.04 odpuszczacie Kiyomizu; 1.05 pomijacie Kasuga Taisha; 2.05 po herbacie wracacie prosto do hotelu; 4.05 pomijacie Meiji, a w sklepach nie czekacie w kolejkach; 5.05 Akihabara jest dodatkiem. Opuszczona atrakcja nie przechodzi automatycznie na jutro.</p></details>'+
     '<details><summary>Jak zdjęcia zmieniły program?</summary><p>1.05 jedziemy do Nary; Osaka z Sushiro Esaka ze zdjęcia została wariantem. 2.05 herbata w KOTO ze zdjęcia łączy się ze Złotym Pawilonem, który stoi tuż obok; sklep Kinugasa i Nishiki są opcją na popołudnie. 30.04 po sjeście jest opcjonalne Kiyomizu z zejściem do Gion. Hotele i zarezerwowane shinkanseny bez zmian. <a href="atrakcje.html#guide-tips">Identyfikacja zdjęć i źródła →</a></p></details>'+
@@ -595,7 +596,7 @@ Kind regards,
 [imię i nazwisko]</pre></details><p class="note">Orientacyjnie: transfer {{hanaori.taxi}} + ewentualne {{hanaori.van}} za typ auta, kąpiel {{hanaori.bath}}. Razem do około 16 tys. JPY (około 384 zł przy planistycznym kursie 2,40 zł/100 JPY), w ramach rezerwy na transport i dodatki, nie jako opłacone usługi. Cena transferu nie jest gwarantowana.</p></section>`+
     '<section id="zdjecia"><h2 class="stitle">Zdjęcia: autorzy i licencje</h2><p class="lead-p">Zdjęcia pochodzą z Wikimedia Commons. Część jest poglądowa i nie przedstawia dokładnie miejsca z naszej rezerwacji; podpis mówi o tym wprost.</p>'+creditsList()+'<p class="note">Pozostałe zdjęcia (meczet, dworzec w Tokio, hotele): Wikimedia Commons, licencje CC.</p></section>'+
     '<section><h2 class="stitle">Źródła do ponownego sprawdzenia</h2><div class="linklist"><a href="https://ashinoko-hanaori.orixhotelsandresorts.com/news/10593/" target="_blank" rel="noopener">Hanaori: zmiana shuttle</a><a href="https://www.hakonenavi.jp/international/en/status_information" target="_blank" rel="noopener">Transport Hakone</a><a href="https://www.shibuya-scramble-square.com/sky/ticket/" target="_blank" rel="noopener">Shibuya Sky</a><a href="https://www.pokemon-cafe.jp/ja/cafe/news/" target="_blank" rel="noopener">Pokémon Café: NEWS</a><a href="https://www.etihad.com/en/manage/check-in" target="_blank" rel="noopener">Odprawa Etihad</a></div><p class="note">Audyt harmonogramu: 12.11.2026; oferta kąpieli i transferu z odpowiedzi hotelu z 26.09.2026, do ponownego potwierdzenia. Dane pokojów i terminów odwołania z potwierdzeń Booking; dokumenty i numery pozostają prywatne. <a href="loty.html">Historia wyboru lotów</a>.</p></section>'+footer('');
-  return shell({title:'Kulisy planu · Japonia 2027',desc:'Co jeszcze zarezerwować, terminy odwołania hoteli i zasady spokojnej rodzinnej agendy.',prefix:'',active:'decyzje.html',inner,pillsIdx:null});
+  return shell({title:'Przygotowania i decyzje · Japonia 2027',desc:'Co jeszcze zarezerwować, terminy odwołania hoteli i zasady spokojnej rodzinnej agendy.',prefix:'',active:'decyzje.html',inner,pillsIdx:null});
 }
 /* ---- pogoda ---- */
 /* ============ DRUGA PARA: monitor cen Etihad, ten sam kalendarz, koszty i decyzje ============ */
@@ -680,7 +681,7 @@ function pokazPage(){
   </div>
 </section>`;}).join('\n');
   const open=BOOKINGS.filter(b=>!/^✅/.test(b.when)).sort((a,b)=>(a.due||'9999').localeCompare(b.due||'9999'));
-  const openList=open.map(b=>`<li><time>${b.due?'do '+dm(b.due):'bez terminu'}</time><div><b>${b.what}</b><span>${b.when}</span></div></li>`).join('');
+  const openList=open.map(b=>`<li><time>${b.due?'do '+dm(b.due):'bez terminu'}</time><div><b>${b.what}</b><span>${b.when} · Odpowiada: ${b.owner}</span></div></li>`).join('');
   const nS=DAYS.length;
   const dots=[['Plan',''],...DAYS.map(d=>[short(d),'']),['Sprawy','only-my'],['Pytania','only-zn'],['Notatki','']].map(([t,c],i)=>`<a href="#s${i+1}"${c?` class="${c}"`:''}>${t}</a>`).join('');
   return `<!doctype html>
@@ -756,7 +757,7 @@ function drukPage(){
   const days = DAYS.map((d,i)=>{
     const it = DAYINT[d.date], fx = DAYFLEX[d.date], hid = DAYHOTEL[d.date];
     const H = hid ? HOTELS.find(h=>h.id===hid) : null;
-    const rows = d.tl.map(([t,h,desc,kind,pre])=>`<tr><td class="t">${t}</td><td><b>${h}</b>${kind?` <small>[${ITEM_LABEL[kind]}]</small>`:''}${desc?`<span class="dsc">${desc}</span>`:''}${pre?`<span class="dsc"><b>Przed wyjazdem:</b> ${pre}</span>`:''}</td></tr>`).join('');
+    const rows = d.tl.map(([t,h,desc,kind,pre])=>`<tr><td class="t">${t}</td><td><b>${h}</b>${kind?` <small>[${ITEM_LABEL[kind]}]</small>`:''}${desc?`<span class="dsc">${desc}</span>`:''}${pre?`<span class="dsc">Przygotowanie: zobacz aneks „Przed wyjazdem”, ${d.dd}.</span>`:''}</td></tr>`).join('');
     const facts = d.facts.map(([v,k])=>`<span><b>${v}</b>${k}</span>`).join('');
     return `<section class="pg day">
       <div class="dhead">
@@ -775,6 +776,7 @@ function drukPage(){
     </section>`;
   }).join('');
 
+  const preparation = DAYS.map(d=>{const steps=d.tl.filter(x=>x[4]);return steps.length?`<div class="preparation-day"><h3>${d.dd}: przygotowanie</h3>${steps.map(([time,title,desc,kind,pre])=>`<p class="note"><b>${time} · ${title}</b><br>${pre}</p>`).join('')}</div>`:'';}).join('');
   const hotels = HOTELS.map(H=>`<tr><td><b>${H.name}</b><span class="dsc">${H.stay}</span><span class="dsc">${H.cancel}</span></td><td><b>${HOTEL_STORY[H.id].title}</b><p>${HOTEL_STORY[H.id].text}</p></td></tr>`).join('');
 
   const inner = `<div class="sheet">
@@ -801,6 +803,7 @@ function drukPage(){
 
   <section class="pg" id="dwie-rodziny"><h2>Podróżujemy razem</h2><p>${GROUP_RULE}</p><p>${TIMING_NOTE}</p><p>Loty, trzy shinkanseny i hotele w Japonii są zarezerwowane dla obu rodzin. Miejsca w pociągach będą potwierdzone bliżej podróży. Pozostałe przejazdy i atrakcje wymagają rezerwacji.</p><p>Potwierdzenia, terminy płatności i rozliczenia: prywatna zakładka na stronie, dostępna po podaniu hasła.</p></section>
   ${days}
+  <section class="pg preparation"><h2>Przed wyjazdem: rezerwacje i przygotowanie</h2><p class="note">Koordynator wspólnych rezerwacji pilnuje atrakcji i przejazdów dla siedmiu osób; każda rodzina swoich dokumentów, płatności i bagażu. Ustalcie konkretne osoby w grupie. Poniżej pełne wskazówki do kroków z agendy.</p>${preparation}</section>
   <section class="pg deadlines-print"><h2>Terminy i przypomnienia</h2><p>Stan ${TRIP.reviewed}. Godziny w opisach wskazują strefę czasową. Osobne płatności i anulowania obu rodzin; kwoty i numery pozostają w zakładce prywatnej.</p><p><a href="https://japonia-2027.vercel.app/terminy.ics">Pobierz kalendarz</a>. Anulowanie hoteli i przegląd shinkansenów mają alarm tydzień wcześniej. Sam wydruk nie wysyła przypomnień.</p><table class="agenda"><thead><tr><th>Termin</th><th>Co zrobić</th></tr></thead><tbody>${DEADLINES.map(d=>`<tr><td>${d.label}</td><td><b>${d.title}</b><span class="dsc">${d.text}</span></td></tr>`).join('')}</tbody></table></section>
 
   <section class="pg">
@@ -919,10 +922,12 @@ h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:22px 0 8px}
   body{font-size:10.5pt;line-height:1.42}
   .topbar,.hint{display:none !important}
   .sheet{max-width:none;margin:0;padding:0}
-  .pg{border:none;border-radius:0;padding:0;margin:0;page-break-after:always;break-after:page}
+  .pg{border:none;border-radius:0;padding:0;margin:0;page-break-after:auto;break-after:auto}
   .pg:last-child{page-break-after:auto;break-after:auto}
   .band{margin:0 0 22px;height:46px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .cover{padding-top:0}
+  .cover{padding-top:0;break-after:page}
+  .pg:not(.cover){padding-top:8mm}.pg>h2,.dhead,h3{break-after:avoid}
+  .pg>.lead,.pg>.note{orphans:3;widows:3}.day .blk{orphans:3;widows:3}
   h1{font-size:34pt}h2{font-size:18pt}h3{font-size:13pt;margin:16px 0 6px}
   .cfacts b{font-size:19pt}
   .agenda{font-size:9.5pt}
@@ -944,6 +949,8 @@ h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:22px 0 8px}
   .day .flex p{padding:5px 8px}
   .day .pfoot{margin-top:4px}
   .day .blk{break-inside:avoid;page-break-inside:avoid}
+  .preparation h3{break-after:avoid}.preparation .note{break-inside:avoid}.preparation .note{font-size:9pt}
+  .day .lead{font-size:10pt}.day .agenda td{padding:4px 0}.day .note{margin:5px 0}.day .blk ul{margin-top:3px}.day .blk li{margin:2px 0}
   .pfoot{position:static;margin-top:3mm;break-before:avoid;page-break-before:avoid}
   .pg{padding-bottom:0}
   a{color:inherit;text-decoration:none}
@@ -958,7 +965,7 @@ h3{font-family:var(--serif);font-weight:500;font-size:20px;margin:22px 0 8px}
   <a href="index.html">← wróć do strony</a>
   <button class="btn" type="button" onclick="window.print()">🖨️ Drukuj / zapisz jako PDF</button>
 </div>
-<p class="hint">Kliknij <b>„Drukuj / zapisz jako PDF"</b>, a w oknie drukowania wybierz miejsce docelowe <b>„Zapisz jako PDF"</b>. Ustaw format <b>A4</b> i włącz <b>grafikę tła</b>, żeby zachować kolory okładki. Każdy dzień zaczyna się na nowej stronie. Liczba stron zależy od ustawień drukowania; przed zapisaniem sprawdź podgląd, marginesy i wyłącz nagłówki przeglądarki.</p>
+<p class="hint">Kliknij <b>„Drukuj / zapisz jako PDF"</b>, a w oknie drukowania wybierz miejsce docelowe <b>„Zapisz jako PDF"</b>. Ustaw format <b>A4</b> i włącz <b>grafikę tła</b>, żeby zachować kolory okładki. Pełny przewodnik ma ciągły układ, bez prawie pustych kartek. Jeśli chcesz jeden dzień na jednej kartce, wybierz „Plan na drogę”. Liczba stron zależy od ustawień drukowania; przed zapisaniem sprawdź podgląd, marginesy i wyłącz nagłówki przeglądarki.</p>
 ${inner}
 </body>
 </html>`;
@@ -1374,27 +1381,30 @@ const SWVER = contentHash.digest('hex').slice(0,10);
 const SW = `/* Service worker planu Japonia 2027 — wersja ${SWVER} · HTML/CSS/JS network-first, obrazy cache-first */
 const CACHE = 'jp2027-${SWVER}';
 const PRECACHE = ${JSON.stringify(PRECACHE)};
+const BUILD = '${BUILD_ID}';
+const CRITICAL = PRECACHE.filter(u=>/\\.html$|assets\\/(style\\.css|app\\.js|pokaz\\.css|pokaz\\.js)$/.test(u));
 self.addEventListener('install', function(e){
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then(function(c){
     // Pojedynczy błąd nie może wywrócić instalacji ani zostawić dziury: gdy pliku nie da się pobrać,
     // przenosimy jego poprzednią kopię ze starej pamięci, zanim zostanie ona usunięta przy aktywacji.
-    return Promise.all(PRECACHE.map(function(u){return c.add(u).catch(function(){
+    var failed=[];return Promise.all(PRECACHE.map(function(u){return c.add(u).catch(function(){ failed.push(u);
       return caches.match(u,{ignoreSearch:true}).then(function(old){ if(old) return c.put(u,old); });
-    });}));
+    });})).then(function(){return c.put('/offline-status.json',new Response(JSON.stringify({build:BUILD,savedAt:new Date().toISOString(),ready:!CRITICAL.some(u=>failed.includes(u)),missing:failed}),{headers:{'Content-Type':'application/json'}}));});
   }));
 });
 self.addEventListener('activate', function(e){
   e.waitUntil(caches.keys().then(function(keys){
-    return Promise.all(keys.filter(function(k){return k!==CACHE;}).map(function(k){return caches.delete(k);}));
+    return Promise.all(keys.filter(function(k){return k.startsWith('jp2027-')&&k!==CACHE;}).map(function(k){return caches.delete(k);}));
   }).then(function(){return self.clients.claim();}));
 });
+self.addEventListener('message',function(e){if(e.data==='offline-status'&&e.ports[0]) e.waitUntil(caches.open(CACHE).then(c=>c.match('/offline-status.json')).then(r=>r?r.json():null).then(s=>e.ports[0].postMessage(s)));});
 function store(req,res){ if(res && res.status===200){ var cp=res.clone(); caches.open(CACHE).then(function(c){c.put(req,cp);}); } return res; }
 self.addEventListener('fetch', function(e){
   var req = e.request;
   if(req.method!=='GET') return;
   var url = new URL(req.url);
-  if(url.pathname.startsWith('/api/')) return;
+  if(url.pathname.startsWith('/api/')||url.pathname==='/rezerwacje.html') return;
   if(url.origin !== location.origin) return;           // mapy, pogoda, Google — tylko z sieci
   var isDoc  = req.mode==='navigate' || req.destination==='document' || /\\.html$|\\/$/.test(url.pathname);
   var isCode = /assets\\/(style\\.css|app\\.js|pokaz\\.css|pokaz\\.js)$/.test(url.pathname);
@@ -1402,7 +1412,7 @@ self.addEventListener('fetch', function(e){
     // NETWORK FIRST: strona i kod zawsze świeże; cache tylko gdy nie ma sieci
     e.respondWith((async function(){
       var controller = new AbortController(), timer = setTimeout(function(){controller.abort();},5000);
-      try { return store(req, await fetch(req,{signal:controller.signal})); }
+      try { var response=await fetch(req,{signal:controller.signal}); if(response.status>=500) throw new Error('server unavailable'); return store(req,response); }
       catch { var hit = await caches.match(req,{ignoreSearch:true});
         if(hit) return hit;
         if(isDoc) return (await caches.match('index.html')) || new Response('Brak zapisanej strony. Połącz się z internetem.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});

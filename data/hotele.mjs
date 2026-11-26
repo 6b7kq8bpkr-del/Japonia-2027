@@ -6,7 +6,7 @@ export const HOTELS = [
  cancel:'Rezerwacja bezzwrotna według vouchera. Numery i warunki w prywatnym potwierdzeniu.',
  mapsq:'Grand Millennium Al Wahda, Abu Dhabi',site:'https://www.millenniumhotels.com/en/abu-dhabi/grand-millennium-al-wahda/'},
  {id:'kioto',name:'MIMARU Kyoto STATION',stay:'Kioto · 29.04-3.05 · 4 noce',
- desc:'Apartament rodzinny dla 2+2, z kuchnią. W potwierdzeniu nie ma posiłków. Meldunek 15:00-22:00, wymeldowanie do 11:00; przy opóźnionym locie uprzedźcie recepcję. Pranie planujemy 2.05 po południu. <b>Uwaga na fałszywe żądania zapłaty:</b> w październiku 2026 MIMARU ostrzegło o możliwym ujawnieniu danych rezerwacji w systemie Temairazu. Każdą prośbę o dopłatę lub dane karty przysłaną mailem albo przez WhatsApp sprawdźcie bezpośrednio z hotelem, zanim cokolwiek zapłacicie.',
+ desc:'Apartament rodzinny dla 2+2, z kuchnią. W potwierdzeniu nie ma posiłków. Meldunek 15:00-22:00, wymeldowanie do 11:00; przy opóźnionym locie uprzedźcie recepcję. Pralnia jest opcją dla chętnych; plan podstawowy nie wymaga prania. <b>Uwaga na fałszywe żądania zapłaty:</b> w październiku 2026 MIMARU ostrzegło o możliwym ujawnieniu danych rezerwacji w systemie Temairazu. Każdą prośbę o dopłatę lub dane karty przysłaną mailem albo przez WhatsApp sprawdźcie bezpośrednio z hotelem, zanim cokolwiek zapłacicie.',
  price:'219 283 JPY (około 5 263 zł przy 0,024 zł/JPY); zarezerwowane, w potwierdzeniu zapłacono 0 JPY. Podatek miejski może być dodatkowy.',
  cancel:'Bezpłatnie do 21.04.2027, 23:59 JST (16:59 w Polsce). Później opłata według potwierdzenia: pełna cena.',
  near:'Przy południowej stronie dworca Kyoto (Hachijō)',jp:'京都市南区東九条東山王町15-1',

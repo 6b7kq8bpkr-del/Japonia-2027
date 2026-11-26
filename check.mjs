@@ -69,9 +69,9 @@ const compact=readFileSync(join(DIR,'druk-skrot.html'),'utf8');
 if((compact.match(/class="travel-day"/g)||[]).length!==DAYS.length) errs.push('Skrócony wydruk: brak dnia');
 for(const d of DAYS) if(!compact.includes(`days/${d.date}.html`)) errs.push(`Skrócony wydruk: brak odsyłacza dnia ${d.date}`);
 
-const calc=JSON.parse(src.match(/const CALC = (\{[^}]*\})/)[1].replace(/(\w+):/g,'"$1":'));
+const {default:budget}=await import('./data/budget.cjs'); const calc=budget.CALC;
 if(DAYS.filter(d=>d.stay&&d.stay!=='auh').length!==calc.nights) errs.push('Liczba nocy w Japonii nie zgadza się z kalkulatorem');
-const ticket=+src.match(/const TICKET = \{[^}]*total:(\d+(?:\.\d+)?)/)[1];
+const ticket=budget.TICKET.total;
 const sum=ticket+calc.nights*calc.nightRate+calc.transport+calc.days*calc.foodRate+calc.attractions+calc.extras, k=Math.round(sum/1000);
 const {DP_TOTALS}=await import('./data/druga-para.mjs');
 const groupSum=sum+Object.values(DP_TOTALS).reduce((total,n)=>total+n,0);

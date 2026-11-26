@@ -1,3 +1,4 @@
+import budget from './budget.cjs';
 // Druga para: dwoje dorosłych i syn (12 lat w czasie wyjazdu), te same daty i ten sam układ podróży co my.
 // CENY: archiwum odczytów Google Flights sprzed zakupu (monitoring zakończony 13.11.2026, zadanie wyłączone).
 // Kwoty drugiej rodziny nie są publikowane na stronie; potwierdzenia i rozliczenia są w zahasłowanej zakładce.
@@ -10,7 +11,7 @@ export const CENY = [
   {date:'2026-11-13', total:11913, note:'Punkt startowy. Wylot 27.04 11:50, w Naricie 28.04 12:45 (2 h przesiadki w Abu Zabi); powrót 7.05. Google: „ceny są obecnie typowe”.'},
 ];
 
-export const DP_KOLEJ = {date:'2026-11-13', perTripJPY:43110, totalJPY:86220, kodamaJPY:10290, paidTotalJPY:96510, rate:0.024, paid:true};
+export const DP_KOLEJ = {date:'2026-11-13', perTripJPY:budget.OTHER_RAIL[0], totalJPY:budget.total(budget.OTHER_RAIL.slice(0,2)), kodamaJPY:budget.OTHER_RAIL[2], paidTotalJPY:budget.total(budget.OTHER_RAIL), rate:budget.RATE, paid:true};
 // Koszty poza lotami na trzy osoby (dane robocze, poza stroną publiczną). Hotele według potwierdzeń Booking, reszta to szacunki.
 export const DP_KOSZTY = [
   {category:'hotels', co:'Abu Zabi: nocleg w pakiecie stopover', zl:0, zrodlo:'Nocleg w pakiecie z biletem. Na miejscu opłata hotelowa 15 AED za pokój za noc; przy jednym pokoju dla trzech osób to około 17 zł.'},

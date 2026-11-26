@@ -38,7 +38,8 @@ if(pg){var upd=function(){var h=document.documentElement,m=h.scrollHeight-h.clie
   pg.style.width=(m>0?(h.scrollTop/m*100):0)+'%';};addEventListener('scroll',upd,{passive:true});upd();}
 // countdown to departure
 var cd=document.getElementById('cd');
-if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date())/86400000));cd.textContent=days;}
+var previewTime=new URLSearchParams(location.search).get('teraz'); var clockNow=previewTime?new Date(previewTime):new Date(); if(isNaN(clockNow))clockNow=new Date();
+if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00+02:00')-clockNow)/86400000));cd.textContent=days;}
 // home hero: parallax bg + fading scroll cue
 (function(){
   var hbg=document.querySelector('.hero.home .hbg'), cue=document.querySelector('.scrollcue');
@@ -56,13 +57,23 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   var geoEl=document.getElementById('geo'); if(!geoEl) return;
   var btn=document.getElementById('mapActivate'), mapDiv=document.getElementById('map');
   if(!btn||!mapDiv) return;
-  var done=false;
+  var done=false, map=null, layer=null, selected=JSON.parse(geoEl.textContent);
   function activate(){
     if(done) return; done=true;
     btn.style.display='none'; mapDiv.style.display='block';
-    ensureLeaflet(function(){ render(JSON.parse(geoEl.textContent)); });
+    ensureLeaflet(function(){ render(selected); });
   }
   btn.addEventListener('click',activate);
+  var modesEl=document.getElementById('geo-modes');
+  if(modesEl){var modes=JSON.parse(modesEl.textContent);document.querySelectorAll('[data-map-mode]').forEach(function(button){button.addEventListener('click',function(){
+    selected=modes[+button.dataset.mapMode].points;
+    document.querySelectorAll('[data-map-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+    var legend=document.querySelector('.maplegend');legend.textContent='';
+    selected.forEach(function(point,i){var item=document.createElement('li'),num=document.createElement('span');num.className='mn';num.textContent=i+1;item.appendChild(num);item.appendChild(document.createTextNode(' '+point[2]));legend.appendChild(item);});
+    document.querySelector('.gmap').href='https://www.google.com/maps/dir/'+selected.map(p=>p[0]+','+p[1]).join('/');
+    if(map)render(selected);else activate();
+  });});}
+
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){
       es.forEach(function(e){ if(e.isIntersecting){ activate(); io.disconnect(); } });
@@ -78,17 +89,17 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
     document.head.appendChild(s);
   }
   function render(stops){
-    var map=L.map(mapDiv,{scrollWheelZoom:false});
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(map);
+    if(!map){map=L.map(mapDiv,{scrollWheelZoom:false});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(map);layer=L.layerGroup().addTo(map);}else layer.clearLayers();
     var pts=[];
     stops.forEach(function(s,i){ var ll=[s[0],s[1]]; pts.push(ll);
       L.marker(ll,{icon:L.divIcon({className:'',iconSize:[26,26],iconAnchor:[13,13],html:'<div class="mk">'+(i+1)+'</div>'})})
-        .addTo(map).bindPopup((i+1)+'. '+s[2]);
+        .addTo(layer).bindPopup((i+1)+'. '+s[2]);
     });
     var routeEl=document.getElementById('geo-route');
     var linePts=routeEl?JSON.parse(routeEl.textContent):pts;
-    if(linePts.length>1) L.polyline(linePts,{color:'#c8402c',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
-    map.fitBounds(pts,{padding:[34,34]});
+    if(linePts.length>1) L.polyline(linePts,{color:'#c8402c',weight:3,dashArray:'6 6',opacity:.85}).addTo(layer);
+    map.fitBounds(pts,{padding:[34,34],maxZoom:15});
     setTimeout(function(){map.invalidateSize();},80);
   }
 })();
@@ -255,6 +266,12 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
           var r=el('div'); r.appendChild(el('span',null,x[0])); r.appendChild(el('b',null,day.s[x[1]][0]+' · '+day.s[x[1]][1])); g.appendChild(r); });
         if(g.children.length) box.appendChild(g);
         var l=el('a','today-link','Otwórz dzisiejszy plan →'); l.href='days/'+day.d+'.html#plan'; box.appendChild(l);
+        var actions=el('nav','quick-actions'); actions.setAttribute('aria-label','Na dziś');
+        var upcoming=(day.transport||[]).filter(function(t){return t[0]>=hm;})[0];
+        var links=[['Bilety i potwierdzenia','rezerwacje.html'],['Mapa dnia','days/'+day.d+'.html#mapa']];
+        if(day.hotel)links.push(['Hotel i dojazd','hotele.html#'+day.hotel]);
+        if(upcoming)links.unshift(['Najbliższy przejazd · '+upcoming[0],'days/'+day.d+'.html#krok-'+upcoming[0].replace(/[^0-9]/g,'')]);
+        links.forEach(function(pair){var a=el('a',null,pair[0]);a.href=pair[1];actions.appendChild(a);});box.appendChild(actions);
         box.hidden=false;
       }
     }
@@ -343,36 +360,23 @@ if(cd){var days=Math.max(0,Math.ceil((new Date('2027-04-27T00:00:00')-new Date()
   box.hidden=false;
 })();
 
-/* ---- wybór układu strony: Telefon / Komputer ----
-   Domyślnie układ wynika z ekranu. Wybór zapisuje się w tej przeglądarce (klucz jp.uklad). */
-(function(){
-  var d=document.documentElement, waski=Math.min(screen.width,screen.height)<700, ramka=d.classList.contains('w-ramce');
-  var pref=null; try{ pref=localStorage.getItem('jp.uklad'); }catch(e){}
-  var biezacy=ramka?'tel':(pref||(waski?'tel':'pc'));
-  [].forEach.call(document.querySelectorAll('.uklad button'),function(b){
-    var on=b.getAttribute('data-u')===biezacy; b.classList.toggle('on',on); b.setAttribute('aria-pressed',on?'true':'false');
-    b.addEventListener('click',function(){
-      var u=b.getAttribute('data-u'), domyslny=waski?'tel':'pc';
-      try{ if(u===domyslny) localStorage.removeItem('jp.uklad'); else localStorage.setItem('jp.uklad',u); }catch(e){}
-      // w ramce przeładowujemy całe okno, żeby zamknąć podgląd telefonu
-      var w=ramka?window.top:window, url=w.location.href.replace(/([?&])uklad=ramka&?/,'$1').replace(/[?&]$/,'');
-      w.location.href=url;
-    });
-  });
-  if(!d.classList.contains('uklad-tel')) return;
-  // podgląd telefonu na komputerze: ta sama strona w ramce szerokości telefonu
-  var src=location.href.split('#'), q=src[0]+(src[0].indexOf('?')<0?'?':'&')+'uklad=ramka'+(src[1]?'#'+src[1]:'');
-  var tlo=document.createElement('div'); tlo.className='ramka-tel';
-  var f=document.createElement('iframe'); f.src=q; f.title='Strona w układzie telefonu';
-  var x=document.createElement('button'); x.type='button'; x.className='ramka-wyjdz'; x.textContent='Wróć do układu komputera';
-  x.addEventListener('click',function(){ try{ localStorage.removeItem('jp.uklad'); }catch(e){} location.reload(); });
-  tlo.appendChild(x); tlo.appendChild(f); document.body.appendChild(tlo);
-})();
-
-
 /* Menu główne: natywne details zachowuje obsługę klawiatury. */
 (function(){
  var menus=[].slice.call(document.querySelectorAll('.nav-more'));
  document.addEventListener('keydown',function(e){if(e.key==='Escape')menus.forEach(function(m){if(m.open){m.open=false;m.querySelector('summary').focus();}});});
  document.addEventListener('click',function(e){menus.forEach(function(m){if(!m.contains(e.target))m.open=false;});});
+})();
+
+/* Czy na tym urządzeniu zapisano bieżące wydanie planu? Prywatne dane nie trafiają do cache. */
+(function(){
+  var badge=document.querySelector('.offline-state');if(!badge)return;
+  var state=null;
+  function show(){var ready=state&&state.ready&&state.build===badge.dataset.build;
+    badge.dataset.offline=String(!navigator.onLine);
+    var when=state&&state.savedAt?new Date(state.savedAt).toLocaleString('pl-PL'):'';
+    badge.textContent=(navigator.onLine?'':'Jesteś offline. ')+(ready?'Plan zapisany offline · wydanie '+state.build+' · '+when:'Zapis całego bieżącego planu offline nie jest potwierdzony. Otwórz stronę przy dostępie do internetu.')+' Mapy, pogoda i prywatne rezerwacje wymagają internetu.';
+  }
+  function check(){if(!navigator.serviceWorker.controller){show();return;}var channel=new MessageChannel();channel.port1.onmessage=function(e){state=e.data;channel.port1.close();show();};navigator.serviceWorker.controller.postMessage('offline-status',[channel.port2]);show();}
+  if('serviceWorker' in navigator){navigator.serviceWorker.ready.then(check);navigator.serviceWorker.addEventListener('controllerchange',check);}else show();
+  addEventListener('online',check);addEventListener('offline',show);document.addEventListener('visibilitychange',function(){if(!document.hidden)check();});
 })();

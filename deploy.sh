@@ -8,6 +8,7 @@ node build.mjs
 node check.mjs
 node test-private.cjs
 node test-calendar.mjs
+node test-journey.cjs
 npx --yes vercel build --prod
 npx --yes vercel deploy --prebuilt --prod
 if [ -n "$(git status --porcelain)" ]; then
