@@ -60,3 +60,6 @@ Skrypt buduje, testuje i wdraża na Vercel; przerywa się na pierwszym błędzie
 - `data/warianty.mjs`: warunkowy wariant Pokémon; status `pending` nie jest rezerwacją.
 - Weryfikacja: `node build.mjs`, `node check.mjs`, `node test-private.cjs`, `node test-calendar.mjs`, `node test-journey.cjs`. Testy pracują lokalnie na atrapach, nie wykonują zakupów ani operacji w produkcji.
 - Wydanie w stopce pozwala porównać wdrożenie. Status offline potwierdza zapis aktualnego planu na danym urządzeniu; prywatny panel nigdy nie jest cache’owany.
+
+### Ochrona panelu prywatnego
+Na Vercel 26.11.2026 włączono regułę WAF „Ochrona prywatnych rezerwacji”: POST `/api/rezerwacje`, 10 żądań / 60 s na adres IP, powyżej limitu HTTP 429. Reguła działa na brzegu sieci, niezależnie od instancji funkcji; nie ogranicza przeglądania publicznej agendy. Status sprawdza `vercel firewall rules list`. Nie włączano płatnego planu ani dodatkowych usług.
