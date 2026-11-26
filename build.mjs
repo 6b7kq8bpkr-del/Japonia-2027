@@ -560,27 +560,7 @@ function decyzjePage(){
     '<details><summary>Jak reagować na pogodę?</summary><p>20 i 24.04 sprawdźcie sytuację przed terminami hoteli miejskich. 1-2.05 porównajcie prognozę dla Hakone z kosztem ewentualnej zmiany. 5.05 sprawdźcie ostrzeżenia, a rano 6 i 7.05 kursowanie transportu. Przy silnym wietrze statek nie zastępuje automatycznie kolejki.</p></details>'+
     '<details><summary>Co z budżetem?</summary><p>Hotele są zarezerwowane w JPY, lecz w potwierdzeniach nie były jeszcze opłacone. Koszt w złotych zależy od płatności i kursu; podatki miejscowe mogą być dodatkowe. Loty są kupione, a ich koszt jest znany: {{bilety.suma}} za cztery e-bilety.</p></details>'+
     '</div></section>'+
-    `<section id="koto-mail"><h2 class="stitle">KOTO: zapytanie o plan prywatny NO4 dla 7 osób</h2><p class="lead-p">Do wysłania na reservation@teaceremony-kyoto.com. KOTO ma plan prywatny NO4 dla grup od siedmiu osób i przy większych grupach poleca właśnie go; pytamy, czy obejmuje czworo dorosłych i troje dzieci. Tekst jest propozycją, nie został wysłany.</p><details class="card" open><summary>Otwórz tekst po angielsku</summary><pre style="white-space:pre-wrap;font:inherit;margin:0.75rem 0 0">Subject: Private tea ceremony (Plan NO4) for 7 guests on Sunday, 2 May 2027
-
-Dear Tea Ceremony KOTO team,
-
-We are a group of seven travelling together: four adults and three children, who will be 10, 12 and 12 years old on the day.
-
-We would like to book your private tea ceremony, Plan NO4 (tea ceremony for over 7 adults), on Sunday, 2 May 2027, ideally starting at 11:45. 13:00 would also work for us.
-
-Could you please let us know:
-1. Whether Plan NO4 is available for our group of 4 adults and 3 children.
-2. The price per adult and per child.
-3. Whether 2 May 2027 at 11:45 (or 13:00) is available.
-4. How to book: through asoview or by email, and how to pay.
-5. Your cancellation policy.
-
-The ceremony will be in English for us. We do not need kimono.
-
-Thank you very much in advance.
-
-Best regards,
-[imię i nazwisko]</pre></details></section>`+
+    `<section id="koto-mail"><h2 class="stitle">KOTO: czekamy na odpowiedź</h2><p class="lead-p">Zapytanie po angielsku wysłano 26.11.2026 do reservation@teaceremony-kyoto.com. Ceremonia nie jest jeszcze zarezerwowana.</p><p>Poprosiliśmy o prywatną sesję 2.05.2027 o 11:45, ewentualnie 13:00, dla czworga dorosłych i trojga dzieci w wieku 10, 12 i 12 lat, bez wynajmu kimona. Zapytaliśmy o kwalifikację do planu NO4, dostępność, łączną cenę z opłatami, czas trwania, sposób płatności oraz warunki anulowania i zmiany daty.</p><p class="note">Następny krok: po odpowiedzi KOTO wybrać i potwierdzić sesję dla całej siódemki. Nie wysyłamy ponownie tego samego zapytania.</p></section>`+
     `<section id="hotel-mail"><h2 class="stitle">Hanaori: propozycja odpowiedzi do hotelu</h2><p class="lead-p">Hotel przedstawił opcje, ale kąpiel termalna i transfer nie są zarezerwowane. Wanna w pokoju nie ma wody termalnej. Poniższy tekst jest propozycją wiadomości, nie został wysłany.</p><details class="card"><summary>Otwórz tekst po angielsku</summary><pre style="white-space:pre-wrap;font:0.875rem/1.6 var(--sans)">Dear Hanaori team,
 
 Thank you very much for your kind and detailed reply. We understand that the open-air bath in our Deluxe room does not use hot-spring water.

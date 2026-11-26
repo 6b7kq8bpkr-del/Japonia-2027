@@ -14,7 +14,8 @@ for(const [id,date] of [['payment-kyoto-second','20270419'],['payment-tokyo-seco
 assert(get('romancecar-sale').includes('DTSTART:20270406T010000Z'));
 assert(get('nex-return-sale').includes('DTSTART:20270407T010000Z'));
 for(const id of ['cancel-kyoto','cancel-tokyo','cancel-hanaori','nozomi51-cancel','nozomi6-cancel','kodama-cancel'])assert(get(id).includes('TRIGGER:-P7D'),id);
-assert(get('koto-enquiry').includes('DTSTART;VALUE=DATE:20261127'));
+assert(get('koto-enquiry').includes('DTSTART;VALUE=DATE:20261126'));
+assert(!get('koto-enquiry').includes('BEGIN:VALARM'), 'Wysłane zapytanie nie powinno przypominać o wysyłce');
 for(const [id,fact] of [['nozomi51-cancel','n51.odj'],['nozomi6-cancel','n6.odj'],['kodama-cancel','kodama.odj']]){
  const e=DEADLINES.find(x=>x.id===id),jp=new Date(Date.parse(e.utc)+9*3600000).toISOString();
  assert.equal(jp.slice(0,10),e.date);assert.equal(jp.slice(11,16),F[fact]);

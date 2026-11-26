@@ -3,10 +3,11 @@ import {TRIP} from './statusy.mjs';
 export const BOOKINGS = [
   {
     "id": "koto-mail-v1",
-    "due": "2026-11-27",
-    "when": "Teraz",
-    "what": "Wysłać maila do KOTO o plan prywatny NO4 dla 7 osób",
-    "note": "Na reservation@teaceremony-kyoto.com: plan NO4 (sesja prywatna dla grup od siedmiu osób) na 2.05.2027 o 11:45 albo 13:00, dla 4 dorosłych i 3 dzieci (10, 12 i 12 lat). Pytamy o dostępność, cenę dorosłych i dzieci, sposób rezerwacji i anulowanie. <a href=\"decyzje.html#koto-mail\">Gotowy tekst maila w przygotowaniach</a>."
+    "done": true,
+    "due": "2026-11-26",
+    "when": "✅ Wysłano 26.11.2026",
+    "what": "Zapytanie do KOTO wysłane - czekamy na odpowiedź",
+    "note": "Mail dotyczy prywatnej ceremonii po angielsku 2.05.2027 o 11:45 lub 13:00 dla 4 dorosłych i 3 dzieci (10, 12 i 12 lat), bez kimona. Pytamy o plan NO4, dostępność, łączną cenę, płatność i anulowanie. To zapytanie, nie potwierdzona rezerwacja. <a href=\"decyzje.html#koto-mail\">Status zapytania</a>."
   },
   {
     "id": "kodama-done-v2",
@@ -16,13 +17,6 @@ export const BOOKINGS = [
     "when": "✅ Kupione 24.11.2026",
     "what": "Kodama 7.05 kupiona dla obu rodzin",
     "note": TRIP.kodama.note
-  },
-  {
-    "id": "grupa-v3",
-    "due": "2026-11-30",
-    "when": "Teraz, z drugą rodziną",
-    "what": "Ustalić wspólne zasady siedmioosobowej grupy",
-    "note": "Te same hotele w Japonii są już zarezerwowane dla obu rodzin. Pozostaje wspólny czat, punkty zbiórki i zasada: każda rodzina rozlicza się osobno, wspólne rezerwacje atrakcji koordynuje jedna osoba. Przejazdy, KOTO, sumo i kolacja urodzinowa wspólne; zakupy i część spacerów w układzie 4+3. Każda podgrupa ma dorosłego, internet i swoje bilety. Voucher stopover drugiej rodziny pozostaje do otrzymania."
   },
   {
     "id": "restauracje-7-v1",
@@ -54,10 +48,11 @@ export const BOOKINGS = [
   },
   {
     "id": "hotel-deadlines-v4",
-    "due": "2027-04-13",
-    "when": "Przed 14.04: import kalendarza",
-    "what": "Zapisać terminy anulowania w swoim kalendarzu",
-    "note": "Terminy anulowania obu rodzin: Kioto 21.04 23:59 JST, Tokio 25.04 23:59 JST, Hanaori 2.05 23:59 JST (16:59 w Polsce). Plik terminy.ics zawiera osobne zdarzenia i alarmy tydzień, dzień i dwie godziny wcześniej. Zaimportujcie go do osobnego kalendarza i włączcie powiadomienia. Strona sama ich nie wysyła; import pliku nie jest automatyczną synchronizacją."
+    "done": true,
+    "due": "2026-11-26",
+    "when": "✅ Zweryfikowane i zapisane 26.11.2026",
+    "what": "Terminy anulowania obu rodzin są w kalendarzu",
+    "note": "Terminy anulowania obu rodzin: Kioto 21.04 23:59 JST, Tokio 25.04 23:59 JST, Hanaori 2.05 23:59 JST (16:59 w Polsce). Daty sprawdzono w sześciu potwierdzeniach Booking 26.11.2026. Kalendarz organizatora ma już zdarzenia i przypomnienia tydzień, dzień i dwie godziny wcześniej - nie importujcie ich tam ponownie. Plik terminy.ics służy osobom, które nie mają jeszcze tych zdarzeń. Import nie jest automatyczną synchronizacją."
   },
   {
     "id": "kinugasa-v3",
@@ -69,9 +64,9 @@ export const BOOKINGS = [
     "id": "tea-koto-v4",
     "from": "2026-11-13",
     "due": "2027-03-31",
-    "when": "Teraz zapytanie; rezerwacja po potwierdzeniu terminu",
+    "when": "Czekamy na odpowiedź KOTO; potem rezerwacja",
     "what": "Zarezerwować KOTO 2.05 na {{koto.start}} dla 7 osób",
-    "note": "Jedna ceremonia dla siedmiu osób, około 45 min, bez dodatkowej kaligrafii i bez całodniowego kimona. Zapytajcie teraz mailem (reservation@teaceremony-kyoto.com) o plan prywatny NO4 dla grup od siedmiu osób, około 12 miejsc w tej samej cenie za osobę, i czy obejmuje 4 dorosłych i 3 dzieci. Sesja wspólna ma w szczycie około 13 miejsc. Dostępność i wycenę trzeba uzgodnić. Na 2.05 Marcel ma jeszcze 12 lat: obecny cennik KOTO 2 × 3300 + 2 × 2500 = {{koto.cena}}; potwierdźcie cenę i dostępność na 2027. Wspólne sesje zaczynają się o {{koto.sesje}}; sesji o 10:30 nie ma. Celujemy w pierwszą."
+    "note": "Jedna ceremonia dla siedmiu osób, około 45 min, bez dodatkowej kaligrafii i bez całodniowego kimona. Zapytanie o plan prywatny NO4 dla 4 dorosłych i 3 dzieci wysłano 26.11.2026. Czekamy na odpowiedź w sprawie dostępności, łącznej ceny i warunków. Nie wysyłajcie ponownie tego samego zapytania. Sesja wspólna ma w szczycie około 13 miejsc. Na 2.05 Marcel ma jeszcze 12 lat: obecny cennik KOTO 2 × 3300 + 2 × 2500 = {{koto.cena}}; potwierdźcie cenę i dostępność na 2027. Wspólne sesje zaczynają się o {{koto.sesje}}; sesji o 10:30 nie ma. Celujemy w pierwszą."
   },
   {
     "id": "sumo-v3",
@@ -356,10 +351,11 @@ export const DEADLINES = [
   {
     "id": "koto-enquiry",
     "taskIds": ["koto-mail-v1"],
-    "date": "2026-11-27",
-    "label": "27.11.2026",
-    "title": "Wysłać zapytanie do KOTO dla 7 osób",
-    "text": "Planistyczny termin kontaktu o 2.05.2027. Potwierdzić sesję, cenę całej grupy, udział dzieci i anulowanie. To nie jest rezerwacja ani termin otwarcia sprzedaży.",
+    "date": "2026-11-26",
+    "label": "Wysłano 26.11.2026",
+    "title": "KOTO: zapytanie wysłane, czekamy na odpowiedź",
+    "text": "Zapytanie o 2.05.2027 o 11:45 lub 13:00 dla siedmiu osób wysłane. Czekamy na dostępność, cenę i warunki; rezerwacja nie jest potwierdzona.",
+    "alarms": [],
     "href": "decyzje.html#do-zalatwienia"
   },
   {
